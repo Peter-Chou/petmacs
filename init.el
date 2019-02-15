@@ -36,6 +36,7 @@
 (update-load-path)
 
 (require 'init-custom)
+(require 'init-font)
 (require 'init-package)
 (require 'init-builtin)
 (require 'init-completion)
