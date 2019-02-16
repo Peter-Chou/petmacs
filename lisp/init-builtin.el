@@ -2,16 +2,15 @@
 (setq delete-by-moving-to-trash t)         ; Deleting files go to OS's trash folder
 (setq make-backup-files nil)               ; Forbide to make backup files
 (setq auto-save-default nil)               ; Disable auto save
+(setq create-lockfiles nil)                ; Disable lock files .#filename
 
 (setq-default major-mode 'text-mode)
 
-;; UI
-(tool-bar-mode -1)
+
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
-(if (fboundp 'display-line-numbers-mode)
-    (global-display-line-numbers-mode 1)
-  (global-linum-mode 1))
+;; turn on highlighting current line
+(global-hl-line-mode 1)
 
 ;; Basic modes
 
@@ -48,7 +47,7 @@
   :init (setq enable-recursive-minibuffers t ; Allow commands in minibuffers
               history-length 1000
               savehist-additional-variables '(mark-ring
-                                              global-mark-ring
+					      global-mark-ring
                                               search-ring
                                               regexp-search-ring
                                               extended-command-history)
