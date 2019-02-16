@@ -47,6 +47,14 @@ flycheck_*.el
 # network security
 /network-security.data
 
+# quelpa folder
+/quelpa/
+
+# transient folder
+/transient/
+
 recentf
 history
 places
+amx-items
+projectile*
