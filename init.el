@@ -11,7 +11,7 @@
       auto-window-vscroll nil)
 
 (add-hook 'after-init-hook
-          `(lambda ()
+         `(lambda ()
              (setq file-name-handler-alist file-name-handler-alist-old
                    gc-cons-threshold 800000
                    gc-cons-percentage 0.1)
@@ -36,8 +36,20 @@
 (update-load-path)
 
 (require 'init-custom)
-(require 'init-font)
 (require 'init-package)
+(require 'init-foremost)
+(require 'init-font)
 (require 'init-builtin)
-(require 'init-completion)
+(require 'init-tools)
+(require 'init-company)
+(require 'init-project)
 (require 'init-evil)
+(require 'init-default)
+(require 'init-ui)
+(require 'init-vc)
+(require 'init-ivy)
+(require 'init-elisp)
+(require 'init-misc)
+
+(require 'my-funcs)
+(require 'my-keybindings)
