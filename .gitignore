@@ -53,8 +53,12 @@ flycheck_*.el
 # transient folder
 /transient/
 
+# anaconda folder
+/anaconda-mode/
+
 recentf
 history
 places
+smex-items
 amx-items
 projectile*
