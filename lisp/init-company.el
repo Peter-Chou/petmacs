@@ -8,18 +8,16 @@
          :map company-active-map
          ("C-p" . company-select-previous)
          ("C-n" . company-select-next)
-         ("<tab>" . company-complete-common-or-cycle)
-         ;; ("<backtab>" . my-company-yasnippet)
-         ;; ("C-c C-y" . my-company-yasnippet)
+         ("<tab>" . company-complete-selection)
+	 ("C-/" . company-search-candidates)
+	 ("C-M-/" . company-filter-candidates)
          :map company-search-map
          ("C-p" . company-select-previous)
-         ("C-n" . company-select-next))
+         ("C-n" . company-select-next)
+	 ("C-/" . company-search-candidates)
+	 ("C-M-/" . company-filter-candidates)
+	 ("C-d" . company-show-doc-buffer))
   :hook (after-init . global-company-mode)
-  :init
-  (defun my-company-yasnippet ()
-    (interactive)
-    (company-abort)
-    (call-interactively 'company-yasnippet))
   :config
   (setq company-tooltip-align-annotations t ; aligns annotation to the right
         company-tooltip-limit 12            ; bigger popup window

@@ -1,4 +1,13 @@
 
+;; Environment
+(when (or (eq system-type 'gnu/linux) (eq system-type 'darwin))
+  (use-package exec-path-from-shell
+    :init
+    (setq exec-path-from-shell-check-startup-files nil)
+    (setq exec-path-from-shell-variables '("PATH" "MANPATH" "PYTHONPATH" "GOPATH"))
+    (setq exec-path-from-shell-arguments '("-l"))
+    (exec-path-from-shell-initialize)))
+
 (toggle-frame-maximized)
 ;; UTF-8 as default encoding
 (set-language-environment "UTF-8")

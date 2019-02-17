@@ -46,11 +46,6 @@
          ("C-c c w" . counsel-colors-web)
          ("C-c c z" . counsel-fzf)
 
-         ;; Find counsel commands quickly
-         ("<f6>" . (lambda ()
-                     (interactive)
-                     (counsel-M-x "^counsel ")))
-
          :map ivy-minibuffer-map
          ("C-w" . ivy-yank-word)
 
@@ -98,17 +93,32 @@
   (let ((cmd "rg -S --no-heading --line-number --color never '%s' %s"))
     (setq counsel-grep-base-command cmd))
 
+  ;; allow to select prompt in some ivy functions
+  (setq ivy-use-selectable-prompt t)
+
+  ;; Occur
+  (evil-set-initial-state 'ivy-occur-grep-mode 'normal)
+  (evil-make-overriding-map ivy-occur-mode-map 'normal)
+
   ;; Integration with `projectile'
   (with-eval-after-load 'projectile
-    (setq projectile-completion-system 'ivy))
-
-  )
+    (setq projectile-completion-system 'ivy)))
 
 (use-package counsel-projectile
   :init
-  (setq projectile-switch-project-action 'counsel-projectile-find-file)
-  )
+  (setq projectile-switch-project-action 'counsel-projectile-find-file))
+
+;; Use ivy as the interface to select from xref candidates
+(use-package ivy-xref
+  :ensure t
+  :init (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
 
 (use-package ivy-hydra)
+
+;; for history in counsel-M-x
+(use-package smex
+  :init
+  (setq-default smex-history-length 32)
+  (smex-initialize))
 
 (provide 'init-ivy)

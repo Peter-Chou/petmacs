@@ -4,6 +4,8 @@
          ("C-x M-g" . magit-dispatch-popup)
          ("C-c M-g" . magit-file-popup))
   :config
+  (setq magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1)
+  (add-to-list 'magit-log-arguments "--color")
   ;; Show tasks
   (use-package magit-todos
     :hook (ater-init . magit-todos-mode))
@@ -73,12 +75,15 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   ;; Open github/gitlab/bitbucket page
   (use-package browse-at-remote
     :bind (:map vc-prefix-map
-		("B" . browse-at-remote)))
+		("B" . browse-at-remote))))
 
-  ;; Git related modes
-  (use-package gitattributes-mode)
-  (use-package gitconfig-mode)
-  (use-package gitignore-mode)
-  )
+(use-package evil-magit
+  :hook (magit-mode . evil-magit-init))
+
+;; Git related modes
+(use-package gitattributes-mode)
+(use-package gitignore-mode)
+(use-package gitconfig-mode)
+(use-package git-commit)
 
 (provide 'init-vc)
