@@ -12,6 +12,8 @@
 ;; turn on highlighting current line
 (global-hl-line-mode 1)
 
+(global-anzu-mode t)
+
 ;; Basic modes
 
 ;; Start server
