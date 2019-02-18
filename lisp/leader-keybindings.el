@@ -17,8 +17,7 @@
 
 (evil-leader/set-key
   "hdf" 'counsel-describe-function
-  "hdv" 'counsel-describe-variable
-  "hR"  'spacemacs/counsel-search-docs)
+  "hdv" 'counsel-describe-variable)
 
 ;; leader-f family
 (which-key-add-key-based-replacements
