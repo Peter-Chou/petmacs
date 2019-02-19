@@ -94,5 +94,11 @@
    `(linum-highlight-face
      ((t (:inherit 'default :background ,(face-background 'default) :foreground ,(face-foreground 'default)))))))
 
+(use-package vim-empty-lines-mode
+  :ensure t
+  :hook ((eshell-mode . (lambda () (vim-empty-lines-mode -1))))
+  :init
+  (global-vim-empty-lines-mode))
+
 (provide 'init-ui)
 

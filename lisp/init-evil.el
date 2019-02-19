@@ -49,5 +49,26 @@
   (progn
     (define-key evil-normal-state-map "gc" 'evilnc-comment-operator)))
 
+(use-package evil-surround
+  :init
+  (global-evil-surround-mode 1))
+
+(use-package evil-visualstar
+  :commands (evil-visualstar/begin-search-forward
+             evil-visualstar/begin-search-backward)
+  :init
+  (progn
+    (define-key evil-visual-state-map (kbd "*")
+      'evil-visualstar/begin-search-forward)
+    (define-key evil-visual-state-map (kbd "#")
+      'evil-visualstar/begin-search-backward)))
+
+(use-package evil-fringe-mark
+  :ensure t
+  :config
+  (progn
+    (setq-default right-fringe-width 25)
+    (setq-default evil-fringe-mark-side 'right-fringe)
+    (global-evil-fringe-mark-mode)))
 
 (provide 'init-evil)

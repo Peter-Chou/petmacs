@@ -37,22 +37,28 @@
 
 (require 'init-custom)
 (require 'init-package)
-(require 'init-ui)
 (require 'init-foremost)
-(require 'init-font)
 (require 'init-builtin)
+(require 'init-font)
+
+(require 'init-evil)
+
+(require 'init-ui)
+(require 'init-ivy)
+(require 'init-company)
+(require 'init-yasnippet)
+
 (require 'init-tools)
 (require 'init-ibuffer)
 (require 'init-vc)
-(require 'init-evil)
-(require 'init-company)
-(require 'init-program)
 (require 'init-project)
-(require 'init-ivy)
+
+(require 'init-program)
 (require 'init-lsp)
 (require 'init-elisp)
 (require 'init-c-c++)
 (require 'init-python)
+
 (require 'init-misc)
 (require 'init-default)
 

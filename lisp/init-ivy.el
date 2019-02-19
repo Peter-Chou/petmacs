@@ -104,6 +104,7 @@
   (with-eval-after-load 'projectile
     (setq projectile-completion-system 'ivy)))
 
+
 (use-package counsel-projectile
   :init
   (setq projectile-switch-project-action 'counsel-projectile-find-file))

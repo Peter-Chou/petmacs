@@ -69,6 +69,7 @@
   (format "%s b" petmacs-evil-leader-key) "buffers")
 (evil-leader/set-key
   "bb" 'ivy-switch-buffer
+  "bx" 'kill-buffer-and-window
   "bI" 'ibuffer)
 
 ;; leader-w family
@@ -76,5 +77,22 @@
   (format "%s w" petmacs-evil-leader-key) "windows")
 (evil-leader/set-key
   "wc" 'olivetti-mode)
+
+;;;; major mode specific keybinding
+(which-key-add-key-based-replacements
+  (format "%s m" petmacs-evil-leader-key) "major mode cmds")
+
+;;; python
+
+(evil-leader/set-key-for-mode 'python-mode "mcc" 'petmacs/python-execute-file)
+(evil-leader/set-key-for-mode 'python-mode "mhh" 'anaconda-mode-show-doc)
+(evil-leader/set-key-for-mode 'python-mode "mga" 'anaconda-mode-find-assignments)
+(evil-leader/set-key-for-mode 'python-mode "mgg" 'petmacs/jump-to-definition)
+(evil-leader/set-key-for-mode 'python-mode "mgG" 'petmacs/jump-to-definition-other-window)
+(evil-leader/set-key-for-mode 'python-mode "mgu" 'anaconda-mode-find-references)
+(evil-leader/set-key-for-mode 'python-mode "msi" 'petmacs/python-start-or-switch-repl)
+(evil-leader/set-key-for-mode 'python-mode "msb" 'python-shell-send-buffer)
+(evil-leader/set-key-for-mode 'python-mode "msr" 'python-shell-send-region)
+
 
 (provide 'leader-keybindings)
