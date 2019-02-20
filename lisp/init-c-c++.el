@@ -21,4 +21,8 @@
 		    ".ccls")
 		  projectile-project-root-files-top-down-recurring))))
 
+(use-package smart-semicolon
+  :defer t
+  :hook ((c-mode-common . smart-semicolon-mode)))
+
 (provide 'init-c-c++)
