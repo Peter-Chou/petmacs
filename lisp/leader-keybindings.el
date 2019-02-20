@@ -94,5 +94,8 @@
 (evil-leader/set-key-for-mode 'python-mode "msb" 'python-shell-send-buffer)
 (evil-leader/set-key-for-mode 'python-mode "msr" 'python-shell-send-region)
 
+;;;; evil jump
+
+(evil-define-minor-mode-key 'normal 'anaconda-mode (kbd "gd") 'anaconda-mode-find-definitions)
 
 (provide 'leader-keybindings)
