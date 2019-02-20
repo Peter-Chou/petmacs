@@ -11,6 +11,15 @@
   "TAB" 'petmacs/alternate-buffer
   "d" 'xref-pop-marker-stack)
 
+;; leader-q family
+(which-key-add-key-based-replacements
+  (format "%s q" petmacs-evil-leader-key) "quit")
+
+(evil-leader/set-key
+  "qq" 'petmacs/frame-killer
+  "qQ" 'kill-emacs
+  "qR" 'restart-emacs)
+
 ;; leader-h family
 (which-key-add-key-based-replacements
   (format "%s h" petmacs-evil-leader-key) "helps")
@@ -77,6 +86,14 @@
   (format "%s w" petmacs-evil-leader-key) "windows")
 (evil-leader/set-key
   "wc" 'olivetti-mode)
+
+;; leader-j family
+(which-key-add-key-based-replacements
+  (format "%s j" petmacs-evil-leader-key) "jumps")
+(evil-leader/set-key
+  ;; "jj" 'avy-goto-char-timer
+  "jj" 'avy-goto-word-1
+  "jJ" 'avy-goto-char-2)
 
 ;;;; major mode specific keybinding
 (which-key-add-key-based-replacements
