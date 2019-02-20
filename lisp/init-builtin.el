@@ -9,9 +9,6 @@
 
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
-;; turn on highlighting current line
-(global-hl-line-mode 1)
-
 (use-package anzu
   :init
   (global-anzu-mode t))
