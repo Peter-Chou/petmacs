@@ -12,4 +12,6 @@
 		    (font-spec :family "等距更纱黑体 SC" :size petmacs--font-size))
   )
 
+(use-package fontify-face)
+
 (provide 'init-font)
