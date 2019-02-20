@@ -1,4 +1,30 @@
 
+;; Dos2Unix/Unix2Dos
+(defun dos2unix ()
+  "Convert the current buffer to UNIX file format."
+  (interactive)
+  (set-buffer-file-coding-system 'undecided-unix nil))
+
+(defun unix2dos ()
+  "Convert the current buffer to DOS file format."
+  (interactive)
+  (set-buffer-file-coding-system 'undecided-dos nil))
+
+;; Revert buffer
+(defun revert-current-buffer ()
+  "Revert the current buffer."
+  (interactive)
+  (message "Revert this buffer.")
+  (ignore-errors
+    (widen)
+    (text-scale-increase 0)
+    (if (fboundp 'fancy-widen)
+        (fancy-widen)))
+  (revert-buffer t t))
+(bind-key "<f5>" #'petmacs/revert-current-buffer)
+(if (eq system-type 'darwin)
+    (bind-key "s-r" #'petmacs/revert-current-buffer))
+
 ;; Recompile site-lisp directory
 (defun recompile-site-lisp ()
   "Recompile packages in site-lisp directory."
@@ -26,6 +52,15 @@ current window."
                    (not (eq buffer current-buffer)))
                  (mapcar #'car (window-prev-buffers window)))
      nil t)))
+
+(defun petmacs/frame-killer ()
+  "Kill server buffer and hide the main Emacs window"
+  (interactive)
+  (condition-case nil
+      (delete-frame nil 1)
+    (error
+     (make-frame-invisible nil 1))))
+
 
 ;;; python
 
