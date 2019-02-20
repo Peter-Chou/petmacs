@@ -5,6 +5,9 @@
   :ensure nil
   :diminish eldoc-mode)
 
+;; Semantic code search for emacs lisp
+(use-package elisp-refs)
+
 (use-package aggressive-indent
   :hook (emacs-lisp-mode . aggressive-indent-mode))
 
