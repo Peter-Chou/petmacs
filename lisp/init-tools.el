@@ -20,12 +20,18 @@
     (defalias 'projectile-ripgrep 'rg-project)
     (bind-key "s R" #'rg-project projectile-command-map)))
 
+(use-package avy
+  :defer nil)
+
 ;; center window
 (use-package olivetti
   :diminish
   :init
   (setq olivetti-body-width 0.618))
 
+(use-package restart-emacs)
+
+(use-package carbon-now-sh)
 (use-package daemons)                   ; system services/daemons
 (use-package diffview)                  ; side-by-side diff view
 (use-package esup)                      ; Emacs startup profiler
