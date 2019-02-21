@@ -1,0 +1,73 @@
+
+(use-package eshell
+  :ensure nil
+  :defines (compilation-last-buffer eshell-prompt-function)
+  :commands (eshell/alias
+             eshell-send-input eshell-flatten-list
+             eshell-interactive-output-p eshell-parse-command)
+  :hook ((eshell-mode . (lambda ()
+                          (bind-key "C-l" 'petmacs/eshell-clear eshell-mode-map)))
+	 (eshell-mode  . (lambda () (display-line-numbers-mode -1)(hl-line-mode -1)))
+	 (eshell-after-prompt . petmacs//protect-eshell-prompt)
+	 )
+  :preface
+  (defun petmacs/eshell-clear ()
+    "Clear the eshell buffer."
+    (interactive)
+    (let ((inhibit-read-only t))
+      (erase-buffer)
+      (eshell-send-input)))
+
+  (defun petmacs//protect-eshell-prompt ()
+    "Protect Eshell's prompt like Comint's prompts.
+
+E.g. `evil-change-whole-line' won't wipe the prompt. This
+is achieved by adding the relevant text properties."
+    (let ((inhibit-field-text-motion t))
+      (add-text-properties
+       (point-at-bol)
+       (point)
+       '(rear-nonsticky t
+			inhibit-line-move-field-capture t
+			field output
+			read-only t
+			front-sticky (field inhibit-line-move-field-capture)))))
+  :init
+  ;; add alias to eshell
+  (setq eshell-aliases-file (expand-file-name "alias" user-emacs-directory))
+  )
+
+(use-package eshell-prompt-extras
+  :init
+  (with-eval-after-load "esh-opt"
+    ;; (require 'virtualenvwrapper)
+    ;; (venv-initialize-eshell)
+    (autoload 'epe-theme-pipeline "eshell-prompt-extras")
+    (setq eshell-highlight-prompt nil
+          ;; add new line adhead of tty
+          eshell-prompt-function (lambda ()
+                                   (concat "\n" (epe-theme-pipeline))))))
+
+
+;; Fish-like history autosuggestions
+(use-package esh-autosuggest
+  :defines ivy-display-functions-alist
+  :preface
+  (defun setup-eshell-ivy-completion ()
+    (setq-local ivy-display-functions-alist
+                (remq (assoc 'ivy-completion-in-region ivy-display-functions-alist)
+		      ivy-display-functions-alist)))
+  :bind (:map eshell-mode-map
+	      ([remap eshell-pcomplete] . completion-at-point))
+  :hook ((eshell-mode . esh-autosuggest-mode)
+         (eshell-mode . setup-eshell-ivy-completion)))
+
+;; Eldoc support
+(use-package esh-help
+  :init (setup-esh-help-eldoc))
+
+;; `cd' to frequent directory in eshell
+(use-package eshell-z
+  :hook (eshell-mode . (lambda () (require 'eshell-z))))
+
+(provide 'init-eshell)
