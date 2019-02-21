@@ -25,6 +25,26 @@
 (if (eq system-type 'darwin)
     (bind-key "s-r" #'petmacs/revert-current-buffer))
 
+(defun petmacs/pop-eshell (arg)
+  "Pop a shell in a side window.
+Pass arg to ‘shell’."
+  (interactive "P")
+  (select-window
+   (display-buffer-in-side-window
+    (save-window-excursion
+      (let ((prefix-arg arg))
+        (call-interactively #'eshell))
+      (current-buffer))
+    '((side . right)
+      (window-width . fit-window-to-buffer)))))
+
+(defun petmacs/projectile-pop-eshell ()
+  "Open a term buffer at projectile project root."
+  (interactive)
+  (let ((default-directory (projectile-project-root)))
+    (call-interactively 'petmacs/pop-eshell)))
+
+
 ;; Recompile site-lisp directory
 (defun recompile-site-lisp ()
   "Recompile packages in site-lisp directory."
