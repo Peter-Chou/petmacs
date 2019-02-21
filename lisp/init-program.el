@@ -21,4 +21,12 @@
 
 (global-set-key (kbd "C-x C-r") 'ido-recentf-open)
 
+(use-package fill-column-indicator
+  :hook (prog-mode . (lambda ()
+		       (fci-mode 1)
+		       (fci-update-all-windows t)))
+  :init
+    (setq fci-rule-color "#FFA631"
+	fci-rule-use-dashes t))
+
 (provide 'init-program)
