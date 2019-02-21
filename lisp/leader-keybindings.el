@@ -37,6 +37,9 @@
 (evil-leader/set-key
   "ff" 'counsel-find-file
   "fj" 'dired-jump
+  "ft"    'treemacs
+  "fB"    'treemacs-bookmark
+  "fT"    'treemacs-find-file
   "fL"  'counsel-locate
   "fr" 'counsel-recentf
   "fs" 'save-buffer
@@ -64,6 +67,7 @@
 (evil-leader/set-key
   "p SPC" 'counsel-projectile
   "p'"    'petmacs/projectile-pop-eshell
+  "pt"    'petmacs/treemacs-project-toggle
   "pb"    'counsel-projectile-switch-to-buffer
   "pd"    'counsel-projectile-find-dir
   "pp"    'counsel-projectile-switch-project
@@ -85,6 +89,7 @@
 (evil-leader/set-key
   "bb" 'ivy-switch-buffer
   "bx" 'kill-buffer-and-window
+  "bi" 'imenu-list-smart-toggle
   "bI" 'ibuffer)
 
 ;; leader-w family
