@@ -48,6 +48,7 @@
 (require 'init-company)
 (require 'init-yasnippet)
 (require 'init-dired)
+(require 'init-treemacs)
 
 (require 'init-tools)
 (require 'init-highlight)
