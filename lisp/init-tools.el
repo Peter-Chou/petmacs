@@ -21,7 +21,9 @@
     (bind-key "s R" #'rg-project projectile-command-map)))
 
 (use-package avy
-  :defer nil)
+  :defer nil
+  :init
+  (setq avy-timeout-seconds 0.0))
 
 ;; center window
 (use-package olivetti
