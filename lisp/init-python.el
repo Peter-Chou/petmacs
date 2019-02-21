@@ -36,4 +36,6 @@
   :defines company-backends
   :init (cl-pushnew 'company-anaconda company-backends))
 
+(use-package virtualenvwrapper)
+
 (provide 'init-python)
