@@ -141,6 +141,17 @@ as the pyenv version then also return nil. This works around https://github.com/
     (pop-to-buffer (process-buffer shell-process))
     (evil-insert-state)))
 
+(defun petmacs/treemacs-project-toggle ()
+  "Toggle and add the current project to treemacs if not already added."
+  (interactive)
+  (if (eq (treemacs-current-visibility) 'visible)
+      (delete-window (treemacs-get-local-window))
+    (let ((path (projectile-project-root))
+          (name (projectile-project-name)))
+      (unless (treemacs-current-workspace)
+        (treemacs--find-workspace))
+      (treemacs-do-add-project-to-workspace path name)
+      (treemacs-select-window))))
 
 
 (provide 'core-funcs)
