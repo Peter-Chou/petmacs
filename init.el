@@ -47,6 +47,7 @@
 (require 'init-ivy)
 (require 'init-company)
 (require 'init-yasnippet)
+(require 'init-dired)
 
 (require 'init-tools)
 (require 'init-highlight)
@@ -60,6 +61,7 @@
 (require 'init-c-c++)
 (require 'init-python)
 
+(require 'init-eshell)
 (require 'init-misc)
 (require 'init-default)
 
