@@ -26,7 +26,17 @@
 		       (fci-mode 1)
 		       (fci-update-all-windows t)))
   :init
-    (setq fci-rule-color "#FFA631"
+  (setq fci-rule-color "#FFA631"
 	fci-rule-use-dashes t))
+
+(use-package imenu-list
+  :defer t
+  :init
+  (setq imenu-list-focus-after-activation t
+        imenu-list-auto-resize t)
+  :init
+  (evil-define-key 'normal imenu-list-major-mode-map (kbd "d") 'imenu-list-display-entry) 
+  (evil-define-key 'normal imenu-list-major-mode-map (kbd "r") 'imenu-list-refresh) 
+  (evil-define-key 'normal imenu-list-major-mode-map (kbd "q") 'imenu-list-quit-window))
 
 (provide 'init-program)
