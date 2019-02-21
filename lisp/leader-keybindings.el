@@ -5,8 +5,10 @@
 (evil-leader/set-leader petmacs-evil-leader-key)
 
 (evil-leader/set-key
+  "'"   'petmacs/pop-eshell
   "?"   'counsel-descbinds
   "/"   'counsel-projectile-rg
+  "u"   'universal-argument
   "Ts"  'counsel-load-theme
   "TAB" 'petmacs/alternate-buffer
   "d" 'xref-pop-marker-stack)
@@ -34,6 +36,7 @@
 
 (evil-leader/set-key
   "ff" 'counsel-find-file
+  "fj" 'dired-jump
   "fL"  'counsel-locate
   "fr" 'counsel-recentf
   "fs" 'save-buffer
@@ -60,6 +63,7 @@
   (format "%s p" petmacs-evil-leader-key) "project")
 (evil-leader/set-key
   "p SPC" 'counsel-projectile
+  "p'"    'petmacs/projectile-pop-eshell
   "pb"    'counsel-projectile-switch-to-buffer
   "pd"    'counsel-projectile-find-dir
   "pp"    'counsel-projectile-switch-project
@@ -71,7 +75,9 @@
 (which-key-add-key-based-replacements
   (format "%s j" petmacs-evil-leader-key) "jumps")
 (evil-leader/set-key
-  "ji" 'counsel-imenu)
+  "ji" 'counsel-imenu
+  "jj" 'avy-goto-char-timer
+  "jJ" 'avy-goto-char-2)
 
 ;; leader-b family
 (which-key-add-key-based-replacements
@@ -86,14 +92,6 @@
   (format "%s w" petmacs-evil-leader-key) "windows")
 (evil-leader/set-key
   "wc" 'olivetti-mode)
-
-;; leader-j family
-(which-key-add-key-based-replacements
-  (format "%s j" petmacs-evil-leader-key) "jumps")
-(evil-leader/set-key
-  ;; "jj" 'avy-goto-char-timer
-  "jj" 'avy-goto-word-1
-  "jJ" 'avy-goto-char-2)
 
 ;;;; major mode specific keybinding
 (which-key-add-key-based-replacements
