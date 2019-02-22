@@ -1,6 +1,8 @@
 
+;;; code:
+
 (defvar petmacs-evil-leader-key "<SPC>"
-  "evil leader key")
+  "Evil leader key.")
 
 (evil-leader/set-leader petmacs-evil-leader-key)
 
@@ -11,12 +13,19 @@
   "u"   'universal-argument
   "Ts"  'counsel-load-theme
   "TAB" 'petmacs/alternate-buffer
-  "d" 'xref-pop-marker-stack)
+  "d"   'xref-pop-marker-stack)
+
+;; leader-a application family
+(which-key-add-key-based-replacements
+  (format "%s a" petmacs-evil-leader-key) "application")
+(evil-leader/set-key
+  "ap" 'list-processes
+  "aP" 'proced
+  "ak" 'paradox-list-packages)
 
 ;; leader-q family
 (which-key-add-key-based-replacements
   (format "%s q" petmacs-evil-leader-key) "quit")
-
 (evil-leader/set-key
   "qq" 'petmacs/frame-killer
   "qQ" 'kill-emacs
@@ -33,17 +42,16 @@
 ;; leader-f family
 (which-key-add-key-based-replacements
   (format "%s f" petmacs-evil-leader-key) "files")
-
 (evil-leader/set-key
-  "ff" 'counsel-find-file
-  "fj" 'dired-jump
-  "ft"    'treemacs
-  "fB"    'treemacs-bookmark
-  "fT"    'treemacs-find-file
+  "ff"  'counsel-find-file
+  "fj"  'dired-jump
+  "ft"  'treemacs
+  "fB"  'treemacs-bookmark
+  "fT"  'treemacs-find-file
   "fL"  'counsel-locate
-  "fr" 'counsel-recentf
-  "fs" 'save-buffer
-  "fb" 'counsel-bookmark
+  "fr"  'counsel-recentf
+  "fs"  'save-buffer
+  "fb"  'counsel-bookmark
   "fed" 'petmacs/find-dotfile)
 
 ;; leader-g family
@@ -73,7 +81,7 @@
   "pp"    'counsel-projectile-switch-project
   "pf"    'counsel-projectile-find-file
   "pr"    'projectile-recentf
-  "pv"  'projectile-vc)
+  "pv"    'projectile-vc)
 
 ;; leader-j family
 (which-key-add-key-based-replacements
@@ -82,6 +90,23 @@
   "ji" 'counsel-imenu
   "jj" 'avy-goto-char-timer
   "jJ" 'avy-goto-char-2)
+
+;; leader-e family
+(which-key-add-key-based-replacements
+  (format "%s e" petmacs-evil-leader-key) "error")
+(evil-leader/set-key
+  "eb" 'flycheck-buffer
+  "ec" 'flycheck-clear
+  "eh" 'flycheck-describe-checker
+  "el" 'petmacs/toggle-flycheck-error-list
+  "en" 'petmacs/next-error
+  "eN" 'petmacs/previous-error
+  "ep" 'petmacs/previous-error
+  "es" 'flycheck-select-checker
+  "eS" 'flycheck-set-checker-executable
+  "ev" 'flycheck-verify-setup
+  "ey" 'flycheck-copy-errors-as-kill
+  "ex" 'flycheck-explain-error-at-point)
 
 ;; leader-b family
 (which-key-add-key-based-replacements
@@ -92,11 +117,19 @@
   "bi" 'imenu-list-smart-toggle
   "bI" 'ibuffer)
 
+;; leader-t family
+(which-key-add-key-based-replacements
+  (format "%s t" petmacs-evil-leader-key) "toggle")
+(evil-leader/set-key
+  "ts" 'flycheck-mode)
+
 ;; leader-w family
 (which-key-add-key-based-replacements
   (format "%s w" petmacs-evil-leader-key) "windows")
 (evil-leader/set-key
-  "wc" 'olivetti-mode)
+  "wc"  'olivetti-mode
+  "wpm" 'popwin:messages
+  "wpp" 'popwin:close-popup-window)
 
 ;;;; major mode specific keybinding
 (which-key-add-key-based-replacements
@@ -119,3 +152,5 @@
 (evil-define-minor-mode-key 'normal 'anaconda-mode (kbd "gd") 'anaconda-mode-find-definitions)
 
 (provide 'leader-keybindings)
+
+;;; leader-keybindings ends here
