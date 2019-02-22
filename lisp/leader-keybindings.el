@@ -67,7 +67,8 @@
   "gm"  'magit-dispatch
   "gs"  'magit-status
   "gS"  'magit-stage-file
-  "gU"  'magit-unstage-file)
+  "gU"  'magit-unstage-file
+  "gho" 'browse-at-remote)
 
 ;; leader-p family
 (which-key-add-key-based-replacements
