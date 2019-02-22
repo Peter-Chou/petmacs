@@ -31,6 +31,10 @@
 
 (use-package imenu-list
   :defer t
+  :hook (imenu-list-major-mode . (lambda ()
+				   (display-line-numbers-mode -1)
+				   (hl-line-mode -1)
+				   (vim-empty-lines-mode -1)))
   :init
   (setq imenu-list-focus-after-activation t
         imenu-list-auto-resize t)
