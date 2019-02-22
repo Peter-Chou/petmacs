@@ -1,2 +1,2 @@
-![petmacs](C:\Users\zhou_\.emacs.d\img\totoro.gif)
+![petmacs](./img/totoro.gif)
 
