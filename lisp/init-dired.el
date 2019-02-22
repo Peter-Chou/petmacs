@@ -35,7 +35,10 @@
   ;; was dired-up-director
   (evil-define-key 'normal dired-mode-map (kbd "^") 'petmacs/dired-goto-parent-directory)  
   ;; kill current buffer when leaving dired mode
-  (evil-define-key 'normal dired-mode-map (kbd "q") 'kill-this-buffer))
+  (evil-define-key 'normal dired-mode-map (kbd "q") 'kill-this-buffer)
+  :init
+  (put 'dired-find-alternate-file 'disabled nil)
+  )
 
 ;; Quick sort dired buffers via hydra
 (use-package dired-quick-sort
@@ -77,6 +80,6 @@
 
   (setq dired-omit-files
         (concat dired-omit-files
-                "\\|^.DS_Store$\\|^.projectile$\\|^.git*\\|^.svn$\\|^.vscode$\\|\\.js\\.meta$\\|\\.meta$\\|\\.elc$\\|^.emacs.*")))
+                "\\|^.DS_Store$\\|^.projectile$\\|^.git$\\|^.svn$\\|^.vscode$\\|\\.js\\.meta$\\|\\.meta$\\|\\.elc$\\|^.emacs.*")))
 
 (provide 'init-dired)
