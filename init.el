@@ -36,6 +36,7 @@
 (update-load-path)
 
 (require 'init-custom)
+(require 'init-const)
 (require 'init-package)
 (require 'init-foremost)
 (require 'init-builtin)
@@ -57,14 +58,18 @@
 (require 'init-project)
 
 (require 'init-program)
+(require 'init-flycheck)
 (require 'init-lsp)
 (require 'init-elisp)
 (require 'init-c-c++)
 (require 'init-python)
 
 (require 'init-eshell)
+(require 'init-window)
 (require 'init-misc)
 (require 'init-default)
 
 (require 'core-funcs)
 (require 'leader-keybindings)
+
+;;; init.el ends here
