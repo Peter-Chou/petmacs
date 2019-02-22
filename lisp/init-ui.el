@@ -80,9 +80,8 @@
     (define-key winum-keymap (kbd "M-5") 'winum-select-window-5)
     (define-key winum-keymap (kbd "M-6") 'winum-select-window-6)
     (define-key winum-keymap (kbd "M-7") 'winum-select-window-7)
-    (define-key winum-keymap (kbd "M-8") 'winum-select-window-8)
-    )
-  )
+    (define-key winum-keymap (kbd "M-8") 'winum-select-window-8)))
+
 
 ;; Highlight current line number
 (use-package hlinum
@@ -99,6 +98,16 @@
   :hook ((eshell-mode . (lambda () (vim-empty-lines-mode -1))))
   :init
   (global-vim-empty-lines-mode))
+
+(use-package hide-mode-line
+  :hook (((completion-list-mode
+           completion-in-region-mode
+           lsp-ui-imenu-mode
+	   imenu-list-minor-mode
+           neotree-mode
+           treemacs-mode)
+          . hide-mode-line-mode)))
+
 
 (provide 'init-ui)
 
