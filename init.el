@@ -34,6 +34,7 @@
 (advice-add #'package-initialize :after #'add-subdirs-to-load-path)
 
 (update-load-path)
+(add-subdirs-to-load-path)
 
 (require 'init-custom)
 (require 'init-const)
@@ -73,3 +74,4 @@
 (require 'leader-keybindings)
 
 ;;; init.el ends here
+(put 'dired-find-alternate-file 'disabled nil)
