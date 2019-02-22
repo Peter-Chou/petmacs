@@ -1,3 +1,8 @@
+;; init-project.el --- Setup project related packages.  -*- lexical-binding: t -*-
+
+;;; Commentary:
+
+;;; Code:
 
 (use-package projectile
   :diminish
@@ -30,3 +35,5 @@
   )
 
 (provide 'init-project)
+
+;;; init-project.el ends here

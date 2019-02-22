@@ -1,3 +1,8 @@
+;; init-c-c++.el --- Setup c/c++ IDE.  -*- lexical-binding: t -*-
+
+;;; Commentary:
+
+;;; Code:
 
 ;; C/C++/Objective-C support
 (use-package ccls
@@ -26,3 +31,5 @@
   :hook ((c-mode-common . smart-semicolon-mode)))
 
 (provide 'init-c-c++)
+
+;;; init-c-c++.el ends here

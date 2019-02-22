@@ -1,3 +1,8 @@
+;; init-package.el --- Setup download / update packages.  -*- lexical-binding: t -*-
+
+;;; Commentary:
+
+;;; Code:
 
 (setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
                          ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
@@ -54,3 +59,4 @@
 
 (provide 'init-package)
 
+;;; init-package.el ends here

@@ -1,3 +1,8 @@
+;; init-builtin.el --- Setup Emacs builtins.  -*- lexical-binding: t -*-
+
+;;; Commentary:
+
+;;; Code:
 
 (setq delete-by-moving-to-trash t)         ; Deleting files go to OS's trash folder
 (setq make-backup-files nil)               ; Forbide to make backup files
@@ -55,3 +60,5 @@
               savehist-autosave-interval 300))
 
 (provide 'init-builtin)
+
+;;; init-builtin.el ends here

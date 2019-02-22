@@ -1,3 +1,8 @@
+;; init-dired.el --- Setup dired  -*- lexical-binding: t -*-
+
+;;; Commentary:
+
+;;; Code:
 
 ;; Directory operations
 (use-package dired
@@ -83,3 +88,5 @@
                 "\\|^.DS_Store$\\|^.projectile$\\|^.git$\\|^.svn$\\|^.vscode$\\|\\.js\\.meta$\\|\\.meta$\\|\\.elc$\\|^.emacs.*")))
 
 (provide 'init-dired)
+
+;;; init-dired.el ends here

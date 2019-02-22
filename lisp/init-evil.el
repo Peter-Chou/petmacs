@@ -1,3 +1,8 @@
+;; init-evil.el --- Setup Evil.  -*- lexical-binding: t -*-
+
+;;; Commentary:
+
+;;; Code:
 
 (use-package evil-leader
   :defer nil
@@ -72,3 +77,5 @@
     (global-evil-fringe-mark-mode)))
 
 (provide 'init-evil)
+
+;;; init-evil.el ends here

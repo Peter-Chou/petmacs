@@ -1,3 +1,9 @@
+;; init-custom.el --- Setup custom.el.  -*- lexical-binding: t -*-
+
+;;; Commentary:
+
+;;; Code:
+
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
@@ -5,3 +11,5 @@
 (load-file custom-file)
 
 (provide 'init-custom)
+
+;;; init-custom.el ends here

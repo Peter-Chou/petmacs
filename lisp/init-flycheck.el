@@ -1,3 +1,8 @@
+;; init-flycheck.el --- Setup flycheck.  -*- lexical-binding: t -*-
+
+;;; Commentary:
+
+;;; Code:
 
 (use-package flycheck
   :diminish flycheck-mode
@@ -36,3 +41,5 @@
     :hook (global-flycheck-mode . avy-flycheck-setup)))
 
 (provide 'init-flycheck)
+
+;;; init-flycheck.el ends here

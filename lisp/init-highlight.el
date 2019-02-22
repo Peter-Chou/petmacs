@@ -1,3 +1,8 @@
+;; init-highlight.el --- Setup highlights.  -*- lexical-binding: t -*-
+
+;;; Commentary:
+
+;;; Code:
 
 ;; Highlight the current line
 (use-package hl-line
@@ -86,3 +91,5 @@
   (cl-pushnew '("WORKAROUND" . "#d0bf8f") hl-todo-keyword-faces))
 
 (provide 'init-highlight)
+
+;;; init-highlight.el ends here

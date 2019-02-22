@@ -1,3 +1,8 @@
+;; init-elisp.el --- Setup Emacs lisp IDE.  -*- lexical-binding: t -*-
+
+;;; Commentary:
+
+;;; Code:
 
 ;; Show function arglist or variable docstring
 ;; `global-eldoc-mode' is enabled by default.
@@ -12,3 +17,5 @@
   :hook (emacs-lisp-mode . aggressive-indent-mode))
 
 (provide 'init-elisp)
+
+;;; init-elisp.el ends here

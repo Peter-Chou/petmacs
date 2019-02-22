@@ -1,3 +1,8 @@
+;; init-lsp.el --- Setup lsp.  -*- lexical-binding: t -*-
+
+;;; Commentary:
+
+;;; Code:
 
 (use-package lsp-mode
   :commands lsp
@@ -17,3 +22,5 @@
 (use-package company-lsp)
 
 (provide 'init-lsp)
+
+;;; init-lsp.el ends here

@@ -1,3 +1,8 @@
+;; init-company.el --- Setup company related packages.  -*- lexical-binding: t -*-
+
+;;; Commentary:
+
+;;; Code:
 
 (use-package company
   :diminish company-mode
@@ -84,3 +89,5 @@
             ))))
 
 (provide 'init-company)
+
+;;; init-company.el ends here

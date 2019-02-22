@@ -1,3 +1,8 @@
+;; init-ivy.el --- Setup Ivy.  -*- lexical-binding: t -*-
+
+;;; Commentary:
+
+;;; Code:
 
 (use-package counsel
   :diminish ivy-mode counsel-mode
@@ -48,15 +53,6 @@
 
          :map ivy-minibuffer-map
          ("C-w" . ivy-yank-word)
-
-         ;; Search at point
-         ;; "M-j": word-at-point
-         ;; "M-n"/"C-w": symbol-at-point
-         ;; Refer to https://www.emacswiki.org/emacs/SearchAtPoint#toc8
-         ;; and https://github.com/abo-abo/swiper/wiki/FAQ
-         ;; ("C-w" . (lambda ()
-         ;;            (interactive)
-         ;;            (insert (format "%s" (with-ivy-window (ivy-thing-at-point))))))
 
          :map counsel-find-file-map
          ("C-h" . counsel-up-directory)
@@ -123,3 +119,5 @@
   (smex-initialize))
 
 (provide 'init-ivy)
+
+;;; init-ivy.el ends here

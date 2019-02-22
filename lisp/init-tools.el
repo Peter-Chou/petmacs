@@ -1,3 +1,8 @@
+;; init-tools.el --- Setup useful tools.  -*- lexical-binding: t -*-
+
+;;; Commentary:
+
+;;; Code:
 
 (use-package which-key
   :diminish which-key-mode
@@ -40,3 +45,5 @@
 
 
 (provide 'init-tools)
+
+;;; init-tools.el ends here

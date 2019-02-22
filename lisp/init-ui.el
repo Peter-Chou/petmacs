@@ -1,3 +1,8 @@
+;; init-ui.el --- Setup UI.  -*- lexical-binding: t -*-
+
+;;; Commentary:
+
+;;; Code:
 
 (use-package all-the-icons
   :defer nil)
@@ -111,3 +116,4 @@
 
 (provide 'init-ui)
 
+;;; init-ui.el ends here

@@ -1,3 +1,8 @@
+;; init-python.el --- Setup Python IDE.  -*- lexical-binding: t -*-
+
+;;; Commentary:
+
+;;; Code:
 
 ;; Python Mode
 ;; Install:
@@ -39,3 +44,5 @@
 (use-package virtualenvwrapper)
 
 (provide 'init-python)
+
+;;; init-python.el ends here

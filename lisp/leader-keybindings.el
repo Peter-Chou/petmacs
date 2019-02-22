@@ -1,5 +1,8 @@
+;; leader-keybindings.el --- Setup evil-leader keybindings.  -*- lexical-binding: t -*-
 
-;;; code:
+;;; Commentary:
+
+;;; Code:
 
 (defvar petmacs-evil-leader-key "<SPC>"
   "Evil leader key.")

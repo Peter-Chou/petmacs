@@ -1,3 +1,8 @@
+;; init-treemacs.el --- Setup treemacs.  -*- lexical-binding: t -*-
+
+;;; Commentary:
+
+;;; Code:
 
 (use-package treemacs
   :defines winum-keymap
@@ -104,3 +109,5 @@
   :after treemacs)
 
 (provide 'init-treemacs)
+
+;;; init-treemacs.el ends here

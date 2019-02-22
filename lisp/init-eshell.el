@@ -1,3 +1,8 @@
+;; init-eshell.el --- Setup eshell.  -*- lexical-binding: t -*-
+
+;;; Commentary:
+
+;;; Code:
 
 (use-package eshell
   :ensure nil
@@ -71,3 +76,5 @@ is achieved by adding the relevant text properties."
   :hook (eshell-mode . (lambda () (require 'eshell-z))))
 
 (provide 'init-eshell)
+
+;;; init-eshell.el ends here

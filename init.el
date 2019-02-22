@@ -1,3 +1,8 @@
+;;; init.el --- Petmacs configurations  -*- lexical-binding: t no-byte-compile: t; -*-
+
+;;; Commentary:
+
+;;; Code:
 
 (defvar file-name-handler-alist-old file-name-handler-alist)
 
@@ -39,7 +44,7 @@
 (require 'init-custom)
 (require 'init-const)
 (require 'init-package)
-(require 'init-foremost)
+(require 'init-default)
 (require 'init-builtin)
 (require 'init-font)
 
@@ -68,7 +73,6 @@
 (require 'init-eshell)
 (require 'init-window)
 (require 'init-misc)
-(require 'init-default)
 
 (require 'core-funcs)
 (require 'leader-keybindings)

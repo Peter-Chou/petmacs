@@ -1,3 +1,8 @@
+;; init-vc.el --- Setup version control.  -*- lexical-binding: t -*-
+
+;;; Commentary:
+
+;;; Code:
 
 (use-package magit
   :bind (("C-x g" . magit-status)
@@ -87,3 +92,5 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 (use-package git-commit)
 
 (provide 'init-vc)
+
+;;; init-vc.el ends here

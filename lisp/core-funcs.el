@@ -1,3 +1,8 @@
+;; core-funcs.el --- Petmacs usable functions.  -*- lexical-binding: t -*-
+
+;;; Commentary:
+
+;;; Code:
 
 ;; Dos2Unix/Unix2Dos
 (defun dos2unix ()
@@ -192,3 +197,5 @@ If the error list is visible, hide it.  Otherwise, show it."
 
 
 (provide 'core-funcs)
+
+;;; core-funcs.el ends here

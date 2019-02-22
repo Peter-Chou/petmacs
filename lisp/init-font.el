@@ -1,3 +1,8 @@
+;; init-font.el --- Setup fonts.  -*- lexical-binding: t -*-
+
+;;; Commentary:
+
+;;; Code:
 
 (defvar petmacs--font-size 17.5
   "default font size")
@@ -15,3 +20,5 @@
 (use-package fontify-face)
 
 (provide 'init-font)
+
+;;; init-font.el ends here

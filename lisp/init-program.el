@@ -1,3 +1,9 @@
+;; init-program.el --- Setup programming useful packages.  -*- lexical-binding: t -*-
+
+;;; Commentary:
+
+;;; Code:
+
 (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit)
 (electric-pair-mode 1)
 
@@ -28,6 +34,11 @@
   :init
   (setq fci-rule-color "#FFA631"
 	fci-rule-use-dashes t))
+;; init-builtin.el --- Setup Emacs builtins.  -*- lexical-binding: t -*-
+
+;;; Commentary:
+
+;;; Code:
 
 (use-package imenu-list
   :defer t
@@ -42,9 +53,6 @@
   (evil-define-key 'normal imenu-list-major-mode-map (kbd "d") 'imenu-list-display-entry) 
   (evil-define-key 'normal imenu-list-major-mode-map (kbd "r") 'imenu-list-refresh) 
   (evil-define-key 'normal imenu-list-major-mode-map (kbd "q") 'imenu-list-quit-window))
-
-
-;; (use-package prettify-utils) ; needed by pretty-code
 
 (use-package prettify-utils
   :ensure t
@@ -96,3 +104,5 @@
   (petmacs/complete-setup-pretty-code))
 
 (provide 'init-program)
+
+;;; init-program.el ends here

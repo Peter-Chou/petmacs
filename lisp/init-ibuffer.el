@@ -1,3 +1,8 @@
+;; init-ibuffer.el --- Setup ibuffer.  -*- lexical-binding: t -*-
+
+;;; Commentary:
+
+;;; Code:
 
 (use-package ibuffer
   :ensure nil
@@ -62,3 +67,5 @@
     (advice-add #'ibuffer-find-file :override #'petmacs//ibuffer-find-file)))
 
 (provide 'init-ibuffer)
+
+;;; init-ibuffer.el ends here

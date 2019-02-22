@@ -1,4 +1,8 @@
+;; init-window.el --- Setup window related packages.  -*- lexical-binding: t -*-
 
+;;; Commentary:
+
+;;; Code:
 
 (use-package ace-window
   :init
@@ -35,3 +39,5 @@
     ))
 
 (provide 'init-window)
+
+;;; init-window.el ends here
