@@ -8,7 +8,6 @@
   :defer nil)
 
 (use-package font-lock+
-  :ensure t
   :quelpa
   (font-lock+ :repo "emacsmirror/font-lock-plus" :fetcher github))
 
