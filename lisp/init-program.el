@@ -55,7 +55,6 @@
   (evil-define-key 'normal imenu-list-major-mode-map (kbd "q") 'imenu-list-quit-window))
 
 (use-package prettify-utils
-  :ensure t
   :quelpa
   (prettify-utils :repo "Ilazki/prettify-utils.el" :fetcher github))
 
