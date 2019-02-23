@@ -7,8 +7,13 @@
 (use-package evil-leader
   :defer nil
   :init
-  (global-evil-leader-mode)
-  )
+  (global-evil-leader-mode))
+
+(use-package evil-major-leader
+  :quelpa
+  (evil-major-leader :repo "Peter-Chou/evil-major-leader" :fetcher github)
+  :init
+  (global-evil-major-leader-mode))
 
 (use-package evil-anzu)
 
