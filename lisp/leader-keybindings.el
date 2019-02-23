@@ -7,7 +7,11 @@
 (defvar petmacs-evil-leader-key "<SPC>"
   "Evil leader key.")
 
+(defvar petmacs-evil-major-leader-key "\,"
+  "Evil leader key.")
+
 (evil-leader/set-leader petmacs-evil-leader-key)
+(evil-major-leader/set-leader petmacs-evil-major-leader-key)
 
 (evil-leader/set-key
   "'"   'petmacs/pop-eshell
@@ -118,7 +122,8 @@
 (evil-leader/set-key
   "bb" 'ivy-switch-buffer
   "bx" 'kill-buffer-and-window
-  "bi" 'imenu-list-smart-toggle
+  ;; "bi" 'imenu-list-smart-toggle
+  "bi" 'lsp-ui-imenu
   "bI" 'ibuffer)
 
 ;; leader-t family
@@ -139,17 +144,46 @@
 (which-key-add-key-based-replacements
   (format "%s m" petmacs-evil-leader-key) "major mode cmds")
 
-;;; python
+(defun petmacs//set-key-prefix-name (key name)
+  (which-key-add-key-based-replacements
+    (format "%s m%s" petmacs-evil-leader-key key) name)
+  (which-key-add-key-based-replacements (format ", %s" key) name)
+  )
 
-(evil-leader/set-key-for-mode 'python-mode "mcc" 'petmacs/python-execute-file)
+(petmacs//set-key-prefix-name "c" "compile")
+;; (which-key-add-key-based-replacements
+;;   (format "%s m" petmacs-evil-leader-key) "major mode cmds")
+;; (which-key-add-key-based-replacements
+;;   (format "%s mc" petmacs-evil-leader-key) "compile")
+
+;;  for evil-major-leader
+;; (which-key-add-key-based-replacements ", c" "compile")
+
+;;; python
+;; )
+
 (evil-leader/set-key-for-mode 'python-mode "mhh" 'anaconda-mode-show-doc)
 (evil-leader/set-key-for-mode 'python-mode "mga" 'anaconda-mode-find-assignments)
 (evil-leader/set-key-for-mode 'python-mode "mgg" 'petmacs/jump-to-definition)
 (evil-leader/set-key-for-mode 'python-mode "mgG" 'petmacs/jump-to-definition-other-window)
 (evil-leader/set-key-for-mode 'python-mode "mgu" 'anaconda-mode-find-references)
-(evil-leader/set-key-for-mode 'python-mode "msi" 'petmacs/python-start-or-switch-repl)
 (evil-leader/set-key-for-mode 'python-mode "msb" 'python-shell-send-buffer)
+(evil-leader/set-key-for-mode 'python-mode "mck" 'petmacs/quit-subjob)
+(evil-leader/set-key-for-mode 'python-mode "msk" 'petmacs/python-interrupt-repl)
+(evil-leader/set-key-for-mode 'python-mode "msq" 'petmacs/python-quit-repl)
 (evil-leader/set-key-for-mode 'python-mode "msr" 'python-shell-send-region)
+
+(if sys/win32p
+    (progn
+      (evil-leader/set-key-for-mode 'python-mode "mcc" 'petmacs/windows-python-execute-file)
+      (evil-leader/set-key-for-mode 'python-mode "mcC" 'petmacs/windows-python-execute-file-focus)
+      (evil-leader/set-key-for-mode 'python-mode "msi" 'petmacs/windows-python-start-or-switch-repl)
+      )
+  (progn
+    (evil-leader/set-key-for-mode 'python-mode "mcc" 'petmacs/python-execute-file)
+    (evil-leader/set-key-for-mode 'python-mode "mcC" 'petmacs/python-execute-file-focus)
+    (evil-leader/set-key-for-mode 'python-mode "msi" 'petmacs/python-start-or-switch-repl)
+    ))
 
 ;;;; evil jump
 
