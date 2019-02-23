@@ -4,6 +4,10 @@
 
 ;;; Code:
 
+(defvar petmacs-default-language-env 'UTF-8)
+(defvar petmacs-default-coding-env 'utf-8)
+
+
 ;; Environment
 (when (or (eq system-type 'gnu/linux) (eq system-type 'darwin))
   (use-package exec-path-from-shell
@@ -15,8 +19,8 @@
 
 (toggle-frame-maximized)
 ;; UTF-8 as default encoding
-(set-language-environment "UTF-8")
-(set-default-coding-systems 'utf-8)
+(set-language-environment petmacs-default-language-env)
+(set-default-coding-systems petmacs-default-coding-env)
 
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq inhibit-startup-screen t)
