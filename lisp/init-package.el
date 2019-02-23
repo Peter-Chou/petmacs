@@ -17,8 +17,6 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-
-
 ;; Should set before loading `use-package'
 (eval-and-compile
   (setq use-package-always-ensure t)
@@ -34,20 +32,19 @@
 (setq quelpa-update-melpa-p nil)
 (setq quelpa-checkout-melpa-p nil)
 
-
-
-;; (use-package quelpa-use-package)
+;; Required by `use-package'
+(use-package diminish)
+(use-package bind-key)
 (quelpa
  '(quelpa-use-package
    :fetcher git
    :url "https://framagit.org/steckerhalter/quelpa-use-package.git"))
 (require 'quelpa-use-package)
+;; disable :ensure from package.el when :quelpa is found in use-package
+(quelpa-use-package-activate-advice)
 
-;; Required by `use-package'
-(use-package diminish)
-(use-package bind-key)
-
-;; Extensions
+;; Extensions 
+;; download / update packages
 (use-package paradox
   :ensure t
   :commands paradox-enable
