@@ -15,6 +15,19 @@
   (interactive)
   (set-buffer-file-coding-system 'undecided-dos nil))
 
+(defun petmacs/hidden-dos-eol ()
+  "Do not show ^M in files containing mixed UNIX and DOS line endings"
+  (interactive)
+  (unless buffer-display-table
+    (setq buffer-display-table (make-display-table)))
+  (aset buffer-display-table ?\^M []))
+
+(defun petmacs/remove-dos-eol ()
+  ";; Replace DOS eol CR LF with Unix eolns CR"
+  (interactive)
+  (goto-char (point-min))
+  (while (search-forward "\r" nil t) (replace-match "")))
+
 ;; Revert buffer
 (defun revert-current-buffer ()
   "Revert the current buffer."
@@ -126,6 +139,15 @@ as the pyenv version then also return nil. This works around https://github.com/
       (with-current-buffer (get-buffer "*compilation*")
         (inferior-python-mode)))))
 
+(defun petmacs/python-execute-file-focus (arg)
+  "Execute a python script in a shell and switch to the shell buffer in
+ `insert state'."
+  (interactive "P")
+  (petmacs/python-execute-file arg)
+  (switch-to-buffer-other-window "*compilation*")
+  (end-of-buffer)
+  (evil-insert-state))
+
 (defun petmacs/python-start-or-switch-repl ()
   "Start and/or switch to the REPL."
   (interactive)
@@ -195,6 +217,78 @@ If the error list is visible, hide it.  Otherwise, show it."
       (quit-window nil window)
     (flycheck-list-errors)))
 
+;;;; python
+
+(defun petmacs/quit-subjob ()
+  "quit runing job in python buffer"
+  (interactive)
+  (save-excursion
+    (setq petmacs--current-buffer-name (buffer-name))
+    (previous-buffer)
+
+    (setq petmacs--previous-buffer-name (buffer-name))
+    (switch-to-buffer "*compilation*")
+    (comint-quit-subjob)
+    (switch-to-buffer petmacs--previous-buffer-name)
+    (switch-to-buffer petmacs--current-buffer-name)
+    (set-language-environment petmacs-default-language-env)))
+
+(defun petmacs/windows-python-execute-file (arg)
+  "execute python file & produce correct chinese outputs"
+  (interactive "P")
+  (set-language-environment 'Chinese-GB18030)
+  (save-some-buffers t)
+  (petmacs/python-execute-file arg)
+  (set-language-environment petmacs-default-language-env))
+
+(defun petmacs/windows-python-execute-file-focus (arg)
+  "EXECUTE PYTHON FILE & SWITCH TO THE SHELL BUFFER IN INSERT STATE & PRODUCE CORRECT CHINESE OUTPUTS"
+  (interactive "P")
+  (set-language-environment 'Chinese-GB18030)
+  (save-some-buffers t)
+  (petmacs/python-execute-file-focus arg)
+  (set-language-environment petmacs-default-language-env))
+
+(defun petmacs/windows-python-start-or-switch-repl ()
+  (interactive)
+  (set-language-environment 'Chinese-GB18030)
+  (petmacs/python-start-or-switch-repl)
+  (other-window -1))
+
+(defun petmacs/python-quit-repl ()
+  (interactive)
+  (switch-to-buffer "*Python*")
+  (comint-quit-subjob)
+  (kill-buffer-and-window)
+  (set-language-environment petmacs-default-language-env))
+
+(defun petmacs/python-interrupt-repl ()
+  (interactive)
+  (switch-to-buffer "*Python*")
+  (comint-interrupt-subjob)
+  (other-window -1))
+
+(defun petmacs/pyvenv-workon ()
+  "switch python virtualenvironment and restart anaconda server"
+  (interactive)
+  (call-interactively 'pyvenv-workon)
+  ;; (setq python-shell-virtualenv-path pyvenv-virtual-env)
+  (pythonic-activate pyvenv-virtual-env)
+  )
+
+(defun petmacs/pyvenv-activate ()
+  "switch python virtualenvironment and restart anaconda server"
+  (interactive)
+  (call-interactively 'pyvenv-activate)
+  ;; (setq python-shell-virtualenv-path pyvenv-virtual-env)
+  (pythonic-activate pyvenv-virtual-env)
+  )
+
+(defun petmacs/pyvenv-deactivate ()
+  "deactivate pyvenv & anaconda virtual enironment"
+  (interactive)
+  (pyvenv-deactivate)
+  (pythonic-deactivate))
 
 (provide 'core-funcs)
 
