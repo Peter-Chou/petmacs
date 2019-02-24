@@ -39,7 +39,7 @@
 (use-package olivetti
   :diminish
   :init
-  (setq olivetti-body-width 0.618))
+  (setq olivetti-body-width 0.6))
 
 (use-package restart-emacs)
 
