@@ -11,8 +11,10 @@
   :init
   (setq which-key-idle-delay 0.2)
   (setq which-key-separator " ")
-  (setq which-key-prefix-prefix " ")
-  )
+  (setq which-key-prefix-prefix " "))
+
+(use-package hungry-delete
+  :hook (after-init . global-hungry-delete-mode))
 
 (use-package editorconfig
   :diminish editorconfig-mode
