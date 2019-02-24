@@ -50,9 +50,12 @@
   (setq imenu-list-focus-after-activation t
         imenu-list-auto-resize t)
   :init
-  (evil-define-key 'normal imenu-list-major-mode-map (kbd "d") 'imenu-list-display-entry) 
+  (evil-define-key 'normal imenu-list-major-mode-map (kbd "d") 'imenu-list-display-entry)
   (evil-define-key 'normal imenu-list-major-mode-map (kbd "r") 'imenu-list-refresh) 
   (evil-define-key 'normal imenu-list-major-mode-map (kbd "q") 'imenu-list-quit-window))
+
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
 
 (use-package prettify-utils
   :quelpa
@@ -64,9 +67,11 @@
   :init
   (progn
     (require 'pretty-code)
-    (pretty-code-add-hook 'emacs-lisp-mode-hook '((:def "defun")))
-    (pretty-code-add-hook 'python-mode-hook     '((:def "def")
-					          (:lambda "lambda")))))
+    ;; (pretty-code-add-hook 'python-mode-hook     '((:def "def")
+    ;; 					          (:lambda "lambda")))
+    (pretty-code-add-hook 'emacs-lisp-mode-hook '((:def "defun")
+						  (:lambda "lambda")))
+    ))
 
 (use-package pretty-fonts
   :ensure nil
