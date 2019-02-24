@@ -8,7 +8,7 @@
   "Evil leader key.")
 
 (defvar petmacs-evil-major-leader-key "\,"
-  "Evil leader key.")
+  "Evil major leader key.")
 
 (evil-leader/set-leader petmacs-evil-leader-key)
 (evil-major-leader/set-leader petmacs-evil-major-leader-key)
