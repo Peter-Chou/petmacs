@@ -11,6 +11,10 @@
 (use-package python
   :ensure nil
   :defines gud-pdb-command-name pdb-path
+  :hook (python-mode . (lambda ()
+			 (setq indent-tabs-mode nil
+                               tab-width 2
+                               python-indent-offset 2)))
   :config
   ;; Disable readline based native completion
   (setq python-shell-completion-native-enable nil)
