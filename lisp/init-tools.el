@@ -7,7 +7,12 @@
 (use-package which-key
   :diminish which-key-mode
   :bind (:map help-map ("C-h" . which-key-C-h-dispatch))
-  :hook (after-init . which-key-mode))
+  :hook (after-init . which-key-mode)
+  :init
+  (setq which-key-idle-delay 0.2)
+  (setq which-key-separator " ")
+  (setq which-key-prefix-prefix " ")
+  )
 
 (use-package editorconfig
   :diminish editorconfig-mode
