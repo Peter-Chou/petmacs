@@ -11,6 +11,26 @@
   :config
   (setq magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1)
   (add-to-list 'magit-log-arguments "--color")
+
+  ;; When 'C-c C-c' is pressed in the magit commit message buffer,
+  ;; delete the magit-diff buffer related to the current repo.
+  (defun kill-magit-diff-buffer-in-current-repo (&rest _)
+    "Delete the magit-diff buffer related to the current repo"
+    (let ((magit-diff-buffer-in-current-repo
+           (magit-mode-get-buffer 'magit-diff-mode)))
+      (kill-buffer magit-diff-buffer-in-current-repo)))
+
+  (add-hook 'git-commit-setup-hook
+            (lambda ()
+              (add-hook 'with-editor-post-finish-hook
+			#'kill-magit-diff-buffer-in-current-repo
+			nil t))) ; the t is important
+
+  ;; kill magit status buffer when quitting magit status
+  (define-key magit-mode-map (kbd "q") (lambda()
+					 (interactive)
+					 (magit-mode-bury-buffer t)))
+
   ;; Show tasks
   (use-package magit-todos
     :hook (ater-init . magit-todos-mode))
