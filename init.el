@@ -43,9 +43,10 @@
 
 ;; use mirror
 (setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-                         ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
+                         ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+                         ("melpa-stable" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa-stable/")))
 ;; (add-to-list 'package-archives
-;;	     '("melpa" . "https://melpa.org/packages/"))
+;;      '("melpa" . "https://melpa.org/packages/"))
 
 ;; Initialize packages
 (package-initialize)
