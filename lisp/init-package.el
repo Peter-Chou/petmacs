@@ -4,14 +4,6 @@
 
 ;;; Code:
 
-(setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-                         ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
-;; (add-to-list 'package-archives
-;;	     '("melpa" . "https://melpa.org/packages/"))
-
-;; Initialize packages
-(package-initialize)
-
 ;; Setup `use-package'
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)

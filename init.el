@@ -41,6 +41,15 @@
 (update-load-path)
 (add-subdirs-to-load-path)
 
+;; use mirror
+(setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+                         ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
+;; (add-to-list 'package-archives
+;;	     '("melpa" . "https://melpa.org/packages/"))
+
+;; Initialize packages
+(package-initialize)
+
 (require 'init-custom)
 (require 'init-const)
 (require 'init-package)
