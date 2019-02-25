@@ -1,8 +1,7 @@
-![petmacs](./img/totoro.gif)
-
----
 
 # Screenshot
 
-![screenshot](./img/screenshot.png)
+![petmacs](./img/screenshot_dashboard.png)
+
+![screenshot](./img/screenshot_elisp.png)
 
