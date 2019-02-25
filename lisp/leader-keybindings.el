@@ -59,6 +59,7 @@
   "fr"  'counsel-recentf
   "fs"  'save-buffer
   "fb"  'counsel-bookmark
+  "fec" 'petmacs/find-custom-file
   "fed" 'petmacs/find-dotfile)
 
 ;; leader-g family
@@ -121,7 +122,12 @@
   (format "%s b" petmacs-evil-leader-key) "buffers")
 (evil-leader/set-key
   "bb" 'ivy-switch-buffer
+  "bd" 'kill-this-buffer
+  "bR" 'petmacs/revert-current-buffer
+  "bs" 'petmacs/goto-scratch-buffer
   "bx" 'kill-buffer-and-window
+  "bh" 'petmacs/goto-dashboard
+  "bY" 'petmacs/copy-whole-buffer-to-clipboard
   ;; "bi" 'imenu-list-smart-toggle
   "bi" 'lsp-ui-imenu
   "bI" 'ibuffer)
@@ -130,6 +136,7 @@
 (which-key-add-key-based-replacements
   (format "%s t" petmacs-evil-leader-key) "toggle")
 (evil-leader/set-key
+  "t-" 'centered-cursor-mode
   "ts" 'flycheck-mode)
 
 ;; leader-w family
