@@ -20,6 +20,10 @@
               ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
               ([remap xref-find-references] . lsp-ui-peek-find-references)
               ("C-c u" . lsp-ui-imenu))
+  :hook (lsp-ui-imenu-mode . (lambda ()
+			       (display-line-numbers-mode -1)
+			       (hl-line-mode -1)
+			       (vim-empty-lines-mode -1)))
   :init
   (evil-define-key 'normal lsp-ui-imenu-mode-map (kbd "q") 'lsp-ui-imenu--kill)
   (evil-define-key 'normal lsp-ui-imenu-mode-map (kbd "J") 'lsp-ui-imenu--next-kind)
