@@ -61,6 +61,7 @@
 (require 'init-evil)
 
 (require 'init-ui)
+(require 'init-dashboard)
 (require 'init-ivy)
 (require 'init-company)
 (require 'init-yasnippet)
