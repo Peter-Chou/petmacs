@@ -23,13 +23,23 @@
   (aset buffer-display-table ?\^M []))
 
 (defun petmacs/remove-dos-eol ()
-  ";; Replace DOS eol CR LF with Unix eolns CR"
+  "Replace DOS eol CR LF with Unix eolns CR"
   (interactive)
   (goto-char (point-min))
   (while (search-forward "\r" nil t) (replace-match "")))
 
+(defun petmacs/goto-dashboard ()
+  "goto Home buffer"
+  (interactive)
+  (switch-to-buffer "*dashboard*"))
+
+(defun petmacs/goto-scratch-buffer ()
+  "goto Home buffer"
+  (interactive)
+  (switch-to-buffer "*scratch*"))
+
 ;; Revert buffer
-(defun revert-current-buffer ()
+(defun petmacs/revert-current-buffer ()
   "Revert the current buffer."
   (interactive)
   (message "Revert this buffer.")
@@ -42,6 +52,12 @@
 (bind-key "<f5>" #'petmacs/revert-current-buffer)
 (if (eq system-type 'darwin)
     (bind-key "s-r" #'petmacs/revert-current-buffer))
+
+(defun petmacs/copy-whole-buffer-to-clipboard ()
+  "Copy entire buffer to clipboard"
+  (interactive)
+  (clipboard-kill-ring-save (point-min) (point-max)))
+
 
 (defun petmacs/pop-eshell (arg)
   "Pop a shell in a side window.
@@ -77,6 +93,10 @@ Pass arg to ‘shell’."
   (interactive)
   (find-file-existing (concat user-emacs-directory "init.el")))
 
+(defun petmacs/find-custom-file ()
+  "Edit the `dotfile', in the current window."
+  (interactive)
+  (find-file-existing (concat user-emacs-directory "custom.el")))
 
 (defun petmacs/alternate-buffer (&optional window)
   "Switch back and forth between current and last buffer in the
