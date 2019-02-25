@@ -16,6 +16,11 @@
 (use-package hungry-delete
   :hook (after-init . global-hungry-delete-mode))
 
+(use-package expand-region
+  :init
+  (setq expand-region-contract-fast-key "V"
+        expand-region-reset-fast-key "r"))
+
 (use-package editorconfig
   :diminish editorconfig-mode
   :hook (after-init . editorconfig-mode))
@@ -38,10 +43,20 @@
   (setq avy-timeout-seconds 0.0))
 
 ;; center window
-(use-package olivetti
-  :diminish
+(use-package writeroom-mode
   :init
-  (setq olivetti-body-width 0.6))
+  (setq writeroom-maximize-window nil
+	writeroom-fullscreen-effect 'maximized
+	writeroom-mode-line t
+	writeroom-width 100)
+  :config
+  (define-key writeroom-mode-map (kbd "C-M-<") #'writeroom-decrease-width)
+  (define-key writeroom-mode-map (kbd "C-M->") #'writeroom-increase-width)
+  (define-key writeroom-mode-map (kbd "C-M-=") #'writeroom-adjust-width))
+;; (use-package olivetti
+;;   :diminish
+;;   :init
+;;   (setq olivetti-body-width 0.6))
 
 (use-package centered-cursor-mode)
 
