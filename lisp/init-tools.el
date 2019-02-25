@@ -43,6 +43,8 @@
   :init
   (setq olivetti-body-width 0.6))
 
+(use-package centered-cursor-mode)
+
 (use-package restart-emacs)
 
 (use-package carbon-now-sh)
