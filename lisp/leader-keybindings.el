@@ -17,8 +17,11 @@
   "'"   'petmacs/pop-eshell
   "?"   'counsel-descbinds
   "/"   'counsel-projectile-rg
+  "v"   'er/expand-region
   "u"   'universal-argument
   "Ts"  'counsel-load-theme
+  "TF"  'toggle-frame-fullscreen
+  "TM"  'maximize-window
   "TAB" 'petmacs/alternate-buffer
   "d"   'xref-pop-marker-stack)
 
@@ -49,6 +52,8 @@
 ;; leader-f family
 (which-key-add-key-based-replacements
   (format "%s f" petmacs-evil-leader-key) "files")
+(which-key-add-key-based-replacements
+  (format "%s fy" petmacs-evil-leader-key) "copy")
 (evil-leader/set-key
   "ff"  'counsel-find-file
   "fj"  'dired-jump
@@ -58,7 +63,15 @@
   "fL"  'counsel-locate
   "fr"  'counsel-recentf
   "fs"  'save-buffer
+  "fc"  'petmacs/copy-file
   "fb"  'counsel-bookmark
+  "fB"  'treemacs-bookmark
+  "fCu" 'dos2unix
+  "fCd" 'unix2dos
+  "fyy" 'petmacs/copy-file-path
+  "fyY" 'petmacs/projectile-copy-file-path
+  "fyd" 'petmacs/copy-directory-path
+  "fyn" 'petmacs/copy-file-name
   "fec" 'petmacs/find-custom-file
   "fed" 'petmacs/find-dotfile)
 
@@ -96,7 +109,8 @@
 (which-key-add-key-based-replacements
   (format "%s j" petmacs-evil-leader-key) "jumps")
 (evil-leader/set-key
-  "ji" 'counsel-imenu
+  "ji" 'petmacs/counsel-jump-in-buffer
+  "jw" 'evil-avy-goto-word-or-subword-1
   "jj" 'avy-goto-char-timer
   "jJ" 'avy-goto-char-2)
 
@@ -143,7 +157,8 @@
 (which-key-add-key-based-replacements
   (format "%s w" petmacs-evil-leader-key) "windows")
 (evil-leader/set-key
-  "wc"  'olivetti-mode
+  "wc"  'writeroom-mode
+  "wd"  'delete-window
   "wpm" 'popwin:messages
   "wpp" 'popwin:close-popup-window)
 
@@ -154,21 +169,11 @@
 (defun petmacs//set-key-prefix-name (key name)
   (which-key-add-key-based-replacements
     (format "%s m%s" petmacs-evil-leader-key key) name)
-  (which-key-add-key-based-replacements (format ", %s" key) name)
-  )
+  (which-key-add-key-based-replacements (format ", %s" key) name))
 
 (petmacs//set-key-prefix-name "c" "compile")
-;; (which-key-add-key-based-replacements
-;;   (format "%s m" petmacs-evil-leader-key) "major mode cmds")
-;; (which-key-add-key-based-replacements
-;;   (format "%s mc" petmacs-evil-leader-key) "compile")
-
-;;  for evil-major-leader
-;; (which-key-add-key-based-replacements ", c" "compile")
 
 ;;; python
-;; )
-
 (evil-leader/set-key-for-mode 'python-mode "mhh" 'anaconda-mode-show-doc)
 (evil-leader/set-key-for-mode 'python-mode "mga" 'anaconda-mode-find-assignments)
 (evil-leader/set-key-for-mode 'python-mode "mgg" 'petmacs/jump-to-definition)
