@@ -19,21 +19,29 @@
 (eval-when-compile
   (require 'use-package))
 
-(use-package quelpa)
-(setq quelpa-self-upgrade-p nil)
-(setq quelpa-update-melpa-p nil)
-(setq quelpa-checkout-melpa-p nil)
+(use-package quelpa
+  :init
+  (setq quelpa-self-upgrade-p nil)
+  (setq quelpa-update-melpa-p nil)
+  (setq quelpa-checkout-melpa-p nil))
+
+(use-package quelpa-use-package
+  :defer nil
+  :config
+  (require 'quelpa-use-package)
+  (quelpa-use-package-activate-advice))
 
 ;; Required by `use-package'
 (use-package diminish)
 (use-package bind-key)
-(quelpa
- '(quelpa-use-package
-   :fetcher git
-   :url "https://framagit.org/steckerhalter/quelpa-use-package.git"))
-(require 'quelpa-use-package)
-;; disable :ensure from package.el when :quelpa is found in use-package
-(quelpa-use-package-activate-advice)
+
+;; (quelpa
+;;  '(quelpa-use-package
+;;    :fetcher git
+;;    :url "https://framagit.org/steckerhalter/quelpa-use-package.git"))
+;; (require 'quelpa-use-package)
+;; ;; disable :ensure from package.el when :quelpa is found in use-package
+;; (quelpa-use-package-activate-advice)
 
 ;; Extensions 
 ;; download / update packages
