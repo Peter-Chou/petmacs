@@ -15,6 +15,11 @@
   (interactive)
   (set-buffer-file-coding-system 'undecided-dos nil))
 
+(defun petmacs/copy-file ()
+  "Write the file under new name."
+  (interactive)
+  (call-interactively 'write-file))
+
 (defun petmacs/hidden-dos-eol ()
   "Do not show ^M in files containing mixed UNIX and DOS line endings"
   (interactive)
@@ -58,6 +63,54 @@
   (interactive)
   (clipboard-kill-ring-save (point-min) (point-max)))
 
+(defun petmacs/counsel-jump-in-buffer ()
+  "Jump in buffer with `counsel-imenu' or `counsel-org-goto' if in org-mode"
+  (interactive)
+  (call-interactively
+   (cond
+    ((eq major-mode 'org-mode) 'counsel-org-goto)
+    (t 'counsel-imenu))))
+
+(defun petmacs--file-path ()
+  "Retrieve the file path of the current buffer.
+
+Returns:
+  - A string containing the file path in case of success.
+  - `nil' in case the current buffer does not have a directory."
+  (when-let (file-path (buffer-file-name))
+    (file-truename file-path)))
+
+(defun petmacs/copy-directory-path ()
+  "Copy and show the directory path of the current buffer.
+
+If the buffer is not visiting a file, use the `list-buffers-directory'
+variable as a fallback to display the directory, useful in buffers like the
+ones created by `magit' and `dired'."
+  (interactive)
+  (if-let (directory-path (petmacs--directory-path))
+      (message "%s" (kill-new directory-path))
+    (message "WARNING: Current buffer does not have a directory!")))
+
+(defun petmacs/copy-file-path ()
+  "Copy and show the file path of the current buffer."
+  (interactive)
+  (if-let (file-path (petmacs--file-path))
+      (message "%s" (kill-new file-path))
+    (message "WARNING: Current buffer is not attached to a file!")))
+
+(defun petmacs/copy-file-name ()
+  "Copy and show the file name of the current buffer."
+  (interactive)
+  (if-let (file-name (file-name-nondirectory (petmacs--file-path)))
+      (message "%s" (kill-new file-name))
+    (message "WARNING: Current buffer is not attached to a file!")))
+
+(defun petmacs/projectile-copy-file-path ()
+  "Copy and show the file path relative to project root."
+  (interactive)
+  (if-let (file-path (petmacs--projectile-file-path))
+      (message "%s" (kill-new file-path))
+    (message "WARNING: Current buffer is not visiting a file!")))
 
 (defun petmacs/pop-eshell (arg)
   "Pop a shell in a side window.
