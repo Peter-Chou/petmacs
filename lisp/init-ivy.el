@@ -85,25 +85,46 @@
   (setq swiper-action-recenter t)
   (setq counsel-find-file-at-point t)
   (setq counsel-yank-pop-separator "\n-------\n")
-  ;; Use faster search tools: ripgrep 
-  (let ((cmd "rg -S --no-heading --line-number --color never '%s' %s"))
+
+  ;; Use faster search tools: ripgrep or the silver search
+  (let ((cmd (cond ((executable-find "rg")
+                    "rg -S --no-heading --line-number --color never '%s' %s")
+                   ((executable-find "ag")
+                    "ag -S --noheading --nocolor --nofilename --numbers '%s' %s")
+                   (t counsel-grep-base-command))))
     (setq counsel-grep-base-command cmd))
-
-  ;; allow to select prompt in some ivy functions
-  (setq ivy-use-selectable-prompt t)
-
   ;; Occur
   (evil-set-initial-state 'ivy-occur-grep-mode 'normal)
   (evil-make-overriding-map ivy-occur-mode-map 'normal)
 
   ;; Integration with `projectile'
   (with-eval-after-load 'projectile
-    (setq projectile-completion-system 'ivy)))
+    (setq projectile-completion-system 'ivy))
 
+  ;; Integration with `magit'
+  (with-eval-after-load 'magit
+    (setq magit-completing-read-function 'ivy-completing-read))
+  )
 
+;; Enhance fuzzy matching
+(use-package flx)
+
+;; Enhance M-x
+(use-package amx)
+
+;; Integrate yasnippet
+(use-package ivy-yasnippet
+  :bind ("C-c C-y" . ivy-yasnippet)
+  :config (advice-add #'ivy-yasnippet--preview :override #'ignore))
+
+;; Ivy integration for Projectile
 (use-package counsel-projectile
-  :init
-  (setq projectile-switch-project-action 'counsel-projectile-find-file))
+  :init (counsel-projectile-mode 1))
+
+;; Tramp ivy interface
+(use-package counsel-tramp
+  :bind (:map counsel-mode-map
+              ("C-c c v" . counsel-tramp)))
 
 ;; Use ivy as the interface to select from xref candidates
 (use-package ivy-xref
