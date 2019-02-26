@@ -92,10 +92,6 @@
                 #b00000111111
                 #b00000111111))))
 
-;; (use-package treemacs-evil
-;;   :defer nil
-;;   :after treemacs)
-
 (use-package treemacs-evil
   :defer t
   :init
