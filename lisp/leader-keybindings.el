@@ -159,6 +159,7 @@
 (evil-leader/set-key
   "wc"  'writeroom-mode
   "wd"  'delete-window
+  "wF"  'make-frame
   "wpm" 'popwin:messages
   "wpp" 'popwin:close-popup-window)
 
@@ -167,13 +168,13 @@
   (format "%s m" petmacs-evil-leader-key) "major mode cmds")
 
 (defun petmacs//set-key-prefix-name (key name)
-  (which-key-add-key-based-replacements
-    (format "%s m%s" petmacs-evil-leader-key key) name)
+  (which-key-add-key-based-replacements (format "%s m%s" petmacs-evil-leader-key key) name)
   (which-key-add-key-based-replacements (format ", %s" key) name))
 
 (petmacs//set-key-prefix-name "c" "compile")
 
 ;;; python
+(evil-leader/set-key-for-mode 'python-mode "m=" 'yapfify-buffer)
 (evil-leader/set-key-for-mode 'python-mode "mhh" 'anaconda-mode-show-doc)
 (evil-leader/set-key-for-mode 'python-mode "mga" 'anaconda-mode-find-assignments)
 (evil-leader/set-key-for-mode 'python-mode "mgg" 'petmacs/jump-to-definition)
@@ -181,9 +182,13 @@
 (evil-leader/set-key-for-mode 'python-mode "mgu" 'anaconda-mode-find-references)
 (evil-leader/set-key-for-mode 'python-mode "msb" 'python-shell-send-buffer)
 (evil-leader/set-key-for-mode 'python-mode "mck" 'petmacs/quit-subjob)
+(evil-leader/set-key-for-mode 'python-mode "mdb" 'petmacs/python-toggle-breakpoint)
 (evil-leader/set-key-for-mode 'python-mode "msk" 'petmacs/python-interrupt-repl)
 (evil-leader/set-key-for-mode 'python-mode "msq" 'petmacs/python-quit-repl)
 (evil-leader/set-key-for-mode 'python-mode "msr" 'python-shell-send-region)
+(evil-leader/set-key-for-mode 'python-mode "mva" 'pyvenv-activate)
+(evil-leader/set-key-for-mode 'python-mode "mvd" 'pyvenv-deactivate)
+(evil-leader/set-key-for-mode 'python-mode "mvw" 'pyvenv-workon)
 
 (if sys/win32p
     (progn

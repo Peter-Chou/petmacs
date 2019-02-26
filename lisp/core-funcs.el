@@ -363,6 +363,20 @@ If the error list is visible, hide it.  Otherwise, show it."
   (pyvenv-deactivate)
   (pythonic-deactivate))
 
+(defun petmacs/python-toggle-breakpoint ()
+  "Add a break point, highlight it."
+  (interactive)
+  (let ((trace  "import ipdb; ipdb.set_trace() # XXX BREAKPOINT")
+	(line (thing-at-point 'line)))
+    (if (and line (string-match trace line))
+	(kill-whole-line)
+      (progn
+	(back-to-indentation)
+	(insert trace)
+	(insert "\n")
+	(python-indent-line)))))
+
+
 (provide 'core-funcs)
 
 ;;; core-funcs.el ends here

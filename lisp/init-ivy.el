@@ -129,7 +129,13 @@
 ;; Use ivy as the interface to select from xref candidates
 (use-package ivy-xref
   :ensure t
-  :init (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
+  :init
+  (setq xref-show-xrefs-function #'ivy-xref-show-xrefs)
+  (setq xref-prompt-for-identifier '(not xref-find-definitions
+                                         xref-find-definitions-other-window
+                                         xref-find-definitions-other-frame
+                                         xref-find-references))
+  )
 
 (use-package ivy-hydra)
 
