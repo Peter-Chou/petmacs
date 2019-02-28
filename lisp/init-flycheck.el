@@ -22,19 +22,13 @@
   (if (display-graphic-p)
       (if emacs/>=26p
           (use-package flycheck-posframe
-            :hook (flycheck-mode . (lambda ()
-                                     (unless (and (bound-and-true-p lsp-mode)
-                                                  (bound-and-true-p lsp-ui-flycheck-enable))
-                                       (flycheck-posframe-mode 1)))))
+            :hook (flycheck-mode . flycheck-posframe-mode))
         (use-package flycheck-pos-tip
           :defines flycheck-pos-tip-timeout
           :hook (global-flycheck-mode . flycheck-pos-tip-mode)
           :config (setq flycheck-pos-tip-timeout 30)))
     (use-package flycheck-popup-tip
-      :hook (flycheck-mode . (lambda ()
-                               (unless (and (bound-and-true-p lsp-mode)
-                                            (bound-and-true-p lsp-ui-flycheck-enable))
-                                 (flycheck-popup-tip-mode 1))))))
+      :hook (flycheck-mode . flycheck-popup-tip-mode)))
 
   ;; Jump to and fix syntax errors via `avy'
   (use-package avy-flycheck
