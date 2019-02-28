@@ -34,11 +34,6 @@
   :init
   (setq fci-rule-color "#FFA631"
 	fci-rule-use-dashes t))
-;; init-builtin.el --- Setup Emacs builtins.  -*- lexical-binding: t -*-
-
-;;; Commentary:
-
-;;; Code:
 
 (use-package imenu-list
   :defer t
