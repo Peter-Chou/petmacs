@@ -139,11 +139,11 @@
 
 (use-package ivy-hydra)
 
-;; for history in counsel-M-x
-(use-package smex
-  :init
-  (setq-default smex-history-length 32)
-  (smex-initialize))
+;; ;; for history in counsel-M-x
+;; (use-package smex
+;;   :init
+;;   (setq-default smex-history-length 32)
+;;   (smex-initialize))
 
 (provide 'init-ivy)
 
