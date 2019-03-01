@@ -16,14 +16,21 @@
   (setq dashboard-items '((recents  . 5)
                           (bookmarks . 5)
                           (projects . 5)
-                          (agenda . 5)
-                          (registers . 5)))
+                          (agenda . 5)))
   :config
   (dashboard-setup-startup-hook)
-  (add-to-list 'dashboard-items '(agenda) t)
   (setq show-week-agenda-p t)
   (evil-define-key 'normal dashboard-mode-map (kbd "RET") 'widget-button-press) 
-  (evil-define-key 'normal dashboard-mode-map [down-mouse-1] 'widget-button-click))
+  (evil-define-key 'normal dashboard-mode-map [down-mouse-1] 'widget-button-click)
+  (defun dashboard-insert-buttons (_list-size)
+    ;; (insert "\n")
+    ;; (insert "\n")
+    ;; (insert "\n")
+    (insert (format "[%d packages loaded in %s]" (length package-activated-list) (emacs-init-time))))
+
+  (add-to-list 'dashboard-item-generators  '(buttons . dashboard-insert-buttons))
+  (add-to-list 'dashboard-items '(buttons))
+  )
 
 (provide 'init-dashboard)
 
