@@ -80,6 +80,7 @@
 (require 'init-elisp)
 (require 'init-c-c++)
 (require 'init-python)
+(require 'init-org)
 
 (require 'init-eshell)
 (require 'init-window)
