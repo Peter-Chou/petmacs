@@ -16,7 +16,7 @@
       auto-window-vscroll nil)
 
 (add-hook 'after-init-hook
-         `(lambda ()
+          `(lambda ()
              (setq file-name-handler-alist file-name-handler-alist-old
                    gc-cons-threshold 800000
                    gc-cons-percentage 0.1)
@@ -53,9 +53,9 @@
 
 (require 'init-custom)
 (require 'init-const)
+(require 'init-variable)
 (require 'init-package)
 (require 'init-default)
-(require 'init-builtin)
 (require 'init-font)
 
 (require 'init-evil)
