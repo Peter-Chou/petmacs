@@ -26,16 +26,19 @@
   (dashboard-setup-startup-hook)
   (setq show-week-agenda-p t)
   (evil-define-key 'normal dashboard-mode-map (kbd "RET") 'widget-button-press)
+  (evil-define-key 'normal dashboard-mode-map (kbd "gd") 'widget-button-press)
   (evil-define-key 'normal dashboard-mode-map [down-mouse-1] 'widget-button-click)
-  (defun dashboard-insert-buttons (_list-size)
+  (defun petmacs//emacs-startup-info (_list-size)
     ;; (insert "\n")
     ;; (insert "\n")
     ;; (insert "\n")
-    (insert (format "[%d packages loaded in %s]" (length package-activated-list) (emacs-init-time))))
+    (let ((petmacs--startup-info (format "[%d packages loaded in %s]" (length package-activated-list) (emacs-init-time))))
+      (insert (make-string (max 0 (floor (/ (- dashboard-banner-length
+                                               (+ (length petmacs--startup-info) 1)) 2))) ?\ ))
+      (insert petmacs--startup-info)))
 
-  (add-to-list 'dashboard-item-generators  '(buttons . dashboard-insert-buttons))
-  (add-to-list 'dashboard-items '(buttons))
-  )
+  (add-to-list 'dashboard-item-generators  '(startup-info . petmacs//emacs-startup-info))
+  (add-to-list 'dashboard-items '(startup-info)))
 
 (provide 'init-dashboard)
 
