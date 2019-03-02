@@ -4,8 +4,9 @@
 
 ;;; Code:
 
-(defvar petmacs--font-size 17.5
-  "default font size")
+(eval-when-compile
+  (require 'init-const)
+  (require 'init-variable))
 
 ;; (set-default-font "Fira Code Retina 14.5" nil t)
 (set-face-attribute 'default nil :font (format "Fira Code Retina-%S" petmacs--font-size))

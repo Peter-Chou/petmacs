@@ -8,6 +8,9 @@
 
 (defvar petmacs-default-coding-env 'utf-8)
 
+(defvar petmacs--font-size 17.5
+  "default font size")
+
 (provide 'init-variable)
 
 ;;; init-const.el ends here

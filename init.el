@@ -45,8 +45,6 @@
 (setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
                          ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
                          ("melpa-stable" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa-stable/")))
-;; (add-to-list 'package-archives
-;;      '("melpa" . "https://melpa.org/packages/"))
 
 ;; Initialize packages
 (package-initialize)
@@ -61,8 +59,10 @@
 (require 'init-evil)
 
 (require 'init-ui)
+(require 'init-window)
 (require 'init-dashboard)
-(require 'init-ivy)
+
+(require 'init-ivy)			;TODO: need refactor
 (require 'init-company)
 (require 'init-yasnippet)
 (require 'init-dired)
@@ -83,7 +83,6 @@
 (require 'init-org)
 
 (require 'init-eshell)
-(require 'init-window)
 (require 'init-misc)
 
 (require 'core-funcs)

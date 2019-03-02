@@ -54,7 +54,6 @@
 (use-package highlight-indent-guides
   :defer t
   :hook ((python-mode . highlight-indent-guides-mode)
-         ;; (prog-mode . highlight-indent-guides-mode)
          (highlight-indent-guides-mode . (lambda ()
                                            (set-face-foreground 'highlight-indent-guides-character-face "#8f9091")
                                            (set-face-foreground 'highlight-indent-guides-top-character-face "#fe5e10"))))

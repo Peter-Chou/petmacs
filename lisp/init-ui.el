@@ -12,12 +12,9 @@
   (font-lock+ :repo "emacsmirror/font-lock-plus" :fetcher github))
 
 (use-package all-the-icons-ivy
-  :defer nil
-  :config
-  (all-the-icons-ivy-setup))
+  :hook (after-init . all-the-icons-ivy-setup))
 
 (use-package doom-modeline
-  :ensure t
   :hook ((after-init . doom-modeline-mode)
          (doom-modeline-mode . setup-custom-doom-modeline))
   :config
@@ -48,8 +45,7 @@
       '(misc-info persp-name lsp irc mu4e github debug minor-modes input-method buffer-encoding my-python-venv process vcs checker))
 
     (defun setup-custom-doom-modeline ()
-      (doom-modeline-set-modeline 'my-modeline-layout 'default))
-    ))
+      (doom-modeline-set-modeline 'my-modeline-layout 'default))))
 
 (use-package doom-themes
   :defer nil
@@ -60,32 +56,15 @@
     ;; Corrects (and improves) org-mode's native fontification.
     (doom-themes-org-config)
     ;; enable custom treemacs themes
-    ;; (doom-themes-treemacs-config)
-    ))
+    (doom-themes-treemacs-config)))
 
 (load-theme 'doom-solarized-light t)
 
 (use-package display-line-numbers-mode
   :ensure nil
   :init
-  (progn
-    (setq-default display-line-numbers-type 'relative)
-    (global-display-line-numbers-mode 1)))
-
-(use-package winum
-  :init
-  (winum-mode)
-  :config
-  (progn
-    (define-key winum-keymap (kbd "M-1") 'winum-select-window-1)
-    (define-key winum-keymap (kbd "M-2") 'winum-select-window-2)
-    (define-key winum-keymap (kbd "M-3") 'winum-select-window-3)
-    (define-key winum-keymap (kbd "M-4") 'winum-select-window-4)
-    (define-key winum-keymap (kbd "M-5") 'winum-select-window-5)
-    (define-key winum-keymap (kbd "M-6") 'winum-select-window-6)
-    (define-key winum-keymap (kbd "M-7") 'winum-select-window-7)
-    (define-key winum-keymap (kbd "M-8") 'winum-select-window-8)))
-
+  (setq-default display-line-numbers-type 'relative)
+  (global-display-line-numbers-mode 1))
 
 ;; Highlight current line number
 (use-package hlinum

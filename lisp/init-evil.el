@@ -4,6 +4,10 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-const)
+  (require 'init-variable))
+
 (use-package evil-leader
   :defer nil
   :init
@@ -49,15 +53,11 @@
 
 (use-package evil-escape
   :init
-  (progn
-    (setq-default evil-escape-delay 0.3)
-    (evil-escape-mode)))
+  (setq-default evil-escape-delay 0.3)
+  (evil-escape-mode))
 
-(use-package evil-nerd-commenter
-  :commands evilnc-comment-operator
-  :init
-  (progn
-    (define-key evil-normal-state-map "gc" 'evilnc-comment-operator)))
+(use-package evil-commentary
+  :hook (after-init . evil-commentary-mode))
 
 (use-package evil-surround
   :init
@@ -76,10 +76,13 @@
 (use-package evil-fringe-mark
   :ensure t
   :config
-  (progn
-    (setq-default right-fringe-width 25)
-    (setq-default evil-fringe-mark-side 'right-fringe)
-    (global-evil-fringe-mark-mode)))
+  (setq-default right-fringe-width 25)
+  (setq-default evil-fringe-mark-side 'right-fringe)
+  (global-evil-fringe-mark-mode))
+
+(use-package evil-magit
+  :hook (magit-mode . evil-magit-init))
+
 
 (provide 'init-evil)
 

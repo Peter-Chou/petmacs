@@ -31,6 +31,15 @@
 					 (interactive)
 					 (magit-mode-bury-buffer t)))
 
+  (define-key magit-mode-map (kbd "M-1") 'winum-select-window-1)
+  (define-key magit-mode-map (kbd "M-2") 'winum-select-window-2)
+  (define-key magit-mode-map (kbd "M-3") 'winum-select-window-3)
+  (define-key magit-mode-map (kbd "M-4") 'winum-select-window-4)
+  (define-key magit-mode-map (kbd "M-5") 'winum-select-window-5)
+  (define-key magit-mode-map (kbd "M-6") 'winum-select-window-6)
+  (define-key magit-mode-map (kbd "M-7") 'winum-select-window-7)
+  (define-key magit-mode-map (kbd "M-8") 'winum-select-window-8)
+
   ;; Show tasks
   (use-package magit-todos
     :hook (ater-init . magit-todos-mode))
@@ -101,9 +110,6 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   (use-package browse-at-remote
     :bind (:map vc-prefix-map
 		("B" . browse-at-remote))))
-
-(use-package evil-magit
-  :hook (magit-mode . evil-magit-init))
 
 ;; Git related modes
 (use-package gitattributes-mode)

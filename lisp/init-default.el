@@ -4,6 +4,10 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-const)
+  (require 'init-variable))
+
 ;; use exec-path-from-shell in linux / mac
 (when (or (eq system-type 'gnu/linux) (eq system-type 'darwin))
   (use-package exec-path-from-shell

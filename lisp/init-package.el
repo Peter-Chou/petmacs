@@ -26,22 +26,13 @@
   (setq quelpa-checkout-melpa-p nil))
 
 (use-package quelpa-use-package
-  :defer nil
-  :config
+  :init
   (require 'quelpa-use-package)
   (quelpa-use-package-activate-advice))
 
 ;; Required by `use-package'
 (use-package diminish)
 (use-package bind-key)
-
-;; (quelpa
-;;  '(quelpa-use-package
-;;    :fetcher git
-;;    :url "https://framagit.org/steckerhalter/quelpa-use-package.git"))
-;; (require 'quelpa-use-package)
-;; ;; disable :ensure from package.el when :quelpa is found in use-package
-;; (quelpa-use-package-activate-advice)
 
 ;; Extensions 
 ;; download / update packages
@@ -52,6 +43,7 @@
   :init
   (setq paradox-execute-asynchronously t)
   (setq paradox-github-token t)
+  (setq paradox-display-star-count nil)
   (defalias 'upgrade-packages 'paradox-upgrade-packages))
 
 (provide 'init-package)
