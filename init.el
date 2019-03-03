@@ -16,11 +16,11 @@
       auto-window-vscroll nil)
 
 (add-hook 'after-init-hook
-          `(lambda ()
-             (setq file-name-handler-alist file-name-handler-alist-old
-                   gc-cons-threshold 800000
-                   gc-cons-percentage 0.1)
-             (garbage-collect)) t)
+	  `(lambda ()
+	     (setq file-name-handler-alist file-name-handler-alist-old
+		   gc-cons-threshold 800000
+		   gc-cons-percentage 0.1)
+	     (garbage-collect)) t)
 
 ;; Load path
 ;; Optimize: Force "lisp"" and "site-lisp" at the head to reduce the startup time.
@@ -32,7 +32,7 @@
 (defun add-subdirs-to-load-path (&rest _)
   "Add subdirectories to `load-path'."
   (let ((default-directory
-          (expand-file-name "site-lisp" user-emacs-directory)))
+	  (expand-file-name "site-lisp" user-emacs-directory)))
     (normal-top-level-add-subdirs-to-load-path)))
 
 (advice-add #'package-initialize :after #'update-load-path)
@@ -43,8 +43,8 @@
 
 ;; use mirror
 (setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-                         ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-                         ("melpa-stable" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa-stable/")))
+			 ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+			 ("melpa-stable" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa-stable/")))
 
 ;; Initialize packages
 (package-initialize)
@@ -62,9 +62,9 @@
 (require 'init-window)
 (require 'init-dashboard)
 
-(require 'init-ivy)			;TODO: need refactor
+(require 'init-ivy)
 (require 'init-company)
-(require 'init-yasnippet)
+(require 'init-yasnippet)   ;TODO: need refactor
 (require 'init-dired)
 (require 'init-treemacs)
 
