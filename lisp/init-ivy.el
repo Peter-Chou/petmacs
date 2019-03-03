@@ -103,8 +103,7 @@
 
   ;; Integration with `magit'
   (with-eval-after-load 'magit
-    (setq magit-completing-read-function 'ivy-completing-read))
-  )
+    (setq magit-completing-read-function 'ivy-completing-read)))
 
 ;; Enhance fuzzy matching
 (use-package flx)
@@ -134,16 +133,9 @@
   (setq xref-prompt-for-identifier '(not xref-find-definitions
                                          xref-find-definitions-other-window
                                          xref-find-definitions-other-frame
-                                         xref-find-references))
-  )
+                                         xref-find-references)))
 
 (use-package ivy-hydra)
-
-;; ;; for history in counsel-M-x
-;; (use-package smex
-;;   :init
-;;   (setq-default smex-history-length 32)
-;;   (smex-initialize))
 
 (provide 'init-ivy)
 
