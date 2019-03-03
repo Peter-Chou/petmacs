@@ -42,6 +42,7 @@
   :hook (after-init . paradox-enable)
   :init
   (setq paradox-execute-asynchronously t)
+  (setq paradox-spinner-type 'progress-bar)
   (setq paradox-github-token t)
   (setq paradox-display-star-count nil)
   (defalias 'upgrade-packages 'paradox-upgrade-packages))
