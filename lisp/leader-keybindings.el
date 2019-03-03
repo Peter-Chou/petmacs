@@ -44,7 +44,6 @@
 ;; leader-h family
 (which-key-add-key-based-replacements
   (format "%s h" petmacs-evil-leader-key) "helps")
-
 (evil-leader/set-key
   "hdf" 'counsel-describe-function
   "hdv" 'counsel-describe-variable)
@@ -162,6 +161,12 @@
   "wF"  'make-frame
   "wpm" 'popwin:messages
   "wpp" 'popwin:close-popup-window)
+
+;; leader-o family
+(which-key-add-key-based-replacements
+  (format "%s o" petmacs-evil-leader-key) "yours")
+(evil-leader/set-key
+  "ow" 'whitespace-cleanup)
 
 ;;;; major mode specific keybinding
 (which-key-add-key-based-replacements
