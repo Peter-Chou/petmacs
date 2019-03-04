@@ -36,59 +36,73 @@
 	company-dabbrev-downcase nil)
   (define-key emacs-lisp-mode-map (kbd "C-M-i") 'company-complete))
 
-(use-package company-box
-  :diminish
-  :functions (all-the-icons-faicon
-	      all-the-icons-material
-	      all-the-icons-octicon
-	      all-the-icons-alltheicon)
-  :hook (company-mode . company-box-mode)
-  :init (setq company-box-enable-icon (display-graphic-p))
-  :config
-  (setq company-box-backends-colors nil)
+(when emacs/>=26p
+  (use-package company-box
+    :diminish
+    :functions (all-the-icons-faicon
+                all-the-icons-material
+                all-the-icons-octicon
+                all-the-icons-alltheicon)
+    :hook (company-mode . company-box-mode)
+    :init (setq company-box-enable-icon (display-graphic-p))
+    :config
+    (setq company-box-backends-colors nil)
 
-  (with-eval-after-load 'all-the-icons
-    (setq company-box-icons-unknown
-	  (all-the-icons-octicon "file-text" :v-adjust -0.05))
+    (with-eval-after-load 'all-the-icons
+      (eval-and-compile
+        (defun petmacs//company-box-icon (family icon &rest args)
+          "Defines icons using `all-the-icons' for `company-box'."
+          (when icon
+            (let ((icon (pcase family
+                          ('octicon (all-the-icons-octicon icon :v-adjust -0.05 args))
+                          ('faicon (all-the-icons-faicon icon :v-adjust -0.0575))
+                          ('material (all-the-icons-material icon :v-adjust -0.225 args))
+                          ('alltheicon (all-the-icons-alltheicon icon args)))))
+              (unless (symbolp icon)
+                (concat icon
+                        (propertize " " 'face 'variable-pitch)))))))
 
-    (setq company-box-icons-elisp
-	  (list
-	   (all-the-icons-faicon "cube" :v-adjust -0.0575 :face 'font-lock-constant-face)       ; Function
-	   (all-the-icons-faicon "tag" :v-adjust -0.0575 :face 'font-lock-keyword-face)         ; Variable
-	   (all-the-icons-faicon "cog" :v-adjust -0.0575 :face 'font-lock-warning-face)         ; Feature
-	   (all-the-icons-material "palette" :v-adjust -0.2)      ; Face
-	   ))
+      (setq company-box-icons-unknown
+            (petmacs//company-box-icon 'octicon "file-text"))
 
-    (setq company-box-icons-yasnippet
-	  (all-the-icons-octicon "file-code" :v-adjust -0.05))    ; Snippet
+      (setq company-box-icons-elisp
+            (list
+             (petmacs//company-box-icon 'faicon "cube")        ; Function
+             (petmacs//company-box-icon 'faicon "tag")         ; Variable
+             (petmacs//company-box-icon 'faicon "cog")         ; Feature
+             (petmacs//company-box-icon 'material "palette")   ; Face
+             ))
 
-    (setq company-box-icons-lsp
-	  `(( 1  . ,(all-the-icons-faicon "file-text-o" :v-adjust -0.0575))     ; Text
-	    ( 2  . ,(all-the-icons-faicon "cube" :v-adjust -0.0575 :face font-lock-constant-face))            ; Method
-	    ( 3  . ,(all-the-icons-faicon "cube" :v-adjust -0.0575 :face font-lock-constant-face))            ; Function
-	    ( 4  . ,(all-the-icons-faicon "cube" :v-adjust -0.0575 :face font-lock-constant-face))            ; Constructor
-	    ( 5  . ,(all-the-icons-faicon "tag" :v-adjust -0.0575 :face 'font-lock-warning-face))             ; Field
-	    ( 6  . ,(all-the-icons-faicon "tag" :v-adjust -0.0575 :face 'font-lock-warning-face))             ; Variable
-	    ( 7  . ,(all-the-icons-faicon "cog" :v-adjust -0.0575 :face 'font-lock-warning-face))             ; Class
-	    ( 8  . ,(all-the-icons-faicon "cogs" :v-adjust -0.0575))            ; Interface
-	    ( 9  . ,(all-the-icons-alltheicon "less"))                          ; Module
-	    (10  . ,(all-the-icons-faicon "wrench" :v-adjust -0.0575))          ; Property
-	    (11  . ,(all-the-icons-faicon "tag" :v-adjust -0.0575))             ; Unit
-	    (12  . ,(all-the-icons-faicon "tag" :v-adjust -0.0575 :face 'font-lock-keyword-face))             ; Value
-	    (13  . ,(all-the-icons-faicon "file-text-o" :v-adjust -0.0575 :face 'font-lock-warning-face))     ; Enum
-	    (14  . ,(all-the-icons-material "format_align_center" :v-adjust -0.2))             ; Keyword
-	    (15  . ,(all-the-icons-material "content_paste" :v-adjust -0.2))    ; Snippet
-	    (16  . ,(all-the-icons-material "palette" :v-adjust -0.2))          ; Color
-	    (17  . ,(all-the-icons-faicon "file" :v-adjust -0.0575))            ; File
-	    (18  . ,(all-the-icons-faicon "tag" :v-adjust -0.0575))             ; Reference
-	    (19  . ,(all-the-icons-faicon "folder" :v-adjust -0.0575))          ; Folder
-	    (20  . ,(all-the-icons-faicon "tag" :v-adjust -0.0575 :face 'font-lock-keyword-face))             ; EnumMember
-	    (21  . ,(all-the-icons-faicon "tag" :v-adjust -0.0575 :face 'font-lock-keyword-face))             ; Constant
-	    (22  . ,(all-the-icons-faicon "cog" :v-adjust -0.0575 :face 'font-lock-warning-face))             ; Struct
-	    (23  . ,(all-the-icons-faicon "bolt" :v-adjust -0.0575 :face 'font-lock-warning-face))            ; Event
-	    (24  . ,(all-the-icons-faicon "tag" :v-adjust -0.0575))             ; Operator
-	    (25  . ,(all-the-icons-faicon "cog" :v-adjust -0.0575 :face 'font-lock-warning-face))             ; TypeParameter
-	    ))))
+      (setq company-box-icons-yasnippet
+            (petmacs//company-box-icon 'octicon "file-code"))  ; Snippet
+
+      (setq company-box-icons-lsp
+            `(( 1  . ,(petmacs//company-box-icon 'faicon "file-text-o"))     ; Text
+              ( 2  . ,(petmacs//company-box-icon 'faicon "cube"))            ; Method
+              ( 3  . ,(petmacs//company-box-icon 'faicon "cube"))            ; Function
+              ( 4  . ,(petmacs//company-box-icon 'faicon "cube"))            ; Constructor
+              ( 5  . ,(petmacs//company-box-icon 'faicon "tag"))             ; Field
+              ( 6  . ,(petmacs//company-box-icon 'faicon "tag"))             ; Variable
+              ( 7  . ,(petmacs//company-box-icon 'faicon "cog"))             ; Class
+              ( 8  . ,(petmacs//company-box-icon 'faicon "cogs"))            ; Interface
+              ( 9  . ,(petmacs//company-box-icon 'alltheicon "less"))        ; Module
+              (10  . ,(petmacs//company-box-icon 'faicon "wrench"))          ; Property
+              (11  . ,(petmacs//company-box-icon 'faicon "tag"))             ; Unit
+              (12  . ,(petmacs//company-box-icon 'faicon "tag"))             ; Value
+              (13  . ,(petmacs//company-box-icon 'faicon "file-text-o"))     ; Enum
+              (14  . ,(petmacs//company-box-icon 'material "format_align_center")) ; Keyword
+              (15  . ,(petmacs//company-box-icon 'material "content_paste")) ; Snippet
+              (16  . ,(petmacs//company-box-icon 'material "palette"))       ; Color
+              (17  . ,(petmacs//company-box-icon 'faicon "file"))            ; File
+              (18  . ,(petmacs//company-box-icon 'faicon "tag"))             ; Reference
+              (19  . ,(petmacs//company-box-icon 'faicon "folder"))          ; Folder
+              (20  . ,(petmacs//company-box-icon 'faicon "tag"))             ; EnumMember
+              (21  . ,(petmacs//company-box-icon 'faicon "tag"))             ; Constant
+              (22  . ,(petmacs//company-box-icon 'faicon "cog"))             ; Struct
+              (23  . ,(petmacs//company-box-icon 'faicon "bolt"))            ; Event
+              (24  . ,(petmacs//company-box-icon 'faicon "tag"))             ; Operator
+              (25  . ,(petmacs//company-box-icon 'faicon "cog"))             ; TypeParameter
+              )))))
 
 (provide 'init-company)
 
