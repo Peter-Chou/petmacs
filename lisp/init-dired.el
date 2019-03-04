@@ -19,7 +19,7 @@
   (setq dired-recursive-deletes 'always)
   (setq dired-recursive-copies 'always)
 
-  (when (eq system-type 'darwin)
+  (when sys/macp
     ;; Suppress the warning: `ls does not support --dired'.
     (setq dired-use-ls-dired nil)
 
@@ -27,13 +27,13 @@
       ;; Use GNU ls as `gls' from `coreutils' if available.
       (setq insert-directory-program "gls")))
 
-  (when (or (and (eq system-type 'darwin) (executable-find "gls"))
-            (and (not (eq system-type 'darwin)) (executable-find "ls")))
+  (when (or (and sys/macp (executable-find "gls"))
+            (and (not sys/macp) (executable-find "ls")))
     ;; Using `insert-directory-program'
     (setq ls-lisp-use-insert-directory-program t)
-
     ;; Show directory first
     (setq dired-listing-switches "-alh --group-directories-first"))
+
   (evil-define-key 'normal dired-mode-map (kbd "RET") 'dired-find-alternate-file) 
   ;; was dired-advertised-find-file
   (evil-define-key 'normal dired-mode-map (kbd "f") 'dired-find-alternate-file) 
@@ -42,8 +42,7 @@
   ;; kill current buffer when leaving dired mode
   (evil-define-key 'normal dired-mode-map (kbd "q") 'kill-this-buffer)
   :init
-  (put 'dired-find-alternate-file 'disabled nil)
-  )
+  (put 'dired-find-alternate-file 'disabled nil))
 
 ;; Quick sort dired buffers via hydra
 (use-package dired-quick-sort
@@ -65,9 +64,9 @@
   :demand
   :config
   (let ((cmd (cond
-              ((and (display-graphic-p) (eq system-type 'darwin)) "open")
-              ((and (display-graphic-p) (eq system-type 'gnu/linux)) "xdg-open")
-              ((eq system-type 'windows-nt) "start")
+              ((and (display-graphic-p) sys/macp) "open")
+              ((and (display-graphic-p) sys/linuxp) "xdg-open")
+              (sys/win32p "start")
               (t ""))))
     (setq dired-guess-shell-alist-user
           `(("\\.pdf\\'" ,cmd)
