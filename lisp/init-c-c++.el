@@ -12,10 +12,10 @@
                                                   (lsp)))
   :init
   (setq ccls-executable (file-truename "~/ccls/Release/ccls"))
-  ;; (setq ccls-initialization-options
-  ;; 	(if (boundp 'ccls-initialization-options)
-  ;; 	    (append ccls-initialization-options `(:cacheDirectory ,(expand-file-name "~/.ccls-cache")))
-  ;; 	  `(:cacheDirectory ,(expand-file-name "~/.ccls-cache"))))
+  (setq ccls-initialization-options
+  	(if (boundp 'ccls-initialization-options)
+  	    (append ccls-initialization-options `(:cache (:directory ,(expand-file-name "~/.ccls-cache"))))
+  	  `(:cache (:directory ,(expand-file-name "~/.ccls-cache")))))
 
   (setq ccls-sem-highlight-method 'overlay)
 
