@@ -53,19 +53,18 @@ is achieved by adding the relevant text properties."
           eshell-prompt-function (lambda ()
                                    (concat "\n" (epe-theme-pipeline))))))
 
-
 ;; Fish-like history autosuggestions
-(use-package esh-autosuggest
-  :defines ivy-display-functions-alist
-  :preface
-  (defun setup-eshell-ivy-completion ()
-    (setq-local ivy-display-functions-alist
-                (remq (assoc 'ivy-completion-in-region ivy-display-functions-alist)
-		      ivy-display-functions-alist)))
-  :bind (:map eshell-mode-map
-	      ([remap eshell-pcomplete] . completion-at-point))
-  :hook ((eshell-mode . esh-autosuggest-mode)
-         (eshell-mode . setup-eshell-ivy-completion)))
+;; (use-package esh-autosuggest
+;;   :defines ivy-display-functions-alist
+;;   :preface
+;;   (defun setup-eshell-ivy-completion ()
+;;     (setq-local ivy-display-functions-alist
+;;                 (remq (assoc 'ivy-completion-in-region ivy-display-functions-alist)
+;; 		      ivy-display-functions-alist)))
+;;   :bind (:map eshell-mode-map
+;; 	      ([remap eshell-pcomplete] . completion-at-point))
+;;   :hook ((eshell-mode . esh-autosuggest-mode)
+;;          (eshell-mode . setup-eshell-ivy-completion)))
 
 ;; Eldoc support
 (use-package esh-help
