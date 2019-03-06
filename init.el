@@ -64,9 +64,9 @@
 
 (require 'init-ivy)
 (require 'init-company)
-(require 'init-yasnippet)   ;TODO: need refactor
+(require 'init-yasnippet)
 (require 'init-dired)
-(require 'init-treemacs)
+(require 'init-treemacs)  ;TODO: need refactor
 
 (require 'init-tools)
 (require 'init-highlight)

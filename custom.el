@@ -5,7 +5,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (org-dashboard org-pomodoro org-tree-slide org-preview-html toc-org org-rich-yank ob-ipython ob-rust ob-go org-fancy-priorities org-bullets realgud pyvenv counsel-tramp ivy-yasnippet amx flx writeroom-mode centered-cursor-mode dashboard electric-operator hungry-delete rainbow-delimiters yasnippet-snippets beacon default-text-scale popwin eshell-z esh-help esh-autosuggest eshell-prompt-extras virtualenvwrapper company-anaconda anaconda-mode yapfify smart-semicolon ccls aggressive-indent elisp-refs company-lsp lsp-ui lsp-mode avy-flycheck flycheck-posframe flycheck prettify-utils imenu-list fill-column-indicator gitconfig-mode gitignore-mode gitattributes-mode browse-at-remote git-messenger git-timemachine magit-todos evil-magit magit ibuffer-projectile hl-todo highlight-indent-guides symbol-overlay esup diffview daemons carbon-now-sh restart-emacs rg editorconfig which-key treemacs-projectile treemacs-evil treemacs diredfl all-the-icons-dired dired-quick-sort yasnippet company-box company ivy-hydra ivy-xref counsel-projectile counsel hide-mode-line vim-empty-lines-mode hlinum winum doom-themes doom-modeline all-the-icons-ivy font-lock+ evil-fringe-mark evil-visualstar evil-surround evil-escape evil-anzu evil-major-leader evil-leader fontify-face anzu paradox quelpa-use-package diminish quelpa use-package))))
+    (eldoc-box org-dashboard org-pomodoro org-tree-slide org-preview-html toc-org org-rich-yank ob-ipython ob-rust ob-go org-fancy-priorities org-bullets pyvenv counsel-tramp ivy-yasnippet amx flx writeroom-mode centered-cursor-mode dashboard electric-operator hungry-delete rainbow-delimiters yasnippet-snippets beacon default-text-scale popwin eshell-z esh-help esh-autosuggest eshell-prompt-extras virtualenvwrapper company-anaconda anaconda-mode yapfify smart-semicolon ccls aggressive-indent elisp-refs company-lsp lsp-ui lsp-mode avy-flycheck flycheck-posframe flycheck prettify-utils imenu-list fill-column-indicator gitconfig-mode gitignore-mode gitattributes-mode browse-at-remote git-messenger git-timemachine magit-todos evil-magit magit ibuffer-projectile hl-todo highlight-indent-guides symbol-overlay esup diffview daemons carbon-now-sh restart-emacs rg editorconfig which-key treemacs-projectile treemacs-evil treemacs diredfl all-the-icons-dired dired-quick-sort yasnippet company-box company ivy-hydra ivy-xref counsel-projectile counsel hide-mode-line vim-empty-lines-mode hlinum winum doom-themes doom-modeline all-the-icons-ivy font-lock+ evil-fringe-mark evil-visualstar evil-surround evil-escape evil-anzu evil-major-leader evil-leader fontify-face anzu paradox quelpa-use-package diminish quelpa use-package))))
  
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -14,8 +14,8 @@
  ;; If there is more than one, they won't work right.
  '(all-the-icons-dired-dir-face ((t (\` (:foreground (\, (face-background (quote default))))))))
  '(aw-leading-char-face ((t (:inherit ace-jump-face-foreground :height 3.0))))
- '(dashboard-banner-logo-title-face ((t (:inherit bold))))
- '(dashboard-heading-face ((t (:inherit (font-lock-keyword-face bold)))))
+ '(dashboard-banner-logo-title-face ((t (:inherit bold))) t)
+ '(dashboard-heading-face ((t (:inherit (font-lock-keyword-face bold)))) t)
  '(epe-pipeline-delimiter-face ((t (:foreground "#fd780f" :weight bold))))
  '(epe-pipeline-host-face ((t (:foreground "#3cd8a2" :weight bold))))
  '(epe-pipeline-time-face ((t (:foreground "#e2c504"))))
