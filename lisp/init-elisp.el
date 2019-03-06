@@ -6,6 +6,9 @@
 
 ;; Show function arglist or variable docstring
 ;; `global-eldoc-mode' is enabled by default.
+;; (use-package eldoc
+;;   :ensure nil
+;;   :diminish eldoc-mode)
 (use-package eldoc
   :ensure nil
   :diminish
@@ -14,13 +17,15 @@
     ;; Display documentation in childframe
     (use-package eldoc-box
       :diminish
-      :hook ((eldoc-mode . eldoc-box-hover-mode)
-             (eldoc-box-hover-mode . eldoc-box-hover-at-point-mode))
-      :config
-      ;; Compatible with `lsp-mode'
-      (with-eval-after-load 'lsp-mode
-        (add-hook 'lsp-mode-hook (lambda ()
-                                   (eldoc-box-hover-mode -1)))))))
+      :hook ((eldoc-mode . (lambda ()
+                             ;; Compatible with `lsp-mode'
+                             (unless (bound-and-true-p lsp-mode)
+                               (eldoc-box-hover-mode 1)
+                               (eldoc-box-hover-at-point-mode 1))))
+             (lsp-mode . (lambda ()
+                           ;; Compatible with `lsp-mode'
+                           (if eldoc-box-hover-mode
+                               (eldoc-box-hover-mode -1))))))))
 
 ;; Semantic code search for emacs lisp
 (use-package elisp-refs)
