@@ -4,6 +4,10 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-const)
+  (require 'init-variable))
+
 ;; Directory operations
 (use-package dired
   :ensure nil
