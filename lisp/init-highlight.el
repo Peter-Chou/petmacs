@@ -19,27 +19,6 @@
              symbol-overlay-jump-call)
   :hook ((prog-mode . symbol-overlay-mode))
   :config
-  (defun symbol-overlay-switch-first ()
-    (interactive)
-    (let* ((symbol (symbol-overlay-get-symbol))
-           (keyword (symbol-overlay-assoc symbol))
-           (a-symbol (car keyword))
-           (before (symbol-overlay-get-list a-symbol 'car))
-           (count (length before)))
-      (symbol-overlay-jump-call 'symbol-overlay-basic-jump (- count))))
-
-  (defun symbol-overlay-switch-last ()
-    (interactive)
-    (let* ((symbol (symbol-overlay-get-symbol))
-           (keyword (symbol-overlay-assoc symbol))
-           (a-symbol (car keyword))
-           (after (symbol-overlay-get-list a-symbol 'cdr))
-           (count (length after)))
-      (symbol-overlay-jump-call 'symbol-overlay-basic-jump (- count 1))))
-
-  (bind-keys :map symbol-overlay-map
-             ("<" . symbol-overlay-switch-first)
-             (">" . symbol-overlay-switch-last))
   (global-set-key (kbd "M-i") 'symbol-overlay-put)
   (global-set-key (kbd "M-n") 'symbol-overlay-switch-forward)
   (global-set-key (kbd "M-p") 'symbol-overlay-switch-backward)
