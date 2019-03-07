@@ -141,8 +141,8 @@
   "bx" 'kill-buffer-and-window
   "bh" 'petmacs/goto-dashboard
   "bY" 'petmacs/copy-whole-buffer-to-clipboard
-  ;; "bi" 'imenu-list-smart-toggle
-  "bi" 'lsp-ui-imenu
+  "bi" 'imenu-list-smart-toggle
+  ;; "bi" 'lsp-ui-imenu
   "bI" 'ibuffer)
 
 ;; leader-t family
