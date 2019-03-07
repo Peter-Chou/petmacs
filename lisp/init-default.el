@@ -121,11 +121,6 @@
                                               extended-command-history)
               savehist-autosave-interval 300))
 
-;; show search match information
-;; (use-package anzu
-;;   :init
-;;   (global-anzu-mode t))
-
 ;; Show number of matches in mode-line while searching
 (use-package anzu
   :diminish
