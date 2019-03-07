@@ -73,6 +73,25 @@
   :ensure nil
   :hook (after-init . save-place-mode))
 
+;; Automatically reload files was modified by external program
+(use-package autorevert
+  :ensure nil
+  :diminish
+  :hook (after-init . global-auto-revert-mode))
+
+;; Pass a URL to a WWW browser
+(use-package browse-url
+  :ensure nil
+  :defines dired-mode-map
+  :bind (("C-c C-z ." . browse-url-at-point)
+         ("C-c C-z b" . browse-url-of-buffer)
+         ("C-c C-z r" . browse-url-of-region)
+         ("C-c C-z u" . browse-url)
+         ("C-c C-z v" . browse-url-of-file))
+  :init
+  (with-eval-after-load 'dired
+    (bind-key "C-c C-z f" #'browse-url-of-file dired-mode-map)))
+
 (use-package recentf
   :ensure nil
   :hook (after-init . recentf-mode)
@@ -103,9 +122,52 @@
               savehist-autosave-interval 300))
 
 ;; show search match information
+;; (use-package anzu
+;;   :init
+;;   (global-anzu-mode t))
+
+;; Show number of matches in mode-line while searching
 (use-package anzu
-  :init
-  (global-anzu-mode t))
+  :diminish
+  :bind (([remap query-replace] . anzu-query-replace)
+         ([remap query-replace-regexp] . anzu-query-replace-regexp)
+         :map isearch-mode-map
+         ([remap isearch-query-replace] . anzu-isearch-query-replace)
+         ([remap isearch-query-replace-regexp] . anzu-isearch-query-replace-regexp))
+  :hook (after-init . global-anzu-mode))
+
+;; A comprehensive visual interface to diff & patch
+(use-package ediff
+  :ensure nil
+  :hook(;; show org ediffs unfolded
+        (ediff-prepare-buffer . outline-show-all)
+        ;; restore window layout when done
+        (ediff-quit . winner-undo))
+  :config
+  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+  (setq ediff-split-window-function 'split-window-horizontally)
+  (setq ediff-merge-split-window-function 'split-window-horizontally))
+
+;; Automatic parenthesis pairing
+(use-package elec-pair
+  :ensure nil
+  :hook (after-init . electric-pair-mode)
+  :init (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit))
+
+;; Make bindings that stick around
+(use-package hydra)
+
+;; Treat undo history as a tree
+(use-package undo-tree
+  :diminish
+  :hook (after-init . global-undo-tree-mode))
+
+;; Handling capitalized subwords in a nomenclature
+(use-package subword
+  :ensure nil
+  :diminish
+  :hook ((prog-mode . subword-mode)
+         (minibuffer-setup . subword-mode)))
 
 (provide 'init-default)
 
