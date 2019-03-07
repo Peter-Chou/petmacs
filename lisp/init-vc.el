@@ -111,6 +111,21 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
     :bind (:map vc-prefix-map
 		("B" . browse-at-remote))))
 
+(use-package git-gutter
+  :hook (prog-mode . git-gutter-mode)
+  :init
+  (run-with-idle-timer 1 nil 'global-git-gutter-mode)
+  (setq git-gutter:update-interval 2
+        git-gutter:modified-sign " "
+        git-gutter:added-sign "+"
+        git-gutter:deleted-sign "-"
+        git-gutter:diff-option "-w"
+        git-gutter:hide-gutter t
+        git-gutter:ask-p nil
+        git-gutter:verbosity 0
+        git-gutter:handled-backends '(git hg bzr svn)
+        git-gutter:hide-gutter t))
+
 ;; Git related modes
 (use-package gitattributes-mode)
 (use-package gitignore-mode)
