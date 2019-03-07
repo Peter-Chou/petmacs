@@ -25,6 +25,12 @@
 			       (hl-line-mode -1)
 			       (vim-empty-lines-mode -1)))
   :init
+  (setq lsp-ui-peek-enable t)
+  (setq lsp-ui-doc-enable nil)
+  (setq lsp-ui-imenu-enable t)
+  (setq lsp-ui-flycheck-enable t)
+  (setq lsp-ui-sideline-enable nil)
+  (setq lsp-ui-sideline-ignore-duplicate t)
   (evil-define-key 'normal lsp-ui-imenu-mode-map (kbd "q") 'lsp-ui-imenu--kill)
   (evil-define-key 'normal lsp-ui-imenu-mode-map (kbd "J") 'lsp-ui-imenu--next-kind)
   (evil-define-key 'normal lsp-ui-imenu-mode-map (kbd "K") 'lsp-ui-imenu--prev-kind)
