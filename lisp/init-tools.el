@@ -55,10 +55,6 @@
   (define-key writeroom-mode-map (kbd "C-M-<") #'writeroom-decrease-width)
   (define-key writeroom-mode-map (kbd "C-M->") #'writeroom-increase-width)
   (define-key writeroom-mode-map (kbd "C-M-=") #'writeroom-adjust-width))
-;; (use-package olivetti
-;;   :diminish
-;;   :init
-;;   (setq olivetti-body-width 0.6))
 
 (use-package centered-cursor-mode)
 
