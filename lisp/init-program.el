@@ -4,11 +4,8 @@
 
 ;;; Code:
 
-(setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit)
-(electric-pair-mode 1)
-
-(add-hook 'prog-mode-hook #'subword-mode)
-(add-hook 'minibuffer-setup-hook #'subword-mode)
+;; (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit)
+;; (electric-pair-mode 1)
 
 ;; IDO
 (ido-mode 1)
