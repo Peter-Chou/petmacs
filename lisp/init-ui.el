@@ -58,7 +58,7 @@
     ;; enable custom treemacs themes
     (doom-themes-treemacs-config)))
 
-(load-theme 'doom-solarized-light t)
+(load-theme 'doom-dracula t)
 
 (use-package display-line-numbers-mode
   :ensure nil
