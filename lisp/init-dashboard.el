@@ -28,7 +28,7 @@
   (dashboard-setup-startup-hook)
   (evil-define-key 'normal dashboard-mode-map (kbd "RET") 'widget-button-press)
   (evil-define-key 'normal dashboard-mode-map (kbd "gd") 'widget-button-press)
-  (evil-define-key 'normal dashboard-mode-map [down-mouse-1] 'widget-button-click)
+  (evil-define-key 'normal dashboard-mode-map [mouse-1] 'widget-button-click)
   (defun petmacs//emacs-startup-info (_list-size)
     (let ((petmacs--startup-info (format "[%d packages loaded in %s]" (length package-activated-list) (emacs-init-time))))
       (insert (make-string (max 0 (floor (/ (- dashboard-banner-length
