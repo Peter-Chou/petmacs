@@ -14,15 +14,14 @@
 	 ("C-p" . company-select-previous)
 	 ("C-n" . company-select-next)
 	 ("<tab>" . company-complete-selection)
-	 ;; ("C-/" . company-search-candidates)
 	 ("C-/" . counsel-company)
-	 ("C-M-/" . company-filter-candidates)
+	 ;; ("C-M-/" . company-filter-candidates)
+	 ("C-d" . company-show-doc-buffer)
 	 :map company-search-map
 	 ("C-p" . company-select-previous)
 	 ("C-n" . company-select-next)
 	 ;; ("C-/" . company-search-candidates)
-	 ("C-/" . counsel-company)
-	 ("C-M-/" . company-filter-candidates)
+	 ;; ("C-M-/" . company-filter-candidates)
 	 ("C-d" . company-show-doc-buffer))
   :hook (after-init . global-company-mode)
   :config
