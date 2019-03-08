@@ -81,6 +81,8 @@
 (require 'init-c-c++)
 (require 'init-python)
 (require 'init-org)
+(require 'init-yaml)
+(require 'init-sql)
 
 (require 'init-eshell)
 (require 'init-misc)
