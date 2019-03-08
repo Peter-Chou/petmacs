@@ -90,6 +90,13 @@
   "gU"  'magit-unstage-file
   "gho" 'browse-at-remote)
 
+
+;; leader-i insert family
+(which-key-add-key-based-replacements
+  (format "%s i" petmacs-evil-leader-key) "insert")
+(evil-leader/set-key
+  "is" 'ivy-yasnippet)
+
 ;; leader-p family
 (which-key-add-key-based-replacements
   (format "%s p" petmacs-evil-leader-key) "project")
