@@ -40,7 +40,7 @@
 				   (vim-empty-lines-mode -1)))
   :init
   (setq imenu-list-focus-after-activation t
-        imenu-list-auto-resize t)
+        imenu-list-auto-resize nil)
   :init
   (evil-define-key 'normal imenu-list-major-mode-map (kbd "d") 'imenu-list-display-entry)
   (evil-define-key 'normal imenu-list-major-mode-map (kbd "r") 'imenu-list-refresh) 
