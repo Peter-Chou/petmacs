@@ -23,9 +23,7 @@
 	 (sql-interactive-mode . sqlup-mode))
   :config
   (setq sqlup-blacklist (append sqlup-blacklist
-                                sql-capitalize-keywords-blacklist))
-  ;; TODO: add company backends
-  )
+                                sql-capitalize-keywords-blacklist)))
 
 (provide 'init-sql)
 
