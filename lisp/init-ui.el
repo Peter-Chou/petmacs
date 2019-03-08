@@ -49,6 +49,9 @@
 
 (use-package doom-themes
   :defer nil
+  :custom
+  (doom-themes-enable-italic t)
+  (doom-themes-enable-bold t)
   :config
   (progn
     ;; Enable flashing mode-line on errors
