@@ -9,6 +9,8 @@
   (default-text-scale-mode))
 
 (use-package beacon
+  :custom
+  (beacon-color "yellow")
   :init
   (beacon-mode 1))
 
