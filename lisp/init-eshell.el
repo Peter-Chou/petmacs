@@ -43,6 +43,11 @@ is achieved by adding the relevant text properties."
   )
 
 (use-package eshell-prompt-extras
+  :custom-face
+  (epe-pipeline-delimiter-face ((t (:foreground "#fd780f" :weight bold))))
+  (epe-pipeline-host-face ((t (:foreground "#3cd8a2" :weight bold))))
+  (epe-pipeline-time-face ((t (:foreground "#e2c504"))))
+  (epe-pipeline-user-face ((t (:foreground "#ef2d2d" :weight bold))))
   :init
   (with-eval-after-load "esh-opt"
     ;; (require 'virtualenvwrapper)
@@ -54,7 +59,9 @@ is achieved by adding the relevant text properties."
                                    (concat "\n" (epe-theme-pipeline))))))
 
 ;; Fish-like history autosuggestions
+;; disable because of lagging
 ;; (use-package esh-autosuggest
+;;   :pin melpa-stable
 ;;   :defines ivy-display-functions-alist
 ;;   :preface
 ;;   (defun setup-eshell-ivy-completion ()
