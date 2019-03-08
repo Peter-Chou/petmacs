@@ -17,7 +17,8 @@
   	    (append ccls-initialization-options `(:cache (:directory ,(expand-file-name "~/.ccls-cache"))))
   	  `(:cache (:directory ,(expand-file-name "~/.ccls-cache")))))
 
-  (setq ccls-sem-highlight-method 'overlay)
+  ;; (setq ccls-sem-highlight-method 'overlay)  ; overlay is slow
+  (setq ccls-sem-highlight-method 'font-lock)
 
   :config
   (with-eval-after-load 'projectile
