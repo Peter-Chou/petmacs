@@ -5,6 +5,10 @@
 ;;; Code:
 
 (use-package ace-window
+  :custom
+  (aw-keys '(?j ?k ?l ?i ?o ?h ?y ?u ?p))
+  :custom-face
+  (aw-leading-char-face ((t (:height 4.0 :foreground "#f1fa8c"))))
   :init
   (progn
     (setq aw-scope 'frame)
