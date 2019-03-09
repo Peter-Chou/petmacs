@@ -21,7 +21,7 @@
                           (agenda . 5)))
   :hook ((after-init . dashboard-setup-startup-hook)
          (dashboard-mode . (lambda () (setq-local frame-title-format ""))))
-  :custom-face
+  ;; :custom-face
   ;; (dashboard-banner-logo-title-face ((t (:inherit bold))))
   ;; (dashboard-heading-face ((t (:inherit (font-lock-keyword-face bold)))))
   :config
