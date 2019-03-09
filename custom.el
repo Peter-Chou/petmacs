@@ -16,8 +16,6 @@
  ;; If there is more than one, they won't work right.
  '(all-the-icons-dired-dir-face ((t (\` (:foreground (\, (face-background (quote default))))))))
  '(aw-leading-char-face ((t (:inherit ace-jump-face-foreground :height 3.0))))
- '(dashboard-banner-logo-title-face ((t (:inherit bold))) t)
- '(dashboard-heading-face ((t (:inherit (font-lock-keyword-face bold)))) t)
  '(epe-pipeline-delimiter-face ((t (:foreground "#fd780f" :weight bold))))
  '(epe-pipeline-host-face ((t (:foreground "#3cd8a2" :weight bold))))
  '(epe-pipeline-time-face ((t (:foreground "#e2c504"))))
