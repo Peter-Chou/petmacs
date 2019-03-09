@@ -46,8 +46,12 @@
 
   ;; Walk through git revisions of a file
   (use-package git-timemachine
+    :custom-face
+    (git-timemachine-minibuffer-author-face ((t (:inherit font-lock-string-face))))
+    (git-timemachine-minibuffer-detail-face ((t (:inherit warning))))
     :bind (:map vc-prefix-map
 		("t" . git-timemachine)))
+
   ;; Pop up last commit information of current line
   (use-package git-messenger
     :bind (:map vc-prefix-map
