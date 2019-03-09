@@ -363,7 +363,7 @@ If the error list is visible, hide it.  Otherwise, show it."
   (pyvenv-deactivate)
   (pythonic-deactivate))
 
-(defun petmacs/python-toggle-breakpoint ()
+(defun petmacs/python-insert-breakpoint ()
   "Add a break point, highlight it."
   (interactive)
   (let ((trace  "import ipdb; ipdb.set_trace() # XXX BREAKPOINT")
@@ -374,8 +374,17 @@ If the error list is visible, hide it.  Otherwise, show it."
 	(back-to-indentation)
 	(insert trace)
 	(insert "\n")
-	(python-indent-line)))))
+	(python-indent-line)
+	(highlight-lines-matching-regexp "^[ ]*import ipdb" 'hi-pink)
+	(highlight-lines-matching-regexp "^ipdb.set_trace()" 'hi-pink)))))
 
+(defun petmacs/python-delete-breakpoint ()
+  "delete break point"
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (flush-lines "^[ ]*import ipdb")
+    (flush-lines "^[ ]*ipdb.set_trace()")))
 
 (provide 'core-funcs)
 
