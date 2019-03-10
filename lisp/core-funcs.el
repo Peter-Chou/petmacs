@@ -367,7 +367,7 @@ If the error list is visible, hide it.  Otherwise, show it."
   "highlight a break point"
   (interactive)
   (highlight-lines-matching-regexp "^[ ]*import ipdb" 'hi-pink)
-  (highlight-lines-matching-regexp "^ipdb.set_trace()" 'hi-pink))
+  (highlight-lines-matching-regexp "^[ ]*ipdb.set_trace()" 'hi-pink))
 
 (defun petmacs/python-insert-breakpoint ()
   "Add a break point, highlight it."
