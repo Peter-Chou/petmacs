@@ -363,6 +363,12 @@ If the error list is visible, hide it.  Otherwise, show it."
   (pyvenv-deactivate)
   (pythonic-deactivate))
 
+(defun petmacs/python-highlight-breakpoint ()
+  "highlight a break point"
+  (interactive)
+  (highlight-lines-matching-regexp "^[ ]*import ipdb" 'hi-pink)
+  (highlight-lines-matching-regexp "^ipdb.set_trace()" 'hi-pink))
+
 (defun petmacs/python-insert-breakpoint ()
   "Add a break point, highlight it."
   (interactive)
@@ -375,8 +381,7 @@ If the error list is visible, hide it.  Otherwise, show it."
 	(insert trace)
 	(insert "\n")
 	(python-indent-line)
-	(highlight-lines-matching-regexp "^[ ]*import ipdb" 'hi-pink)
-	(highlight-lines-matching-regexp "^ipdb.set_trace()" 'hi-pink)))))
+	(petmacs/python-highlight-breakpoint)))))
 
 (defun petmacs/python-delete-breakpoint ()
   "delete break point"
