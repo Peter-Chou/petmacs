@@ -196,6 +196,7 @@
 (evil-leader/set-key-for-mode 'python-mode "mck" 'petmacs/quit-subjob)
 (evil-leader/set-key-for-mode 'python-mode "mdb" 'petmacs/python-insert-breakpoint)
 (evil-leader/set-key-for-mode 'python-mode "mdd" 'petmacs/python-delete-breakpoint)
+(evil-leader/set-key-for-mode 'python-mode "mdh" 'petmacs/python-highlight-breakpoint)
 (evil-leader/set-key-for-mode 'python-mode "msk" 'petmacs/python-interrupt-repl)
 (evil-leader/set-key-for-mode 'python-mode "msq" 'petmacs/python-quit-repl)
 (evil-leader/set-key-for-mode 'python-mode "msr" 'python-shell-send-region)
