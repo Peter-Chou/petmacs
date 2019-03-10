@@ -11,7 +11,30 @@
   :init
   (setq which-key-idle-delay 0.2)
   (setq which-key-separator " ")
-  (setq which-key-prefix-prefix " "))
+  (setq which-key-prefix-prefix " ")
+
+  ;; Needed to avoid nil variable error before update to recent which-key
+  (defvar which-key-replacement-alist nil)
+  ;; Reset to the default or customized value before adding our values in order
+  ;; to make this initialization code idempotent.
+  (custom-reevaluate-setting 'which-key-replacement-alist)
+  ;; Replace rules for better naming of functions
+  (let ((new-descriptions
+         ;; being higher in this list means the replacement is applied later
+         '(
+           ("petmacs/\\(.+\\)" . "\\1")
+           ("petmacs/toggle-\\(.+\\)" . "\\1")
+           ("avy-goto-word-or-subword-1" . "avy word")
+           ("shell-command" . "shell cmd")
+           ("universal-argument" . "universal arg")
+           ("er/expand-region" . "expand region")
+	   ("counsel-projectile-rg". "project rg")
+           ("evil-lisp-state-\\(.+\\)" . "\\1")
+           ("helm-mini\\|ivy-switch-buffer" . "list-buffers"))))
+    (dolist (nd new-descriptions)
+      ;; ensure the target matches the whole string
+      (push (cons (cons nil (concat "\\`" (car nd) "\\'")) (cons nil (cdr nd)))
+            which-key-replacement-alist))))
 
 (use-package hungry-delete
   :hook (after-init . global-hungry-delete-mode)
