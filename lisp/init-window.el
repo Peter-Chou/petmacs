@@ -54,6 +54,24 @@
     (push '("^\\*Flycheck.+\\*$" :regexp t :dedicated t :position bottom :stick t :noselect t) popwin:special-display-config)
     ))
 
+
+;; center window
+(use-package olivetti
+  :diminish
+  :bind ("<f7>" . olivetti-mode)
+  :init (setq olivetti-body-width 0.56))
+;; (use-package writeroom-mode
+;;   :init
+;;   (setq writeroom-maximize-window nil
+;; 	writeroom-fullscreen-effect 'maximized
+;; 	writeroom-mode-line t
+;; 	writeroom-width 100)
+;;   :config
+;;   (define-key writeroom-mode-map (kbd "C-M-<") #'writeroom-decrease-width)
+;;   (define-key writeroom-mode-map (kbd "C-M->") #'writeroom-increase-width)
+;;   (define-key writeroom-mode-map (kbd "C-M-=") #'writeroom-adjust-width))
+
+
 (provide 'init-window)
 
 ;;; init-window.el ends here
