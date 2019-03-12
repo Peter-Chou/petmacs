@@ -5,7 +5,7 @@
 ;;; Code:
 
 (use-package lsp-mode
-  :pin melpa-stable
+  ;; :pin melpa-stable
   :commands lsp
   :init
   (setq lsp-auto-guess-root t)
@@ -15,7 +15,7 @@
     (require 'lsp-clients)))
 
 (use-package lsp-ui
-  :pin melpa-stable
+  ;; :pin melpa-stable
   :bind (:map lsp-ui-mode-map
               ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
               ([remap xref-find-references] . lsp-ui-peek-find-references)
@@ -39,7 +39,8 @@
 
 
 (use-package company-lsp
-  :pin melpa-stable)
+  ;; :pin melpa-stable
+  )
 
 (provide 'init-lsp)
 
