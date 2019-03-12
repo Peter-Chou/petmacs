@@ -9,6 +9,7 @@
   :commands org-try-structure-completion
   :functions hydra-org-template/body
   :bind (("C-c a" . org-agenda)
+	 ("C-c c" . org-capture)
          ("C-c b" . org-switchb))
   :hook (org-indent-mode . (lambda() (diminish 'org-indent-mode)))
   :config
@@ -34,7 +35,6 @@
   ;; More fancy UI
   (use-package org-bullets
     :if (char-displayable-p ?◉)
-    :custom (org-bullets-bullet-list '("" "" "" "" "" "" "" "" "" ""))
     :hook (org-mode . org-bullets-mode))
 
   (use-package org-fancy-priorities
@@ -179,6 +179,50 @@ _h_tml    _S_HELL     _p_erl          _A_SCII:
                   (hydra-org-template/body)
                 (self-insert-command 1)))
             org-mode-map))
+
+
+(use-package evil-org
+  :preface
+  (defun petmacs//evil-org-mode ()
+    (evil-org-mode)
+    (evil-normalize-keymaps)
+    (evil-org-set-key-theme))
+  :hook (org-mode . petmacs//evil-org-mode)
+  :init
+  (setq evil-org-use-additional-insert t
+        evil-org-key-theme `(textobjects
+                             navigation
+                             additional
+                             todo))
+  :config
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys))
+
+(use-package org-projectile
+  :commands (org-projectile-location-for-project)
+  :preface
+  (defun org-projectile/capture (&optional arg)
+    (interactive "P")
+    (if arg
+	(org-projectile-project-todo-completing-read :empty-lines 1)
+      (org-projectile-capture-for-current-project :empty-lines 1)))
+
+  (defun org-projectile/goto-todos ()
+    (interactive)
+    (org-projectile-goto-location-for-project (projectile-project-name)))
+
+  :init
+  (defvar org-projectile-file "TODO.org")
+  (with-eval-after-load 'org-capture
+    (require 'org-projectile))
+  :config
+  (if (file-name-absolute-p org-projectile-file)
+      (progn
+	(setq org-projectile-projects-file org-projectile-file)
+	(push (org-projectile-project-todo-entry :empty-lines 1)
+              org-capture-templates))
+    (org-projectile-per-project)
+    (setq org-projectile-per-project-filepath org-projectile-file)))
 
 (provide 'init-org)
 
