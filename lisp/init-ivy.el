@@ -66,7 +66,7 @@
 
   (setq ivy-use-selectable-prompt t)
   (setq ivy-use-virtual-buffers t)    ; Enable bookmarks and recentf
-  (setq ivy-height 10)
+  (setq ivy-height 15)
   (setq ivy-count-format "(%d/%d) ")
   (setq ivy-on-del-error-function nil)
 
