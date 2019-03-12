@@ -28,10 +28,33 @@
 ;; leader-a application family
 (which-key-add-key-based-replacements
   (format "%s a" petmacs-evil-leader-key) "application")
+(which-key-add-key-based-replacements
+  (format "%s ao" petmacs-evil-leader-key) "org")
+(which-key-add-key-based-replacements
+  (format "%s aC" petmacs-evil-leader-key) "clock")
 (evil-leader/set-key
-  "ap" 'list-processes
-  "aP" 'proced
-  "ak" 'paradox-list-packages)
+  "ap"  'list-processes
+  "aP"  'proced
+  "ak"  'paradox-list-packages
+  "ao#" 'org-agenda-list-stuck-projects
+  "ao/" 'org-occur-in-agenda-files
+  "aoa" 'org-agenda-list
+  "aoc" 'org-capture
+  "aoe" 'org-store-agenda-views
+  "aofi" 'org-feed-goto-inbox
+  "aofu" 'org-feed-update-all
+  "aoCc" 'org-clock-cancel
+  "aoCg" 'org-clock-goto
+  "aoCi" 'org-clock-in
+  "aoCI" 'org-clock-in-last
+  "aoCj" 'org-clock-jump-to-current-clock
+  "aoCo" 'org-clock-out
+  "aoCr" 'org-resolve-clocks
+  "aol" 'org-store-link
+  "aom" 'org-tags-view
+  "aoo" 'org-agenda
+  "aos" 'org-search-view
+  "aot" 'org-todo-list)
 
 ;; leader-q family
 (which-key-add-key-based-replacements
@@ -39,6 +62,7 @@
 (evil-leader/set-key
   "qq" 'petmacs/frame-killer
   "qQ" 'kill-emacs
+  "qh" 'suspend-frame
   "qR" 'restart-emacs)
 
 ;; leader-h family
@@ -109,6 +133,7 @@
   "pp"    'counsel-projectile-switch-project
   "pf"    'counsel-projectile-find-file
   "pr"    'projectile-recentf
+  "po"    'org-projectile/goto-todos
   "pv"    'projectile-vc)
 
 ;; leader-j family
@@ -163,7 +188,7 @@
 (which-key-add-key-based-replacements
   (format "%s w" petmacs-evil-leader-key) "windows")
 (evil-leader/set-key
-  "wc"  'writeroom-mode
+  "wc"  'olivetti-mode
   "wd"  'delete-window
   "wF"  'make-frame
   "wpm" 'popwin:messages
@@ -173,7 +198,11 @@
 (which-key-add-key-based-replacements
   (format "%s o" petmacs-evil-leader-key) "yours")
 (evil-leader/set-key
-  "ow" 'whitespace-cleanup)
+  "ow"  'whitespace-cleanup
+  "obs" 'bookmark-set
+  "obd" 'bookmark-delete
+  "obr" 'bookmark-rename
+  "obl" 'bookmark-bmenu-list)
 
 ;;;; major mode specific keybinding
 (which-key-add-key-based-replacements
@@ -184,6 +213,10 @@
   (which-key-add-key-based-replacements (format ", %s" key) name))
 
 (petmacs//set-key-prefix-name "c" "compile")
+
+
+;;; json
+(evil-leader/set-key-for-mode 'json-mode "m=" 'prettier-js)
 
 ;;; python
 (evil-leader/set-key-for-mode 'python-mode "m=" 'yapfify-buffer)
