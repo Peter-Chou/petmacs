@@ -190,10 +190,7 @@ _h_tml    _S_HELL     _p_erl          _A_SCII:
   :hook (org-mode . petmacs//evil-org-mode)
   :init
   (setq evil-org-use-additional-insert t
-        evil-org-key-theme `(textobjects
-                             navigation
-                             additional
-                             todo))
+        evil-org-set-key-theme '(textobjects insert navigation additional calendar shift todo heading))
   :config
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys))
