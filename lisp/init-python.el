@@ -35,13 +35,17 @@
          (python-mode . anaconda-eldoc-mode))
   :config
   ;; WORKAROUND: https://github.com/proofit404/anaconda-mode#faq
-  (when (eq system-type 'darwin)
-    (setq anaconda-mode-localhost-address "localhost")))
+  ;; (when (eq system-type 'darwin)
+  ;;   (setq anaconda-mode-localhost-address "localhost"))
+  (setq anaconda-mode-localhost-address "localhost"))
 
 (use-package company-anaconda
   :after company
   :defines company-backends
-  :init (cl-pushnew 'company-anaconda company-backends))
+  :init (cl-pushnew 'company-anaconda company-backends)
+  :config
+  (evil-define-minor-mode-key 'normal 'anaconda-mode (kbd "C-M-i") 'company-anaconda)
+  (evil-define-minor-mode-key 'insert 'anaconda-mode (kbd "C-M-i") 'company-anaconda))
 
 (use-package virtualenvwrapper)
 
