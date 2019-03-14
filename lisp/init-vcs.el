@@ -1,4 +1,4 @@
-;; init-vc.el --- Setup version control.  -*- lexical-binding: t -*-
+;; init-vcs.el --- Setup version control.  -*- lexical-binding: t -*-
 
 ;;; Commentary:
 
@@ -144,6 +144,6 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 (use-package gitconfig-mode)
 (use-package git-commit)
 
-(provide 'init-vc)
+(provide 'init-vcs)
 
-;;; init-vc.el ends here
+;;; init-vcs.el ends here

@@ -73,7 +73,7 @@
 (require 'init-tools)
 (require 'init-highlight)
 (require 'init-ibuffer)
-(require 'init-vc)
+(require 'init-vcs)
 (require 'init-project)
 
 (require 'init-program)
