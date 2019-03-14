@@ -56,6 +56,9 @@ flycheck_*.el
 # anaconda folder
 /anaconda-mode/
 
+# persp folder
+/persp-confs/
+
 # cache
 .cache*
 
