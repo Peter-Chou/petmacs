@@ -4,6 +4,25 @@
 
 ;;; Code:
 
+(defun petmacs/ivy-persp-switch-project-advice (project)
+  (let ((persp-reset-windows-on-nil-window-conf t))
+    (persp-switch project)))
+
+(defun petmacs/ivy-persp-switch-project (arg)
+  (interactive "P")
+  (require 'counsel-projectile)
+  (advice-add 'counsel-projectile-switch-project-action
+	      :before #'petmacs/ivy-persp-switch-project-advice)
+  (ivy-read "Switch to Project Perspective: "
+            (if (projectile-project-p)
+                (cons (abbreviate-file-name (projectile-project-root))
+		      (projectile-relevant-known-projects))
+	      projectile-known-projects)
+            :action #'counsel-projectile-switch-project-action
+            :caller 'petmacs/ivy-persp-switch-project)
+  (advice-remove 'counsel-projectile-switch-project-action
+                 'petmacs/ivy-persp-switch-project-advice))
+
 ;; Dos2Unix/Unix2Dos
 (defun dos2unix ()
   "Convert the current buffer to UNIX file format."
