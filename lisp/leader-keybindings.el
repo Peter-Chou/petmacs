@@ -111,6 +111,7 @@
   "gfl" 'magit-log-buffer-file
   "gfd" 'magit-diff
   "gi"  'magit-init
+  "gl"  'magit-log-head
   "gL"  'magit-list-repositories
   "gm"  'magit-dispatch
   "gs"  'magit-status
