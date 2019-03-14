@@ -73,6 +73,8 @@
   (format "%s f" petmacs-evil-leader-key) "files")
 (which-key-add-key-based-replacements
   (format "%s fy" petmacs-evil-leader-key) "copy")
+(which-key-add-key-based-replacements
+  (format "%s fv" petmacs-evil-leader-key) "variable")
 (evil-leader/set-key
   "ff"  'counsel-find-file
   "fj"  'dired-jump
@@ -81,10 +83,16 @@
   "fT"  'treemacs-find-file
   "fL"  'counsel-locate
   "fr"  'counsel-recentf
+  "fR"  'petmacs/rename-current-buffer-file
   "fs"  'save-buffer
+  "fS"  'evil-write-all
   "fc"  'petmacs/copy-file
+  "fi"  'insert-file
   "fb"  'counsel-bookmark
   "fB"  'treemacs-bookmark
+  "fvd" 'add-dir-local-variable
+  "fvf" 'add-file-local-variable
+  "fvp" 'add-file-local-variable-prop-line
   "fCu" 'dos2unix
   "fCd" 'unix2dos
   "fyy" 'petmacs/copy-file-path
@@ -214,6 +222,11 @@
   (which-key-add-key-based-replacements (format ", %s" key) name))
 
 (petmacs//set-key-prefix-name "c" "compile")
+(petmacs//set-key-prefix-name "d" "debug")
+(petmacs//set-key-prefix-name "g" "goto")
+(petmacs//set-key-prefix-name "s" "REPL")
+(petmacs//set-key-prefix-name "h" "help")
+(petmacs//set-key-prefix-name "v" "virtualenv")
 
 
 ;;; json
@@ -223,8 +236,8 @@
 (evil-leader/set-key-for-mode 'python-mode "m=" 'yapfify-buffer)
 (evil-leader/set-key-for-mode 'python-mode "mhh" 'anaconda-mode-show-doc)
 (evil-leader/set-key-for-mode 'python-mode "mga" 'anaconda-mode-find-assignments)
-(evil-leader/set-key-for-mode 'python-mode "mgg" 'petmacs/jump-to-definition)
-(evil-leader/set-key-for-mode 'python-mode "mgG" 'petmacs/jump-to-definition-other-window)
+(evil-leader/set-key-for-mode 'python-mode "mgg" 'anaconda-mode-find-definitions)
+(evil-leader/set-key-for-mode 'python-mode "mgG" 'anaconda-mode-find-definitions-other-window)
 (evil-leader/set-key-for-mode 'python-mode "mgu" 'anaconda-mode-find-references)
 (evil-leader/set-key-for-mode 'python-mode "msb" 'python-shell-send-buffer)
 (evil-leader/set-key-for-mode 'python-mode "mck" 'petmacs/quit-subjob)
@@ -252,7 +265,12 @@
 
 ;;;; evil jump
 
+;; python mode
 (evil-define-minor-mode-key 'normal 'anaconda-mode (kbd "gd") 'anaconda-mode-find-definitions)
+(evil-define-minor-mode-key 'normal 'anaconda-mode (kbd "gD") 'anaconda-mode-find-definitions-other-window)
+
+;; python mode
+(evil-define-key 'normal emacs-lisp-mode-map (kbd "gD") 'petmacs/evil-goto-definition-other-window)
 
 (provide 'leader-keybindings)
 
