@@ -11,6 +11,13 @@
 (defvar petmacs--font-size 17.5
   "default font size")
 
+(defvar petmacs-evil-leader-key "<SPC>"
+  "Evil leader key.")
+
+(defvar petmacs-evil-major-leader-key "\,"
+  "Evil major leader key.")
+
+
 (provide 'init-variable)
 
 ;;; init-const.el ends here

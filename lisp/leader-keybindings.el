@@ -4,12 +4,6 @@
 
 ;;; Code:
 
-(defvar petmacs-evil-leader-key "<SPC>"
-  "Evil leader key.")
-
-(defvar petmacs-evil-major-leader-key "\,"
-  "Evil major leader key.")
-
 (evil-leader/set-leader petmacs-evil-leader-key)
 (evil-major-leader/set-leader petmacs-evil-major-leader-key)
 
@@ -33,8 +27,10 @@
 (which-key-add-key-based-replacements
   (format "%s aC" petmacs-evil-leader-key) "clock")
 (evil-leader/set-key
+  "ad" 'deer
   "ap"  'list-processes
   "aP"  'proced
+  "ar" 'ranger
   "ak"  'paradox-list-packages
   "ao#" 'org-agenda-list-stuck-projects
   "ao/" 'org-occur-in-agenda-files
@@ -134,6 +130,7 @@
   "pf"    'counsel-projectile-find-file
   "pr"    'projectile-recentf
   "po"    'org-projectile/goto-todos
+  "pl"    'petmacs/ivy-persp-switch-project
   "pv"    'projectile-vc)
 
 ;; leader-j family
@@ -142,6 +139,8 @@
 (evil-leader/set-key
   "ji" 'petmacs/counsel-jump-in-buffer
   "jw" 'evil-avy-goto-word-or-subword-1
+  "jD" 'deer-jump-other-window
+  "jd" 'deer
   "jj" 'avy-goto-char-timer
   "jJ" 'avy-goto-char-2)
 
@@ -173,6 +172,8 @@
   "bx" 'kill-buffer-and-window
   "bh" 'petmacs/goto-dashboard
   "bY" 'petmacs/copy-whole-buffer-to-clipboard
+  "ba" 'persp-add-buffer
+  "br" 'persp-remove-buffer
   "bi" 'imenu-list-smart-toggle
   ;; "bi" 'lsp-ui-imenu
   "bI" 'ibuffer)
