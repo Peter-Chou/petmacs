@@ -46,6 +46,7 @@
 			 ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
 			 ("melpa-stable" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa-stable/")))
 
+
 ;; Initialize packages
 (package-initialize)
 
@@ -60,6 +61,7 @@
 
 (require 'init-ui)
 (require 'init-window)
+(require 'init-layout)
 (require 'init-dashboard)
 
 (require 'init-ivy)
