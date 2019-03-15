@@ -4,6 +4,10 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-const)
+  (require 'init-variable))
+
 (use-package company
   :diminish company-mode
   :defines (company-dabbrev-ignore-case company-dabbrev-downcase)
