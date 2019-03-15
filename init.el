@@ -42,8 +42,9 @@
 (add-subdirs-to-load-path)
 
 ;; use mirror
-(setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-			 ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+(setq package-archives '(("gnu"          . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+			 ("melpa"        . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+			 ("org"          . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
 			 ("melpa-stable" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa-stable/")))
 
 
