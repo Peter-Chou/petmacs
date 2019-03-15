@@ -27,8 +27,36 @@
         ;; this is consistent with the value of
         ;; `helm-org-headings-max-depth'.
         org-imenu-depth 8)
+
   (add-to-list 'org-export-backends 'md)
-  )
+
+  ;; Babel
+  (setq org-confirm-babel-evaluate nil
+        org-src-fontify-natively t
+        org-src-tab-acts-natively t)
+
+  (defvar load-language-list '((emacs-lisp . t)
+                               (perl . t)
+                               (python . t)
+                               (ruby . t)
+                               (js . t)
+                               (css . t)
+                               (sass . t)
+                               (C . t)
+                               (java . t)
+                               (plantuml . t)))
+
+  ;; ob-sh renamed to ob-shell since 26.1.
+  (if emacs/>=26p
+      (cl-pushnew '(shell . t) load-language-list)
+    (cl-pushnew '(sh . t) load-language-list))
+
+  (use-package ob-ipython
+    :if (executable-find "jupyter")     ; DO NOT remove
+    :init (cl-pushnew '(ipython . t) load-language-list))
+
+  (org-babel-do-load-languages 'org-babel-load-languages
+                               load-language-list))
 
 (use-package org-agenda
   :ensure nil
@@ -39,8 +67,13 @@
         '((daily today require-timed)
           (0900 01000 1100 1200 1300 1400 1500 1600 1700 1800 1900 2000 2100 2200 2300 2400)
           "-"
-	  "────────────────"))
-  )
+	  "────────────────")))
+
+;; Pomodoro
+(use-package org-pomodoro
+  :after org-agenda
+  :bind (:map org-agenda-mode-map
+              ("P" . org-pomodoro)))
 
 (use-package org-bullets
   :if (char-displayable-p ?◉)
