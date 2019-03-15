@@ -25,12 +25,11 @@
   (setq quelpa-update-melpa-p nil)
   (setq quelpa-checkout-melpa-p nil))
 
+;; Required by `use-package'
 (use-package quelpa-use-package
   :init
   (require 'quelpa-use-package)
   (quelpa-use-package-activate-advice))
-
-;; Required by `use-package'
 (use-package diminish)
 (use-package bind-key)
 
