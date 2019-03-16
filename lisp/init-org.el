@@ -111,6 +111,22 @@
     (org-projectile-per-project)
     (setq org-projectile-per-project-filepath org-projectile-file)))
 
+(use-package evil-org
+  :preface
+  (defun petmacs//evil-org-mode ()
+    (evil-org-mode)
+    (evil-normalize-keymaps)
+    (evil-org-set-key-theme))
+  :hook (org-mode . petmacs//evil-org-mode)
+  :init
+  (setq evil-org-use-additional-insert t
+        evil-org-key-theme `(textobjects
+                             navigation
+                             additional
+                             todo))
+  :config
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys))
 ;; Preview
 (use-package org-preview-html
   :diminish org-preview-html-mode)
