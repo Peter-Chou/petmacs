@@ -24,7 +24,8 @@
 (use-package evil
   :init
   (setq evil-want-C-u-scroll t)
-
+  (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+  (setq evil-want-keybinding nil) ;; use evil-collection instead
   (when evil-want-C-u-scroll
     (define-key evil-insert-state-map (kbd "C-u") 'evil-scroll-up)
     (define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up)
@@ -50,6 +51,15 @@
     ;; Overload shifts so that they don't lose the selection
     (define-key evil-visual-state-map (kbd "<") 'petmacs//evil-visual-shift-left)
     (define-key evil-visual-state-map (kbd ">") 'petmacs//evil-visual-shift-right)))
+
+(use-package evil-collection
+  :after evil
+  :ensure t
+  :config
+  (evil-collection-init))
+
+;; (use-package evil-magit
+;;   :hook (magit-mode . evil-magit-init))
 
 (use-package evil-escape
   :init
@@ -79,9 +89,6 @@
   (setq-default right-fringe-width 25)
   (setq-default evil-fringe-mark-side 'right-fringe)
   (global-evil-fringe-mark-mode))
-
-(use-package evil-magit
-  :hook (magit-mode . evil-magit-init))
 
 ;; using outline-minor-mode for evil folding
 (use-package outline-mode
