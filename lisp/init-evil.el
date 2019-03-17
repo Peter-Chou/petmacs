@@ -54,12 +54,8 @@
 
 (use-package evil-collection
   :after evil
-  :ensure t
   :config
   (evil-collection-init))
-
-;; (use-package evil-magit
-;;   :hook (magit-mode . evil-magit-init))
 
 (use-package evil-escape
   :init
