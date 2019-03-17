@@ -11,10 +11,11 @@
              eshell-send-input eshell-flatten-list
              eshell-interactive-output-p eshell-parse-command)
   :hook ((eshell-mode . (lambda ()
-                          (bind-key "C-l" 'petmacs/eshell-clear eshell-mode-map)))
+                          (bind-key "C-l" 'petmacs/eshell-clear eshell-mode-map)
+			  (evil-define-key 'normal eshell-mode-map (kbd "C-r") 'petmacs/ivy-eshell-history)
+			  (evil-define-key 'insert eshell-mode-map (kbd "C-r") 'petmacs/ivy-eshell-history)))
 	 (eshell-mode  . (lambda () (display-line-numbers-mode -1)(hl-line-mode -1)))
-	 (eshell-after-prompt . petmacs//protect-eshell-prompt)
-	 )
+	 (eshell-after-prompt . petmacs//protect-eshell-prompt))
   :preface
   (defun petmacs/eshell-clear ()
     "Clear the eshell buffer."
@@ -22,6 +23,20 @@
     (let ((inhibit-read-only t))
       (erase-buffer)
       (eshell-send-input)))
+
+  (defun petmacs/ivy-eshell-history ()
+    (interactive)
+    (require 'em-hist)
+    (let* ((start-pos (save-excursion (eshell-bol) (point)))
+           (end-pos (point))
+           (input (buffer-substring-no-properties start-pos end-pos))
+           (command (ivy-read "Command: "
+                              (delete-dups
+                               (when (> (ring-size eshell-history-ring) 0)
+				 (ring-elements eshell-history-ring)))
+                              :initial-input input)))
+      (setf (buffer-substring start-pos end-pos) command)
+      (end-of-line)))
 
   (defun petmacs//protect-eshell-prompt ()
     "Protect Eshell's prompt like Comint's prompts.
@@ -39,8 +54,7 @@ is achieved by adding the relevant text properties."
 			front-sticky (field inhibit-line-move-field-capture)))))
   :init
   ;; add alias to eshell
-  (setq eshell-aliases-file (expand-file-name "alias" user-emacs-directory))
-  )
+  (setq eshell-aliases-file (expand-file-name "alias" user-emacs-directory)))
 
 (use-package eshell-prompt-extras
   :custom-face
