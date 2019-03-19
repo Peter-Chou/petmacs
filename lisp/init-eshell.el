@@ -53,6 +53,7 @@ is achieved by adding the relevant text properties."
 			read-only t
 			front-sticky (field inhibit-line-move-field-capture)))))
   :init
+  (setq eshell-history-size 512)
   ;; add alias to eshell
   (setq eshell-aliases-file (expand-file-name "alias" user-emacs-directory)))
 
