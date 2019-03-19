@@ -123,7 +123,15 @@
 ;; Tramp ivy interface
 (use-package counsel-tramp
   :bind (:map counsel-mode-map
-              ("C-c c v" . counsel-tramp)))
+              ("C-c c v" . counsel-tramp))
+  :init
+  (setq tramp-default-method "ssh")
+  (add-hook 'counsel-tramp-pre-command-hook '(lambda () (global-aggressive-indent-mode 0)
+					       (projectile-mode 0)
+					       (editorconfig-mode 0)))
+  (add-hook 'counsel-tramp-quit-hook '(lambda () (global-aggressive-indent-mode 1)
+					(projectile-mode 1)
+					(editorconfig-mode 1))))
 
 ;; Use ivy as the interface to select from xref candidates
 (use-package ivy-xref
