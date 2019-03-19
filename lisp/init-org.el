@@ -38,6 +38,8 @@
   (defvar load-language-list '((emacs-lisp . t)
                                (perl . t)
                                (python . t)
+			       (dot . t)
+			       (latex . t)
                                (ruby . t)
                                (js . t)
                                (css . t)
