@@ -37,10 +37,9 @@
   (evil-define-key 'normal lsp-ui-imenu-mode-map (kbd "<return>") 'lsp-ui-imenu--visit)
   (evil-define-key 'normal lsp-ui-imenu-mode-map (kbd "d") 'lsp-ui-imenu--view))
 
-
 (use-package company-lsp
   ;; :pin melpa-stable
-  )
+  :init (setq company-lsp-cache-candidates 'auto))
 
 (provide 'init-lsp)
 
