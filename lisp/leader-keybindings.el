@@ -252,17 +252,20 @@
 (evil-leader/set-key-for-mode 'python-mode "mvd" 'pyvenv-deactivate)
 (evil-leader/set-key-for-mode 'python-mode "mvw" 'pyvenv-workon)
 
-(if sys/win32p
-    (progn
-      (evil-leader/set-key-for-mode 'python-mode "mcc" 'petmacs/windows-python-execute-file)
-      (evil-leader/set-key-for-mode 'python-mode "mcC" 'petmacs/windows-python-execute-file-focus)
-      (evil-leader/set-key-for-mode 'python-mode "msi" 'petmacs/windows-python-start-or-switch-repl)
-      )
-  (progn
-    (evil-leader/set-key-for-mode 'python-mode "mcc" 'petmacs/python-execute-file)
-    (evil-leader/set-key-for-mode 'python-mode "mcC" 'petmacs/python-execute-file-focus)
-    (evil-leader/set-key-for-mode 'python-mode "msi" 'petmacs/python-start-or-switch-repl)
-    ))
+;; (if sys/win32p
+;;     (progn
+;;       (evil-leader/set-key-for-mode 'python-mode "mcc" 'petmacs/windows-python-execute-file)
+;;       (evil-leader/set-key-for-mode 'python-mode "mcC" 'petmacs/windows-python-execute-file-focus)
+;;       (evil-leader/set-key-for-mode 'python-mode "msi" 'petmacs/windows-python-start-or-switch-repl)
+;;       )
+;;   (progn
+;;     (evil-leader/set-key-for-mode 'python-mode "mcc" 'petmacs/python-execute-file)
+;;     (evil-leader/set-key-for-mode 'python-mode "mcC" 'petmacs/python-execute-file-focus)
+;;     (evil-leader/set-key-for-mode 'python-mode "msi" 'petmacs/python-start-or-switch-repl)
+;;     ))
+(evil-leader/set-key-for-mode 'python-mode "mcc" 'petmacs/python-execute-file)
+(evil-leader/set-key-for-mode 'python-mode "mcC" 'petmacs/python-execute-file-focus)
+(evil-leader/set-key-for-mode 'python-mode "msi" 'petmacs/python-start-or-switch-repl)
 
 ;;;; evil jump
 
