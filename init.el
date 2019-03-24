@@ -47,7 +47,6 @@
 			 ("org"          . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
 			 ("melpa-stable" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa-stable/")))
 
-
 ;; Initialize packages
 (package-initialize)
 
