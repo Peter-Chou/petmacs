@@ -22,8 +22,7 @@
               ("C-c u" . lsp-ui-imenu))
   :hook (lsp-ui-imenu-mode . (lambda ()
 			       (display-line-numbers-mode -1)
-			       (hl-line-mode -1)
-			       (vim-empty-lines-mode -1)))
+			       (hl-line-mode -1)))
   :init
   (setq lsp-ui-peek-enable t)
   (setq lsp-ui-doc-enable nil)

@@ -26,8 +26,7 @@
          ([mouse-1]   . treemacs-single-click-expand-action))
   :hook (treemacs-mode . (lambda ()
 			   (display-line-numbers-mode -1)
-			   (hl-line-mode -1)
-			   (vim-empty-lines-mode -1)))
+			   (hl-line-mode -1)))
   :init
   ;; (with-eval-after-load 'winum
   ;;   (bind-key (kbd "M-0") #'treemacs-select-window winum-keymap))

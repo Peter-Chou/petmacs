@@ -82,12 +82,6 @@
    `(linum-highlight-face
      ((t (:inherit 'default :background ,(face-background 'default) :foreground ,(face-foreground 'default)))))))
 
-(use-package vim-empty-lines-mode
-  :ensure t
-  :hook ((eshell-mode . (lambda () (vim-empty-lines-mode -1))))
-  :init
-  (global-vim-empty-lines-mode))
-
 (use-package hide-mode-line
   :hook (((completion-list-mode
            completion-in-region-mode
@@ -96,7 +90,6 @@
            neotree-mode
            treemacs-mode)
           . hide-mode-line-mode)))
-
 
 (provide 'init-ui)
 
