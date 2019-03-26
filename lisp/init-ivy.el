@@ -119,7 +119,9 @@
 
 ;; Ivy integration for Projectile
 (use-package counsel-projectile
-  :init (counsel-projectile-mode 1))
+  :init
+  (setq counsel-projectile-grep-initial-input '(ivy-thing-at-point))
+  (counsel-projectile-mode 1))
 
 ;; Tramp ivy interface
 (use-package counsel-tramp
