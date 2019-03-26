@@ -5,6 +5,7 @@
 ;;; Code:
 
 (use-package counsel
+  ;; C-M-j to create file/dir when name is match part of the exist file/dir
   :diminish ivy-mode counsel-mode
   :defines (projectile-completion-system magit-completing-read-function)
   :bind (("C-s" . swiper)
