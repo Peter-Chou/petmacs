@@ -71,6 +71,12 @@
     (add-hook 'before-save-hook 'petmacs//python-sort-imports))
   )
 
+;; Emacs IPython Notebook
+(use-package ein
+  :diminish ein:notebook-mode
+  :defines ein:completion-backend
+  :init (setq ein:completion-backend 'ein:use-company-backend))
+
 (use-package virtualenvwrapper)
 
 (provide 'init-python)
