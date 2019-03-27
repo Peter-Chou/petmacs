@@ -50,7 +50,10 @@
       (evil-visual-restore))
     ;; Overload shifts so that they don't lose the selection
     (define-key evil-visual-state-map (kbd "<") 'petmacs//evil-visual-shift-left)
-    (define-key evil-visual-state-map (kbd ">") 'petmacs//evil-visual-shift-right)))
+    (define-key evil-visual-state-map (kbd ">") 'petmacs//evil-visual-shift-right)
+    ;; treat _ as word like vim
+    (with-eval-after-load 'evil
+      (defalias #'forward-evil-word #'forward-evil-symbol))))
 
 (use-package evil-collection
   :after evil
