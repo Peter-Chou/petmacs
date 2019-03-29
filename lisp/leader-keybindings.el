@@ -176,7 +176,7 @@
 (evil-leader/set-key
   "bb" 'ivy-switch-buffer
   "bd" 'kill-this-buffer
-  "bR" 'petmacs/revert-current-buffer
+  "bR" 'petmacs/revert-this-buffer
   "bs" 'petmacs/goto-scratch-buffer
   "bx" 'kill-buffer-and-window
   "bh" 'petmacs/goto-dashboard

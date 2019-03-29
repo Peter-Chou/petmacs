@@ -4,6 +4,10 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-const)
+  (require 'init-variable))
+
 (defun petmacs/ivy-persp-switch-project-advice (project)
   (let ((persp-reset-windows-on-nil-window-conf t))
     (persp-switch project)))
@@ -71,19 +75,20 @@
   (switch-to-buffer "*scratch*"))
 
 ;; Revert buffer
-(defun petmacs/revert-current-buffer ()
+(defun petmacs/revert-this-buffer ()
   "Revert the current buffer."
   (interactive)
-  (message "Revert this buffer.")
-  (ignore-errors
-    (widen)
+  (unless (minibuffer-window-active-p (selected-window))
     (text-scale-increase 0)
-    (if (fboundp 'fancy-widen)
-        (fancy-widen)))
-  (revert-buffer t t))
-(bind-key "<f5>" #'petmacs/revert-current-buffer)
-(if (eq system-type 'darwin)
-    (bind-key "s-r" #'petmacs/revert-current-buffer))
+    (widen)
+    (if (and (fboundp 'fancy-narrow-active-p)
+             (fancy-narrow-active-p))
+        (fancy-widen))
+    (revert-buffer t t)
+    (message "Reverted this buffer.")))
+(bind-key "<f5>" #'petmacs/revert-this-buffer)
+(if sys/mac-x-p
+    (bind-key "s-r" #'petmacs/revert-this-buffer))
 
 (defun petmacs/copy-whole-buffer-to-clipboard ()
   "Copy entire buffer to clipboard"
