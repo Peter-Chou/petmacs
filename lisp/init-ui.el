@@ -4,8 +4,28 @@
 
 ;;; Code:
 
+;; Icons
+;; NOTE: Must run `M-x all-the-icons-install-fonts' manually on Windows
 (use-package all-the-icons
-  :defer nil)
+  :if (display-graphic-p)
+  :init
+  (unless (or sys/win32p (member "all-the-icons" (font-family-list)))
+    (all-the-icons-install-fonts t))
+  :config
+  (add-to-list 'all-the-icons-icon-alist
+               '("\\.ipynb" all-the-icons-fileicon "jupyter" :height 0.9 :face all-the-icons-orange))
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(ein:notebooklist-mode all-the-icons-faicon "book" :height 1.0 :v-adjust -0.1 :face all-the-icons-orange))
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(ein:notebook-mode all-the-icons-fileicon "jupyter" :height 0.9 :face all-the-icons-orange))
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(ein:notebook-multilang-mode all-the-icons-fileicon "jupyter" :height 0.9 :face all-the-icons-orange))
+  (add-to-list 'all-the-icons-icon-alist
+               '("\\.epub$" all-the-icons-faicon "book" :height 1.0 :v-adjust -0.1 :face all-the-icons-green))
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(nov-mode all-the-icons-faicon "book" :height 1.0 :v-adjust -0.1 :face all-the-icons-green))
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(gfm-mode  all-the-icons-octicon "markdown" :v-adjust 0.0 :face all-the-icons-lblue)))
 
 (use-package font-lock+
   :quelpa
