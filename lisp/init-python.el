@@ -75,7 +75,12 @@
 (use-package ein
   :diminish ein:notebook-mode
   :defines ein:completion-backend
-  :init (setq ein:completion-backend 'ein:use-company-backend))
+  :init
+  (setq ein:completion-backend 'ein:use-company-backend)
+
+  ;; WORKAROUND:https://github.com/millejoh/emacs-ipython-notebook/issues/496
+  (with-eval-after-load 'ido
+    (defalias 'ido-completing-read 'completing-read)))
 
 (use-package virtualenvwrapper)
 
