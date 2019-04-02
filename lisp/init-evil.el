@@ -48,12 +48,12 @@
       (call-interactively 'evil-shift-right)
       (evil-normal-state)
       (evil-visual-restore))
+    ;; treat _ as word like vim
+    ;; (with-eval-after-load 'evil
+    ;;   (defalias #'forward-evil-word #'forward-evil-symbol))
     ;; Overload shifts so that they don't lose the selection
     (define-key evil-visual-state-map (kbd "<") 'petmacs//evil-visual-shift-left)
-    (define-key evil-visual-state-map (kbd ">") 'petmacs//evil-visual-shift-right)
-    ;; treat _ as word like vim
-    (with-eval-after-load 'evil
-      (defalias #'forward-evil-word #'forward-evil-symbol))))
+    (define-key evil-visual-state-map (kbd ">") 'petmacs//evil-visual-shift-right)))
 
 (use-package evil-collection
   :after evil
