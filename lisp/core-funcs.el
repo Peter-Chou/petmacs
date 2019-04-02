@@ -8,6 +8,11 @@
   (require 'init-const)
   (require 'init-variable))
 
+(defun petmacs/popwin:compilation ()
+  "Display *compilation* buffer in a popup window."
+  (interactive)
+  (popwin:popup-buffer-tail "*compilation*"))
+
 (defun petmacs/ivy-persp-switch-project-advice (project)
   (let ((persp-reset-windows-on-nil-window-conf t))
     (persp-switch project)))

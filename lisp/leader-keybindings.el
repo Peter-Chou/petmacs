@@ -202,6 +202,7 @@
   "wd"  'delete-window
   "wF"  'make-frame
   "wpm" 'popwin:messages
+  "wpc" 'petmacs/popwin:compilation
   "wpp" 'popwin:close-popup-window)
 
 ;; leader-o family
