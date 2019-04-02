@@ -125,10 +125,12 @@
         evil-org-key-theme `(textobjects
                              navigation
                              additional
+			     calendar
                              todo))
   :config
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys))
+
 ;; Preview
 (use-package org-preview-html
   :diminish org-preview-html-mode)
