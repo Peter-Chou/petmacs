@@ -98,7 +98,8 @@
 
   (defun org-projectile/goto-todos ()
     (interactive)
-    (org-projectile-goto-location-for-project (projectile-project-name)))
+    (org-projectile-goto-location-for-project (projectile-project-name))
+    (revert-buffer))
 
   :init
   (with-eval-after-load 'org-capture

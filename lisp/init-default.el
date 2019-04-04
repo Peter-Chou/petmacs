@@ -111,6 +111,9 @@
   :diminish
   :hook (after-init . global-auto-revert-mode))
 
+;; revert buffer without confimation
+(setq revert-without-query '(".*"))
+
 ;; Pass a URL to a WWW browser
 (use-package browse-url
   :ensure nil
@@ -156,7 +159,11 @@
 ;; Show number of matches in mode-line while searching
 (use-package anzu
   :diminish
-  :bind (([remap query-replace] . anzu-query-replace)
+  :bind (([remap query-replace] . (lambda (&rest arg)
+                                    (interactive)
+                                    (if (thing-at-point 'symbol)
+                                        (anzu-query-replace-at-cursor)
+                                      (anzu-query-replace arg))))
          ([remap query-replace-regexp] . anzu-query-replace-regexp)
          :map isearch-mode-map
          ([remap isearch-query-replace] . anzu-isearch-query-replace)
