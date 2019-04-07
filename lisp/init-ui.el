@@ -84,7 +84,8 @@
     ;; Corrects (and improves) org-mode's native fontification.
     (doom-themes-org-config)))
 
-(load-theme 'doom-dracula t)
+;; (load-theme 'doom-dracula t)
+(load-theme 'doom-solarized-light t)
 
 (use-package display-line-numbers-mode
   :ensure nil
