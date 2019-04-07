@@ -14,7 +14,8 @@
   :config
   (setq flycheck-indication-mode 'right-fringe)
   (setq flycheck-emacs-lisp-load-path 'inherit)
-  (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
+  ;; disable python-flake8 which use python-pylint as default checker
+  (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc python-flake8))
 
   ;; Only check while saving and opening files
   (setq flycheck-check-syntax-automatically '(save mode-enabled)))
