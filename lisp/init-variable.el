@@ -8,7 +8,7 @@
 
 (defvar petmacs-default-coding-env 'utf-8)
 
-(defvar petmacs--font-size 15.5
+(defvar petmacs--font-size 13.5
   "default font size")
 
 (defvar petmacs-evil-leader-key "<SPC>"
