@@ -141,6 +141,7 @@
                           "ido.*"
                           "persp-confs"
                           "recentf"
+			  "undo-tree-hist"
                           "url"
                           "COMMIT_EDITMSG\\'")))
 
@@ -190,7 +191,13 @@
 ;; Treat undo history as a tree
 (use-package undo-tree
   :diminish
-  :hook (after-init . global-undo-tree-mode))
+  :hook (after-init . global-undo-tree-mode)
+  :init (setq undo-tree-visualizer-timestamps t
+              undo-tree-visualizer-diff t
+              undo-tree-auto-save-history t
+              undo-tree-enable-undo-in-region nil
+              undo-tree-history-directory-alist
+              `(("." . ,(concat user-emacs-directory "undo-tree-hist/")))))
 
 ;; Handling capitalized subwords in a nomenclature
 (use-package subword
