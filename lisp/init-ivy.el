@@ -8,7 +8,9 @@
   ;; C-M-j to create file/dir when name is match part of the exist file/dir
   :diminish ivy-mode counsel-mode
   :defines (projectile-completion-system magit-completing-read-function)
-  :bind (("C-s" . swiper)
+  :bind (
+	 ;; ("C-s" . swiper)
+	 ("C-s" . swiper-isearch)
          ("C-S-s" . swiper-all)
 
          ("C-c C-r" . ivy-resume)
