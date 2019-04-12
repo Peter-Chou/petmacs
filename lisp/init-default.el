@@ -54,6 +54,10 @@
       (modify-coding-system-alist 'file "\\.js\\(on\\)?\\'"'utf-8-unix)
       ;; yaml
       (modify-coding-system-alist 'file "\\.ya?ml\\'"'utf-8-unix)
+      ;; markdown
+      (modify-coding-system-alist 'file "\\.m[kd]\\'"'utf-8-unix)
+      ;; org
+      (modify-coding-system-alist 'file "\\.org\\'"'utf-8-unix)
       ;; c/c++
       (modify-coding-system-alist 'file "\\.[cChH]\\'" 'utf-8-unix)
       (modify-coding-system-alist 'file "\\[ch]pp\\'" 'utf-8-unix)
