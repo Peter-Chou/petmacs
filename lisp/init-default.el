@@ -63,6 +63,7 @@
       (modify-coding-system-alist 'file "\\[ch]pp\\'" 'utf-8-unix)
       (modify-coding-system-alist 'file "\\.cc\\'" 'utf-8-unix)
       (modify-coding-system-alist 'file "\\.CC\\'" 'utf-8-unix)
+      (modify-coding-system-alist 'file "\\.hh\\'" 'utf-8-unix)
       (modify-coding-system-alist 'file "\\.HH\\'" 'utf-8-unix)
       (modify-coding-system-alist 'file "\\.[ch]++\\'" 'utf-8-unix)
       ;; java
