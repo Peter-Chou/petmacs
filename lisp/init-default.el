@@ -235,5 +235,4 @@
          (minibuffer-setup . subword-mode)))
 
 (provide 'init-default)
-
 ;;; init-default.el ends here
