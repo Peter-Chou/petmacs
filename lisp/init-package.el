@@ -44,7 +44,7 @@
   (setq paradox-spinner-type 'progress-bar)
   (setq paradox-github-token t)
   (setq paradox-display-star-count nil)
-  (defalias 'upgrade-packages 'paradox-upgrade-packages))
+  (defalias #'upgrade-packages #'paradox-upgrade-packages))
 
 (provide 'init-package)
 
