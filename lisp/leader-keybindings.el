@@ -68,6 +68,12 @@
   "hdf" 'counsel-describe-function
   "hdv" 'counsel-describe-variable)
 
+;; leader-s search family
+(which-key-add-key-based-replacements
+  (format "%s s" petmacs-evil-leader-key) "search")
+(evil-leader/set-key
+  "se" 'evil-iedit-state/iedit-mode)
+
 ;; leader-f family
 (which-key-add-key-based-replacements
   (format "%s f" petmacs-evil-leader-key) "files")

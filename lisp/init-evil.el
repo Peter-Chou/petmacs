@@ -89,22 +89,16 @@
   (setq-default evil-fringe-mark-side 'right-fringe)
   (global-evil-fringe-mark-mode))
 
-;; using outline-minor-mode for evil folding
-(use-package outline-mode
-  :ensure nil
-  :hook (prog-mode . outline-minor-mode)
+(use-package evil-iedit-state
+  :commands (evil-iedit-state evil-iedit-state/iedit-mode)
   :init
-  ;; (evil-define-key 'normal outline-mode-map (kbd "zK") 'outline-show-branches) ; Show all children recursively but no body.
-  ;; (evil-define-key 'normal outline-mode-map (kbd "zk") 'outline-show-children) ; Direct children only unlike `outline-show-branches'
-  (define-key evil-normal-state-map (kbd "zB") 'outline-hide-body) ; Hide all bodies
-  (define-key evil-normal-state-map (kbd "zb") 'outline-show-all)  ; Hide current body
-  (define-key evil-normal-state-map (kbd "ze") 'outline-show-entry) ; Show current body only, not subtree, reverse of outline-hide-entry
-  (define-key evil-normal-state-map (kbd "zl") 'outline-hide-leaves) ; Like `outline-hide-body' but for current subtree only
-  (define-key evil-normal-state-map (kbd "zp") 'outline-hide-other)    ; Hide all nodes and bodies except current body.
-  (define-key evil-normal-state-map (kbd "zj") 'outline-forward-same-level)
-  (define-key evil-normal-state-map (kbd "zk") 'outline-backward-same-level)
-  (define-key evil-normal-state-map (kbd "M-j") 'outline-move-subtree-down)
-  (define-key evil-normal-state-map (kbd "M-k") 'outline-move-subtree-up))
+  (setq iedit-current-symbol-default t
+        iedit-only-at-symbol-boundaries t
+        iedit-toggle-key-default nil)
+  :config
+  ;; set TAB action
+  (define-key iedit-occurrence-keymap-default (kbd "TAB") 'iedit-toggle-selection)
+  (define-key iedit-occurrence-keymap-default [tab] 'iedit-toggle-selection))
 
 (provide 'init-evil)
 
