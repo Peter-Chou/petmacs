@@ -20,6 +20,12 @@
   (unless (or sys/win32p (member "all-the-icons" (font-family-list)))
     (all-the-icons-install-fonts t))
   :config
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(help-mode all-the-icons-faicon "info-circle" :height 1.1 :v-adjust -0.1 :face all-the-icons-purple))
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(Info-mode all-the-icons-faicon "info-circle" :height 1.1 :v-adjust -0.1))
+  (add-to-list 'all-the-icons-icon-alist
+               '("\\NEWS" all-the-icons-faicon "newspaper-o" :height 0.9 :v-adjust -0.2))
   (add-to-list 'all-the-icons-icon-alist
                '("\\.ipynb" all-the-icons-fileicon "jupyter" :height 1.2 :face all-the-icons-orange))
   (add-to-list 'all-the-icons-mode-icon-alist
@@ -34,6 +40,7 @@
                '(nov-mode all-the-icons-faicon "book" :face all-the-icons-green))
   (add-to-list 'all-the-icons-mode-icon-alist
                '(gfm-mode  all-the-icons-octicon "markdown" :face all-the-icons-blue)))
+
 (use-package font-lock+
   :quelpa
   (font-lock+ :repo "emacsmirror/font-lock-plus" :fetcher github))
