@@ -46,33 +46,6 @@
       ;; 这一句的话，新建文件以utf-8编码，行末结束符平台相关
       (prefer-coding-system 'utf-8-dos)
       (prefer-coding-system 'utf-8-unix)
-      (prefer-coding-system 'gb18030)
-
-      ;; python
-      (modify-coding-system-alist 'file "\\.py\\'" 'utf-8-unix)
-      ;; js / json
-      (modify-coding-system-alist 'file "\\.js\\(on\\)?\\'"'utf-8-unix)
-      ;; yaml
-      (modify-coding-system-alist 'file "\\.ya?ml\\'"'utf-8-unix)
-      ;; markdown
-      (modify-coding-system-alist 'file "\\.m[kd]\\'"'utf-8-unix)
-      ;; org
-      (modify-coding-system-alist 'file "\\.org\\'"'utf-8-unix)
-      ;; c/c++
-      (modify-coding-system-alist 'file "\\.[cChH]\\'" 'utf-8-unix)
-      (modify-coding-system-alist 'file "\\[ch]pp\\'" 'utf-8-unix)
-      (modify-coding-system-alist 'file "\\.cc\\'" 'utf-8-unix)
-      (modify-coding-system-alist 'file "\\.CC\\'" 'utf-8-unix)
-      (modify-coding-system-alist 'file "\\.hh\\'" 'utf-8-unix)
-      (modify-coding-system-alist 'file "\\.HH\\'" 'utf-8-unix)
-      (modify-coding-system-alist 'file "\\.[ch]++\\'" 'utf-8-unix)
-      ;; java
-      (modify-coding-system-alist 'file "\\.java\\'" 'utf-8-unix)
-      ;; scala
-      (modify-coding-system-alist 'file "\\.scala\\'" 'utf-8-unix)
-
-      ;; (defun petmacs//utf-8-file-open ()
-      ;;   (setq buffer-file-coding-system 'utf-8-unix))
       )
   (progn
     (set-language-environment petmacs-default-language-env)
