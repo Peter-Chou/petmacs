@@ -402,37 +402,13 @@ If the error list is visible, hide it.  Otherwise, show it."
     (switch-to-buffer "*compilation*")
     (comint-quit-subjob)
     (switch-to-buffer petmacs--previous-buffer-name)
-    (switch-to-buffer petmacs--current-buffer-name)
-    (set-language-environment petmacs-default-language-env)))
-
-(defun petmacs/windows-python-execute-file (arg)
-  "execute python file & produce correct chinese outputs"
-  (interactive "P")
-  (set-language-environment 'Chinese-GB18030)
-  (save-some-buffers t)
-  (petmacs/python-execute-file arg)
-  (set-language-environment petmacs-default-language-env))
-
-(defun petmacs/windows-python-execute-file-focus (arg)
-  "EXECUTE PYTHON FILE & SWITCH TO THE SHELL BUFFER IN INSERT STATE & PRODUCE CORRECT CHINESE OUTPUTS"
-  (interactive "P")
-  (set-language-environment 'Chinese-GB18030)
-  (save-some-buffers t)
-  (petmacs/python-execute-file-focus arg)
-  (set-language-environment petmacs-default-language-env))
-
-(defun petmacs/windows-python-start-or-switch-repl ()
-  (interactive)
-  (set-language-environment 'Chinese-GB18030)
-  (petmacs/python-start-or-switch-repl)
-  (other-window -1))
+    (switch-to-buffer petmacs--current-buffer-name)))
 
 (defun petmacs/python-quit-repl ()
   (interactive)
   (switch-to-buffer "*Python*")
   (comint-quit-subjob)
-  (kill-buffer-and-window)
-  (set-language-environment petmacs-default-language-env))
+  (kill-buffer-and-window))
 
 (defun petmacs/python-interrupt-repl ()
   (interactive)
@@ -444,17 +420,13 @@ If the error list is visible, hide it.  Otherwise, show it."
   "switch python virtualenvironment and restart anaconda server"
   (interactive)
   (call-interactively 'pyvenv-workon)
-  ;; (setq python-shell-virtualenv-path pyvenv-virtual-env)
-  (pythonic-activate pyvenv-virtual-env)
-  )
+  (pythonic-activate pyvenv-virtual-env))
 
 (defun petmacs/pyvenv-activate ()
   "switch python virtualenvironment and restart anaconda server"
   (interactive)
   (call-interactively 'pyvenv-activate)
-  ;; (setq python-shell-virtualenv-path pyvenv-virtual-env)
-  (pythonic-activate pyvenv-virtual-env)
-  )
+  (pythonic-activate pyvenv-virtual-env))
 
 (defun petmacs/pyvenv-deactivate ()
   "deactivate pyvenv & anaconda virtual enironment"
