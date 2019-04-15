@@ -84,6 +84,15 @@
      cands
      "\n"))
   (setq ivy-format-function 'petmacs//ivy-format-function-arrow)
+  (setq ivy-initial-inputs-alist nil)
+  (setq ivy-re-builders-alist
+        '((counsel-ag . ivy--regex-plus)
+          (counsel-rg . ivy--regex-plus)
+          (counsel-grep . ivy--regex-plus)
+          (counsel-grep-or-swiper . ivy--regex-plus)
+          (swiper . ivy--regex-plus)
+          (swiper-isearch . ivy--regex-plus)
+          (t . ivy--regex-fuzzy)))
 
   (setq swiper-action-recenter t)
   (setq counsel-find-file-at-point t)
