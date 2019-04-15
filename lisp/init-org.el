@@ -13,10 +13,8 @@
   (require 'org)
   (setq org-directory "~/org"
         org-default-notes-file (expand-file-name "notes.org" org-directory)
-        org-todo-keywords '((sequence "TODO(T)" "DOING(I)" "HANGUP(H)" "|" "DONE(D)" "CANCEL(C)")
-                            (sequence "⚑(t)" "🏴(i)" "❓(h)" "|" "✔(d)" "✘(c)"))
-        org-todo-keyword-faces '(("HANGUP" . warning)
-                                 ("❓" . warning))
+        org-todo-keywords '((sequence "TODO(t)" "DOING(i)" "HANGUP(h)" "|" "DONE(d)" "CANCEL(c)"))
+        org-todo-keyword-faces '(("HANGUP" . warning))
         org-pretty-entities t
 	org-hide-emphasis-markers t
         org-log-done t
