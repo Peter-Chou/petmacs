@@ -122,10 +122,8 @@
       counsel-rg
       counsel-pt))
 
-  (defvar my-ivy-fly-last-pos (- (point-min) 1))
-
   (defun my-ivy-fly-back-to-present ()
-    ;; (remove-hook 'pre-command-hook 'my-ivy-fly-back-to-present t)
+    (remove-hook 'pre-command-hook 'my-ivy-fly-back-to-present t)
     (cond ((and (memq last-command my-ivy-fly-commands)
                 (equal (this-command-keys-vector) (kbd "M-p")))
            ;; repeat one time to get straight to the first history item
@@ -135,12 +133,7 @@
           ((memq this-command '(self-insert-command
                                 ivy-yank-word))
            (delete-region (point)
-                          (point-max))
-           (when (and (memq this-command '(ivy-yank-word))
-                      (>= my-ivy-fly-last-pos (point-min)))
-             (with-ivy-window
-               (goto-char my-ivy-fly-last-pos)
-               (setq my-ivy-fly-last-pos 0))))))
+                          (point-max)))))
 
   (defun my-ivy-fly-time-travel ()
     (when (memq this-command my-ivy-fly-commands)
@@ -152,8 +145,6 @@
                                     (call-interactively cmd) t)
                               (buffer-string))))))
         (when future
-          (with-ivy-window
-            (setq my-ivy-fly-last-pos (point)))
           (save-excursion
             (insert (propertize future 'face 'shadow)))
           (add-hook 'pre-command-hook 'my-ivy-fly-back-to-present nil t)))))
@@ -306,13 +297,15 @@
              (buffer-file-name (buffer-file-name buffer))
              (major-mode (buffer-local-value 'major-mode buffer))
              (icon (if (and buffer-file-name
-                            (all-the-icons-match-to-alist buffer-file-name
-                                                          all-the-icons-icon-alist))
+                            (all-the-icons-auto-mode-match?))
                        (all-the-icons-icon-for-file (file-name-nondirectory buffer-file-name)
                                                     :height 0.9 :v-adjust -0.05)
                      (all-the-icons-icon-for-mode major-mode :height 0.9 :v-adjust -0.05))))
         (if (symbolp icon)
-            (setq icon (all-the-icons-faicon "file-o" :face 'all-the-icons-dsilver :height 0.9 :v-adjust -0.05))
+            (setq icon (all-the-icons-faicon "file-o"
+                                             :face 'all-the-icons-dsilver
+                                             :height 0.9
+                                             :v-adjust -0.05))
           icon))))
 
   (defun ivy-rich-file-icon (candidate)
