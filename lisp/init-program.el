@@ -249,6 +249,17 @@
   (define-key evil-normal-state-map (kbd "M-j") 'outline-move-subtree-down)
   (define-key evil-normal-state-map (kbd "M-k") 'outline-move-subtree-up))
 
+;; Compilation Mode
+(use-package compile
+  :ensure nil
+  :preface
+  ;; ANSI Coloring
+  ;; @see https://stackoverflow.com/questions/13397737/ansi-coloring-in-compilation-mode
+  (defun my-colorize-compilation-buffer ()
+    "ANSI coloring in compilation buffers."
+    (when (eq major-mode 'compilation-mode)
+      (ansi-color-apply-on-region compilation-filter-start (point-max))))
+  :hook (compilation-filter . my-colorize-compilation-buffer))
 
 (provide 'init-program)
 
