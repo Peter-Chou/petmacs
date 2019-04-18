@@ -250,6 +250,12 @@ Pass arg to ‘shell’."
   (interactive)
   (find-file-existing (concat user-emacs-directory "custom.el")))
 
+(defun petmacs/find-org-global-todos ()
+  "Edit the `dotfile', in the current window."
+  (interactive)
+  (find-file-existing (expand-file-name "TODOs.org" org-directory))
+  (revert-buffer nil t))
+
 (defun petmacs/alternate-buffer (&optional window)
   "Switch back and forth between current and last buffer in the
 current window."

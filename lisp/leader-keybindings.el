@@ -105,6 +105,7 @@
   "fyY" 'petmacs/projectile-copy-file-path
   "fyd" 'petmacs/copy-directory-path
   "fyn" 'petmacs/copy-file-name
+  "feo" 'petmacs/find-org-global-todos
   "fec" 'petmacs/find-custom-file
   "fed" 'petmacs/find-dotfile)
 
