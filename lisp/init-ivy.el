@@ -8,7 +8,8 @@
   :diminish ivy-mode counsel-mode
   :defines (projectile-completion-system magit-completing-read-function)
   :commands swiper-isearch
-  :bind (("C-s" . swiper-isearch)
+  :bind (("C-s" . swiper)
+         ("s-f" . swiper-isearch)
          ("C-S-s" . swiper-all)
 
          ("C-c C-r" . ivy-resume)
@@ -89,6 +90,7 @@
   (setq ivy-initial-inputs-alist nil)
   (setq ivy-re-builders-alist
         '((swiper . ivy--regex-plus)
+          (swiper-all . ivy--regex-plus)
           (swiper-isearch . ivy--regex-plus)
           (counsel-ag . ivy--regex-plus)
           (counsel-rg . ivy--regex-plus)
@@ -117,6 +119,7 @@
       keep-lines
       ivy-read
       swiper
+      swiper-all
       swiper-isearch
       counsel-grep
       counsel-ack
@@ -304,10 +307,7 @@
                                                     :height 0.9 :v-adjust -0.05)
                      (all-the-icons-icon-for-mode major-mode :height 0.9 :v-adjust -0.05))))
         (if (symbolp icon)
-            (setq icon (all-the-icons-faicon "file-o"
-                                             :face 'all-the-icons-dsilver
-                                             :height 0.9
-                                             :v-adjust -0.05))
+            (all-the-icons-faicon "file-o" :face 'all-the-icons-dsilver :height 0.9 :v-adjust -0.05)
           icon))))
 
   (defun ivy-rich-file-icon (candidate)
@@ -333,7 +333,7 @@
                          ((not (string-empty-p file))
                           (all-the-icons-icon-for-file file :height 0.9 :v-adjust -0.05)))))
         (if (symbolp icon)
-            (setq icon (all-the-icons-faicon "file-o" :face 'all-the-icons-dsilver :height 0.9 :v-adjust -0.05))
+            (all-the-icons-faicon "file-o" :face 'all-the-icons-dsilver :height 0.9 :v-adjust -0.05)
           icon))))
 
   (defun ivy-rich-function-icon (_candidate)
