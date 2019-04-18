@@ -12,6 +12,7 @@
   :init
   (require 'org)
   (setq org-directory "~/org"
+	org-use-sub-superscripts nil	;; disable ^ _ for (super/sub)script in display
         org-default-notes-file (expand-file-name "notes.org" org-directory)
         org-todo-keywords '((sequence "TODO(t)" "DOING(i)" "HANGUP(h)" "|" "DONE(d)" "CANCEL(c)"))
         org-todo-keyword-faces '(("HANGUP" . warning))
