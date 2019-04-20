@@ -29,6 +29,11 @@
 
   (add-to-list 'org-export-backends 'md)
 
+  (setq org-capture-templates
+        '(("t" "Todo" entry (file+headline "~/org/TODOs.org" "Todo soon")
+           "* TODO %? \n  %^t")
+          ))
+
   ;; Babel
   (setq org-confirm-babel-evaluate nil
         org-src-fontify-natively t
