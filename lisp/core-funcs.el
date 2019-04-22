@@ -346,6 +346,48 @@ as the pyenv version then also return nil. This works around https://github.com/
     (pop-to-buffer (process-buffer shell-process))
     (evil-insert-state)))
 
+(defun petmacs/python-shell-send-buffer-switch ()
+  "Send buffer content to shell and switch to it in insert mode."
+  (interactive)
+  (let ((python-mode-hook nil))
+    (python-shell-send-buffer)
+    (python-shell-switch-to-shell)
+    (evil-insert-state)))
+
+(defun petmacs/python-shell-send-buffer ()
+  "Send buffer content to shell and switch to it in insert mode."
+  (interactive)
+  (let ((python-mode-hook nil))
+    (python-shell-send-buffer)))
+
+(defun petmacs/python-shell-send-defun-switch ()
+  "Send function content to shell and switch to it in insert mode."
+  (interactive)
+  (let ((python-mode-hook nil))
+    (python-shell-send-defun nil)
+    (python-shell-switch-to-shell)
+    (evil-insert-state)))
+
+(defun petmacs/python-shell-send-defun ()
+  "Send function content to shell and switch to it in insert mode."
+  (interactive)
+  (let ((python-mode-hook nil))
+    (python-shell-send-defun nil)))
+
+(defun petmacs/python-shell-send-region-switch (start end)
+  "Send region content to shell and switch to it in insert mode."
+  (interactive "r")
+  (let ((python-mode-hook nil))
+    (python-shell-send-region start end)
+    (python-shell-switch-to-shell)
+    (evil-insert-state)))
+
+(defun petmacs/python-shell-send-region (start end)
+  "Send region content to shell and switch to it in insert mode."
+  (interactive "r")
+  (let ((python-mode-hook nil))
+    (python-shell-send-region start end)))
+
 (defun petmacs/error-delegate ()
   "Decide which error API to delegate to.
 
