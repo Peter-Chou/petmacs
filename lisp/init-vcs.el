@@ -139,6 +139,13 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
         git-gutter:hide-gutter t)
   )
 
+(use-package evil-magit
+  :pin melpa-stable
+  :init
+  (with-eval-after-load 'magit
+    (require 'evil-magit)
+    (add-hook 'git-commit-mode-hook 'evil-insert-state)))
+
 ;; Git related modes
 (use-package gitattributes-mode)
 (use-package gitignore-mode)
