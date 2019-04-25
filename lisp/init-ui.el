@@ -82,8 +82,9 @@
            'face (if (doom-modeline--active) 'doom-modeline-buffer-major-mode)))))
 
     (doom-modeline-def-modeline 'my-modeline-layout
-      '(bar workspace-number window-number evil-state god-state ryo-modal xah-fly-keys matches buffer-info remote-host buffer-position parrot selection-info)
-      '(misc-info persp-name lsp irc mu4e github debug minor-modes input-method buffer-encoding my-python-venv process vcs checker))
+      '(bar workspace-name window-number modals matches buffer-info remote-host buffer-position parrot selection-info)
+      '(objed-state misc-info persp-name lsp irc mu4e github debug fancy-battery minor-modes input-method buffer-encoding my-python-venv process vcs checker))
+
 
     (defun setup-custom-doom-modeline ()
       (doom-modeline-set-modeline 'my-modeline-layout 'default))))
