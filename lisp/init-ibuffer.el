@@ -7,12 +7,28 @@
 (use-package ibuffer
   :ensure nil
   :functions (all-the-icons-icon-for-file
-              all-the-icons-icon-for-mode
-              all-the-icons-auto-mode-match?
-              all-the-icons-faicon)
+               all-the-icons-icon-for-mode
+               all-the-icons-auto-mode-match?
+               all-the-icons-faicon)
+  :preface
+  (defun petmacs/ibuffer-previous-line ()
+    (interactive)
+    (previous-line)
+    (if (<= (line-number-at-pos) 2)
+	(goto-line (- (count-lines (point-min) (point-max)) 2))))
+
+  (defun petmacs/ibuffer-next-line ()
+    (interactive)
+    (next-line)
+    (if (>= (line-number-at-pos) (- (count-lines (point-min) (point-max)) 1))
+	(goto-line 3)))
+
   :commands ibuffer-find-file
   :bind ("C-x C-b" . ibuffer)
   :config
+  (define-key ibuffer-mode-map (kbd "j") 'petmacs/ibuffer-next-line)
+  (define-key ibuffer-mode-map (kbd "k") 'petmacs/ibuffer-previous-line)
+
   (setq ibuffer-filter-group-name-face '(:inherit (font-lock-string-face bold)))
 
   ;; Display buffer icons on GUI
@@ -52,9 +68,9 @@
   (use-package ibuffer-projectile
     :functions all-the-icons-octicon ibuffer-do-sort-by-alphabetic
     :hook ((ibuffer . (lambda ()
-                        (ibuffer-projectile-set-filter-groups)
-                        (unless (eq ibuffer-sorting-mode 'alphabetic)
-                          (ibuffer-do-sort-by-alphabetic)))))
+                         (ibuffer-projectile-set-filter-groups)
+                         (unless (eq ibuffer-sorting-mode 'alphabetic)
+                           (ibuffer-do-sort-by-alphabetic)))))
     :config
     (setq ibuffer-projectile-prefix
           (if (display-graphic-p)
