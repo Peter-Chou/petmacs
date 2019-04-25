@@ -57,11 +57,11 @@
                      nil)))
       (and err1 err2)))
 
-  (defun petmacs/ibuffer-next-header ()
+  (defun petmacs/ibuffer-next-group ()
     (interactive)
     (while (petmacs/ibuffer-next-line)))
 
-  (defun petmacs/ibuffer-previous-header ()
+  (defun petmacs/ibuffer-previous-group ()
     (interactive)
     (while (petmacs/ibuffer-previous-line)))
 
@@ -70,8 +70,8 @@
   :config
   (define-key ibuffer-mode-map (kbd "j") 'petmacs/ibuffer-next-line)
   (define-key ibuffer-mode-map (kbd "k") 'petmacs/ibuffer-previous-line)
-  (define-key ibuffer-mode-map (kbd "J") 'petmacs/ibuffer-next-header)
-  (define-key ibuffer-mode-map (kbd "K") 'petmacs/ibuffer-previous-header)
+  (define-key ibuffer-mode-map (kbd "J") 'petmacs/ibuffer-next-group)
+  (define-key ibuffer-mode-map (kbd "K") 'petmacs/ibuffer-previous-group)
 
   (setq ibuffer-filter-group-name-face '(:inherit (font-lock-string-face bold)))
 
@@ -112,9 +112,9 @@
   (use-package ibuffer-projectile
     :functions all-the-icons-octicon ibuffer-do-sort-by-alphabetic
     :hook ((ibuffer . (lambda ()
-                        (ibuffer-projectile-set-filter-groups)
-                        (unless (eq ibuffer-sorting-mode 'alphabetic)
-                          (ibuffer-do-sort-by-alphabetic)))))
+                         (ibuffer-projectile-set-filter-groups)
+                         (unless (eq ibuffer-sorting-mode 'alphabetic)
+                           (ibuffer-do-sort-by-alphabetic)))))
     :config
     (setq ibuffer-projectile-prefix
           (if (display-graphic-p)
