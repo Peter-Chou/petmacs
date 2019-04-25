@@ -5,9 +5,10 @@
 ;;; Code:
 
 (use-package magit
+  :pin melpa-stable
   :bind (("C-x g" . magit-status)
-         ("C-x M-g" . magit-dispatch-popup)
-         ("C-c M-g" . magit-file-popup))
+          ("C-x M-g" . magit-dispatch-popup)
+          ("C-c M-g" . magit-file-popup))
   :config
   (setq magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1)
   (add-to-list 'magit-log-arguments "--color")
@@ -50,14 +51,14 @@
     (git-timemachine-minibuffer-author-face ((t (:inherit font-lock-string-face))))
     (git-timemachine-minibuffer-detail-face ((t (:inherit warning))))
     :bind (:map vc-prefix-map
-		("t" . git-timemachine)))
+		  ("t" . git-timemachine)))
 
   ;; Pop up last commit information of current line
   (use-package git-messenger
     :bind (:map vc-prefix-map
-		("p" . git-messenger:popup-message)
-		:map git-messenger-map
-		("m" . git-messenger:copy-message))
+		  ("p" . git-messenger:popup-message)
+		  :map git-messenger-map
+		  ("m" . git-messenger:copy-message))
     :init
     ;; Use magit-show-commit for showing status/diff commands
     (setq git-messenger:use-magit-popup t))
