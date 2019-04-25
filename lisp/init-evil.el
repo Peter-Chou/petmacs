@@ -55,10 +55,10 @@
     (define-key evil-visual-state-map (kbd "<") 'petmacs//evil-visual-shift-left)
     (define-key evil-visual-state-map (kbd ">") 'petmacs//evil-visual-shift-right)))
 
-(use-package evil-collection
-  :after evil
-  :config
-  (evil-collection-init))
+;; (use-package evil-collection
+;;   :after evil
+;;   :config
+;;   (evil-collection-init))
 
 (use-package evil-escape
   :init
