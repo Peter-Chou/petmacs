@@ -205,6 +205,7 @@
 (which-key-add-key-based-replacements
   (format "%s w" petmacs-evil-leader-key) "windows")
 (evil-leader/set-key
+  "w."  'hydra-frame-window/body
   "wc"  'olivetti-mode
   "wd"  'delete-window
   "wF"  'make-frame

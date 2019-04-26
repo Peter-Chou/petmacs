@@ -510,6 +510,33 @@ If the error list is visible, hide it.  Otherwise, show it."
     (flush-lines "^[ ]*import ipdb")
     (flush-lines "^[ ]*ipdb.set_trace()")))
 
+(defhydra hydra-frame-window (:color pink :hint nil)
+  "
+^Frame^                 ^Window^      ^Window Size^^^^     ^Text Zoom^
+^^----------------------^^------------^^----------^^^^-----^^---------------         (__)
+_0_: delete             _t_oggle        ^ ^ _k_ ^ ^            _+_                   (oo)
+_1_: delete others      _s_wap          _h_ ^+^ _l_            _=_             /------\\/
+_2_: new                _d_elete        ^ ^ _j_ ^ ^            _-_            / |    ||
+_F_ullscreen            _o_ther         _b_alance^^^^          ^ ^         *  /\\-----/\\  ~~  C-c w/C-x o w
+"
+  ("0" delete-frame :exit t)
+  ("1" delete-other-frames :exit t)
+  ("2" make-frame  :exit t)
+  ("b" balance-windows)
+  ("s" ace-swap-window)
+  ("F" toggle-frame-fullscreen)
+  ("t" toggle-window-split)
+  ("d" ace-delete-window :exit t)
+  ("o" ace-window :exit t)
+  ("-" text-scale-decrease)
+  ("=" (text-scale-increase 0))
+  ("+" text-scale-increase)
+  ("h" shrink-window-horizontally)
+  ("k" shrink-window)
+  ("j" enlarge-window)
+  ("l" enlarge-window-horizontally)
+  ("q" nil "quit"))
+
 (provide 'core-funcs)
 
 ;;; core-funcs.el ends here
