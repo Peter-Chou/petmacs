@@ -5,28 +5,29 @@
 ;;; Code:
 
 (use-package treemacs
+  :pin melpa-stable
   :defines winum-keymap
   :commands (treemacs-follow-mode
-	     treemacs-current-visibility
-	     treemacs-select-window
-	     treemacs--window-number-ten
-             treemacs-filewatch-mode
-             treemacs-fringe-indicator-mode
-             treemacs-git-mode)
+	      treemacs-current-visibility
+	      treemacs-select-window
+	      treemacs--window-number-ten
+              treemacs-filewatch-mode
+              treemacs-fringe-indicator-mode
+              treemacs-git-mode)
   :bind (([f8]        . treemacs)
-         ("C-`"       . treemacs-select-window)
-         ("M-0"       . treemacs-select-window)
-         ("C-x 1"     . treemacs-delete-other-windows)
-         ("C-x t 1"   . treemacs-delete-other-windows)
-         ("C-x t t"   . treemacs)
-         ("C-x t b"   . treemacs-bookmark)
-         ("C-x t C-t" . treemacs-find-file)
-         ("C-x t M-t" . treemacs-find-tag)
-         :map treemacs-mode-map
-         ([mouse-1]   . treemacs-single-click-expand-action))
+          ("C-`"       . treemacs-select-window)
+          ("M-0"       . treemacs-select-window)
+          ("C-x 1"     . treemacs-delete-other-windows)
+          ("C-x t 1"   . treemacs-delete-other-windows)
+          ("C-x t t"   . treemacs)
+          ("C-x t b"   . treemacs-bookmark)
+          ("C-x t C-t" . treemacs-find-file)
+          ("C-x t M-t" . treemacs-find-tag)
+          :map treemacs-mode-map
+          ([mouse-1]   . treemacs-single-click-expand-action))
   :hook (treemacs-mode . (lambda ()
-			   (display-line-numbers-mode -1)
-			   (hl-line-mode -1)))
+			    (display-line-numbers-mode -1)
+			    (hl-line-mode -1)))
   :init
   ;; (with-eval-after-load 'winum
   ;;   (bind-key (kbd "M-0") #'treemacs-select-window winum-keymap))
@@ -92,6 +93,7 @@
                 #b00000111111))))
 
 (use-package treemacs-evil
+  :pin melpa-stable
   :defer t
   :init
   (with-eval-after-load 'treemacs
@@ -101,7 +103,18 @@
   (define-key evil-treemacs-state-map (kbd "+") 'treemacs-create-dir))
 
 (use-package treemacs-projectile
+  :pin melpa-stable
   :after treemacs)
+
+(use-package treemacs-magit
+  :pin melpa-stable
+  :after treemacs magit
+  :commands treemacs-magit--schedule-update
+  :hook ((magit-post-commit
+           git-commit-post-finish
+           magit-post-stage
+           magit-post-unstage)
+          . treemacs-magit--schedule-update))
 
 (provide 'init-treemacs)
 
