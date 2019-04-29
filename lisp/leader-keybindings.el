@@ -208,6 +208,7 @@
   "w."  'hydra-frame-window/body
   "wc"  'olivetti-mode
   "wd"  'delete-window
+  "wD"  'ace-delete-window
   "wF"  'make-frame
   "wpm" 'popwin:messages
   "wpc" 'petmacs/popwin:compilation
