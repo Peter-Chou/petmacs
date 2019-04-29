@@ -437,6 +437,12 @@ If the error list is visible, hide it.  Otherwise, show it."
       (quit-window nil window)
     (flycheck-list-errors)))
 
+(defun petmacs/open-mintty-terminal ()
+  (interactive)
+  (progn
+    (shell-command "mintty /bin/env MSYSTEM=MINGW64 CHERE_INVOKING=1 /bin/bash --login -i &")
+    (delete-window)))
+
 ;;;; python
 
 (defun petmacs/quit-subjob ()
