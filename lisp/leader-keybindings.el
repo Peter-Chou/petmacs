@@ -4,6 +4,10 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-const)
+  (require 'init-variable))
+
 (evil-leader/set-leader petmacs-evil-leader-key)
 (evil-major-leader/set-leader petmacs-evil-major-leader-key)
 
@@ -51,6 +55,9 @@
   "aoo" 'org-agenda
   "aos" 'org-search-view
   "aot" 'org-todo-list)
+(if sys/win32p
+    (evil-leader/set-key
+      "am" 'petmacs/open-mintty-terminal-here))
 
 ;; leader-q family
 (which-key-add-key-based-replacements
