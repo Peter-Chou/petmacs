@@ -415,63 +415,6 @@ as the pyenv version then also return nil. This works around https://github.com/
         (revert-buffer t t t))
     (message "Error: Cannot find autoflake executable.")))
 
-(defun petmacs/error-delegate ()
-  "Decide which error API to delegate to.
-
-Delegates to flycheck if it is enabled and the next-error buffer
-is not visible. Otherwise delegates to regular Emacs next-error."
-  (if (and (bound-and-true-p flycheck-mode)
-           (let ((buf (ignore-errors (next-error-find-buffer))))
-             (not (and buf (get-buffer-window buf)))))
-      'flycheck
-    'emacs))
-
-(defun petmacs/next-error (&optional n reset)
-  "Dispatch to flycheck or standard emacs error."
-  (interactive "P")
-  (let ((sys (petmacs/error-delegate)))
-    (cond
-     ((eq 'flycheck sys) (call-interactively 'flycheck-next-error))
-     ((eq 'emacs sys) (call-interactively 'next-error)))))
-
-(defun petmacs/previous-error (&optional n reset)
-  "Dispatch to flycheck or standard emacs error."
-  (interactive "P")
-  (let ((sys (petmacs/error-delegate)))
-    (cond
-     ((eq 'flycheck sys) (call-interactively 'flycheck-previous-error))
-     ((eq 'emacs sys) (call-interactively 'previous-error)))))
-
-
-(defun petmacs/treemacs-project-toggle ()
-  "Toggle and add the current project to treemacs if not already added."
-  (interactive)
-  (if (eq (treemacs-current-visibility) 'visible)
-      (delete-window (treemacs-get-local-window))
-    (let ((path (projectile-project-root))
-          (name (projectile-project-name)))
-      (unless (treemacs-current-workspace)
-        (treemacs--find-workspace))
-      (treemacs-do-add-project-to-workspace path name)
-      (treemacs-select-window))))
-
-
-(defun petmacs/toggle-flycheck-error-list ()
-  "Toggle flycheck's error list window.
-If the error list is visible, hide it.  Otherwise, show it."
-  (interactive)
-  (-if-let (window (flycheck-get-error-list-window))
-      (quit-window nil window)
-    (flycheck-list-errors)))
-
-(defun petmacs/open-mintty-terminal-here ()
-  (interactive)
-  (progn
-    (shell-command "mintty /bin/env MSYSTEM=MINGW64 CHERE_INVOKING=1 /bin/bash --login -i &")
-    (delete-window)))
-
-;;;; python
-
 (defun petmacs/quit-subjob ()
   "quit runing job in python buffer"
   (interactive)
@@ -547,6 +490,64 @@ If the error list is visible, hide it.  Otherwise, show it."
     (goto-char (point-min))
     (flush-lines "^[ ]*import ipdb")
     (flush-lines "^[ ]*ipdb.set_trace()")))
+
+
+(defun petmacs/error-delegate ()
+  "Decide which error API to delegate to.
+
+Delegates to flycheck if it is enabled and the next-error buffer
+is not visible. Otherwise delegates to regular Emacs next-error."
+  (if (and (bound-and-true-p flycheck-mode)
+           (let ((buf (ignore-errors (next-error-find-buffer))))
+             (not (and buf (get-buffer-window buf)))))
+      'flycheck
+    'emacs))
+
+(defun petmacs/next-error (&optional n reset)
+  "Dispatch to flycheck or standard emacs error."
+  (interactive "P")
+  (let ((sys (petmacs/error-delegate)))
+    (cond
+     ((eq 'flycheck sys) (call-interactively 'flycheck-next-error))
+     ((eq 'emacs sys) (call-interactively 'next-error)))))
+
+(defun petmacs/previous-error (&optional n reset)
+  "Dispatch to flycheck or standard emacs error."
+  (interactive "P")
+  (let ((sys (petmacs/error-delegate)))
+    (cond
+     ((eq 'flycheck sys) (call-interactively 'flycheck-previous-error))
+     ((eq 'emacs sys) (call-interactively 'previous-error)))))
+
+
+(defun petmacs/treemacs-project-toggle ()
+  "Toggle and add the current project to treemacs if not already added."
+  (interactive)
+  (if (eq (treemacs-current-visibility) 'visible)
+      (delete-window (treemacs-get-local-window))
+    (let ((path (projectile-project-root))
+          (name (projectile-project-name)))
+      (unless (treemacs-current-workspace)
+        (treemacs--find-workspace))
+      (treemacs-do-add-project-to-workspace path name)
+      (treemacs-select-window))))
+
+
+(defun petmacs/toggle-flycheck-error-list ()
+  "Toggle flycheck's error list window.
+If the error list is visible, hide it.  Otherwise, show it."
+  (interactive)
+  (-if-let (window (flycheck-get-error-list-window))
+      (quit-window nil window)
+    (flycheck-list-errors)))
+
+(defun petmacs/open-mintty-terminal-here ()
+  (interactive)
+  (progn
+    (shell-command "mintty /bin/env MSYSTEM=MINGW64 CHERE_INVOKING=1 /bin/bash --login -i &")
+    (delete-window)))
+
+;;; hydra
 
 (defhydra hydra-frame-window (:color pink :hint nil)
   "
