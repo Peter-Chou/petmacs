@@ -17,11 +17,12 @@
   :hook ((markdown-mode . orgtbl-mode)
 	  (markdown-mode . petmacs//cleanup-org-tables-on-save))
   :config
-  (define-key markdown-mode-map (kbd "M-<down>") 'markdown-move-down)
-  (define-key markdown-mode-map (kbd "M-<left>") 'markdown-promote)
-  (define-key markdown-mode-map (kbd "M-<right>") 'markdown-demote)
-  (define-key markdown-mode-map (kbd "M-<up>") 'markdown-move-up)
-  )
+  (dolist (s '(normal insert))
+    (evil-define-key s markdown-mode-map
+      (kbd "M-h") 'markdown-promote
+      (kbd "M-j") 'markdown-move-down
+      (kbd "M-k") 'markdown-move-up
+      (kbd "M-l") 'markdown-demote)))
 
 (use-package markdown-toc)
 
