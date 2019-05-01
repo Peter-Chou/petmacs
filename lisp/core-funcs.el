@@ -388,6 +388,33 @@ as the pyenv version then also return nil. This works around https://github.com/
   (let ((python-mode-hook nil))
     (python-shell-send-region start end)))
 
+(defun petmacs/python-load-venv-file ()
+  "Set pyvenv virtualenv from \".venv\" by looking in parent directories. handle directory or file"
+  (interactive)
+  (let ((root-path (locate-dominating-file default-directory
+                                           ".venv")))
+    (when root-path
+      (let* ((file-path (expand-file-name ".venv" root-path))
+             (virtualenv
+              (if (file-directory-p file-path)
+                  file-path
+                (with-temp-buffer
+                  (insert-file-contents-literally file-path)
+                  (buffer-substring-no-properties (line-beginning-position)
+                                                  (line-end-position))))))))))
+
+;; from https://www.snip2code.com/Snippet/127022/Emacs-auto-remove-unused-import-statemen
+(defun petmacs/python-remove-unused-imports()
+  "Use Autoflake to remove unused function"
+  "autoflake --remove-all-unused-imports -i unused_imports.py"
+  (interactive)
+  (if (executable-find "autoflake")
+      (progn
+        (shell-command (format "autoflake --remove-all-unused-imports -i %s"
+                               (shell-quote-argument (buffer-file-name))))
+        (revert-buffer t t t))
+    (message "Error: Cannot find autoflake executable.")))
+
 (defun petmacs/error-delegate ()
   "Decide which error API to delegate to.
 
@@ -491,8 +518,13 @@ If the error list is visible, hide it.  Otherwise, show it."
 (defun petmacs/python-highlight-breakpoint ()
   "highlight a break point"
   (interactive)
-  (highlight-lines-matching-regexp "^[ ]*import ipdb" 'hi-pink)
-  (highlight-lines-matching-regexp "^[ ]*ipdb.set_trace()" 'hi-pink))
+  ;; (highlight-lines-matching-regexp "^[ ]*import ipdb" 'hi-pink)
+  ;; (highlight-lines-matching-regexp "^[ ]*ipdb.set_trace()" 'hi-pink)
+  (highlight-lines-matching-regexp "breakpoint()" 'hi-pink)
+  (highlight-lines-matching-regexp "import \\(pdb\\|ipdb\\|pudb\\|wdb\\)" 'hi-pink)
+  (highlight-lines-matching-regexp "\\(pdb\\|ipdb\\|pudb\\|wdb\\).set_trace()" 'hi-pink)
+  (highlight-lines-matching-regexp "trepan.api.debug()" 'hi-pink)
+  )
 
 (defun petmacs/python-insert-breakpoint ()
   "Add a break point, highlight it."

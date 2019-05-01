@@ -10,8 +10,9 @@
 
 ;; Python Mode
 ;; Install:
-;;   pip install pyflakes
-;;   pip install autopep8
+;;   pip install yapf
+;;   pip install isort
+;;   pip install autoflake
 (use-package python
   :ensure nil
   :defines gud-pdb-command-name pdb-path

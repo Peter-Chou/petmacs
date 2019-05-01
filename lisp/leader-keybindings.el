@@ -253,11 +253,20 @@
 
 ;;; python
 (evil-leader/set-key-for-mode 'python-mode "m=" 'yapfify-buffer)
-(evil-leader/set-key-for-mode 'python-mode "mhh" 'anaconda-mode-show-doc)
+(evil-leader/set-key-for-mode 'python-mode "m." 'petmacs/python-load-venv-file)
+(evil-leader/set-key-for-mode 'python-mode "mcc" 'petmacs/python-execute-file)
+(evil-leader/set-key-for-mode 'python-mode "mcC" 'petmacs/python-execute-file-focus)
+(evil-leader/set-key-for-mode 'python-mode "mck" 'petmacs/quit-subjob)
+(evil-leader/set-key-for-mode 'python-mode "mdb" 'petmacs/python-insert-breakpoint)
+(evil-leader/set-key-for-mode 'python-mode "mdd" 'petmacs/python-delete-breakpoint)
+(evil-leader/set-key-for-mode 'python-mode "mdh" 'petmacs/python-highlight-breakpoint)
 (evil-leader/set-key-for-mode 'python-mode "mga" 'anaconda-mode-find-assignments)
 (evil-leader/set-key-for-mode 'python-mode "mgg" 'anaconda-mode-find-definitions)
 (evil-leader/set-key-for-mode 'python-mode "mgG" 'anaconda-mode-find-definitions-other-window)
 (evil-leader/set-key-for-mode 'python-mode "mgu" 'anaconda-mode-find-references)
+(evil-leader/set-key-for-mode 'python-mode "mhh" 'anaconda-mode-show-doc)
+(evil-leader/set-key-for-mode 'python-mode "mri" 'petmacs/python-remove-unused-imports)
+(evil-leader/set-key-for-mode 'python-mode "mrI" 'py-isort-buffer)
 ;; (evil-leader/set-key-for-mode 'python-mode "msb" 'python-shell-send-buffer)
 (evil-leader/set-key-for-mode 'python-mode "msB" 'petmacs/python-shell-send-buffer-switch)
 (evil-leader/set-key-for-mode 'python-mode "msb" 'petmacs/python-shell-send-buffer)
@@ -269,10 +278,6 @@
 (evil-leader/set-key-for-mode 'python-mode "msR" 'petmacs/python-shell-send-region-switch)
 (evil-leader/set-key-for-mode 'python-mode "msk" 'petmacs/python-interrupt-repl)
 (evil-leader/set-key-for-mode 'python-mode "msq" 'petmacs/python-quit-repl)
-(evil-leader/set-key-for-mode 'python-mode "mck" 'petmacs/quit-subjob)
-(evil-leader/set-key-for-mode 'python-mode "mdb" 'petmacs/python-insert-breakpoint)
-(evil-leader/set-key-for-mode 'python-mode "mdd" 'petmacs/python-delete-breakpoint)
-(evil-leader/set-key-for-mode 'python-mode "mdh" 'petmacs/python-highlight-breakpoint)
 (evil-leader/set-key-for-mode 'python-mode "mva" 'pyvenv-activate)
 (evil-leader/set-key-for-mode 'python-mode "mvd" 'pyvenv-deactivate)
 (evil-leader/set-key-for-mode 'python-mode "mvw" 'pyvenv-workon)
@@ -283,8 +288,6 @@
 (evil-leader/set-key-for-mode 'python-mode "mvps" 'pipenv-shell)
 (evil-leader/set-key-for-mode 'python-mode "mvpu" 'pipenv-uninstall)
 
-(evil-leader/set-key-for-mode 'python-mode "mcc" 'petmacs/python-execute-file)
-(evil-leader/set-key-for-mode 'python-mode "mcC" 'petmacs/python-execute-file-focus)
 
 ;;;; evil jump
 
