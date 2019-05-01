@@ -133,7 +133,6 @@
   "gU"  'magit-unstage-file
   "gho" 'browse-at-remote)
 
-
 ;; leader-i insert family
 (which-key-add-key-based-replacements
   (format "%s i" petmacs-evil-leader-key) "insert")
@@ -226,12 +225,14 @@
   (format "%s o" petmacs-evil-leader-key) "yours")
 (evil-leader/set-key
   "ow"  'whitespace-cleanup
+  ;; bookmarks
   "obs" 'bookmark-set
   "obd" 'bookmark-delete
   "obr" 'bookmark-rename
   "obl" 'bookmark-bmenu-list)
 
 ;;;; major mode specific keybinding
+
 (which-key-add-key-based-replacements
   (format "%s m" petmacs-evil-leader-key) "major mode cmds")
 
@@ -247,55 +248,121 @@
 (petmacs//set-key-prefix-name "v" "virtualenv")
 (petmacs//set-key-prefix-name "vp" "pipenv")
 
-
 ;;; json
 (evil-leader/set-key-for-mode 'json-mode "m=" 'prettier-js)
 
 ;;; python
-(evil-leader/set-key-for-mode 'python-mode "m=" 'yapfify-buffer)
-(evil-leader/set-key-for-mode 'python-mode "m." 'petmacs/python-load-venv-file)
-(evil-leader/set-key-for-mode 'python-mode "mcc" 'petmacs/python-execute-file)
-(evil-leader/set-key-for-mode 'python-mode "mcC" 'petmacs/python-execute-file-focus)
-(evil-leader/set-key-for-mode 'python-mode "mck" 'petmacs/quit-subjob)
-(evil-leader/set-key-for-mode 'python-mode "mdb" 'petmacs/python-insert-breakpoint)
-(evil-leader/set-key-for-mode 'python-mode "mdd" 'petmacs/python-delete-breakpoint)
-(evil-leader/set-key-for-mode 'python-mode "mdh" 'petmacs/python-highlight-breakpoint)
-(evil-leader/set-key-for-mode 'python-mode "mga" 'anaconda-mode-find-assignments)
-(evil-leader/set-key-for-mode 'python-mode "mgg" 'anaconda-mode-find-definitions)
-(evil-leader/set-key-for-mode 'python-mode "mgG" 'anaconda-mode-find-definitions-other-window)
-(evil-leader/set-key-for-mode 'python-mode "mgu" 'anaconda-mode-find-references)
-(evil-leader/set-key-for-mode 'python-mode "mhh" 'anaconda-mode-show-doc)
-(evil-leader/set-key-for-mode 'python-mode "mri" 'petmacs/python-remove-unused-imports)
-(evil-leader/set-key-for-mode 'python-mode "mrI" 'py-isort-buffer)
-;; (evil-leader/set-key-for-mode 'python-mode "msb" 'python-shell-send-buffer)
-(evil-leader/set-key-for-mode 'python-mode "msB" 'petmacs/python-shell-send-buffer-switch)
-(evil-leader/set-key-for-mode 'python-mode "msb" 'petmacs/python-shell-send-buffer)
-(evil-leader/set-key-for-mode 'python-mode "msb" 'petmacs/python-shell-send-buffer)
-(evil-leader/set-key-for-mode 'python-mode "msF" 'petmacs/python-shell-send-defun-switch)
-(evil-leader/set-key-for-mode 'python-mode "msf" 'petmacs/python-shell-send-defun)
-(evil-leader/set-key-for-mode 'python-mode "msi" 'petmacs/python-start-or-switch-repl)
-(evil-leader/set-key-for-mode 'python-mode "msr" 'petmacs/python-shell-send-region)
-(evil-leader/set-key-for-mode 'python-mode "msR" 'petmacs/python-shell-send-region-switch)
-(evil-leader/set-key-for-mode 'python-mode "msk" 'petmacs/python-interrupt-repl)
-(evil-leader/set-key-for-mode 'python-mode "msq" 'petmacs/python-quit-repl)
-(evil-leader/set-key-for-mode 'python-mode "mva" 'pyvenv-activate)
-(evil-leader/set-key-for-mode 'python-mode "mvd" 'pyvenv-deactivate)
-(evil-leader/set-key-for-mode 'python-mode "mvw" 'pyvenv-workon)
-(evil-leader/set-key-for-mode 'python-mode "mvpa" 'pipenv-activate)
-(evil-leader/set-key-for-mode 'python-mode "mvpd" 'pipenv-deactivate)
-(evil-leader/set-key-for-mode 'python-mode "mvpi" 'pipenv-install)
-(evil-leader/set-key-for-mode 'python-mode "mvpo" 'pipenv-open)
-(evil-leader/set-key-for-mode 'python-mode "mvps" 'pipenv-shell)
-(evil-leader/set-key-for-mode 'python-mode "mvpu" 'pipenv-uninstall)
+(evil-leader/set-key-for-mode 'python-mode
+  "m=" 'yapfify-buffer
+  "m=" 'yapfify-buffer
+  "m." 'petmacs/python-load-venv-file
+  "mcc" 'petmacs/python-execute-file
+  "mcC" 'petmacs/python-execute-file-focus
+  "mck" 'petmacs/quit-subjob
+  "mdb" 'petmacs/python-insert-breakpoint
+  "mdd" 'petmacs/python-delete-breakpoint
+  "mdh" 'petmacs/python-highlight-breakpoint
+  "mga" 'anaconda-mode-find-assignments
+  "mgg" 'anaconda-mode-find-definitions
+  "mgG" 'anaconda-mode-find-definitions-other-window
+  "mgu" 'anaconda-mode-find-references
+  "mhh" 'anaconda-mode-show-doc
+  "mri" 'petmacs/python-remove-unused-imports
+  "mrI" 'py-isort-buffer
+  "msB" 'petmacs/python-shell-send-buffer-switch
+  "msb" 'petmacs/python-shell-send-buffer
+  "msb" 'petmacs/python-shell-send-buffer
+  "msF" 'petmacs/python-shell-send-defun-switch
+  "msf" 'petmacs/python-shell-send-defun
+  "msi" 'petmacs/python-start-or-switch-repl
+  "msr" 'petmacs/python-shell-send-region
+  "msR" 'petmacs/python-shell-send-region-switch
+  "msk" 'petmacs/python-interrupt-repl
+  "msq" 'petmacs/python-quit-repl
+  "mva" 'pyvenv-activate
+  "mvd" 'pyvenv-deactivate
+  "mvw" 'pyvenv-workon
+  "mvpa" 'pipenv-activate
+  "mvpd" 'pipenv-deactivate
+  "mvpi" 'pipenv-install
+  "mvpo" 'pipenv-open
+  "mvps" 'pipenv-shell
+  "mvpu" 'pipenv-uninstall)
 
+;;; markdown
+(evil-leader/set-key-for-mode 'markdown-mode
+  ;; Movement
+  "m{"   'markdown-backward-paragraph
+  "m}"   'markdown-forward-paragraph
+  ;; Completion, and Cycling
+  "m]"   'markdown-complete
+  ;; Indentation
+  "m>"   'markdown-indent-region
+  "m<"   'markdown-outdent-region
+  ;; Buffer-wide commands
+  "mc]"  'markdown-complete-buffer
+  "mcc"  'markdown-check-refs
+  "mce"  'markdown-export
+  "mcm"  'markdown-other-window
+  "mcn"  'markdown-cleanup-list-numbers
+  "mco"  'markdown-open
+  "mcp"  'markdown-preview
+  "mcv"  'markdown-export-and-preview
+  "mcw"  'markdown-kill-ring-save
+  ;; headings
+  "mhi"  'markdown-insert-header-dwim
+  "mhI"  'markdown-insert-header-setext-dwim
+  "mh1"  'markdown-insert-header-atx-1
+  "mh2"  'markdown-insert-header-atx-2
+  "mh3"  'markdown-insert-header-atx-3
+  "mh4"  'markdown-insert-header-atx-4
+  "mh5"  'markdown-insert-header-atx-5
+  "mh6"  'markdown-insert-header-atx-6
+  "mh!"  'markdown-insert-header-setext-1
+  "mh@"  'markdown-insert-header-setext-2
+  ;; Insertion of common elements
+  "m-"   'markdown-insert-hr
+  "mif"  'markdown-insert-footnote
+  "mii"  'markdown-insert-image
+  "mik"  'spacemacs/insert-keybinding-markdown
+  "mil"  'markdown-insert-link
+  "miw"  'markdown-insert-wiki-link
+  "miu"  'markdown-insert-uri
+  ;; Element removal
+  "mk"   'markdown-kill-thing-at-point
+  ;; List editing
+  "li"  'markdown-insert-list-item
+  ;; Toggles
+  "mti"  'markdown-toggle-inline-images
+  "mtm"  'markdown-toggle-markup-hiding
+  "mtl"  'markdown-toggle-url-hiding
+  "mtt"  'markdown-toggle-gfm-checkbox
+  "mtw"  'markdown-toggle-wiki-links
+  ;; region manipulation
+  "mxb"  'markdown-insert-bold
+  "mxi"  'markdown-insert-italic
+  "mxc"  'markdown-insert-code
+  "mxC"  'markdown-insert-gfm-code-block
+  "mxq"  'markdown-insert-blockquote
+  "mxQ"  'markdown-blockquote-region
+  "mxp"  'markdown-insert-pre
+  "mxP"  'markdown-pre-region
+  ;; Following and Jumping
+  "mN"   'markdown-next-link
+  "mf"   'markdown-follow-thing-at-point
+  "mP"   'markdown-previous-link
+  "m <RET>" 'markdown-do
+  "mit" 'markdown-toc-generate-toc
+  ;; "cP" 'markdown-live-preview-mode
+  )
 
-;;;; evil jump
+;;;; evil jumps
 
-;; python mode
+;;; evil jump in python mode
 (evil-define-minor-mode-key 'normal 'anaconda-mode (kbd "gd") 'anaconda-mode-find-definitions)
 (evil-define-minor-mode-key 'normal 'anaconda-mode (kbd "gD") 'anaconda-mode-find-definitions-other-window)
 
-;; python mode
+;; evil jump in elisp mode
 (evil-define-key 'normal emacs-lisp-mode-map (kbd "gD") 'petmacs/evil-goto-definition-other-window)
 
 (provide 'leader-keybindings)
