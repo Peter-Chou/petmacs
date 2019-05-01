@@ -78,11 +78,19 @@
     (add-hook 'before-save-hook 'petmacs//python-sort-imports))
   )
 
-;; Emacs IPython Notebook
-(use-package ein
-  :diminish ein:notebook-mode
-  :defines ein:completion-backend
-  :init (setq ein:completion-backend 'ein:use-company-backend))
+(use-package pipenv
+  :commands (pipenv-activate
+              pipenv-deactivate
+              pipenv-shell
+              pipenv-open
+              pipenv-install
+              pipenv-uninstall))
+
+  ;; Emacs IPython Notebook
+  (use-package ein
+    :diminish ein:notebook-mode
+    :defines ein:completion-backend
+    :init (setq ein:completion-backend 'ein:use-company-backend))
 
 (use-package virtualenvwrapper)
 

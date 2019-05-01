@@ -245,6 +245,7 @@
 (petmacs//set-key-prefix-name "s" "REPL")
 (petmacs//set-key-prefix-name "h" "help")
 (petmacs//set-key-prefix-name "v" "virtualenv")
+(petmacs//set-key-prefix-name "vp" "pipenv")
 
 
 ;;; json
@@ -275,6 +276,12 @@
 (evil-leader/set-key-for-mode 'python-mode "mva" 'pyvenv-activate)
 (evil-leader/set-key-for-mode 'python-mode "mvd" 'pyvenv-deactivate)
 (evil-leader/set-key-for-mode 'python-mode "mvw" 'pyvenv-workon)
+(evil-leader/set-key-for-mode 'python-mode "mvpa" 'pipenv-activate)
+(evil-leader/set-key-for-mode 'python-mode "mvpd" 'pipenv-deactivate)
+(evil-leader/set-key-for-mode 'python-mode "mvpi" 'pipenv-install)
+(evil-leader/set-key-for-mode 'python-mode "mvpo" 'pipenv-open)
+(evil-leader/set-key-for-mode 'python-mode "mvps" 'pipenv-shell)
+(evil-leader/set-key-for-mode 'python-mode "mvpu" 'pipenv-uninstall)
 
 (evil-leader/set-key-for-mode 'python-mode "mcc" 'petmacs/python-execute-file)
 (evil-leader/set-key-for-mode 'python-mode "mcC" 'petmacs/python-execute-file-focus)
