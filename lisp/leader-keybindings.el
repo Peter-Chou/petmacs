@@ -331,7 +331,7 @@
   ;; Element removal
   "mk"   'markdown-kill-thing-at-point
   ;; List editing
-  "li"  'markdown-insert-list-item
+  "mli"  'markdown-insert-list-item
   ;; Toggles
   "mti"  'markdown-toggle-inline-images
   "mtm"  'markdown-toggle-markup-hiding
