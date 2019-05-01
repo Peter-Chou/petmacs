@@ -19,6 +19,13 @@
   ;; Disable readline based native completion
   (setq python-shell-completion-native-enable nil)
 
+  (define-key inferior-python-mode-map (kbd "C-j") 'comint-next-input)
+  (define-key inferior-python-mode-map (kbd "<up>") 'comint-next-input)
+  (define-key inferior-python-mode-map (kbd "C-k") 'comint-previous-input)
+  (define-key inferior-python-mode-map (kbd "<down>") 'comint-previous-input)
+  (define-key inferior-python-mode-map
+    (kbd "C-r") 'comint-history-isearch-backward)
+
   (add-hook 'inferior-python-mode-hook
             (lambda ()
               ;; (bind-key "C-c C-z" #'kill-buffer-and-window inferior-python-mode-map)
