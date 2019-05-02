@@ -305,7 +305,8 @@
   "mce"  'markdown-export
   "mcm"  'markdown-other-window
   "mcn"  'markdown-cleanup-list-numbers
-  "mco"  'markdown-open
+  ;; "mco"  'markdown-open
+  "mco"  'petmacs/open-markdown-in-typora
   "mcp"  'markdown-preview
   "mcv"  'markdown-export-and-preview
   "mcw"  'markdown-kill-ring-save
@@ -353,8 +354,7 @@
   "mP"   'markdown-previous-link
   "m <RET>" 'markdown-do
   "mit" 'markdown-toc-generate-toc
-  ;; "cP" 'markdown-live-preview-mode
-  )
+  "mcP" 'vmd-mode)
 
 ;;;; evil jumps
 
