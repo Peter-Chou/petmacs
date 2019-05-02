@@ -5,7 +5,15 @@
 ;;; Code:
 
 (use-package markdown-mode
+  ;; markdown linting: npm i -g markdownlint-cli
   :preface
+  ;; add Typora executable into $PATH
+  (defun petmacs/open-markdown-in-typora ()
+    (interactive)
+    (progn
+      (shell-command (format "Typora %s &" (buffer-file-name)))
+      (delete-window)))
+
   ;; stolen from http://stackoverflow.com/a/26297700
   ;; makes markdown tables saner via orgtbl-mode
   (defun petmacs//cleanup-org-tables ()
@@ -32,6 +40,12 @@
     (let ((petmacs--typora"C:/Program Files/Typora/Typora.exe"))
       (if (file-exists-p petmacs--typora)
           (setq markdown-open-command petmacs--typora)))))
+
+;; install nodejs
+;; use taobao mirror:
+;; $ npm config set registry https://registry.npm.taobao.org
+;; $ npm install -g vmd
+(use-package vmd-mode)
 
 (use-package markdown-toc)
 
