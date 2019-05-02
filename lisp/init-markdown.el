@@ -1,3 +1,8 @@
+;; init-markdown.el --- Setup markdown.  -*- lexical-binding: t -*-
+
+;;; Commentary:
+
+;;; Code:
 
 (use-package markdown-mode
   :preface
@@ -22,8 +27,14 @@
       (kbd "M-h") 'markdown-promote
       (kbd "M-j") 'markdown-move-down
       (kbd "M-k") 'markdown-move-up
-      (kbd "M-l") 'markdown-demote)))
+      (kbd "M-l") 'markdown-demote))
+  (when sys/win32p
+    (let ((petmacs--typora"C:/Program Files/Typora/Typora.exe"))
+      (if (file-exists-p petmacs--typora)
+          (setq markdown-open-command petmacs--typora)))))
 
 (use-package markdown-toc)
 
 (provide 'init-markdown)
+
+;;; init-markdown.el ends here
