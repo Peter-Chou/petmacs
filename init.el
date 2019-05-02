@@ -83,6 +83,7 @@
 (require 'init-c-c++)
 (require 'init-python)
 (require 'init-org)
+(require 'init-markdown)
 (require 'init-json)
 (require 'init-yaml)
 (require 'init-sql)
