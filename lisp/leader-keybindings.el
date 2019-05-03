@@ -205,7 +205,8 @@
   (format "%s t" petmacs-evil-leader-key) "toggle")
 (evil-leader/set-key
   "t-" 'centered-cursor-mode
-  "ts" 'flycheck-mode)
+  "ts" 'flycheck-mode
+  "tf" 'focus-mode)
 
 ;; leader-w family
 (which-key-add-key-based-replacements
