@@ -8,8 +8,8 @@
   :diminish ivy-mode counsel-mode
   :defines (projectile-completion-system magit-completing-read-function)
   :commands swiper-isearch
-  :bind (("C-s" . swiper)
-          ("s-f" . swiper-isearch)
+  :bind (("C-s" . swiper-isearch)
+          ("s-f" . swiper)
           ("C-S-s" . swiper-all)
 
           ("C-c C-r" . ivy-resume)
@@ -77,7 +77,7 @@
           :map swiper-map
           ("M-%" . swiper-query-replace))
   :hook ((after-init . ivy-mode)
-          (ivy-mode . counsel-mode))
+         (ivy-mode . counsel-mode))
   :config
   (setq enable-recursive-minibuffers t) ; Allow commands in minibuffers
 
