@@ -217,9 +217,10 @@
   "wd"  'delete-window
   "wD"  'ace-delete-window
   "wF"  'make-frame
-  "wpm" 'popwin:messages
-  "wpc" 'petmacs/popwin:compilation
-  "wpp" 'popwin:close-popup-window)
+  "wpm" 'petmacs/shackle-popup-message-buffer
+  "wpc" 'petmacs/shackle-popup-compilation-buffer
+  "wpl" 'petamcs/shackle-popup-last-buffer
+  )
 
 ;; leader-o family
 (which-key-add-key-based-replacements
