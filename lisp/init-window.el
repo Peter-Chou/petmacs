@@ -76,50 +76,50 @@
   :commands shackle-display-buffer
   :hook (after-init . shackle-mode)
   :config
-(eval-and-compile
-  (defun petamcs/shackle-popup-last-buffer ()
-    "View last popup buffer."
-    (interactive)
-    (ignore-errors
-      (display-buffer shackle-last-buffer)))
+  (eval-and-compile
+    (defun petamcs/shackle-popup-last-buffer ()
+      "View last popup buffer."
+      (interactive)
+      (ignore-errors
+	(display-buffer shackle-last-buffer)))
 
-  ;; Add keyword: `autoclose'
-  (defun shackle-display-buffer-hack (fn buffer alist plist)
-    (let ((window (funcall fn buffer alist plist)))
-      (setq shackle--current-popup-window window)
+    ;; Add keyword: `autoclose'
+    (defun shackle-display-buffer-hack (fn buffer alist plist)
+      (let ((window (funcall fn buffer alist plist)))
+	(setq shackle--current-popup-window window)
 
-      (when (plist-get plist :autoclose)
-        (push (cons window buffer) shackle--popup-window-list))
-      window))
+	(when (plist-get plist :autoclose)
+          (push (cons window buffer) shackle--popup-window-list))
+	window))
 
-  (defun shackle-close-popup-window-hack (&rest _)
-    "Close current popup window via `C-g'."
-    (setq shackle--popup-window-list
-          (cl-loop for (window . buffer) in shackle--popup-window-list
-                   if (and (window-live-p window)
-                           (equal (window-buffer window) buffer))
-                   collect (cons window buffer)))
-    ;; `C-g' can deactivate region
-    (when (and (called-interactively-p 'interactive)
-               (not (region-active-p)))
-      (let (window buffer)
-        (if (one-window-p)
-            (progn
-              (setq window (selected-window))
-              (when (equal (buffer-local-value 'shackle--current-popup-window
-                                               (window-buffer window))
-                           window)
-                (winner-undo)))
-          (setq window (caar shackle--popup-window-list))
-          (setq buffer (cdar shackle--popup-window-list))
-          (when (and (window-live-p window)
-                     (equal (window-buffer window) buffer))
-            (delete-window window)
+    (defun shackle-close-popup-window-hack (&rest _)
+      "Close current popup window via `C-g'."
+      (setq shackle--popup-window-list
+            (cl-loop for (window . buffer) in shackle--popup-window-list
+                     if (and (window-live-p window)
+                             (equal (window-buffer window) buffer))
+                     collect (cons window buffer)))
+      ;; `C-g' can deactivate region
+      (when (and (called-interactively-p 'interactive)
+		 (not (region-active-p)))
+	(let (window buffer)
+          (if (one-window-p)
+              (progn
+		(setq window (selected-window))
+		(when (equal (buffer-local-value 'shackle--current-popup-window
+						 (window-buffer window))
+                             window)
+                  (winner-undo)))
+            (setq window (caar shackle--popup-window-list))
+            (setq buffer (cdar shackle--popup-window-list))
+            (when (and (window-live-p window)
+                       (equal (window-buffer window) buffer))
+              (delete-window window)
 
-            (pop shackle--popup-window-list))))))
+              (pop shackle--popup-window-list))))))
 
-  (advice-add #'keyboard-quit :before #'shackle-close-popup-window-hack)
-  (advice-add #'shackle-display-buffer :around #'shackle-display-buffer-hack))
+    (advice-add #'keyboard-quit :before #'shackle-close-popup-window-hack)
+    (advice-add #'shackle-display-buffer :around #'shackle-display-buffer-hack))
 
   ;; rules
   (setq shackle-default-size 0.4)
@@ -162,7 +162,6 @@
           (list-environment-mode :select t :size 0.3 :align 'below :autoclose t)
           (profiler-report-mode :select t :size 0.5 :align 'below)
           (tabulated-list-mode :align 'below))))
-
 
 ;; center window
 (use-package olivetti
