@@ -31,6 +31,9 @@
 
   (add-to-list 'org-export-backends 'md)
 
+  ;; Override `org-switch-to-buffer-other-window' for compatibility with `shackle'
+  (advice-add #'org-switch-to-buffer-other-window :override #'switch-to-buffer-other-window)
+
   (setq org-capture-templates
         '(("t" "Todo" entry (file+headline "~/org/TODOs.org" "Todo soon")
            "* TODO %? \n  %^t")
