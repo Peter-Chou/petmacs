@@ -107,10 +107,10 @@
        (concat (if (display-graphic-p)
                    (all-the-icons-octicon "chevron-right" :height 0.8 :v-adjust -0.05)
                  ">")
-               "\t"
+               (propertize " " 'display `(space :align-to 2))
                (ivy--add-face str 'ivy-current-match)))
      (lambda (str)
-       (concat "\t\t" str))
+       (concat (propertize " " 'display `(space :align-to 2)) str))
      cands
      "\n"))
   (setq ivy-format-function 'my-ivy-format-function-arrow)
@@ -210,7 +210,7 @@
   ;; Additional key bindings for Ivy
   (use-package ivy-hydra
     :bind (:map ivy-minibuffer-map
-                  ("M-o" . ivy-dispatching-done-hydra)))
+                ("M-o" . ivy-dispatching-done-hydra)))
 
   ;; Ivy integration for Projectile
   (use-package counsel-projectile
@@ -240,7 +240,7 @@
   (use-package flyspell-correct-ivy
     :after flyspell
     :bind (:map flyspell-mode-map
-                  ([remap flyspell-correct-word-before-point] . flyspell-correct-previous-word-generic)))
+                ([remap flyspell-correct-word-before-point] . flyspell-correct-previous-word-generic)))
 
   ;; Quick launch apps
   (cond
@@ -249,17 +249,17 @@
    (sys/macp
     (use-package counsel-osx-app
       :bind (:map counsel-mode-map
-                    ("C-<f6>" . counsel-osx-app)))))
+                  ("C-<f6>" . counsel-osx-app)))))
 
   ;; Display world clock using Ivy
   (use-package counsel-world-clock
     :bind (:map counsel-mode-map
-                  ("C-c c k" . counsel-world-clock)))
+                ("C-c c k" . counsel-world-clock)))
 
   ;; Tramp ivy interface
   (use-package counsel-tramp
     :bind (:map counsel-mode-map
-                  ("C-c c v" . counsel-tramp)))
+                ("C-c c v" . counsel-tramp)))
 
   ;; Support pinyin in Ivy
   ;; Input prefix ':' to match pinyin
