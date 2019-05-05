@@ -543,9 +543,7 @@ If the error list is visible, hide it.  Otherwise, show it."
 
 (defun petmacs/open-mintty-terminal-here ()
   (interactive)
-  (progn
-    (shell-command "mintty /bin/env MSYSTEM=MINGW64 CHERE_INVOKING=1 /bin/bash --login -i &")
-    (delete-window)))
+  (call-process-shell-command  "mintty /bin/env MSYSTEM=MINGW64 CHERE_INVOKING=1 /bin/bash --login -i &" nil 0))
 
 ;;; hydra
 

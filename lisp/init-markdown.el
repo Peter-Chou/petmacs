@@ -10,9 +10,7 @@
   ;; add Typora executable into $PATH
   (defun petmacs/open-markdown-in-typora ()
     (interactive)
-    (progn
-      (shell-command (format "Typora %s &" (buffer-file-name)))
-      (delete-window)))
+    (call-process-shell-command  (format "Typora %s &" (buffer-file-name)) nil 0))
 
   ;; stolen from http://stackoverflow.com/a/26297700
   ;; makes markdown tables saner via orgtbl-mode
