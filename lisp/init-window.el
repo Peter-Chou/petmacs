@@ -134,7 +134,7 @@
           ("*Backtrace*" :select t :size 15 :align 'below)
           ("*Warnings*" :size 0.3 :align 'below :autoclose t)
           ("*Messages*" :size 0.3 :align 'below :autoclose t)
-          ("^\\*.*Shell Command.*\\*$" :regexp t :size 0.3 :align 'below :autoclose t)
+          ;; ("^\\*.*Shell Command.*\\*$" :regexp t :size 0.3 :align 'below :autoclose t)
           ("\\*[Wo]*Man.*\\*" :regexp t :select t :align 'below :autoclose t)
           ("*Calendar*" :select t :size 0.3 :align 'below)
           (" *undo-tree*" :select t)
