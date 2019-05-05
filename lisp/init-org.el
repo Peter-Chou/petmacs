@@ -20,7 +20,8 @@
                                  ("❓" . warning))
         org-pretty-entities t
 	org-hide-emphasis-markers t
-        org-log-done t
+	org-startup-folded 'content
+	org-log-done t
         org-startup-with-inline-images t
         org-image-actual-width nil
         org-src-fontify-natively t
