@@ -4,23 +4,31 @@
 
 ;;; Code:
 
-(defvar file-name-handler-alist-old file-name-handler-alist)
 
 (require 'package)
+
+;; Speed up startup
+(defvar default-file-name-handler-alist file-name-handler-alist)
 
 (setq package-enable-at-startup nil
       file-name-handler-alist nil
       message-log-max 16384
-      gc-cons-threshold 402653184
-      gc-cons-percentage 0.6
-      auto-window-vscroll nil)
+      gc-cons-threshold 80000000
+      ;; gc-cons-percentage 0.6
+      ;; auto-window-vscroll nil
+      )
 
-(add-hook 'after-init-hook
-	  `(lambda ()
-	     (setq file-name-handler-alist file-name-handler-alist-old
-		   gc-cons-threshold 800000
-		   gc-cons-percentage 0.1)
-	     (garbage-collect)) t)
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            "Restore defalut values after init."
+            (setq file-name-handler-alist default-file-name-handler-alist)
+            (setq gc-cons-threshold 400000)
+            (if (boundp 'after-focus-change-function)
+                (add-function :after after-focus-change-function
+                              (lambda ()
+                                (unless (frame-focus-state)
+                                  (garbage-collect))))
+              (add-hook 'focus-out-hook 'garbage-collect))))
 
 ;; Load path
 ;; Optimize: Force "lisp"" and "site-lisp" at the head to reduce the startup time.
@@ -48,7 +56,7 @@
 			 ("melpa-stable" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa-stable/")))
 
 ;; Initialize packages
-(package-initialize)
+;; (package-initialize)
 
 (require 'init-custom)
 (require 'init-const)
