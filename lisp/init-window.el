@@ -12,6 +12,7 @@
   :init
   (progn
     ;; (setq aw-scope 'frame) ;; jump only in current frame
+    (setq aw-minibuffer-flag t)
     (global-set-key (kbd "C-x O") 'other-frame)
     (global-set-key [remap other-window] 'ace-window)))
 
