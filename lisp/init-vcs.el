@@ -5,13 +5,13 @@
 ;;; Code:
 
 (use-package magit
-  :pin melpa-stable
+  ;; :pin melpa-stable
   :bind (("C-x g" . magit-status)
           ("C-x M-g" . magit-dispatch-popup)
           ("C-c M-g" . magit-file-popup))
   :config
   (setq magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1)
-  (add-to-list 'magit-log-arguments "--color")
+  ;; (add-to-list 'magit-log-arguments "--color")
 
   ;; When 'C-c C-c' is pressed in the magit commit message buffer,
   ;; delete the magit-diff buffer related to the current repo.
@@ -140,7 +140,7 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   )
 
 (use-package evil-magit
-  :pin melpa-stable
+  ;; :pin melpa-stable
   :init
   (with-eval-after-load 'magit
     (require 'evil-magit)
