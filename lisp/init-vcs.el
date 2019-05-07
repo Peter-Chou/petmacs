@@ -157,6 +157,7 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   :config
   (when sys/win32p
     ;; windows can only use grep
+    ;; install git for windows from https://git-scm.com/download/win
     (setq magit-todos-nice nil)
     (setq magit-todos-scanner 'magit-todos--scan-with-git-grep)))
 
