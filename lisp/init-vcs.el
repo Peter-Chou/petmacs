@@ -147,9 +147,18 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   :commands (magit-todos-mode magit-todos-list magit-todos-list-internal)
   :quelpa (magit-todos :repo "Peter-Chou/magit-todos" :fetcher github)
   :hook (after-init . magit-todos-mode)
+  :init
+  ;; disable magit-todos keybindings which is not compatible with evil-magit
+  (setq magit-todos-section-map
+	(let ((map (make-sparse-keymap)))
+	  (define-key map "j" #'evil-next-visual-line)
+	  (define-key map "k" #'evil-previous-visual-line)
+	  map))
   :config
-  (setq magit-todos-nice nil)
-  (setq magit-todos-scanner 'magit-todos--scan-with-git-grep))
+  (when sys/win32p
+    ;; windows can only use grep
+    (setq magit-todos-nice nil)
+    (setq magit-todos-scanner 'magit-todos--scan-with-git-grep)))
 
 ;; Git related modes
 (use-package gitattributes-mode)
