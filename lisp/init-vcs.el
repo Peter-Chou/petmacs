@@ -142,8 +142,8 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
     (add-hook 'git-commit-mode-hook 'evil-insert-state)))
 
 ;; Show tasks
+(use-package pcre2el) ;; magit-todos dependency
 (use-package magit-todos
-  :ensure t
   :commands (magit-todos-mode magit-todos-list magit-todos-list-internal)
   :quelpa (magit-todos :repo "Peter-Chou/magit-todos" :fetcher github)
   :hook (after-init . magit-todos-mode)
