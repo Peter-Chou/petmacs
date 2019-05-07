@@ -108,6 +108,7 @@
   "fvp" 'add-file-local-variable-prop-line
   "fCu" 'dos2unix
   "fCd" 'unix2dos
+  "fCr" 'petmacs/save-buffer-gbk-as-utf8
   "fyy" 'petmacs/copy-file-path
   "fyY" 'petmacs/projectile-copy-file-path
   "fyd" 'petmacs/copy-directory-path

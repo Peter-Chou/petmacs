@@ -32,6 +32,11 @@
   (advice-remove 'counsel-projectile-switch-project-action
                  'petmacs/ivy-persp-switch-project-advice))
 
+(defun petmacs/save-buffer-gbk-as-utf8 ()
+  "Revert a buffer with GBK and save as UTF-8."
+  (interactive)
+  (save-buffer-as-utf8 'gbk))
+
 (defun petmacs/evil-goto-definition-other-window ()
   "Jump to definition around point in other window."
   (interactive)
