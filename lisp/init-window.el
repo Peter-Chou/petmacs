@@ -11,7 +11,7 @@
   (aw-leading-char-face ((t (:height 4.0 :foreground "#f1fa8c"))))
   :init
   (progn
-    (setq aw-scope 'frame)
+    ;; (setq aw-scope 'frame) ;; jump only in current frame
     (global-set-key (kbd "C-x O") 'other-frame)
     (global-set-key [remap other-window] 'ace-window)))
 
