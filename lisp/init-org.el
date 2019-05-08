@@ -109,7 +109,6 @@
   (defun org-projectile/goto-todos ()
     (interactive)
     (org-projectile-goto-location-for-project (projectile-project-name))
-    (org-agenda-file-to-front)
     (revert-buffer))
 
   :init
