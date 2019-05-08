@@ -12,11 +12,21 @@
 ;; Highlight symbols
 (use-package symbol-overlay
   :diminish
+  :custom-face
+  (symbol-overlay-default-face ((t (:inherit 'region))))
+  (symbol-overlay-face-1 ((t (:inherit 'highlight))))
+  (symbol-overlay-face-2 ((t (:inherit 'font-lock-builtin-face :inverse-video t))))
+  (symbol-overlay-face-3 ((t (:inherit 'warning :inverse-video t))))
+  (symbol-overlay-face-4 ((t (:inherit 'font-lock-constant-face :inverse-video t))))
+  (symbol-overlay-face-5 ((t (:inherit 'error :inverse-video t))))
+  (symbol-overlay-face-6 ((t (:inherit 'dired-mark :inverse-video t :bold nil))))
+  (symbol-overlay-face-7 ((t (:inherit 'success :inverse-video t))))
+  (symbol-overlay-face-8 ((t (:inherit 'dired-symlink :inverse-video t :bold nil))))
   :functions (symbol-overlay-switch-first symbol-overlay-switch-last)
   :commands (symbol-overlay-get-symbol
-             symbol-overlay-assoc
-             symbol-overlay-get-list
-             symbol-overlay-jump-call)
+	      symbol-overlay-assoc
+	      symbol-overlay-get-list
+	      symbol-overlay-jump-call)
   :hook ((prog-mode . symbol-overlay-mode))
   :config
   (global-set-key (kbd "M-i") 'symbol-overlay-put)
@@ -33,18 +43,44 @@
 (use-package highlight-indent-guides
   :defer t
   :hook (((python-mode yaml-mode) . highlight-indent-guides-mode)
-         (highlight-indent-guides-mode . (lambda ()
-                                           (set-face-foreground 'highlight-indent-guides-character-face "#8f9091")
-                                           (set-face-foreground 'highlight-indent-guides-top-character-face "#fe5e10"))))
+	  (highlight-indent-guides-mode . (lambda ()
+					    (set-face-foreground 'highlight-indent-guides-character-face "#8f9091")
+					    (set-face-foreground 'highlight-indent-guides-top-character-face "#fe5e10"))))
   :config
   (progn
     (setq highlight-indent-guides-method 'character
-          
-          highlight-indent-guides-character ?\┆ ;; candidates: , ⋮, ┆, ┊, ┋, ┇
-          highlight-indent-guides-responsive 'top
-          highlight-indent-guides-auto-enabled nil
-          highlight-indent-guides-auto-character-face-perc 10
-          highlight-indent-guides-auto-top-character-face-perc 20)))
+
+	  highlight-indent-guides-character ?\┆ ;; candidates: , ⋮, ┆, ┊, ┋, ┇
+	  highlight-indent-guides-responsive 'top
+	  highlight-indent-guides-auto-enabled nil
+	  highlight-indent-guides-auto-character-face-perc 10
+	  highlight-indent-guides-auto-top-character-face-perc 20)))
+
+;; Colorize color names in buffers
+(use-package rainbow-mode
+  :diminish
+  :hook ((prog-mode help-mode) . rainbow-mode)
+  :config
+  ;; HACK: Use overlay instead of text properties to override `hl-line' faces.
+  ;; @see https://emacs.stackexchange.com/questions/36420
+  (defun my-rainbow-colorize-match (color &optional match)
+    (let* ((match (or match 0))
+	   (ov (make-overlay (match-beginning match) (match-end match))))
+      (overlay-put ov
+		   'face `((:foreground ,(if (> 0.5 (rainbow-x-color-luminance color))
+					      "white" "black"))
+			   (:background ,color)))
+      (overlay-put ov 'ovrainbow t)))
+  (advice-add #'rainbow-colorize-match :override #'my-rainbow-colorize-match)
+
+  (defun my-rainbow-clear-overlays ()
+    (remove-overlays (point-min) (point-max) 'ovrainbow t))
+  (advice-add #'rainbow-turn-off :after #'my-rainbow-clear-overlays))
+
+;; Highlight some operations
+(use-package volatile-highlights
+  :diminish
+  :hook (after-init . volatile-highlights-mode))
 
 ;; Highlight matching paren
 (use-package paren
@@ -58,10 +94,10 @@
 (use-package hl-todo
   :custom-face (hl-todo ((t (:box t :inherit 'hl-todo))))
   :bind (:map hl-todo-mode-map
-              ([C-f3] . hl-todo-occur)
-              ("C-c t p" . hl-todo-previous)
-              ("C-c t n" . hl-todo-next)
-              ("C-c t o" . hl-todo-occur))
+	      ([C-f3] . hl-todo-occur)
+	      ("C-c t p" . hl-todo-previous)
+	      ("C-c t n" . hl-todo-next)
+	      ("C-c t o" . hl-todo-occur))
   :hook (after-init . global-hl-todo-mode)
   :config
   (dolist (keyword '("BUG" "DEFECT" "ISSUE"))
