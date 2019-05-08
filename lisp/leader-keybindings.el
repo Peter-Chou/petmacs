@@ -48,7 +48,7 @@
   "aoCg" 'org-clock-goto
   "aoCi" 'org-clock-in
   "aoCI" 'org-clock-in-last
-  "aoCj" 'org-clock-jump-to-current-clock
+  "aoCj" 'petmacs/org-clock-jump-to-current-clock
   "aoCo" 'org-clock-out
   "aoCr" 'org-resolve-clocks
   "aol" 'org-store-link
@@ -605,6 +605,73 @@
     (kbd "s-M-SPC") 'org-agenda-transient-state/body
     ))
 
+(with-eval-after-load 'org-calendar
+  (evil-set-initial-state 'org-calendar-mode 'normal)
+  (evil-define-key 'normal org-calendar-mode-map
+    ;; motion
+    "h" 'calendar-backward-day
+    "j" 'calendar-forward-week
+    "k" 'calendar-backward-week
+    "l" 'calendar-forward-day
+    "0" 'calendar-beginning-of-week
+    "^" 'calendar-beginning-of-week
+    "$" 'calendar-end-of-week
+    "[[" 'calendar-backward-year
+    "]]" 'calendar-forward-year
+    (kbd "M-<") 'calendar-beginning-of-year
+    (kbd "M->") 'calendar-end-of-year
+    "(" 'calendar-beginning-of-month
+    ")" 'calendar-end-of-month
+    (kbd "SPC") 'scroll-other-window
+    (kbd "S-SPC") 'scroll-other-window-down
+    (kbd "<delete>") 'scroll-other-window-down
+    "<" 'calendar-scroll-right
+    ">" 'calendar-scroll-left
+    (kbd "C-b") 'calendar-scroll-right-three-months
+    (kbd "C-f") 'calendar-scroll-left-three-months
+    "{" 'calendar-backward-month
+    "}" 'calendar-forward-month
+    (kbd "C-k") 'calendar-backward-month
+    (kbd "C-j") 'calendar-forward-month
+    "gk" 'calendar-backward-month
+    "gj" 'calendar-forward-month
+
+    ;; visual
+    "v" 'calendar-set-mark
+
+    ;; goto
+    "." 'calendar-goto-today
+    "gd" 'calendar-goto-date ; "gd" in evil-org-agenda, "gd" in Emacs.
+    ;; "gD" 'calendar-other-month ; Not very useful if we have `calendar-goto-date'.
+
+    ;; diary
+    "D" 'diary-view-other-diary-entries
+    "d" 'diary-view-entries
+    "m" 'diary-mark-entries
+    "s" 'diary-show-all-entries
+
+    "u" 'calendar-unmark
+    "x" 'calendar-mark-holidays
+
+    ;; show
+    "gm" 'calendar-lunar-phases ; "gm" in evil-org-agenda. TODO: Shadows calendar-mayan.
+    "gs" 'calendar-sunrise-sunset ; "gs" in evil-org-agenda
+    "gh" 'calendar-list-holidays ; "gh" in evil-org-agenda. TODO: Shadows calendar-hebrew.
+    "gc" 'org-calendar-goto-agenda ; "gc" in evil-org-agenda. TODO: Shadows calendar-iso.
+    "r" 'calendar-cursor-holidays
+
+    ;; refresh
+    "gr" 'calendar-redraw
+
+    "g?" 'calendar-goto-info-node
+    "?" 'calendar-goto-info-node ; Search is not very useful.
+    (kbd "M-=") 'calendar-count-days-region
+
+    ;; quit
+    "q" 'calendar-exit
+    "ZQ" 'evil-quit
+    "ZZ" 'calendar-exit))
+
 (with-eval-after-load 'org-capture
   (evil-define-minor-mode-key 'normal 'org-capture-mode
     (kbd "c") 'org-capture-finalize
@@ -619,8 +686,9 @@
 
 ;;;; evil jumps
 ;;; evil jump in python mode
-(evil-define-minor-mode-key 'normal 'anaconda-mode (kbd "gd") 'anaconda-mode-find-definitions)
-(evil-define-minor-mode-key 'normal 'anaconda-mode (kbd "gD") 'anaconda-mode-find-definitions-other-window)
+(evil-define-minor-mode-key 'normal 'anaconda-mode
+  (kbd "gd") 'anaconda-mode-find-definitions
+  (kbd "gD") 'anaconda-mode-find-definitions-other-window)
 
 ;; evil jump in elisp mode
 (evil-define-key 'normal emacs-lisp-mode-map (kbd "gD") 'petmacs/evil-goto-definition-other-window)

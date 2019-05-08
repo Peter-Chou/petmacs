@@ -9,6 +9,24 @@
 
 (use-package org
   :preface
+  (defun petmacs//surround-drawer ()
+    (let ((dname (read-from-minibuffer "" "")))
+      (cons (format ":%s:" (upcase (or dname ""))) ":END:")))
+
+  (defun petmacs//surround-code ()
+    (let ((dname (read-from-minibuffer "" "")))
+      (cons (format "#+BEGIN_SRC %s" (or dname "")) "#+END_SRC")))
+
+  (defun petmacs/org-setup-evil-surround ()
+    (with-eval-after-load 'evil-surround
+      (add-to-list 'evil-surround-pairs-alist '(?: . petmacs//surround-drawer))
+      (add-to-list 'evil-surround-pairs-alist '(?# . petmacs//surround-code))))
+
+  (defun petmacs/ob-fix-inline-images ()
+    "Fix redisplay of inline images after a code block evaluation."
+    (when org-inline-image-overlays
+      (org-redisplay-inline-images)))
+
   (defun petmacs/org-clock-jump-to-current-clock ()
     (interactive)
     (org-clock-jump-to-current-clock))
@@ -23,30 +41,31 @@ Will work on both org-mode and any mode that accepts plain html."
       (if (null (equal key "\r"))
           (insert
            (format tag (help-key-description key nil)))
-        (insert (format tag ""))
-        (forward-char -8))))
+	(insert (format tag ""))
+	(forward-char -8))))
 
   :commands (orgtbl-mode)
+  :hook (org-mode . petmacs/org-setup-evil-surround)
   :init
   (require 'org)
   (setq org-directory "~/org"
 	org-use-sub-superscripts nil	;; disable ^ _ for (super/sub)script in display
-        org-default-notes-file (expand-file-name "notes.org" org-directory)
-        org-todo-keywords '((sequence "TODO(t)" "DOING(i)" "HANGUP(h)" "|" "DONE(d)" "CANCEL(c)")
+	org-default-notes-file (expand-file-name "notes.org" org-directory)
+	org-todo-keywords '((sequence "TODO(t)" "DOING(i)" "HANGUP(h)" "|" "DONE(d)" "CANCEL(c)")
                             (sequence "⚑(T)" "🏴(I)" "❓(H)" "|" "✔(D)" "✘(C)"))
-        org-todo-keyword-faces '(("HANGUP" . warning)
-                                 ("❓" . warning))
-        org-pretty-entities t
+	org-todo-keyword-faces '(("HANGUP" . warning)
+				 ("❓" . warning))
+	org-pretty-entities t
 	org-hide-emphasis-markers t
 	org-startup-folded 'content
 	org-log-done t
-        org-startup-with-inline-images t
-        org-image-actual-width nil
-        org-src-fontify-natively t
-        org-src-tab-acts-natively t
-        ;; this is consistent with the value of
-        ;; `helm-org-headings-max-depth'.
-        org-imenu-depth 8)
+	org-startup-with-inline-images t
+	org-image-actual-width nil
+	org-src-fontify-natively t
+	org-src-tab-acts-natively t
+	;; this is consistent with the value of
+	;; `helm-org-headings-max-depth'.
+	org-imenu-depth 8)
 
   (add-to-list 'org-export-backends 'md)
 
@@ -54,14 +73,14 @@ Will work on both org-mode and any mode that accepts plain html."
   (advice-add #'org-switch-to-buffer-other-window :override #'switch-to-buffer-other-window)
 
   (setq org-capture-templates
-        '(("t" "Todo" entry (file+headline "~/org/TODOs.org" "Todo soon")
+	'(("t" "Todo" entry (file+headline "~/org/TODOs.org" "Todo soon")
            "* TODO %? \n  %^t")
           ))
 
   ;; Babel
   (setq org-confirm-babel-evaluate nil
-        org-src-fontify-natively t
-        org-src-tab-acts-natively t)
+	org-src-fontify-natively t
+	org-src-tab-acts-natively t)
 
   (defvar load-language-list '((emacs-lisp . t)
                                (perl . t)
@@ -86,7 +105,12 @@ Will work on both org-mode and any mode that accepts plain html."
     :init (cl-pushnew '(ipython . t) load-language-list))
 
   (org-babel-do-load-languages 'org-babel-load-languages
-                               load-language-list))
+                               load-language-list)
+
+  ;; Fix redisplay of inline images after a code block evaluation.
+  (add-hook 'org-babel-after-execute-hook 'petmacs/ob-fix-inline-images)
+
+  (autoload #'org-clock-jump-to-current-clock "org-clock"))
 
 (use-package org-agenda
   :ensure nil
