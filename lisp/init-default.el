@@ -6,7 +6,7 @@
 
 (eval-when-compile
   (require 'init-const)
-  (require 'init-variable))
+  (require 'init-custom))
 
 ;; use exec-path-from-shell in linux / mac
 (when (or (eq system-type 'gnu/linux) (eq system-type 'darwin))

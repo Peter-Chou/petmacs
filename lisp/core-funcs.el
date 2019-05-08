@@ -6,7 +6,7 @@
 
 (eval-when-compile
   (require 'init-const)
-  (require 'init-variable))
+  (require 'init-custom))
 
 ;; (defun petmacs/popwin:compilation ()
 ;;   "Display *compilation* buffer in a popup window."

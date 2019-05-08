@@ -60,7 +60,6 @@
 
 (require 'init-custom)
 (require 'init-const)
-(require 'init-variable)
 (require 'init-package)
 (require 'init-default)
 (require 'init-font)

@@ -6,7 +6,7 @@
 
 (eval-when-compile
   (require 'init-const)
-  (require 'init-variable))
+  (require 'init-custom))
 
 (evil-leader/set-leader petmacs-evil-leader-key)
 (evil-major-leader/set-leader petmacs-evil-major-leader-key)

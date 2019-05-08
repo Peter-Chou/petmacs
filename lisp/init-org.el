@@ -5,7 +5,7 @@
 ;;; Code:
 (eval-when-compile
   (require 'init-const)
-  (require 'init-variable))
+  (require 'init-custom))
 
 (use-package org
   :commands (orgtbl-mode)

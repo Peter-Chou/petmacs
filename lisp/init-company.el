@@ -6,7 +6,7 @@
 
 (eval-when-compile
   (require 'init-const)
-  (require 'init-variable))
+  (require 'init-custom))
 
 (use-package company
   :diminish company-mode
