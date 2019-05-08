@@ -41,6 +41,7 @@
   "aoa" 'org-agenda-list
   "aoc" 'org-capture
   "aoe" 'org-store-agenda-views
+  "aop" 'org-projectile/capture
   "aofi" 'org-feed-goto-inbox
   "aofu" 'org-feed-update-all
   "aoCc" 'org-clock-cancel
@@ -329,7 +330,7 @@
   "m-"   'markdown-insert-hr
   "mif"  'markdown-insert-footnote
   "mii"  'markdown-insert-image
-  "mik"  'spacemacs/insert-keybinding-markdown
+  "mik"  'petmacs/insert-keybinding-markdown
   "mil"  'markdown-insert-link
   "miw"  'markdown-insert-wiki-link
   "miu"  'markdown-insert-uri
@@ -363,14 +364,258 @@
 ;;; org mode
 (evil-leader/set-key-for-mode 'org-mode
   ;; Movement
-  "mC"   'evil-org-recompute-clocks
+  ;; "mC"   'evil-org-recompute-clocks
+  "m'" 'org-edit-special
+  "mc" 'org-capture
+
+  ;; Clock
+  ;; These keybindings should match those under the "aoC" prefix (below)
+  "mCc" 'org-clock-cancel
+  "mCd" 'org-clock-display
+  "mCe" 'org-evaluate-time-range
+  "mCg" 'org-clock-goto
+  "mCi" 'org-clock-in
+  "mCI" 'org-clock-in-last
+  "mCj" 'petmacs/org-clock-jump-to-current-clock
+  "mCo" 'org-clock-out
+  "mCR" 'org-clock-report
+  "mCr" 'org-resolve-clocks
+  "mCp" 'org-pomodoro
+
+  "mdd" 'org-deadline
+  "mds" 'org-schedule
+  "mdt" 'org-time-stamp
+  "mdT" 'org-time-stamp-inactive
+  "mee" 'org-export-dispatch
+  "mfi" 'org-feed-goto-inbox
+  "mfu" 'org-feed-update-all
+
+  "ma" 'org-agenda
+
+  "mp" 'org-priority
+
+  "mTc" 'org-toggle-checkbox
+  "mTe" 'org-toggle-pretty-entities
+  "mTi" 'org-toggle-inline-images
+  "mTl" 'org-toggle-link-display
+  "mTt" 'org-show-todo-tree
+  "mTT" 'org-todo
+  "mTV" 'space-doc-mode
+  "mTx" 'org-toggle-latex-fragment
+
+  ;; More cycling options (timestamps, headlines, items, properties)
+  "mL" 'org-shiftright
+  "mH" 'org-shiftleft
+  "mJ" 'org-shiftdown
+  "mK" 'org-shiftup
+
+  ;; Change between TODO sets
+  "m C-S-l" 'org-shiftcontrolright
+  "m C-S-h" 'org-shiftcontrolleft
+  "m C-S-j" 'org-shiftcontroldown
+  "m C-S-k" 'org-shiftcontrolup
+
+  ;; Subtree editing
+  "msa" 'org-toggle-archive-tag
+  "msA" 'org-archive-subtree
+  "msb" 'org-tree-to-indirect-buffer
+  "msh" 'org-promote-subtree
+  "msj" 'org-move-subtree-down
+  "msk" 'org-move-subtree-up
+  "msl" 'org-demote-subtree
+  "msn" 'org-narrow-to-subtree
+  "msN" 'widen
+  "msr" 'org-refile
+  "mss" 'org-sparse-tree
+  "msS" 'org-sort
+
+  ;; tables
+  "mta" 'org-table-align
+  "mtb" 'org-table-blank-field
+  "mtc" 'org-table-convert
+  "mtdc" 'org-table-delete-column
+  "mtdr" 'org-table-kill-row
+  "mte" 'org-table-eval-formula
+  "mtE" 'org-table-export
+  "mth" 'org-table-previous-field
+  "mtH" 'org-table-move-column-left
+  "mtic" 'org-table-insert-column
+  "mtih" 'org-table-insert-hline
+  "mtiH" 'org-table-hline-and-move
+  "mtir" 'org-table-insert-row
+  "mtI" 'org-table-import
+  "mtj" 'org-table-next-row
+  "mtJ" 'org-table-move-row-down
+  "mtK" 'org-table-move-row-up
+  "mtl" 'org-table-next-field
+  "mtL" 'org-table-move-column-right
+  "mtn" 'org-table-create
+  "mtN" 'org-table-create-with-table.el
+  "mtr" 'org-table-recalculate
+  "mts" 'org-table-sort-lines
+  "mttf" 'org-table-toggle-formula-debugger
+  "mtto" 'org-table-toggle-coordinate-overlays
+  "mtw" 'org-table-wrap-region
+
+  ;; Source blocks / org-babel
+  "mbp"     'org-babel-previous-src-block
+  "mbn"     'org-babel-next-src-block
+  "mbe"     'org-babel-execute-maybe
+  "mbo"     'org-babel-open-src-block-result
+  "mbv"     'org-babel-expand-src-block
+  "mbu"     'org-babel-goto-src-block-head
+  "mbg"     'org-babel-goto-named-src-block
+  "mbr"     'org-babel-goto-named-result
+  "mbb"     'org-babel-execute-buffer
+  "mbs"     'org-babel-execute-subtree
+  "mbd"     'org-babel-demarcate-block
+  "mbt"     'org-babel-tangle
+  "mbf"     'org-babel-tangle-file
+  "mbc"     'org-babel-check-src-block
+  "mbj"     'org-babel-insert-header-arg
+  "mbl"     'org-babel-load-in-session
+  "mbi"     'org-babel-lob-ingest
+  "mbI"     'org-babel-view-src-block-info
+  "mbz"     'org-babel-switch-to-session
+  "mbZ"     'org-babel-switch-to-session-with-code
+  "mba"     'org-babel-sha1-hash
+  "mbx"     'org-babel-do-key-sequence-in-edit-buffer
+  "mb."     'org-babel-transient-state/body
+  ;; Multi-purpose keys
+  "m," 'org-ctrl-c-ctrl-c
+  "m*" 'org-ctrl-c-star
+  "m-" 'org-ctrl-c-minus
+  "m#" 'org-update-statistics-cookies
+  "m RET"   'org-ctrl-c-ret
+  "m M-RET" 'org-meta-return
+  ;; attachments
+  "mA" 'org-attach
+  ;; insertion
+  "mib" 'org-insert-structure-template
+  "mid" 'org-insert-drawer
+  "mie" 'org-set-effort
+  "mif" 'org-footnote-new
+  "mih" 'org-insert-heading
+  "miH" 'org-insert-heading-after-current
+  "mii" 'org-insert-item
+  "miK" 'petmacs/insert-keybinding-org
+  "mil" 'org-insert-link
+  "min" 'org-add-note
+  "mip" 'org-set-property
+  "mis" 'org-insert-subheading
+  "mit" 'org-set-tags-command
+  ;; region manipulation
+  "mxo" 'org-open-at-point
   )
+
+(evil-leader/set-key-for-mode 'org-agenda-mode
+  "ma" 'org-agenda
+  "mCc" 'org-agenda-clock-cancel
+  "mCi" 'org-agenda-clock-in
+  "mCo" 'org-agenda-clock-out
+  "mCp" 'org-pomodoro
+  "mdd" 'org-agenda-deadline
+  "mds" 'org-agenda-schedule
+  "mie" 'org-agenda-set-effort
+  "mip" 'org-agenda-set-property
+  "mit" 'org-agenda-set-tags
+  "msr" 'org-agenda-refile
+  )
+
+(with-eval-after-load 'org-agenda
+  (evil-set-initial-state 'org-agenda-mode 'normal)
+  (evil-define-key 'normal org-agenda-mode-map
+    "j" 'org-agenda-next-line
+    "k" 'org-agenda-previous-line
+    ;; C-h should not be rebound by evilification so we unshadow it manually
+    ;; TODO add the rule in auto-evilification to ignore C-h (like we do
+    ;; with C-g)
+    (kbd "<RET>") 'org-agenda-switch-to
+    (kbd "\t") 'org-agenda-goto
+
+    "q" 'org-agenda-quit
+    "r" 'org-agenda-redo
+    "S" 'org-save-all-org-buffers
+    "gj" 'org-agenda-goto-date
+    "gJ" 'org-agenda-clock-goto
+    "gm" 'org-agenda-bulk-mark
+    "go" 'org-agenda-open-link
+    "s" 'org-agenda-schedule
+    "+" 'org-agenda-priority-up
+    "," 'org-agenda-priority
+    "-" 'org-agenda-priority-down
+    "y" 'org-agenda-todo-yesterday
+    "n" 'org-agenda-add-note
+    "t" 'org-agenda-todo
+    ":" 'org-agenda-set-tags
+    ";" 'org-timer-set-timer
+    "I" 'helm-org-task-file-headings
+    "i" 'org-agenda-clock-in-avy
+    "O" 'org-agenda-clock-out-avy
+    "u" 'org-agenda-bulk-unmark
+    "x" 'org-agenda-exit
+    "j"  'org-agenda-next-line
+    "k"  'org-agenda-previous-line
+    "vt" 'org-agenda-toggle-time-grid
+    "va" 'org-agenda-archives-mode
+    "vw" 'org-agenda-week-view
+    "vl" 'org-agenda-log-mode
+    "vd" 'org-agenda-day-view
+    "vc" 'org-agenda-show-clocking-issues
+    "g/" 'org-agenda-filter-by-tag
+    "o" 'delete-other-windows
+    "gh" 'org-agenda-holiday
+    "gv" 'org-agenda-view-mode-dispatch
+    "f" 'org-agenda-later
+    "b" 'org-agenda-earlier
+    "c" 'helm-org-capture-templates
+    "e" 'org-agenda-set-effort
+    "n" nil  ; evil-search-next
+    "{" 'org-agenda-manipulate-query-add-re
+    "}" 'org-agenda-manipulate-query-subtract-re
+    "A" 'org-agenda-toggle-archive-tag
+    "." 'org-agenda-goto-today
+    "0" 'evil-digit-argument-or-evil-beginning-of-line
+    "<" 'org-agenda-filter-by-category
+    ">" 'org-agenda-date-prompt
+    "F" 'org-agenda-follow-mode
+    "D" 'org-agenda-deadline
+    "H" 'org-agenda-holidays
+    "J" 'org-agenda-next-date-line
+    "K" 'org-agenda-previous-date-line
+    "L" 'org-agenda-recenter
+    "P" 'org-agenda-show-priority
+    "R" 'org-agenda-clockreport-mode
+    "Z" 'org-agenda-sunrise-sunset
+    "T" 'org-agenda-show-tags
+    "X" 'org-agenda-clock-cancel
+    "[" 'org-agenda-manipulate-query-add
+    "g\\" 'org-agenda-filter-by-tag-refine
+    "]" 'org-agenda-manipulate-query-subtract
+
+    (kbd "C-h") nil
+    (kbd "M-j") 'org-agenda-next-item
+    (kbd "M-k") 'org-agenda-previous-item
+    (kbd "M-h") 'org-agenda-earlier
+    (kbd "M-l") 'org-agenda-later
+    (kbd "gd") 'org-agenda-toggle-time-grid
+    (kbd "gr") 'org-agenda-redo
+    (kbd "M-RET") 'org-agenda-show-and-scroll-up
+    (kbd "M-SPC") 'org-agenda-transient-state/body
+    (kbd "s-M-SPC") 'org-agenda-transient-state/body
+    ))
+
 (with-eval-after-load 'org-capture
   (evil-define-minor-mode-key 'normal 'org-capture-mode
     (kbd "c") 'org-capture-finalize
     (kbd "k") 'org-capture-kill
     (kbd "a") 'org-capture-kill
     (kbd "r") 'org-capture-refile))
+(with-eval-after-load 'org-src
+  (evil-define-minor-mode-key 'normal 'org-src-mode
+    "c" 'org-edit-src-exit
+    "a" 'org-edit-src-abort
+    "k" 'org-edit-src-abort))
 
 ;;;; evil jumps
 ;;; evil jump in python mode

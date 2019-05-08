@@ -550,6 +550,27 @@ If the error list is visible, hide it.  Otherwise, show it."
   (interactive)
   (call-process-shell-command  "mintty /bin/env MSYSTEM=MINGW64 CHERE_INVOKING=1 /bin/bash --login -i &" nil 0))
 
+;;; markdown
+
+;; Insert key for org-mode and markdown a la C-h k
+;; from SE endless http://emacs.stackexchange.com/questions/2206/i-want-to-have-the-kbd-tags-for-my-blog-written-in-org-mode/2208#2208
+(defun petmacs/insert-keybinding-markdown (key)
+  "Ask for a key then insert its description.
+Will work on both org-mode and any mode that accepts plain html."
+  (interactive "kType key sequence: ")
+  (let* ((tag "~%s~"))
+    (if (null (equal key "\r"))
+        (insert
+         (format tag (help-key-description key nil)))
+      (insert (format tag ""))
+      (forward-char -6))))
+
+;;; macros
+(defmacro petmacs|org-emphasize (fname char)
+  "Make function for setting the emphasis in org mode"
+  `(defun ,fname () (interactive)
+      (org-emphasize ,char)))
+
 ;;; hydra
 
 (defhydra hydra-frame-window (:color pink :hint nil)
@@ -578,6 +599,100 @@ _F_ullscreen            _o_ther         _b_alance^^^^          ^ ^         *  /\
   ("j" enlarge-window)
   ("l" enlarge-window-horizontally)
   ("q" nil "quit"))
+
+
+(defhydra org-babel-transient-state (:color pink :hint nil)
+  "
+[_j_/_k_] navigate src blocks         [_e_] execute src block
+[_g_]^^   goto named block            [_'_] edit src block
+[_z_]^^   recenter screen             [_q_] quit"
+  ("q" nil :exit t)
+  ("j" org-babel-next-src-block)
+  ("k" org-babel-previous-src-block)
+  ("g" org-babel-goto-named-src-block)
+  ("z" recenter-top-bottom)
+  ("e" org-babel-execute-maybe :exit t)
+  ("'" org-edit-special :exit t))
+
+(defhydra org-agenda-transient-state (:color pink :hint nil)
+  "
+Headline^^            Visit entry^^               Filter^^                    Date^^                  Toggle mode^^        View^^             Clock^^        Other^^
+--------^^---------   -----------^^------------   ------^^-----------------   ----^^-------------     -----------^^------  ----^^---------    -----^^------  -----^^-----------
+[_ht_] set status     [_SPC_] in other window     [_ft_] by tag               [_ds_] schedule         [_tf_] follow        [_vd_] day         [_cI_] in      [_gr_] reload
+[_hk_] kill           [_TAB_] & go to location    [_fr_] refine by tag        [_dS_] un-schedule      [_tl_] log           [_vw_] week        [_cO_] out     [_._]  go to today
+[_hr_] refile         [_RET_] & del other windows [_fc_] by category          [_dd_] set deadline     [_ta_] archive       [_vt_] fortnight   [_cq_] cancel  [_gd_] go to date
+[_hA_] archive        [_o_]   link                [_fh_] by top headline      [_dD_] remove deadline  [_tr_] clock report  [_vm_] month       [_cj_] jump    ^^
+[_h:_] set tags       ^^                          [_fx_] by regexp            [_dt_] timestamp        [_tc_] clock issues  [_vy_] year        ^^             ^^
+[_hp_] set priority   ^^                          [_fd_] delete all filters   [_+_]  do later         [_td_] diaries       [_vn_] next span   ^^             ^^
+^^                    ^^                          ^^                          [_-_]  do earlier       ^^                   [_vp_] prev span   ^^             ^^
+^^                    ^^                          ^^                          ^^                      ^^                   [_vr_] reset       ^^             ^^
+[_q_] quit
+"
+  ;; Entry
+  ("h:" org-agenda-set-tags)
+  ("hA" org-agenda-archive-default)
+  ("hk" org-agenda-kill)
+  ("hp" org-agenda-priority)
+  ("hr" org-agenda-refile)
+  ("ht" org-agenda-todo)
+
+  ;; Visit entry
+  ("SPC" org-agenda-show-and-scroll-up)
+  ("<tab>" org-agenda-goto :exit t)
+  ("TAB" org-agenda-goto :exit t)
+  ("RET" org-agenda-switch-to :exit t)
+  ("o"   link-hint-open-link :exit t)
+
+  ;; Date
+  ("ds" org-agenda-schedule)
+  ("dS" (lambda () (interactive)
+          (let ((current-prefix-arg '(4)))
+            (call-interactively 'org-agenda-schedule))))
+  ("dd" org-agenda-deadline)
+  ("dt" org-agenda-date-prompt)
+  ("dD" (lambda () (interactive)
+          (let ((current-prefix-arg '(4)))
+            (call-interactively 'org-agenda-deadline))))
+  ("+" org-agenda-do-date-later)
+  ("-" org-agenda-do-date-earlier)
+
+  ;; View
+  ("vd" org-agenda-day-view)
+  ("vw" org-agenda-week-view)
+  ("vt" org-agenda-fortnight-view)
+  ("vm" org-agenda-month-view)
+  ("vy" org-agenda-year-view)
+  ("vn" org-agenda-later)
+  ("vp" org-agenda-earlier)
+  ("vr" org-agenda-reset-view)
+
+  ;; Toggle mode
+  ("tf" org-agenda-follow-mode)
+  ("tl" org-agenda-log-mode)
+  ("ta" org-agenda-archives-mode)
+  ("tr" org-agenda-clockreport-mode)
+  ("tc" org-agenda-show-clocking-issues)
+  ("td" org-agenda-toggle-diary)
+
+  ;; Filter
+  ("ft" org-agenda-filter-by-tag)
+  ("fr" org-agenda-filter-by-tag-refine)
+  ("fc" org-agenda-filter-by-category)
+  ("fh" org-agenda-filter-by-top-headline)
+  ("fx" org-agenda-filter-by-regexp)
+  ("fd" org-agenda-filter-remove-all)
+
+  ;; Clock
+  ("cI" org-agenda-clock-in :exit t)
+  ("cj" org-agenda-clock-goto :exit t)
+  ("cO" org-agenda-clock-out)
+  ("cq" org-agenda-clock-cancel)
+
+  ;; Other
+  ("q" nil :exit t)
+  ("gr" org-agenda-redo)
+  ("." org-agenda-goto-today)
+  ("gd" org-agenda-goto-date))
 
 (provide 'core-funcs)
 

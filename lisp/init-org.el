@@ -8,6 +8,24 @@
   (require 'init-custom))
 
 (use-package org
+  :preface
+  (defun petmacs/org-clock-jump-to-current-clock ()
+    (interactive)
+    (org-clock-jump-to-current-clock))
+
+  ;; Insert key for org-mode and markdown a la C-h k
+  ;; from SE endless http://emacs.stackexchange.com/questions/2206/i-want-to-have-the-kbd-tags-for-my-blog-written-in-org-mode/2208#2208
+  (defun petmacs/insert-keybinding-org (key)
+    "Ask for a key then insert its description.
+Will work on both org-mode and any mode that accepts plain html."
+    (interactive "kType key sequence: ")
+    (let* ((tag "@@html:<kbd>@@ %s @@html:</kbd>@@"))
+      (if (null (equal key "\r"))
+          (insert
+           (format tag (help-key-description key nil)))
+        (insert (format tag ""))
+        (forward-char -8))))
+
   :commands (orgtbl-mode)
   :init
   (require 'org)
@@ -151,6 +169,9 @@
 (use-package org-dashboard)
 
 (use-package org-plus-contrib)
+
+(use-package org-sticky-header
+  :hook (org-mode . org-sticky-header-mode))
 
 (provide 'init-org)
 
