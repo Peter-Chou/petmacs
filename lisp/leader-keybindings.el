@@ -360,8 +360,19 @@
   "mit" 'markdown-toc-generate-toc
   "mcP" 'vmd-mode)
 
-;;;; evil jumps
+;;; org mode
+(evil-leader/set-key-for-mode 'org-mode
+  ;; Movement
+  "mC"   'evil-org-recompute-clocks
+  )
+(with-eval-after-load 'org-capture
+  (evil-define-minor-mode-key 'normal 'org-capture-mode
+    (kbd "c") 'org-capture-finalize
+    (kbd "k") 'org-capture-kill
+    (kbd "a") 'org-capture-kill
+    (kbd "r") 'org-capture-refile))
 
+;;;; evil jumps
 ;;; evil jump in python mode
 (evil-define-minor-mode-key 'normal 'anaconda-mode (kbd "gd") 'anaconda-mode-find-definitions)
 (evil-define-minor-mode-key 'normal 'anaconda-mode (kbd "gD") 'anaconda-mode-find-definitions-other-window)

@@ -140,6 +140,7 @@
                              todo))
   :config
   (require 'evil-org-agenda)
+  (evil-define-key 'normal evil-org-mode-map "O" 'evil-open-above)
   (evil-org-agenda-set-keys))
 
 ;; Preview
