@@ -28,6 +28,11 @@ used.")
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
+(let ((custom-template-file
+       (expand-file-name "custom-template.el" user-emacs-directory)))
+  (if (not (file-exists-p custom-file))
+      (copy-file custom-template-file custom-file)))
+
 ;; load custom-set-variables & custom-set-faces in custom file
 (load-file custom-file)
 
