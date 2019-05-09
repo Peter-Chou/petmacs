@@ -43,9 +43,9 @@
 (use-package highlight-indent-guides
   :defer t
   :hook (((python-mode yaml-mode) . highlight-indent-guides-mode)
-	  (highlight-indent-guides-mode . (lambda ()
-					    (set-face-foreground 'highlight-indent-guides-character-face "#8f9091")
-					    (set-face-foreground 'highlight-indent-guides-top-character-face "#fe5e10"))))
+	 (highlight-indent-guides-mode . (lambda ()
+					   (set-face-foreground 'highlight-indent-guides-character-face "#8f9091")
+					   (set-face-foreground 'highlight-indent-guides-top-character-face "#fe5e10"))))
   :config
   (progn
     (setq highlight-indent-guides-method 'character
@@ -65,12 +65,11 @@
   ;; @see https://emacs.stackexchange.com/questions/36420
   (defun my-rainbow-colorize-match (color &optional match)
     (let* ((match (or match 0))
-	   (ov (make-overlay (match-beginning match) (match-end match))))
-      (overlay-put ov
-		   'face `((:foreground ,(if (> 0.5 (rainbow-x-color-luminance color))
-					      "white" "black"))
-			   (:background ,color)))
-      (overlay-put ov 'ovrainbow t)))
+           (ov (make-overlay (match-beginning match) (match-end match))))
+      (overlay-put ov 'ovrainbow t)
+      (overlay-put ov 'face `((:foreground ,(if (> 0.5 (rainbow-x-color-luminance color))
+                                                "white" "black"))
+                              (:background ,color)))))
   (advice-add #'rainbow-colorize-match :override #'my-rainbow-colorize-match)
 
   (defun my-rainbow-clear-overlays ()
