@@ -77,7 +77,7 @@
           :map swiper-map
           ("M-%" . swiper-query-replace))
   :hook ((after-init . ivy-mode)
-         (ivy-mode . counsel-mode))
+          (ivy-mode . counsel-mode))
   :config
   (setq enable-recursive-minibuffers t) ; Allow commands in minibuffers
 
@@ -153,7 +153,9 @@
                  (append unread-command-events
                          (listify-key-sequence (kbd "M-p")))))
           ((memq this-command '(self-insert-command
-                                ivy-yank-word))
+				yank
+                                ivy-yank-word
+                                counsel-yank-pop))
            (delete-region (point)
                           (point-max)))))
 
