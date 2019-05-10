@@ -75,7 +75,7 @@
 (require 'init-company)
 (require 'init-yasnippet)
 (require 'init-dired)
-(require 'init-treemacs)  ;TODO: need refactor
+(require 'init-treemacs)
 
 (require 'init-tools)
 (require 'init-highlight)

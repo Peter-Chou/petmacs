@@ -8,26 +8,26 @@
   :pin melpa-stable
   :defines winum-keymap
   :commands (treemacs-follow-mode
-	      treemacs-current-visibility
-	      treemacs-select-window
-	      treemacs--window-number-ten
-              treemacs-filewatch-mode
-              treemacs-fringe-indicator-mode
-              treemacs-git-mode)
+	     treemacs-current-visibility
+	     treemacs-select-window
+	     treemacs--window-number-ten
+             treemacs-filewatch-mode
+             treemacs-fringe-indicator-mode
+             treemacs-git-mode)
   :bind (([f8]        . treemacs)
-          ("C-`"       . treemacs-select-window)
-          ("M-0"       . treemacs-select-window)
-          ("C-x 1"     . treemacs-delete-other-windows)
-          ("C-x t 1"   . treemacs-delete-other-windows)
-          ("C-x t t"   . treemacs)
-          ("C-x t b"   . treemacs-bookmark)
-          ("C-x t C-t" . treemacs-find-file)
-          ("C-x t M-t" . treemacs-find-tag)
-          :map treemacs-mode-map
-          ([mouse-1]   . treemacs-single-click-expand-action))
+         ("C-`"       . treemacs-select-window)
+         ("M-0"       . treemacs-select-window)
+         ("C-x 1"     . treemacs-delete-other-windows)
+         ("C-x t 1"   . treemacs-delete-other-windows)
+         ("C-x t t"   . treemacs)
+         ("C-x t b"   . treemacs-bookmark)
+         ("C-x t C-t" . treemacs-find-file)
+         ("C-x t M-t" . treemacs-find-tag)
+         :map treemacs-mode-map
+         ([mouse-1]   . treemacs-single-click-expand-action))
   :hook (treemacs-mode . (lambda ()
-			    (display-line-numbers-mode -1)
-			    (hl-line-mode -1)))
+			   (display-line-numbers-mode -1)
+			   (hl-line-mode -1)))
   :init
   ;; (with-eval-after-load 'winum
   ;;   (bind-key (kbd "M-0") #'treemacs-select-window winum-keymap))
@@ -55,42 +55,13 @@
 
   (treemacs-follow-mode t)
   (treemacs-filewatch-mode t)
-  (treemacs-fringe-indicator-mode t)
+  ;; (treemacs-fringe-indicator-mode t)
   (pcase (cons (not (null (executable-find "git")))
                (not (null (executable-find "python3"))))
     (`(t . t)
      (treemacs-git-mode 'extended))
     (`(t . _)
-     (treemacs-git-mode 'simple)))
-
-  (if (fboundp 'define-fringe-bitmap)
-      (define-fringe-bitmap 'treemacs--fringe-indicator-bitmap
-        (vector #b00000111111
-                #b00000111111
-                #b00000111111
-                #b00000111111
-                #b00000111111
-                #b00000111111
-                #b00000111111
-                #b00000111111
-                #b00000111111
-                #b00000111111
-                #b00000111111
-                #b00000111111
-                #b00000111111
-                #b00000111111
-                #b00000111111
-                #b00000111111
-                #b00000111111
-                #b00000111111
-                #b00000111111
-                #b00000111111
-                #b00000111111
-                #b00000111111
-                #b00000111111
-                #b00000111111
-                #b00000111111
-                #b00000111111))))
+     (treemacs-git-mode 'simple))))
 
 (use-package treemacs-evil
   :pin melpa-stable
