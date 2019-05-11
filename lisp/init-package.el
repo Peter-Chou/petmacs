@@ -43,8 +43,11 @@
   :init
   (require 'quelpa-use-package)
   (quelpa-use-package-activate-advice))
+
 (use-package diminish)
 (use-package bind-key)
+;; Update GPG keyring for GNU ELPA
+(use-package gnu-elpa-keyring-update)
 
 ;; Extensions 
 ;; download / update packages
