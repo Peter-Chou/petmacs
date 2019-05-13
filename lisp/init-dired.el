@@ -58,6 +58,11 @@
   :init
   (require 'font-lock+))
 
+;; Allow rsync from dired buffers
+(use-package dired-rsync
+  :bind (:map dired-mode-map
+                ("C-c C-r" . dired-rsync)))
+
 (use-package diredfl
   :init
   (diredfl-global-mode 1))
