@@ -13,16 +13,14 @@
 (setq package-enable-at-startup nil
       file-name-handler-alist nil
       message-log-max 16384
-      gc-cons-threshold 80000000
-      ;; gc-cons-percentage 0.6
-      ;; auto-window-vscroll nil
+      gc-cons-threshold 40000000
       )
 
 (add-hook 'emacs-startup-hook
           (lambda ()
             "Restore defalut values after init."
             (setq file-name-handler-alist default-file-name-handler-alist)
-            (setq gc-cons-threshold 400000)
+            (setq gc-cons-threshold 800000)
             (if (boundp 'after-focus-change-function)
                 (add-function :after after-focus-change-function
                               (lambda ()
