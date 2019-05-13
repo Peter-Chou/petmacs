@@ -44,7 +44,7 @@
 ;; Walk through git revisions of a file
 (use-package git-timemachine
   :custom-face
-  (git-timemachine-minibuffer-author-face ((t (:inherit font-lock-string-face))))
+  (git-timemachine-minibuffer-author-face ((t (:inherit success))))
   (git-timemachine-minibuffer-detail-face ((t (:inherit warning))))
   :bind (:map vc-prefix-map
 		("t" . git-timemachine)))
@@ -146,7 +146,7 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 (use-package magit-todos
   :commands (magit-todos-mode magit-todos-list magit-todos-list-internal)
   :quelpa (magit-todos :repo "Peter-Chou/magit-todos" :fetcher github)
-  :hook (after-init . magit-todos-mode)
+  :hook (emacs-startup . magit-todos-mode)
   :init
   ;; disable magit-todos keybindings which is not compatible with evil-magit
   (setq magit-todos-section-map
