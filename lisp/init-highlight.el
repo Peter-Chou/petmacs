@@ -43,9 +43,9 @@
 (use-package highlight-indent-guides
   :defer t
   :hook (((python-mode yaml-mode) . highlight-indent-guides-mode)
-	 (highlight-indent-guides-mode . (lambda ()
-					   (set-face-foreground 'highlight-indent-guides-character-face "#8f9091")
-					   (set-face-foreground 'highlight-indent-guides-top-character-face "#fe5e10"))))
+	  (highlight-indent-guides-mode . (lambda ()
+					    (set-face-foreground 'highlight-indent-guides-character-face "#8f9091")
+					    (set-face-foreground 'highlight-indent-guides-top-character-face "#fe5e10"))))
   :config
   (progn
     (setq highlight-indent-guides-method 'character
@@ -54,7 +54,12 @@
 	  highlight-indent-guides-responsive 'top
 	  highlight-indent-guides-auto-enabled nil
 	  highlight-indent-guides-auto-character-face-perc 10
-	  highlight-indent-guides-auto-top-character-face-perc 20)))
+	  highlight-indent-guides-auto-top-character-face-perc 20))
+  ;; Don't display first level of indentation
+  (defun petmacs//indent-guides-for-all-but-first-column (level responsive display)
+    (unless (< level 1)
+      (highlight-indent-guides--highlighter-default level responsive display)))
+  (setq highlight-indent-guides-highlighter-function #'petmacs//indent-guides-for-all-but-first-column))
 
 ;; Colorize color names in buffers
 (use-package rainbow-mode
@@ -68,7 +73,7 @@
            (ov (make-overlay (match-beginning match) (match-end match))))
       (overlay-put ov 'ovrainbow t)
       (overlay-put ov 'face `((:foreground ,(if (> 0.5 (rainbow-x-color-luminance color))
-                                                "white" "black"))
+                                                 "white" "black"))
                               (:background ,color)))))
   (advice-add #'rainbow-colorize-match :override #'my-rainbow-colorize-match)
 
