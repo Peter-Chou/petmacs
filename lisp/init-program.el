@@ -50,7 +50,7 @@
 (defun petmacs/complete-setup-pretty-code ()
   (require 'pretty-fonts)
   (pretty-fonts-add-hook 'prog-mode-hook pretty-fonts-fira-code-alist)
-  (pretty-fonts-add-hook 'org-mode-hook  pretty-fonts-fira-code-alist)
+  ;; (pretty-fonts-add-hook 'org-mode-hook  pretty-fonts-fira-code-alist)
 
   (pretty-fonts-set-fontsets-for-fira-code)
   (pretty-fonts-set-fontsets
