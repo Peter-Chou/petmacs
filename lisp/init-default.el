@@ -201,10 +201,13 @@
   :hook (after-init . global-undo-tree-mode)
   :init (setq undo-tree-visualizer-timestamps t
               undo-tree-visualizer-diff t
-              undo-tree-auto-save-history t
               undo-tree-enable-undo-in-region nil
+              undo-tree-auto-save-history nil
               undo-tree-history-directory-alist
-              `(("." . ,(concat user-emacs-directory "undo-tree-hist/")))))
+              `(("." . ,(locate-user-emacs-file "undo-tree-hist/"))))
+  :config
+  ;; FIXME:  keep the diff window
+  (make-variable-buffer-local 'undo-tree-visualizer-diff))
 
 ;; Handling capitalized subwords in a nomenclature
 (use-package subword
