@@ -41,11 +41,11 @@
   (define-key symbol-overlay-map (kbd "H") 'symbol-overlay-map-help))
 
 (use-package highlight-indent-guides
+  :custom-face
+  (highlight-indent-guides-top-character-face ((t (:inherit (font-lock-function-name-face bold)))))
+  (highlight-indent-guides-character-face ((t (:inherit (font-lock-comment-face)))))
   :defer t
-  :hook (((python-mode yaml-mode) . highlight-indent-guides-mode)
-	  (highlight-indent-guides-mode . (lambda ()
-					    (set-face-foreground 'highlight-indent-guides-character-face "#8f9091")
-					    (set-face-foreground 'highlight-indent-guides-top-character-face "#fe5e10"))))
+  :hook ((python-mode yaml-mode) . highlight-indent-guides-mode)
   :config
   (progn
     (setq highlight-indent-guides-method 'character
