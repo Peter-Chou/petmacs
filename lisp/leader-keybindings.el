@@ -18,6 +18,7 @@
   "v"   'er/expand-region
   "u"   'universal-argument
   "Ts"  'counsel-load-theme
+  "Tn"  'petmacs/cycle-theme
   "TF"  'toggle-frame-fullscreen
   "TM"  'maximize-window
   "TAB" 'petmacs/alternate-buffer

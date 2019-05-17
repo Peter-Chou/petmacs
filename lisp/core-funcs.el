@@ -8,10 +8,13 @@
   (require 'init-const)
   (require 'init-custom))
 
-;; (defun petmacs/popwin:compilation ()
-;;   "Display *compilation* buffer in a popup window."
-;;   (interactive)
-;;   (popwin:popup-buffer-tail "*compilation*"))
+(defun petmacs/cycle-theme ()
+  "Cycle through a list of themes, petmacs-themes-list."
+  (interactive)
+  (when petmacs--default-theme
+    (setq petmacs-themes-list (append petmacs-themes-list (list petmacs--default-theme))))
+  (setq petmacs--default-theme (pop petmacs-themes-list))
+  (load-theme  petmacs--default-theme t))
 
 (defun petmacs/ivy-persp-switch-project-advice (project)
   (let ((persp-reset-windows-on-nil-window-conf t))

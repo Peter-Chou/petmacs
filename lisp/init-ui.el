@@ -4,6 +4,10 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-const)
+  (require 'init-custom))
+
 ;; Icons
 ;; NOTE: Must run `M-x all-the-icons-install-fonts' manually on Windows
 (use-package all-the-icons
@@ -103,8 +107,12 @@
     ;; Corrects (and improves) org-mode's native fontification.
     (doom-themes-org-config)))
 
-;; (load-theme 'doom-dracula t)
-(load-theme 'doom-solarized-light t)
+(load-theme petmacs--default-theme t)
+;;; Disable theme before load a new theme
+(defadvice load-theme
+    (before theme-dont-propagate activate)
+  "Disable theme before load theme."
+  (mapc #'disable-theme custom-enabled-themes))
 
 (use-package display-line-numbers-mode
   :ensure nil

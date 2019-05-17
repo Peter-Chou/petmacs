@@ -8,6 +8,9 @@
 
 (defvar petmacs-default-coding-env 'utf-8)
 
+(defvar petmacs-themes-list '(doom-one-light doom-dracula)
+  "list of themes for cycling")
+
 (defvar petmacs-font-size 12.5
   "default font size")
 
@@ -22,6 +25,10 @@
 path, one file per project is used (and the path is relative to
 the project root). If it an absolute path, one global file is
 used.")
+
+
+(defvar petmacs--default-theme (pop petmacs-themes-list)
+  "petmacs default theme as the first theme in petmcas-themes-list")
 
 (defvar python-shell--interpreter nil)
 (defvar python-shell--interpreter-args nil)
