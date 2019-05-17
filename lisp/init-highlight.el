@@ -42,7 +42,7 @@
 
 (use-package highlight-indent-guides
   :custom-face
-  (highlight-indent-guides-top-character-face ((t (:inherit (font-lock-function-name-face bold)))))
+  (highlight-indent-guides-top-character-face ((t (:inherit (font-lock-keyword-face bold)))))
   (highlight-indent-guides-character-face ((t (:inherit (font-lock-comment-face)))))
   :defer t
   :hook ((python-mode yaml-mode) . highlight-indent-guides-mode)
