@@ -420,6 +420,7 @@
   "msa" 'org-toggle-archive-tag
   "msA" 'org-archive-subtree
   "msb" 'org-tree-to-indirect-buffer
+  "msd" 'org-cut-subtree
   "msh" 'org-promote-subtree
   "msj" 'org-move-subtree-down
   "msk" 'org-move-subtree-up
