@@ -39,6 +39,11 @@
 	company-dabbrev-downcase nil)
   (define-key emacs-lisp-mode-map (kbd "C-M-i") 'company-complete))
 
+;; Better sorting and filtering
+(use-package company-prescient
+  :init (company-prescient-mode 1)
+  :config (prescient-persist-mode 1))
+
 ;; (when emacs/>=26p
 ;;   (use-package company-box
 ;;     :diminish
