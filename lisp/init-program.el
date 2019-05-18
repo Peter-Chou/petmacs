@@ -5,12 +5,25 @@
 ;;; Code:
 
 (use-package fill-column-indicator
+  :preface
+  (defun petmacs//change-fci-rule-color (&rest args)
+    "Change the fill-column-indicator based on the background.
+    ARGS is only used because we use this function as advice after
+    `load-theme'."
+    (setq fci-rule-color (face-attribute 'font-lock-function-name-face :foreground))
+    (let* ((bufs (buffer-list)))
+      (dolist (buf bufs)
+	(with-current-buffer buf
+          (when (bound-and-true-p fci-mode)
+            (fci-make-overlay-strings)
+            (fci-update-all-windows t))))))
   :hook (prog-mode . (lambda ()
 		       (fci-mode 1)
 		       (fci-update-all-windows t)))
   :init
-  (setq fci-rule-color "#FFA631"
-	fci-rule-use-dashes t))
+  (setq fci-rule-color (face-attribute 'font-lock-function-name-face :foreground))
+  (setq fci-rule-use-dashes t)
+  (advice-add 'load-theme :after 'petmacs//change-fci-rule-color))
 
 (use-package imenu-list
   :defer t
