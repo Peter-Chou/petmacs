@@ -61,6 +61,10 @@
          (doom-modeline-mode . setup-custom-doom-modeline))
   :custom-face
   (doom-modeline-buffer-file ((t (:inherit font-lock-string-face :weight bold))))
+  :init
+  (unless after-init-time
+    ;; prevent flash of unstyled modeline at startup
+    (setq-default mode-line-format nil))
   :config
   (progn
     (setq
