@@ -5,16 +5,13 @@
 ;;; Code:
 
 (use-package ace-window
-  :custom
-  (aw-keys '(?j ?k ?l ?i ?o ?h ?y ?u ?p))
   :custom-face
-  (aw-leading-char-face ((t (:height 4.0 :foreground "#f1fa8c"))))
+  (aw-leading-char-face ((t (:inherit error :bold t :height 4.2))))
+  :bind ([remap other-window] . ace-window)
   :init
-  (progn
-    ;; (setq aw-scope 'frame) ;; jump only in current frame
-    (setq aw-minibuffer-flag t)
-    (global-set-key (kbd "C-x O") 'other-frame)
-    (global-set-key [remap other-window] 'ace-window)))
+  ;; (setq aw-scope 'frame) ;; jump only in current frame
+  (setq aw-minibuffer-flag t)
+  (global-set-key (kbd "C-x O") 'other-frame))
 
 (use-package winum
   :init
