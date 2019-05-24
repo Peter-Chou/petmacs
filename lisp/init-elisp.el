@@ -54,6 +54,7 @@
                           (revert-buffer nil t)))
                      'follow-link t))))
               (setq ad-index (1+ ad-index))))))))
+
   ;; Remove hook
   (defun remove-hook-at-point ()
     "Remove the hook at the point in the *Help* buffer."
@@ -67,17 +68,15 @@
             ((hook (progn (goto-char (point-min)) (symbol-at-point)))
              (func (when (and
                           (or (re-search-forward
-                               (format "%s value is[\s\n]" hook) nil t)
+                               (format "[%s|Its|global] value is[\s|\n]" hook) nil t)
                               (re-search-forward
-                               (format "^Value:[\s\n]") nil t)
-                              (re-search-forward
-                               (format "global value is [\n]") nil t))
+                               (format "^Value:[\s|\n]") nil t))
                           (sexp-at-point))
                      (end-of-sexp)
                      (backward-char 1)
                      (catch 'break
                        (while t
-                         (condition-case err
+                         (condition-case _err
                              (backward-sexp)
                            (scan-error (throw 'break nil)))
                          (let ((bounds (bounds-of-thing-at-point 'sexp)))
