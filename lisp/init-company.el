@@ -32,7 +32,7 @@
   (setq company-tooltip-align-annotations t ; aligns annotation to the right
 	company-tooltip-limit 12            ; bigger popup window
 	company-idle-delay .1               ; decrease delay before autocompletion popup shows
-	company-echo-delay 0                ; remove annoying blinking
+	company-echo-delay (if (display-graphic-p) nil 0)
 	company-minimum-prefix-length 2
 	company-require-match nil
 	company-dabbrev-ignore-case nil
@@ -41,8 +41,7 @@
 
 ;; Better sorting and filtering
 (use-package company-prescient
-  :init (company-prescient-mode 1)
-  :config (prescient-persist-mode 1))
+  :init (company-prescient-mode 1))
 
 ;; (when emacs/>=26p
 ;;   (use-package company-box
