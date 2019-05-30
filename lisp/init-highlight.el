@@ -24,10 +24,12 @@
   (symbol-overlay-face-8 ((t (:inherit 'dired-symlink :inverse-video t :bold nil))))
   :functions (symbol-overlay-switch-first symbol-overlay-switch-last)
   :commands (symbol-overlay-get-symbol
-	      symbol-overlay-assoc
-	      symbol-overlay-get-list
-	      symbol-overlay-jump-call)
+	     symbol-overlay-assoc
+	     symbol-overlay-get-list
+	     symbol-overlay-jump-call)
   :hook ((prog-mode . symbol-overlay-mode))
+  :init
+  (setq symbol-overlay-idle-time 0.01)
   :config
   (global-set-key (kbd "M-i") 'symbol-overlay-put)
   (global-set-key (kbd "M-n") 'symbol-overlay-switch-forward)
