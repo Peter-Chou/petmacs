@@ -201,8 +201,8 @@
   "br" 'persp-remove-buffer
   "bj" 'ace-window
   ;; "bi" 'imenu-list-smart-toggle
-  "bi" 'lsp-ui-imenu
-  "bI" 'ibuffer)
+  "bI" 'lsp-ui-imenu
+  "bi" 'ibuffer)
 
 ;; leader-t family
 (which-key-add-key-based-replacements
