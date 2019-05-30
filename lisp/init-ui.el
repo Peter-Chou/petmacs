@@ -145,14 +145,33 @@
    `(linum-highlight-face
      ((t (:inherit 'default :background ,(face-background 'default) :foreground ,(face-foreground 'default)))))))
 
+;; Display Time
+(use-package time
+  :ensure nil
+  :unless (display-graphic-p)
+  :hook (after-init . display-time-mode)
+  :init
+  (setq display-time-24hr-format t
+        display-time-day-and-date t))
+
 (use-package hide-mode-line
-  :hook (((completion-list-mode
-           completion-in-region-mode
-           lsp-ui-imenu-mode
-	   imenu-list-minor-mode
-           neotree-mode
-           treemacs-mode)
-          . hide-mode-line-mode)))
+  :hook (((completion-list-mode completion-in-region-mode) . hide-mode-line-mode)))
+
+;; Suppress GUI features
+(setq use-file-dialog nil)
+(setq use-dialog-box nil)
+(setq inhibit-startup-screen t)
+(setq inhibit-startup-echo-area-message t)
+
+;; Display dividers between windows
+(setq window-divider-default-places t
+      window-divider-default-bottom-width 1
+      window-divider-default-right-width 1)
+(add-hook 'window-setup-hook #'window-divider-mode)
+
+(fset 'yes-or-no-p 'y-or-n-p)
+(setq visible-bell t)
+(add-hook 'window-setup-hook #'size-indication-mode)
 
 (provide 'init-ui)
 

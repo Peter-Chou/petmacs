@@ -51,16 +51,6 @@
     (set-language-environment petmacs-default-language-env)
     (set-default-coding-systems petmacs-default-coding-env)))
 
-;; Suppress GUI features
-(setq use-file-dialog nil)
-(setq use-dialog-box nil)
-(setq inhibit-startup-screen t)
-(setq inhibit-startup-echo-area-message t)
-
-(fset 'yes-or-no-p 'y-or-n-p)
-(setq visible-bell t)
-(size-indication-mode 1)
-
 (setq delete-by-moving-to-trash t)         ; Deleting files go to OS's trash folder
 (setq make-backup-files nil)               ; Forbide to make backup files
 (setq auto-save-default nil)               ; Disable auto save
