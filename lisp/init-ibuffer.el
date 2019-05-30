@@ -4,12 +4,16 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-const)
+  (require 'init-custom))
+
 (use-package ibuffer
   :ensure nil
   :functions (all-the-icons-icon-for-file
-               all-the-icons-icon-for-mode
-               all-the-icons-auto-mode-match?
-               all-the-icons-faicon)
+              all-the-icons-icon-for-mode
+              all-the-icons-auto-mode-match?
+              all-the-icons-faicon)
   :preface
   (defun petmacs/ibuffer-advance-motion (direction)
     (forward-line direction)
@@ -88,7 +92,7 @@
 	    (setq icon (all-the-icons-faicon "file-o" :face 'all-the-icons-dsilver :height 0.8 :v-adjust 0.0))
 	  icon)))
 
-    (setq ibuffer-formats `((mark modified read-only locked
+    (setq ibuffer-formats `((mark modified read-only ,(if emacs/>=26p 'locked "")
                                   ;; Here you may adjust by replacing :right with :center or :left
                                   ;; According to taste, if you want the icon further from the name
                                   " " (icon 2 2 :left :elide)
@@ -113,9 +117,9 @@
   (use-package ibuffer-projectile
     :functions all-the-icons-octicon ibuffer-do-sort-by-alphabetic
     :hook ((ibuffer . (lambda ()
-                         (ibuffer-projectile-set-filter-groups)
-                         (unless (eq ibuffer-sorting-mode 'alphabetic)
-                           (ibuffer-do-sort-by-alphabetic)))))
+                        (ibuffer-projectile-set-filter-groups)
+                        (unless (eq ibuffer-sorting-mode 'alphabetic)
+                          (ibuffer-do-sort-by-alphabetic)))))
     :config
     (setq ibuffer-projectile-prefix
           (if (display-graphic-p)
