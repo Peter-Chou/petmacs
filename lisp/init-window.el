@@ -6,7 +6,7 @@
 
 (use-package ace-window
   :custom-face
-  (aw-leading-char-face ((t (:inherit error :bold t :height 4.2))))
+  (aw-leading-char-face ((t (:inherit font-lock-keyword-face :bold t :height 4.2))))
   :bind ([remap other-window] . ace-window)
   :init
   ;; (setq aw-scope 'frame) ;; jump only in current frame
