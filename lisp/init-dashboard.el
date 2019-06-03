@@ -32,6 +32,13 @@
   ;;                           (projects  . "file-directory")
   ;;                           (registers . "database"))
   (setq dashboard-footer "  S T A Y   H U N G R Y,   S T A Y   F O O L I S H.")
+  (setq dashboard-footer-icon (cond ((display-graphic-p)
+				     (all-the-icons-faicon "heart"
+							   :height 1.1
+							   :v-adjust -0.05
+							   :face 'error))
+				    ((char-displayable-p ?🧡) "🧡 ")
+				    (t ">")))
   (setq dashboard-set-file-icons t)
   (setq dashboard-show-shortcuts nil)
   (setq dashboard-set-init-info t)
