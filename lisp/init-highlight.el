@@ -47,8 +47,7 @@
   (highlight-indent-guides-top-character-face ((t (:inherit (font-lock-keyword-face bold)))))
   (highlight-indent-guides-character-face ((t (:inherit (font-lock-comment-face)))))
   :defer t
-  :hook (((python-mode yaml-mode) . highlight-indent-guides-mode)
-	 (ein:notebook-multilang-mode . (lambda () (highlight-indent-guides-mode -1))))
+  :hook ((python-mode yaml-mode) . highlight-indent-guides-mode)
   :config
   (progn
     (setq highlight-indent-guides-method 'character

@@ -87,10 +87,6 @@
              pipenv-install
              pipenv-uninstall))
 
-;; Emacs IPython Notebook
-(use-package ein
-  :diminish ein:notebook-mode)
-
 (use-package virtualenvwrapper)
 
 (provide 'init-python)
