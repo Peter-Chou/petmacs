@@ -274,6 +274,8 @@
       (ansi-color-apply-on-region compilation-filter-start (point-max))))
   :hook (compilation-filter . my-colorize-compilation-buffer))
 
+(use-package dockerfile-mode)
+
 (provide 'init-program)
 
 ;;; init-program.el ends here
