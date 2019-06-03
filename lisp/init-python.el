@@ -74,9 +74,9 @@
       (shell-command-to-string (format "isort %s" buffer-file-name))))
   :init
   ;; Run on file save
-  (if sys/win32p
-      (add-hook 'after-save-hook 'petmacs//python-sort-imports-windows)
-    (add-hook 'before-save-hook 'petmacs//python-sort-imports))
+  ;; (if sys/win32p
+  ;;     (add-hook 'after-save-hook 'petmacs//python-sort-imports-windows)
+  ;;   (add-hook 'before-save-hook 'petmacs//python-sort-imports))
   )
 
 (use-package pipenv
