@@ -5,7 +5,7 @@
 ;;; Code:
 
 (use-package treemacs
-  :pin melpa-stable
+  ;; :pin melpa-stable
   :defines winum-keymap
   :commands (treemacs-follow-mode
 	     treemacs-current-visibility
@@ -64,7 +64,7 @@
      (treemacs-git-mode 'simple))))
 
 (use-package treemacs-evil
-  :pin melpa-stable
+  ;; :pin melpa-stable
   :defer t
   :init
   (with-eval-after-load 'treemacs
@@ -74,18 +74,18 @@
   (define-key evil-treemacs-state-map (kbd "+") 'treemacs-create-dir))
 
 (use-package treemacs-projectile
-  :pin melpa-stable
+  ;; :pin melpa-stable
   :after treemacs)
 
 (use-package treemacs-magit
-  :pin melpa-stable
+  ;; :pin melpa-stable
   :after treemacs magit
   :commands treemacs-magit--schedule-update
   :hook ((magit-post-commit
-           git-commit-post-finish
-           magit-post-stage
-           magit-post-unstage)
-          . treemacs-magit--schedule-update))
+          git-commit-post-finish
+          magit-post-stage
+          magit-post-unstage)
+         . treemacs-magit--schedule-update))
 
 (provide 'init-treemacs)
 
