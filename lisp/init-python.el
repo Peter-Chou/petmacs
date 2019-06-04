@@ -59,25 +59,7 @@
   (evil-define-minor-mode-key 'normal 'anaconda-mode (kbd "C-M-i") 'company-anaconda)
   (evil-define-minor-mode-key 'insert 'anaconda-mode (kbd "C-M-i") 'company-anaconda))
 
-(use-package py-isort
-  :preface
-  (defun petmacs//python-sort-imports ()
-    ;; py-isort-before-save checks the major mode as well, however we can prevent
-    ;; it from loading the package unnecessarily by doing our own check
-    (when (and python-sort-imports-on-save
-               (derived-mode-p 'python-mode))
-      (py-isort-before-save)))
-
-  (defun petmacs//python-sort-imports-windows ()
-    "When in Python Mode, call isort on save"
-    (when (eq major-mode 'python-mode)
-      (shell-command-to-string (format "isort %s" buffer-file-name))))
-  :init
-  ;; Run on file save
-  ;; (if sys/win32p
-  ;;     (add-hook 'after-save-hook 'petmacs//python-sort-imports-windows)
-  ;;   (add-hook 'before-save-hook 'petmacs//python-sort-imports))
-  )
+(use-package py-isort)
 
 (use-package pipenv
   :commands (pipenv-activate
