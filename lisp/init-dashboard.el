@@ -44,7 +44,7 @@
   (setq dashboard-set-init-info t)
   (setq show-week-agenda-p t)
   (setq dashboard-startup-banner (expand-file-name "img/totoro_banner.png" user-emacs-directory))
-  (setq dashboard-items '((recents  . 8)
+  (setq dashboard-items '((recents  . 5)
                           (bookmarks . 5)
                           (projects . 5)
                           (agenda . 5)))
