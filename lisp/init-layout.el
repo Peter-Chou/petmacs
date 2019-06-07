@@ -9,7 +9,8 @@
   :diminish
   :defines ivy-sort-functions-alist
   :commands (get-current-persp persp-contain-buffer-p)
-  :hook (after-init . persp-mode)
+  :hook ((after-init . persp-mode)
+	 (window-setup . toggle-frame-maximized))
   :init
   (setq persp-keymap-prefix (kbd "C-x p"))
   (setq persp-nil-name "default")

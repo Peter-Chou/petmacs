@@ -18,7 +18,7 @@
     (exec-path-from-shell-initialize)))
 
 ;; maximize emacs after initialization
-(toggle-frame-maximized)
+;; (toggle-frame-maximized)
 
 ;; fix print gibberish when in windows system 
 ;; https://blog.csdn.net/sanwu2010/article/details/23994977
