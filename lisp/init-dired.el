@@ -94,24 +94,24 @@
         (concat dired-omit-files
                 "\\|^.DS_Store$\\|^.projectile$\\|^.git$\\|^.svn$\\|^.vscode$\\|\\.js\\.meta$\\|\\.meta$\\|\\.elc$\\|^.emacs.*")))
 
-(use-package ranger
-  :diminish
-  :commands (ranger deer deer-jump-other-window ranger-override-dired-mode)
-  :init
-  (setq ranger-override-dired t)
-  (setq ranger-deer-show-details t)
-  (setq ranger-cleanup-on-disable t)
-  (setq ranger-show-hidden t)
-  (setq ranger-parent-depth 1)
-  (setq ranger-width-parents 0.12)
-  (ranger-override-dired-mode t)  ;; use ranger as default directory handler
-  (setq ranger-ignored-extensions '("mkv" "iso" "mp4"))
-  ;; set the max files size (in MB) to preview
-  (setq ranger-max-preview-size 5)
-  ;; allow '-' to enter ranger
-  (define-key evil-normal-state-map (kbd "-") 'deer)
-  :config
-  (define-key ranger-mode-map (kbd "-") 'ranger-up-directory))
+;; (use-package ranger
+;;   :diminish
+;;   :commands (ranger deer deer-jump-other-window ranger-override-dired-mode)
+;;   :init
+;;   (setq ranger-override-dired t)
+;;   (setq ranger-deer-show-details t)
+;;   (setq ranger-cleanup-on-disable t)
+;;   (setq ranger-show-hidden t)
+;;   (setq ranger-parent-depth 1)
+;;   (setq ranger-width-parents 0.12)
+;;   (ranger-override-dired-mode t)  ;; use ranger as default directory handler
+;;   (setq ranger-ignored-extensions '("mkv" "iso" "mp4"))
+;;   ;; set the max files size (in MB) to preview
+;;   (setq ranger-max-preview-size 5)
+;;   ;; allow '-' to enter ranger
+;;   (define-key evil-normal-state-map (kbd "-") 'deer)
+;;   :config
+;;   (define-key ranger-mode-map (kbd "-") 'ranger-up-directory))
 
 (provide 'init-dired)
 
