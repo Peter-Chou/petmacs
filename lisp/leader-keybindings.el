@@ -35,7 +35,7 @@
   "ad" 'deer
   "ap"  'list-processes
   "aP"  'proced
-  "ar" 'ranger
+  ;; "ar" 'ranger
   "ak"  'paradox-list-packages
   "ao#" 'org-agenda-list-stuck-projects
   "ao/" 'org-occur-in-agenda-files

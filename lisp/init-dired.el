@@ -46,7 +46,8 @@
   ;; kill current buffer when leaving dired mode
   (evil-define-key 'normal dired-mode-map (kbd "q") 'kill-this-buffer)
   :init
-  (put 'dired-find-alternate-file 'disabled nil))
+  (put 'dired-find-alternate-file 'disabled nil)
+  (define-key evil-normal-state-map (kbd "-") 'dired-jump))
 
 ;; Quick sort dired buffers via hydra
 (use-package dired-quick-sort
