@@ -14,7 +14,7 @@
   (which-key-add-key-based-replacements
     (format "%s %s" petmacs-evil-major-leader-insert-default-key key) desc))
 
-(defun petmacs//set-key-prefix-name (key name)
+(defun petmacs//setup-major-mode-key-name (key name)
   (which-key-add-key-based-replacements (format "%s m%s" petmacs-evil-leader-key key) name)
   (which-key-add-key-based-replacements (format "%s m%s" petmacs-evil-major-leader-insert-default-key key) name)
   (which-key-add-key-based-replacements (format ", %s" key) name))

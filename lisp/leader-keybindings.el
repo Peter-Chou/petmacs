@@ -17,12 +17,15 @@
   "/"   'counsel-projectile-rg
   "v"   'er/expand-region
   "u"   'universal-argument
+  "d"   'xref-pop-marker-stack)
+
+;; leader-T Top family 
+(petmacs//setup-default-key-name "T" "Top")
+(evil-leader/set-key
   "Ts"  'counsel-load-theme
   "Tn"  'petmacs/cycle-theme
   "TF"  'toggle-frame-fullscreen
-  "TM"  'maximize-window
-  "TAB" 'petmacs/alternate-buffer
-  "d"   'xref-pop-marker-stack)
+  "TM"  'maximize-window)
 
 ;; leader-a application family
 (petmacs//setup-default-key-name "a" "application")
@@ -190,6 +193,7 @@
   "bi" 'ibuffer)
 
 ;; leader-t family
+(petmacs//setup-default-key-name "t" "toggle")
 (which-key-add-key-based-replacements
   (format "%s t" petmacs-evil-leader-key) "toggle")
 (evil-leader/set-key
@@ -226,13 +230,13 @@
 
 (petmacs//setup-default-key-name "m" "major mode cmds")
 
-(petmacs//set-key-prefix-name "c" "compile")
-(petmacs//set-key-prefix-name "d" "debug")
-(petmacs//set-key-prefix-name "g" "goto")
-(petmacs//set-key-prefix-name "s" "REPL")
-(petmacs//set-key-prefix-name "h" "help")
-(petmacs//set-key-prefix-name "v" "virtualenv")
-(petmacs//set-key-prefix-name "vp" "pipenv")
+(petmacs//setup-major-mode-key-name "c" "compile")
+(petmacs//setup-major-mode-key-name "d" "debug")
+(petmacs//setup-major-mode-key-name "g" "goto")
+(petmacs//setup-major-mode-key-name "s" "REPL")
+(petmacs//setup-major-mode-key-name "h" "help")
+(petmacs//setup-major-mode-key-name "v" "virtualenv")
+(petmacs//setup-major-mode-key-name "vp" "pipenv")
 
 ;;; json
 (evil-leader/set-key-for-mode 'json-mode "m=" 'prettier-js)
