@@ -17,7 +17,8 @@
   "/"   'counsel-projectile-rg
   "v"   'er/expand-region
   "u"   'universal-argument
-  "d"   'xref-pop-marker-stack)
+  "d"   'xref-pop-marker-stack
+  "TAB" 'petmacs/alternate-buffer)
 
 ;; leader-T Top family 
 (petmacs//setup-default-key-name "T" "Top")
