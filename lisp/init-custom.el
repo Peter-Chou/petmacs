@@ -20,6 +20,9 @@
 (defvar petmacs-evil-major-leader-key "\,"
   "Evil major leader key.")
 
+(defvar petmacs-evil-major-leader-insert-default-key "M-m"
+  "Evil leader key in evil insert mode.")
+
 (defvar org-projectile-file "TODOs.org"
   "The file to store project TODOs in. If this is a relative
 path, one file per project is used (and the path is relative to

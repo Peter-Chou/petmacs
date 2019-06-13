@@ -8,6 +8,17 @@
   (require 'init-const)
   (require 'init-custom))
 
+(defun petmacs//setup-default-key-name (key desc)
+  (which-key-add-key-based-replacements
+    (format "%s %s" petmacs-evil-leader-key key) desc)
+  (which-key-add-key-based-replacements
+    (format "%s %s" petmacs-evil-major-leader-insert-default-key key) desc))
+
+(defun petmacs//set-key-prefix-name (key name)
+  (which-key-add-key-based-replacements (format "%s m%s" petmacs-evil-leader-key key) name)
+  (which-key-add-key-based-replacements (format "%s m%s" petmacs-evil-major-leader-insert-default-key key) name)
+  (which-key-add-key-based-replacements (format ", %s" key) name))
+
 (defun petmacs/cycle-theme ()
   "Cycle through a list of themes, petmacs-themes-list."
   (interactive)

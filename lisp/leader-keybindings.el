@@ -25,14 +25,11 @@
   "d"   'xref-pop-marker-stack)
 
 ;; leader-a application family
-(which-key-add-key-based-replacements
-  (format "%s a" petmacs-evil-leader-key) "application")
-(which-key-add-key-based-replacements
-  (format "%s ao" petmacs-evil-leader-key) "org")
-(which-key-add-key-based-replacements
-  (format "%s aC" petmacs-evil-leader-key) "clock")
+(petmacs//setup-default-key-name "a" "application")
+(petmacs//setup-default-key-name "ao" "org")
+(petmacs//setup-default-key-name "aC" "Clock")
 (evil-leader/set-key
-  "ad" 'deer
+  ;; "ad" 'deer
   "ap"  'list-processes
   "aP"  'proced
   ;; "ar" 'ranger
@@ -62,8 +59,7 @@
       "am" 'petmacs/open-mintty-terminal-here))
 
 ;; leader-q family
-(which-key-add-key-based-replacements
-  (format "%s q" petmacs-evil-leader-key) "quit")
+(petmacs//setup-default-key-name "q" "quit")
 (evil-leader/set-key
   "qq" 'petmacs/frame-killer
   "qQ" 'kill-emacs
@@ -71,25 +67,20 @@
   "qR" 'restart-emacs)
 
 ;; leader-h family
-(which-key-add-key-based-replacements
-  (format "%s h" petmacs-evil-leader-key) "helps")
+(petmacs//setup-default-key-name "h" "helps")
 (evil-leader/set-key
   "hdf" 'counsel-describe-function
   "hdv" 'counsel-describe-variable)
 
 ;; leader-s search family
-(which-key-add-key-based-replacements
-  (format "%s s" petmacs-evil-leader-key) "search")
+(petmacs//setup-default-key-name "s" "search")
 (evil-leader/set-key
   "se" 'evil-iedit-state/iedit-mode)
 
 ;; leader-f family
-(which-key-add-key-based-replacements
-  (format "%s f" petmacs-evil-leader-key) "files")
-(which-key-add-key-based-replacements
-  (format "%s fy" petmacs-evil-leader-key) "copy")
-(which-key-add-key-based-replacements
-  (format "%s fv" petmacs-evil-leader-key) "variable")
+(petmacs//setup-default-key-name "f" "files")
+(petmacs//setup-default-key-name "fy" "copy")
+(petmacs//setup-default-key-name "fv" "variable")
 (evil-leader/set-key
   "ff"  'counsel-find-file
   "fj"  'dired-jump
@@ -120,8 +111,7 @@
   "fed" 'petmacs/find-dotfile)
 
 ;; leader-g family
-(which-key-add-key-based-replacements
-  (format "%s g" petmacs-evil-leader-key) "git")
+(petmacs//setup-default-key-name "g" "git")
 (evil-leader/set-key
   "gc"  'magit-clone
   "gff" 'magit-find-file
@@ -137,14 +127,12 @@
   "gho" 'browse-at-remote)
 
 ;; leader-i insert family
-(which-key-add-key-based-replacements
-  (format "%s i" petmacs-evil-leader-key) "insert")
+(petmacs//setup-default-key-name "i" "insert")
 (evil-leader/set-key
   "is" 'ivy-yasnippet)
 
 ;; leader-p family
-(which-key-add-key-based-replacements
-  (format "%s p" petmacs-evil-leader-key) "project")
+(petmacs//setup-default-key-name "p" "project")
 (evil-leader/set-key
   "p SPC" 'counsel-projectile
   "p'"    'petmacs/projectile-pop-eshell
@@ -159,8 +147,7 @@
   "pv"    'projectile-vc)
 
 ;; leader-j family
-(which-key-add-key-based-replacements
-  (format "%s j" petmacs-evil-leader-key) "jumps")
+(petmacs//setup-default-key-name "j" "jumps")
 (evil-leader/set-key
   "ji" 'petmacs/counsel-jump-in-buffer
   "jw" 'evil-avy-goto-word-or-subword-1
@@ -170,8 +157,7 @@
   "jJ" 'avy-goto-char-2)
 
 ;; leader-e family
-(which-key-add-key-based-replacements
-  (format "%s e" petmacs-evil-leader-key) "error")
+(petmacs//setup-default-key-name "e" "error")
 (evil-leader/set-key
   "eb" 'flycheck-buffer
   "ec" 'flycheck-clear
@@ -187,8 +173,7 @@
   "ex" 'flycheck-explain-error-at-point)
 
 ;; leader-b family
-(which-key-add-key-based-replacements
-  (format "%s b" petmacs-evil-leader-key) "buffers")
+(petmacs//setup-default-key-name "b" "buffers")
 (evil-leader/set-key
   "bb" 'ivy-switch-buffer
   "bd" 'kill-this-buffer
@@ -213,8 +198,7 @@
   "tf" 'focus-mode)
 
 ;; leader-w family
-(which-key-add-key-based-replacements
-  (format "%s w" petmacs-evil-leader-key) "windows")
+(petmacs//setup-default-key-name "w" "windows")
 (evil-leader/set-key
   "w."  'hydra-frame-window/body
   "wc"  'olivetti-mode
@@ -227,8 +211,9 @@
   )
 
 ;; leader-o family
-(which-key-add-key-based-replacements
-  (format "%s o" petmacs-evil-leader-key) "yours")
+(petmacs//setup-default-key-name "o" "users")
+(petmacs//setup-default-key-name "ob" "bookmarks")
+(petmacs//setup-default-key-name "ow" "whitespace")
 (evil-leader/set-key
   "ow"  'whitespace-cleanup
   ;; bookmarks
@@ -239,12 +224,7 @@
 
 ;;;; major mode specific keybinding
 
-(which-key-add-key-based-replacements
-  (format "%s m" petmacs-evil-leader-key) "major mode cmds")
-
-(defun petmacs//set-key-prefix-name (key name)
-  (which-key-add-key-based-replacements (format "%s m%s" petmacs-evil-leader-key key) name)
-  (which-key-add-key-based-replacements (format ", %s" key) name))
+(petmacs//setup-default-key-name "m" "major mode cmds")
 
 (petmacs//set-key-prefix-name "c" "compile")
 (petmacs//set-key-prefix-name "d" "debug")
