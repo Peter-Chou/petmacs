@@ -274,6 +274,10 @@
       (ansi-color-apply-on-region compilation-filter-start (point-max))))
   :hook (compilation-filter . my-colorize-compilation-buffer))
 
+;; Run commands quickly
+(use-package quickrun
+  :init (setq quickrun-focus-p nil))
+
 (use-package dockerfile-mode)
 
 (provide 'init-program)
