@@ -32,11 +32,15 @@
       (setq insert-directory-program "gls")))
 
   (when (or (and sys/macp (executable-find "gls"))
-            (and (not sys/macp) (executable-find "ls")))
+            (and (not sys/win32p) (and (not sys/macp) (executable-find "ls"))))
     ;; Using `insert-directory-program'
     (setq ls-lisp-use-insert-directory-program t)
     ;; Show directory first
     (setq dired-listing-switches "-alh --group-directories-first"))
+
+  (when sys/win32p
+    (setq dired-listing-switches "-alh --group-directories-first"))
+  ;; (setq dired-listing-switches "-alh")
 
   (evil-define-key 'normal dired-mode-map (kbd "RET") 'dired-find-alternate-file) 
   ;; was dired-advertised-find-file
