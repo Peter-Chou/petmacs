@@ -185,6 +185,7 @@
   "bs" 'petmacs/goto-scratch-buffer
   "bx" 'kill-buffer-and-window
   "bh" 'petmacs/goto-dashboard
+  "bm" 'petmacs/switch-to-minibuffer-window
   "bY" 'petmacs/copy-whole-buffer-to-clipboard
   "ba" 'persp-add-buffer
   "br" 'persp-remove-buffer

@@ -27,6 +27,12 @@
   (setq petmacs--default-theme (pop petmacs-themes-list))
   (load-theme  petmacs--default-theme t))
 
+(defun petmacs/switch-to-minibuffer-window ()
+  "switch to minibuffer window (if active)"
+  (interactive)
+  (when (active-minibuffer-window)
+    (select-window (active-minibuffer-window))))
+
 (defun petmacs/ivy-persp-switch-project-advice (project)
   (let ((persp-reset-windows-on-nil-window-conf t))
     (persp-switch project)))
