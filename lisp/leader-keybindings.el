@@ -23,7 +23,7 @@
 ;; leader-T Top family 
 (petmacs//setup-default-key-name "T" "Top")
 (evil-leader/set-key
-  "Ts"  'counsel-load-theme
+  "Ts"  'petmacs/select-theme
   "Tn"  'petmacs/cycle-theme
   "TF"  'toggle-frame-fullscreen
   "TM"  'maximize-window)

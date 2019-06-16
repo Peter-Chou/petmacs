@@ -8,6 +8,19 @@
   (require 'init-const)
   (require 'init-custom))
 
+(defun petmacs/escape ()
+  "Run `doom-escape-hook'."
+  (interactive)
+  (cond ((minibuffer-window-active-p (minibuffer-window))
+         ;; quit the minibuffer if open.
+         (abort-recursive-edit))
+        ;; don't abort macros
+        ((or defining-kbd-macro executing-kbd-macro) nil)
+        ;; Back to the default
+        ((keyboard-quit))))
+;; escape minibuffer with single C-g
+(global-set-key [remap keyboard-quit] #'petmacs/escape)
+
 (defun petmacs//setup-default-key-name (key desc)
   (which-key-add-key-based-replacements
     (format "%s %s" petmacs-evil-leader-key key) desc)
@@ -22,10 +35,17 @@
 (defun petmacs/cycle-theme ()
   "Cycle through a list of themes, petmacs-themes-list."
   (interactive)
-  (when petmacs--default-theme
+  (when (not (member petmacs--default-theme petmacs-themes-list))
     (setq petmacs-themes-list (append petmacs-themes-list (list petmacs--default-theme))))
   (setq petmacs--default-theme (pop petmacs-themes-list))
   (load-theme  petmacs--default-theme t))
+
+(defun petmacs/select-theme ()
+  (interactive)
+  (when (not (member petmacs--default-theme petmacs-themes-list))
+    (setq petmacs-themes-list (append petmacs-themes-list (list petmacs--default-theme))))
+  (counsel-load-theme))
+
 
 (defun petmacs/switch-to-minibuffer-window ()
   "switch to minibuffer window (if active)"
