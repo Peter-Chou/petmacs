@@ -7,15 +7,21 @@
 (use-package lsp-mode
   ;; :pin melpa-stable
   :commands lsp
+  :diminish lsp-mode
+  :bind (:map lsp-mode-map
+	      ("C-c C-d" . lsp-describe-thing-at-point))
   :init
-  (setq lsp-auto-guess-root t)
-  (setq lsp-prefer-flymake nil)
+  (setq lsp-auto-guess-root t		;; Detect project root
+	lsp-prefer-flymake nil		;; Use lsp-ui and flycheck
+	flymake-fringe-indicator-position 'right-fringe)
   :config
   (progn
     (require 'lsp-clients)))
 
 (use-package lsp-ui
   ;; :pin melpa-stable
+  :custom-face
+  (lsp-ui-doc-background ((t (:background nil))))
   :bind (:map lsp-ui-mode-map
               ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
               ([remap xref-find-references] . lsp-ui-peek-find-references)
@@ -24,16 +30,19 @@
 			       (display-line-numbers-mode -1)
 			       (hl-line-mode -1)))
   :init
-  (setq lsp-ui-peek-enable t)
-  (setq lsp-ui-doc-enable t)
-  (setq lsp-ui-doc-use-webkit t)
-  (setq lsp-ui-doc-include-signature t)
-  (setq lsp-ui-doc-position 'top)
-  (setq lsp-ui-doc-border (face-foreground 'default))
-  (setq lsp-ui-imenu-enable t)
-  (setq lsp-ui-flycheck-enable t)
-  (setq lsp-ui-sideline-enable nil)
-  (setq lsp-ui-sideline-ignore-duplicate t)
+  (setq lsp-ui-doc-enable t
+	lsp-ui-peek-enable t
+	lsp-ui-doc-use-webkit nil
+	lsp-ui-doc-include-signature t
+	lsp-ui-doc-position 'top
+	lsp-ui-doc-border (face-foreground 'default)
+
+	lsp-ui-sideline-enable nil
+	lsp-ui-sideline-ignore-duplicate t)
+
+  ;; (setq lsp-ui-imenu-enable t)
+  ;; (setq lsp-ui-flycheck-enable t)
+
   (evil-define-key 'normal lsp-ui-imenu-mode-map (kbd "q") 'lsp-ui-imenu--kill)
   (evil-define-key 'normal lsp-ui-imenu-mode-map (kbd "J") 'lsp-ui-imenu--next-kind)
   (evil-define-key 'normal lsp-ui-imenu-mode-map (kbd "K") 'lsp-ui-imenu--prev-kind)
@@ -44,6 +53,10 @@
   ;; https://github.com/emacs-lsp/lsp-ui/issues/243
   (defadvice lsp-ui-imenu (after hide-lsp-ui-imenu-mode-line activate)
     (setq mode-line-format nil)))
+
+(use-package company-lsp
+  ;; :pin melpa-stable
+  :init (setq company-lsp-cache-candidates 'auto))
 
 ;; Debug
 ;; (use-package dap-mode
@@ -58,14 +71,10 @@
 ;;          ((c-mode c++-mode objc-mode swift) . (lambda () (require 'dap-lldb)))
 ;;          (php-mode . (lambda () (require 'dap-php)))))
 
-(use-package company-lsp
-  ;; :pin melpa-stable
-  :init (setq company-lsp-cache-candidates 'auto))
-
 ;; `lsp-mode' and `treemacs' integration.
 (use-package lsp-treemacs
   :bind (:map lsp-mode-map
-                ("M-9" . lsp-treemacs-errors-list)))
+	      ("M-9" . lsp-treemacs-errors-list)))
 
 (provide 'init-lsp)
 
