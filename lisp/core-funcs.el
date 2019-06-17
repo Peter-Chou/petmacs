@@ -8,19 +8,6 @@
   (require 'init-const)
   (require 'init-custom))
 
-(defun petmacs/escape ()
-  "Run `doom-escape-hook'."
-  (interactive)
-  (cond ((minibuffer-window-active-p (minibuffer-window))
-         ;; quit the minibuffer if open.
-         (abort-recursive-edit))
-        ;; don't abort macros
-        ((or defining-kbd-macro executing-kbd-macro) nil)
-        ;; Back to the default
-        ((keyboard-quit))))
-;; escape minibuffer with single C-g
-(global-set-key [remap keyboard-quit] #'petmacs/escape)
-
 (defun petmacs//setup-default-key-name (key desc)
   (which-key-add-key-based-replacements
     (format "%s %s" petmacs-evil-leader-key key) desc)
