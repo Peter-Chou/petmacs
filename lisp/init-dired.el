@@ -18,9 +18,18 @@
     (interactive)
     (find-alternate-file ".."))
 
+  ;; show diectory first
+  (defun petmacs//dired-sort ()
+    "Sort dired listings with directories first."
+    (save-excursion
+      (let (buffer-read-only)
+	(forward-line 2) ;; beyond dir. header
+	(sort-regexp-fields t "^.*$" "[ ]*." (point) (point-max)))
+      (set-buffer-modified-p nil)))
+
   :config
   ;; Always delete and copy recursively
-  (setq dired-recursive-deletes 'always)
+  (setq dired-recursive-deletes 'top)  ;; “top” means ask once
   (setq dired-recursive-copies 'always)
 
   (when sys/macp
@@ -39,8 +48,11 @@
     (setq dired-listing-switches "-alh --group-directories-first"))
 
   (when sys/win32p
-    (setq dired-listing-switches "-alh --group-directories-first"))
-  ;; (setq dired-listing-switches "-alh")
+    (setq dired-listing-switches "-alh")  ;; show human readable file size
+    (defadvice dired-readin
+	(after dired-after-updating-hook first () activate)
+      "Sort dired listings with directories first before adding marks."
+      (petmacs//dired-sort)))
 
   (evil-define-key 'normal dired-mode-map (kbd "RET") 'dired-find-alternate-file) 
   ;; was dired-advertised-find-file
