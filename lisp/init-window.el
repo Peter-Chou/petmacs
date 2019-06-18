@@ -32,6 +32,19 @@
 (put 'shackle--current-popup-window 'permanent-local t)
 
 (use-package shackle
+  :preface
+  (defun petmacs/shackle-popup-message-buffer ()
+    "View message buffer."
+    (interactive)
+    (ignore-errors
+      (display-buffer "*Messages*")))
+
+  (defun petmacs/shackle-popup-compilation-buffer ()
+    "View compilation buffer."
+    (interactive)
+    (ignore-errors
+      (display-buffer"*compilation*")))
+
   :functions org-switch-to-buffer-other-window
   :commands shackle-display-buffer
   :hook (after-init . shackle-mode)
