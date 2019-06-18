@@ -8,7 +8,7 @@
 
 (defvar petmacs-default-coding-env 'utf-8)
 
-(defvar petmacs-themes-list '(doom-one doom-one-light)
+(defvar petmacs-themes-list '(doom-one-light doom-one)
   "list of themes for cycling")
 
 (defvar petmacs-font-size 12.5
