@@ -44,9 +44,9 @@
   (setq dashboard-set-init-info t)
   (setq show-week-agenda-p t)
   (setq dashboard-startup-banner (expand-file-name "img/totoro_banner.png" user-emacs-directory))
-  (setq dashboard-items '((recents  . 5)
+  (setq dashboard-items '((recents  . 7)
                           (bookmarks . 5)
-                          (projects . 5)
+                          ;; (projects . 5)
                           (agenda . 5)))
 
   (evil-define-key 'normal dashboard-mode-map
