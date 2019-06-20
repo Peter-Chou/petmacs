@@ -65,8 +65,11 @@
   (setq-default evil-escape-delay 0.3)
   (evil-escape-mode))
 
-(use-package evil-commentary
-  :hook (after-init . evil-commentary-mode))
+(use-package evil-nerd-commenter
+  :init
+  (evil-define-key 'normal prog-mode-map
+    "gc" 'evilnc-comment-or-uncomment-lines
+    "gy" 'evilnc-comment-and-kill-ring-save))
 
 (use-package evil-surround
   :init
