@@ -155,6 +155,8 @@
 
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq visible-bell t)
+(setq inhibit-compacting-font-caches t) ; Don’t compact font caches during GC.
+
 (add-hook 'window-setup-hook #'size-indication-mode)
 
 (provide 'init-ui)
