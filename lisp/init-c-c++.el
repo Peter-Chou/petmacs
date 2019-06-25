@@ -9,7 +9,7 @@
   :defines projectile-project-root-files-top-down-recurring
   :hook ((c-mode c++-mode objc-mode cuda-mode) . (lambda ()
                                                   (require 'ccls)
-                                                  (lsp)))
+                                                  (lsp-deferred)))
   :init
   (setq ccls-executable (file-truename "~/ccls/Release/ccls"))
   (setq ccls-initialization-options
