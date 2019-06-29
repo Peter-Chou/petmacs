@@ -12,16 +12,17 @@
   :hook ((after-init . persp-mode)
 	 (window-setup . toggle-frame-maximized))
   :init
-  (setq persp-keymap-prefix (kbd "C-x p"))
-  (setq persp-nil-name "default")
-  (setq persp-set-last-persp-for-new-frames nil)
-  (setq persp-kill-foreign-buffer-behaviour 'kill)
-  (setq persp-auto-resume-time 0)
-  (setq persp-common-buffer-filter-functions
+  (setq persp-keymap-prefix (kbd "C-x p")
+        persp-nil-name "default"
+        persp-set-last-persp-for-new-frames nil
+        persp-kill-foreign-buffer-behaviour 'kill
+        persp-common-buffer-filter-functions
         (list #'(lambda (b)
                   "Ignore temporary buffers."
                   (or (string-prefix-p " " (buffer-name b))
-                      (string-prefix-p "*" (buffer-name b))
+                      (and (string-prefix-p "*" (buffer-name b))
+                           (not (string-equal "*scratch*" (buffer-name b))))
+                      (eq major-mode 'nov-mode)
                       (string-prefix-p "magit" (buffer-name b))))))
   :config
   ;; Integrate IVY
@@ -50,7 +51,8 @@
               persp-add-buffer projectile-project-buffers)
   :commands (persp-mode-projectile-bridge-find-perspectives-for-all-buffers
              persp-mode-projectile-bridge-kill-perspectives
-             persp-mode-projectile-bridge-add-new-persp)
+             persp-mode-projectile-bridge-add-new-persp
+             projectile-project-buffers)
   :hook
   ((persp-mode . persp-mode-projectile-bridge-mode)
    (persp-mode-projectile-bridge-mode
