@@ -265,20 +265,27 @@
 ;; Compilation Mode
 (use-package compile
   :ensure nil
-  :preface
+  :hook (compilation-filter . my-colorize-compilation-buffer)
+  :init
   ;; ANSI Coloring
   ;; @see https://stackoverflow.com/questions/13397737/ansi-coloring-in-compilation-mode
   (defun my-colorize-compilation-buffer ()
     "ANSI coloring in compilation buffers."
     (when (eq major-mode 'compilation-mode)
-      (ansi-color-apply-on-region compilation-filter-start (point-max))))
-  :hook (compilation-filter . my-colorize-compilation-buffer))
+      (ansi-color-apply-on-region compilation-filter-start (point-max)))))
 
 ;; Run commands quickly
 (use-package quickrun
   :init (setq quickrun-focus-p nil))
 
+;; Docker
+(use-package docker
+  :bind ("C-c d" . docker)
+  :init (setq docker-image-run-arguments '("-i" "-t" "--rm")
+              docker-container-shell-file-name "/bin/bash"))
+
 (use-package dockerfile-mode)
+(use-package docker-tramp)
 
 (provide 'init-program)
 
