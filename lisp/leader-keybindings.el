@@ -11,6 +11,16 @@
 (evil-leader/set-leader petmacs-evil-leader-key)
 (evil-major-leader/set-leader petmacs-evil-major-leader-key)
 
+;; Escape from isearch-mode("/" and "?" in evil-mode) like vim
+(define-key isearch-mode-map (kbd "<escape>") 'isearch-cancel)
+
+;; Make <escape> quit as much as possible
+(define-key minibuffer-local-map (kbd "<escape>") 'keyboard-escape-quit)
+(define-key minibuffer-local-ns-map (kbd "<escape>") 'keyboard-escape-quit)
+(define-key minibuffer-local-completion-map (kbd "<escape>") 'keyboard-escape-quit)
+(define-key minibuffer-local-must-match-map (kbd "<escape>") 'keyboard-escape-quit)
+(define-key minibuffer-local-isearch-map (kbd "<escape>") 'keyboard-escape-quit)
+
 (evil-leader/set-key
   "'"   'petmacs/pop-eshell
   "?"   'counsel-descbinds
@@ -36,6 +46,7 @@
   ;; "ad" 'deer
   "ap"  'list-processes
   "aP"  'proced
+  "au"  'undo-tree-visualize
   ;; "ar" 'ranger
   "ak"  'paradox-list-packages
   "ao#" 'org-agenda-list-stuck-projects
@@ -114,6 +125,18 @@
   "fec" 'petmacs/find-custom-file
   "fed" 'petmacs/find-dotfile)
 
+;; leader-F family
+(petmacs//setup-default-key-name "F" "Frame")
+(evil-leader/set-key
+  "Ff" 'find-file-other-frame
+  "Fd" 'delete-frame
+  "FD" 'delete-other-frames
+  "Fb" 'switch-to-buffer-other-frame
+  "FB" 'display-buffer-other-frame
+  "Fo" 'other-frame
+  "FO" 'dired-other-frame
+  "Fn" 'make-frame)
+
 ;; leader-g family
 (petmacs//setup-default-key-name "g" "git")
 (evil-leader/set-key
@@ -156,6 +179,7 @@
   "ji" 'petmacs/counsel-jump-in-buffer
   "jw" 'evil-avy-goto-word-or-subword-1
   "jD" 'deer-jump-other-window
+  "jc" 'goto-last-change
   "jd" 'deer
   "jj" 'avy-goto-char-timer
   "jJ" 'avy-goto-char-2)
@@ -181,6 +205,8 @@
 (evil-leader/set-key
   "bb" 'ivy-switch-buffer
   "bd" 'kill-this-buffer
+  "bn" 'next-buffer
+  "bp"    'previous-buffer
   "bR" 'petmacs/revert-this-buffer
   "bs" 'petmacs/goto-scratch-buffer
   "bx" 'kill-buffer-and-window
@@ -190,8 +216,8 @@
   "ba" 'persp-add-buffer
   "br" 'persp-remove-buffer
   "bj" 'ace-window
-  ;; "bi" 'imenu-list-smart-toggle
-  "bI" 'lsp-ui-imenu
+  "bt" 'imenu-list-smart-toggle
+  ;; "bI" 'lsp-ui-imenu
   "bi" 'ibuffer)
 
 ;; leader-t family
@@ -227,6 +253,13 @@
   "obd" 'bookmark-delete
   "obr" 'bookmark-rename
   "obl" 'bookmark-bmenu-list)
+
+(petmacs//setup-default-key-name "n" "narrow")
+(evil-leader/set-key
+  "nr" 'narrow-to-region
+  "np" 'narrow-to-page
+  "nf" 'narrow-to-defun
+  "nw" 'widen)
 
 ;;;; major mode specific keybinding
 
