@@ -10,12 +10,13 @@
   :defines ivy-sort-functions-alist
   :commands (get-current-persp persp-contain-buffer-p)
   :hook ((after-init . persp-mode)
-	 (window-setup . toggle-frame-maximized))
+         (window-setup . toggle-frame-maximized))
   :init
   (setq persp-keymap-prefix (kbd "C-x p")
         persp-nil-name "default"
         persp-set-last-persp-for-new-frames nil
         persp-kill-foreign-buffer-behaviour 'kill
+        persp-auto-resume-time 0
         persp-common-buffer-filter-functions
         (list #'(lambda (b)
                   "Ignore temporary buffers."
@@ -47,23 +48,23 @@
 ;; Integrate `projectile'
 (use-package persp-mode-projectile-bridge
   :functions (persp-get-by-name
-              persp-add-new set-persp-parameter
-              persp-add-buffer projectile-project-buffers)
+              persp-add-new
+              set-persp-parameter
+              persp-add-buffer)
   :commands (persp-mode-projectile-bridge-find-perspectives-for-all-buffers
              persp-mode-projectile-bridge-kill-perspectives
              persp-mode-projectile-bridge-add-new-persp
              projectile-project-buffers)
-  :hook
-  ((persp-mode . persp-mode-projectile-bridge-mode)
-   (persp-mode-projectile-bridge-mode
-    .
-    (lambda ()
-      (if persp-mode-projectile-bridge-mode
-          (persp-mode-projectile-bridge-find-perspectives-for-all-buffers)
-        (persp-mode-projectile-bridge-kill-perspectives)))))
+  :hook ((persp-mode . persp-mode-projectile-bridge-mode)
+         (persp-mode-projectile-bridge-mode
+          .
+          (lambda ()
+            (if persp-mode-projectile-bridge-mode
+                (persp-mode-projectile-bridge-find-perspectives-for-all-buffers)
+              (persp-mode-projectile-bridge-kill-perspectives)))))
   :init (setq persp-mode-projectile-bridge-persp-name-prefix "[p]")
   :config
-  ;; HACK:Allow saving to files
+  ;; HACK: Allow saving to files
   (eval-and-compile
     (defun my-persp-mode-projectile-bridge-add-new-persp (name)
       (let ((persp (persp-get-by-name name *persp-hash* :nil)))
@@ -77,6 +78,7 @@
           persp)))
     (advice-add #'persp-mode-projectile-bridge-add-new-persp
                 :override #'my-persp-mode-projectile-bridge-add-new-persp)))
+
 (provide 'init-layout)
 
 ;;; init-layout.el ends here
