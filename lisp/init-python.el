@@ -59,6 +59,12 @@
   (evil-define-minor-mode-key 'normal 'anaconda-mode (kbd "C-M-i") 'company-anaconda)
   (evil-define-minor-mode-key 'insert 'anaconda-mode (kbd "C-M-i") 'company-anaconda))
 
+(use-package lsp-python-ms
+  :hook (python-mode . (lambda ()
+                         (require 'lsp-python-ms)
+                         (lsp-deferred)
+			 (flycheck-mode -1))))
+
 (use-package py-isort)
 
 (use-package pipenv
