@@ -33,6 +33,9 @@ used.")
 (defvar petmacs--default-theme (pop petmacs-themes-list)
   "petmacs default theme as the first theme in petmcas-themes-list")
 
+(defvar petmacs-default-mode-for-headers 'c++-mode
+  "default default mode for .h header files, Can be `c-mode' or `c++-mode'")
+
 (defvar python-shell--interpreter nil)
 (defvar python-shell--interpreter-args nil)
 

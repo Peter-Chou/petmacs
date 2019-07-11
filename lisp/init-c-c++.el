@@ -4,12 +4,20 @@
 
 ;;; Code:
 
+(use-package cc-mode
+  :defer t
+  :init
+  (add-to-list 'auto-mode-alist
+	       `("\\.h\\'" . ,petmacs-default-mode-for-headers))
+  :config
+  (require 'compile))
+
 ;; C/C++/Objective-C support
 (use-package ccls
   :defines projectile-project-root-files-top-down-recurring
   :hook ((c-mode c++-mode objc-mode cuda-mode) . (lambda ()
-                                                  (require 'ccls)
-                                                  (lsp-deferred)))
+						   (require 'ccls)
+						   (lsp-deferred)))
   :init
   (setq ccls-executable (file-truename "~/ccls/Release/ccls"))
   (setq ccls-initialization-options
