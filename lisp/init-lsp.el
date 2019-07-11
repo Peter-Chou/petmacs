@@ -45,7 +45,7 @@
 	lsp-ui-sideline-ignore-duplicate t)
 
   ;; (setq lsp-ui-imenu-enable t)
-  ;; (setq lsp-ui-flycheck-enable t)
+  (setq lsp-ui-flycheck-enable nil)	;; disable flycheck
 
   (evil-define-key 'normal lsp-ui-imenu-mode-map (kbd "q") 'lsp-ui-imenu--kill)
   (evil-define-key 'normal lsp-ui-imenu-mode-map (kbd "J") 'lsp-ui-imenu--next-kind)
