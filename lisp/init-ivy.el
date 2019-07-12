@@ -4,6 +4,10 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-const)
+  (require 'init-custom))
+
 (use-package counsel
   :diminish ivy-mode counsel-mode
   :defines (projectile-completion-system magit-completing-read-function recentf-list)
@@ -54,11 +58,6 @@
          ("C-c c u" . counsel-unicode-char)
          ("C-c c w" . counsel-colors-web)
          ("C-c c z" . counsel-fzf)
-
-         ;; Find counsel commands quickly
-         ("<f6>" . (lambda ()
-                     (interactive)
-                     (counsel-M-x "^counsel-")))
 
          :map ivy-minibuffer-map
          ("C-w" . ivy-yank-word)
@@ -132,17 +131,18 @@
       counsel-pt))
 
   (defun my-ivy-fly-back-to-present ()
-    (remove-hook 'pre-command-hook 'my-ivy-fly-back-to-present t)
+    ;; (remove-hook 'pre-command-hook 'my-ivy-fly-back-to-present t)
     (cond ((and (memq last-command my-ivy-fly-commands)
                 (equal (this-command-keys-vector) (kbd "M-p")))
            ;; repeat one time to get straight to the first history item
            (setq unread-command-events
                  (append unread-command-events
                          (listify-key-sequence (kbd "M-p")))))
-          ((memq this-command '(self-insert-command
-				yank
-                                ivy-yank-word
-                                counsel-yank-pop))
+          ((or (memq this-command '(self-insert-command
+                                    yank
+                                    ivy-yank-word
+                                    counsel-yank-pop))
+               (equal (this-command-keys-vector) (kbd "M-n")))
            (delete-region (point)
                           (point-max)))))
 
@@ -157,7 +157,12 @@
                               (buffer-string))))))
         (when future
           (save-excursion
-            (insert (propertize future 'face 'shadow)))
+            (insert (propertize (replace-regexp-in-string
+                                 "\\\\_<" ""
+                                 (replace-regexp-in-string
+                                  "\\\\_>" ""
+                                  future))
+                                'face 'shadow)))
           (add-hook 'pre-command-hook 'my-ivy-fly-back-to-present nil t)))))
 
   (add-hook 'minibuffer-setup-hook #'my-ivy-fly-time-travel)
@@ -169,8 +174,12 @@
     (interactive)
     (let ((text (replace-regexp-in-string
                  "\n" ""
-                 (replace-regexp-in-string "^.*Swiper: " ""
-                                           (thing-at-point 'line t)))))
+                 (replace-regexp-in-string
+                  "\\\\_<" ""
+                  (replace-regexp-in-string
+                   "\\\\_>" ""
+                   (replace-regexp-in-string "^.*Swiper: " ""
+                                             (thing-at-point 'line t)))))))
       (ivy-quit-and-run
         (counsel-rg text default-directory))))
   (bind-key "<C-return>" #'my-swiper-toggle-counsel-rg swiper-map)
@@ -180,7 +189,8 @@
       "Toggle `rg-dwim' with current swiper input."
       (interactive)
       (ivy-quit-and-run (rg-dwim default-directory)))
-    (bind-key "<M-return>" #'my-swiper-toggle-rg-dwim swiper-map))
+    (bind-key "<M-return>" #'my-swiper-toggle-rg-dwim swiper-map)
+    (bind-key "<M-return>" #'my-swiper-toggle-rg-dwim ivy-minibuffer-map))
 
   ;; Integration with `projectile'
   (with-eval-after-load 'projectile
@@ -219,20 +229,12 @@
     (setq counsel-projectile-grep-initial-input '(ivy-thing-at-point))
     (counsel-projectile-mode 1)
     :config
-    ;; open deer when switch into one project
-    ;; (counsel-projectile-modify-action
-    ;;  'counsel-projectile-switch-project-action
-    ;;  '((add ("." deer
-    ;;          "open ‘deer’ at the root of the project")
-    ;;         1)))
-
     ;; open dired when switch into one project
     (counsel-projectile-modify-action
      'counsel-projectile-switch-project-action
      '((add ("." dired
              "open ‘dired’ at the root of the project")
-            1)))
-    )
+            1))))
 
   ;; Integrate yasnippet
   (use-package ivy-yasnippet
