@@ -254,12 +254,69 @@
   "obr" 'bookmark-rename
   "obl" 'bookmark-bmenu-list)
 
+;; leader-n family
 (petmacs//setup-default-key-name "n" "narrow")
 (evil-leader/set-key
   "nr" 'narrow-to-region
   "np" 'narrow-to-page
   "nf" 'narrow-to-defun
   "nw" 'widen)
+
+;;; lsp
+;; leader-l family
+(petmacs//setup-default-key-name "l" "language server")
+(petmacs//setup-default-key-name "l=" "format")
+(petmacs//setup-default-key-name "lg" "goto")
+(petmacs//setup-default-key-name "lG" "goto other window")
+(petmacs//setup-default-key-name "lp" "peek")
+(petmacs//setup-default-key-name "lb" "backend")
+(petmacs//setup-default-key-name "lr" "refactor")
+(petmacs//setup-default-key-name "lT" "toggles")
+(petmacs//setup-default-key-name "lF" "folders")
+(evil-leader/set-key
+  ;; format
+  "l=b" #'lsp-format-buffer
+  "l=r" #'lsp-format-region
+  ;; goto
+  "lgr" #'lsp-find-references
+  "lgt" #'lsp-find-type-definition
+  "lgd" #'lsp-find-definition
+  "lgD" #'lsp-find-declaration
+  "lgi" #'lsp-find-implementation
+  "lgk" #'petmacs/lsp-avy-goto-word
+  "lgK" #'petmacs/lsp-avy-goto-symbol
+  "lgM" #'lsp-ui-imenu
+  ;; goto other window
+  "lGr" #'petmacs/lsp-find-references-other-window
+  "lGt" #'petmacs/lsp-find-type-definition-other-window
+  "lGd" #'petmacs/lsp-find-definition-other-window
+  "lGD" #'petmacs/lsp-find-declaration-other-window
+  "lGi" #'petmacs/lsp-find-implementation-other-window
+  ;; peek
+  "lpd" #'lsp-ui-peek-find-definitions
+  "lpi" #'lsp-ui-peek-find-implementation
+  "lpr" #'lsp-ui-peek-find-references
+  "lpRn" #'lsp-ui-find-next-reference
+  "lpRp" #'lsp-ui-find-prev-reference
+  ;; backend
+  "lba" #'lsp-execute-code-action
+  "lbd" #'lsp-describe-session
+  "lbr" #'lsp-restart-workspace
+  "lbs" #'lsp-shutdown-workspace
+  ;; refactor
+  "lrr" #'lsp-rename
+  ;; toggles
+  "lTd" #'lsp-ui-doc-mode
+  "lTs" #'lsp-ui-sideline-mode
+  "lTF" #'petmacs/lsp-ui-doc-func
+  "lTS" #'petmacs/lsp-ui-sideline-symb
+  "lTI" #'petmacs/lsp-ui-sideline-ignore-duplicate
+  "lTl" #'lsp-lens-mode
+  ;; folders
+  "lFs" #'lsp-workspace-folders-switch
+  "lFr" #'lsp-workspace-folders-remove
+  "lFa" #'lsp-workspace-folders-add)
+
 
 ;;;; major mode specific keybinding
 
