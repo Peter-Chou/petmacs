@@ -64,6 +64,7 @@
 
 (use-package avy
   :defer nil
+  :commands (avy-with)
   :init
   (setq avy-timeout-seconds 0.0))
 
