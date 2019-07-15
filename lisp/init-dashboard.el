@@ -4,9 +4,6 @@
 
 ;;; Code:
 
-(use-package page-break-lines
-  :commands (page-break-lines-mode))
-
 (use-package dashboard
   :custom-face (dashboard-banner-logo-title ((t (:height 1.1 :inherit default))))
   :diminish (dashboard-mode page-break-lines-mode)

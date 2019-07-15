@@ -49,6 +49,9 @@
 ;; Update GPG keyring for GNU ELPA
 (use-package gnu-elpa-keyring-update)
 
+(use-package page-break-lines
+  :commands (page-break-lines-mode))
+
 ;; Extensions 
 ;; download / update packages
 (use-package paradox
@@ -60,7 +63,17 @@
   (setq paradox-spinner-type 'progress-bar)
   (setq paradox-github-token t)
   (setq paradox-display-star-count nil)
-  (defalias #'upgrade-packages #'paradox-upgrade-packages))
+  (defalias #'upgrade-packages #'paradox-upgrade-packages)
+  :config
+  (when (fboundp 'page-break-lines-mode)
+    (add-hook 'paradox-after-execute-functions
+              (lambda (&rest _)
+                (let ((buf (get-buffer-create "*Paradox Report*"))
+                      (inhibit-read-only t))
+                  (with-current-buffer buf
+                    (page-break-lines-mode 1))))
+              t))
+  )
 
 (provide 'init-package)
 
