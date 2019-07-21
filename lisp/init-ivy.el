@@ -104,18 +104,21 @@
   ;; Pre-fill search keywords
   ;; @see https://www.reddit.com/r/emacs/comments/b7g1px/withemacs_execute_commands_like_marty_mcfly/
   (defvar my-ivy-fly-commands '(query-replace-regexp
-				flush-lines
-				keep-lines
-				ivy-read
-				swiper
-				swiper-all
-				swiper-isearch
-				counsel-grep-or-swiper
-				counsel-grep
-				counsel-ack
-				counsel-ag
-				counsel-rg
-				counsel-pt))
+                                flush-lines
+                                keep-lines
+                                ivy-read
+                                swiper
+                                swiper-backward
+                                swiper-all
+                                swiper-isearch
+                                swiper-isearch-backward
+                                counsel-grep-or-swiper
+                                counsel-grep-or-swiper-backward
+                                counsel-grep
+                                counsel-ack
+                                counsel-ag
+                                counsel-rg
+                                counsel-pt))
 
   (defun my-ivy-fly-back-to-present ()
     ;; (remove-hook 'pre-command-hook 'my-ivy-fly-back-to-present t)
