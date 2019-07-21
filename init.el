@@ -21,18 +21,17 @@
             ;; `focus-out-hook' is obsolete since 27.1
             (if (boundp 'after-focus-change-function)
                 (add-function :after after-focus-change-function
-                              (lambda ()
-                                (unless (frame-focus-state)
-                                  (garbage-collect))))
+			      (lambda ()
+				(unless (frame-focus-state)
+				  (garbage-collect))))
               (add-hook 'focus-out-hook 'garbage-collect))
 
             ;; Avoid GCs while using `ivy'/`counsel'/`swiper' and `helm', etc.
             ;; @see http://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-threshold/
             (defun my-minibuffer-setup-hook ()
-              (setq gc-cons-threshold 40000000))
+              (setq gc-cons-threshold most-positive-fixnum))
 
             (defun my-minibuffer-exit-hook ()
-              (garbage-collect)
               (setq gc-cons-threshold 800000))
 
             (add-hook 'minibuffer-setup-hook #'my-minibuffer-setup-hook)
@@ -48,7 +47,7 @@
 (defun add-subdirs-to-load-path (&rest _)
   "Add subdirectories to `load-path'."
   (let ((default-directory
-	  (expand-file-name "site-lisp" user-emacs-directory)))
+          (expand-file-name "site-lisp" user-emacs-directory)))
     (normal-top-level-add-subdirs-to-load-path)))
 
 (advice-add #'package-initialize :after #'update-load-path)
