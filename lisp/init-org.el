@@ -131,6 +131,10 @@ Will work on both org-mode and any mode that accepts plain html."
 ;; Pomodoro
 (use-package org-pomodoro
   :after org-agenda
+  :custom-face
+  (org-pomodoro-mode-line ((t (:inherit warning))))
+  (org-pomodoro-mode-line-overtime ((t (:inherit error))))
+  (org-pomodoro-mode-line-break ((t (:inherit success))))
   :bind (:map org-agenda-mode-map
               ("P" . org-pomodoro)))
 
