@@ -13,11 +13,19 @@ Petmacs requires fonts for better display:
 
   - [all the icons](https://github.com/domtronn/all-the-icons.el/tree/master/fonts)  
 
+- global tools
+
+  - [ripgrep](https://github.com/BurntSushi/ripgrep) in your $PATH
+
 - Python related Packages
 
 ```sh
 pip install pylint yapf isort
 ```
+
+- C/C++ packages
+
+build [ccls](https://github.com/MaskRay/ccls) language server at $HOME path
 
 - nodejs packages
 
@@ -26,10 +34,6 @@ npm install -g eslint_d prettier markdownlint-cli vmd
 ```
 
 use mirror if you have timeout error.
-
-- C/C++ packages
-
-build [ccls](https://github.com/MaskRay/ccls) language server at $HOME path
 
 ---
 
