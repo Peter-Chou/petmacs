@@ -4,6 +4,10 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-const)
+  (require 'init-custom))
+
 (use-package markdown-mode
   ;; markdown linting: npm i -g markdownlint-cli
   :preface
@@ -26,7 +30,7 @@
   (("\\.m[k]d" . markdown-mode)
    ("\\.mdk" . markdown-mode))
   :hook ((markdown-mode . orgtbl-mode)
-	  (markdown-mode . petmacs//cleanup-org-tables-on-save))
+	 (markdown-mode . petmacs//cleanup-org-tables-on-save))
   :config
   (dolist (s '(normal insert))
     (evil-define-key s markdown-mode-map
