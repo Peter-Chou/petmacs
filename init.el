@@ -97,9 +97,9 @@
 (require 'init-elisp)
 (require 'init-c-c++)
 (require 'init-python)
+(require 'init-web)
 (require 'init-org)
 (require 'init-markdown)
-(require 'init-json)
 (require 'init-yaml)
 (require 'init-sql)
 
