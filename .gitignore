@@ -77,3 +77,5 @@ bookmarks
 ido*
 lisp/emacs_backtrace.txt
 mspyls/
+eclipse.jdt.ls/
+workspace/
