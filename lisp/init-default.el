@@ -202,6 +202,8 @@
 (use-package hydra)
 
 ;; Treat undo history as a tree
+;; FIXME:  keep the diff window
+(make-variable-buffer-local 'undo-tree-visualizer-diff)
 (use-package undo-tree
   :diminish
   :hook (after-init . global-undo-tree-mode)
@@ -210,10 +212,7 @@
               undo-tree-enable-undo-in-region nil
               undo-tree-auto-save-history nil
               undo-tree-history-directory-alist
-              `(("." . ,(locate-user-emacs-file "undo-tree-hist/"))))
-  :config
-  ;; FIXME:  keep the diff window
-  (make-variable-buffer-local 'undo-tree-visualizer-diff))
+              `(("." . ,(locate-user-emacs-file "undo-tree-hist/")))))
 
 ;; Handling capitalized subwords in a nomenclature
 (use-package subword
