@@ -84,10 +84,17 @@
 (when (fboundp 'horizontal-scroll-bar-mode)
   (horizontal-scroll-bar-mode -1))
 
-;; Line and Column
 (setq-default fill-column 80)
-(setq column-number-mode t)
-(setq line-number-mode t)
+(use-package simple
+  :ensure nil
+  :hook (window-setup . size-indication-mode)
+  :init (setq column-number-mode t
+              line-number-mode t
+              kill-whole-line t              ; Kill line including '\n'
+              line-move-visual nil
+              track-eol t                    ; Keep cursor at end of lines. Require line-move-visual is nil.
+              set-mark-command-repeat-pop t)  ; Repeating C-SPC after popping mark pops it again
+  )
 
 ;; Don't open a file in a new frame
 (when (boundp 'ns-pop-up-frames)
