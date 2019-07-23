@@ -57,6 +57,12 @@
 (when emacs/>=26p
   (use-package company-box
     :diminish
+    :commands (company-box--get-color
+	       company-box--resolve-colors
+	       company-box--add-icon
+	       company-box--apply-color
+	       company-box--make-line
+	       company-box-icons--elisp)
     :hook (company-mode . company-box-mode)
     :init (setq company-box-icons-alist 'company-box-icons-all-the-icons)
     :config
