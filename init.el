@@ -96,6 +96,7 @@
 (require 'init-elisp)
 (require 'init-c-c++)
 (require 'init-python)
+(require 'init-java)
 (require 'init-web)
 (require 'init-org)
 (require 'init-markdown)
