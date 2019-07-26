@@ -103,6 +103,8 @@
   ;; enable custom treemacs themes
   (doom-themes-treemacs-config))
 
+(use-package chocolate-theme)
+
 (load-theme petmacs--default-theme t)
 ;;; Disable theme before load a new theme
 (defadvice load-theme
