@@ -174,17 +174,24 @@
   :init (setq company-lsp-cache-candidates 'auto))
 
 ;; Debug
-;; (use-package dap-mode
-;;   :after lsp-mode
-;;   :diminish
-;;   :hook ((after-init . dap-mode)
-;;          (dap-mode . dap-ui-mode)
+;; python: pip install "ptvsd>=4.2" 
+;; C++: build lldb from https://github.com/llvm-mirror/lldb/tree/master/tools/lldb-vscode
+(use-package dap-mode
+  :diminish
+  :functions dap-hydra/nil
+  :bind (:map lsp-mode-map
+	      ("<f5>" . dap-debug)
+	      ("M-<f5>" . dap-hydra))
+  :hook ((after-init . dap-mode)
+	 (dap-mode . dap-ui-mode)
+	 (dap-session-created . (lambda (&_rest) (dap-hydra)))
+	 (dap-terminated . (lambda (&_rest) (dap-hydra/nil)))
 
-;;          (python-mode . (lambda () (require 'dap-python)))
-;;          (go-mode . (lambda () (require 'dap-go)))
-;;          (java-mode . (lambda () (require 'dap-java)))
-;;          ((c-mode c++-mode objc-mode swift) . (lambda () (require 'dap-lldb)))
-;;          (php-mode . (lambda () (require 'dap-php)))))
+	 (python-mode . (lambda () (require 'dap-python)))
+	 (java-mode . (lambda () (require 'dap-java)))
+	 ((c-mode c++-mode objc-mode swift) . (lambda () (require 'dap-lldb)))
+	 ;; ((js-mode js2-mode) . (lambda () (require 'dap-chrome)))
+	 ))
 
 ;; `lsp-mode' and `treemacs' integration.
 (use-package lsp-treemacs
