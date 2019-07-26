@@ -333,6 +333,56 @@
 ;;; json
 (evil-leader/set-key-for-mode 'json-mode "m=" 'prettier-js)
 
+;;; java
+(evil-leader/set-key-for-mode 'java-mode
+  "mpu"  'lsp-java-update-user-settings
+  ;; refactoring
+  "mro" 'lsp-java-organize-imports
+  "mrcp" 'lsp-java-create-parameter
+  "mrcf" 'lsp-java-create-field
+  "mrci" 'lsp-java-conver-to-static-import
+  "mrec" 'lsp-java-extract-to-constant
+  "mrel" 'lsp-java-extract-to-local-variable
+  "mrem" 'lsp-java-extract-method
+  ;; assign/add
+  "mrai" 'lsp-java-add-import
+  "mram" 'lsp-java-add-unimplemented-methods
+  "mrat" 'lsp-java-add-throws
+  "mraa" 'lsp-java-assign-all
+  "mraf" 'lsp-java-assign-to-field
+  ;; generate
+  "mrgt" 'lsp-java-generate-to-string
+  "mrge" 'lsp-java-generate-equals-and-hash-code
+  "mrgo" 'lsp-java-generate-overrides
+  "mrgg" 'lsp-java-generate-getters-and-setters
+  ;; create/compile
+  "mcc"  'lsp-java-build-project
+  ;; "mcc" 'mvn-compile
+  "mcp"  'lsp-java-spring-initializr
+
+  "man"  'lsp-java-actionable-notifications
+
+  ;; dap-mode
+  ;; debug
+  "mddj" 'dap-java-debug
+  "mdtt" 'dap-java-debug-test-method
+  "mdtc" 'dap-java-debug-test-class
+  ;; run
+  "mtt" 'dap-java-run-test-method
+  ;; "mtt"   'maven-test-method
+  "mtc" 'dap-java-run-test-class
+
+  ;; non-lsp configurations
+  "mcC" 'mvn-clean
+  "mcr" 'petmacs/mvn-clean-compile
+  ;; minor mode: maven-test-mode
+  "mga"  'maven-test-toggle-between-test-and-class
+  "mgA"  'maven-test-toggle-between-test-and-class-other-window
+  "mta"   'maven-test-all
+  "mtC-a" 'maven-test-clean-test-all
+  "mtb"   'maven-test-file
+  "mti"   'maven-test-install)
+
 ;;; python
 (evil-leader/set-key-for-mode 'python-mode
   "m=" 'yapfify-buffer
