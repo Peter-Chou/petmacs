@@ -39,6 +39,9 @@
   :defer t
   :hook ((c-mode-common . smart-semicolon-mode)))
 
+(use-package modern-cpp-font-lock
+  :hook (c++-mode . modern-c++-font-lock-mode))
+
 (provide 'init-c-c++)
 
 ;;; init-c-c++.el ends here
