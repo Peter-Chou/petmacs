@@ -8,14 +8,22 @@
 (require 'package)
 
 ;; Speed up startup
+(defvar petmacs-gc-cons-threshold (if (display-graphic-p) 8000000 800000)
+  "The default value to use for `gc-cons-threshold'. If you experience freezing,
+decrease this. If you experience stuttering, increase this.")
+
+(defvar petmacs-gc-cons-upper-limit (if (display-graphic-p) 400000000 40000000)
+  "The temporary value for `gc-cons-threshold' to defer it.")
+
 (defvar default-file-name-handler-alist file-name-handler-alist)
+
 (setq file-name-handler-alist nil)
-(setq gc-cons-threshold 40000000)
+(setq gc-cons-threshold petmacs-gc-cons-upper-limit)
 (add-hook 'emacs-startup-hook
           (lambda ()
             "Restore defalut values after startup."
             (setq file-name-handler-alist default-file-name-handler-alist)
-            (setq gc-cons-threshold 800000)
+            (setq gc-cons-threshold petmacs-gc-cons-threshold)
 
             ;; GC automatically while unfocusing the frame
             ;; `focus-out-hook' is obsolete since 27.1
@@ -29,10 +37,10 @@
             ;; Avoid GCs while using `ivy'/`counsel'/`swiper' and `helm', etc.
             ;; @see http://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-threshold/
             (defun my-minibuffer-setup-hook ()
-              (setq gc-cons-threshold most-positive-fixnum))
+              (setq gc-cons-threshold petmacs-gc-cons-upper-limit))
 
             (defun my-minibuffer-exit-hook ()
-              (setq gc-cons-threshold 800000))
+              (setq gc-cons-threshold petmacs-gc-cons-threshold))
 
             (add-hook 'minibuffer-setup-hook #'my-minibuffer-setup-hook)
             (add-hook 'minibuffer-exit-hook #'my-minibuffer-exit-hook)))
@@ -52,6 +60,7 @@
 
 (advice-add #'package-initialize :after #'update-load-path)
 (advice-add #'package-initialize :after #'add-subdirs-to-load-path)
+
 
 (update-load-path)
 (add-subdirs-to-load-path)
