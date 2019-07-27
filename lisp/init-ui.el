@@ -53,12 +53,17 @@
 
 (use-package doom-modeline
   :hook ((after-init . doom-modeline-mode)
-         (doom-modeline-mode . setup-custom-doom-modeline))
+         ;; (doom-modeline-mode . setup-custom-doom-modeline)
+	 (after-load-theme . (lambda ()
+                               (set-face-foreground
+                                'mode-line
+                                (face-foreground 'default)))))
   :custom-face
   (doom-modeline-buffer-file ((t (:inherit font-lock-string-face :weight bold))))
   :init
+  ;; prevent flash of unstyled modeline at startup
   (unless after-init-time
-    ;; prevent flash of unstyled modeline at startup
+    (setq doom-modeline--old-format mode-line-format)
     (setq-default mode-line-format nil))
   (setq
    find-file-visit-truename t  ; display the real names for symlink files
@@ -66,6 +71,7 @@
    doom-modeline-lsp nil
    doom-modeline-persp-name nil
    doom-modeline-github nil
+   doom-modeline-mu4e nil
    ;; doom-modeline-buffer-file-name-style 'truncate-with-project
    doom-modeline-buffer-file-name-style 'file-name
    doom-modeline-major-mode-color-icon t)
