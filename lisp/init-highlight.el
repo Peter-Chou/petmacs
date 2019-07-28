@@ -22,14 +22,18 @@
   (symbol-overlay-face-6 ((t (:inherit 'dired-mark :inverse-video t :bold nil))))
   (symbol-overlay-face-7 ((t (:inherit 'success :inverse-video t))))
   (symbol-overlay-face-8 ((t (:inherit 'dired-symlink :inverse-video t :bold nil))))
-  :functions (symbol-overlay-switch-first symbol-overlay-switch-last)
-  :commands (symbol-overlay-get-symbol
-	     symbol-overlay-assoc
-	     symbol-overlay-get-list
-	     symbol-overlay-jump-call)
-  :hook ((prog-mode . symbol-overlay-mode))
-  :init
-  (setq symbol-overlay-idle-time 0.01)
+  :bind (("M-i" . symbol-overlay-put)
+         ("M-n" . symbol-overlay-jump-next)
+         ("M-p" . symbol-overlay-jump-prev)
+         ("M-N" . symbol-overlay-switch-forward)
+         ("M-P" . symbol-overlay-switch-backward)
+         ("M-C" . symbol-overlay-remove-all)
+         ([M-f3] . symbol-overlay-remove-all))
+  :hook ((prog-mode . symbol-overlay-mode)
+         ;; Disable symbol highlighting in `iedit-mode'
+         (iedit-mode . (lambda () (symbol-overlay-mode -1)))
+         (iedit-mode-end . symbol-overlay-mode))
+  :init (setq symbol-overlay-idle-time 0.1)
   :config
   (global-set-key (kbd "M-i") 'symbol-overlay-put)
   (global-set-key (kbd "M-n") 'symbol-overlay-switch-forward)
@@ -37,15 +41,22 @@
   (global-set-key (kbd "<f7>") 'symbol-overlay-mode)
   (global-set-key (kbd "M-c") 'symbol-overlay-remove-all)
   ;; (global-set-key (kbd "<f8>") 'symbol-overlay-remove-all)
-
   ;; remap help tooltip keybinding from h to H in symbol-overlay-map
   (define-key symbol-overlay-map (kbd "h") 'evil-backward-char)
-  (define-key symbol-overlay-map (kbd "H") 'symbol-overlay-map-help))
+  (define-key symbol-overlay-map (kbd "H") 'symbol-overlay-map-help)
+
+  ;; Disable symbol highlighting while selecting
+  (defadvice set-mark (after disable-symbol-overlay activate)
+    (symbol-overlay-mode -1))
+  (defadvice deactivate-mark (after enable-symbol-overlay activate)
+    (symbol-overlay-mode 1)))
 
 (use-package highlight-indent-guides
   :custom-face
   (highlight-indent-guides-top-character-face ((t (:inherit (font-lock-keyword-face bold)))))
   (highlight-indent-guides-character-face ((t (:inherit (font-lock-comment-face)))))
+  :commands highlight-indent-guides--highlighter-default
+  :functions my-indent-guides-for-all-but-first-column
   :defer t
   :hook ((python-mode yaml-mode) . highlight-indent-guides-mode)
   :config
@@ -61,12 +72,29 @@
   (defun petmacs//indent-guides-for-all-but-first-column (level responsive display)
     (unless (< level 1)
       (highlight-indent-guides--highlighter-default level responsive display)))
-  (setq highlight-indent-guides-highlighter-function #'petmacs//indent-guides-for-all-but-first-column))
+  (setq highlight-indent-guides-highlighter-function #'petmacs//indent-guides-for-all-but-first-column)
+
+  ;; Disable `highlight-indent-guides-mode' in `swiper'
+  ;; https://github.com/DarthFennec/highlight-indent-guides/issues/40
+  (with-eval-after-load 'ivy
+    (defadvice ivy-cleanup-string (after my-ivy-cleanup-hig activate)
+      (let ((pos 0) (next 0) (limit (length str)) (prop 'highlight-indent-guides-prop))
+        (while (and pos next)
+          (setq next (text-property-not-all pos limit prop nil str))
+          (when next
+            (setq pos (text-property-any next limit prop nil str))
+            (ignore-errors
+              (remove-text-properties next pos '(display nil face nil) str))))))))
 
 ;; Colorize color names in buffers
 (use-package rainbow-mode
   :diminish
-  :hook ((prog-mode help-mode) . rainbow-mode)
+  :defines helpful-mode-map
+  :functions my-rainbow-colorize-match
+  :commands (rainbow-x-color-luminance rainbow-colorize-match)
+  :bind (:map help-mode-map
+         ("r" . rainbow-mode))
+  :hook ((css-mode scss-mode less-css-mode) . rainbow-mode)
   :config
   ;; HACK: Use overlay instead of text properties to override `hl-line' faces.
   ;; @see https://emacs.stackexchange.com/questions/36420
@@ -75,18 +103,16 @@
            (ov (make-overlay (match-beginning match) (match-end match))))
       (overlay-put ov 'ovrainbow t)
       (overlay-put ov 'face `((:foreground ,(if (> 0.5 (rainbow-x-color-luminance color))
-                                                 "white" "black"))
+                                                "white" "black"))
                               (:background ,color)))))
   (advice-add #'rainbow-colorize-match :override #'my-rainbow-colorize-match)
 
-  (defun my-rainbow-clear-overlays ()
-    (remove-overlays (point-min) (point-max) 'ovrainbow t))
-  (advice-add #'rainbow-turn-off :after #'my-rainbow-clear-overlays))
+  (defadvice rainbow-turn-off (after clear-overlays activate)
+    (remove-overlays (point-min) (point-max) 'ovrainbow t)))
 
-;; Highlight some operations
-(use-package volatile-highlights
-  :diminish
-  :hook (after-init . volatile-highlights-mode))
+;; Highlight brackets according to their depth
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
 
 ;; Highlight matching paren
 (use-package paren
@@ -95,6 +121,50 @@
   :config
   (setq show-paren-when-point-inside-paren t)
   (setq show-paren-when-point-in-periphery t))
+
+;; Pulse current line
+(use-package pulse
+  :ensure nil
+  :preface
+  (defun my-pulse-momentary-line (&rest _)
+    "Pulse the current line."
+    (pulse-momentary-highlight-one-line (point) 'next-error))
+
+  (defun my-pulse-momentary (&rest _)
+    "Pulse the current line."
+    (if (fboundp 'xref-pulse-momentarily)
+        (xref-pulse-momentarily)
+      (my-pulse-momentary-line)))
+
+  (defun my-recenter-and-pulse(&rest _)
+    "Recenter and pulse the current line."
+    (recenter)
+    (my-pulse-momentary))
+
+  (defun my-recenter-and-pulse-line (&rest _)
+    "Recenter and pulse the current line."
+    (recenter)
+    (my-pulse-momentary-line))
+  :hook (((dumb-jump-after-jump
+           imenu-after-jump) . my-recenter-and-pulse)
+         ((bookmark-after-jump
+           magit-diff-visit-file
+           next-error) . my-recenter-and-pulse-line))
+  :init
+  (dolist (cmd '(recenter-top-bottom
+                 other-window ace-window windmove-do-window-select
+                 pager-page-down pager-page-up
+                 symbol-overlay-basic-jump))
+    (advice-add cmd :after #'my-pulse-momentary-line))
+  (dolist (cmd '(pop-to-mark-command
+                 pop-global-mark
+                 goto-last-change))
+    (advice-add cmd :after #'my-recenter-and-pulse)))
+
+;; Highlight some operations
+(use-package volatile-highlights
+  :diminish
+  :hook (after-init . volatile-highlights-mode))
 
 ;; Highlight TODO and similar keywords in comments and strings
 (use-package hl-todo
