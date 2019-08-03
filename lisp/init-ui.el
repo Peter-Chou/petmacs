@@ -8,6 +8,22 @@
   (require 'init-const)
   (require 'init-custom))
 
+(when sys/mac-x-p
+  (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+  (add-to-list 'default-frame-alist '(ns-appearance . dark))
+  (add-hook 'after-load-theme-hook
+            (lambda ()
+              (let ((bg (frame-parameter nil 'background-mode)))
+                (set-frame-parameter nil 'ns-appearance bg)
+                (setcdr (assq 'ns-appearance default-frame-alist) bg)))))
+
+;; Menu/Tool/Scroll bars
+(unless emacs/>=27p        ; Move to early init-file in 27
+  (unless sys/mac-x-p
+    (push '(menu-bar-lines . 0) default-frame-alist))
+  (push '(tool-bar-lines . 0) default-frame-alist)
+  (push '(vertical-scroll-bars) default-frame-alist))
+
 ;; Icons
 ;; NOTE: Must run `M-x all-the-icons-install-fonts' manually on Windows
 (use-package all-the-icons
@@ -52,12 +68,8 @@
   :hook (after-init . all-the-icons-ivy-setup))
 
 (use-package doom-modeline
-  :hook ((after-init . doom-modeline-mode)
+  :hook (after-init . doom-modeline-mode)
          ;; (doom-modeline-mode . setup-custom-doom-modeline)
-	 (after-load-theme . (lambda ()
-                               (set-face-foreground
-                                'mode-line
-                                (face-foreground 'default)))))
   :custom-face
   (doom-modeline-buffer-file ((t (:inherit font-lock-string-face :weight bold))))
   :init
@@ -76,6 +88,9 @@
    doom-modeline-buffer-file-name-style 'file-name
    doom-modeline-major-mode-color-icon t)
   :config
+  ;; FIXME: @see https://github.com/hlissner/emacs-doom-themes/issues/317.
+  (set-face-foreground 'mode-line (face-foreground 'default))
+
   (doom-modeline-def-segment my-python-venv
     "The current python virtual environment state."
     (when (eq major-mode 'python-mode)
