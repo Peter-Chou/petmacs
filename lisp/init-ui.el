@@ -68,8 +68,8 @@
   :hook (after-init . all-the-icons-ivy-setup))
 
 (use-package doom-modeline
-  :hook (after-init . doom-modeline-mode)
-         ;; (doom-modeline-mode . setup-custom-doom-modeline)
+  :hook ((after-init . doom-modeline-mode)
+         (doom-modeline-mode . setup-custom-doom-modeline))
   :custom-face
   (doom-modeline-buffer-file ((t (:inherit font-lock-string-face :weight bold))))
   :init
@@ -91,7 +91,7 @@
   ;; FIXME: @see https://github.com/hlissner/emacs-doom-themes/issues/317.
   (set-face-foreground 'mode-line (face-foreground 'default))
 
-  (doom-modeline-def-segment my-python-venv
+  (doom-modeline-def-segment petmacs||python-venv
     "The current python virtual environment state."
     (when (eq major-mode 'python-mode)
       (if (eq python-shell-virtualenv-root nil)
@@ -104,9 +104,8 @@
 	 'face (if (doom-modeline--active) 'doom-modeline-buffer-major-mode)))))
 
   (doom-modeline-def-modeline 'my-modeline-layout
-    '(bar workspace-name window-number modals matches buffer-info remote-host buffer-position parrot selection-info)
-    '(objed-state misc-info persp-name lsp irc mu4e github debug fancy-battery minor-modes input-method buffer-encoding my-python-venv process vcs checker))
-
+  '(bar workspace-name window-number modals matches buffer-info remote-host buffer-position parrot selection-info)
+  '(objed-state misc-info persp-name fancy-battery irc mu4e github debug lsp minor-modes input-method indent-info buffer-encoding petmacs||python-venv process vcs checker))
 
   (defun setup-custom-doom-modeline ()
     (doom-modeline-set-modeline 'my-modeline-layout 'default)))
