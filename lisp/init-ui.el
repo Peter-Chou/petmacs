@@ -141,12 +141,10 @@
 ;; Highlight current line number
 (use-package hlinum
   :defines linum-highlight-in-all-buffersp
+  :custom-face (linum-highlight-face ((t (:inherit default :background nil :foreground nil))))
   :hook (global-linum-mode . hlinum-activate)
   :init
-  (setq linum-highlight-in-all-buffersp t)
-  (custom-set-faces
-   `(linum-highlight-face
-     ((t (:inherit 'default :background ,(face-background 'default) :foreground ,(face-foreground 'default)))))))
+  (setq linum-highlight-in-all-buffersp t))
 
 ;; Display Time
 (use-package time
