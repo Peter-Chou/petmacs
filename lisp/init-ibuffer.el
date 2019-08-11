@@ -10,10 +10,6 @@
 
 (use-package ibuffer
   :ensure nil
-  :functions (all-the-icons-icon-for-file
-              all-the-icons-icon-for-mode
-              all-the-icons-auto-mode-match?
-              all-the-icons-faicon)
   :preface
   (defun petmacs/ibuffer-advance-motion (direction)
     (forward-line direction)
@@ -69,15 +65,19 @@
     (interactive)
     (while (petmacs/ibuffer-previous-line)))
 
-  :commands ibuffer-find-file
+  :functions (all-the-icons-icon-for-file
+              all-the-icons-icon-for-mode
+              all-the-icons-auto-mode-match?
+              all-the-icons-faicon)
+  :commands (ibuffer-find-file
+             ibuffer-current-buffer)
   :bind ("C-x C-b" . ibuffer)
+  :init (setq ibuffer-filter-group-name-face '(:inherit (font-lock-string-face bold)))
   :config
   (define-key ibuffer-mode-map (kbd "j") 'petmacs/ibuffer-next-line)
   (define-key ibuffer-mode-map (kbd "k") 'petmacs/ibuffer-previous-line)
   (define-key ibuffer-mode-map (kbd "J") 'petmacs/ibuffer-next-group)
   (define-key ibuffer-mode-map (kbd "K") 'petmacs/ibuffer-previous-group)
-
-  (setq ibuffer-filter-group-name-face '(:inherit (font-lock-string-face bold)))
 
   ;; Display buffer icons on GUI
   (when (display-graphic-p)
