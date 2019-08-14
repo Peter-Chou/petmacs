@@ -127,6 +127,8 @@
           ("*lsp session*" :size 0.4 :align 'below :autoclose t)
           (" *Org todo*" :select t :size 4 :align 'below :autoclose t)
           ("*Org Dashboard*" :select t :size 0.4 :align 'below :autoclose t)
+	  ("^\\*macro expansion\\**" :regexp t :size 0.4 :align 'below)
+          (" *Install vterm" :size 0.3 :align 'below)
 
           (ag-mode :select t :align 'below)
           (grep-mode :select t :align 'below)
