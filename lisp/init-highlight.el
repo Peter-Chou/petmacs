@@ -109,10 +109,10 @@
 (use-package rainbow-mode
   :diminish
   :defines helpful-mode-map
-  :functions my-rainbow-colorize-match
-  :commands (rainbow-x-color-luminance rainbow-colorize-match)
+  :functions (my-rainbow-colorize-match my-rainbow-clear-overlays)
+  :commands (rainbow-x-color-luminance rainbow-colorize-match rainbow-turn-off)
   :bind (:map help-mode-map
-         ("r" . rainbow-mode))
+         ("w" . rainbow-mode))
   :hook ((css-mode scss-mode less-css-mode) . rainbow-mode)
   :config
   ;; HACK: Use overlay instead of text properties to override `hl-line' faces.
@@ -126,8 +126,10 @@
                               (:background ,color)))))
   (advice-add #'rainbow-colorize-match :override #'my-rainbow-colorize-match)
 
-  (defadvice rainbow-turn-off (after clear-overlays activate)
-    (remove-overlays (point-min) (point-max) 'ovrainbow t)))
+  (defun my-rainbow-clear-overlays ()
+    "Clear all rainbow overlays."
+    (remove-overlays (point-min) (point-max) 'ovrainbow t))
+  (advice-add #'rainbow-turn-off :after #'my-rainbow-clear-overlays))
 
 ;; Highlight brackets according to their depth
 (use-package rainbow-delimiters
