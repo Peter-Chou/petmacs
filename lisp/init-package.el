@@ -59,11 +59,18 @@
   :commands paradox-enable
   :hook (after-init . paradox-enable)
   :init
-  (setq paradox-execute-asynchronously t)
-  (setq paradox-spinner-type 'progress-bar)
-  (setq paradox-github-token t)
-  (setq paradox-display-star-count nil)
+  (setq paradox-execute-asynchronously t
+	paradox-spinner-type 'progress-bar
+	paradox-github-token t
+	paradox-display-star-count nil)
+
   (defalias #'upgrade-packages #'paradox-upgrade-packages)
+
+  ;; Replace default `list-packages'
+  (defun my-paradox-enable (&rest _)
+    "Enable paradox, overriding the default package-menu."
+    (paradox-enable))
+  (advice-add #'list-packages :before #'my-paradox-enable)
   :config
   (when (fboundp 'page-break-lines-mode)
     (add-hook 'paradox-after-execute-functions
@@ -72,8 +79,7 @@
                       (inhibit-read-only t))
                   (with-current-buffer buf
                     (page-break-lines-mode 1))))
-              t))
-  )
+              t)))
 
 (provide 'init-package)
 
