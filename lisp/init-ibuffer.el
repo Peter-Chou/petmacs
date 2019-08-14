@@ -65,6 +65,11 @@
     (interactive)
     (while (petmacs/ibuffer-previous-line)))
 
+  (defun petmacs/ibuffer-visit-buffer ()
+    (interactive)
+    (ibuffer-visit-buffer)
+    (kill-buffer "*Ibuffer*"))
+
   :functions (all-the-icons-icon-for-file
               all-the-icons-icon-for-mode
               all-the-icons-auto-mode-match?
@@ -78,6 +83,7 @@
   (define-key ibuffer-mode-map (kbd "k") 'petmacs/ibuffer-previous-line)
   (define-key ibuffer-mode-map (kbd "J") 'petmacs/ibuffer-next-group)
   (define-key ibuffer-mode-map (kbd "K") 'petmacs/ibuffer-previous-group)
+  (define-key ibuffer-mode-map (kbd "RET") 'petmacs/ibuffer-visit-buffer)
 
   ;; Display buffer icons on GUI
   (when (display-graphic-p)
