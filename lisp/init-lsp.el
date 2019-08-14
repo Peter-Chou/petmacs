@@ -111,6 +111,7 @@
 
 (use-package lsp-ui
   ;; :pin melpa-stable
+  :functions my-lsp-ui-imenu-hide-mode-line
   :commands lsp-ui-doc-hide
   :custom-face (lsp-ui-doc-background ((t (:background ,(face-background 'tooltip)))))
   :hook (after-load-theme . (lambda ()
@@ -164,10 +165,12 @@
 	      (set-face-background 'lsp-ui-doc-background
 				   (face-background 'tooltip))))
 
-  ;; WORKAROUND Hide mode-line of the lsp-ui-imenu buffer
-  ;; @see https://github.com/emacs-lsp/lsp-ui/issues/243
-  (defadvice lsp-ui-imenu (after hide-lsp-ui-imenu-mode-line activate)
-    (setq mode-line-format nil)))
+     ;; WORKAROUND Hide mode-line of the lsp-ui-imenu buffer
+     ;; @see https://github.com/emacs-lsp/lsp-ui/issues/243
+     (defun my-lsp-ui-imenu-hide-mode-line ()
+       "Hide the mode-line in lsp-ui-imenu."
+       (setq mode-line-format nil))
+     (advice-add #'lsp-ui-imenu :after #'my-lsp-ui-imenu-hide-mode-line))
 
 (use-package company-lsp
   ;; :pin melpa-stable
