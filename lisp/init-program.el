@@ -287,6 +287,7 @@
 (use-package dockerfile-mode)
 (use-package docker-tramp)
 (use-package csv-mode)
+(use-package protobuf-mode)
 
 (provide 'init-program)
 
