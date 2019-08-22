@@ -91,6 +91,10 @@
   ;; FIXME: @see https://github.com/hlissner/emacs-doom-themes/issues/317.
   (set-face-foreground 'mode-line (face-foreground 'default))
 
+  ;; Make swiper match clearer
+  (with-eval-after-load 'swiper
+      (set-face-background 'swiper-background-match-face-1 "SlateGray1"))
+
   (doom-modeline-def-segment petmacs||python-venv
     "The current python virtual environment state."
     (when (eq major-mode 'python-mode)
