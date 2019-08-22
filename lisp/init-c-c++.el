@@ -42,6 +42,13 @@
 (use-package modern-cpp-font-lock
   :hook (c++-mode . modern-c++-font-lock-mode))
 
+(use-package cmake-mode
+  :mode (("CMakeLists\\.txt\\'" . cmake-mode) ("\\.cmake\\'" . cmake-mode))
+  :config
+  (add-hook 'cmake-mode-hook (lambda()
+                               (add-to-list (make-local-variable 'company-backends)
+                                            'company-cmake))))
+
 (provide 'init-c-c++)
 
 ;;; init-c-c++.el ends here
