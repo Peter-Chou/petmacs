@@ -77,6 +77,9 @@ Will work on both org-mode and any mode that accepts plain html."
 
   (add-to-list 'org-export-backends 'md)
 
+  (with-eval-after-load 'counsel
+    (bind-key [remap org-set-tags-command] #'counsel-org-tag org-mode-map))
+
   (setq org-capture-templates
 	'(("t" "Todo" entry (file+headline "~/org/TODOs.org" "Todo soon")
            "* TODO %? \n  %^t")
@@ -141,6 +144,14 @@ Will work on both org-mode and any mode that accepts plain html."
 (use-package org-bullets
   :if (char-displayable-p ?◉)
   :hook (org-mode . org-bullets-mode))
+
+(use-package org-fancy-priorities
+:diminish
+:hook (org-mode . org-fancy-priorities-mode)
+:init (setq org-fancy-priorities-list
+	    (if (char-displayable-p ?■)
+		'("■" "■" "■" "■")
+		'("HIGH" "MIDIUM" "LOW" "OPTIONAL"))))
 
 (use-package toc-org
   :hook (org-mode . toc-org-enable)
