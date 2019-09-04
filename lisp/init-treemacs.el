@@ -6,7 +6,6 @@
 
 (use-package treemacs
   ;; :pin melpa-stable
-  :defines winum-keymap
   :commands (treemacs-follow-mode
 	     treemacs-current-visibility
 	     treemacs-select-window
@@ -29,39 +28,14 @@
 			   (display-line-numbers-mode -1)
 			   (hl-line-mode -1)))
   :init
-  ;; (with-eval-after-load 'winum
-  ;;   (bind-key (kbd "M-0") #'treemacs-select-window winum-keymap))
   (define-key winum-keymap (kbd "M-0") 'treemacs-select-window)
   :config
     (setq treemacs-collapse-dirs                 (if treemacs-python-executable 3 0)
-          treemacs-deferred-git-apply-delay      0.5
-          treemacs-display-in-side-window        t
-          treemacs-eldoc-display                 t
-          treemacs-file-event-delay              5000
-          treemacs-file-follow-delay             0.2
+          treemacs-sorting                       'alphabetic-case-insensitive-desc
           treemacs-follow-after-init             t
-          treemacs-git-command-pipe              ""
-          treemacs-goto-tag-strategy             'refetch-index
-          treemacs-indentation                   2
-          treemacs-indentation-string            " "
-          treemacs-is-never-other-window         nil
-          treemacs-max-git-entries               5000
-          treemacs-no-png-images                 nil
-          treemacs-no-delete-other-windows       t
-          treemacs-project-follow-cleanup        nil
-          treemacs-recenter-distance             0.1
-          treemacs-recenter-after-file-follow    nil
-          treemacs-recenter-after-tag-follow     nil
-          treemacs-recenter-after-project-jump   'always
-          treemacs-recenter-after-project-expand 'on-distance
-          treemacs-show-cursor                   nil
-          treemacs-show-hidden-files             t
-          treemacs-silent-filewatch              nil
-          treemacs-silent-refresh                nil
-          treemacs-sorting                       'alphabetic-desc
-          treemacs-space-between-root-nodes      t
-          treemacs-tag-follow-cleanup            t
-          treemacs-tag-follow-delay              1.5
+          treemacs-is-never-other-window         t
+          treemacs-silent-filewatch              t
+          treemacs-silent-refresh                t
           treemacs-width                         30)
 
   (treemacs-follow-mode t)
@@ -86,7 +60,10 @@
 
 (use-package treemacs-projectile
   ;; :pin melpa-stable
-  :after treemacs)
+  :after treemacs projectile
+  :bind (([M-f8] . treemacs-projectile)
+	 :map projectile-command-map
+	 ("h" . treemacs-projectile)))
 
 (use-package treemacs-magit
   ;; :pin melpa-stable
