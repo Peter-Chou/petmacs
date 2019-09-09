@@ -213,6 +213,7 @@ Will work on both org-mode and any mode that accepts plain html."
 (use-package org-dashboard)
 
 (use-package org-plus-contrib)
+(use-package htmlize)
 
 (use-package org-sticky-header
   :hook (org-mode . org-sticky-header-mode))
