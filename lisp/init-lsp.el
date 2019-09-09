@@ -113,7 +113,9 @@
   ;; :pin melpa-stable
   :functions my-lsp-ui-imenu-hide-mode-line
   :commands lsp-ui-doc-hide
-  :custom-face (lsp-ui-doc-background ((t (:background ,(face-background 'tooltip)))))
+  :custom-face
+  (lsp-ui-doc-background ((t (:background ,(face-background 'tooltip)))))
+  (lsp-ui-sideline-code-action ((t (:inherit warning))))
   :hook (after-load-theme . (lambda ()
 			      (set-face-attribute 'lsp-ui-doc-background nil
 						  :background (face-background 'tooltip))))
@@ -136,16 +138,18 @@
   (setq lsp-ui-doc-enable t
 	lsp-ui-peek-enable t
 	lsp-ui-doc-use-webkit nil
+	lsp-ui-doc-delay 1.0
 	lsp-ui-doc-include-signature t
-	lsp-ui-doc-position 'top
-	;; lsp-ui-doc-position 'at-point
+	lsp-ui-doc-position 'top  ;; or at-point
 	lsp-ui-doc-border (face-foreground 'default)
 
-	lsp-ui-sideline-enable nil
-	lsp-ui-sideline-ignore-duplicate t)
+	lsp-ui-flycheck-enable nil  ;; disable flycheck
 
-  ;; (setq lsp-ui-imenu-enable t)
-  (setq lsp-ui-flycheck-enable nil)	;; disable flycheck
+	lsp-ui-sideline-enable t
+	lsp-ui-sideline-show-hover nil
+	lsp-ui-sideline-show-diagnostics nil
+	lsp-ui-sideline-ignore-duplicate t
+	lsp-eldoc-enable-hover nil)
 
   (evil-define-key 'normal lsp-ui-imenu-mode-map (kbd "q") 'lsp-ui-imenu--kill)
   (evil-define-key 'normal lsp-ui-imenu-mode-map (kbd "J") 'lsp-ui-imenu--next-kind)
