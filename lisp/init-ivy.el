@@ -101,7 +101,8 @@
        (concat (propertize " " 'display `(space :align-to 2)) str))
      cands
      "\n"))
-  (setq ivy-format-functions-alist '((t . my-ivy-format-function-arrow)))
+  (setq ivy-format-functions-alist '((counsel-describe-face . counsel--faces-format-function)
+                                     (t . my-ivy-format-function-arrow)))
 
   (setq swiper-action-recenter t)
 
@@ -112,7 +113,6 @@
   (when (executable-find "rg")
     (setq counsel-grep-base-command "rg -S --no-heading --line-number --color never '%s' %s"))
   :config
-  (add-to-list 'ivy-format-functions-alist '(counsel-describe-face . counsel--faces-format-function))
 
   ;; Pre-fill search keywords
   ;; @see https://www.reddit.com/r/emacs/comments/b7g1px/withemacs_execute_commands_like_marty_mcfly/
@@ -134,7 +134,6 @@
                                 counsel-pt))
 
   (defun my-ivy-fly-back-to-present ()
-    ;; (remove-hook 'pre-command-hook 'my-ivy-fly-back-to-present t)
     (cond ((and (memq last-command my-ivy-fly-commands)
                 (equal (this-command-keys-vector) (kbd "M-p")))
            ;; repeat one time to get straight to the first history item
@@ -169,6 +168,9 @@
           (add-hook 'pre-command-hook 'my-ivy-fly-back-to-present nil t)))))
 
   (add-hook 'minibuffer-setup-hook #'my-ivy-fly-time-travel)
+  (add-hook 'minibuffer-exit-hook
+            (lambda ()
+              (remove-hook 'pre-command-hook 'my-ivy-fly-back-to-present t)))
 
   ;; Improve search experience of `swiper'
   ;; @see https://emacs-china.org/t/swiper-swiper-isearch/9007/12
