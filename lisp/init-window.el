@@ -105,7 +105,7 @@
         shackle-rules
         '(("*Help*" :select t :size 0.3 :align 'below :autoclose t)
           ("*Apropos*" :select t :size 0.3 :align 'below :autoclose t)
-          ("*compilation*" :size 0.4 :align 'below :autoclose t)
+          ("*compilation*" :select t :size 0.3 :align 'below :autoclose t)
           ("*Completions*" :size 0.3 :align 'below :autoclose t)
           ("*Pp Eval Output*" :size 15 :align 'below :autoclose t)
           ("*ert*" :align 'below :autoclose t)
@@ -117,7 +117,6 @@
           ("*Calendar*" :select t :size 0.3 :align 'below)
           ("\\*ivy-occur .*\\*" :regexp t :size 0.4 :select t :align 'below)
           (" *undo-tree*" :select t)
-          ("*Paradox Report*" :size 0.3 :align 'below :autoclose t)
           ("*quickrun*" :select t :size 15 :align 'below)
           ("*tldr*" :align 'below :autoclose t)
           ("*Youdao Dictionary*" :size 0.3 :align 'below :autoclose t)
@@ -127,8 +126,14 @@
           ("*lsp session*" :size 0.4 :align 'below :autoclose t)
           (" *Org todo*" :select t :size 4 :align 'below :autoclose t)
           ("*Org Dashboard*" :select t :size 0.4 :align 'below :autoclose t)
-	  ("^\\*macro expansion\\**" :regexp t :size 0.4 :align 'below)
+          ("*gud-debug*" :select t :size 0.4 :align 'below :autoclose t)
+          ("^\\*macro expansion\\**" :regexp t :size 0.4 :align 'below)
           (" *Install vterm" :size 0.3 :align 'below)
+          ("*Paradox Report*" :size 0.2 :align 'below :autoclose t)
+          ("*package update results*" :size 0.2 :align 'below :autoclose t)
+
+          ("*Gofmt Errors*" :select t :size 0.3 :align 'below :autoclose t)
+          ("*Go Test*" :select t :size 0.3 :align 'below :autoclose t)
 
           (ag-mode :select t :align 'below)
           (grep-mode :select t :align 'below)
@@ -140,8 +145,9 @@
 
           (Buffer-menu-mode :select t :size 20 :align 'below :autoclose t)
           (comint-mode :align 'below)
-          (helpful-mode :select t :size 0.4 :align 'below :autoclose t)
+          (helpful-mode :select t :size 0.3 :align 'below :autoclose t)
           (process-menu-mode :select t :size 0.3 :align 'below :autoclose t)
+          (cargo-process-mode :select t :size 0.3 :align 'below :autoclose t)
           (list-environment-mode :select t :size 0.3 :align 'below :autoclose t)
           (profiler-report-mode :select t :size 0.5 :align 'below)
           (tabulated-list-mode :align 'below))))
