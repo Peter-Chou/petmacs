@@ -15,25 +15,27 @@
 ;;   pip install autoflake
 (use-package python
   :ensure nil
-  :defines gud-pdb-command-name pdb-path
   :hook
-  (python-mode . (lambda ()
-  		   (setq-local flycheck-checkers '(python-pylint))))
-  :config
+  ((python-mode . (lambda ()
+		    (setq-local flycheck-checkers '(python-pylint))))
+   (inferior-python-mode . (lambda ()
+			     (process-query-on-exit-flag
+			      (get-process "Python")))))
+  :init
   ;; Disable readline based native completion
   (setq python-shell-completion-native-enable nil)
+
+  :config
+  ;; Env vars
+  (with-eval-after-load 'exec-path-from-shell
+    (exec-path-from-shell-copy-env "PYTHONPATH"))
 
   (define-key inferior-python-mode-map (kbd "C-j") 'comint-next-input)
   (define-key inferior-python-mode-map (kbd "<up>") 'comint-next-input)
   (define-key inferior-python-mode-map (kbd "C-k") 'comint-previous-input)
   (define-key inferior-python-mode-map (kbd "<down>") 'comint-previous-input)
   (define-key inferior-python-mode-map
-    (kbd "C-r") 'comint-history-isearch-backward)
-
-  (add-hook 'inferior-python-mode-hook
-	    (lambda ()
-	      ;; (bind-key "C-c C-z" #'kill-buffer-and-window inferior-python-mode-map)
-	      (process-query-on-exit-flag (get-process "Python")))))
+    (kbd "C-r") 'comint-history-isearch-backward))
 
 (use-package pyvenv)
 
