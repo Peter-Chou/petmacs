@@ -262,78 +262,77 @@
   "nf" 'narrow-to-defun
   "nw" 'widen)
 
-;;; lsp
-;; leader-l family
-(petmacs//setup-default-key-name "l" "language server")
-(petmacs//setup-default-key-name "l=" "format")
-(petmacs//setup-default-key-name "lg" "goto")
-(petmacs//setup-default-key-name "lG" "goto other window")
-(petmacs//setup-default-key-name "lp" "peek")
-(petmacs//setup-default-key-name "lb" "backend")
-(petmacs//setup-default-key-name "lr" "refactor")
-(petmacs//setup-default-key-name "lT" "toggles")
-(petmacs//setup-default-key-name "lF" "folders")
-(evil-leader/set-key
-  ;; format
-  "l=b" #'lsp-format-buffer
-  "l=r" #'lsp-format-region
-  ;; goto
-  "lgr" #'lsp-find-references
-  "lgt" #'lsp-find-type-definition
-  "lgd" #'lsp-find-definition
-  "lgD" #'lsp-find-declaration
-  "lgi" #'lsp-find-implementation
-  "lgk" #'petmacs/lsp-avy-goto-word
-  "lgK" #'petmacs/lsp-avy-goto-symbol
-  "lgM" #'lsp-ui-imenu
-  ;; goto other window
-  "lGr" #'petmacs/lsp-find-references-other-window
-  "lGt" #'petmacs/lsp-find-type-definition-other-window
-  "lGd" #'petmacs/lsp-find-definition-other-window
-  "lGD" #'petmacs/lsp-find-declaration-other-window
-  "lGi" #'petmacs/lsp-find-implementation-other-window
-  ;; peek
-  "lpd" #'lsp-ui-peek-find-definitions
-  "lpi" #'lsp-ui-peek-find-implementation
-  "lpr" #'lsp-ui-peek-find-references
-  "lpRn" #'lsp-ui-find-next-reference
-  "lpRp" #'lsp-ui-find-prev-reference
-  ;; backend
-  "lba" #'lsp-execute-code-action
-  "lbd" #'lsp-describe-session
-  "lbr" #'lsp-restart-workspace
-  "lbs" #'lsp-shutdown-workspace
-  ;; refactor
-  "lrr" #'lsp-rename
-  ;; toggles
-  "lTd" #'lsp-ui-doc-mode
-  "lTs" #'lsp-ui-sideline-mode
-  "lTF" #'petmacs/lsp-ui-doc-func
-  "lTS" #'petmacs/lsp-ui-sideline-symb
-  "lTI" #'petmacs/lsp-ui-sideline-ignore-duplicate
-  "lTl" #'lsp-lens-mode
-  ;; folders
-  "lFs" #'lsp-workspace-folders-switch
-  "lFr" #'lsp-workspace-folders-remove
-  "lFa" #'lsp-workspace-folders-add)
-
-
 ;;;; major mode specific keybinding
-
 (petmacs//setup-default-key-name "m" "major mode cmds")
-
+(petmacs//setup-major-mode-key-name "=" "format")
+(petmacs//setup-major-mode-key-name "b" "backend")
 (petmacs//setup-major-mode-key-name "c" "compile")
 (petmacs//setup-major-mode-key-name "d" "debug")
 (petmacs//setup-major-mode-key-name "g" "goto")
+(petmacs//setup-major-mode-key-name "G" "goto other window")
+(petmacs//setup-major-mode-key-name "p" "peek")
+(petmacs//setup-major-mode-key-name "F" "folders")
+(petmacs//setup-major-mode-key-name "r" "refactor")
+(petmacs//setup-major-mode-key-name "rg" "generate")
+(petmacs//setup-major-mode-key-name "ra" "assign/add")
 (petmacs//setup-major-mode-key-name "s" "REPL")
+(petmacs//setup-major-mode-key-name "t" "test")
+(petmacs//setup-major-mode-key-name "T" "toggles")
 (petmacs//setup-major-mode-key-name "h" "help")
 (petmacs//setup-major-mode-key-name "v" "virtualenv")
 (petmacs//setup-major-mode-key-name "vp" "pipenv")
 
-;;; json
+;;; lsp major mode settings
+(dolist (mode lsp-active-modes)
+  (evil-leader/set-key-for-mode mode
+    ;; format
+    "m=b" #'lsp-format-buffer
+    "m=r" #'lsp-format-region
+    ;; goto
+    "mgr" #'lsp-find-references
+    "mgt" #'lsp-find-type-definition
+    "mgd" #'lsp-find-definition
+    "mgD" #'lsp-find-declaration
+    "mgi" #'lsp-find-implementation
+    "mgk" #'petmacs/lsp-avy-goto-word
+    "mgK" #'petmacs/lsp-avy-goto-symbol
+    "mgM" #'lsp-ui-imenu
+    ;; goto other window
+    "mGr" #'petmacs/lsp-find-references-other-window
+    "mGt" #'petmacs/lsp-find-type-definition-other-window
+    "mGd" #'petmacs/lsp-find-definition-other-window
+    "mGD" #'petmacs/lsp-find-declaration-other-window
+    "mGi" #'petmacs/lsp-find-implementation-other-window
+    ;; peek
+    "mpd" #'lsp-ui-peek-find-definitions
+    "mpi" #'lsp-ui-peek-find-implementation
+    "mpr" #'lsp-ui-peek-find-references
+    "mpRn" #'lsp-ui-find-next-reference
+    "mpRp" #'lsp-ui-find-prev-reference
+    ;; backend
+    "mba" #'lsp-execute-code-action
+    "mbd" #'lsp-describe-session
+    "mbr" #'lsp-restart-workspace
+    "mbs" #'lsp-shutdown-workspace
+    ;; refactor
+    "mrr" #'lsp-rename
+    ;; toggles
+    "mTd" #'lsp-ui-doc-mode
+    "mTs" #'lsp-ui-sideline-mode
+    "mTF" #'petmacs/lsp-ui-doc-func
+    "mTS" #'petmacs/lsp-ui-sideline-symb
+    "mTI" #'petmacs/lsp-ui-sideline-ignore-duplicate
+    "mTl" #'lsp-lens-mode
+    ;; folders
+    "mFs" #'lsp-workspace-folders-switch
+    "mFr" #'lsp-workspace-folders-remove
+    "mFa" #'lsp-workspace-folders-add)
+  )
+
+;;; json major mode
 (evil-leader/set-key-for-mode 'json-mode "m=" 'prettier-js)
 
-;;; java
+;;; java major mode
 (evil-leader/set-key-for-mode 'java-mode
   "mpu"  'lsp-java-update-user-settings
   ;; refactoring
@@ -383,10 +382,9 @@
   "mtb"   'maven-test-file
   "mti"   'maven-test-install)
 
-;;; python
+;;; python major mode
 (evil-leader/set-key-for-mode 'python-mode
-  "m=" 'yapfify-buffer
-  "m=" 'yapfify-buffer
+  "m==" 'yapfify-buffer
   "m." 'petmacs/python-load-venv-file
   "mcc" 'petmacs/python-execute-file
   "mcC" 'petmacs/python-execute-file-focus
@@ -421,7 +419,7 @@
   "mvps" 'pipenv-shell
   "mvpu" 'pipenv-uninstall)
 
-;;; markdown
+;;; markdown major mode
 (evil-leader/set-key-for-mode 'markdown-mode
   ;; Movement
   "m{"   'markdown-backward-paragraph
@@ -488,7 +486,7 @@
   "mit" 'markdown-toc-generate-toc
   "mcP" 'vmd-mode)
 
-;;; org mode
+;;; org major mode
 (evil-leader/set-key-for-mode 'org-mode
   ;; Movement
   ;; "mC"   'evil-org-recompute-clocks
