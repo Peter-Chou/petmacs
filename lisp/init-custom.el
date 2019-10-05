@@ -23,7 +23,7 @@
 (defvar petmacs-evil-major-leader-insert-default-key "M-m"
   "Evil leader key in evil insert mode.")
 
-(defconst lsp-active-modes '(c-mode
+(defvar petmacs-lsp-active-modes '(c-mode
 			     c++-mode
 			     python-mode
 			     java-mode)

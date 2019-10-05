@@ -283,7 +283,7 @@
 (petmacs//setup-major-mode-key-name "vp" "pipenv")
 
 ;;; lsp major mode settings
-(dolist (mode lsp-active-modes)
+(dolist (mode petmacs-lsp-active-modes)
   (evil-leader/set-key-for-mode mode
     ;; format
     "m=b" #'lsp-format-buffer
