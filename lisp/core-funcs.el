@@ -8,6 +8,68 @@
   (require 'init-const)
   (require 'init-custom))
 
+;;; Network Proxy
+(defun proxy-http-show ()
+  "Show HTTP/HTTPS proxy."
+  (interactive)
+  (if url-proxy-services
+      (message "Current HTTP proxy is \"%s\"" petmacs-proxy)
+    (message "No HTTP proxy")))
+
+(defun proxy-http-enable ()
+  "Enable HTTP/HTTPS proxy."
+  (interactive)
+  (setq url-proxy-services `(("http" . ,petmacs-proxy)
+                             ("https" . ,petmacs-proxy)
+                             ("no_proxy" . "^\\(localhost\\|192.168.*\\|10.*\\)")))
+  (proxy-http-show))
+
+(defun proxy-http-disable ()
+  "Disable HTTP/HTTPS proxy."
+  (interactive)
+  (setq url-proxy-services nil)
+  (proxy-http-show))
+
+(defun proxy-http-toggle ()
+  "Toggle HTTP/HTTPS proxy."
+  (interactive)
+  (if url-proxy-services
+      (proxy-http-disable)
+    (proxy-http-enable)))
+
+(defvar socks-noproxy)
+(defvar socks-server)
+(defun proxy-socks-show ()
+  "Show SOCKS proxy."
+  (interactive)
+  (if socks-noproxy
+      (message "Current SOCKS%d proxy is %s:%d"
+               (cadddr socks-server) (cadr socks-server) (caddr socks-server))
+    (message "No SOCKS proxy")))
+
+(defun proxy-socks-enable ()
+  "Enable SOCKS proxy."
+  (interactive)
+  (require 'socks)
+  (setq url-gateway-method 'socks
+        socks-noproxy '("localhost")
+        socks-server '("Default server" "127.0.0.1" 1086 5))
+  (proxy-socks-show))
+
+(defun proxy-socks-disable ()
+  "Disable SOCKS proxy."
+  (interactive)
+  (setq url-gateway-method 'native
+        socks-noproxy nil)
+  (proxy-socks-show))
+
+(defun proxy-socks-toggle ()
+  "Toggle SOCKS proxy."
+  (interactive)
+  (if (bound-and-true-p socks-noproxy)
+      (proxy-socks-disable)
+    (proxy-socks-enable)))
+
 (defun petmacs//setup-default-key-name (key desc)
   (which-key-add-key-based-replacements
     (format "%s %s" petmacs-evil-leader-key key) desc)

@@ -8,6 +8,9 @@
 
 (defvar petmacs-default-coding-env 'utf-8)
 
+(defvar petmacs-proxy "127.0.0.1:1080"
+  "Set network proxy.")
+
 (defvar petmacs-themes-list '(doom-one-light chocolate)
   "list of themes for cycling")
 
