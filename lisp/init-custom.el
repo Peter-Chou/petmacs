@@ -26,10 +26,12 @@
 (defvar petmacs-evil-major-leader-insert-default-key "M-m"
   "Evil leader key in evil insert mode.")
 
-(defvar petmacs-lsp-active-modes '(c-mode
-			     c++-mode
-			     python-mode
-			     java-mode)
+(defvar petmacs-lsp-active-modes '(
+				   c-mode
+				   c++-mode
+				   python-mode
+				   java-mode
+				   )
   "Primary major modes of the lsp activated layer.")
 
 (defvar org-projectile-file "TODOs.org"
