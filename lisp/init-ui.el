@@ -131,8 +131,30 @@
   (doom-themes-enable-italic t)
   (doom-themes-enable-bold t)
   :config
+  ;; FIXME: @see https://github.com/hlissner/emacs-doom-themes/issues/317.
+  (set-face-foreground 'mode-line (face-foreground 'default))
+  ;; Make swiper match clearer
+  (with-eval-after-load 'swiper
+    (set-face-background 'swiper-background-match-face-1 "SlateGray1"))
+
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
+  (with-no-warnings
+    (defun doom-themes-visual-bell-fn ()
+      "Blink the mode-line red briefly. Set `ring-bell-function' to this to use it."
+      (let ((doom-themes--bell-cookie (face-remap-add-relative
+				       'mode-line
+				       `(:background ,(face-foreground 'error)))))
+	(force-mode-line-update)
+	(run-with-timer 0.15 nil
+			(lambda (cookie buf)
+			  (with-current-buffer buf
+			    (face-remap-remove-relative cookie)
+			    (force-mode-line-update)))
+			doom-themes--bell-cookie
+			(current-buffer)))))
+  ;; Corrects (and improves) org-mode's native fontification.
+  (setq doom-themes-treemacs-theme "doom-colors")
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config)
   ;; enable custom treemacs themes
