@@ -157,20 +157,13 @@
 (use-package recentf
   :ensure nil
   :hook (after-init . recentf-mode)
-  :init
-  (setq recentf-max-saved-items 200)
-  (setq recentf-exclude '((expand-file-name package-user-dir)
-                          ".cache"
-                          ".cask"
-                          ".elfeed"
-                          "bookmarks"
-                          "cache"
-                          "ido.*"
-                          "persp-confs"
-                          "recentf"
-			  "undo-tree-hist"
-                          "url"
-                          "COMMIT_EDITMSG\\'")))
+  :init (setq recentf-max-saved-items 200
+              recentf-exclude
+              '("\\.?cache" ".cask" "url" "COMMIT_EDITMSG\\'" "bookmarks"
+                "\\.\\(?:gz\\|gif\\|svg\\|png\\|jpe?g\\)$" "^/tmp/" "^/ssh:"
+                "\\.?ido\\.last$" "\\.revive$" "/TAGS$" "^/var/folders/.+$"
+                (lambda (file) (file-in-directory-p file package-user-dir))))
+  :config (push (expand-file-name recentf-save-file) recentf-exclude))
 
 (use-package savehist
   :ensure nil
@@ -220,13 +213,16 @@
 (make-variable-buffer-local 'undo-tree-visualizer-diff)
 (use-package undo-tree
   :diminish
+  :defines recentf-exclude
   :hook (after-init . global-undo-tree-mode)
   :init (setq undo-tree-visualizer-timestamps t
               undo-tree-visualizer-diff t
               undo-tree-enable-undo-in-region nil
               undo-tree-auto-save-history nil
               undo-tree-history-directory-alist
-              `(("." . ,(locate-user-emacs-file "undo-tree-hist/")))))
+              `(("." . ,(locate-user-emacs-file "undo-tree-hist/"))))
+  :config (dolist (dir undo-tree-history-directory-alist)
+            (push (expand-file-name (cdr dir)) recentf-exclude)))
 
 ;; Handling capitalized subwords in a nomenclature
 (use-package subword
