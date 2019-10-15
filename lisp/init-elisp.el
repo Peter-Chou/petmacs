@@ -235,12 +235,16 @@ Lisp function does not specify a special indentation."
   (define-advice helpful-callable (:after (function) advice-remove-button)
     (add-button-to-remove-advice (helpful--buffer function t) function)))
 
-;; better elisp syntax support
-(use-package elispfl
-  ;; :commands (magit-todos-mode magit-todos-list magit-todos-list-internal)
-  :quelpa (elispfl :repo "cireu/elispfl" :fetcher github)
-  :hook ((emacs-lisp-mode . elispfl-mode)
-	 (ielm . elispfl-ielm-mode)))
+;; Syntax highlighting of known Elisp symbols
+(use-package highlight-defined
+  :hook (emacs-lisp-mode . highlight-defined-mode))
+
+;; ;; better elisp syntax support
+;; (use-package elispfl
+;;   ;; :commands (magit-todos-mode magit-todos-list magit-todos-list-internal)
+;;   :quelpa (elispfl :repo "cireu/elispfl" :fetcher github)
+;;   :hook ((emacs-lisp-mode . elispfl-mode)
+;; 	 (ielm . elispfl-ielm-mode)))
 
 (provide 'init-elisp)
 
