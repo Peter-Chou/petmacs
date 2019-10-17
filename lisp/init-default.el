@@ -64,8 +64,21 @@
       ;; python output -> Eamcs : decoding = chinese-gbk-dos
       (modify-coding-system-alist 'process "yapf" '(utf-8 . utf-8)))
   (progn
+    ;; UTF-8 as the default coding system
+    (when (fboundp 'set-charset-priority)
+      (set-charset-priority 'unicode))
     (set-language-environment petmacs-default-language-env)
-    (set-default-coding-systems petmacs-default-coding-env)))
+    (set-default-coding-systems petmacs-default-coding-env))
+  (set-keyboard-coding-system petmacs-default-coding-env)
+  (set-clipboard-coding-system petmacs-default-coding-env)
+  (set-terminal-coding-system petmacs-default-coding-env)
+  (set-buffer-file-coding-system petmacs-default-coding-env)
+  (set-selection-coding-system petmacs-default-coding-env)
+  (modify-coding-system-alist 'process "*" petmacs-default-coding-env)
+  (set-file-name-coding-system petmacs-default-coding-env)
+
+  (setq locale-coding-system 'utf-8
+	default-process-coding-system '(utf-8 . utf-8)))
 
 (setq delete-by-moving-to-trash t)         ; Deleting files go to OS's trash folder
 (setq make-backup-files nil)               ; Forbide to make backup files
