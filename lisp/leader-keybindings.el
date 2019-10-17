@@ -103,7 +103,8 @@
   "fB"  'treemacs-bookmark
   "fT"  'treemacs-find-file
   "fL"  'counsel-locate
-  "fr"  'counsel-recentf
+  ;; "fr"  'counsel-recentf
+  "fr"  'counsel-buffer-or-recentf
   "fR"  'petmacs/rename-current-buffer-file
   "fs"  'save-buffer
   "fS"  'evil-write-all
