@@ -205,6 +205,39 @@
   :bind (:map lsp-mode-map
 	      ("M-9" . lsp-treemacs-errors-list)))
 
+;; Enable LSP in org babel
+;; https://github.com/emacs-lsp/lsp-mode/issues/377
+(cl-defmacro lsp-org-babel-enbale (lang)
+  "Support LANG in org source code block."
+  (cl-check-type lang stringp)
+  (let* ((edit-pre (intern (format "org-babel-edit-prep:%s" lang)))
+         (intern-pre (intern (format "lsp--%s" (symbol-name edit-pre)))))
+    `(progn
+       (defun ,intern-pre (info)
+         (let ((filename (or (->> info caddr (alist-get :file))
+                             buffer-file-name)))
+           (setq buffer-file-name filename)
+	   ;; `lsp-auto-guess-root' MUST be non-nil.
+	   (setq lsp-buffer-uri (lsp--path-to-uri filename))
+	   (lsp-deferred)))
+       (put ',intern-pre 'function-documentation
+            (format "Enable lsp in the buffer of org source block (%s)." (upcase ,lang)))
+
+       (if (fboundp ',edit-pre)
+           (advice-add ',edit-pre :after ',intern-pre)
+         (progn
+           (defun ,edit-pre (info)
+             (,intern-pre info))
+           (put ',edit-pre 'function-documentation
+                (format "Prepare local buffer environment for org source block (%s)."
+                        (upcase ,lang))))))))
+
+(defvar org-babel-lang-list
+  '("go" "python" "ipython" "ruby" "js" "css" "sass" "C" "rust" "java"))
+(add-to-list 'org-babel-lang-list (if emacs/>=26p "shell" "sh"))
+(dolist (lang org-babel-lang-list)
+  (eval `(lsp-org-babel-enbale ,lang)))
+
 (provide 'init-lsp)
 
 ;;; init-lsp.el ends here
