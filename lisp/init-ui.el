@@ -114,7 +114,7 @@
 	(propertize
 	 (let ((base-dir-name (file-name-nondirectory (substring python-shell-virtualenv-root 0 -1))))
 	   (if (< 10 (length base-dir-name))
-	       (format " (%s..)" (substring base-dir-name 0 8))
+	       (format " (%s..)" (substring base-dir-name 0 15))
 	     (format " (%s)" base-dir-name)))
 	 'face (if (doom-modeline--active) 'doom-modeline-buffer-major-mode)))))
 
@@ -127,6 +127,8 @@
 
 (use-package doom-themes
   :defer nil
+  :defines doom-themes-treemacs-theme
+  :functions doom-themes-hide-modeline
   :custom
   (doom-themes-enable-italic t)
   (doom-themes-enable-bold t)
@@ -154,11 +156,20 @@
 			doom-themes--bell-cookie
 			(current-buffer)))))
   ;; Corrects (and improves) org-mode's native fontification.
-  (setq doom-themes-treemacs-theme "doom-colors")
-  ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config)
-  ;; enable custom treemacs themes
-  (doom-themes-treemacs-config))
+
+  ;; Enable customized theme (`all-the-icons' must be installed!)
+  (setq doom-themes-treemacs-theme "doom-colors")
+  (doom-themes-treemacs-config)
+  (remove-hook 'treemacs-mode-hook #'doom-themes-hide-modeline)
+  (with-eval-after-load 'treemacs
+    (when (require 'all-the-icons nil t)
+      (with-no-warnings
+	(treemacs-modify-theme "doom-colors"
+			       :config
+	  (treemacs-create-icon
+	   :icon (format "%s " (all-the-icons-octicon "tag" :height 0.9 :v-adjust -0.05 :face 'all-the-icons-lblue))
+	   :extensions (tag-leaf)))))))
 
 (use-package chocolate-theme)
 
