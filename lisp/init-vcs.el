@@ -41,23 +41,6 @@
   (define-key magit-mode-map (kbd "M-7") 'winum-select-window-7)
   (define-key magit-mode-map (kbd "M-8") 'winum-select-window-8))
 
-;; Notification
-(use-package alert
-  :init
-  (with-no-warnings
-    (defun my-magit-process-finish (arg &optional _process-buf _command-buf
-				    _default-dir _section)
-      (let ((title "Magit"))
-	(unless (integerp arg)
-	  (setq title (capitalize (process-name arg)))
-	  (setq arg (process-exit-status arg)))
-	(let ((alert-fade-time 0.8)
-	      (alert-default-style 'mode-line))
-	  (if (= arg 0)
-	      (alert "Success" :title title :severity 'normal)
-	    (alert "Failed" :tile title :severity 'urgent)))))
-    (advice-add #'magit-process-finish :after #'my-magit-process-finish)))
-
 ;; Walk through git revisions of a file
 (use-package git-timemachine
   :custom-face
