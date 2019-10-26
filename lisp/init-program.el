@@ -92,12 +92,17 @@
 (use-package electric-operator
   :hook ((c-mode-common . electric-operator-mode)
          (python-mode . electric-operator-mode)
+	 (go-mode . electric-operator-mode)
          (electric-operator-mode . (lambda ()
                                      (electric-operator-add-rules-for-mode 'c++-mode
                                                                            (cons "*" nil)
                                                                            (cons "&" nil))
                                      (electric-operator-add-rules-for-mode 'c-mode
-                                                                           (cons "*" nil))))))
+                                                                           (cons "*" nil))
+                                     (electric-operator-add-rules-for-mode 'go-mode
+                                                                           (cons ":=" " := ")
+									   (cons "==" " == "))
+				     ))))
 
 ;; using outline-minor-mode for evil folding
 (use-package outline-mode
