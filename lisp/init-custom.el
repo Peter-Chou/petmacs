@@ -31,6 +31,8 @@
 				   c++-mode
 				   python-mode
 				   java-mode
+				   scala-mode
+				   go-mode
 				   )
   "Primary major modes of the lsp activated layer.")
 
