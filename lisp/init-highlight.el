@@ -118,7 +118,7 @@
   :commands (rainbow-x-color-luminance rainbow-colorize-match rainbow-turn-off)
   :bind (:map help-mode-map
          ("w" . rainbow-mode))
-  :hook ((css-mode scss-mode less-css-mode) . rainbow-mode)
+  :hook ((css-mode scss-mode less-css-mode html-mode web-mode php-mode) . rainbow-mode)
   :config
   ;; HACK: Use overlay instead of text properties to override `hl-line' faces.
   ;; @see https://emacs.stackexchange.com/questions/36420
