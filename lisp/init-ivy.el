@@ -218,14 +218,14 @@
 
   (use-package ivy-prescient
     :commands ivy-prescient-re-builder
-    :custom-face (ivy-minibuffer-match-face-1 ((t (:inherit font-lock-doc-face :foreground nil))))
-    :preface
+    :custom-face
+    (ivy-minibuffer-match-face-1 ((t (:inherit font-lock-doc-face :foreground nil))))
+    :init
     (defun ivy-prescient-non-fuzzy (str)
       (let ((prescient-filter-method '(literal regexp)))
         (ivy-prescient-re-builder str)))
-    :init
-    (setq ivy-prescient-retain-classic-highlighting t
-          ivy-re-builders-alist '((counsel-ag . ivy-prescient-non-fuzzy)
+
+    (setq ivy-re-builders-alist '((counsel-ag . ivy-prescient-non-fuzzy)
                                   (counsel-rg . ivy-prescient-non-fuzzy)
                                   (counsel-pt . ivy-prescient-non-fuzzy)
                                   (counsel-grep . ivy-prescient-non-fuzzy)
@@ -233,7 +233,11 @@
                                   (swiper . ivy-prescient-non-fuzzy)
                                   (swiper-isearch . ivy-prescient-non-fuzzy)
                                   (swiper-all . ivy-prescient-non-fuzzy)
-                                  (t . ivy-prescient-re-builder)))
+                                  (insert-char . ivy-prescient-non-fuzzy)
+                                  (t . ivy-prescient-re-builder))
+          ivy-prescient-enable-filtering t
+          ivy-prescient-retain-classic-highlighting t)
+
     (ivy-prescient-mode 1))
 
   ;; Additional key bindings for Ivy
