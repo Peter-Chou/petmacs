@@ -241,9 +241,7 @@
     (ivy-prescient-mode 1))
 
   ;; Additional key bindings for Ivy
-  (use-package ivy-hydra
-    :bind (:map ivy-minibuffer-map
-                ("M-o" . ivy-dispatching-done-hydra)))
+  (use-package ivy-hydra)
 
   ;; Ivy integration for Projectile
   (use-package counsel-projectile
@@ -445,6 +443,26 @@
     (when (display-graphic-p)
       (all-the-icons-faicon "font" :height 0.85 :v-adjust -0.05 :face 'all-the-icons-lblue)))
 
+  (defun ivy-rich-world-clock-icon (_candidate)
+    "Display the world clock icon in `ivy-rich'."
+    (when (display-graphic-p)
+      (all-the-icons-faicon "globe" :height 1.0 :v-adjust -0.05 :face 'all-the-icons-lblue)))
+
+  (defun ivy-rich-tramp-icon (_candidate)
+    "Display the tramp icon in `ivy-rich'."
+    (when (display-graphic-p)
+      (all-the-icons-material "settings_remote" :height 1.0 :v-adjust -0.2)))
+
+  (defun ivy-rich-git-branch-icon (_candidate)
+    "Display the git branch icon in `ivy-rich'."
+    (when (display-graphic-p)
+      (all-the-icons-octicon "git-branch" :height 1.0 :v-adjust -0.05 :face 'all-the-icons-green)))
+
+  (defun ivy-rich-process-icon (_candidate)
+    "Display the process icon in `ivy-rich'."
+    (when (display-graphic-p)
+      (all-the-icons-faicon "bolt" :height 1.0 :v-adjust -0.05 :face 'all-the-icons-lblue)))
+
   (when (display-graphic-p)
     (defun my-ivy-rich-bookmark-type (candidate)
       (let ((filename (file-local-name (ivy-rich-bookmark-filename candidate))))
@@ -547,6 +565,11 @@
            ((ivy-rich-variable-icon)
             (counsel-describe-variable-transformer (:width 50))
             (ivy-rich-counsel-variable-docstring (:face font-lock-doc-face))))
+          counsel-set-variable
+          (:columns
+           ((ivy-rich-variable-icon)
+            (counsel-describe-variable-transformer (:width 50))
+            (ivy-rich-counsel-variable-docstring (:face font-lock-doc-face))))
           counsel-apropos
           (:columns
            ((ivy-rich-symbol-icon)
@@ -610,6 +633,11 @@
             (ivy-rich-bookmark-name (:width 40))
             (ivy-rich-bookmark-info))
            :delimiter "\t")
+          counsel-bookmarked-directory
+          (:columns
+           ((ivy-rich-file-icon)
+            (ivy-rich-candidate))
+           :delimiter "\t")
           counsel-package
           (:columns
            ((ivy-rich-package-icon)
@@ -638,6 +666,26 @@
           counsel-load-theme
           (:columns
            ((ivy-rich-theme-icon)
+            (ivy-rich-candidate))
+           :delimiter "\t")
+          counsel-world-clock
+          (:columns
+           ((ivy-rich-world-clock-icon)
+            (ivy-rich-candidate))
+           :delimiter "\t")
+          counsel-tramp
+          (:columns
+           ((ivy-rich-tramp-icon)
+            (ivy-rich-candidate))
+           :delimiter "\t")
+          counsel-git-checkout
+          (:columns
+           ((ivy-rich-git-branch-icon)
+            (ivy-rich-candidate))
+           :delimiter "\t")
+          counsel-list-processes
+          (:columns
+           ((ivy-rich-process-icon)
             (ivy-rich-candidate))
            :delimiter "\t")
           counsel-projectile-switch-project
