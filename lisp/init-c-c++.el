@@ -20,10 +20,13 @@
 						   (lsp-deferred)))
   :init
   (setq ccls-executable (file-truename "~/ccls/Release/ccls"))
+  ;; (setq ccls-initialization-options
+  ;; 	(if (boundp 'ccls-initialization-options)
+  ;; 	    (append ccls-initialization-options `(:cache (:directory ,(expand-file-name "~/.ccls-cache"))))
+  ;; 	  `(:cache (:directory ,(expand-file-name "~/.ccls-cache")))))
   (setq ccls-initialization-options
-  	(if (boundp 'ccls-initialization-options)
-  	    (append ccls-initialization-options `(:cache (:directory ,(expand-file-name "~/.ccls-cache"))))
-  	  `(:cache (:directory ,(expand-file-name "~/.ccls-cache")))))
+        `(:cache (:directory ,(expand-file-name "~/.ccls-cache"))
+                 :compilationDatabaseDirectory "build"))
 
   ;; (setq ccls-sem-highlight-method 'overlay)  ; overlay is slow
   (setq ccls-sem-highlight-method 'font-lock)
