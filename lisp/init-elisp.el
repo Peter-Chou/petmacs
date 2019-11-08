@@ -237,14 +237,8 @@ Lisp function does not specify a special indentation."
 
 ;; Syntax highlighting of known Elisp symbols
 (use-package highlight-defined
-  :hook (emacs-lisp-mode . highlight-defined-mode))
-
-;; ;; better elisp syntax support
-;; (use-package elispfl
-;;   ;; :commands (magit-todos-mode magit-todos-list magit-todos-list-internal)
-;;   :quelpa (elispfl :repo "cireu/elispfl" :fetcher github)
-;;   :hook ((emacs-lisp-mode . elispfl-mode)
-;; 	 (ielm . elispfl-ielm-mode)))
+  :hook (emacs-lisp-mode . highlight-defined-mode)
+  :init (setq highlight-defined-face-use-itself t))
 
 (provide 'init-elisp)
 
