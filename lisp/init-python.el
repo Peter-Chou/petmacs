@@ -60,7 +60,9 @@
 	:hook (python-mode . (lambda ()
 			       (require 'lsp-python-ms)
 			       (lsp-deferred)
-			       (flycheck-mode -1)))))
+			       (flycheck-mode -1)))
+	:init
+	(setq lsp-python-ms-nupkg-channel "stable")))
   (progn
     (use-package anaconda-mode
       :defines anaconda-mode-localhost-address
