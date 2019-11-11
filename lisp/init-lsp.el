@@ -4,6 +4,10 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-const)
+  (require 'init-custom))
+
 (use-package lsp-mode
   ;; :pin melpa-stable
   :preface
@@ -203,8 +207,10 @@
 ;; `lsp-mode' and `treemacs' integration.
 (when emacs/>=25.2p
   (use-package lsp-treemacs
-    :bind (("C-<f8>" . lsp-treemacs-errors-list)
-           ("M-<f8>" . lsp-treemacs-symbols)
+    :after lsp-mode
+    :bind (:map lsp-mode-map
+	   ("C-<f8>" . lsp-treemacs-errors-list)
+	   ("M-<f8>" . lsp-treemacs-symbols)
            ("s-<f8>" . lsp-treemacs-java-deps-list))
     :config
     (with-eval-after-load 'ace-window
