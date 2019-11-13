@@ -95,9 +95,14 @@
    doom-modeline-persp-name nil
    doom-modeline-github nil
    doom-modeline-mu4e nil
-   ;; doom-modeline-buffer-file-name-style 'truncate-with-project
-   doom-modeline-buffer-file-name-style 'file-name
-   doom-modeline-major-mode-color-icon t)
+   doom-modeline-buffer-file-name-style 'relative-to-project
+   ;; doom-modeline-buffer-file-name-style 'file-name
+   doom-modeline-icon (display-graphic-p)
+   doom-modeline-major-mode-icon t
+   doom-modeline-major-mode-color-icon t
+   doom-modeline-buffer-state-icon t
+   doom-modeline-buffer-modification-icon t
+   doom-modeline-indent-info nil)
   :config
   ;; FIXME: @see https://github.com/hlissner/emacs-doom-themes/issues/317.
   (set-face-foreground 'mode-line (face-foreground 'default))
@@ -120,10 +125,11 @@
 
   (doom-modeline-def-modeline 'my-modeline-layout
   '(bar workspace-name window-number modals matches buffer-info remote-host buffer-position parrot selection-info)
-  '(objed-state misc-info persp-name fancy-battery irc mu4e github debug lsp minor-modes input-method indent-info buffer-encoding petmacs||python-venv process vcs checker))
+  '(objed-state misc-info persp-name grip irc mu4e github debug lsp minor-modes input-method indent-info buffer-encoding petmacs||python-venv process vcs checker))
 
   (defun setup-custom-doom-modeline ()
-    (doom-modeline-set-modeline 'my-modeline-layout 'default)))
+    (doom-modeline-set-modeline 'my-modeline-layout 'default))
+  )
 
 (use-package doom-themes
   :defer nil
