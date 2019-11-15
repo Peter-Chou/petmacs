@@ -391,7 +391,7 @@
 
 ;; Enable LSP in org babel
 ;; https://github.com/emacs-lsp/lsp-mode/issues/377
-(cl-defmacro lsp-org-babel-enbale (lang)
+(cl-defmacro lsp-org-babel-enable (lang)
   "Support LANG in org source code block."
   (cl-check-type lang stringp)
   (let* ((edit-pre (intern (format "org-babel-edit-prep:%s" lang)))
@@ -420,7 +420,7 @@
   '("go" "python" "ipython" "ruby" "js" "css" "sass" "C" "rust" "java"))
 (add-to-list 'org-babel-lang-list (if emacs/>=26p "shell" "sh"))
 (dolist (lang org-babel-lang-list)
-  (eval `(lsp-org-babel-enbale ,lang)))
+  (eval `(lsp-org-babel-enable ,lang)))
 
 (provide 'init-lsp)
 
