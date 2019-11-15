@@ -110,8 +110,13 @@
 	lsp-prefer-flymake nil		;; Use lsp-ui and flycheck
 	flymake-fringe-indicator-position 'right-fringe)
   :config
-  (progn
-    (require 'lsp-clients)))
+     ;; Configure LSP clients
+     (use-package lsp-clients
+       :ensure nil
+       :hook (go-mode . (lambda ()
+                          "Format and add/delete imports."
+                          (add-hook 'before-save-hook #'lsp-format-buffer t t)
+                          (add-hook 'before-save-hook #'lsp-organize-imports t t)))))
 
 (use-package lsp-ui
   ;; :pin melpa-stable
