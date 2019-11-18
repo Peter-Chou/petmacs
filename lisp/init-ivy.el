@@ -28,7 +28,10 @@
 
 	 :map counsel-mode-map
 	 ([remap swiper] . counsel-grep-or-swiper)
+	 ([remap swiper-backward] . counsel-grep-or-swiper-backward)
+	 ([remap cd] . counsel-cd)
 	 ([remap dired] . counsel-dired)
+	 ([remap set-variable] . counsel-set-variable)
 	 ("C-x C-r" . counsel-recentf)
 	 ("C-x j" . counsel-mark-ring)
 
@@ -236,8 +239,8 @@
                                   (swiper-all . ivy-prescient-non-fuzzy)
                                   (insert-char . ivy-prescient-non-fuzzy)
                                   (t . ivy-prescient-re-builder))
-          ivy-prescient-sort-commands '(:not swiper swiper-isearch
-                                        ivy-switch-buffer counsel-yank-pop))
+	  ivy-prescient-sort-commands '(:not swiper swiper-isearch ivy-switch-buffer
+					counsel-grep counsel-ag counsel-yank-pop))
 
     (ivy-prescient-mode 1))
 
@@ -604,6 +607,11 @@
           counsel-dired-jump
           (:columns
            ((ivy-rich-file-icon)
+            (ivy-rich-candidate))
+           :delimiter "\t")
+          counsel-el
+          (:columns
+           ((ivy-rich-symbol-icon)
             (ivy-rich-candidate))
            :delimiter "\t")
           counsel-fzf
