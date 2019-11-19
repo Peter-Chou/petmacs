@@ -7,6 +7,7 @@
 ;; Highlight the current line
 (use-package hl-line
   :ensure nil
+  :custom-face (hl-line ((t ,@(and emacs/>=27p '(:extend t)))))
   :hook (after-init . global-hl-line-mode))
 
 ;; Highlight symbols
@@ -118,7 +119,7 @@
   :commands (rainbow-x-color-luminance rainbow-colorize-match rainbow-turn-off)
   :bind (:map help-mode-map
          ("w" . rainbow-mode))
-  :hook ((css-mode scss-mode less-css-mode html-mode web-mode php-mode) . rainbow-mode)
+  :hook ((html-mode php-mode) . rainbow-mode)
   :config
   ;; HACK: Use overlay instead of text properties to override `hl-line' faces.
   ;; @see https://emacs.stackexchange.com/questions/36420
