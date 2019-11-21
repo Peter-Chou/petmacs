@@ -83,6 +83,7 @@ decrease this. If you experience stuttering, increase this.")
 (require 'init-evil)
 
 (require 'init-ui)
+
 (require 'init-window)
 (require 'init-layout)
 (require 'init-dashboard)
