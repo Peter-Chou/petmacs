@@ -116,97 +116,92 @@
   (when (executable-find "rg")
     (setq counsel-grep-base-command "rg -S --no-heading --line-number --color never '%s' %s"))
   :config
+  (with-no-warnings
+    ;; Pre-fill search keywords
+    ;; @see https://www.reddit.com/r/emacs/comments/b7g1px/withemacs_execute_commands_like_marty_mcfly/
+    (defvar my-ivy-fly-commands
+      '(query-replace-regexp
+        flush-lines keep-lines ivy-read
+        swiper swiper-backward swiper-all
+        swiper-isearch swiper-isearch-backward
+        counsel-grep-or-swiper counsel-grep-or-swiper-backward
+        counsel-grep counsel-ack counsel-ag counsel-rg counsel-pt))
+    (defvar-local my-ivy-fly--travel nil)
 
-  ;; Pre-fill search keywords
-  ;; @see https://www.reddit.com/r/emacs/comments/b7g1px/withemacs_execute_commands_like_marty_mcfly/
-  (defvar my-ivy-fly-commands '(query-replace-regexp
-                                flush-lines
-                                keep-lines
-                                ivy-read
-                                swiper
-                                swiper-backward
-                                swiper-all
-                                swiper-isearch
-                                swiper-isearch-backward
-                                counsel-grep-or-swiper
-                                counsel-grep-or-swiper-backward
-                                counsel-grep
-                                counsel-ack
-                                counsel-ag
-                                counsel-rg
-                                counsel-pt))
+    (defun my-ivy-fly-back-to-present ()
+      (cond ((and (memq last-command my-ivy-fly-commands)
+                  (equal (this-command-keys-vector) (kbd "M-p")))
+             ;; repeat one time to get straight to the first history item
+             (setq unread-command-events
+                   (append unread-command-events
+                           (listify-key-sequence (kbd "M-p")))))
+            ((or (memq this-command '(self-insert-command
+                                      yank ivy-forward-char
+                                      ivy-yank-word counsel-yank-pop))
+                 (equal (this-command-keys-vector) (kbd "M-n")))
+             (unless my-ivy-fly--travel
+               (delete-region (point) (point-max))
+               (when (eq this-command 'ivy-forward-char)
+                 (insert (ivy-cleanup-string ivy-text)))
+               (setq my-ivy-fly--travel t)))))
 
-  (defun my-ivy-fly-back-to-present ()
-    (cond ((and (memq last-command my-ivy-fly-commands)
-                (equal (this-command-keys-vector) (kbd "M-p")))
-           ;; repeat one time to get straight to the first history item
-           (setq unread-command-events
-                 (append unread-command-events
-                         (listify-key-sequence (kbd "M-p")))))
-          ((or (memq this-command '(self-insert-command
-                                    yank
-                                    ivy-yank-word
-                                    counsel-yank-pop))
-               (equal (this-command-keys-vector) (kbd "M-n")))
-           (delete-region (point)
-                          (point-max)))))
 
-  (defun my-ivy-fly-time-travel ()
-    (when (memq this-command my-ivy-fly-commands)
-      (let* ((kbd (kbd "M-n"))
-             (cmd (key-binding kbd))
-             (future (and cmd
-                          (with-temp-buffer
-                            (when (ignore-errors
-                                    (call-interactively cmd) t)
-                              (buffer-string))))))
-        (when future
-          (save-excursion
-            (insert (propertize (replace-regexp-in-string
-                                 "\\\\_<" ""
-                                 (replace-regexp-in-string
-                                  "\\\\_>" ""
-                                  future))
-                                'face 'shadow)))
-          (add-hook 'pre-command-hook 'my-ivy-fly-back-to-present nil t)))))
+    (defun my-ivy-fly-time-travel ()
+      (when (memq this-command my-ivy-fly-commands)
+        (let* ((kbd (kbd "M-n"))
+               (cmd (key-binding kbd))
+               (future (and cmd
+                            (with-temp-buffer
+                              (when (ignore-errors
+                                      (call-interactively cmd) t)
+                                (buffer-string))))))
+          (when future
+            (save-excursion
+              (insert (propertize (replace-regexp-in-string
+                                   "\\\\_<" ""
+                                   (replace-regexp-in-string
+                                    "\\\\_>" ""
+                                    future))
+                                  'face 'shadow)))
+            (add-hook 'pre-command-hook 'my-ivy-fly-back-to-present nil t)))))
 
-  (add-hook 'minibuffer-setup-hook #'my-ivy-fly-time-travel)
-  (add-hook 'minibuffer-exit-hook
-            (lambda ()
-              (remove-hook 'pre-command-hook 'my-ivy-fly-back-to-present t)))
+    (add-hook 'minibuffer-setup-hook #'my-ivy-fly-time-travel)
+    (add-hook 'minibuffer-exit-hook
+              (lambda ()
+                (remove-hook 'pre-command-hook 'my-ivy-fly-back-to-present t)))
 
-  ;; Improve search experience of `swiper'
-  ;; @see https://emacs-china.org/t/swiper-swiper-isearch/9007/12
-  (defun my-swiper-toggle-counsel-rg ()
-    "Toggle `counsel-rg' with current swiper input."
-    (interactive)
-    (let ((text (replace-regexp-in-string
-                 "\n" ""
-                 (replace-regexp-in-string
-                  "\\\\_<" ""
-                  (replace-regexp-in-string
-                   "\\\\_>" ""
-                   (replace-regexp-in-string "^.*Swiper: " ""
-                                             (thing-at-point 'line t)))))))
-      (ivy-quit-and-run
-        (counsel-rg text default-directory))))
-  (bind-key "<C-return>" #'my-swiper-toggle-counsel-rg swiper-map)
-
-  (with-eval-after-load 'rg
-    (defun my-swiper-toggle-rg-dwim ()
-      "Toggle `rg-dwim' with current swiper input."
+    ;; Improve search experience of `swiper'
+    ;; @see https://emacs-china.org/t/swiper-swiper-isearch/9007/12
+    (defun my-swiper-toggle-counsel-rg ()
+      "Toggle `counsel-rg' with current swiper input."
       (interactive)
-      (ivy-quit-and-run (rg-dwim default-directory)))
-    (bind-key "<M-return>" #'my-swiper-toggle-rg-dwim swiper-map)
-    (bind-key "<M-return>" #'my-swiper-toggle-rg-dwim ivy-minibuffer-map))
+      (let ((text (replace-regexp-in-string
+                   "\n" ""
+                   (replace-regexp-in-string
+                    "\\\\_<" ""
+                    (replace-regexp-in-string
+                     "\\\\_>" ""
+                     (replace-regexp-in-string "^.*Swiper: " ""
+                                               (thing-at-point 'line t)))))))
+        (ivy-quit-and-run
+          (counsel-rg text default-directory))))
+    (bind-key "<C-return>" #'my-swiper-toggle-counsel-rg swiper-map)
 
-  ;; Integration with `projectile'
-  (with-eval-after-load 'projectile
-    (setq projectile-completion-system 'ivy))
+    (with-eval-after-load 'rg
+      (defun my-swiper-toggle-rg-dwim ()
+        "Toggle `rg-dwim' with current swiper input."
+        (interactive)
+        (ivy-quit-and-run (rg-dwim default-directory)))
+      (bind-key "<M-return>" #'my-swiper-toggle-rg-dwim swiper-map)
+      (bind-key "<M-return>" #'my-swiper-toggle-rg-dwim ivy-minibuffer-map))
 
-  ;; Integration with `magit'
-  (with-eval-after-load 'magit
-    (setq magit-completing-read-function 'ivy-completing-read))
+    ;; Integration with `projectile'
+    (with-eval-after-load 'projectile
+      (setq projectile-completion-system 'ivy))
+
+    ;; Integration with `magit'
+    (with-eval-after-load 'magit
+      (setq magit-completing-read-function 'ivy-completing-read)))
 
   ;; Enhance M-x
   (use-package amx
