@@ -14,7 +14,7 @@
 (defvar petmacs-themes-list '(doom-one-light chocolate)
   "list of themes for cycling")
 
-(defvar petmacs-font-size 12.5
+(defvar petmacs-font-size 13.5
   "default font size")
 
 (defvar petmacs-evil-leader-key "<SPC>"
