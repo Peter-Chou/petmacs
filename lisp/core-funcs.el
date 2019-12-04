@@ -8,6 +8,13 @@
   (require 'init-const)
   (require 'init-custom))
 
+;; Suppress warnings
+(declare-function async-inject-variables 'async)
+(declare-function chart-bar-quickie 'chart)
+(declare-function flycheck-buffer 'flycheck)
+(declare-function flymake-start 'flymake)
+(declare-function upgrade-packages 'init-package)
+
 ;;; Network Proxy
 (defun proxy-http-show ()
   "Show HTTP/HTTPS proxy."
