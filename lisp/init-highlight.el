@@ -7,8 +7,9 @@
 ;; Highlight the current line
 (use-package hl-line
   :ensure nil
-  :custom-face (hl-line ((t ,@(and emacs/>=27p '(:extend t)))))
-  :hook (after-init . global-hl-line-mode))
+  :custom-face (hl-line ((t (:extend t))))
+  :hook ((after-init . global-hl-line-mode)
+         ((term-mode vterm-mode) . hl-line-unload-function)))
 
 ;; Highlight symbols
 (use-package symbol-overlay
