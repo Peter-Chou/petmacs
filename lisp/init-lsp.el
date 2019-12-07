@@ -107,6 +107,7 @@
 	 ("C-c C-d" . lsp-describe-thing-at-point))
   :init
   (setq lsp-auto-guess-root t		;; Detect project root
+        lsp-keep-workspace-alive nil    ;; Auto-kill LSP server
 	lsp-prefer-flymake nil		;; Use lsp-ui and flycheck
 	flymake-fringe-indicator-position 'right-fringe)
   :config
@@ -128,18 +129,10 @@
   :hook (after-load-theme . (lambda ()
 			      (set-face-attribute 'lsp-ui-doc-background nil
 						  :background (face-background 'tooltip))))
-  :bind (
+  :bind (("C-c u" . lsp-ui-imenu)
 	 :map lsp-ui-mode-map
 	 ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
-	 ([remap xref-find-references] . lsp-ui-peek-find-references)
-	 ("C-c u" . lsp-ui-imenu)
-
-	 :map lsp-ui-peek-mode-map
-	 ("h" . lsp-ui-peek--select-prev-file)
-	 ("j" . lsp-ui-peek--select-next)
-	 ("k" . lsp-ui-peek--select-prev)
-	 ("l" . lsp-ui-peek--select-next-file)
-	 )
+	 ([remap xref-find-references] . lsp-ui-peek-find-references))
   :hook (lsp-ui-imenu-mode . (lambda ()
 			       (display-line-numbers-mode -1)
 			       (hl-line-mode -1)))
@@ -147,7 +140,7 @@
   (setq lsp-ui-doc-enable t
 	lsp-ui-peek-enable t
 	lsp-ui-doc-use-webkit nil
-	lsp-ui-doc-delay 1.0
+	lsp-ui-doc-delay 0.5
 	lsp-ui-doc-include-signature t
 	lsp-ui-doc-position 'top  ;; or at-point
 	lsp-ui-doc-border (face-foreground 'default)
@@ -157,8 +150,7 @@
 	lsp-ui-sideline-enable t
 	lsp-ui-sideline-show-hover nil
 	lsp-ui-sideline-show-diagnostics nil
-	lsp-ui-sideline-ignore-duplicate t
-	lsp-eldoc-enable-hover nil)
+	lsp-ui-sideline-ignore-duplicate t)
 
   (evil-define-key 'normal lsp-ui-imenu-mode-map (kbd "q") 'lsp-ui-imenu--kill)
   (evil-define-key 'normal lsp-ui-imenu-mode-map (kbd "J") 'lsp-ui-imenu--next-kind)
