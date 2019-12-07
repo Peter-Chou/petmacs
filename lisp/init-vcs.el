@@ -143,23 +143,31 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 
 ;; Show tasks
 (use-package pcre2el) ;; magit-todos dependency
-(use-package magit-todos
-  :commands (magit-todos-mode magit-todos-list magit-todos-list-internal)
-  :quelpa (magit-todos :repo "Peter-Chou/magit-todos" :fetcher github)
-  :hook (emacs-startup . magit-todos-mode)
-  :init
-  ;; disable magit-todos keybindings which is not compatible with evil-magit
-  (setq magit-todos-section-map
-	(let ((map (make-sparse-keymap)))
-	  (define-key map "j" #'evil-next-visual-line)
-	  (define-key map "k" #'evil-previous-visual-line)
-	  map))
-  :config
-  (when sys/win32p
-    ;; windows can only use grep
-    ;; install git for windows from https://git-scm.com/download/win
-    (setq magit-todos-nice nil)
-    (setq magit-todos-scanner 'magit-todos--scan-with-git-grep)))
+
+;; Show TODOs in magit
+(when (and emacs/>=25.2p (not sys/win32p))
+  (use-package magit-todos
+    :init
+    (setq magit-todos-nice (if (executable-find "nice") t nil))
+    (magit-todos-mode 1)))
+
+;; (use-package magit-todos
+;;   :commands (magit-todos-mode magit-todos-list magit-todos-list-internal)
+;;   :quelpa (magit-todos :repo "Peter-Chou/magit-todos" :fetcher github)
+;;   :hook (emacs-startup . magit-todos-mode)
+;;   :init
+;;   ;; disable magit-todos keybindings which is not compatible with evil-magit
+;;   (setq magit-todos-section-map
+;; 	(let ((map (make-sparse-keymap)))
+;; 	  (define-key map "j" #'evil-next-visual-line)
+;; 	  (define-key map "k" #'evil-previous-visual-line)
+;; 	  map))
+;;   :config
+;;   (when sys/win32p
+;;     ;; windows can only use grep
+;;     ;; install git for windows from https://git-scm.com/download/win
+;;     (setq magit-todos-nice nil)
+;;     (setq magit-todos-scanner 'magit-todos--scan-with-git-grep)))
 
 ;; Git related modes
 (use-package gitattributes-mode)
