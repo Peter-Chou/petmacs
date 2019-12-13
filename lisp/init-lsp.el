@@ -145,6 +145,12 @@
 	lsp-ui-doc-position 'top  ;; or at-point
 	lsp-ui-doc-border (face-foreground 'default)
 
+	lsp-ui-imenu-enable t
+	lsp-ui-imenu-colors `(,(face-foreground 'font-lock-keyword-face)
+			      ,(face-foreground 'font-lock-string-face)
+			      ,(face-foreground 'font-lock-constant-face)
+			      ,(face-foreground 'font-lock-variable-name-face))
+
 	lsp-ui-flycheck-enable nil  ;; disable flycheck
 
 	lsp-ui-sideline-enable t
