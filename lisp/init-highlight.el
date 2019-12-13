@@ -68,28 +68,26 @@
 ;; Colorize color names in buffers
 (use-package rainbow-mode
   :diminish
-  :defines helpful-mode-map
-  :functions (my-rainbow-colorize-match my-rainbow-clear-overlays)
-  :commands (rainbow-x-color-luminance rainbow-colorize-match rainbow-turn-off)
   :bind (:map help-mode-map
          ("w" . rainbow-mode))
   :hook ((html-mode php-mode) . rainbow-mode)
   :config
   ;; HACK: Use overlay instead of text properties to override `hl-line' faces.
   ;; @see https://emacs.stackexchange.com/questions/36420
-  (defun my-rainbow-colorize-match (color &optional match)
-    (let* ((match (or match 0))
-           (ov (make-overlay (match-beginning match) (match-end match))))
-      (overlay-put ov 'ovrainbow t)
-      (overlay-put ov 'face `((:foreground ,(if (> 0.5 (rainbow-x-color-luminance color))
-                                                "white" "black"))
-                              (:background ,color)))))
-  (advice-add #'rainbow-colorize-match :override #'my-rainbow-colorize-match)
+  (with-no-warnings
+    (defun my-rainbow-colorize-match (color &optional match)
+      (let* ((match (or match 0))
+             (ov (make-overlay (match-beginning match) (match-end match))))
+        (overlay-put ov 'ovrainbow t)
+        (overlay-put ov 'face `((:foreground ,(if (> 0.5 (rainbow-x-color-luminance color))
+                                                  "white" "black"))
+                                (:background ,color)))))
+    (advice-add #'rainbow-colorize-match :override #'my-rainbow-colorize-match)
 
-  (defun my-rainbow-clear-overlays ()
-    "Clear all rainbow overlays."
-    (remove-overlays (point-min) (point-max) 'ovrainbow t))
-  (advice-add #'rainbow-turn-off :after #'my-rainbow-clear-overlays))
+    (defun my-rainbow-clear-overlays ()
+      "Clear all rainbow overlays."
+      (remove-overlays (point-min) (point-max) 'ovrainbow t))
+    (advice-add #'rainbow-turn-off :after #'my-rainbow-clear-overlays)))
 
 ;; Highlight brackets according to their depth
 (use-package rainbow-delimiters
@@ -103,49 +101,63 @@
   (setq show-paren-when-point-inside-paren t)
   (setq show-paren-when-point-in-periphery t))
 
+;; Highlight some operations
+(use-package volatile-highlights
+  :diminish
+  :hook (after-init . volatile-highlights-mode)
+  :config
+  (with-no-warnings
+    (when (fboundp 'pulse-momentary-highlight-region)
+      (defun my-vhl-pulse (beg end &optional _buf face)
+        "Pulse the changes."
+        (pulse-momentary-highlight-region beg end face))
+      (advice-add #'vhl/.make-hl :override #'my-vhl-pulse))))
+
 ;; Pulse current line
 (use-package pulse
   :ensure nil
-  :preface
-  (defun my-pulse-momentary-line (&rest _)
-    "Pulse the current line."
-    (pulse-momentary-highlight-one-line (point) 'next-error))
-
-  (defun my-pulse-momentary (&rest _)
-    "Pulse the current line."
-    (if (fboundp 'xref-pulse-momentarily)
-        (xref-pulse-momentarily)
-      (my-pulse-momentary-line)))
-
-  (defun my-recenter-and-pulse(&rest _)
-    "Recenter and pulse the current line."
-    (recenter)
-    (my-pulse-momentary))
-
-  (defun my-recenter-and-pulse-line (&rest _)
-    "Recenter and pulse the current line."
-    (recenter)
-    (my-pulse-momentary-line))
+  :custom-face
+  (pulse-highlight-start-face ((t (:inherit region))))
+  (pulse-highlight-face ((t (:inherit region))))
   :hook (((dumb-jump-after-jump
            imenu-after-jump) . my-recenter-and-pulse)
          ((bookmark-after-jump
            magit-diff-visit-file
            next-error) . my-recenter-and-pulse-line))
   :init
-  (dolist (cmd '(recenter-top-bottom
-                 other-window ace-window windmove-do-window-select
-                 pager-page-down pager-page-up
-                 symbol-overlay-basic-jump))
-    (advice-add cmd :after #'my-pulse-momentary-line))
-  (dolist (cmd '(pop-to-mark-command
-                 pop-global-mark
-                 goto-last-change))
-    (advice-add cmd :after #'my-recenter-and-pulse)))
+  (with-no-warnings
+    (defun my-pulse-momentary-line (&rest _)
+      "Pulse the current line."
+      (pulse-momentary-highlight-one-line (point)))
 
-;; Highlight some operations
-(use-package volatile-highlights
-  :diminish
-  :hook (after-init . volatile-highlights-mode))
+    (defun my-pulse-momentary (&rest _)
+      "Pulse the region or the current line."
+      (if (fboundp 'xref-pulse-momentarily)
+          (xref-pulse-momentarily)
+        (my-pulse-momentary-line)))
+
+    (defun my-recenter-and-pulse(&rest _)
+      "Recenter and pulse the region or the current line."
+      (recenter)
+      (my-pulse-momentary))
+
+    (defun my-recenter-and-pulse-line (&rest _)
+      "Recenter and pulse the current line."
+      (recenter)
+      (my-pulse-momentary-line))
+
+    (dolist (cmd '(recenter-top-bottom
+                   other-window windmove-do-window-select
+                   ace-window aw--select-window
+                   pager-page-down pager-page-up
+                   treemacs-select-window
+                   symbol-overlay-basic-jump))
+      (advice-add cmd :after #'my-pulse-momentary-line))
+
+    (dolist (cmd '(pop-to-mark-command
+                   pop-global-mark
+                   goto-last-change))
+      (advice-add cmd :after #'my-recenter-and-pulse))))
 
 ;; Highlight TODO and similar keywords in comments and strings
 (use-package hl-todo
