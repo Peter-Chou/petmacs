@@ -220,7 +220,12 @@
   :init (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit))
 
 ;; Make bindings that stick around
-(use-package hydra)
+(use-package hydra
+  :commands (hydra-default-pre
+             hydra-keyboard-quit
+             hydra--call-interactively-remap-maybe
+             hydra-show-hint
+             hydra-set-transient-map))
 
 ;; Treat undo history as a tree
 ;; FIXME:  keep the diff window
