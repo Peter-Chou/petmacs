@@ -25,7 +25,6 @@
                               (string-suffix-p ".elc" bname)
                               (string-suffix-p ".gz" bname)
                               (string-suffix-p ".zip" bname)
-                              (string-prefix-p "magit" bname)
                               (string-prefix-p "Pfuture-Callback" bname)
                               (string-prefix-p "magit" bname)
                               (eq (buffer-local-value 'major-mode b) 'erc-mode)
