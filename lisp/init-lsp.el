@@ -187,6 +187,18 @@
   ;; :pin melpa-stable
   :init (setq company-lsp-cache-candidates 'auto))
 
+;; Ivy integration
+(use-package lsp-ivy
+  :after lsp-mode
+  :bind (:map lsp-mode-map
+         ([remap xref-find-apropos] . lsp-ivy-workspace-symbol)
+         ("C-s-." . lsp-ivy-global-workspace-symbol)))
+
+;; Origami integration
+(use-package lsp-origami
+  :after lsp-mode
+  :hook (origami-mode . lsp-origami-mode))
+
 ;; Debug
 ;; python: pip install "ptvsd>=4.2" 
 ;; C++: build lldb from https://github.com/llvm-mirror/lldb/tree/master/tools/lldb-vscode
