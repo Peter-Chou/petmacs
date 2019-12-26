@@ -218,8 +218,8 @@
   "br" 'persp-remove-buffer
   "bj" 'ace-window
   "bt" 'imenu-list-smart-toggle
-  ;; "bI" 'lsp-ui-imenu
-  "bI" 'imenu-list
+  "bI" 'lsp-ui-imenu
+  ;; "bI" 'imenu-list
   "bi" 'ibuffer)
 
 ;; leader-t family
