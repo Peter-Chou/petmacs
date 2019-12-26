@@ -45,16 +45,11 @@
                              (not (persp-contain-buffer-p b persp))
                            nil)))))))
 
-;; Integrate `projectile'
+;; Projectile integration
 (use-package persp-mode-projectile-bridge
-  :functions (persp-get-by-name
-              persp-add-new
-              set-persp-parameter
-              persp-add-buffer)
+  :after projectile
   :commands (persp-mode-projectile-bridge-find-perspectives-for-all-buffers
-             persp-mode-projectile-bridge-kill-perspectives
-             persp-mode-projectile-bridge-add-new-persp
-             projectile-project-buffers)
+             persp-mode-projectile-bridge-kill-perspectives)
   :hook ((persp-mode . persp-mode-projectile-bridge-mode)
          (persp-mode-projectile-bridge-mode
           .
@@ -65,7 +60,7 @@
   :init (setq persp-mode-projectile-bridge-persp-name-prefix "[p]")
   :config
   ;; HACK: Allow saving to files
-  (eval-and-compile
+  (with-no-warnings
     (defun my-persp-mode-projectile-bridge-add-new-persp (name)
       (let ((persp (persp-get-by-name name *persp-hash* :nil)))
         (if (eq :nil persp)
