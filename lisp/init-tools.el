@@ -5,7 +5,7 @@
 ;;; Code:
 
 (use-package which-key
-  :diminish which-key-mode
+  :diminish
   :bind (:map help-map ("C-h" . which-key-C-h-dispatch))
   :hook (after-init . which-key-mode)
   :init
@@ -47,7 +47,7 @@
         expand-region-reset-fast-key "r"))
 
 (use-package editorconfig
-  :diminish editorconfig-mode
+  :diminish
   :hook (after-init . editorconfig-mode))
 
 (use-package rg

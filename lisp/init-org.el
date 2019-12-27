@@ -207,7 +207,7 @@ Will work on both org-mode and any mode that accepts plain html."
 
 ;; Preview
 (use-package org-preview-html
-  :diminish org-preview-html-mode)
+  :diminish)
 
 ;; Visually summarize progress
 (use-package org-dashboard)

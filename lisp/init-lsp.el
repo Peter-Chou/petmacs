@@ -9,6 +9,7 @@
   (require 'init-custom))
 
 (use-package lsp-mode
+  :diminish
   ;; :pin melpa-stable
   :preface
   (defun petmacs//lsp-avy-document-symbol (all)
@@ -101,7 +102,6 @@
     (lsp-find-type-definition))
 
   :commands lsp
-  :diminish lsp-mode
   :bind (
 	 :map lsp-mode-map
 	 ("C-c C-d" . lsp-describe-thing-at-point))

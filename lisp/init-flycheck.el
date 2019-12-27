@@ -5,7 +5,7 @@
 ;;; Code:
 
 (use-package flycheck
-  :diminish flycheck-mode
+  :diminish
   :hook (after-init . global-flycheck-mode)
   :init
   (evil-define-key 'normal flycheck-error-list-mode-map (kbd "RET") 'flycheck-error-list-goto-error)
