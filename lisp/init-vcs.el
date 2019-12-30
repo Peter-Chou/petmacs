@@ -6,6 +6,8 @@
 
 (use-package magit
   ;; :pin melpa-stable
+  :mode (("\\COMMIT_EDITMSG\\'" . text-mode)
+         ("\\MERGE_MSG\\'" . text-mode))
   :bind (("C-x g" . magit-status)
           ("C-x M-g" . magit-dispatch-popup)
           ("C-c M-g" . magit-file-popup))
