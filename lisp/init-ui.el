@@ -8,6 +8,11 @@
   (require 'init-const)
   (require 'init-custom))
 
+;; Font
+(defun font-installed-p (font-name)
+    "Check if font with FONT-NAME is available."
+      (find-font (font-spec :name font-name)))
+
 (when sys/mac-x-p
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
   (add-to-list 'default-frame-alist '(ns-appearance . dark))
