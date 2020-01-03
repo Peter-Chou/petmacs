@@ -15,6 +15,8 @@
          ([remap xref-find-definitions] . godef-jump)
          ("C-c R" . go-remove-unused-imports)
          ("<f1>" . godoc-at-point))
+  :hook (go-mode . (lambda ()
+			 (lsp-deferred)))
   :config
   ;; Env vars
   (with-eval-after-load 'exec-path-from-shell
