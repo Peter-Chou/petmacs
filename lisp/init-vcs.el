@@ -217,10 +217,15 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 (use-package pcre2el) ;; magit-todos dependency
 
 ;; Show TODOs in magit
-(when (and emacs/>=25.2p (not sys/win32p))
+(when emacs/>=25.2p
   (use-package magit-todos
     :init
     (setq magit-todos-nice (if (executable-find "nice") t nil))
+    (setq magit-todos-section-map
+	  (let ((map (make-sparse-keymap)))
+	    (define-key map "j" #'evil-next-visual-line)
+	    (define-key map "k" #'evil-previous-visual-line)
+	    map))
     (magit-todos-mode 1)))
 
 ;; (use-package magit-todos
