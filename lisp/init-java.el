@@ -9,9 +9,7 @@
   (require 'init-custom))
 
 (use-package lsp-java
-  :hook (java-mode . (lambda ()
-		       (require 'lsp-java)
-		       (lsp-deferred))))
+     :hook (java-mode . (lambda () (require 'lsp-java))))
 
 (use-package mvn
   :preface

@@ -57,10 +57,11 @@
 (if (member 'python-mode petmacs-lsp-active-modes)
     (progn
       (use-package lsp-python-ms
-	:hook (python-mode . (lambda ()
-			       (require 'lsp-python-ms)
-			       (lsp-deferred)
-			       (flycheck-mode -1)))
+	:hook (python-mode . (lambda () (require 'lsp-python-ms)))
+	;; :hook (python-mode . (lambda ()
+	;; 		       (require 'lsp-python-ms)
+	;; 		       (lsp-deferred)
+	;; 		       (flycheck-mode -1)))
 	:init
 	(setq lsp-python-ms-nupkg-channel "stable")))
   (progn
