@@ -35,8 +35,12 @@
 	company-echo-delay (if (display-graphic-p) nil 0)
 	company-minimum-prefix-length 2
 	company-require-match nil
-	company-dabbrev-ignore-case nil
-	company-dabbrev-downcase nil)
+        company-dabbrev-ignore-case nil
+        company-dabbrev-downcase nil
+        company-global-modes '(not erc-mode message-mode help-mode gud-mode eshell-mode shell-mode)
+        company-backends '(company-capf)
+        company-frontends '(company-pseudo-tooltip-frontend
+                            company-echo-metadata-frontend))
   (define-key emacs-lisp-mode-map (kbd "C-M-i") 'company-complete))
 
 ;; Better sorting and filtering
