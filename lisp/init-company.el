@@ -38,8 +38,12 @@
         company-dabbrev-ignore-case nil
         company-dabbrev-downcase nil
         company-global-modes '(not erc-mode message-mode help-mode gud-mode eshell-mode shell-mode)
-        company-backends '(company-capf)
-        company-frontends '(company-pseudo-tooltip-frontend
+	company-backends '((company-files          ; files & directory
+			    company-keywords       ; keywords
+			    company-capf
+			    company-yasnippet)
+			   (company-abbrev company-dabbrev))
+company-frontends '(company-pseudo-tooltip-frontend
                             company-echo-metadata-frontend))
   (define-key emacs-lisp-mode-map (kbd "C-M-i") 'company-complete))
 
