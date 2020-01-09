@@ -111,7 +111,7 @@
   (setq swiper-action-recenter t)
 
   (setq counsel-find-file-at-point t
-	counsel-yank-pop-separator "\n────────\n")
+        counsel-yank-pop-separator "\n────────\n")
 
   ;; Use the faster search tool: ripgrep (`rg')
   (when (executable-find "rg")
@@ -122,6 +122,22 @@
             "gls -a | grep -i -E '%s' | tr '\\n' '\\0' | xargs -0 gls -d --group-directories-first")))
   :config
   (with-no-warnings
+    ;; Display an arrow with the selected item
+    (defun my-ivy-format-function-arrow (cands)
+      "Transform CANDS into a string for minibuffer."
+      (ivy--format-function-generic
+       (lambda (str)
+         (concat (if (display-graphic-p)
+                     (all-the-icons-octicon "chevron-right" :height 0.8 :v-adjust -0.05)
+                   ">")
+                 (propertize " " 'display `(space :align-to 2))
+                 (ivy--add-face str 'ivy-current-match)))
+       (lambda (str)
+         (concat (propertize " " 'display `(space :align-to 2)) str))
+       cands
+       "\n"))
+    ;; (setf (alist-get 't ivy-format-functions-alist) #'my-ivy-format-function-arrow)
+
     ;; Pre-fill search keywords
     ;; @see https://www.reddit.com/r/emacs/comments/b7g1px/withemacs_execute_commands_like_marty_mcfly/
     (defvar my-ivy-fly-commands
@@ -306,7 +322,8 @@ This is for use in `ivy-re-builders-alist'."
     (ivy-prescient-mode 1))
 
   ;; Additional key bindings for Ivy
-  (use-package ivy-hydra)
+  (use-package ivy-hydra
+    :init (setq ivy-read-action-function #'ivy-hydra-read-action))
 
   ;; Ivy integration for Projectile
   (use-package counsel-projectile
@@ -357,7 +374,7 @@ This is for use in `ivy-re-builders-alist'."
   ;; Tramp ivy interface
   (use-package counsel-tramp
     :bind (:map counsel-mode-map
-                ("C-c c v" . counsel-tramp)))
+                ("C-c c T" . counsel-tramp)))
 
   ;; Support pinyin in Ivy
   ;; Input prefix ':' to match pinyin
