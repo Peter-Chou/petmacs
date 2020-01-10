@@ -107,7 +107,7 @@
 (setq-default fill-column 80)
 (use-package simple
   :ensure nil
-  :hook (window-setup . size-indication-mode)
+  :hook (after-init . size-indication-mode)
   :init (setq column-number-mode t
               line-number-mode t
               kill-whole-line t              ; Kill line including '\n'
