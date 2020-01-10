@@ -23,9 +23,8 @@
                 (setcdr (assq 'ns-appearance default-frame-alist) bg)))))
 
 ;; Menu/Tool/Scroll bars
-(unless emacs/>=27p        ; Move to early init-file in 27
-  (unless sys/mac-x-p
-    (push '(menu-bar-lines . 0) default-frame-alist))
+(unless emacs/>=27p
+  (push '(menu-bar-lines . 0) default-frame-alist)
   (push '(tool-bar-lines . 0) default-frame-alist)
   (push '(vertical-scroll-bars) default-frame-alist))
 
@@ -158,9 +157,10 @@
   (setq
    find-file-visit-truename t  ; display the real names for symlink files
    ;; doom-modeline-height 21
-   doom-modeline-lsp nil
+   doom-modeline-lsp t
    doom-modeline-persp-name nil
    doom-modeline-github nil
+   doom-modeline-minor-modes t
    doom-modeline-mu4e nil
    doom-modeline-buffer-file-name-style 'relative-to-project
    ;; doom-modeline-buffer-file-name-style 'file-name
@@ -194,6 +194,11 @@
   (defun setup-custom-doom-modeline ()
     (doom-modeline-set-modeline 'my-modeline-layout 'default))
   )
+
+;; A minor-mode menu for mode-line
+(when emacs/>=25.2p
+  (use-package minions
+    :hook (doom-modeline-mode . minions-mode)))
 
 (use-package doom-themes
   :defer nil
