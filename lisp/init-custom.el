@@ -12,8 +12,7 @@
   "Set network proxy.")
 
 (defvar petmacs-themes-list '(
-			      ;; doom-dracula
-			      doom-gruvbox
+			      doom-dracula
 			      doom-solarized-light
 			      ;; doom-one-light
 			      ;; chocolate
