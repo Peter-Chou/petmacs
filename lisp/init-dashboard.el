@@ -10,10 +10,6 @@
   :defines (persp-save-dir persp-special-last-buffer)
   :functions (all-the-icons-faicon
 	      all-the-icons-material
-	      open-custom-file
-	      persp-get-buffer-or-null
-	      persp-load-state-from-file
-	      persp-switch-to-buffer
 	      winner-undo
 	      widget-forward)
   :hook ((after-init . dashboard-setup-startup-hook)

@@ -322,21 +322,15 @@
                       (set-package-archives centaur-package-archives))
          "tuna" :toggle (eq centaur-package-archives 'tuna)))))))
 
-;; Treat undo history as a tree
-;; FIXME:  keep the diff window
-(make-variable-buffer-local 'undo-tree-visualizer-diff)
-(use-package undo-tree
-  :diminish
-  :defines recentf-exclude
-  :hook (after-init . global-undo-tree-mode)
-  :init (setq undo-tree-visualizer-timestamps t
-              undo-tree-visualizer-diff t
-              undo-tree-enable-undo-in-region nil
-              undo-tree-auto-save-history nil
-              undo-tree-history-directory-alist
-              `(("." . ,(locate-user-emacs-file "undo-tree-hist/"))))
-  :config (dolist (dir undo-tree-history-directory-alist)
-            (push (expand-file-name (cdr dir)) recentf-exclude)))
+;; Undo/Redo
+(use-package undo-fu
+  :bind (([remap undo] . undo-fu-only-undo)
+         ([remap undo-only] . undo-fu-only-undo)
+         ("C-?" . undo-fu-only-redo)
+         ("M-_" . undo-fu-only-redo)))
+
+;; Goto last change
+(use-package goto-last-change)
 
 ;; Handling capitalized subwords in a nomenclature
 (use-package subword

@@ -151,7 +151,7 @@ Will work on both org-mode and any mode that accepts plain html."
 :init (setq org-fancy-priorities-list
 	    (if (char-displayable-p ?■)
 		'("■" "■" "■" "■")
-		'("HIGH" "MIDIUM" "LOW" "OPTIONAL"))))
+		'("HIGH" "MEDIUM" "LOW" "OPTIONAL"))))
 
 (use-package toc-org
   :hook (org-mode . toc-org-enable)
