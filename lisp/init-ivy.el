@@ -358,7 +358,8 @@ This is for use in `ivy-re-builders-alist'."
   (use-package flyspell-correct-ivy
     :after flyspell
     :bind (:map flyspell-mode-map
-                ([remap flyspell-correct-word-before-point] . flyspell-correct-previous-word-generic)))
+           ([remap flyspell-correct-word-before-point] . flyspell-correct-wrapper))
+    :init (setq flyspell-correct-interface #'flyspell-correct-ivy))
 
   ;; Quick launch apps
   (cond
@@ -390,8 +391,9 @@ This is for use in `ivy-re-builders-alist'."
       (defun ivy--regex-pinyin (str)
         "The regex builder wrapper to support pinyin."
         (or (pinyin-to-utf8 str)
-            (ivy-prescient-non-fuzzy str)
-            (ivy--regex-plus str)))
+	    (and (fboundp 'ivy-prescient-non-fuzzy)
+		 (ivy-prescient-non-fuzzy str))
+	    (ivy--regex-plus str)))
 
       (defun my-pinyinlib-build-regexp-string (str)
         "Build a pinyin regexp sequence from STR."
