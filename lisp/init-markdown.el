@@ -9,47 +9,53 @@
   (require 'init-custom))
 
 (use-package markdown-mode
-  ;; markdown linting: npm i -g markdownlint-cli
-  :preface
-  ;; add Typora executable into $PATH
-  (defun petmacs/open-markdown-in-typora ()
-    (interactive)
-    (call-process-shell-command  (format "Typora %s &" (buffer-file-name)) nil 0))
+  :hook ((markdown-mode . auto-fill-mode))
+  :mode (("README\\.md\\'" . gfm-mode))
+  :init
+  (setq markdown-enable-wiki-links t
+        markdown-italic-underscore t
+        markdown-asymmetric-header t
+        markdown-make-gfm-checkboxes-buttons t
+        markdown-gfm-uppercase-checkbox t
+        markdown-fontify-code-blocks-natively t
+        markdown-enable-math t
 
-  ;; stolen from http://stackoverflow.com/a/26297700
-  ;; makes markdown tables saner via orgtbl-mode
-  (defun petmacs//cleanup-org-tables ()
-    (require 'org-table)
-    (save-excursion
-      (goto-char (point-min))
-      (while (search-forward "-+-" nil t) (replace-match "-|-"))))
-
-  (defun petmacs//cleanup-org-tables-on-save ()
-    (add-hook 'before-save-hook 'petmacs//cleanup-org-tables nil 'local))
-  :mode
-  (("\\.m[k]d" . markdown-mode)
-   ("\\.mdk" . markdown-mode))
-  :hook ((markdown-mode . orgtbl-mode)
-	 (markdown-mode . petmacs//cleanup-org-tables-on-save))
+        markdown-content-type "application/xhtml+xml"
+        markdown-css-paths '("https://cdn.jsdelivr.net/npm/github-markdown-css/github-markdown.min.css"
+                             "https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/github.min.css")
+        markdown-xhtml-header-content "
+<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+<style>
+body {
+  box-sizing: border-box;
+  max-width: 740px;
+  width: 100%;
+  margin: 40px auto;
+  padding: 0 10px;
+}
+</style>
+<script src='https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/highlight.min.js'></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  document.body.classList.add('markdown-body');
+  document.querySelectorAll('pre[lang] > code').forEach((code) => {
+    code.classList.add(code.parentElement.lang);
+    hljs.highlightBlock(code);
+  });
+});
+</script>
+")
   :config
-  (dolist (s '(normal insert))
-    (evil-define-key s markdown-mode-map
-      (kbd "M-h") 'markdown-promote
-      (kbd "M-j") 'markdown-move-down
-      (kbd "M-k") 'markdown-move-up
-      (kbd "M-l") 'markdown-demote))
-  (when sys/win32p
-    (let ((petmacs--typora"C:/Program Files/Typora/Typora.exe"))
-      (if (file-exists-p petmacs--typora)
-          (setq markdown-open-command petmacs--typora)))))
+  ;; Preview via `grip'
+  ;; Install: pip install grip
+  (use-package grip-mode
+    :bind (:map markdown-mode-command-map
+           ("g" . grip-mode)))
 
-;; install nodejs
-;; use taobao mirror:
-;; $ npm config set registry https://registry.npm.taobao.org
-;; $ npm install -g vmd
-(use-package vmd-mode)
-
-(use-package markdown-toc)
+  ;; Table of contents
+  (use-package markdown-toc
+    :bind (:map markdown-mode-command-map
+           ("r" . markdown-toc-generate-or-refresh-toc))))
 
 (provide 'init-markdown)
 

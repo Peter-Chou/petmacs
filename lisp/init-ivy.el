@@ -195,15 +195,53 @@
               (lambda ()
                 (remove-hook 'pre-command-hook 'my-ivy-fly-back-to-present t)))
 
+    ;;
     ;; Improve search experience of `swiper' and `counsel'
+    ;;
+    (defun my-ivy-switch-to-swiper (&rest _)
+      "Switch to `swiper' with the current input."
+      (swiper ivy-text))
+
+    (defun my-ivy-switch-to-swiper-isearch (&rest _)
+      "Switch to `swiper-isearch' with the current input."
+      (swiper-isearch ivy-text))
+
+    (defun my-ivy-switch-to-swiper-all (&rest _)
+      "Switch to `swiper-all' with the current input."
+      (swiper-all ivy-text))
+
+    (defun my-ivy-switch-to-rg-dwim (&rest _)
+      "Switch to `rg-dwim' with the current input."
+      (rg-dwim default-directory))
+
+    (defun my-ivy-switch-to-counsel-rg (&rest _)
+      "Switch to `counsel-rg' with the current input."
+      (counsel-rg ivy-text default-directory))
+
+    (defun my-ivy-switch-to-counsel-git-grep (&rest _)
+      "Switch to `counsel-git-grep' with the current input."
+      (counsel-git-grep ivy-text default-directory))
+
+    (defun my-ivy-switch-to-counsel-find-file (&rest _)
+      "Switch to `counsel-find-file' with the current input."
+      (counsel-find-file ivy-text))
+
+    (defun my-ivy-switch-to-counsel-fzf (&rest _)
+      "Switch to `counsel-fzf' with the current input."
+      (counsel-fzf ivy-text default-directory))
+
+    (defun my-ivy-switch-to-counsel-git (&rest _)
+      "Switch to `counsel-git' with the current input."
+      (counsel-git ivy-text))
+
     ;; @see https://emacs-china.org/t/swiper-swiper-isearch/9007/12
     (defun my-swiper-toggle-counsel-rg ()
-      "Toggle `counsel-rg' and `swiper-isearch' with the current input."
+      "Toggle `counsel-rg' and `swiper'/`swiper-isearch' with the current input."
       (interactive)
       (ivy-quit-and-run
-        (if (eq (ivy-state-caller ivy-last) 'swiper-isearch)
-            (counsel-rg ivy-text default-directory)
-          (swiper-isearch ivy-text))))
+        (if (memq (ivy-state-caller ivy-last) '(swiper swiper-isearch))
+            (my-ivy-switch-to-counsel-rg)
+          (my-ivy-switch-to-swiper-isearch))))
     (bind-key "<C-return>" #'my-swiper-toggle-counsel-rg swiper-map)
     (bind-key "<C-return>" #'my-swiper-toggle-counsel-rg counsel-ag-map)
 
@@ -232,44 +270,74 @@
         (counsel-fzf (or ivy-text "") default-directory)))
     (bind-key "<C-return>" #'my-counsel-find-file-toggle-fzf counsel-find-file-map)
 
-    ;; Prettify `counsel-imenu'
-    (defun my-counsel-imenu-get-candidates-from (alist &optional prefix)
-      "Create a list of (key . value) from ALIST.
-PREFIX is used to create the key."
-      (cl-mapcan
-       (lambda (elm)
-         (if (imenu--subalist-p elm)
-             (counsel-imenu-get-candidates-from
-              (cl-loop for (e . v) in (cdr elm) collect
-                       (cons e (if (integerp v) (copy-marker v) v)))
-              ;; pass the prefix to next recursive call
-              (concat prefix (if prefix ".") (car elm)))
-           (let ((key (concat
-                       (when prefix
-                         (if (display-graphic-p)
-                             (progn
-                               (pcase prefix
-                                 ("Packages"
-                                  (setq prefix (all-the-icons-faicon "archive" :height 0.9 :v-adjust -0.05 :face 'all-the-icons-silver)))
-                                 ((or "Types" "Type")
-                                  (setq prefix (all-the-icons-faicon "wrench" :height 0.9 :v-adjust -0.05)))
-                                 ((or "Functions" "Function")
-                                  (setq prefix (all-the-icons-faicon "cube" :height 0.95 :v-adjust -0.05 :face 'all-the-icons-purple)))
-                                 ((or "Variables" "Variable")
-                                  (setq prefix (all-the-icons-octicon "tag" :height 0.95 :v-adjust 0 :face 'all-the-icons-lblue)))
-                                 ("Class"
-                                  (setq prefix (all-the-icons-material "settings_input_component" :height 0.9 :v-adjust -0.15 :face 'all-the-icons-orange))))
-                               (concat prefix "\t"))
-                           (concat
-                            (propertize prefix 'face 'ivy-grep-info)
-                            ": ")))
-                       (car elm))))
-             (list (cons key
-                         (cons key (if (overlayp (cdr elm))
-                                       (overlay-start (cdr elm))
-                                     (cdr elm))))))))
-       alist))
-    (advice-add #'counsel-imenu-get-candidates-from :override #'my-counsel-imenu-get-candidates-from)
+    (defun my-swiper-toggle-rg-dwim ()
+      "Toggle `rg-dwim' with the current input."
+      (interactive)
+      (ivy-quit-and-run (my-ivy-switch-to-rg-dwim)))
+    (bind-key "<M-return>" #'my-swiper-toggle-rg-dwim swiper-map)
+    (bind-key "<M-return>" #'my-swiper-toggle-rg-dwim counsel-ag-map)
+
+    (defun my-swiper-toggle-swiper-isearch ()
+      "Toggle `swiper' and `swiper-isearch' with the current input."
+      (interactive)
+      (ivy-quit-and-run
+        (if (eq (ivy-state-caller ivy-last) 'swiper-isearch)
+            (my-ivy-switch-to-swiper)
+          (my-ivy-switch-to-swiper-isearch))))
+    (bind-key "<s-return>" #'my-swiper-toggle-swiper-isearch swiper-map)
+
+    ;; More actions
+    (ivy-add-actions
+     'swiper-isearch
+     '(("r" my-ivy-switch-to-counsel-rg "rg")
+       ("d" my-ivy-switch-to-rg-dwim "rg dwim")
+       ("s" my-ivy-switch-to-swiper "swiper")
+       ("a" my-ivy-switch-to-swiper-all "swiper all")))
+
+    (ivy-add-actions
+     'swiper
+     '(("r" my-ivy-switch-to-counsel-rg "rg")
+       ("d" my-ivy-switch-to-rg-dwim "rg dwim")
+       ("s" my-ivy-switch-to-swiper-isearch "swiper isearch")
+       ("a" my-ivy-switch-to-swiper-all "swiper all")))
+
+    (ivy-add-actions
+     'swiper-all
+     '(("g" my-ivy-switch-to-counsel-git-grep "git grep")
+       ("r" my-ivy-switch-to-counsel-rg "rg")
+       ("d" my-ivy-switch-to-rg-dwim "rg dwim")
+       ("s" my-swiper-toggle-swiper-isearch "swiper isearch")
+       ("S" my-ivy-switch-to-swiper "swiper")))
+
+    (ivy-add-actions
+     'counsel-rg
+     '(("s" my-ivy-switch-to-swiper-isearch "swiper isearch")
+       ("S" my-ivy-switch-to-swiper "swiper")
+       ("a" my-ivy-switch-to-swiper-all "swiper all")
+       ("d" my-ivy-switch-to-rg-dwim "rg dwim")))
+
+    (ivy-add-actions
+     'counsel-git-grep
+     '(("s" my-ivy-switch-to-swiper-isearch "swiper isearch")
+       ("S" my-ivy-switch-to-swiper "swiper")
+       ("r" my-ivy-switch-to-rg-dwim "rg")
+       ("d" my-ivy-switch-to-rg-dwim "rg dwim")
+       ("a" my-ivy-switch-to-swiper-all "swiper all")))
+
+    (ivy-add-actions
+     'counsel-find-file
+     '(("g" my-ivy-switch-to-counsel-git "git")
+       ("z" my-ivy-switch-to-counsel-fzf "fzf")))
+
+    (ivy-add-actions
+     'counsel-git
+     '(("f" my-ivy-switch-to-counsel-find-file "find file")
+       ("z" my-ivy-switch-to-counsel-fzf "fzf")))
+
+    (ivy-add-actions
+     'counsel-fzf
+     '(("f" my-ivy-switch-to-counsel-find-file "find file")
+       ("g" my-ivy-switch-to-counsel-git "git")))
 
     ;; Integration with `projectile'
     (with-eval-after-load 'projectile
@@ -330,16 +398,8 @@ This is for use in `ivy-re-builders-alist'."
 
   ;; Ivy integration for Projectile
   (use-package counsel-projectile
-    :init
-    (setq counsel-projectile-grep-initial-input '(ivy-thing-at-point))
-    (counsel-projectile-mode 1)
-    :config
-    ;; open dired when switch into one project
-    (counsel-projectile-modify-action
-     'counsel-projectile-switch-project-action
-     '((add ("." dired
-             "open ‘dired’ at the root of the project")
-            1))))
+    :hook (counsel-mode . counsel-projectile-mode)
+    :init (setq counsel-projectile-grep-initial-input '(ivy-thing-at-point)))
 
   ;; Integrate yasnippet
   (use-package ivy-yasnippet
@@ -429,6 +489,7 @@ This is for use in `ivy-re-builders-alist'."
              (setf (alist-get key ivy-re-builders-alist)
                    #'ivy--regex-pinyin))))
        ivy-re-builders-alist))))
+
 
 ;; More friendly display transformer for Ivy
 (use-package ivy-rich
@@ -545,6 +606,35 @@ This is for use in `ivy-re-builders-alist'."
       "Display the process icon in `ivy-rich'."
       (when (display-graphic-p)
         (all-the-icons-faicon "bolt" :height 1.0 :v-adjust -0.05 :face 'all-the-icons-lblue)))
+
+    (defun ivy-rich-imenu-icon (candidate)
+      "Display the imenu icon in `ivy-rich'."
+      (when (display-graphic-p)
+        (let ((case-fold-search nil))
+          (cond
+           ((string-match-p "Type Parameters?[:)]" candidate)
+            (all-the-icons-faicon "arrows" :height 0.85 :v-adjust -0.05))
+           ((string-match-p "\\(Variables?\\)\\|\\(Fields?\\)\\|\\(Parameters?\\)[:)]" candidate)
+            (all-the-icons-octicon "tag" :height 0.95 :v-adjust 0 :face 'all-the-icons-lblue))
+           ((string-match-p "Constants?[:)]" candidate)
+            (all-the-icons-faicon "square-o" :height 0.95 :v-adjust -0.15))
+           ((string-match-p "Enum\\(erations?\\)?[:)]" candidate)
+            (all-the-icons-material "storage" :height 0.95 :v-adjust -0.2 :face 'all-the-icons-orange))
+           ((string-match-p "References?[:)]" candidate)
+            (all-the-icons-material "collections_bookmark" :height 0.95 :v-adjust -0.2))
+           ((string-match-p "\\(Types?\\)\\|\\(Property\\)[:)]" candidate)
+            (all-the-icons-faicon "wrench" :height 0.9 :v-adjust -0.05))
+           ((string-match-p "\\(Functions?\\)\\|\\(Methods?\\)\\|\\(Constructors?\\)[:)]" candidate)
+            (all-the-icons-faicon "cube" :height 0.95 :v-adjust -0.05 :face 'all-the-icons-purple))
+           ((string-match-p "\\(Class\\)\\|\\(Structs?\\)[:)]" candidate)
+            (all-the-icons-material "settings_input_component" :height 0.9 :v-adjust -0.15 :face 'all-the-icons-orange))
+           ((string-match-p "Interfaces?[:)]" candidate)
+            (all-the-icons-material "share" :height 0.95 :v-adjust -0.2 :face 'all-the-icons-lblue))
+           ((string-match-p "Modules?[:)]" candidate)
+            (all-the-icons-material "view_module" :height 0.95 :v-adjust -0.15 :face 'all-the-icons-lblue))
+           ((string-match-p "Packages?[:)]" candidate)
+            (all-the-icons-faicon "archive" :height 0.9 :v-adjust -0.05 :face 'all-the-icons-silver))
+           (t (all-the-icons-faicon "question-circle-o" :height 0.9 :v-adjust -0.05 :face 'all-the-icons-lilver))))))
 
     (when (display-graphic-p)
       (defun my-ivy-rich-bookmark-type (candidate)
@@ -782,6 +872,11 @@ This is for use in `ivy-re-builders-alist'."
           counsel-minor
           (:columns
            ((ivy-rich-mode-icon)
+            (ivy-rich-candidate))
+           :delimiter "\t")
+          counsel-imenu
+          (:columns
+           ((ivy-rich-imenu-icon)
             (ivy-rich-candidate))
            :delimiter "\t")
           treemacs-projectile
