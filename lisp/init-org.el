@@ -75,6 +75,8 @@ Will work on both org-mode and any mode that accepts plain html."
 	;; `helm-org-headings-max-depth'.
 	org-imenu-depth 8)
 
+  ;; Add gfm/md backends
+  (use-package ox-gfm)
   (add-to-list 'org-export-backends 'md)
 
   (with-eval-after-load 'counsel
