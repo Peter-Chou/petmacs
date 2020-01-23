@@ -104,10 +104,10 @@
   (define-key iedit-occurrence-keymap-default [tab] 'iedit-toggle-selection))
 
 (use-package bind-map)
-(use-package evil-evilified-state
-  :quelpa (evil-evilified-state :fetcher github
-  				:repo "Peter-Chou/evil-evilified-state")
-  :demand t)
+;; (use-package evil-evilified-state
+;;   :quelpa (evil-evilified-state :fetcher github
+;;   				:repo "Peter-Chou/evil-evilified-state")
+  ;; :demand t)
 
 (provide 'init-evil)
 
