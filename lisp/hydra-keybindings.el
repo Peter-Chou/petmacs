@@ -20,19 +20,26 @@
    (
     ("a" global-a/body "applications")
     ("T" global-T/body "theme")
+    ("g" global-g/body "git")
+    ("i" global-i/body "insert")
+    ("w" global-w/body "windows")
+    )
+   ""
+   (
     ("t" global-t/body "toggles")
     ("q" global-q/body "quit")
     ("f" global-f/body "file")
     ("F" global-F/body "frame")
-    ("g" global-g/body "git")
-    ("i" global-i/body "insert")
+    ("n" global-n/body "narrow / widen")
+    )
+   ""
+   (
     ("p" global-p/body "project")
     ("j" global-j/body "jumps")
     ("e" global-e/body "errors")
     ("b" global-b/body "buffers")
-    ("w" global-w/body "windows")
-    ("n" global-n/body "narrow / widen")
-    )))
+    )
+   ))
 
 (pretty-hydra-define global-n (:exit t :quit-key "q" )
   ("narrow / widen"
@@ -47,14 +54,34 @@
     ("d" delete-window "delete window")
     ("D" ace-delete-window "ace delete window")
 
-    ("p" global-wp/body "pop out buffer")
+    ("." global-wdot/body "window management")
     )))
 
-(pretty-hydra-define global-wp (:exit t :quit-key "q" )
-  ("pop out buffers"
-   (("m" petmacs/shackle-popup-message-buffer "pop out message buffer")
-    ("c" petmacs/shackle-popup-compilation-buffer "pop out compilation buffer")
-    )))
+(pretty-hydra-define global-wdot (:quit-key "q")
+   ("Actions"
+    (("TAB" other-window "switch")
+     ("x" ace-delete-window "delete" :exit t)
+     ("m" ace-delete-other-windows "maximize" :exit t)
+     ("s" ace-swap-window "swap" :exit t)
+     ("a" ace-select-window "select" :exit t)
+     ("f" toggle-frame-fullscreen "fullscreen" :exit t))
+    "Resize"
+    (("h" shrink-window-horizontally "←")
+     ("j" enlarge-window "↓")
+     ("k" shrink-window "↑")
+     ("l" enlarge-window-horizontally "→")
+     ("n" balance-windows "balance"))
+    "Split"
+    (("b" split-window-right "horizontally")
+     ("v" split-window-below "vertically"))
+    "Zoom"
+    (("+" text-scale-increase "in")
+     ("=" text-scale-increase "in")
+     ("-" text-scale-decrease "out")
+     ("0" (text-scale-increase 0) "reset"))
+    "Appearance"
+    (("F" set-frame-font "font")
+     ("T" petmacs/select-theme "theme"))))
 
 (pretty-hydra-define global-b (:exit t :quit-key "q" )
   ("buffers"
@@ -71,6 +98,15 @@
     ("j" ace-window "jump to window")
     ("i" imenu-list-smart-toggle "open buffer's imenu list")
     ("B" ibuffer "open Ibuffer")
+
+    ("p" global-bp/body "pop out buffers")
+    )))
+
+
+(pretty-hydra-define global-bp (:exit t :quit-key "q" )
+  ("pop out buffers"
+   (("m" petmacs/shackle-popup-message-buffer "pop out message buffer")
+    ("c" petmacs/shackle-popup-compilation-buffer "pop out compilation buffer")
     )))
 
 (pretty-hydra-define global-e (:exit t :quit-key "q" )
@@ -250,11 +286,13 @@
     ("-" centered-cursor-mode "center cursor")
     ("e" flycheck-mode "toggle flycheck mode")
     ("f" focus-mode "toggle focus mode")
+    ("p" proxy-http-toggle "toggle proxy 127.0.0.1:1080")
     )))
 
 (pretty-hydra-define global-Tf (:quit-key "q" )
   ("font"
    (("=" default-text-scale-decrease "font +")
+    ("+" default-text-scale-decrease "font +")
     ("-" default-text-scale-increase "font -")
     )))
 
