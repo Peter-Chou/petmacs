@@ -355,22 +355,35 @@
 
 (major-mode-hydra-define python-mode
   (:title "Python Mode")
-  ("Python"
-   (("c" petmacs-python-c/body "compile")
-
+  ("Compile"
+   (("c" petmacs-python-compile/body "compile")
     ;; lsp related keybindings
     ("g" petmacs-lsp-goto/body "lsp goto")
     ("r" petmacs-lsp-refactor/body "lsp refactor")
     ("b" petmacs-lsp-backend/body "lsp backend")
     ("w" petmacs-lsp-workspace/body "lsp workspace")
     ("d" dap-hydra "dap debug")
+
+    ;;; others
+    ("v" petmacs-python-venv/body "virtual environment")
     )))
 
-(pretty-hydra-define petmacs-python-c (:exit t :quit-key "q")
+;; (major-mode-hydra-define+ python-mode (:exit t :quit-key "q")
+;;   ("lsp refactor"
+;;    (("ri" py-isort-buffer "sort import expression")
+;;     )))
+
+(pretty-hydra-define petmacs-python-compile (:exit t :quit-key "q")
   ("compile"
-   (("c" petmacs/python-execute-file "execute file")
+   (("w" pyvenv-workon "list virtual environments")
+    ("d" pyvenv-deactivate "deactivate virtual environment")
     )))
 
+(pretty-hydra-define petmacs-python-venv (:exit t :quit-key "q")
+  ("virtual environment"
+   (("pa" pipenv-activate "execute file")
+    ("k" petmacs/quit-subjob "quit execution")
+    )))
 
 ;; (major-mode-hydra-define+ python-mode (:exit t :quit-key "q")
 ;;   ("Python"
