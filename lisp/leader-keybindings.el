@@ -30,48 +30,50 @@
   "d"   'xref-pop-marker-stack
   "TAB" 'petmacs/alternate-buffer)
 
-;; leader-T Top family 
-(petmacs//setup-default-key-name "T" "Top")
+;; leader-T Theme family 
+(petmacs//setup-default-key-name "T" "Theme")
 (evil-leader/set-key
   "Ts"  'petmacs/select-theme
-  "Tn"  'petmacs/cycle-theme
-  "TF"  'toggle-frame-fullscreen
-  "TM"  'maximize-window)
+  "Tn"  'petmacs/cycle-theme)
 
 ;; leader-a application family
 (petmacs//setup-default-key-name "a" "application")
 (petmacs//setup-default-key-name "ao" "org")
 (petmacs//setup-default-key-name "aC" "Clock")
 (evil-leader/set-key
-  ;; "ad" 'deer
+  "ad" 'deer
   "ap"  'list-processes
   "aP"  'proced
-  "au"  'undo-tree-visualize
-  ;; "ar" 'ranger
+  "ar" 'ranger
   "ak"  'paradox-list-packages
-  "ao#" 'org-agenda-list-stuck-projects
+  "au" 'paradox-upgrade-packages
   "ao/" 'org-occur-in-agenda-files
+
+  ;;; org
   "aoa" 'org-agenda-list
   "aoc" 'org-capture
   "aoe" 'org-store-agenda-views
   "aop" 'org-projectile/capture
-  "aofi" 'org-feed-goto-inbox
-  "aofu" 'org-feed-update-all
-  "aoCc" 'org-clock-cancel
-  "aoCg" 'org-clock-goto
-  "aoCi" 'org-clock-in
-  "aoCI" 'org-clock-in-last
-  "aoCj" 'petmacs/org-clock-jump-to-current-clock
-  "aoCo" 'org-clock-out
-  "aoCr" 'org-resolve-clocks
+  "aoo" 'org-agenda
   "aol" 'org-store-link
   "aom" 'org-tags-view
-  "aoo" 'org-agenda
   "aos" 'org-search-view
-  "aot" 'org-todo-list)
-(if sys/win32p
-    (evil-leader/set-key
-      "am" 'petmacs/open-mintty-terminal-here))
+  "aot" 'org-todo-list
+
+  ;; ;;; org feed
+  ;; "aofi" 'org-feed-goto-inbox
+  ;; "aofu" 'org-feed-update-all
+
+
+  ;; ;;; org clock
+  ;; "aoCc" 'org-clock-cancel
+  ;; "aoCg" 'org-clock-goto
+  ;; "aoCi" 'org-clock-in
+  ;; "aoCI" 'org-clock-in-last
+  ;; "aoCj" 'petmacs/org-clock-jump-to-current-clock
+  ;; "aoCo" 'org-clock-out
+  ;; "aoCr" 'org-resolve-clocks
+  )
 
 ;; leader-q family
 (petmacs//setup-default-key-name "q" "quit")
@@ -80,17 +82,6 @@
   "qQ" 'kill-emacs
   "qh" 'suspend-frame
   "qR" 'restart-emacs)
-
-;; leader-h family
-(petmacs//setup-default-key-name "h" "helps")
-(evil-leader/set-key
-  "hdf" 'counsel-describe-function
-  "hdv" 'counsel-describe-variable)
-
-;; leader-s search family
-(petmacs//setup-default-key-name "s" "search")
-(evil-leader/set-key
-  "se" 'evil-iedit-state/iedit-mode)
 
 ;; leader-f family
 (petmacs//setup-default-key-name "f" "files")
@@ -103,7 +94,6 @@
   "fB"  'treemacs-bookmark
   "fT"  'treemacs-find-file
   "fL"  'counsel-locate
-  ;; "fr"  'counsel-recentf
   "fr"  'counsel-buffer-or-recentf
   "fR"  'petmacs/rename-current-buffer-file
   "fs"  'save-buffer
@@ -112,11 +102,17 @@
   "fi"  'insert-file
   "fb"  'counsel-bookmark
   "fB"  'treemacs-bookmark
+
+  ;;; file local variable
   "fvd" 'add-dir-local-variable
   "fvf" 'add-file-local-variable
   "fvp" 'add-file-local-variable-prop-line
+
+  ;;; unix <-> dos
   "fCu" 'dos2unix
   "fCd" 'unix2dos
+
+  ;;; file path copy
   "fCr" 'petmacs/save-buffer-gbk-as-utf8
   "fyy" 'petmacs/copy-file-path
   "fyY" 'petmacs/projectile-copy-file-path
@@ -229,7 +225,10 @@
 (evil-leader/set-key
   "t-" 'centered-cursor-mode
   "ts" 'flycheck-mode
-  "tf" 'focus-mode)
+  "tf" 'focus-mode
+  "tF"  'toggle-frame-fullscreen
+  "tM"  'maximize-window
+  )
 
 ;; leader-w family
 (petmacs//setup-default-key-name "w" "windows")

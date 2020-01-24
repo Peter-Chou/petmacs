@@ -266,6 +266,32 @@ initialized with the current filename."
                 ;; ?\a = C-g, ?\e = Esc and C-[
                 ((memq key '(?\a ?\e)) (keyboard-quit))))))))
 
+
+(defun petmacs--projectile-file-path ()
+  "Retrieve the file path relative to project root.
+
+Returns:
+  - A string containing the file path in case of success.
+  - `nil' in case the current buffer does not visit a file."
+  (when-let (file-name (buffer-file-name))
+    (file-relative-name (file-truename file-name) (projectile-project-root))))
+
+
+(defun petmacs--directory-path ()
+  "Retrieve the directory path of the current buffer.
+
+If the buffer is not visiting a file, use the `list-buffers-directory' variable
+as a fallback to display the directory, useful in buffers like the ones created
+by `magit' and `dired'.
+
+Returns:
+  - A string containing the directory path in case of success.
+  - `nil' in case the current buffer does not have a directory."
+  (when-let (directory-name (if-let (file-name (buffer-file-name))
+                                (file-name-directory file-name)
+                              list-buffers-directory))
+    (file-truename directory-name)))
+
 (defun petmacs--file-path ()
   "Retrieve the file path of the current buffer.
 
