@@ -8,6 +8,8 @@
   (require 'init-const)
   (require 'init-custom))
 
+(use-package major-mode-hydra)
+
 
 (pretty-hydra-define global-window (:foreign-keys warn :quit-key "Q" :exit t)
   ("Shortcuts"
@@ -38,8 +40,22 @@
     ("j" global-j/body "jumps")
     ("e" global-e/body "errors")
     ("b" global-b/body "buffers")
+    ("o" global-o/body "fold code block")
+    ("m" major-mode-hydra "major mode")
     )
    ))
+
+(pretty-hydra-define global-o (:exit t :quit-key "q" )
+   ("Node"
+    ((":" origami-recursively-toggle-node "toggle recursively")
+     ("a" origami-toggle-all-nodes "toggle all")
+     ("t" origami-toggle-node "toggle current")
+     ("o" origami-show-only-node "only show current"))
+    "Actions"
+    (("u" origami-undo "undo")
+     ("d" origami-redo "redo")
+     ("r" origami-reset "reset"))
+  ))
 
 (pretty-hydra-define global-n (:exit t :quit-key "q" )
   ("narrow / widen"
@@ -296,9 +312,70 @@
     ("-" default-text-scale-increase "font -")
     )))
 
-(evil-global-set-key 'normal (kbd petmacs-evil-leader-key) 'global-window/body)
-;; (global-set-key (kbd petmacs-evil-leader-key) 'global-window/body)
+(evil-global-set-key 'normal (kbd petmacs-evil-leader-key) #'global-window/body)
+(evil-global-set-key 'normal (kbd petmacs-evil-major-leader-key) #'major-mode-hydra)
 
+;;; lsp related global keybindings map
+(pretty-hydra-define petmacs-lsp-goto (:exit t :quit-key "q")
+  ("lsp goto"
+   (("d" xref-find-definitions "jump to definition")
+    ("D" petmacs/lsp-find-references-other-window "jump to definition other window")
+    ("r" lsp-find-references "jump to reference")
+    )))
+
+(pretty-hydra-define petmacs-lsp-refactor (:exit t :quit-key "q")
+  ("lsp refactor"
+   (("r" lsp-rename "lsp rename")
+    ("f" petmacs-lsp-refactor-format/body "lsp format")
+    )))
+
+(pretty-hydra-define petmacs-lsp-refactor-format (:exit t :quit-key "q")
+  ("lsp format"
+   (("b" lsp-format-buffer "lsp format buffer")
+    ("r" lsp-format-region "lsp format region")
+    )))
+
+(pretty-hydra-define petmacs-lsp-backend (:exit t :quit-key "q")
+  ("lsp backend"
+   (("a" lsp-execute-code-action "execute code action")
+    ("d" lsp-describe-session "describe current lsp session")
+    ("r" lsp-restart-workspace "restart lsp server")
+    ("s" lsp-shutdown-workspace "shutdown lsp server")
+    ("n" lsp "start new lsp server")
+    )))
+
+(pretty-hydra-define petmacs-lsp-workspace (:exit t :quit-key "q")
+  ("lsp workspace"
+   (("s" lsp-workspace-folders-switch "switch workspace folder")
+    ("r" lsp-workspace-folders-remove "remove workspace folder")
+    ("a" lsp-workspace-folders-add "add a workspace folder")
+    )))
+
+;;; major mode keybindings
+
+(major-mode-hydra-define python-mode
+  (:title "Python Mode")
+  ("Python"
+   (("c" petmacs-python-c/body "compile")
+
+    ;; lsp related keybindings
+    ("g" petmacs-lsp-goto/body "lsp goto")
+    ("r" petmacs-lsp-refactor/body "lsp refactor")
+    ("b" petmacs-lsp-backend/body "lsp backend")
+    ("w" petmacs-lsp-workspace/body "lsp workspace")
+    ("d" dap-hydra "dap debug")
+    )))
+
+(pretty-hydra-define petmacs-python-c (:exit t :quit-key "q")
+  ("compile"
+   (("c" petmacs/python-execute-file "execute file")
+    )))
+
+
+;; (major-mode-hydra-define+ python-mode (:exit t :quit-key "q")
+;;   ("Python"
+;;    (("." petmacs/python-load-venv-file "load .env file")
+;;     )))
 
 (provide 'hydra-keybindings)
 

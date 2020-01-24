@@ -87,7 +87,7 @@
     (interactive)
     (let ((pop-up-windows t))
       (pop-to-buffer (current-buffer) t))
-    (lsp-find-references))
+    (xref-find-references))
 
   (defun petmacs/lsp-find-implementation-other-window ()
     (interactive)
