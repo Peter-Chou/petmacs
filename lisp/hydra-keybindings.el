@@ -17,7 +17,9 @@
     ("d" xref-pop-marker-stack "pop back")
     ("'" petmacs/pop-eshell "pop eshell here"))
    "global"
-   (("T" global-T/body "theme")
+   (
+    ("a" global-a/body "applications")
+    ("T" global-T/body "theme")
     ("t" global-t/body "toggles")
     ("q" global-q/body "quit")
     ("f" global-f/body "file")
@@ -26,12 +28,100 @@
     ("i" global-i/body "insert")
     ("p" global-p/body "project")
     ("j" global-j/body "jumps")
+    ("e" global-e/body "errors")
+    ("b" global-b/body "buffers")
+    ("w" global-w/body "windows")
+    ("n" global-n/body "narrow / widen")
+    )))
+
+(pretty-hydra-define global-n (:exit t :quit-key "q" )
+  ("narrow / widen"
+   (("r" narrow-to-region "narrow to region")
+    ("f" narrow-to-defun "narrow to function")
+    ("w" widen "widen narrowed")
+    )))
+
+(pretty-hydra-define global-w (:exit t :quit-key "q" )
+  ("windows"
+   (("c" olivetti-mode "center buffer")
+    ("d" delete-window "delete window")
+    ("D" ace-delete-window "ace delete window")
+
+    ("p" global-wp/body "pop out buffer")
+    )))
+
+(pretty-hydra-define global-wp (:exit t :quit-key "q" )
+  ("pop out buffers"
+   (("m" petmacs/shackle-popup-message-buffer "pop out message buffer")
+    ("c" petmacs/shackle-popup-compilation-buffer "pop out compilation buffer")
+    )))
+
+(pretty-hydra-define global-b (:exit t :quit-key "q" )
+  ("buffers"
+   (("b" ivy-switch-buffer "switch buffer")
+    ("d" kill-this-buffer "kill this buffer")
+    ("n" next-buffer "next buffer")
+    ("p" previous-buffer "previous buffer")
+    ("R" petmacs/revert-this-buffer "revert current buffer")
+    ("s" petmacs/goto-scratch-buffer "goto scratch buffer")
+    ("x" kill-buffer-and-window "kill buffer & window")
+    ("h" petmacs/goto-dashboard "go to dashboard")
+    ("m" petmacs/switch-to-minibuffer-window "go to mini buffer")
+    ("Y" petmacs/copy-whole-buffer-to-clipboard "copy current buffer to clipboard")
+    ("j" ace-window "jump to window")
+    ("i" imenu-list-smart-toggle "open buffer's imenu list")
+    ("B" ibuffer "open Ibuffer")
+    )))
+
+(pretty-hydra-define global-e (:exit t :quit-key "q" )
+  ("applications"
+   (("l" petmacs/toggle-flycheck-error-list "list errors")
+    ("n" petmacs/next-error "next error")
+    ("p" petmacs/previous-error "previous error")
+    ("x" flycheck-explain-error-at-point "explain error at point")
+    )))
+
+(pretty-hydra-define global-a (:exit t :quit-key "q" )
+  ("applications"
+   (("p" list-processes "list processes")
+    ("P" proced "process buffer")
+    ("u" paradox-upgrade-packages "upgrade packages")
+    ("w" whitespace-cleanup "cleanup whitespace")
+
+    ("o" global-ao/body "org")
+    ("b" global-ab/body "bookmarks")
+    )))
+
+
+(pretty-hydra-define global-ab (:exit t :quit-key "q" )
+  ("bookmarks"
+   (("s" bookmark-set "set bookmark")
+    ("d" bookmark-delete "delete bookmark")
+    ("r" bookmark-rename "rename bookmark")
+    ("l" bookmark-bmenu-list "list bookmark menu")
+    )))
+
+(pretty-hydra-define global-ao (:exit t :quit-key "q" )
+  ("org"
+   (("#" org-agenda-list-stuck-projects "org agenda list stuck projects")
+    ("/" org-occur-in-agenda-files "org occur in agenda files")
+    ("a" org-agenda-list "org agenda list")
+    ("c" org-capture "org capture")
+    ("e" org-store-agenda-views "org store agenda views")
+    ("p" org-projectile/capture "org project capture")
+    ("o" org-agenda "org agenda")
+    ("t" org-todo-list "org todo list")
     )))
 
 (pretty-hydra-define global-j (:exit t :quit-key "q" )
   ("jumps"
    (("i" petmacs/counsel-jump-in-buffer "counsel imenu")
     ("w" evil-avy-goto-word-or-subword-1 "jump to word first char")
+    ("d" deer "deer jump")
+    ("D" deer-jump-other-window "deer jump in other window")
+    ("l" goto-last-change "goto last change")
+    ("j" avy-goto-char-timer "goto char 1")
+    ("J" avy-goto-char-2 "goto char 2")
     )))
 
 (pretty-hydra-define global-p (:exit t :quit-key "q" )
@@ -108,9 +198,7 @@
    ("C" global-fC/body "dos <-> unix (file)")
    ("p" global-fp/body "copy path")
    ("e" global-fe/body "emacs configs")
-
     )))
-
 
 (pretty-hydra-define global-fe (:exit t :quit-key "q" )
   ("emacs configs"
@@ -156,11 +244,13 @@
 
 
 (pretty-hydra-define global-t (:exit t :quit-key "q" )
-  ("toggle"
+  ("toggles"
    (("F" toggle-frame-fullscreen "full screen")
     ("M" maximize-window "maximize window")
+    ("-" centered-cursor-mode "center cursor")
+    ("e" flycheck-mode "toggle flycheck mode")
+    ("f" focus-mode "toggle focus mode")
     )))
-
 
 (pretty-hydra-define global-Tf (:quit-key "q" )
   ("font"
@@ -168,12 +258,8 @@
     ("-" default-text-scale-increase "font -")
     )))
 
-
-
-
 (evil-global-set-key 'normal (kbd petmacs-evil-leader-key) 'global-window/body)
 ;; (global-set-key (kbd petmacs-evil-leader-key) 'global-window/body)
-
 
 
 (provide 'hydra-keybindings)

@@ -207,7 +207,7 @@
   "bb" 'ivy-switch-buffer
   "bd" 'kill-this-buffer
   "bn" 'next-buffer
-  "bp"    'previous-buffer
+  "bp" 'previous-buffer
   "bR" 'petmacs/revert-this-buffer
   "bs" 'petmacs/goto-scratch-buffer
   "bx" 'kill-buffer-and-window
@@ -241,7 +241,7 @@
   "wF"  'make-frame
   "wpm" 'petmacs/shackle-popup-message-buffer
   "wpc" 'petmacs/shackle-popup-compilation-buffer
-  "wpl" 'petamcs/shackle-popup-last-buffer
+  ;; "wpl" 'petamcs/shackle-popup-last-buffer
   )
 
 ;; leader-o family
