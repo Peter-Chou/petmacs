@@ -16,11 +16,6 @@
   (setq evil-want-C-u-scroll t)
   (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
   (setq evil-want-keybinding nil) ;; use evil-collection instead
-  (when evil-want-C-u-scroll
-    (define-key evil-insert-state-map (kbd "C-u") 'evil-scroll-up)
-    (define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up)
-    (define-key evil-visual-state-map (kbd "C-u") 'evil-scroll-up)
-    (define-key evil-motion-state-map (kbd "C-u") 'evil-scroll-up))
   :config
   (require 'evil-anzu)
   (evil-mode 1)
@@ -41,9 +36,16 @@
     ;; treat _ as word like vim
     (with-eval-after-load 'evil
       (defalias #'forward-evil-word #'forward-evil-symbol))
+
+    (when evil-want-C-u-scroll
+      (define-key evil-insert-state-map (kbd "C-u") 'evil-scroll-up)
+      (define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up)
+      (define-key evil-visual-state-map (kbd "C-u") 'evil-scroll-up)
+      (define-key evil-motion-state-map (kbd "C-u") 'evil-scroll-up))
     ;; Overload shifts so that they don't lose the selection
     (define-key evil-visual-state-map (kbd "<") 'petmacs//evil-visual-shift-left)
-    (define-key evil-visual-state-map (kbd ">") 'petmacs//evil-visual-shift-right)))
+    (define-key evil-visual-state-map (kbd ">") 'petmacs//evil-visual-shift-right)
+    ))
 
 (use-package evil-escape
   :init
