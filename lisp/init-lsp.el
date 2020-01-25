@@ -55,6 +55,11 @@
     (interactive)
     (petmacs//lsp-avy-document-symbol t))
 
+
+  (defun spacemacs/lsp-avy-goto-symbol ()
+    (interactive)
+    (petmacs//lsp-avy-document-symbol nil))
+
   (defun petmacs/lsp-ui-doc-func ()
     "Toggle the function signature in the lsp-ui-doc overlay"
     (interactive)

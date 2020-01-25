@@ -70,6 +70,7 @@
 
 (use-package centered-cursor-mode)
 
+(use-package general)
 (use-package restart-emacs)
 (use-package focus)                     ; Focus on the current region
 (use-package carbon-now-sh)

@@ -8,20 +8,10 @@
   (require 'init-const)
   (require 'init-custom))
 
-(use-package evil-leader
-  :defer nil
-  :init
-  (global-evil-leader-mode))
-
-(use-package evil-major-leader
-  :quelpa
-  (evil-major-leader :repo "Peter-Chou/evil-major-leader" :fetcher github)
-  :init
-  (global-evil-major-leader-mode))
-
 (use-package evil-anzu)
 
 (use-package evil
+  ;; :pin melpa-stable
   :init
   (setq evil-want-C-u-scroll t)
   (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
@@ -49,16 +39,11 @@
       (evil-normal-state)
       (evil-visual-restore))
     ;; treat _ as word like vim
-    ;; (with-eval-after-load 'evil
-    ;;   (defalias #'forward-evil-word #'forward-evil-symbol))
+    (with-eval-after-load 'evil
+      (defalias #'forward-evil-word #'forward-evil-symbol))
     ;; Overload shifts so that they don't lose the selection
     (define-key evil-visual-state-map (kbd "<") 'petmacs//evil-visual-shift-left)
     (define-key evil-visual-state-map (kbd ">") 'petmacs//evil-visual-shift-right)))
-
-;; (use-package evil-collection
-;;   :after evil
-;;   :config
-;;   (evil-collection-init))
 
 (use-package evil-escape
   :init
@@ -104,10 +89,6 @@
   (define-key iedit-occurrence-keymap-default [tab] 'iedit-toggle-selection))
 
 (use-package bind-map)
-(use-package evil-evilified-state
-  :quelpa (evil-evilified-state :fetcher github
-  				:repo "Peter-Chou/evil-evilified-state")
-  :demand t)
 
 (provide 'init-evil)
 

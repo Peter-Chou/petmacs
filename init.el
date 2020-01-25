@@ -119,6 +119,7 @@ decrease this. If you experience stuttering, increase this.")
 (require 'init-misc)
 
 (require 'core-funcs)
-(require 'leader-keybindings)
+(require 'init-leader)
+;; (require 'leader-keybindings)
 
 ;;; init.el ends here

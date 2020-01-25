@@ -8,6 +8,19 @@
   (require 'init-const)
   (require 'init-custom))
 
+
+(use-package evil-leader
+  :defer nil
+  :init
+  (global-evil-leader-mode))
+
+(use-package evil-major-leader
+  :quelpa
+  (evil-major-leader :repo "Peter-Chou/evil-major-leader" :fetcher github)
+  :init
+  (global-evil-major-leader-mode))
+
+
 (evil-leader/set-leader petmacs-evil-leader-key)
 (evil-major-leader/set-leader petmacs-evil-major-leader-key)
 
@@ -47,7 +60,6 @@
   "ar"  'ranger
   "ak"  'paradox-list-packages
   "au"  'paradox-upgrade-packages
-  "ao/" 'org-occur-in-agenda-files
   "aw"  'whitespace-cleanup
 
   ;;; org
@@ -60,6 +72,7 @@
   "aom" 'org-tags-view
   "aos" 'org-search-view
   "aot" 'org-todo-list
+  "ao/" 'org-occur-in-agenda-files
 
   ;; ;;; org feed
   ;; "aofi" 'org-feed-goto-inbox
