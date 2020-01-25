@@ -11,20 +11,18 @@
 (use-package spaceleader
   :ensure nil
   :commands (
-             leader/with-prefix
-	     leader/with-major-mode-prefix
-	     leader/without-prefix
-	     leader/declare-prefix
-	     leader/declare-prefix*
-	     leader/declare-prefix-for-mode
-	     leader/declare-prefix-for-mode*
-	     leader/declare-prefix-for-mode!
-	     leader/declare-prefix-for-mode!*
-	     leader/set-keys
-	     leader/set-keys-for-mode
-	     leader/set-keys-for-mode!
-	     )
-)
+     leader/with-prefix
+     leader/with-major-mode-prefix
+     leader/without-prefix
+     leader/declare-prefix
+     leader/declare-prefix*
+     leader/declare-prefix-for-mode
+     leader/declare-prefix-for-mode*
+     leader/declare-prefix-for-mode!
+     leader/declare-prefix-for-mode!*
+     leader/set-keys
+     leader/set-keys-for-mode
+     leader/set-keys-for-mode!))
 
 
 (leader/declare-prefix*
