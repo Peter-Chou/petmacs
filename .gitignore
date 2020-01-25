@@ -80,3 +80,4 @@ mspyls/
 eclipse.jdt.ls/
 workspace/
 .dap-*
+.last*
