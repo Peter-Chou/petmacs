@@ -8,6 +8,10 @@
   (require 'init-const)
   (require 'init-custom))
 
+(setq leader-nnorm-key petmacs-evil-major-leader-insert-default-key
+      leader-key petmacs-evil-leader-key
+      leader-major-mode-key petmacs-evil-major-leader-key)
+
 (use-package spaceleader
   :ensure nil
   :commands (
@@ -39,6 +43,7 @@
   "g" "git"
   "gf" "magit file"
   "T" "Theme"
+  "t" "toggle"
   "q" "quit"
   "i" "insert"
   "p" "project"
@@ -130,6 +135,15 @@
       "r" 'petmacs/save-buffer-gbk-as-utf8
       ))
   )
+
+(leader/with-prefix "t"
+  (leader/set-keys
+  "-" 'centered-cursor-mode
+  "s" 'flycheck-mode
+  "f" 'focus-mode
+  "F" 'toggle-frame-fullscreen
+  "M" 'maximize-window
+  "p" 'proxy-http-toggle))
 
 (leader/with-prefix "F"
   (leader/set-keys
