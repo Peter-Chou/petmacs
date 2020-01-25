@@ -371,7 +371,6 @@
 
 
 ;;; emacs lisp mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (dolist (mode '(emacs-lisp-mode lisp-interaction-mode))
   (leader/declare-prefix-for-mode!* mode
     "c" "compile"
@@ -390,6 +389,25 @@
     "ef" 'eval-defun
     "gG" 'petmacs/nav-find-elisp-thing-at-point-other-window
     "tq" 'ert))
+
+
+;;; c-c++ mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(dolist (mode '(c-mode c++-mode))
+  (leader/declare-prefix-for-mode!* mode
+    "gh" "hierarchy"
+    "gm" "members"
+    )
+
+  (leader/set-keys-for-mode! mode
+    "bf" 'ccls-reload
+    "bp" 'ccls-preprocess-file
+    "ghc" 'ccls-call-hierarchy
+    "ghC" 'petmacs/c-c++-lsp-ccls-call-hierarchy-inv
+    "ghi" 'ccls-inheritance-hierarchy
+    "ghI" 'petmacs/c-c++-lsp-ccls-inheritance-hierarchy-inv
+
+    "gmh" 'ccls-member-hierarchy
+    ))
 
 (provide 'init-leader)
 

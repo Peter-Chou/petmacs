@@ -18,6 +18,15 @@
 
 ;; C/C++/Objective-C support
 (use-package ccls
+  :preface
+(defun petmacs/c-c++-lsp-ccls-call-hierarchy-inv ()
+  (interactive)
+  (ccls-call-hierarchy t))
+
+(defun petmacs/c-c++-lsp-ccls-inheritance-hierarchy-inv ()
+  (interactive)
+  (ccls-inheritance-hierarchy t))
+
   :defines projectile-project-root-files-top-down-recurring
   :hook ((c-mode c++-mode objc-mode cuda-mode) . (lambda ()
 						   (require 'ccls)
