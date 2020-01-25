@@ -213,8 +213,8 @@
   "bb" 'ivy-switch-buffer
   "bB" 'ibuffer
   "bd" 'kill-this-buffer
-  "bn" 'next-buffer
-  "bp" 'previous-buffer
+  ;; "bn" 'next-buffer
+  ;; "bp" 'previous-buffer
   "bR" 'petmacs/revert-this-buffer
   "bs" 'petmacs/goto-scratch-buffer
   "bx" 'kill-buffer-and-window
