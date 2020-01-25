@@ -250,7 +250,8 @@
 (leader/with-prefix "i"
   (leader/set-keys
   "s" 'ivy-yasnippet
-  "f"  'insert-file))
+  "f" 'insert-file
+  "u" 'counsel-unicode-char))
 
 (leader/with-prefix "T"
   (leader/set-keys
@@ -330,6 +331,7 @@
     "Fa" #'lsp-workspace-folders-add))
 
 
+;;; python mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (leader/declare-prefix-for-mode!* 'python-mode
   "c" "compile"
   "v" "virtual environment"
@@ -366,6 +368,28 @@
   "vpo" 'pipenv-open
   "vps" 'pipenv-shell
   "vpu" 'pipenv-uninstall)
+
+
+;;; emacs lisp mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(dolist (mode '(emacs-lisp-mode lisp-interaction-mode))
+  (leader/declare-prefix-for-mode!* mode
+    "c" "compile"
+    "e" "eval"
+    "t" "test"
+    )
+
+  (leader/set-keys-for-mode! mode
+    "'" 'ielm
+    "si" 'ielm
+    "cc" 'emacs-lisp-byte-compile
+    "eb" 'eval-buffer
+    "eC" 'petmacs/eval-current-form
+    "ee" 'eval-last-sexp
+    "er" 'eval-region
+    "ef" 'eval-defun
+    "gG" 'petmacs/nav-find-elisp-thing-at-point-other-window
+    "tq" 'ert))
 
 (provide 'init-leader)
 

@@ -10,6 +10,16 @@
 
 ;; Emacs lisp mode
 (use-package elisp-mode
+  :preface
+(defun petmacs/eval-current-form ()
+  "Find and evaluate the current def* or set* command.
+Unlike `eval-defun', this does not go to topmost function."
+  (interactive)
+  (save-excursion
+    (search-backward-regexp "(def\\|(set")
+    (forward-list)
+    (call-interactively 'eval-last-sexp)))
+
   :ensure nil
   :defines calculate-lisp-indent-last-sexp
   :functions (helpful-update
