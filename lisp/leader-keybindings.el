@@ -41,13 +41,14 @@
 (petmacs//setup-default-key-name "ao" "org")
 (petmacs//setup-default-key-name "aC" "Clock")
 (evil-leader/set-key
-  "ad" 'deer
+  "ad"  'deer
   "ap"  'list-processes
   "aP"  'proced
-  "ar" 'ranger
+  "ar"  'ranger
   "ak"  'paradox-list-packages
-  "au" 'paradox-upgrade-packages
+  "au"  'paradox-upgrade-packages
   "ao/" 'org-occur-in-agenda-files
+  "aw"  'whitespace-cleanup
 
   ;;; org
   "aoa" 'org-agenda-list
@@ -99,7 +100,6 @@
   "fs"  'save-buffer
   "fS"  'evil-write-all
   "fc"  'petmacs/copy-file
-  "fi"  'insert-file
   "fb"  'counsel-bookmark
   "fB"  'treemacs-bookmark
 
@@ -118,6 +118,8 @@
   "fyY" 'petmacs/projectile-copy-file-path
   "fyd" 'petmacs/copy-directory-path
   "fyn" 'petmacs/copy-file-name
+
+  ;;; emacs configs
   "feo" 'petmacs/find-org-global-todos
   "fec" 'petmacs/find-custom-file
   "fed" 'petmacs/find-dotfile)
@@ -138,22 +140,29 @@
 (petmacs//setup-default-key-name "g" "git")
 (evil-leader/set-key
   "gc"  'magit-clone
-  "gff" 'magit-find-file
-  "gfl" 'magit-log-buffer-file
-  "gfd" 'magit-diff
+  "gs"  'magit-status
   "gi"  'magit-init
   "gl"  'magit-log-head
   "gL"  'magit-list-repositories
   "gm"  'magit-dispatch
-  "gs"  'magit-status
+
+  ;;; magit file
+  "gff" 'magit-find-file
+  "gfl" 'magit-log-buffer-file
+  "gfd" 'magit-diff
+  ;;; magit current file
   "gS"  'magit-stage-file
   "gU"  'magit-unstage-file
+
+  ;;; magit browse
   "gho" 'browse-at-remote)
 
 ;; leader-i insert family
 (petmacs//setup-default-key-name "i" "insert")
 (evil-leader/set-key
-  "is" 'ivy-yasnippet)
+  "is" 'ivy-yasnippet
+  "if"  'insert-file
+  )
 
 ;; leader-p family
 (petmacs//setup-default-key-name "p" "project")
@@ -199,11 +208,13 @@
 
 ;; leader-b family
 (petmacs//setup-default-key-name "b" "buffers")
+(petmacs//setup-default-key-name "bp" "pop out buffer")
 (evil-leader/set-key
   "bb" 'ivy-switch-buffer
+  "bB" 'ibuffer
   "bd" 'kill-this-buffer
   "bn" 'next-buffer
-  "bp"    'previous-buffer
+  "bp" 'previous-buffer
   "bR" 'petmacs/revert-this-buffer
   "bs" 'petmacs/goto-scratch-buffer
   "bx" 'kill-buffer-and-window
@@ -215,8 +226,11 @@
   "bj" 'ace-window
   "bt" 'imenu-list-smart-toggle
   "bI" 'lsp-ui-imenu
-  ;; "bI" 'imenu-list
-  "bi" 'ibuffer)
+  "bI" 'imenu-list
+
+  ;;; pop out buffer
+  "bpm" 'petmacs/shackle-popup-message-buffer
+  "bpc" 'petmacs/shackle-popup-compilation-buffer)
 
 ;; leader-t family
 (petmacs//setup-default-key-name "t" "toggle")
@@ -237,30 +251,29 @@
   "wc"  'olivetti-mode
   "wd"  'delete-window
   "wD"  'ace-delete-window
-  "wF"  'make-frame
-  "wpm" 'petmacs/shackle-popup-message-buffer
-  "wpc" 'petmacs/shackle-popup-compilation-buffer
-  "wpl" 'petamcs/shackle-popup-last-buffer
   )
 
 ;; leader-o family
-(petmacs//setup-default-key-name "o" "users")
-(petmacs//setup-default-key-name "ob" "bookmarks")
-(petmacs//setup-default-key-name "ow" "whitespace")
+(petmacs//setup-default-key-name "o" "Origami")
 (evil-leader/set-key
-  "ow"  'whitespace-cleanup
+  "o."  'origami-hydra/body
+  )
+
+;; leader-B family
+(petmacs//setup-default-key-name "B" "Bookmarks")
+(evil-leader/set-key
   ;; bookmarks
-  "obs" 'bookmark-set
-  "obd" 'bookmark-delete
-  "obr" 'bookmark-rename
-  "obl" 'bookmark-bmenu-list)
+  "Bs" 'bookmark-set
+  "Bd" 'bookmark-delete
+  "Br" 'bookmark-rename
+  "Bl" 'bookmark-bmenu-list)
 
 ;; leader-n family
 (petmacs//setup-default-key-name "n" "narrow")
 (evil-leader/set-key
+  "nf" 'narrow-to-defun
   "nr" 'narrow-to-region
   "np" 'narrow-to-page
-  "nf" 'narrow-to-defun
   "nw" 'widen)
 
 ;;;; major mode specific keybinding
@@ -292,7 +305,7 @@
     ;; goto
     "mgr" #'lsp-find-references
     "mgt" #'lsp-find-type-definition
-    "mgd" #'lsp-find-definition
+    "mgd" #'xref-find-definitions
     "mgD" #'lsp-find-declaration
     "mgi" #'lsp-find-implementation
     "mgk" #'petmacs/lsp-avy-goto-word

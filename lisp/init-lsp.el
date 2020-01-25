@@ -75,7 +75,7 @@
     (interactive)
     (let ((pop-up-windows t))
       (pop-to-buffer (current-buffer) t))
-    (lsp-find-definition))
+    (xref-find-definitions))
 
   (defun petmacs/lsp-find-declaration-other-window ()
     (interactive)
