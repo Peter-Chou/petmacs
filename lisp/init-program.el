@@ -55,66 +55,71 @@
   (pretty-code-add-hook 'emacs-lisp-mode-hook '((:def "defun")
 						(:lambda "lambda"))))
 
-;; (use-package electric-operator
-;;   :hook ((c-mode-common . electric-operator-mode)
-;;          (python-mode . electric-operator-mode)
-;; 	 (go-mode . electric-operator-mode)
-;;          (electric-operator-mode . (lambda ()
-;;                                      (electric-operator-add-rules-for-mode 'c++-mode
-;;                                                                            (cons "*" nil)
-;;                                                                            (cons "&" nil))
-;;                                      (electric-operator-add-rules-for-mode 'c-mode
-;;                                                                            (cons "*" nil))
-;;                                      (electric-operator-add-rules-for-mode 'go-mode
-;;                                                                            (cons ":=" " := ")
-;; 									   (cons "==" " == "))
-;; 				     ))))
+(use-package electric-operator
+  :hook ((c-mode-common . electric-operator-mode)
+         (python-mode . electric-operator-mode)
+	 (go-mode . electric-operator-mode)
+         (electric-operator-mode . (lambda ()
+                                     (electric-operator-add-rules-for-mode 'c++-mode
+									   (cons "-" nil)
+									   (cons "->" nil)
+                                                                           (cons "*" nil)
+                                                                           (cons "&" nil))
+                                     (electric-operator-add-rules-for-mode 'c-mode
+									   (cons "-" nil)
+									   (cons "->" nil)
+                                                                           (cons "*" nil))
+                                     (electric-operator-add-rules-for-mode 'go-mode
+									   (cons ":" nil)
+                                                                           (cons ":=" " := ")
+									   (cons "==" " == "))
+				     ))))
 
-(use-package composite
-  :ensure nil
-  :init
-  (defvar composition-ligature-table (make-char-table nil))
-  :hook
-  (((prog-mode conf-mode nxml-mode markdown-mode help-mode)
-    . (lambda () (setq-local composition-function-table composition-ligature-table))))
-  :config
-  ;; support ligatures, some toned down to prevent hang
-  (when (version<= "27.0" emacs-version)
-    (let ((alist
-           '((33 . ".\\(?:\\(==\\|[!=]\\)[!=]?\\)")
-             (35 . ".\\(?:\\(###?\\|_(\\|[(:=?[_{]\\)[#(:=?[_{]?\\)")
-             (36 . ".\\(?:\\(>\\)>?\\)")
-             (37 . ".\\(?:\\(%\\)%?\\)")
-             (38 . ".\\(?:\\(&\\)&?\\)")
-             (42 . ".\\(?:\\(\\*\\*\\|[*>]\\)[*>]?\\)")
-             ;; (42 . ".\\(?:\\(\\*\\*\\|[*/>]\\).?\\)")
-             (43 . ".\\(?:\\([>]\\)>?\\)")
-             ;; (43 . ".\\(?:\\(\\+\\+\\|[+>]\\).?\\)")
-             (45 . ".\\(?:\\(-[->]\\|<<\\|>>\\|[-<>|~]\\)[-<>|~]?\\)")
-             ;; (46 . ".\\(?:\\(\\.[.<]\\|[-.=]\\)[-.<=]?\\)")
-             (46 . ".\\(?:\\(\\.<\\|[-=]\\)[-<=]?\\)")
-             (47 . ".\\(?:\\(//\\|==\\|[=>]\\)[/=>]?\\)")
-             ;; (47 . ".\\(?:\\(//\\|==\\|[*/=>]\\).?\\)")
-             (48 . ".\\(?:\\(x[a-fA-F0-9]\\).?\\)")
-             (58 . ".\\(?:\\(::\\|[:<=>]\\)[:<=>]?\\)")
-             (59 . ".\\(?:\\(;\\);?\\)")
-             (60 . ".\\(?:\\(!--\\|\\$>\\|\\*>\\|\\+>\\|-[-<>|]\\|/>\\|<[-<=]\\|=[<>|]\\|==>?\\||>\\||||?\\|~[>~]\\|[$*+/:<=>|~-]\\)[$*+/:<=>|~-]?\\)")
-             (61 . ".\\(?:\\(!=\\|/=\\|:=\\|<<\\|=[=>]\\|>>\\|[=>]\\)[=<>]?\\)")
-             (62 . ".\\(?:\\(->\\|=>\\|>[-=>]\\|[-:=>]\\)[-:=>]?\\)")
-             (63 . ".\\(?:\\([.:=?]\\)[.:=?]?\\)")
-             (91 . ".\\(?:\\(|\\)[]|]?\\)")
-             ;; (92 . ".\\(?:\\([\\n]\\)[\\]?\\)")
-             (94 . ".\\(?:\\(=\\)=?\\)")
-             (95 . ".\\(?:\\(|_\\|[_]\\)_?\\)")
-             (119 . ".\\(?:\\(ww\\)w?\\)")
-             (123 . ".\\(?:\\(|\\)[|}]?\\)")
-             (124 . ".\\(?:\\(->\\|=>\\||[-=>]\\||||*>\\|[]=>|}-]\\).?\\)")
-             (126 . ".\\(?:\\(~>\\|[-=>@~]\\)[-=>@~]?\\)"))))
-      (dolist (char-regexp alist)
-        (set-char-table-range composition-ligature-table (car char-regexp)
-                              `([,(cdr char-regexp) 0 font-shape-gstring]))))
-    (set-char-table-parent composition-ligature-table composition-function-table))
-  )
+;; (use-package composite
+;;   :ensure nil
+;;   :init
+;;   (defvar composition-ligature-table (make-char-table nil))
+;;   :hook
+;;   (((prog-mode conf-mode nxml-mode markdown-mode help-mode)
+;;     . (lambda () (setq-local composition-function-table composition-ligature-table))))
+;;   :config
+;;   ;; support ligatures, some toned down to prevent hang
+;;   (when (version<= "27.0" emacs-version)
+;;     (let ((alist
+;;            '((33 . ".\\(?:\\(==\\|[!=]\\)[!=]?\\)")
+;;              (35 . ".\\(?:\\(###?\\|_(\\|[(:=?[_{]\\)[#(:=?[_{]?\\)")
+;;              (36 . ".\\(?:\\(>\\)>?\\)")
+;;              (37 . ".\\(?:\\(%\\)%?\\)")
+;;              (38 . ".\\(?:\\(&\\)&?\\)")
+;;              (42 . ".\\(?:\\(\\*\\*\\|[*>]\\)[*>]?\\)")
+;;              ;; (42 . ".\\(?:\\(\\*\\*\\|[*/>]\\).?\\)")
+;;              (43 . ".\\(?:\\([>]\\)>?\\)")
+;;              ;; (43 . ".\\(?:\\(\\+\\+\\|[+>]\\).?\\)")
+;;              (45 . ".\\(?:\\(-[->]\\|<<\\|>>\\|[-<>|~]\\)[-<>|~]?\\)")
+;;              ;; (46 . ".\\(?:\\(\\.[.<]\\|[-.=]\\)[-.<=]?\\)")
+;;              (46 . ".\\(?:\\(\\.<\\|[-=]\\)[-<=]?\\)")
+;;              (47 . ".\\(?:\\(//\\|==\\|[=>]\\)[/=>]?\\)")
+;;              ;; (47 . ".\\(?:\\(//\\|==\\|[*/=>]\\).?\\)")
+;;              (48 . ".\\(?:\\(x[a-fA-F0-9]\\).?\\)")
+;;              (58 . ".\\(?:\\(::\\|[:<=>]\\)[:<=>]?\\)")
+;;              (59 . ".\\(?:\\(;\\);?\\)")
+;;              (60 . ".\\(?:\\(!--\\|\\$>\\|\\*>\\|\\+>\\|-[-<>|]\\|/>\\|<[-<=]\\|=[<>|]\\|==>?\\||>\\||||?\\|~[>~]\\|[$*+/:<=>|~-]\\)[$*+/:<=>|~-]?\\)")
+;;              (61 . ".\\(?:\\(!=\\|/=\\|:=\\|<<\\|=[=>]\\|>>\\|[=>]\\)[=<>]?\\)")
+;;              (62 . ".\\(?:\\(->\\|=>\\|>[-=>]\\|[-:=>]\\)[-:=>]?\\)")
+;;              (63 . ".\\(?:\\([.:=?]\\)[.:=?]?\\)")
+;;              (91 . ".\\(?:\\(|\\)[]|]?\\)")
+;;              ;; (92 . ".\\(?:\\([\\n]\\)[\\]?\\)")
+;;              (94 . ".\\(?:\\(=\\)=?\\)")
+;;              (95 . ".\\(?:\\(|_\\|[_]\\)_?\\)")
+;;              (119 . ".\\(?:\\(ww\\)w?\\)")
+;;              (123 . ".\\(?:\\(|\\)[|}]?\\)")
+;;              (124 . ".\\(?:\\(->\\|=>\\||[-=>]\\||||*>\\|[]=>|}-]\\).?\\)")
+;;              (126 . ".\\(?:\\(~>\\|[-=>@~]\\)[-=>@~]?\\)"))))
+;;       (dolist (char-regexp alist)
+;;         (set-char-table-range composition-ligature-table (car char-regexp)
+;;                               `([,(cdr char-regexp) 0 font-shape-gstring]))))
+;;     (set-char-table-parent composition-ligature-table composition-function-table))
+;;   )
 
 
 ;; Flexible text folding
