@@ -271,6 +271,9 @@
 (use-package hide-mode-line
   :hook (((completion-list-mode completion-in-region-mode) . hide-mode-line-mode)))
 
+(use-package yascroll
+  :hook (after-init . global-yascroll-bar-mode))
+
 ;; Suppress GUI features
 (setq use-file-dialog nil)
 (setq use-dialog-box nil)

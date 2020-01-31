@@ -8,8 +8,8 @@
   (require 'init-const)
   (require 'init-custom))
 
-;; (set-default-font "Fira Code Retina 14.5" nil t)
-(set-face-attribute 'default nil :font (format "Fira Code Retina-%S" petmacs-font-size))
+(set-face-attribute 'default nil :font (format "JetBrains Mono-%S" petmacs-font-size))
+(setq-default line-spacing 0.2) ; add 0.2 height between lines
 
 ;; fix the delay when showing text in chinese
 (if window-system

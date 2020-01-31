@@ -19,7 +19,7 @@
 			      )
   "list of themes for cycling")
 
-(defvar petmacs-font-size 13.0
+(defvar petmacs-font-size 13.5
   "default font size")
 
 (defvar petmacs-evil-leader-key "<SPC>"

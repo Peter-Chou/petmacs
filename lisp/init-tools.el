@@ -10,8 +10,8 @@
   :hook (after-init . which-key-mode)
   :init
   (setq which-key-idle-delay 0.2)
-  ;; (setq which-key-separator " ")
-  ;; (setq which-key-prefix-prefix " ")
+  (setq which-key-separator " ")
+  (setq which-key-prefix-prefix " ")
 
   ;; Needed to avoid nil variable error before update to recent which-key
   (defvar which-key-replacement-alist nil)
