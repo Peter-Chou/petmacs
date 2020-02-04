@@ -20,6 +20,9 @@ decrease this. If you experience stuttering, increase this.")
 
 (defvar default-file-name-handler-alist file-name-handler-alist)
 
+;; accpet 1024 * 1024 bytes from subprocess
+(setq read-process-output-max (* 1024 1024))
+
 (setq file-name-handler-alist nil)
 (setq gc-cons-threshold petmacs-gc-cons-upper-limit)
 (add-hook 'emacs-startup-hook
