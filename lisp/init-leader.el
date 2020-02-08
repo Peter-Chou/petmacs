@@ -100,7 +100,7 @@
     "B"  'treemacs-bookmark
     "T"  'treemacs-find-file
     "L"  'counsel-locate
-    "r"  'counsel-buffer-or-recentf
+    "r"  'counsel-recentf
     "R"  'petmacs/rename-current-buffer-file
     "s"  'save-buffer
     "S"  'evil-write-all
