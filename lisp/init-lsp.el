@@ -138,30 +138,31 @@
 	 :map lsp-ui-mode-map
 	 ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
 	 ([remap xref-find-references] . lsp-ui-peek-find-references))
-  :hook (lsp-ui-imenu-mode . (lambda ()
+  :hook ((lsp-mode . lsp-ui-mode)
+	 (lsp-ui-imenu-mode . (lambda ()
 			       (display-line-numbers-mode -1)
-			       (hl-line-mode -1)))
+			       (hl-line-mode -1))))
   :init
   (setq lsp-ui-doc-enable t
-	lsp-ui-peek-enable t
 	lsp-ui-doc-use-webkit nil
 	lsp-ui-doc-delay 0.2
 	lsp-ui-doc-include-signature t
 	lsp-ui-doc-position 'top  ;; or at-point
 	lsp-ui-doc-border (face-foreground 'default)
-
-	lsp-ui-imenu-enable t
-	lsp-ui-imenu-colors `(,(face-foreground 'font-lock-keyword-face)
-			      ,(face-foreground 'font-lock-string-face)
-			      ,(face-foreground 'font-lock-constant-face)
-			      ,(face-foreground 'font-lock-variable-name-face))
-
-	lsp-ui-flycheck-enable nil  ;; disable flycheck
+        lsp-eldoc-enable-hover nil ; Disable eldoc displays in minibuffer
+	;; lsp-ui-flycheck-enable nil  ;; disable flycheck
+	;; lsp-ui-peek-enable t
 
 	lsp-ui-sideline-enable t
 	lsp-ui-sideline-show-hover nil
 	lsp-ui-sideline-show-diagnostics nil
-	lsp-ui-sideline-ignore-duplicate t)
+	lsp-ui-sideline-ignore-duplicate t
+
+	lsp-ui-imenu-enable t
+        lsp-ui-imenu-colors `(,(face-foreground 'font-lock-keyword-face)
+                              ,(face-foreground 'font-lock-string-face)
+                              ,(face-foreground 'font-lock-constant-face)
+                              ,(face-foreground 'font-lock-variable-name-face)))
 
   (evil-define-key 'normal lsp-ui-imenu-mode-map (kbd "q") 'lsp-ui-imenu--kill)
   (evil-define-key 'normal lsp-ui-imenu-mode-map (kbd "J") 'lsp-ui-imenu--next-kind)
