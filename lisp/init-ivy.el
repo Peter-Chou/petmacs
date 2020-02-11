@@ -92,6 +92,10 @@
 	ivy-on-del-error-function nil
 	ivy-initial-inputs-alist nil)
 
+  ;; Better performance on Windows
+  (when sys/win32p
+    (setq ivy-dynamic-exhibit-delay-ms 200))
+
   (defun my-ivy-format-function-arrow (cands)
     "Transform CANDS into a string for minibuffer."
     (ivy--format-function-generic
