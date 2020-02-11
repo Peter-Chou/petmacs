@@ -40,10 +40,11 @@
            ";;; This is the previous frame parameters.\n"
            ";;; Last generated " (current-time-string) ".\n"
            "(setq initial-frame-alist\n"
-           (format "      '((top . %d)\n" (persp--frame-parameter 'top))
-           (format "        (left . %d)\n" (persp--frame-parameter 'left))
-           (format "        (width . %d)\n" (persp--frame-parameter 'width))
-           (format "        (height . %d)))\n" (persp--frame-parameter 'height)))
+           (format "      '((top . %d)\n" (frame-parameter nil 'top))
+           (format "        (left . %d)\n" (frame-parameter nil 'left))
+           (format "        (width . %d)\n" (frame-parameter nil 'width))
+           (format "        (height . %d)\n" (frame-parameter nil 'height))
+           (format "        (fullscreen . %s)))\n" (frame-parameter nil 'fullscreen)))
           (when (file-writable-p persp-frame-file)
             (write-file persp-frame-file)))
       (error
