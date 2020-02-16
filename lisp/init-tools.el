@@ -6,7 +6,7 @@
 
 (use-package which-key
   :diminish
-  :bind (:map help-map ("C-h" . which-key-C-h-dispatch))
+  :bind ("C-h M-m" . which-key-show-major-mode)
   :hook (after-init . which-key-mode)
   :init
   (setq which-key-idle-delay 0.2)
