@@ -78,6 +78,8 @@ ido*
 lisp/emacs_backtrace.txt
 mspyls/
 eclipse.jdt.ls/
+.extension/
 workspace/
 .dap-*
 .last*
+
