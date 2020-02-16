@@ -105,11 +105,17 @@
     (let ((pop-up-windows t))
       (pop-to-buffer (current-buffer) t))
     (lsp-find-type-definition))
+  :hook (lsp-mode . (lambda ()
+                       ;; Integrate `which-key'
+                       (lsp-enable-which-key-integration)
 
-  :commands lsp
-  :bind (
-	 :map lsp-mode-map
-	 ("C-c C-d" . lsp-describe-thing-at-point))
+                       ;; Format and organize imports
+                       (add-hook 'before-save-hook #'lsp-format-buffer t t)
+                       (add-hook 'before-save-hook #'lsp-organize-imports t t)))
+  :bind (:map lsp-mode-map
+            ("C-c C-d" . lsp-describe-thing-at-point)
+            ([remap xref-find-definitions] . lsp-find-definition)
+            ([remap xref-find-references] . lsp-find-references))
   :init
   (setq lsp-auto-guess-root t		;; Detect project root
         lsp-keep-workspace-alive nil    ;; Auto-kill LSP server
@@ -131,13 +137,9 @@
   :custom-face
   (lsp-ui-doc-background ((t (:background ,(face-background 'tooltip)))))
   (lsp-ui-sideline-code-action ((t (:inherit warning))))
-  :hook (after-load-theme . (lambda ()
-			      (set-face-attribute 'lsp-ui-doc-background nil
-						  :background (face-background 'tooltip))))
   :bind (("C-c u" . lsp-ui-imenu)
-	 :map lsp-ui-mode-map
-	 ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
-	 ([remap xref-find-references] . lsp-ui-peek-find-references))
+            :map lsp-ui-mode-map
+            ("M-<f6>" . lsp-ui-hydra/body))
   :hook ((lsp-mode . lsp-ui-mode)
 	 (lsp-ui-imenu-mode . (lambda ()
 			       (display-line-numbers-mode -1)
