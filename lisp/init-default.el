@@ -87,13 +87,6 @@
 
 (setq-default major-mode 'text-mode)
 
-;; Compatibility
-(unless (fboundp 'caadr)
-  (defun caadr (x)
-    "Return the `car' of the `car' of the `cdr' of X."
-    (declare (compiler-macro internal--compiler-macro-cXXr))
-    (car (car (cdr x)))))
-
 ;; UI
 (unless (eq window-system 'ns)
   (menu-bar-mode -1))
