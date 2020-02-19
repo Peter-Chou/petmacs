@@ -10,6 +10,7 @@
 
 (use-package cc-mode
   :defer t
+  :hook (c-mode-common . (lambda () (c-set-style "stroustrup")))
   :init
   (add-to-list 'auto-mode-alist
 	       `("\\.h\\'" . ,petmacs-default-mode-for-headers))
