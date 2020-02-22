@@ -82,4 +82,5 @@ eclipse.jdt.ls/
 workspace/
 .dap-*
 .last*
+session*
 
