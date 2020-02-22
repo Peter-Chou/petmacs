@@ -206,15 +206,16 @@
 
 (use-package doom-themes
   :defer nil
-  :defines doom-themes-treemacs-theme
   :functions doom-themes-hide-modeline
+  :custom-face
+  (doom-modeline-buffer-file ((t (:inherit (mode-line bold)))))
   :hook (after-load-theme . (lambda ()
 			      (set-face-foreground
 			       'mode-line
 			       (face-foreground 'default))))
   :custom
-  (doom-themes-enable-italic t)
-  (doom-themes-enable-bold t)
+  (doom-dark+-blue-modeline t)
+  (doom-themes-treemacs-theme "doom-colors")
   :config
   ;; FIXME: @see https://github.com/hlissner/emacs-doom-themes/issues/317.
   (set-face-foreground 'mode-line (face-foreground 'default))
@@ -222,8 +223,6 @@
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
 
-  ;; Enable customized theme (`all-the-icons' must be installed!)
-  (setq doom-themes-treemacs-theme "doom-colors")
   (doom-themes-treemacs-config)
   (with-eval-after-load 'treemacs
     (remove-hook 'treemacs-mode-hook #'doom-themes-hide-modeline)))
