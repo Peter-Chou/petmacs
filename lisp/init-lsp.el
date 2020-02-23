@@ -107,12 +107,7 @@
     (lsp-find-type-definition))
   :hook (lsp-mode . (lambda ()
                        ;; Integrate `which-key'
-                       (lsp-enable-which-key-integration)
-
-                          ;; Format and organize imports
-                          (unless (derived-mode-p 'c-mode 'c++-mode)
-                            (add-hook 'before-save-hook #'lsp-format-buffer t t)
-                            (add-hook 'before-save-hook #'lsp-organize-imports t t))))
+                       (lsp-enable-which-key-integration)))
   :bind (:map lsp-mode-map
             ("C-c C-d" . lsp-describe-thing-at-point)
             ([remap xref-find-definitions] . lsp-find-definition)

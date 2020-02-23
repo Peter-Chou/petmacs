@@ -10,10 +10,14 @@
 
 (use-package cc-mode
   :defer t
-  :hook (c-mode-common . (lambda () (c-set-style "stroustrup")))
   :init
   (add-to-list 'auto-mode-alist
 	       `("\\.h\\'" . ,petmacs-default-mode-for-headers))
+
+:hook ((c-mode c++-mode) . (lambda ()
+		    "Format and add/delete imports."
+		    (add-hook 'before-save-hook #'lsp-format-buffer t t)
+		    (add-hook 'before-save-hook #'lsp-organize-imports t t)))
   :config
   (require 'compile))
 
@@ -62,6 +66,10 @@
   (add-hook 'cmake-mode-hook (lambda()
                                (add-to-list (make-local-variable 'company-backends)
                                             'company-cmake))))
+(use-package google-c-style
+  :init
+  (add-hook 'c-mode-common-hook 'google-set-c-style)
+  (add-hook 'c-mode-common-hook 'google-make-newline-indent))
 
 (provide 'init-c-c++)
 
