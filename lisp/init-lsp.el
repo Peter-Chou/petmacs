@@ -131,7 +131,6 @@
   :functions my-lsp-ui-imenu-hide-mode-line
   :commands lsp-ui-doc-hide
   :custom-face
-  (lsp-ui-doc-background ((t (:background ,(face-background 'tooltip)))))
   (lsp-ui-sideline-code-action ((t (:inherit warning))))
   :bind (("C-c u" . lsp-ui-imenu)
             :map lsp-ui-mode-map
