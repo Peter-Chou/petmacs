@@ -160,7 +160,7 @@
   :init
   ;; prevent flash of unstyled modeline at startup
   (unless after-init-time
-    (setq doom-modeline--old-format mode-line-format)
+    (setq doom-modeline--default-format mode-line-format)
     (setq-default mode-line-format nil))
   (setq
    find-file-visit-truename t  ; display the real names for symlink files
