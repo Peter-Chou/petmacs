@@ -359,7 +359,7 @@
   (use-package prescient
     :commands prescient-persist-mode
     :init
-    (setq prescient-filter-method '(literal regexp initialism fuzzy))
+    ;; (setq prescient-filter-method '(literal regexp initialism fuzzy))
     (prescient-persist-mode 1))
 
   (use-package ivy-prescient
@@ -408,8 +408,7 @@ This is for use in `ivy-re-builders-alist'."
   ;; Integrate yasnippet
   (use-package ivy-yasnippet
     :commands ivy-yasnippet--preview
-    :bind ("C-c C-y" . ivy-yasnippet)
-    :config (advice-add #'ivy-yasnippet--preview :override #'ignore))
+    :bind ("C-c C-y" . ivy-yasnippet))
 
   ;; Select from xref candidates with Ivy
   (use-package ivy-xref
