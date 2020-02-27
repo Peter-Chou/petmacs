@@ -75,6 +75,11 @@
           magit-post-unstage)
          . treemacs-magit--schedule-update))
 
+(use-package treemacs-persp
+  :after persp-mode
+  :commands treemacs-set-scope-type
+  :init (treemacs-set-scope-type 'Frames))
+
 (provide 'init-treemacs)
 
 ;;; init-treemacs.el ends here
