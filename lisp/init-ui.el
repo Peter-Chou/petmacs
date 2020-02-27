@@ -42,7 +42,7 @@
   (with-no-warnings
     ;; FIXME: Align the directory icons
     ;; @see https://github.com/domtronn/all-the-icons.el/pull/173
-    (defun all-the-icons-icon-for-dir (dir &optional chevron padding)
+    (defun my-all-the-icons-icon-for-dir (dir &optional chevron padding)
       "Format an icon for DIR with CHEVRON similar to tree based directories."
       (let* ((matcher (all-the-icons-match-to-alist (file-name-base (directory-file-name dir)) all-the-icons-dir-icon-alist))
              (path (expand-file-name dir))
@@ -57,17 +57,18 @@
                      (format "%s" (all-the-icons-octicon "repo" :height 1.1 :v-adjust 0.0)))
                     (t (apply (car matcher) (list (cadr matcher) :v-adjust 0.0))))))
         (format "%s%s%s%s%s" padding chevron padding icon padding)))
+    (advice-add #'all-the-icons-icon-for-dir :override #'my-all-the-icons-icon-for-dir)
 
     (defun all-the-icons-reset ()
       "Reset (unmemoize/memoize) the icons."
       (interactive)
-      (dolist (f '(all-the-icons-icon-for-file
-                   all-the-icons-icon-for-mode
-                   all-the-icons-icon-for-url
-                   all-the-icons-icon-family-for-file
-                   all-the-icons-icon-family-for-mode
-                   all-the-icons-icon-family))
-        (ignore-errors
+      (ignore-errors
+        (dolist (f '(all-the-icons-icon-for-file
+                     all-the-icons-icon-for-mode
+                     all-the-icons-icon-for-url
+                     all-the-icons-icon-family-for-file
+                     all-the-icons-icon-family-for-mode
+                     all-the-icons-icon-family))
           (memoize-restore f)
           (memoize f)))
       (message "Reset all-the-icons")))
@@ -206,7 +207,6 @@
 
 (use-package doom-themes
   :defer nil
-  :functions doom-themes-hide-modeline
   :custom-face
   (doom-modeline-buffer-file ((t (:inherit (mode-line bold)))))
   :hook (after-load-theme . (lambda ()
@@ -223,9 +223,7 @@
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
 
-  (doom-themes-treemacs-config)
-  (with-eval-after-load 'treemacs
-    (remove-hook 'treemacs-mode-hook #'doom-themes-hide-modeline)))
+  (doom-themes-treemacs-config))
 
 (use-package chocolate-theme)
 
