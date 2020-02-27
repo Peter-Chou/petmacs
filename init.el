@@ -8,7 +8,7 @@
 (require 'package)
 
 ;; Speed up startup
-(defvar petmacs-gc-cons-threshold (if (display-graphic-p) 8000000 800000)
+(defvar petmacs-gc-cons-threshold (if (display-graphic-p) 16000000 1600000)
   "The default value to use for `gc-cons-threshold'. If you experience freezing,
 decrease this. If you experience stuttering, increase this.")
 
@@ -20,24 +20,23 @@ decrease this. If you experience stuttering, increase this.")
 
 (defvar default-file-name-handler-alist file-name-handler-alist)
 
-;; accpet 1024 * 1024 bytes from subprocess
-(setq read-process-output-max (* 1024 1024))
-
 (setq file-name-handler-alist nil)
-(setq gc-cons-threshold petmacs-gc-cons-upper-limit)
+(setq gc-cons-threshold petmacs-gc-cons-upper-limit
+      gc-cons-percentage 0.5)
 (add-hook 'emacs-startup-hook
           (lambda ()
             "Restore defalut values after startup."
             (setq file-name-handler-alist default-file-name-handler-alist)
-            (setq gc-cons-threshold petmacs-gc-cons-threshold)
+            (setq gc-cons-threshold petmacs-gc-cons-threshold
+                  gc-cons-percentage 0.1)
 
             ;; GC automatically while unfocusing the frame
             ;; `focus-out-hook' is obsolete since 27.1
             (if (boundp 'after-focus-change-function)
                 (add-function :after after-focus-change-function
-			      (lambda ()
-				(unless (frame-focus-state)
-				  (garbage-collect))))
+                  (lambda ()
+                    (unless (frame-focus-state)
+                      (garbage-collect))))
               (add-hook 'focus-out-hook 'garbage-collect))
 
             ;; Avoid GCs while using `ivy'/`counsel'/`swiper' and `helm', etc.
@@ -55,18 +54,16 @@ decrease this. If you experience stuttering, increase this.")
 ;; Optimize: Force "lisp"" and "site-lisp" at the head to reduce the startup time.
 (defun update-load-path (&rest _)
   "Update `load-path'."
-  (push (expand-file-name "site-lisp" user-emacs-directory) load-path)
-  (push (expand-file-name "lisp" user-emacs-directory) load-path))
+  (dolist (dir '("site-lisp" "lisp"))
+    (push (expand-file-name dir user-emacs-directory) load-path)))
 
 (defun add-subdirs-to-load-path (&rest _)
   "Add subdirectories to `load-path'."
-  (let ((default-directory
-          (expand-file-name "site-lisp" user-emacs-directory)))
+  (let ((default-directory (expand-file-name "site-lisp" user-emacs-directory)))
     (normal-top-level-add-subdirs-to-load-path)))
 
 (advice-add #'package-initialize :after #'update-load-path)
 (advice-add #'package-initialize :after #'add-subdirs-to-load-path)
-
 
 (update-load-path)
 (add-subdirs-to-load-path)
