@@ -92,6 +92,11 @@
 
 (use-package bind-map)
 
+(use-package evil-collection
+  :after evil
+  :config
+(with-eval-after-load 'dired (evil-collection-dired-setup)))
+
 (provide 'init-evil)
 
 ;;; init-evil.el ends here
