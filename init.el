@@ -88,9 +88,9 @@ decrease this. If you experience stuttering, increase this.")
 (require 'init-layout)
 (require 'init-dashboard)
 
+(require 'init-yasnippet)
 (require 'init-ivy)
 (require 'init-company)
-(require 'init-yasnippet)
 (require 'init-dired)
 (require 'init-treemacs)
 

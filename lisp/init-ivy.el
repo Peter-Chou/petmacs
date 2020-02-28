@@ -405,11 +405,6 @@ This is for use in `ivy-re-builders-alist'."
     :hook (counsel-mode . counsel-projectile-mode)
     :init (setq counsel-projectile-grep-initial-input '(ivy-thing-at-point)))
 
-  ;; Integrate yasnippet
-  (use-package ivy-yasnippet
-    :commands ivy-yasnippet--preview
-    :bind ("C-c C-y" . ivy-yasnippet))
-
   ;; Select from xref candidates with Ivy
   (use-package ivy-xref
     :init
@@ -497,7 +492,7 @@ This is for use in `ivy-re-builders-alist'."
 ;; Enable it before`ivy-rich-mode' for better performance
 (use-package all-the-icons-ivy-rich
   :if (icons-displayable-p)
-  :init (all-the-icons-ivy-rich-mode 1))
+:hook (ivy-mode . all-the-icons-ivy-rich-mode))
 
 ;; More friendly display transformer for Ivy
 (use-package ivy-rich
