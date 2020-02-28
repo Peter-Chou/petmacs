@@ -227,7 +227,14 @@
 
 (use-package chocolate-theme)
 
-(load-theme petmacs--default-theme t)
+(use-package circadian
+  :init
+  ;; (setq circadian-themes petmac-auto-themes)
+  (setq circadian-themes '(("8:00" . doom-solarized-light)
+                           ("19:30" . doom-dracula)))
+  (circadian-setup))
+
+;; (load-theme petmacs--default-theme t)
 ;;; Disable theme before load a new theme
 (defadvice load-theme
     (before theme-dont-propagate activate)

@@ -11,16 +11,19 @@
 (defvar petmacs-proxy "127.0.0.1:1080"
   "Set network proxy.")
 
+(defvar petmacs-day-theme 'doom-solarized-light)
+(defvar petmacs-night-theme 'doom-dracula)
+
 (defvar petmacs-themes-list '(
 			      doom-dracula
 			      doom-solarized-light
-			      ;; doom-one-light
-			      ;; chocolate
+			      doom-one-light
+			      chocolate
 			      )
-  "list of themes for cycling")
+  "List of themes for cycling.")
 
 (defvar petmacs-font-size 13.5
-  "default font size")
+  "Default font size.")
 
 (defvar petmacs-evil-leader-key "<SPC>"
   "Evil leader key.")
