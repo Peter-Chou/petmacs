@@ -71,42 +71,36 @@
   :bind (:map dired-mode-map
               ("S" . hydra-dired-quick-sort/body)))
 
-;; Shows icons
-(use-package all-the-icons-dired
-  :diminish
-  :if (icons-displayable-p)
-  :hook (dired-mode . all-the-icons-dired-mode)
-  :init
-  (require 'font-lock+)
-  :config
-  (with-no-warnings
-    (defun my-all-the-icons-dired--display ()
-      "Display the icons of files in a dired buffer."
-      (when dired-subdir-alist
-        (let ((inhibit-read-only t))
-            ;; NOTE: don't display icons it too many items
-            (if (<= (count-lines (point-min) (point-max)) 1000)
-                (save-excursion
-                  ;; TRICK: Use TAB to align icons
-                  (setq-local tab-width 1)
+  ;; Shows icons
+  (use-package all-the-icons-dired
+    :diminish
+    :if (icons-displayable-p)
+    :hook (dired-mode . all-the-icons-dired-mode)
+    :config
+    (with-no-warnings
+      (defun my-all-the-icons-dired--refresh ()
+        "Display the icons of files in a dired buffer."
+        (all-the-icons-dired--remove-all-overlays)
+        ;; NOTE: don't display icons it too many items
+        (if (<= (count-lines (point-min) (point-max)) 1000)
+            (save-excursion
+              ;; TRICK: Use TAB to align icons
+              (setq-local tab-width 1)
 
-                  ;; Insert icons before the filenames
-                  (goto-char (point-min))
-                  (while (not (eobp))
-                    (when (dired-move-to-filename nil)
-                      (insert " ")
-                      (let ((file (dired-get-filename 'verbatim t)))
-                        (unless (member file '("." ".."))
-                          (let ((filename (dired-get-filename nil t)))
-                            (if (file-directory-p filename)
-                                (insert (all-the-icons-icon-for-dir filename nil ""))
-                              (insert (all-the-icons-icon-for-file file :v-adjust -0.05))))
-                          ;; Align and keep one space for refeshing after some operations
-                          (insert "\t "))))
-                    (forward-line 1)))
-              (message "Not display icons because of too many items.")))))
-      (advice-add #'all-the-icons-dired--display
-                  :override #'my-all-the-icons-dired--display)))
+              (goto-char (point-min))
+              (while (not (eobp))
+                (let ((file (dired-get-filename 'verbatim t)))
+                  (when file
+                    (let ((icon (if (file-directory-p file)
+                                    (all-the-icons-icon-for-dir file nil "")
+                                  (all-the-icons-icon-for-file file :v-adjust all-the-icons-dired-v-adjust))))
+                      (if (member file '("." ".."))
+                          (all-the-icons-dired--add-overlay (point) " \t")
+                        (all-the-icons-dired--add-overlay (point) (concat icon "\t"))))))
+                (dired-next-line 1)))
+          (message "Not display icons because of too many items.")))
+      (advice-add #'all-the-icons-dired--refresh
+                  :override #'my-all-the-icons-dired--refresh)))
 
 ;; Allow rsync from dired buffers
 (use-package dired-rsync
