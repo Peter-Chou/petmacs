@@ -265,7 +265,9 @@
         display-time-day-and-date t))
 
 (use-package hide-mode-line
-  :hook (((completion-list-mode completion-in-region-mode) . hide-mode-line-mode)))
+  :hook (((completion-list-mode
+           completion-in-region-mode
+           flycheck-error-list-mode) . hide-mode-line-mode)))
 
 (use-package yascroll
   :hook (after-init . global-yascroll-bar-mode))
