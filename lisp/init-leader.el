@@ -295,6 +295,7 @@
     "p" "peek"
     "b" "backend"
     "r" "refactor"
+    "h" "help"
     "F" "folders"
     "d" "debug"
     )
@@ -330,6 +331,9 @@
     "bd" #'lsp-describe-session
     "br" #'lsp-restart-workspace
     "bs" #'lsp-shutdown-workspace
+
+    "hh" #'lsp-describe-thing-at-point
+
 
     "d." #'dap-hydra
     ;; toggles
