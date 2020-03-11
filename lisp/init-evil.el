@@ -92,12 +92,12 @@
 
 (use-package bind-map)
 
-(use-package evil-collection
-  :after evil
-  :config
-  (with-eval-after-load 'dired (evil-collection-dired-setup))
-  (with-eval-after-load 'ibuffer (evil-collection-ibuffer-setup))
-  )
+;; (use-package evil-collection
+;;   :after evil
+;;   :config
+;;   (with-eval-after-load 'dired (evil-collection-dired-setup))
+;;   (with-eval-after-load 'ibuffer (evil-collection-ibuffer-setup))
+;;   )
 
 (provide 'init-evil)
 
