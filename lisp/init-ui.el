@@ -225,8 +225,6 @@
 
   (doom-themes-treemacs-config))
 
-(use-package chocolate-theme)
-
 ;; (use-package circadian
 ;;   :init
 ;;   ;; (setq circadian-themes petmac-auto-themes)

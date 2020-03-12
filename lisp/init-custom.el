@@ -15,8 +15,8 @@
 ;; (defvar petmacs-night-theme 'doom-dracula)
 
 (defvar petmacs-themes-list '(
-			      chocolate
 			      doom-solarized-light
+			      doom-solarized-dark
 			      doom-one-light
 			      doom-dracula
 			      )
