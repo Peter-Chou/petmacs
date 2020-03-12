@@ -11,14 +11,14 @@
 (defvar petmacs-proxy "127.0.0.1:1080"
   "Set network proxy.")
 
-(defvar petmacs-day-theme 'doom-solarized-light)
-(defvar petmacs-night-theme 'doom-dracula)
+;; (defvar petmacs-day-theme 'doom-solarized-light)
+;; (defvar petmacs-night-theme 'doom-dracula)
 
 (defvar petmacs-themes-list '(
-			      doom-dracula
+			      chocolate
 			      doom-solarized-light
 			      doom-one-light
-			      chocolate
+			      doom-dracula
 			      )
   "List of themes for cycling.")
 

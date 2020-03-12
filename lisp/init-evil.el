@@ -92,12 +92,26 @@
 
 (use-package bind-map)
 
-;; (use-package evil-collection
-;;   :after evil
-;;   :config
-;;   (with-eval-after-load 'dired (evil-collection-dired-setup))
-;;   (with-eval-after-load 'ibuffer (evil-collection-ibuffer-setup))
-;;   )
+(use-package evil-collection
+  :after evil
+  :custom (evil-collection-setup-minibuffer t)
+  :config
+  ;; (with-eval-after-load 'dired (evil-collection-dired-setup))
+  ;; (with-eval-after-load 'ibuffer (evil-collection-ibuffer-setup))
+  (with-eval-after-load 'magit (evil-collection-magit-setup))
+  (with-eval-after-load 'calendar (evil-collection-calendar-setup))
+  (with-eval-after-load 'which-key (evil-collection-which-key-setup))
+  (with-eval-after-load 'imenu-list (evil-collection-imenu-list-setup))
+  (with-eval-after-load 'lsp-ui-imenu (evil-collection-lsp-ui-imenu-setup))
+  (with-eval-after-load 'flycheck (evil-collection-flycheck-setup))
+  (with-eval-after-load 'eshell (evil-collection-eshell-setup))
+  (with-eval-after-load 'docker (evil-collection-docker-setup))
+  (with-eval-after-load 'diff-mode (evil-collection-diff-mode-setup))
+  (with-eval-after-load 'ediff (evil-collection-ediff-setup))
+  (with-eval-after-load 'comint (evil-collection-comint-setup))
+  (with-eval-after-load 'company (evil-collection-company-setup))
+  (with-eval-after-load 'cmake-mode (evil-collection-cmake-mode-setup))
+  )
 
 (provide 'init-evil)
 
