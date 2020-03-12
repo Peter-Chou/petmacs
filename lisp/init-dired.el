@@ -137,7 +137,6 @@
     "Y" 'dired-copy-filename-as-kill
     "+" 'dired-create-directory
     ;; open
-    (kbd "RET") 'dired-find-file
     (kbd "S-<return>") 'dired-find-file-other-window
     (kbd "M-RET") 'dired-display-file
     "gO" 'dired-find-file-other-window
@@ -152,7 +151,7 @@
     "<" 'dired-prev-dirline
     ">" 'dired-next-dirline
     "^" 'dired-up-directory
-    "-" 'dired-up-directory
+    ;; "-" 'dired-up-directory
     " " 'dired-next-line
     [?\S-\ ] 'dired-previous-line
     [remap next-line] 'dired-next-line

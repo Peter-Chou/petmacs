@@ -97,7 +97,7 @@
   :custom (evil-collection-setup-minibuffer t)
   :config
   ;; (with-eval-after-load 'dired (evil-collection-dired-setup))
-  ;; (with-eval-after-load 'ibuffer (evil-collection-ibuffer-setup))
+  (with-eval-after-load 'ibuffer (evil-collection-ibuffer-setup))
   (with-eval-after-load 'magit (evil-collection-magit-setup))
   (with-eval-after-load 'calendar (evil-collection-calendar-setup))
   (with-eval-after-load 'which-key (evil-collection-which-key-setup))
