@@ -224,6 +224,7 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   (use-package magit-todos
     :init
     (setq magit-todos-nice (if (executable-find "nice") t nil))
+    (setq magit-todos-exclude-globs '("third_party"))
     (setq magit-todos-section-map
 	  (let ((map (make-sparse-keymap)))
 	    (define-key map "j" #'evil-next-visual-line)
