@@ -229,7 +229,7 @@ Return a list of strings as the completion candidates."
 
 ;; Debug
 ;; python: pip install "ptvsd>=4.2" 
-;; C++: build lldb from https://github.com/llvm-mirror/lldb/tree/master/tools/lldb-vscode
+;; C++: apt-get install lldb nodejs npm
 (use-package dap-mode
   :diminish
   :bind (:map lsp-mode-map
@@ -237,18 +237,16 @@ Return a list of strings as the completion candidates."
          ("M-<f5>" . dap-hydra))
   :hook ((after-init . dap-mode)
          (dap-mode . dap-ui-mode)
-         (dap-session-created . (lambda (_args) (dap-hydra)))
-         (dap-stopped . (lambda (_args) (dap-hydra)))
+         ;; (dap-session-created . (lambda (_args) (dap-hydra)))
+         ;; (dap-stopped . (lambda (_args) (dap-hydra)))
 
          (python-mode . (lambda () (require 'dap-python)))
-         ;; (ruby-mode . (lambda () (require 'dap-ruby)))
          (go-mode . (lambda () (require 'dap-go)))
          (java-mode . (lambda () (require 'dap-java)))
-         ((c-mode c++-mode objc-mode swift-mode) . (lambda () (require 'dap-lldb)))
-         ;; (php-mode . (lambda () (require 'dap-php)))
-         ;; (elixir-mode . (lambda () (require 'dap-elixir)))
+         ;; ((c-mode c++-mode objc-mode swift-mode) . (lambda () (require 'dap-lldb)))
+         ((c-mode c++-mode objc-mode swift-mode) . (lambda () (require 'dap-gdb-lldb)))
          ;; ((js-mode js2-mode) . (lambda () (require 'dap-chrome)))
-         (powershell-mode . (lambda () (require 'dap-pwsh)))))
+	 ))
 
 ;; `lsp-mode' and `treemacs' integration
 (when emacs/>=25.2p
