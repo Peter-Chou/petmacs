@@ -76,6 +76,7 @@
     :if (icons-displayable-p)
     :hook (dired-mode . all-the-icons-dired-mode)
     :config
+
     (with-no-warnings
       (defun my-all-the-icons-dired--refresh ()
         "Display the icons of files in a dired buffer."
