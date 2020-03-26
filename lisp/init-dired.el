@@ -19,13 +19,13 @@
     (find-alternate-file ".."))
 
   ;; show diectory first
-  (defun petmacs//dired-sort ()
-    "Sort dired listings with directories first."
-    (save-excursion
-      (let (buffer-read-only)
-	(forward-line 2) ;; beyond dir. header
-	(sort-regexp-fields t "^.*$" "[ ]*." (point) (point-max)))
-      (set-buffer-modified-p nil)))
+  ;; (defun petmacs//dired-sort ()
+  ;;   "Sort dired listings with directories first."
+  ;;   (save-excursion
+  ;;     (let (buffer-read-only)
+  ;; 	(forward-line 2) ;; beyond dir. header
+  ;; 	(sort-regexp-fields t "^.*$" "[ ]*." (point) (point-max)))
+  ;;     (set-buffer-modified-p nil)))
   :init
   (put 'dired-find-alternate-file 'disabled nil)
   (define-key evil-normal-state-map (kbd "-") 'dired-jump)
@@ -49,12 +49,12 @@
     ;; Show directory first
     (setq dired-listing-switches "-alh --group-directories-first"))
 
-  (when sys/win32p
-    (setq dired-listing-switches "-alh")  ;; show human readable file size
-    (defadvice dired-readin
-	(after dired-after-updating-hook first () activate)
-      "Sort dired listings with directories first before adding marks."
-      (petmacs//dired-sort)))
+  ;; (when sys/win32p
+  ;;   (setq dired-listing-switches "-alh")  ;; show human readable file size
+  ;;   (defadvice dired-readin
+  ;; 	(after dired-after-updating-hook first () activate)
+  ;;     "Sort dired listings with directories first before adding marks."
+  ;;     (petmacs//dired-sort)))
   ;; was dired-advertised-find-file
   (evil-define-key 'normal dired-mode-map (kbd "RET") 'dired-find-alternate-file) 
   (evil-define-key 'normal dired-mode-map (kbd "f") 'dired-find-alternate-file) 
@@ -66,10 +66,6 @@
   )
 
 ;; Quick sort dired buffers via hydra
-(use-package dired-quick-sort
-  :bind (:map dired-mode-map
-              ("S" . hydra-dired-quick-sort/body)))
-
   ;; Shows icons
   (use-package all-the-icons-dired
     :diminish
@@ -102,10 +98,20 @@
       (advice-add #'all-the-icons-dired--refresh
                   :override #'my-all-the-icons-dired--refresh)))
 
+;; Quick sort dired buffers via hydra
+(use-package dired-quick-sort
+  :bind (:map dired-mode-map
+         ("S" . hydra-dired-quick-sort/body)))
+
+;; Show git info in dired
+(use-package dired-git-info
+  :bind (:map dired-mode-map
+         (")" . dired-git-info-mode)))
+
 ;; Allow rsync from dired buffers
 (use-package dired-rsync
   :bind (:map dired-mode-map
-                ("C-c C-r" . dired-rsync)))
+         ("C-c C-r" . dired-rsync)))
 
 (use-package diredfl
   :init
@@ -137,6 +143,10 @@
   (setq dired-omit-files
         (concat dired-omit-files
                 "\\|^.DS_Store$\\|^.projectile$\\|^.git$\\|^.svn$\\|^.vscode$\\|\\.js\\.meta$\\|\\.meta$\\|\\.elc$\\|^.emacs.*")))
+
+;; `find-dired' alternative using `fd'
+(when (executable-find "fd")
+  (use-package fd-dired))
 
 (use-package ranger
   :diminish
