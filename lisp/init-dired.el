@@ -76,6 +76,11 @@
     :if (icons-displayable-p)
     :hook (dired-mode . all-the-icons-dired-mode)
     :config
+    ;; FIXME: Refresh after creating or renaming the files/directories.
+    ;; @see https://github.com/jtbm37/all-the-icons-dired/issues/34.
+    (with-no-warnings
+      (advice-add 'dired-do-create-files :around #'all-the-icons-dired--refresh-advice)
+      (advice-add 'dired-create-directory :around #'all-the-icons-dired--refresh-advice))
 
     (with-no-warnings
       (defun my-all-the-icons-dired--refresh ()
@@ -89,18 +94,23 @@
 
               (goto-char (point-min))
               (while (not (eobp))
-                (let ((file (dired-get-filename 'verbatim t)))
-                  (when file
-                    (let ((icon (if (file-directory-p file)
-                                    (all-the-icons-icon-for-dir file nil "")
-                                  (all-the-icons-icon-for-file file :v-adjust 0.0))))
-                      (if (member file '("." ".."))
-                          (all-the-icons-dired--add-overlay (point) "  \t")
-                        (all-the-icons-dired--add-overlay (point) (concat icon "\t"))))))
+                (when-let ((file (dired-get-filename 'verbatim t)))
+                  (let ((icon (if (file-directory-p file)
+                                  (all-the-icons-icon-for-dir
+                                   file
+                                   :face 'all-the-icons-dired-dir-face
+                                   :height 0.9
+                                   :v-adjust all-the-icons-dired-v-adjust)
+                                (all-the-icons-icon-for-file
+                                 file
+                                 :height 0.9
+                                 :v-adjust all-the-icons-dired-v-adjust))))
+                    (if (member file '("." ".."))
+                        (all-the-icons-dired--add-overlay (point) "  \t")
+                      (all-the-icons-dired--add-overlay (point) (concat icon "\t")))))
                 (dired-next-line 1)))
           (message "Not display icons because of too many items.")))
-      (advice-add #'all-the-icons-dired--refresh
-                  :override #'my-all-the-icons-dired--refresh)))
+      (advice-add #'all-the-icons-dired--refresh :override #'my-all-the-icons-dired--refresh)))
 
 ;; Allow rsync from dired buffers
 (use-package dired-rsync
@@ -138,29 +148,30 @@
         (concat dired-omit-files
                 "\\|^.DS_Store$\\|^.projectile$\\|^.git$\\|^.svn$\\|^.vscode$\\|\\.js\\.meta$\\|\\.meta$\\|\\.elc$\\|^.emacs.*")))
 
-;; (use-package ranger
-;;   :diminish
-;;   :commands (ranger deer deer-jump-other-window ranger-override-dired-mode)
-;;   :init
-;;   (setq ranger-override-dired t)
-;;   (setq ranger-deer-show-details t)
-;;   (setq ranger-cleanup-on-disable t)
-;;   (setq ranger-show-hidden t)
-;;   (setq ranger-parent-depth 1)
-;;   (setq ranger-width-parents 0.12)
-;;   (ranger-override-dired-mode t)  ;; use ranger as default directory handler
-;;   (setq ranger-ignored-extensions '("mkv" "iso" "mp4"))
-;;   ;; set the max files size (in MB) to preview
-;;   (setq ranger-max-preview-size 5)
-;;   ;; allow '-' to enter ranger
-;;   (define-key evil-normal-state-map (kbd "-") 'deer)
-;;   :config
-;;   (define-key ranger-mode-map (kbd "-") 'ranger-up-directory)
-;;   (with-eval-after-load 'counsel-projectile
-;;     ;; open deer when switch into one project
-;;     (counsel-projectile-modify-action
-;;      'counsel-projectile-switch-project-action
-;;      '((add ("." deer "open ‘deer’ at the root of the project") 1)))))
+(use-package ranger
+  :diminish
+  :commands (ranger deer deer-jump-other-window ranger-override-dired-mode)
+  :init
+  (setq ranger-override-dired t
+	ranger-deer-show-details t
+	ranger-cleanup-on-disable t
+	ranger-show-hidden t
+	ranger-parent-depth 1
+	ranger-width-parents 0.12
+	ranger-override-dired-mode t  ;; use ranger as default directory handler
+	ranger-ignored-extensions '("mkv" "iso" "mp4")
+	ranger-max-preview-size 5)
+  ;; set the max files size (in MB) to preview
+  ;; allow '-' to enter ranger
+  ;; (define-key evil-normal-state-map (kbd "-") 'deer)
+  ;; :config
+  ;; (define-key ranger-mode-map (kbd "-") 'ranger-up-directory)
+  ;; (with-eval-after-load 'counsel-projectile
+  ;;   ;; open deer when switch into one project
+  ;;   (counsel-projectile-modify-action
+  ;;    'counsel-projectile-switch-project-action
+  ;;    '((add ("." deer "open ‘deer’ at the root of the project") 1))))
+  )
 
 (provide 'init-dired)
 
