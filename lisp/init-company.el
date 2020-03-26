@@ -30,6 +30,10 @@
         company-tooltip-limit 12
         company-idle-delay 0
         company-echo-delay (if (display-graphic-p) nil 0)
+        company-backends '((company-files          ; files & directory
+			    company-keywords       ; keywords
+			    )
+			   (company-abbrev company-dabbrev))
         company-minimum-prefix-length 2
         company-require-match nil
         company-dabbrev-ignore-case nil
