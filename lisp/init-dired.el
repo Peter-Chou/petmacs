@@ -76,11 +76,6 @@
     :if (icons-displayable-p)
     :hook (dired-mode . all-the-icons-dired-mode)
     :config
-    ;; FIXME: Refresh after creating or renaming the files/directories.
-    ;; @see https://github.com/jtbm37/all-the-icons-dired/issues/34.
-    (with-no-warnings
-      (advice-add 'dired-do-create-files :around #'all-the-icons-dired--refresh-advice)
-      (advice-add 'dired-create-directory :around #'all-the-icons-dired--refresh-advice))
 
     (with-no-warnings
       (defun my-all-the-icons-dired--refresh ()
@@ -94,23 +89,18 @@
 
               (goto-char (point-min))
               (while (not (eobp))
-                (when-let ((file (dired-get-filename 'verbatim t)))
-                  (let ((icon (if (file-directory-p file)
-                                  (all-the-icons-icon-for-dir
-                                   file
-                                   :face 'all-the-icons-dired-dir-face
-                                   :height 0.9
-                                   :v-adjust all-the-icons-dired-v-adjust)
-                                (all-the-icons-icon-for-file
-                                 file
-                                 :height 0.9
-                                 :v-adjust all-the-icons-dired-v-adjust))))
-                    (if (member file '("." ".."))
-                        (all-the-icons-dired--add-overlay (point) "  \t")
-                      (all-the-icons-dired--add-overlay (point) (concat icon "\t")))))
+                (let ((file (dired-get-filename 'verbatim t)))
+                  (when file
+                    (let ((icon (if (file-directory-p file)
+                                    (all-the-icons-icon-for-dir file nil "")
+                                  (all-the-icons-icon-for-file file :v-adjust 0.0))))
+                      (if (member file '("." ".."))
+                          (all-the-icons-dired--add-overlay (point) "  \t")
+                        (all-the-icons-dired--add-overlay (point) (concat icon "\t"))))))
                 (dired-next-line 1)))
           (message "Not display icons because of too many items.")))
-      (advice-add #'all-the-icons-dired--refresh :override #'my-all-the-icons-dired--refresh)))
+      (advice-add #'all-the-icons-dired--refresh
+                  :override #'my-all-the-icons-dired--refresh)))
 
 ;; Allow rsync from dired buffers
 (use-package dired-rsync
@@ -158,7 +148,7 @@
 	ranger-show-hidden t
 	ranger-parent-depth 1
 	ranger-width-parents 0.12
-	ranger-override-dired-mode t  ;; use ranger as default directory handler
+	;; ranger-override-dired-mode t  ;; use ranger as default directory handler
 	ranger-ignored-extensions '("mkv" "iso" "mp4")
 	ranger-max-preview-size 5)
   ;; set the max files size (in MB) to preview
