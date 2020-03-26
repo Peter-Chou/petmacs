@@ -152,8 +152,7 @@
   :diminish
   :commands (ranger deer deer-jump-other-window ranger-override-dired-mode)
   :init
-  (setq ranger-override-dired t
-	ranger-deer-show-details t
+  (setq ranger-deer-show-details t
 	ranger-cleanup-on-disable t
 	ranger-show-hidden t
 	ranger-parent-depth 1
