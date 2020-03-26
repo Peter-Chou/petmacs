@@ -72,7 +72,7 @@
     "d"  #'deer
     "p"  #'list-processes
     "P"  #'proced
-    ;; "r"  #'ranger
+    "r"  #'ranger
     "k"  #'paradox-list-packages
     "u"  #'paradox-upgrade-packages
     "w"  #'whitespace-cleanup
