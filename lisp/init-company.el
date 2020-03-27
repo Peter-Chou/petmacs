@@ -31,9 +31,9 @@
   :config
   (setq company-tooltip-align-annotations t ; aligns annotation to the right
 	company-tooltip-limit 12            ; bigger popup window
-	company-idle-delay .1               ; decrease delay before autocompletion popup shows
+	company-idle-delay 0.0               ; decrease delay before autocompletion popup shows
 	company-echo-delay (if (display-graphic-p) nil 0)
-	company-minimum-prefix-length 2
+	company-minimum-prefix-length 1
 	company-require-match nil
         company-dabbrev-ignore-case nil
         company-dabbrev-downcase nil
