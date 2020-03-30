@@ -31,8 +31,8 @@
   (define-key evil-normal-state-map (kbd "-") 'dired-jump)
   :config
   ;; Always delete and copy recursively
-  (setq dired-recursive-deletes 'top)  ;; “top” means ask once
-  (setq dired-recursive-copies 'always)
+  (setq dired-recursive-deletes 'top  ;; “top” means ask once
+	dired-recursive-copies 'always)
 
   (when sys/macp
     ;; Suppress the warning: `ls does not support --dired'.
