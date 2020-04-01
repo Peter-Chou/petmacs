@@ -317,7 +317,8 @@
     ;; goto other window
     "Gr" #'petmacs/lsp-find-references-other-window
     "Gt" #'petmacs/lsp-find-type-definition-other-window
-    "Gd" #'petmacs/lsp-find-definition-other-window
+    ;; "Gd" #'petmacs/lsp-find-definition-other-window
+    "Gd" #'xref-find-definitions-other-window
     "GD" #'petmacs/lsp-find-declaration-other-window
     "Gi" #'petmacs/lsp-find-implementation-other-window
     ;; peek
