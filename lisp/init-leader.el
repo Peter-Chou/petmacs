@@ -8,6 +8,7 @@
   (require 'init-const)
   (require 'init-custom))
 
+
 (setq leader-nnorm-key petmacs-evil-major-leader-insert-default-key
       leader-key petmacs-evil-leader-key
       leader-major-mode-key petmacs-evil-major-leader-key)
@@ -230,8 +231,9 @@
   "D" #'deer-jump-other-window
   "c" #'goto-last-change
   "d" #'deer
-  "j" #'avy-goto-char-timer
-  "J" #'avy-goto-char-2))
+  "j" #'avy-goto-char-2
+  "J" #'avy-goto-char-timer
+  ))
 
 (leader/with-prefix "e"
   (leader/set-keys
