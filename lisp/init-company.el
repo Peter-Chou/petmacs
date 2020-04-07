@@ -43,9 +43,10 @@
 			    company-capf
 			    company-yasnippet)
 			   (company-abbrev company-dabbrev))
-company-frontends '(company-pseudo-tooltip-frontend
-                            company-echo-metadata-frontend))
-  (define-key emacs-lisp-mode-map (kbd "C-M-i") 'company-complete)
+	company-frontends '(company-pseudo-tooltip-frontend
+			    company-echo-metadata-frontend))
+  (define-key global-map (kbd "C-M-i") 'company-complete)
+  (define-key global-map (kbd "C-M-f") 'company-files)
 
   ;; Better sorting and filtering
   (use-package company-prescient
