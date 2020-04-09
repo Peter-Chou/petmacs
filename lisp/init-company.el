@@ -46,7 +46,7 @@
 	company-frontends '(company-pseudo-tooltip-frontend
 			    company-echo-metadata-frontend))
   (define-key global-map (kbd "C-M-i") 'company-complete)
-  (define-key global-map (kbd "C-M-f") 'company-files)
+  (define-key global-map (kbd "C-M-k") 'company-files)
 
   ;; Better sorting and filtering
   (use-package company-prescient
