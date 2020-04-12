@@ -33,6 +33,7 @@
 (leader/declare-prefix*
   "a" "applications"
   "ao" "org"
+  "ao" "org"
 
   "f" "files"
   "fy" "copy"
@@ -45,6 +46,7 @@
   "gf" "magit file"
   "T" "Theme"
   "t" "toggle"
+  "tp" "proxy"
   "q" "quit"
   "i" "insert"
   "p" "project"
@@ -143,8 +145,15 @@
   "s" #'flycheck-mode
   "f" #'focus-mode
   "F" #'toggle-frame-fullscreen
-  "M" #'maximize-window
-  "p" #'proxy-http-toggle))
+  "M" #'maximize-window)
+
+  (leader/with-prefix "p"
+    (leader/set-keys
+      "t" #'proxy-http-toggle
+      "d" #'proxy-http-disable
+      "c" #'proxy-http-customize
+      "s" #'proxy-http-show))
+  )
 
 (leader/with-prefix "F"
   (leader/set-keys

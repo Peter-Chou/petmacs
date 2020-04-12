@@ -20,7 +20,8 @@
   "Show HTTP/HTTPS proxy."
   (interactive)
   (if url-proxy-services
-      (message "Current HTTP proxy is \"%s\"" petmacs-proxy)
+      ;; (message "Current HTTP proxy is \"%s\"" petmacs-proxy)
+      (message "Current HTTP proxy is \"%s\"" url-proxy-services)
     (message "No HTTP proxy")))
 
 (defun proxy-http-enable ()
@@ -28,6 +29,13 @@
   (interactive)
   (setq url-proxy-services `(("http" . ,petmacs-proxy)
                              ("https" . ,petmacs-proxy)
+                             ("no_proxy" . "^\\(localhost\\|192.168.*\\|10.*\\)")))
+  (proxy-http-show))
+
+(defun proxy-http-customize (proxy)
+  (interactive "sEnter your proxy IP:PORT format: ")
+  (setq url-proxy-services `(("http" . ,proxy)
+                             ("https" . ,proxy)
                              ("no_proxy" . "^\\(localhost\\|192.168.*\\|10.*\\)")))
   (proxy-http-show))
 
