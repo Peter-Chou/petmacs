@@ -70,6 +70,7 @@
 
 (use-package centered-cursor-mode)
 
+(use-package posframe)
 (use-package general)
 (use-package restart-emacs)
 (use-package focus)                     ; Focus on the current region
