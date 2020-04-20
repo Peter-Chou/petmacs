@@ -116,6 +116,7 @@
   (setq lsp-auto-guess-root nil		;; Detect project root
         lsp-keep-workspace-alive nil    ;; Auto-kill LSP server
         lsp-prefer-capf t
+	lsp-idle-delay 0.500
 	lsp-prefer-flymake nil		;; Use lsp-ui and flycheck
 	flymake-fringe-indicator-position 'right-fringe)
   :config
