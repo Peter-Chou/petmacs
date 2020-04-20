@@ -158,6 +158,11 @@
 (use-package quickrun
   :init (setq quickrun-focus-p nil))
 
+(use-package protobuf-mode
+  :hook (protobuf-mode . (lambda ()
+			   (setq imenu-generic-expression
+				 '((nil "^[[:space:]]*\\(message\\|service\\|enum\\)[[:space:]]+\\([[:alnum:]]+\\)" 2))))))
+
 ;; Docker
 (use-package docker
   :bind ("C-c d" . docker)
