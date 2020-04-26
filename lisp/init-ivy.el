@@ -96,19 +96,6 @@
   (when sys/win32p
     (setq ivy-dynamic-exhibit-delay-ms 200))
 
-  (defun my-ivy-format-function-arrow (cands)
-    "Transform CANDS into a string for minibuffer."
-    (ivy--format-function-generic
-     (lambda (str)
-       (concat (if (icons-displayable-p)
-                   (all-the-icons-octicon "chevron-right" :height 0.8 :v-adjust -0.05)
-                 ">")
-               (propertize " " 'display `(space :align-to 2))
-               (ivy--add-face str 'ivy-current-match)))
-     (lambda (str)
-       (concat (propertize " " 'display `(space :align-to 2)) str))
-     cands
-     "\n"))
   (setq ivy-format-functions-alist '((counsel-describe-face . counsel--faces-format-function)
                                      (t . my-ivy-format-function-arrow)))
 
@@ -124,6 +111,7 @@
       (setq counsel-find-file-occur-use-find nil
             counsel-find-file-occur-cmd
             "gls -a | grep -i -E '%s' | tr '\\n' '\\0' | xargs -0 gls -d --group-directories-first")))
+
   :config
   (with-no-warnings
     ;; Display an arrow with the selected item
@@ -131,16 +119,22 @@
       "Transform CANDS into a string for minibuffer."
       (ivy--format-function-generic
        (lambda (str)
-         (concat (if (icons-displayable-p)
-                     (all-the-icons-octicon "chevron-right" :height 0.8 :v-adjust -0.05)
-                   ">")
-                 (propertize " " 'display `(space :align-to 2))
+         (concat (if (and (bound-and-true-p all-the-icons-ivy-rich-mode)
+                          (>= (length str) 1)
+                          (string= " " (substring str 0 1)))
+                     ">"
+                   "> ")
                  (ivy--add-face str 'ivy-current-match)))
        (lambda (str)
-         (concat (propertize " " 'display `(space :align-to 2)) str))
+         (concat (if (and (bound-and-true-p all-the-icons-ivy-rich-mode)
+                          (>= (length str) 1)
+                          (string= " " (substring str 0 1)))
+                     " "
+                   "  ")
+                 str))
        cands
        "\n"))
-    ;; (setf (alist-get 't ivy-format-functions-alist) #'my-ivy-format-function-arrow)
+    (setf (alist-get 't ivy-format-functions-alist) #'my-ivy-format-function-arrow)
 
     ;; Pre-fill search keywords
     ;; @see https://www.reddit.com/r/emacs/comments/b7g1px/withemacs_execute_commands_like_marty_mcfly/
