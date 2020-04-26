@@ -115,10 +115,12 @@
   :init
   (setq lsp-auto-guess-root nil		;; Detect project root
         lsp-keep-workspace-alive nil    ;; Auto-kill LSP server
+        lsp-enable-indentation nil
+        lsp-enable-on-type-formatting nil
         lsp-prefer-capf t
 	lsp-idle-delay 0.500
-	lsp-prefer-flymake nil		;; Use lsp-ui and flycheck
-	flymake-fringe-indicator-position 'right-fringe)
+        lsp-flycheck-live-reporting nil	;; Disable realtime checking 
+	)
   :config
      ;; Configure LSP clients
      (use-package lsp-clients
@@ -146,11 +148,11 @@
 	lsp-ui-doc-use-webkit nil
 	lsp-ui-doc-delay 0.2
 	lsp-ui-doc-include-signature t
-	lsp-ui-doc-position 'top  ;; or at-point
+	;; lsp-ui-doc-position 'top  ;; or at-point
+        lsp-ui-doc-position 'at-point
+
 	lsp-ui-doc-border (face-foreground 'default)
         lsp-eldoc-enable-hover nil ; Disable eldoc displays in minibuffer
-	;; lsp-ui-flycheck-enable nil  ;; disable flycheck
-	;; lsp-ui-peek-enable t
 
 	lsp-ui-sideline-enable t
 	lsp-ui-sideline-show-hover nil
