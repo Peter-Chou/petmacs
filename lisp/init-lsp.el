@@ -113,10 +113,15 @@
             ([remap xref-find-definitions] . lsp-find-definition)
             ([remap xref-find-references] . lsp-find-references))
   :init
-  (setq lsp-auto-guess-root nil		;; Detect project root
+  (setq lsp-keymap-prefix "C-c l"
+   lsp-auto-guess-root nil		;; Detect project root
         lsp-keep-workspace-alive nil    ;; Auto-kill LSP server
         lsp-enable-indentation nil
-        lsp-enable-on-type-formatting nil
+	lsp-enable-file-watchers nil
+	lsp-enable-folding nil
+	lsp-enable-indentation nil
+	lsp-enable-on-type-formatting nil
+	lsp-enable-symbol-highlighting nil
         lsp-prefer-capf t
 	lsp-idle-delay 0.500
         lsp-flycheck-live-reporting nil	;; Disable realtime checking 
