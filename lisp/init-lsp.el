@@ -454,6 +454,12 @@
 (dolist (lang org-babel-lang-list)
   (eval `(lsp-org-babel-enable ,lang)))
 
+(when sys/macp
+  (use-package lsp-sourcekit
+    :init (setq lsp-sourcekit-executable
+                "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp")))
+
+
 (provide 'init-lsp)
 
 ;;; init-lsp.el ends here
