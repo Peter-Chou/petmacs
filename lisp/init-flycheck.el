@@ -17,10 +17,10 @@
   (evil-define-key 'normal flycheck-error-list-mode-map (kbd "j") 'flycheck-error-list-next-error)
   (evil-define-key 'normal flycheck-error-list-mode-map (kbd "k") 'flycheck-error-list-previous-error)
   :config
-  (setq flycheck-global-modes
-        '(not text-mode outline-mode fundamental-mode org-mode
-              diff-mode shell-mode eshell-mode term-mode vterm-mode)
-        flycheck-emacs-lisp-load-path 'inherit
+  :init (setq flycheck-global-modes
+              '(not text-mode outline-mode fundamental-mode lisp-interaction-mode
+                    org-mode diff-mode shell-mode eshell-mode term-mode vterm-mode)
+              flycheck-emacs-lisp-load-path 'inherit
         ;; Only check while saving and opening files
         flycheck-check-syntax-automatically '(save mode-enabled)
         flycheck-indication-mode 'right-fringe)
