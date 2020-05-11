@@ -322,13 +322,11 @@
     "gd" #'xref-find-definitions
     "gD" #'lsp-find-declaration
     "gi" #'lsp-find-implementation
-    "gk" #'petmacs/lsp-avy-goto-word
-    "gK" #'petmacs/lsp-avy-goto-symbol
+    "gs" #'lsp-ui-find-workspace-symbol
     "gM" #'lsp-ui-imenu
     ;; goto other window
     "Gr" #'petmacs/lsp-find-references-other-window
     "Gt" #'petmacs/lsp-find-type-definition-other-window
-    ;; "Gd" #'petmacs/lsp-find-definition-other-window
     "Gd" #'xref-find-definitions-other-window
     "GD" #'petmacs/lsp-find-declaration-other-window
     "Gi" #'petmacs/lsp-find-implementation-other-window
