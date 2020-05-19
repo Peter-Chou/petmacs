@@ -143,7 +143,8 @@
   (lsp-ui-sideline-code-action ((t (:inherit warning))))
   :bind (("C-c u" . lsp-ui-imenu)
             :map lsp-ui-mode-map
-            ("M-<f6>" . lsp-ui-hydra/body))
+            ("M-<f6>" . lsp-ui-hydra/body)
+	    ("M-RET" . lsp-ui-sideline-apply-code-actions))
   :hook ((lsp-mode . lsp-ui-mode)
 	 (lsp-ui-imenu-mode . (lambda ()
 			       (display-line-numbers-mode -1)
