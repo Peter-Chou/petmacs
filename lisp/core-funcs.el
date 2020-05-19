@@ -51,19 +51,18 @@
 (defun proxy-http-toggle ()
   "Toggle HTTP/HTTPS proxy."
   (interactive)
-  (if url-proxy-services
+  (if (bound-and-true-p url-proxy-services)
       (proxy-http-disable)
     (proxy-http-enable)))
 
-(defvar socks-noproxy)
-(defvar socks-server)
 (defun proxy-socks-show ()
   "Show SOCKS proxy."
   (interactive)
-  (if socks-noproxy
-      (message "Current SOCKS%d proxy is %s:%d"
-               (cadddr socks-server) (cadr socks-server) (caddr socks-server))
-    (message "No SOCKS proxy")))
+  (when (fboundp 'cadddr)                ; defined 25.2+
+    (if (bound-and-true-p socks-noproxy)
+        (message "Current SOCKS%d proxy is %s:%d"
+                 (cadddr socks-server) (cadr socks-server) (caddr socks-server))
+      (message "No SOCKS proxy"))))
 
 (defun proxy-socks-enable ()
   "Enable SOCKS proxy."
@@ -80,13 +79,6 @@
   (setq url-gateway-method 'native
         socks-noproxy nil)
   (proxy-socks-show))
-
-(defun proxy-socks-toggle ()
-  "Toggle SOCKS proxy."
-  (interactive)
-  (if (bound-and-true-p socks-noproxy)
-      (proxy-socks-disable)
-    (proxy-socks-enable)))
 
 (defun petmacs//setup-default-key-name (key desc)
   (which-key-add-key-based-replacements
