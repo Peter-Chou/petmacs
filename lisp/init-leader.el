@@ -321,6 +321,7 @@
     "gt" #'lsp-find-type-definition
     "gd" #'xref-find-definitions
     "gD" #'lsp-find-declaration
+    "gf" #'xref-find-definitions-other-frame
     "gi" #'lsp-find-implementation
     "gs" #'lsp-ui-find-workspace-symbol
     "gM" #'lsp-ui-imenu
