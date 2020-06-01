@@ -11,6 +11,7 @@
   :bind (("C-x g" . magit-status)
           ("C-x M-g" . magit-dispatch-popup)
           ("C-c M-g" . magit-file-popup))
+  :init (setq magit-diff-refine-hunk t)
   :config
   (setq magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1)
   ;; (add-to-list 'magit-log-arguments "--color")
