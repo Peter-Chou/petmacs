@@ -124,7 +124,6 @@
 	lsp-enable-symbol-highlighting nil
         lsp-prefer-capf t
 	lsp-idle-delay 0.500
-        lsp-flycheck-live-reporting nil	;; Disable realtime checking 
 	)
   :config
      ;; Configure LSP clients
