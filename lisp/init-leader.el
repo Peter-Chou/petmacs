@@ -164,6 +164,7 @@
   "B" #'display-buffer-other-frame
   "o" #'other-frame
   "O" #'dired-other-frame
+  "M" #'toggle-frame-maximized
   "n" #'make-frame)
   )
 
