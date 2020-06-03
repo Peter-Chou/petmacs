@@ -378,8 +378,12 @@ Pass arg to ‘shell’."
 (defun petmacs/find-org-global-todos ()
   "Edit the `dotfile', in the current window."
   (interactive)
-  (find-file-existing (expand-file-name "TODOs.org" org-directory))
-  (revert-buffer nil t))
+  (let ((filename (expand-file-name "TODOs.org" org-directory)))
+    (unless (file-exists-p filename)
+      (make-directory org-directory t))
+    (find-file filename)
+    (if (file-exists-p filename)
+	(revert-buffer nil t))))
 
 (defun petmacs/alternate-buffer (&optional window)
   "Switch back and forth between current and last buffer in the
