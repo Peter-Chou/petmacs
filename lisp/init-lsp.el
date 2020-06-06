@@ -116,15 +116,15 @@
   (setq lsp-keymap-prefix "C-c l"
    lsp-auto-guess-root nil		;; Detect project root
         lsp-keep-workspace-alive nil    ;; Auto-kill LSP server
-        lsp-enable-indentation nil
-	lsp-enable-file-watchers nil
-	lsp-enable-folding nil
-	lsp-enable-indentation nil
+        ;; lsp-enable-indentation nil
+	;; lsp-enable-file-watchers nil
+	;; lsp-enable-folding nil
+	;; lsp-enable-indentation nil
 	lsp-enable-on-type-formatting nil
 	lsp-enable-symbol-highlighting nil
         lsp-prefer-capf t
 	lsp-idle-delay 0.500
-        lsp-flycheck-live-reporting nil	;; Disable realtime checking 
+        ;; lsp-flycheck-live-reporting nil	;; Disable realtime checking 
 	)
   :config
      ;; Configure LSP clients
