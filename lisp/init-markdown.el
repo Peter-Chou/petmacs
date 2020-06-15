@@ -62,6 +62,7 @@ mermaid.initialize({
 
   ;; Use `which-key'
   (advice-add #'markdown--command-map-prompt :override #'ignore)
+  (advice-add #'markdown--style-map-prompt   :override #'ignore)
   :config
   (add-to-list 'markdown-code-lang-modes '("mermaid" . mermaid-mode))
 
