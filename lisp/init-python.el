@@ -17,7 +17,8 @@
   :ensure nil
   :hook
   ((python-mode . (lambda ()
-		    (setq-local flycheck-checkers '(python-pylint))))
+		    (setq-local flycheck-checkers '(python-pylint))
+		    (pyvenv-mode 1)))
    (inferior-python-mode . (lambda ()
 			     (process-query-on-exit-flag
 			      (get-process "Python")))))
