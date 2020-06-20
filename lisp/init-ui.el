@@ -188,7 +188,8 @@
 
   (doom-modeline-def-modeline 'my-modeline-layout
   '(bar workspace-name window-number modals matches buffer-info remote-host buffer-position word-count parrot selection-info)
-  '(objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl input-method indent-info buffer-encoding petmacs||python-venv process vcs checker))
+  ;; '(objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl input-method indent-info buffer-encoding petmacs||python-venv process vcs checker))
+  '(objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl input-method indent-info buffer-encoding process vcs checker))
 
   (defun setup-custom-doom-modeline ()
     (doom-modeline-set-modeline 'my-modeline-layout 'default)))
