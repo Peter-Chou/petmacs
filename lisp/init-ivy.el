@@ -500,6 +500,8 @@ This is for use in `ivy-re-builders-alist'."
   ;; For better performance
   (setq ivy-rich-parse-remote-buffer nil))
 
+(use-package ivy-yasnippet)
+
 (provide 'init-ivy)
 
 ;;; init-ivy.el ends here
