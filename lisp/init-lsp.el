@@ -117,7 +117,7 @@
      (setq read-process-output-max (* 1024 1024)) ;; 1MB
 
      (setq lsp-keymap-prefix "C-c l"
-           lsp-auto-guess-root t
+           lsp-auto-guess-root nil
            lsp-keep-workspace-alive nil
            lsp-prefer-capf t
            lsp-signature-auto-activate nil
