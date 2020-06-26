@@ -24,8 +24,7 @@
 	;; -cross-file-rename is vaild since clangd-10
 	"-cross-file-rename"
         ;; "--compile-commands-dir=/work/DomainDrivenConsulting/masd/dogen/integration/build/output/clang7/Release"
-        )
-      )
+        ))
 
 :hook ((c-mode c++-mode) . (lambda ()
 		    "Format and add/delete imports."
