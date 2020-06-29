@@ -62,7 +62,8 @@
 			       (require 'lsp-python-ms)
 			       (lsp-deferred)))
 	:init
-	(setq lsp-python-ms-nupkg-channel "stable")))
+	(setq lsp-python-ms-auto-install-server t
+	      lsp-python-ms-nupkg-channel "stable")))
   (progn
     (use-package anaconda-mode
       :defines anaconda-mode-localhost-address
