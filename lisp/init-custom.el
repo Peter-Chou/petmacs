@@ -15,10 +15,10 @@
 ;; (defvar petmacs-night-theme 'doom-dracula)
 
 (defvar petmacs-themes-list '(
+			      doom-dracula
+			      doom-one-light
 			      doom-solarized-light
 			      doom-solarized-dark
-			      doom-one-light
-			      doom-dracula
 			      )
   "List of themes for cycling.")
 
@@ -41,6 +41,7 @@
 				   java-mode
 				   scala-mode
 				   go-mode
+				   sh-mode
 				   )
   "Primary major modes of the lsp activated layer.")
 
