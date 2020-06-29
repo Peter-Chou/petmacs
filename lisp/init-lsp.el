@@ -121,12 +121,17 @@
            lsp-keep-workspace-alive nil
            lsp-prefer-capf t
            lsp-signature-auto-activate nil
+           lsp-modeline-code-actions-enable nil
 
            lsp-enable-file-watchers nil
+           lsp-enable-file-watchers nil
            lsp-enable-folding nil
+           lsp-enable-semantic-highlighting nil
+           lsp-enable-symbol-highlighting nil
+           lsp-enable-text-document-color nil
+
            lsp-enable-indentation nil
-           lsp-enable-on-type-formatting nil
-           lsp-enable-symbol-highlighting nil)
+           lsp-enable-on-type-formatting nil)
      :config
      ;; Configure LSP clients
      (use-package lsp-clients
