@@ -15,10 +15,10 @@
 ;; (defvar petmacs-night-theme 'doom-dracula)
 
 (defvar petmacs-themes-list '(
-			      doom-dracula
-			      doom-one-light
 			      doom-solarized-light
 			      doom-solarized-dark
+			      doom-dracula
+			      doom-one-light
 			      )
   "List of themes for cycling.")
 
