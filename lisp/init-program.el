@@ -124,18 +124,6 @@
 
 ;; Flexible text folding
 (use-package origami
-  :pretty-hydra
-  ((:title (pretty-hydra-title "Origami" 'octicon "fold")
-    :color blue :quit-key "q")
-   ("Node"
-    ((":" origami-recursively-toggle-node "toggle recursively")
-     ("a" origami-toggle-all-nodes "toggle all")
-     ("t" origami-toggle-node "toggle current")
-     ("o" origami-show-only-node "only show current"))
-    "Actions"
-    (("u" origami-undo "undo")
-     ("d" origami-redo "redo")
-     ("r" origami-reset "reset"))))
   :bind (:map origami-mode-map
          ("C-`" . origami-hydra/body))
   :hook (prog-mode . origami-mode)
