@@ -39,7 +39,20 @@
     (kbd "C-r") 'comint-history-isearch-backward))
 
 (use-package py-isort)
-(use-package pyvenv)
+
+(use-package pyvenv
+  :preface
+  ;; autoload virtual environment if project_root/.venv file exists,
+  ;; .venv file only has the name of the virtual environment.
+  (defun pyvenv-autoload ()
+    (require 'projectile)
+    (let* ((pdir (projectile-project-root)) (pfile (concat pdir ".venv")))
+      (if (file-exists-p pfile)
+          (pyvenv-workon (with-temp-buffer
+                           (insert-file-contents pfile)
+                           (nth 0 (split-string (buffer-string))))))))
+  :hook (python-mode . pyvenv-autoload))
+
 (use-package pipenv
   :commands (pipenv-activate
              pipenv-deactivate
@@ -58,7 +71,7 @@
 (if (member 'python-mode petmacs-lsp-active-modes)
     (progn
       (use-package lsp-python-ms
-	:hook (python-mode . (lambda ()
+	:hook (pyvenv-mode . (lambda ()
 			       (require 'lsp-python-ms)
 			       (lsp-deferred)))
 	:init
@@ -72,8 +85,6 @@
 	     (python-mode . anaconda-eldoc-mode))
       :config
       ;; WORKAROUND: https://github.com/proofit404/anaconda-mode#faq
-      ;; (when (eq system-type 'darwin)
-      ;;   (setq anaconda-mode-localhost-address "localhost"))
       (setq anaconda-mode-localhost-address "localhost"))
 
     (use-package company-anaconda
