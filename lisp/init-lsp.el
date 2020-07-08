@@ -214,24 +214,15 @@
          (python-mode . (lambda () (require 'dap-python)))
          (go-mode . (lambda () (require 'dap-go)))
          (java-mode . (lambda () (require 'dap-java)))
-         ;; ((c-mode c++-mode objc-mode swift-mode) . (lambda () (require 'dap-lldb)))
-         ((c-mode c++-mode objc-mode swift-mode) . (lambda () (require 'dap-gdb-lldb)))
          ;; ((js-mode js2-mode) . (lambda () (require 'dap-chrome)))
-	 )
+         ((c-mode c++-mode objc-mode swift-mode) . (lambda () (require 'dap-lldb)))
+         ;; ((c-mode c++-mode objc-mode swift-mode) . (lambda () (require 'dap-gdb-lldb))))
   :init
-  (setq dap-connect-retry-count 100
-	dap-connect-retry-interval 0.2
+  (setq dap-auto-configure-features '(sessions locals breakpoints expressions controls)
 	;; dap-python-terminal "xterm -e "
+	;; dap-connect-retry-count 100
+	;; dap-connect-retry-interval 0.2
 	)
-  :config
-(dap-register-debug-template "My App"
-  (list :type "python"
-        :args "-i"
-        :cwd nil
-        :env '(("DEBUG" . "1"))
-        ;; :target-module (expand-file-name "~/src/myapp/.env/bin/myapp")
-        :request "launch"
-        :name "My App"))
   )
 
 ;; `lsp-mode' and `treemacs' integration
@@ -249,7 +240,7 @@
         (push 'lsp-treemacs-java-deps-mode aw-ignored-buffers)))
 
     (with-no-warnings
-    (when (require 'all-the-icons nil t)
+      (when (require 'all-the-icons nil t)
         (treemacs-create-theme "petmacs-colors"
           :extends "doom-colors"
           :config
