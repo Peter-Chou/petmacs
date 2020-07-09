@@ -155,7 +155,6 @@
               lsp-ui-doc-include-signature t
               lsp-ui-doc-position 'at-point
               lsp-ui-doc-border (face-foreground 'default)
-              lsp-eldoc-enable-hover nil ; Disable eldoc displays in minibuffer
 
               lsp-ui-sideline-enable t
               lsp-ui-sideline-show-hover nil
@@ -204,8 +203,8 @@
 (use-package dap-mode
   :diminish
   :bind (:map lsp-mode-map
-         ("<f5>" . dap-debug)
-         ("M-<f5>" . dap-hydra))
+              ("<f5>" . dap-debug)
+              ("M-<f5>" . dap-hydra))
   :hook ((after-init . dap-mode)
          (dap-mode . dap-ui-mode)
          ;; (dap-session-created . (lambda (_args) (dap-hydra)))
@@ -215,8 +214,8 @@
          (go-mode . (lambda () (require 'dap-go)))
          (java-mode . (lambda () (require 'dap-java)))
          ;; ((js-mode js2-mode) . (lambda () (require 'dap-chrome)))
-         ((c-mode c++-mode objc-mode swift-mode) . (lambda () (require 'dap-lldb)))
          ;; ((c-mode c++-mode objc-mode swift-mode) . (lambda () (require 'dap-gdb-lldb))))
+         ((c-mode c++-mode objc-mode swift-mode) . (lambda () (require 'dap-lldb))))
   :init
   (setq dap-auto-configure-features '(sessions locals breakpoints expressions controls)
 	;; dap-python-terminal "xterm -e "
