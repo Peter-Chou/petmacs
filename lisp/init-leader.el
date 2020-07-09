@@ -8,6 +8,16 @@
   (require 'init-const)
   (require 'init-custom))
 
+;; install fcitx fcitx-googlepinyin
+;; create ~/.xprofile which has:
+;; ```sh
+;; export GTK_IM_MODULE=fcitx
+;; export QT_IM_MODULE=fcitx
+;; export XMODIFIERS=@im=fcitx
+;; fcitx &
+;; ```
+;; write `LC_CTYPE="zh_CN.UTF-8"` to /etc/default/locale & reboot
+(global-set-key (kbd "C-SPC") 'nil) ;; switch to chinese
 
 (setq leader-nnorm-key petmacs-evil-major-leader-insert-default-key
       leader-key petmacs-evil-leader-key
