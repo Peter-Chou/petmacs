@@ -105,7 +105,6 @@
     (setq petmacs-themes-list (append petmacs-themes-list (list petmacs--default-theme))))
   (counsel-load-theme))
 
-
 (defun petmacs/switch-to-minibuffer-window ()
   "switch to minibuffer window (if active)"
   (interactive)

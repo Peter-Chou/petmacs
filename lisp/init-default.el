@@ -14,7 +14,8 @@
     :init
     (setq exec-path-from-shell-check-startup-files nil)
     (setq exec-path-from-shell-variables '("PATH" "MANPATH" "PYTHONPATH" "GOPATH"
-					   "WORKON_HOME" "JAVA_HOME" "LD_LIBRARY_PATH"))
+					   "WORKON_HOME" "JAVA_HOME"
+					   "LLVM_HOME" "LD_LIBRARY_PATH"))
     (setq exec-path-from-shell-arguments '("-l"))
     (exec-path-from-shell-initialize)))
 
