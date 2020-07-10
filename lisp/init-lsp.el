@@ -200,13 +200,27 @@
 ;; Debug
 ;; python: pip install "ptvsd>=4.2" 
 ;; C++: apt-get install lldb nodejs npm
+;; C++: follow instruction from https://github.com/llvm-mirror/lldb/tree/master/tools/lldb-vscode
 (use-package dap-mode
+  :preface
+  (defun petmacs--autoload-dap-templates()
+    "autoload dap templates in projectile_root_dir/dap_templates.el"
+    (interactive)
+    (let* ((pdir (projectile-project-root))
+	   (pfile (concat pdir "dap_templates.el")))
+      (when (file-exists-p pfile)
+	(with-temp-buffer
+	  (insert-file-contents pfile)
+	  (eval-buffer)
+	  (message "dap templates has been loaded.")))))
   :diminish
+  :defines (dap-lldb-debug-program)
   :bind (:map lsp-mode-map
               ("<f5>" . dap-debug)
               ("M-<f5>" . dap-hydra))
   :hook ((after-init . dap-mode)
          (dap-mode . dap-ui-mode)
+	 (lsp-mode . petmacs--autoload-dap-templates)
          ;; (dap-session-created . (lambda (_args) (dap-hydra)))
          ;; (dap-stopped . (lambda (_args) (dap-hydra)))
 
@@ -214,14 +228,15 @@
          (go-mode . (lambda () (require 'dap-go)))
          (java-mode . (lambda () (require 'dap-java)))
          ;; ((js-mode js2-mode) . (lambda () (require 'dap-chrome)))
-         ;; ((c-mode c++-mode objc-mode swift-mode) . (lambda () (require 'dap-gdb-lldb))))
-         ((c-mode c++-mode objc-mode swift-mode) . (lambda () (require 'dap-lldb))))
+	 ;; ((c-mode c++-mode objc-mode swift-mode) . (lambda () (require 'dap-gdb-lldb))))
+	 ((c-mode c++-mode objc-mode swift-mode) . (lambda () (require 'dap-lldb))))
   :init
-  (setq dap-auto-configure-features '(sessions locals breakpoints expressions controls)
-	;; dap-python-terminal "xterm -e "
-	;; dap-connect-retry-count 100
-	;; dap-connect-retry-interval 0.2
-	)
+  ;; (setq dap-auto-configure-features '(locals controls repl))
+  ;; (setq dap-auto-configure-features '(sessions locals breakpoints expressions controls repl)
+  ;; dap-lldb-debug-program (concat (getenv "LLVM_HOME") "/bin/lldb-vscode")
+  ;; dap-python-terminal "xterm -e "
+  ;; dap-connect-retry-count 100
+  ;; dap-connect-retry-interval 0.2)
   )
 
 ;; `lsp-mode' and `treemacs' integration
