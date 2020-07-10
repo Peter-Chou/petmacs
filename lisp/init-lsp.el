@@ -216,8 +216,8 @@
   :diminish
   :defines (dap-lldb-debug-program)
   :bind (:map lsp-mode-map
-              ("<f5>" . dap-debug)
-              ("M-<f5>" . dap-hydra))
+         ("<f5>" . dap-debug)
+         ("M-<f5>" . dap-hydra))
   :hook ((after-init . dap-mode)
          (dap-mode . dap-ui-mode)
 	 (lsp-mode . petmacs--autoload-dap-templates)
@@ -231,6 +231,7 @@
 	 ;; ((c-mode c++-mode objc-mode swift-mode) . (lambda () (require 'dap-gdb-lldb))))
 	 ((c-mode c++-mode objc-mode swift-mode) . (lambda () (require 'dap-lldb))))
   :init
+  (setq dap-enable-mouse-support t)
   ;; (setq dap-auto-configure-features '(locals controls repl))
   ;; (setq dap-auto-configure-features '(sessions locals breakpoints expressions controls repl)
   ;; dap-lldb-debug-program (concat (getenv "LLVM_HOME") "/bin/lldb-vscode")
