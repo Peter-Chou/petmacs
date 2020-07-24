@@ -74,6 +74,8 @@ decrease this. If you experience stuttering, increase this.")
 			 ("org"          . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
 			 ("melpa-stable" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa-stable/")))
 
+(setq byte-compile-warnings '(cl-functions))
+
 (require 'init-custom)
 (require 'init-const)
 (require 'init-package)
