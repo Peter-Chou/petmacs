@@ -108,6 +108,8 @@
 (leader/with-prefix "f"
   (leader/set-keys
     "f"  #'counsel-find-file
+    "w"  #'find-file-other-window
+    "F"  #'find-file-other-frame
     "j"  #'dired-jump
     "t"  #'treemacs
     "B"  #'treemacs-bookmark
