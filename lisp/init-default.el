@@ -304,5 +304,10 @@
   (and (display-graphic-p)
        (require 'all-the-icons nil t)))
 
+
+(use-package frame-cmds
+  :ensure nil
+  :init (require 'frame-cmds))
+
 (provide 'init-default)
 ;;; init-default.el ends here
