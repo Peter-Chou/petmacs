@@ -26,8 +26,8 @@
 		 (lsp--send-request (lsp--make-request
 				     "textDocument/documentSymbol"
 				     `(:textDocument ,(lsp--text-document-identifier)
-						     :all ,(if all t :json-false)
-						     :startLine ,start-line :endLine ,end-line)))
+				       :all ,(if all t :json-false)
+				       :startLine ,start-line :endLine ,end-line)))
 		 for range = (if ccls loc (->> loc (gethash "location") (gethash "range")))
 		 for range_start = (gethash "start" range)
 		 for range_end = (gethash "end" range)
@@ -68,8 +68,8 @@
   (defun petmacs/lsp-ui-sideline-symb ()
     "Toggle the symbol in the lsp-ui-sideline overlay.
 (generally redundant in C modes)"
-     (interactive)
-     (setq lsp-ui-sideline-show-symbol (not lsp-ui-sideline-show-symbol)))
+    (interactive)
+    (setq lsp-ui-sideline-show-symbol (not lsp-ui-sideline-show-symbol)))
 
   (defun petmacs/lsp-ui-sideline-ignore-duplicate ()
     "Toggle ignore duplicates for lsp-ui-sideline overlay"
@@ -106,40 +106,42 @@
       (pop-to-buffer (current-buffer) t))
     (lsp-find-type-definition))
   :hook (lsp-mode . (lambda ()
-                       ;; Integrate `which-key'
-                       (lsp-enable-which-key-integration)))
+                      ;; Integrate `which-key'
+                      (lsp-enable-which-key-integration)))
   :bind (:map lsp-mode-map
-            ("C-c C-d" . lsp-describe-thing-at-point)
-            ([remap xref-find-definitions] . lsp-find-definition)
-            ([remap xref-find-references] . lsp-find-references))
-     :init
-     ;; @see https://github.com/emacs-lsp/lsp-mode#performance
-     (setq read-process-output-max (* 1024 1024)) ;; 1MB
+         ("C-c C-d" . lsp-describe-thing-at-point)
+         ([remap xref-find-definitions] . lsp-find-definition)
+         ([remap xref-find-references] . lsp-find-references))
+  :init
+  ;; @see https://github.com/emacs-lsp/lsp-mode#performance
+  (setq read-process-output-max (* 1024 1024)) ;; 1MB
 
-     (setq lsp-keymap-prefix "C-c l"
-           lsp-auto-guess-root nil
-           lsp-keep-workspace-alive nil
-           lsp-prefer-capf t
-           lsp-signature-auto-activate nil
-           lsp-modeline-code-actions-enable nil
+  (setq lsp-keymap-prefix "C-c l"
+        lsp-auto-guess-root nil
+        lsp-keep-workspace-alive nil
+        lsp-prefer-capf t
+        lsp-signature-auto-activate nil
+        lsp-modeline-code-actions-enable nil
+        lsp-modeline-diagnostics-enable nil
 
-           lsp-enable-file-watchers nil
-           lsp-enable-file-watchers nil
-           lsp-enable-folding nil
-           lsp-enable-semantic-highlighting nil
-           lsp-enable-symbol-highlighting nil
-           lsp-enable-text-document-color nil
 
-           lsp-enable-indentation nil
-           lsp-enable-on-type-formatting nil)
-     :config
-     ;; Configure LSP clients
-     (use-package lsp-clients
-       :ensure nil
-       :hook (go-mode . (lambda ()
-                          "Format and add/delete imports."
-                          (add-hook 'before-save-hook #'lsp-format-buffer t t)
-                          (add-hook 'before-save-hook #'lsp-organize-imports t t)))))
+        lsp-enable-file-watchers nil
+        lsp-enable-file-watchers nil
+        lsp-enable-folding nil
+        lsp-enable-semantic-highlighting nil
+        lsp-enable-symbol-highlighting nil
+        lsp-enable-text-document-color nil
+
+        lsp-enable-indentation nil
+        lsp-enable-on-type-formatting nil)
+  :config
+  ;; Configure LSP clients
+  (use-package lsp-clients
+    :ensure nil
+    :hook (go-mode . (lambda ()
+                       "Format and add/delete imports."
+                       (add-hook 'before-save-hook #'lsp-format-buffer t t)
+                       (add-hook 'before-save-hook #'lsp-organize-imports t t)))))
 
 (use-package lsp-ui
   :custom-face
@@ -248,6 +250,7 @@
            ("C-<f8>" . lsp-treemacs-errors-list)
            ("M-<f8>" . lsp-treemacs-symbols)
            ("s-<f8>" . lsp-treemacs-java-deps-list))
+    :init (lsp-treemacs-sync-mode 1)
     :config
     (with-eval-after-load 'ace-window
       (when (boundp 'aw-ignored-buffers)
