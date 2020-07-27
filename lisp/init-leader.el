@@ -247,14 +247,14 @@
 
 (leader/with-prefix "j"
   (leader/set-keys
-  "i" #'petmacs/counsel-jump-in-buffer
-  "w" #'evil-avy-goto-word-or-subword-1
-  "D" #'deer-jump-other-window
-  "c" #'goto-last-change
-  "d" #'deer
-  "j" #'avy-goto-char-2
-  "J" #'avy-goto-char-timer
-  ))
+    "i" #'petmacs/counsel-jump-in-buffer
+    "w" #'evil-avy-goto-word-or-subword-1
+    "D" #'deer-jump-other-window
+    "c" #'goto-last-change
+    "d" #'deer
+    "j" #'avy-goto-char-timer
+    "J" #'avy-goto-char-2
+    ))
 
 (leader/with-prefix "e"
   (leader/set-keys
