@@ -22,7 +22,7 @@
 ;; maximize emacs after initialization
 ;; (toggle-frame-maximized)
 
-;; fix print gibberish when in windows system 
+;; fix print gibberish when in windows system
 ;; https://blog.csdn.net/sanwu2010/article/details/23994977
 ;; (if sys/win32p
 ;;     (progn
@@ -318,6 +318,12 @@
 (use-package frame-cmds
   :ensure nil
   :init (require 'frame-cmds))
+
+(when emacs/>=27p
+  (use-package so-long
+    :ensure nil
+    :hook (after-init . global-so-long-mode)
+    :config (setq so-long-threshold 400)))
 
 (provide 'init-default)
 ;;; init-default.el ends here
