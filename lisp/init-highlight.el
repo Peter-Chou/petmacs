@@ -108,7 +108,7 @@
 ;; Colorize color names in buffers
 (use-package rainbow-mode
   :diminish
-  :bind (:map help-mode-map
+  :bind (:map special-mode-map
          ("w" . rainbow-mode))
   :hook ((html-mode php-mode) . rainbow-mode)
   :config

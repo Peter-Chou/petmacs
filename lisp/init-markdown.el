@@ -9,7 +9,6 @@
   (require 'init-custom))
 
 (use-package markdown-mode
-  :commands markdown--command-map-prompt
   :hook ((markdown-mode . auto-fill-mode))
   :mode (("README\\.md\\'" . gfm-mode))
   :init
@@ -60,9 +59,10 @@ mermaid.initialize({
   (when (executable-find "multimarkdown")
     (setq markdown-command "multimarkdown"))
 
-  ;; Use `which-key'
-  (advice-add #'markdown--command-map-prompt :override #'ignore)
-  (advice-add #'markdown--style-map-prompt   :override #'ignore)
+  ;; Use `which-key' instead
+  (with-no-warnings
+    (advice-add #'markdown--command-map-prompt :override #'ignore)
+    (advice-add #'markdown--style-map-prompt   :override #'ignore))
   :config
   (add-to-list 'markdown-code-lang-modes '("mermaid" . mermaid-mode))
 
