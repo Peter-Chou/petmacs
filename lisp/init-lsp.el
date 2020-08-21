@@ -113,7 +113,7 @@
          ([remap xref-find-definitions] . lsp-find-definition)
          ([remap xref-find-references] . lsp-find-references))
   :init
-  ;; @see https://github.com/emacs-lsp/lsp-mode#performance
+  ;; @see https://emacs-lsp.github.io/lsp-mode/page/performance
   (setq read-process-output-max (* 1024 1024)) ;; 1MB
 
   (setq lsp-keymap-prefix "C-c l"
@@ -151,39 +151,21 @@
          ("M-<f6>" . lsp-ui-hydra/body)
          ("M-RET" . lsp-ui-sideline-apply-code-actions))
   :hook (lsp-mode . lsp-ui-mode)
-  :init (setq lsp-ui-doc-enable t
-              lsp-ui-doc-use-webkit nil
-              lsp-ui-doc-delay 0.2
-              lsp-ui-doc-include-signature t
-              lsp-ui-doc-position 'at-point
-              lsp-ui-doc-border (face-foreground 'default)
-
-              lsp-ui-sideline-enable t
-              lsp-ui-sideline-show-hover nil
-              lsp-ui-sideline-show-diagnostics nil
-              lsp-ui-sideline-show-code-actions t
+  :init (setq lsp-ui-sideline-show-diagnostics nil
               lsp-ui-sideline-ignore-duplicate t
-
-              lsp-ui-imenu-enable t
+              lsp-ui-doc-border (face-foreground 'font-lock-comment-face)
               lsp-ui-imenu-colors `(,(face-foreground 'font-lock-keyword-face)
                                     ,(face-foreground 'font-lock-string-face)
                                     ,(face-foreground 'font-lock-constant-face)
                                     ,(face-foreground 'font-lock-variable-name-face)))
-  (evil-define-key 'normal lsp-ui-imenu-mode-map (kbd "q") 'lsp-ui-imenu--kill)
-  (evil-define-key 'normal lsp-ui-imenu-mode-map (kbd "J") 'lsp-ui-imenu--next-kind)
-  (evil-define-key 'normal lsp-ui-imenu-mode-map (kbd "K") 'lsp-ui-imenu--prev-kind)
-  (evil-define-key 'normal lsp-ui-imenu-mode-map (kbd "<return>") 'lsp-ui-imenu--visit)
-  (evil-define-key 'normal lsp-ui-imenu-mode-map (kbd "d") 'lsp-ui-imenu--view)
   :config
-  (add-to-list 'lsp-ui-doc-frame-parameters '(right-fringe . 8))
-
   ;; `C-g'to close doc
   (advice-add #'keyboard-quit :before #'lsp-ui-doc-hide)
 
   ;; Reset `lsp-ui-doc-background' after loading theme
   (add-hook 'after-load-theme-hook
             (lambda ()
-              (setq lsp-ui-doc-border (face-foreground 'default))
+              (setq lsp-ui-doc-border (face-foreground 'font-lock-comment-face))
               (set-face-background 'lsp-ui-doc-background
                                    (face-background 'tooltip)))))
 
@@ -200,7 +182,7 @@
   :hook (origami-mode . lsp-origami-mode))
 
 ;; Debug
-;; python: pip install "ptvsd>=4.2" 
+;; python: pip install "ptvsd>=4.2"
 ;; C++: apt-get install lldb nodejs npm
 ;; C++: follow instruction from https://github.com/llvm-mirror/lldb/tree/master/tools/lldb-vscode
 (use-package dap-mode
@@ -215,6 +197,17 @@
 	  (insert-file-contents pfile)
 	  (eval-buffer)
 	  (message "dap templates has been loaded.")))))
+  (defun petmacs/register-dap-degbug-template ()
+    (interactive)
+    (require 'dap-python)
+    (dap-register-debug-template "python-debug"
+				 (list :type "python"
+                                       :args "-i"
+                                       :cwd nil
+                                       :env '(("DEBUG" . "1"))
+                                       :target-module nil
+                                       :request "launch"
+                                       :name "python-debug")))
   :diminish
   :defines (dap-lldb-debug-program)
   :bind (:map lsp-mode-map
