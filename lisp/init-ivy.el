@@ -353,7 +353,6 @@
   (use-package prescient
     :commands prescient-persist-mode
     :init
-    (setq prescient-filter-method '(literal regexp initialism fuzzy))
     (prescient-persist-mode 1))
 
   (use-package ivy-prescient
@@ -362,7 +361,7 @@
     (ivy-minibuffer-match-face-1 ((t (:inherit font-lock-doc-face :foreground nil))))
     :init
     (defun ivy-prescient-non-fuzzy (str)
-      "Generate an Ivy-formatted non-fuzzy regexp list for the given STR. 
+      "Generate an Ivy-formatted non-fuzzy regexp list for the given STR.
 This is for use in `ivy-re-builders-alist'."
       (let ((prescient-filter-method '(literal regexp)))
         (ivy-prescient-re-builder str)))
@@ -385,6 +384,7 @@ This is for use in `ivy-re-builders-alist'."
             (t . ivy-prescient-re-builder))
           ivy-prescient-sort-commands
           '(:not swiper swiper-isearch ivy-switch-buffer
+            lsp-ivy-workspace-symbol ivy-resume ivy--restore-session
             counsel-grep counsel-git-grep counsel-rg counsel-ag
             counsel-ack counsel-fzf counsel-pt counsel-imenu
             counsel-yank-pop counsel-recentf counsel-buffer-or-recentf))
@@ -421,17 +421,17 @@ This is for use in `ivy-re-builders-alist'."
    (sys/macp
     (use-package counsel-osx-app
       :bind (:map counsel-mode-map
-                  ("C-<f6>" . counsel-osx-app)))))
+             ("C-<f6>" . counsel-osx-app)))))
 
   ;; Display world clock using Ivy
   (use-package counsel-world-clock
     :bind (:map counsel-mode-map
-                ("C-c c k" . counsel-world-clock)))
+           ("C-c c k" . counsel-world-clock)))
 
   ;; Tramp ivy interface
   (use-package counsel-tramp
     :bind (:map counsel-mode-map
-                ("C-c c T" . counsel-tramp)))
+           ("C-c c T" . counsel-tramp)))
 
   ;; Support pinyin in Ivy
   ;; Input prefix ':' to match pinyin
