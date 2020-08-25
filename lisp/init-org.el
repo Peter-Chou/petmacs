@@ -46,7 +46,8 @@ Will work on both org-mode and any mode that accepts plain html."
 
   :commands (orgtbl-mode)
   :custom-face (org-ellipsis ((t (:foreground nil))))
-  :hook ((org-mode . petmacs/org-setup-evil-surround)
+  :hook (((org-babel-after-execute org-mode) . org-redisplay-inline-images) ; display image
+	 (org-mode . petmacs/org-setup-evil-surround)
 	 (org-indent-mode . (lambda()
                               (diminish 'org-indent-mode)
                               ;; WORKAROUND: Prevent text moving around while using brackets
