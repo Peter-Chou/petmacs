@@ -11,103 +11,17 @@
 (use-package lsp-mode
   :diminish
   ;; :pin melpa-stable
-  :preface
-  (defun petmacs//lsp-avy-document-symbol (all)
-    (interactive)
-    (let ((line 0) (col 0) (w (selected-window))
-	  (ccls (memq major-mode '(c-mode c++-mode objc-mode)))
-	  (start-line (1- (line-number-at-pos (window-start))))
-	  (end-line (1- (line-number-at-pos (window-end))))
-	  ranges point0 point1
-	  candidates)
-      (save-excursion
-	(goto-char 1)
-	(cl-loop for loc in
-		 (lsp--send-request (lsp--make-request
-				     "textDocument/documentSymbol"
-				     `(:textDocument ,(lsp--text-document-identifier)
-				       :all ,(if all t :json-false)
-				       :startLine ,start-line :endLine ,end-line)))
-		 for range = (if ccls loc (->> loc (gethash "location") (gethash "range")))
-		 for range_start = (gethash "start" range)
-		 for range_end = (gethash "end" range)
-		 for l0 = (gethash "line" range_start)
-		 for c0 = (gethash "character" range_start)
-		 for l1 = (gethash "line" range_end)
-		 for c1 = (gethash "character" range_end)
-		 while (<= l0 end-line)
-		 when (>= l0 start-line)
-		 do
-		 (forward-line (- l0 line))
-		 (forward-char c0)
-		 (setq point0 (point))
-		 (forward-line (- l1 l0))
-		 (forward-char c1)
-		 (setq point1 (point))
-		 (setq line l1 col c1)
-		 (push `((,point0 . ,point1) . ,w) candidates)))
-      ;; (require 'avy)
-      (avy-with avy-document-symbol
-	(avy--process candidates
-		      (avy--style-fn avy-style)))))
+  :hook ((prog-mode . (lambda ()
+                        (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode)
+                          (lsp-deferred))))
+         (lsp-mode . (lambda ()
+                       ;; Integrate `which-key'
+                       (lsp-enable-which-key-integration)
 
-  (defun petmacs/lsp-avy-goto-word ()
-    (interactive)
-    (petmacs//lsp-avy-document-symbol t))
-
-
-  (defun spacemacs/lsp-avy-goto-symbol ()
-    (interactive)
-    (petmacs//lsp-avy-document-symbol nil))
-
-  (defun petmacs/lsp-ui-doc-func ()
-    "Toggle the function signature in the lsp-ui-doc overlay"
-    (interactive)
-    (setq lsp-ui-doc-include-signature (not lsp-ui-doc-include-signature)))
-
-  (defun petmacs/lsp-ui-sideline-symb ()
-    "Toggle the symbol in the lsp-ui-sideline overlay.
-(generally redundant in C modes)"
-    (interactive)
-    (setq lsp-ui-sideline-show-symbol (not lsp-ui-sideline-show-symbol)))
-
-  (defun petmacs/lsp-ui-sideline-ignore-duplicate ()
-    "Toggle ignore duplicates for lsp-ui-sideline overlay"
-    (interactive)
-    (setq lsp-ui-sideline-ignore-duplicate (not lsp-ui-sideline-ignore-duplicate)))
-
-  (defun petmacs/lsp-find-definition-other-window ()
-    (interactive)
-    (let ((pop-up-windows t))
-      (pop-to-buffer (current-buffer) t))
-    (xref-find-definitions))
-
-  (defun petmacs/lsp-find-declaration-other-window ()
-    (interactive)
-    (let ((pop-up-windows t))
-      (pop-to-buffer (current-buffer) t))
-    (lsp-find-declaration))
-
-  (defun petmacs/lsp-find-references-other-window ()
-    (interactive)
-    (let ((pop-up-windows t))
-      (pop-to-buffer (current-buffer) t))
-    (lsp-find-references))
-
-  (defun petmacs/lsp-find-implementation-other-window ()
-    (interactive)
-    (let ((pop-up-windows t))
-      (pop-to-buffer (current-buffer) t))
-    (lsp-find-implementation))
-
-  (defun petmacs/lsp-find-type-definition-other-window ()
-    (interactive)
-    (let ((pop-up-windows t))
-      (pop-to-buffer (current-buffer) t))
-    (lsp-find-type-definition))
-  :hook (lsp-mode . (lambda ()
-                      ;; Integrate `which-key'
-                      (lsp-enable-which-key-integration)))
+                       ;; Format and organize imports
+                       (unless (apply #'derived-mode-p centaur-lsp-format-on-save-ignore-modes)
+                         (add-hook 'before-save-hook #'lsp-format-buffer t t)
+                         (add-hook 'before-save-hook #'lsp-organize-imports t t)))))
   :bind (:map lsp-mode-map
          ("C-c C-d" . lsp-describe-thing-at-point)
          ([remap xref-find-definitions] . lsp-find-definition)
@@ -135,13 +49,18 @@
         lsp-enable-indentation nil
         lsp-enable-on-type-formatting nil)
   :config
-  ;; Configure LSP clients
-  (use-package lsp-clients
-    :ensure nil
-    :hook (go-mode . (lambda ()
-                       "Format and add/delete imports."
-                       (add-hook 'before-save-hook #'lsp-format-buffer t t)
-                       (add-hook 'before-save-hook #'lsp-organize-imports t t)))))
+  (with-no-warnings
+    (defun my-lsp--init-if-visible (func &rest args)
+      "Not enabling lsp in `git-timemachine-mode'."
+      (unless (bound-and-true-p git-timemachine-mode)
+        (apply func args)))
+    (advice-add #'lsp--init-if-visible :around #'my-lsp--init-if-visible))
+
+  (defun lsp-update-server ()
+    "Update LSP server."
+    (interactive)
+    ;; Equals to `C-u M-x lsp-install-server'
+    (lsp-install-server t)))
 
 (use-package lsp-ui
   :custom-face
