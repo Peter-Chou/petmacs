@@ -1,8 +1,4 @@
 alias :q exit
-alias wget wget -c $*
-alias cp cp -v $*
-alias mv mv -v $*
-alias mkdir mkdir -pv $*
 alias goto git checkout $*
 alias g git $*
 alias d dired .
