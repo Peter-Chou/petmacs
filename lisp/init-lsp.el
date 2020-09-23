@@ -19,9 +19,8 @@
                        (lsp-enable-which-key-integration)
 
                        ;; Format and organize imports
-                       (unless (apply #'derived-mode-p centaur-lsp-format-on-save-ignore-modes)
-                         (add-hook 'before-save-hook #'lsp-format-buffer t t)
-                         (add-hook 'before-save-hook #'lsp-organize-imports t t)))))
+                       (add-hook 'before-save-hook #'lsp-format-buffer t t)
+                       (add-hook 'before-save-hook #'lsp-organize-imports t t))))
   :bind (:map lsp-mode-map
          ("C-c C-d" . lsp-describe-thing-at-point)
          ([remap xref-find-definitions] . lsp-find-definition)
