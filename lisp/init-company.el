@@ -14,6 +14,7 @@
   :commands company-cancel
   :bind (("M-/" . company-complete)
          ("C-M-i" . company-complete)
+         ("C-M-k" . company-files)
          :map company-mode-map
          ("<backtab>" . company-yasnippet)
          :map company-active-map
