@@ -158,7 +158,7 @@
   :hook (after-init . all-the-icons-ivy-setup))
 
 (use-package doom-modeline
-  :hook ((window-setup . doom-modeline-mode)
+  :hook ((after-init . doom-modeline-mode)
          (doom-modeline-mode . setup-custom-doom-modeline))
   :custom-face
   (doom-modeline-buffer-file ((t (:inherit font-lock-string-face :weight bold))))
