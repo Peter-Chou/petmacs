@@ -17,8 +17,8 @@
               my-swiper-toggle-rg-dwim)
   :commands (ivy--format-function-generic
              ivy--add-face)
-  :bind (("C-s" . swiper-isearch)
-	 ("s-f" . swiper)
+  :bind (("C-s" . swiper)
+	 ("s-f" . swiper-isearch)
 	 ("C-S-s" . swiper-all)
 
 	 ("C-c C-r" . ivy-resume)
