@@ -18,6 +18,7 @@
 ;; ```
 ;; write `LC_CTYPE="zh_CN.UTF-8"` to /etc/default/locale & reboot
 (global-set-key (kbd "C-SPC") 'nil) ;; switch to chinese
+(global-set-key (kbd "C-M-k") 'company-files)
 
 (setq leader-nnorm-key petmacs-evil-major-leader-insert-default-key
       leader-key petmacs-evil-leader-key
