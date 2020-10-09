@@ -97,7 +97,7 @@
       :hook (company-mode . company-box-mode)
       :init (setq company-box-enable-icon t
                   company-box-backends-colors nil
-                  company-box-highlight-prefix t)
+                  company-box-doc-delay 0.3)
       :config
       (with-no-warnings
         ;; Prettify icons
