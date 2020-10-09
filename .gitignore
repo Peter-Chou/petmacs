@@ -83,4 +83,4 @@ workspace/
 .dap-*
 .last*
 session*
-
+*.db
