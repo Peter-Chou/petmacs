@@ -30,13 +30,10 @@
   :init
   (define-key winum-keymap (kbd "M-0") 'treemacs-select-window)
   :config
-    (setq treemacs-collapse-dirs                 (if treemacs-python-executable 3 0)
-          treemacs-sorting                       'alphabetic-case-insensitive-desc
-          treemacs-follow-after-init             t
-          treemacs-is-never-other-window         t
-          treemacs-silent-filewatch              t
-          treemacs-silent-refresh                t
-          treemacs-width                         30)
+  (setq treemacs-collapse-dirs                 (if treemacs-python-executable 3 0)
+        treemacs-sorting                       'alphabetic-case-insensitive-desc
+        treemacs-follow-after-init             t
+        treemacs-width                         30)
 
   (treemacs-follow-mode t)
   (treemacs-filewatch-mode t)
@@ -77,8 +74,9 @@
 
 (use-package treemacs-persp
   :after persp-mode
-  :commands treemacs-set-scope-type
-  :init (treemacs-set-scope-type 'Frames))
+  :demand t
+  :functions treemacs-set-scope-type
+  :config (treemacs-set-scope-type 'Perspectives))
 
 (provide 'init-treemacs)
 
