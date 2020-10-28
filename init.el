@@ -1,4 +1,4 @@
-;;; init.el --- Petmacs configurations  -*- lexical-binding: t no-byte-compile: t; -*-
+;;; init.el --- Petmacs configurations  -*- lexical-binding: t no-byte-compile: t -*-
 
 ;;; Commentary:
 
