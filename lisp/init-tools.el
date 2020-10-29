@@ -68,6 +68,10 @@
   :init
   (setq avy-timeout-seconds 0.0))
 
+(use-package quickrun
+  :custom (quickrun-focus-p nil)
+  :bind (("C-c x" . quickrun)))
+
 (use-package centered-cursor-mode)
 
 (use-package posframe)
