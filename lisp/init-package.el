@@ -52,7 +52,7 @@
 (use-package page-break-lines
   :commands (page-break-lines-mode))
 
-;; Extensions 
+;; Extensions
 ;; download / update packages
 (use-package paradox
   :ensure t
@@ -82,6 +82,7 @@
               t)))
 
 ;; Auto update packages
+;; M-x auto-package-update-now
 (use-package auto-package-update
   :init
   (setq auto-package-update-delete-old-versions t
