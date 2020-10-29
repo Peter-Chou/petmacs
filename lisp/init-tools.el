@@ -72,6 +72,12 @@
   :custom (quickrun-focus-p nil)
   :bind (("C-c x" . quickrun)))
 
+;; M-x rmsbolt-starter to see assembly code
+(use-package rmsbolt
+  :custom
+  (rmsbolt-asm-format nil)
+  (rmsbolt-default-directory "/tmp"))
+
 (use-package centered-cursor-mode)
 
 (use-package posframe)
