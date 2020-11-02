@@ -45,15 +45,16 @@
     (defun my-magit-kill-buffers (&rest _)
       "Restore window configuration and kill all Magit buffers."
       (interactive)
+      (magit-restore-window-configuration)
       (let ((buffers (magit-mode-get-buffers)))
-        (magit-restore-window-configuration)
-        (mapc (lambda (buf)
-                (with-current-buffer buf
-                  (if (and magit-this-process
-                           (eq (process-status magit-this-process) 'run))
-                      (bury-buffer buf)
-                    (kill-buffer buf))))
-              buffers)))
+        (when (eq major-mode 'magit-status-mode)
+          (mapc (lambda (buf)
+                  (with-current-buffer buf
+                    (if (and magit-this-process
+                             (eq (process-status magit-this-process) 'run))
+                        (bury-buffer buf)
+                      (kill-buffer buf))))
+                buffers))))
     (setq magit-bury-buffer-function #'my-magit-kill-buffers))
 
   (define-key magit-mode-map (kbd "M-1") 'winum-select-window-1)
