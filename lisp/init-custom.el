@@ -15,16 +15,12 @@
 ;; (defvar petmacs-night-theme 'doom-dracula)
 
 (defvar petmacs-themes-list '(
-			      doom-snazzy
-			      doom-tomorrow-day
-			      doom-solarized-light
-			      doom-solarized-dark
-			      doom-one-light
+			      doom-acario-light
 			      doom-dracula
 			      )
   "List of themes for cycling.")
 
-(defvar petmacs-font-size 12.5
+(defvar petmacs-font-size 13.0
   "Default font size.")
 
 (defvar petmacs-evil-leader-key "<SPC>"
