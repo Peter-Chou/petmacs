@@ -15,6 +15,7 @@
 ;; (defvar petmacs-night-theme 'doom-dracula)
 
 (defvar petmacs-themes-list '(
+			      srcery
 			      doom-acario-light
 			      doom-dracula
 			      )

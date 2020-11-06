@@ -209,6 +209,9 @@
   (use-package minions
     :hook (doom-modeline-mode . minions-mode)))
 
+
+(use-package srcery-theme)
+
 (use-package doom-themes
   :defer nil
   :custom-face
