@@ -9,9 +9,8 @@
   :mode (("\\COMMIT_EDITMSG\\'" . text-mode)
          ("\\MERGE_MSG\\'" . text-mode))
   :bind (("C-x g" . magit-status)
-         ("C-x M-g" . magit-dispatch-popup)
-         ("C-c M-g" . magit-file-popup))
-  :init (setq magit-diff-refine-hunk t)
+          ("C-x M-g" . magit-dispatch-popup)
+          ("C-c M-g" . magit-file-popup))
   :config
   (setq magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1)
   ;; (add-to-list 'magit-log-arguments "--color")
@@ -31,31 +30,9 @@
   			nil t))) ; the t is important
 
   ;; ;; kill magit status buffer when quitting magit status
-  ;; (define-key magit-mode-map (kbd "q") (lambda()
-  ;; 					 (interactive)
-  ;; 					 (magit-mode-bury-buffer t)))
-
-  (when (fboundp 'transient-append-suffix)
-    ;; Add switch: --tags
-    (transient-append-suffix 'magit-fetch
-      "-p" '("-t" "Fetch all tags" ("-t" "--tags"))))
-
-  ;; Exterminate Magit buffers
-  (with-no-warnings
-    (defun my-magit-kill-buffers (&rest _)
-      "Restore window configuration and kill all Magit buffers."
-      (interactive)
-      (magit-restore-window-configuration)
-      (let ((buffers (magit-mode-get-buffers)))
-        (when (eq major-mode 'magit-status-mode)
-          (mapc (lambda (buf)
-                  (with-current-buffer buf
-                    (if (and magit-this-process
-                             (eq (process-status magit-this-process) 'run))
-                        (bury-buffer buf)
-                      (kill-buffer buf))))
-                buffers))))
-    (setq magit-bury-buffer-function #'my-magit-kill-buffers))
+  (define-key magit-mode-map (kbd "q") (lambda()
+  					 (interactive)
+  					 (magit-mode-bury-buffer t)))
 
   (define-key magit-mode-map (kbd "M-1") 'winum-select-window-1)
   (define-key magit-mode-map (kbd "M-2") 'winum-select-window-2)
