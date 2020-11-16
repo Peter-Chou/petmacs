@@ -1,7 +1,6 @@
 # Spaceleader
 ## Description
-leader-key implementation ~~copied and pasted from~~ inspired by
-[spacemacs](https://github.com/syl20bnr/spacemacs) :grinning:.
+leader-key implementation ~~copied and pasted from~~ inspired by [spacemacs](https://github.com/syl20bnr/spacemacs).
 
 ## Installation
 **TODO**: add melpa support.
@@ -17,26 +16,34 @@ following recipe.
  '(spaceleader :type git :host github :repo "mohkale/spaceleader"))
 ```
 
-This package also comes bundled with a file `spaceleader-base.el` which offers some
-basic leader bindings which you may or may not want setup for you.
-
 ## Commands
-| spacemacs                                | spaceleader                    |
-|:-----------------------------------------|:-------------------------------|
-| spacemacs/set-leader-keys                | leader/set-keys                |
-| spacemacs/set-leader-keys-for-minor-mode | leader/set-keys-for-mode       |
-| spacemacs/set-leader-keys-for-major-mode | leader/set-keys-for-major-mode |
-| spacemacs/declare-prefix                 | leader/set-keys                |
-| spacemacs/declare-prefix-for-mode        | leader/set-keys-for-major-mode |
-|                                          | leader/with-prefix             |
-|                                          | leader/with-major-mode-prefix  |
+| spaceleader                      | spacemacs                                |
+|:---------------------------------|:-----------------------------------------|
+| leader/set-keys                  | spacemacs/set-leader-keys                |
+| leader/set-keys-for-mode         | spacemacs/set-leader-keys-for-minor-mode |
+| leader/set-keys-for-mode!        | spacemacs/set-leader-keys-for-major-mode |
+| leader/declare-prefix            | spacemacs/declare-prefix                 |
+| leader/declare-prefix*           |                                          |
+| leader/declare-prefix-for-mode   |                                          |
+| leader/declare-prefix-for-mode*  |                                          |
+| leader/declare-prefix-for-mode!  | spacemacs/declare-prefix-for-mode        |
+| leader/declare-prefix-for-mode!* |                                          |
+| leader/with-prefix               |                                          |
+| leader/with-major-mode-prefix    |                                          |
+| leader/without-prefix            |                                          |
 
-**NOTE**: as of yet, you can't set prefixes for minor-modes see
-[212](https://github.com/justbur/emacs-which-key/issues/212) for why.
+**NOTE**: `leader/declare-prefix-for-mode` &amp; `leader/declare-prefix-for-mode*`
+doesn't work as of yet, see [212](https://github.com/justbur/emacs-which-key/issues/212)
+for why.
+
+The commentary of *spaceleader.el* elaborates on the naming scheme:
+* functions ending with `*` can take a variable amount of arguments.
+* functions containing a `!` target major-modes not minor-modes.
+* the `leader/set-keys` family of functions all take a variable number of arguments.
 
 ## Customisation
 **WARN**: You should set any customisations before loading *spaceleader.el* or you may
-end up with broken leader-keys.
+end up with some bindings in the default leader & the remaining in another leader.
 
 run `M-: customize-group leader` to see all the customisation options for *spaceleader*.
 by default, *spaceleader* tries to emulate spacemacs [evil](https://github.com/emacs-evil/evil)
@@ -46,42 +53,32 @@ configuration as much as possible.
 
 **leader-nnorm-key**: the leader-key used for non-normal emacs evil states.
 
-**leader-major-mode-prefix**: the key under **leader-key** where major-mode leader-bindings are placed.
+**leader-major-mode-prefix**: the key under **leader-key** where major-mode leaders are bound.
 
-**leader-major-mode-key**: an optional shortcut key for **leader-key** then **leader-major-mode-prefix**.
-only for normal-state maps.
+**leader-major-mode-key**: the key in normal state maps used as a shortcut for **leader-key** then **leader-major-mode-prefix**.
 
-## Usage
-*spaceleader* has deviated from spacemacs in a few core ways to make binding leader
-keys more straightforward.
+## Deviation From Spacemacs
+*spaceleader* introduces a few functions to ease the definition of leader keys.
 
-### Bindings &amp; Prefixes
-Firstly, there's no seperate function for specifying prefixes and leader keys. Both
-are done so through `leader/set-keys`.
-
-For example in spacemacs you may have:
+### declare-prefix With Multiple Arguments
+Firstly, variants in the `declare-prefix` family of functions have been defined to
+take multiple arguments. These variants end with a `*`. Meaning if you've got some
+definitions like:
 
 ```elisp
-(spacemacs/declare-prefix "a"  "apps" "applications")
-(spacemacs/declare-prefix "am" "man")
-(spacemacs/set-leader-keys
-  "au"  'undo-tree-visualise
-  "ax"  'customize
-  "amw" 'woman
-  "amm" 'man)
+(spacemacs/declare-prefix "a" "apps" "applications")
+(spacemacs/declare-prefix "b" "buffers")
+(spacemacs/declare-prefix "c" "compile/comments")
 ```
 
-which can just as well be written as:
+you can convert it into a single function call and leave the interpretation of the
+arguments upto *spaceleader*.
 
 ```elisp
-(leader/set-keys
-  "a"  '("apps" . "applications")
-  "au" 'undo-tree-visualise
-  "ax" 'customize
-
-  "am"  "man"
-  "amw" 'woman
-  "amm" 'man)
+(leader/declare-prefix*
+  "a" '("apps" . "applications")
+  "b" "buffers"
+  "c" "compile/comments")
 ```
 
 ### declare-prefix For Major Modes
@@ -96,11 +93,12 @@ any of the keys you want to set with the hardcoded major-mode-prefix used by spa
 ```
 
 this quite quickly becomes bothersome, especially if somewhere down the line you decide you want to
-change the major-mode-prefix. `leader/set-keys-for-major-mode` will automatically prepend your leader
-prefix to any specified keybindings, including for prefix declarations.
+change the major-mode-prefix. *spaceleader* introduced `leader/declare-prefix-for-mode!` to address
+this issue, it automatically prepends your major-mode-prefix to any of the prefix keys you provide;
+saving you the ordeal and ensuring the correct prefix is used.
 
 ```elisp
-(leader/set-keys-for-major-mode 'dired-mode
+(leader/declare-prefix-for-mode!* 'dired-mode
   "x" "command-x"
   "y" "command-y")
 ```
@@ -124,11 +122,9 @@ Have you ever had to define your leader-keys like this?
       (concat my-extra-special-prefix "z") 'command-z)))
 ```
 
-~~I did, and I'm not a fan :cry:.~~ *spaceleader* is designed to take away this hassle, to that
-end there're 3 macros which will let you specify a prefix and assume it's correctly bound in
-all the prefix or leader-key declarations you make within it's body; you can even nest prefix
-declarations and this'll have the obvious affect.
-
+Well you'll never have to do so again :grinning:. *spaceleader* has introduced 3 macros to let you
+specify a prefix and assume it's correctly bound in all the prefix or leader-key declarations you
+make within it's body; you can even nest prefix declarations and this'll have the obvious affect.
 The above can be simplified to:
 
 ```elisp
@@ -145,8 +141,10 @@ The above can be simplified to:
     "z" 'command-z))
 ```
 
-**NOTE**: there's also: `leader/with-major-mode-prefix` - which is an alias for
-`(leader/with-prefix leader-major-mode-prefix &rest BODY)`.
+there's also:
+- `leader/without-prefix` - which removes any and all prefixes within the macro body.
+- `leader/with-major-mode-prefix` - which is an alias for
+  `(leader/with-prefix leader-major-mode-prefix &rest BODY)`.
 
 ## Warnings
 ### Spacemacs *Emacs* Configuration
