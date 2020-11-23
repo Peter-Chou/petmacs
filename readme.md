@@ -11,7 +11,7 @@ Petmacs requires fonts for better display:
 
   - [Fira Code Symbol](https://github.com/tonsky/FiraCode/files/412440/FiraCode-Regular-Symbol.zip)
 
-  - [all the icons](https://github.com/domtronn/all-the-icons.el/tree/master/fonts)  
+  - [all the icons](https://github.com/domtronn/all-the-icons.el/tree/master/fonts)
 
 - global tools
 
@@ -25,7 +25,8 @@ pip install pylint yapf isort
 
 - C/C++ packages
 
-build [ccls](https://github.com/MaskRay/ccls) language server at $HOME path
+lsp use clangd in LLVM project
+dap use lldb-vscode in LLVM/lldb/tools/lldb-vscode (https://github.com/llvm-mirror/lldb/tree/master/tools/lldb-vscode)
 
 - nodejs packages
 

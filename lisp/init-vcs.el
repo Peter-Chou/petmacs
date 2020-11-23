@@ -209,12 +209,12 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 ;;         git-gutter:handled-backends '(git hg bzr svn)
 ;;         git-gutter:hide-gutter t))
 
-(use-package evil-magit
-  ;; :pin melpa-stable
-  :init
-  (with-eval-after-load 'magit
-    (require 'evil-magit)
-    (add-hook 'git-commit-mode-hook 'evil-insert-state)))
+;; (use-package evil-magit
+;;   ;; :pin melpa-stable
+;;   :init
+;;   (with-eval-after-load 'magit
+;;     (require 'evil-magit)
+;;     (add-hook 'git-commit-mode-hook 'evil-insert-state)))
 
 ;; Show tasks
 (use-package pcre2el) ;; magit-todos dependency

@@ -50,9 +50,10 @@
          (go-mode . (lambda () (require 'dap-go)))
          (java-mode . (lambda () (require 'dap-java)))
          ;; ((js-mode js2-mode) . (lambda () (require 'dap-chrome)))
-	 ;; ((c-mode c++-mode objc-mode swift-mode) . (lambda () (require 'dap-gdb-lldb))))
+	 ;;((c-mode c++-mode objc-mode swift-mode) . (lambda () (require 'dap-gdb-lldb))))
 	 )
   :init
+  (require 'cl-lib)
   (setq dap-enable-mouse-support t))
 
 (provide 'init-dap)
