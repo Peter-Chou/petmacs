@@ -185,7 +185,7 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 ;; Open github/gitlab/bitbucket page
 (use-package browse-at-remote
   :bind (:map vc-prefix-map
-		("B" . browse-at-remote)))
+	 ("B" . browse-at-remote)))
 
 ;; (use-package git-gutter
 ;;   :hook (prog-mode . git-gutter-mode)
@@ -209,12 +209,6 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 ;;         git-gutter:handled-backends '(git hg bzr svn)
 ;;         git-gutter:hide-gutter t))
 
-;; (use-package evil-magit
-;;   ;; :pin melpa-stable
-;;   :init
-;;   (with-eval-after-load 'magit
-;;     (require 'evil-magit)
-;;     (add-hook 'git-commit-mode-hook 'evil-insert-state)))
 
 ;; Show tasks
 (use-package pcre2el) ;; magit-todos dependency
