@@ -43,18 +43,26 @@
          (dap-stopped . (lambda (_args) (dap-hydra)))
          (dap-terminated . (lambda (_args) (dap-hydra/nil)))
 	 ((c-mode c++-mode objc-mode swift-mode) . (lambda () (require 'dap-lldb)))
-         ;; (dap-session-created . (lambda (_args) (dap-hydra)))
-         ;; (dap-stopped . (lambda (_args) (dap-hydra)))
-
          (python-mode . (lambda () (require 'dap-python)))
          (go-mode . (lambda () (require 'dap-go)))
          (java-mode . (lambda () (require 'dap-java)))
          ;; ((js-mode js2-mode) . (lambda () (require 'dap-chrome)))
-	 ;;((c-mode c++-mode objc-mode swift-mode) . (lambda () (require 'dap-gdb-lldb))))
 	 )
   :init
   (require 'cl-lib)
-  (setq dap-enable-mouse-support t))
+  (setq dap-enable-mouse-support t
+	dap-auto-configure-features '(sessions locals controls tooltip repl)
+	)
+  :config
+  (with-eval-after-load 'dap-ui
+    (setq dap-ui-buffer-configurations
+          `((,dap-ui--locals-buffer . ((side . right) (slot . 1) (window-width . 0.20)))
+            (,dap-ui--expressions-buffer . ((side . right) (slot . 2) (window-width . 0.20)))
+            (,dap-ui--sessions-buffer . ((side . right) (slot . 3) (window-width . 0.20)))
+            (,dap-ui--breakpoints-buffer . ((side . left) (slot . 2) (window-width . ,treemacs-width)))
+            (,dap-ui--debug-window-buffer . ((side . bottom) (slot . 3) (window-width . 0.20)))
+            (,dap-ui--repl-buffer . ((side . bottom) (slot . 1) (window-width . 0.35))))))
+  )
 
 (provide 'init-dap)
 
