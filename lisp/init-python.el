@@ -70,23 +70,19 @@
 
 (if (member 'python-mode petmacs-lsp-active-modes)
     (progn
-      ;; (use-package lsp-python-ms
-      ;; 	:hook (pyvenv-mode . (lambda ()
-      ;; 			       (require 'lsp-python-ms)
-      ;; 			       (lsp-deferred)))
-      ;; 	:init
-      ;; 	(setq lsp-python-ms-auto-install-server t
-      ;; 	      lsp-python-ms-nupkg-channel "stable"))
+      (use-package lsp-python-ms
+	:hook (pyvenv-mode . (lambda ()
+			       (require 'lsp-python-ms)
+			       (lsp-deferred)))
+	:init
+	(setq lsp-python-ms-auto-install-server t
+	      lsp-python-ms-nupkg-channel "stable"))
+
       ;; ;; Python: pyright
       ;; ;; install pyright:  npm install -g pyright
       ;; ;; update pyright: npm update -g pyright
-
-      (use-package lsp-pyright
-	:hook (python-mode . (lambda () (require 'lsp-pyright)))
-	:init
-	;; (when (executable-find "python3")
-	;;   (setq lsp-pyright-python-executable-cmd "python3"))
-	)
+      ;; (use-package lsp-pyright
+      ;; 	:hook (python-mode . (lambda () (require 'lsp-pyright))))
       )
   (progn
     (use-package anaconda-mode
