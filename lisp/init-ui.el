@@ -211,6 +211,7 @@
 
 
 (use-package srcery-theme)
+(use-package color-theme-sanityinc-tomorrow)
 
 (use-package doom-themes
   :defer nil
