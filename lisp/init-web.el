@@ -30,6 +30,10 @@
 ;; JSON mode
 (use-package json-mode)
 
+;; sudo apt-get install libxml2-utils  // for xmllint
+(use-package xml-format
+  :after nxml-mode)
+
 ;; JavaScript
 (use-package js2-mode
   :defines flycheck-javascript-eslint-executable
