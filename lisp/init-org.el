@@ -142,18 +142,21 @@ Will work on both org-mode and any mode that accepts plain html."
   (org-pomodoro-mode-line-overtime ((t (:inherit error))))
   (org-pomodoro-mode-line-break ((t (:inherit success))))
   :bind (:map org-agenda-mode-map
-              ("P" . org-pomodoro)))
+         ("P" . org-pomodoro)))
 
-(use-package org-bullets
-  :if (char-displayable-p ?◉)
-  :hook (org-mode . org-bullets-mode))
+;; Prettify UI
+(when emacs/>=26p
+  (use-package org-superstar
+    :if (char-displayable-p ?⚫)
+    :hook (org-mode . org-superstar-mode)
+    :init (setq org-superstar-headline-bullets-list '("⚫" "⚫" "⚫" "⚫"))))
 
 (use-package org-fancy-priorities
-:diminish
-:hook (org-mode . org-fancy-priorities-mode)
-:init (setq org-fancy-priorities-list
-	    (if (char-displayable-p ?■)
-		'("■" "■" "■" "■")
+  :diminish
+  :hook (org-mode . org-fancy-priorities-mode)
+  :init (setq org-fancy-priorities-list
+	      (if (char-displayable-p ?■)
+		  '("■" "■" "■" "■")
 		'("HIGH" "MEDIUM" "LOW" "OPTIONAL"))))
 
 (use-package toc-org

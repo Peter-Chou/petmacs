@@ -306,5 +306,13 @@
     :hook (after-init . global-so-long-mode)
     :config (setq so-long-threshold 400)))
 
+;; Process
+(use-package proced
+  :ensure nil
+  :init
+  (setq-default proced-format 'verbose)
+  (setq proced-auto-update-flag t
+        proced-auto-update-interval 3))
+
 (provide 'init-default)
 ;;; init-default.el ends here

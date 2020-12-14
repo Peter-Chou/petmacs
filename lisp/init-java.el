@@ -11,7 +11,12 @@
 (use-package lsp-java
   :hook (java-mode . (lambda ()
 		       (require 'lsp-java)
-		       (lsp-deferred))))
+		       (lsp-deferred)))
+  :init
+  (setq lsp-java-import-maven-enabled t
+	lsp-java-implementations-code-lens-enabled t
+	lsp-java-folding-range-enabled t)
+  )
 
 (use-package mvn
   :preface
