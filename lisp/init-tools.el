@@ -88,6 +88,8 @@
 (use-package daemons)                   ; system services/daemons
 (use-package diffview)                  ; side-by-side diff view
 (use-package esup)                      ; Emacs startup profiler
+(use-package bazel-mode
+  :after lsp-java)
 
 
 (provide 'init-tools)
