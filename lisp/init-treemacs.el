@@ -39,7 +39,7 @@
     (use-package treemacs-projectile
       :after projectile
       :bind (:map projectile-command-map
-             ("h" . treemacs-projectile)))
+		  ("h" . treemacs-projectile)))
 
     (use-package treemacs-magit
       :after magit
@@ -50,11 +50,13 @@
               magit-post-unstage)
              . treemacs-magit--schedule-update))
 
-    (use-package treemacs-persp
-      :after persp-mode
-      :demand t
-      :functions treemacs-set-scope-type
-      :config (treemacs-set-scope-type 'Perspectives))))
+    ;; (use-package treemacs-persp
+    ;;   :after persp-mode
+    ;;   :demand t
+    ;;   :functions treemacs-set-scope-type
+    ;;   :config (treemacs-set-scope-type 'Perspectives))
+    )
+  )
 
 (provide 'init-treemacs)
 
