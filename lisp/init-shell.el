@@ -11,7 +11,9 @@
 (if sys/linuxp
     ;; sudo apt-get install libtool libtool-bin cmake
     (progn
-      (use-package vterm)
+      (use-package vterm
+	:init
+	(setq vterm-kill-buffer-on-exit t))
       )
   (
    (use-package eshell
