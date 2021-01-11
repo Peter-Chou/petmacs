@@ -118,7 +118,7 @@ decrease this. If you experience stuttering, increase this.")
 (require 'init-yaml)
 (require 'init-sql)
 
-(require 'init-eshell)
+(require 'init-shell)
 (require 'init-misc)
 
 (require 'core-funcs)

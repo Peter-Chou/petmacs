@@ -71,14 +71,19 @@
   "wp" "popout window"
   )
 
+(if sys/linuxp
+    (leader/set-keys "'"   #'vterm-other-window)
+  (leader/set-keys "'"   #'petmacs/pop-eshell)
+  )
+
 (leader/set-keys
-  "'"   #'petmacs/pop-eshell
+  ;; "'"   #'petmacs/pop-eshell
   "?"   #'counsel-descbinds
   "/"   #'counsel-projectile-rg
   "v"   #'er/expand-region
   "u"   #'universal-argument
   "d"   #'xref-pop-marker-stack
- "TAB"  #'petmacs/alternate-buffer)
+  "TAB"  #'petmacs/alternate-buffer)
 
 (leader/with-prefix "a"
   (leader/set-keys
@@ -258,31 +263,37 @@
 
 (leader/with-prefix "e"
   (leader/set-keys
-  "b" #'flycheck-buffer
-  "c" #'flycheck-clear
-  "h" #'flycheck-describe-checker
-  "l" #'petmacs/toggle-flycheck-error-list
-  "n" #'petmacs/next-error
-  "N" #'petmacs/previous-error
-  "p" #'petmacs/previous-error
-  "s" #'flycheck-select-checker
-  "S" #'flycheck-set-checker-executable
-  "v" #'flycheck-verify-setup
-  "y" #'flycheck-copy-errors-as-kill
-  "x" #'flycheck-explain-error-at-point))
+    "b" #'flycheck-buffer
+    "c" #'flycheck-clear
+    "h" #'flycheck-describe-checker
+    "l" #'petmacs/toggle-flycheck-error-list
+    "n" #'petmacs/next-error
+    "N" #'petmacs/previous-error
+    "p" #'petmacs/previous-error
+    "s" #'flycheck-select-checker
+    "S" #'flycheck-set-checker-executable
+    "v" #'flycheck-verify-setup
+    "y" #'flycheck-copy-errors-as-kill
+    "x" #'flycheck-explain-error-at-point))
+
+
+(if sys/linuxp
+    (leader/set-keys "p'"   #'vterm-other-window)
+  (leader/set-keys "p'"   #'projectile-pop-eshell)
+  )
 
 (leader/with-prefix "p"
   (leader/set-keys
-  "'"  #'petmacs/projectile-pop-eshell
-  "t"  #'petmacs/treemacs-project-toggle
-  "b"  #'counsel-projectile-switch-to-buffer
-  "d"  #'counsel-projectile-find-dir
-  "p"  #'counsel-projectile-switch-project
-  "f"  #'counsel-projectile-find-file
-  "r"  #'projectile-recentf
-  "o"  #'org-projectile/goto-todos
-  "l"  #'petmacs/ivy-persp-switch-project
-  "v"  #'projectile-vc))
+    ;; "'"  #'petmacs/projectile-pop-eshell
+    "t"  #'petmacs/treemacs-project-toggle
+    "b"  #'counsel-projectile-switch-to-buffer
+    "d"  #'counsel-projectile-find-dir
+    "p"  #'counsel-projectile-switch-project
+    "f"  #'counsel-projectile-find-file
+    "r"  #'projectile-recentf
+    "o"  #'org-projectile/goto-todos
+    "l"  #'petmacs/ivy-persp-switch-project
+    "v"  #'projectile-vc))
 
 (leader/with-prefix "i"
   (leader/set-keys
