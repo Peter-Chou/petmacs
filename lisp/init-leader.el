@@ -72,7 +72,7 @@
   )
 
 (if sys/linuxp
-    (leader/set-keys "'"   #'vterm-other-window)
+    (leader/set-keys "'"   #'vterm-toggle-cd)
   (leader/set-keys "'"   #'petmacs/pop-eshell)
   )
 
@@ -278,7 +278,7 @@
 
 
 (if sys/linuxp
-    (leader/set-keys "p'"   #'vterm-other-window)
+    (leader/set-keys "p'"   #'petmacs/projectile-pop-vterm)
   (leader/set-keys "p'"   #'projectile-pop-eshell)
   )
 

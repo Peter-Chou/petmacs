@@ -13,27 +13,24 @@
     (progn
       (use-package vterm
 	:preface
-	(defun petmacs/vterm--kill-vterm-buffer-and-window (process event)
-	  "Kill buffer and window on vterm process termination."
-	  (when (not (process-live-p process))
-	    (let ((buf (process-buffer process)))
-	      (when (buffer-live-p buf)
-		(with-current-buffer buf
-		  (kill-buffer)
-		  (ignore-errors (delete-window))
-		  (message "VTerm closed."))))))
-
-	(defun petmacs//send-C-r ()
-	  (interactive)
-	  (term-send-raw-string "\C-r"))
-
-	(defun petmacs/setup-term-mode ()
-	  (evil-local-set-key 'insert (kbd "C-r") 'petmacs//send-C-r))
+	(defun evil-collection-vterm-escape-stay ()
+	  "Go back to normal state but don't move
+cursor backwards. Moving cursor backwards is the default vim behavior but it is
+not appropriate in some cases like terminals."
+	  (setq-local evil-move-cursor-back nil))
+	:hook (vterm-mode . (lambda()(evil-local-set-key 'insert (kbd "C-r") #'vterm-send-C-r)))
 	:config
-	(add-hook 'vterm-mode-hook (lambda()
-				     (set-process-sentinel (get-buffer-process (buffer-name))
-							   #'petmacs/vterm--kill-vterm-buffer-and-window)))
-	(add-hook 'vterm-mode-hook 'petmacs/setup-term-mode)))
+	(add-hook 'vterm-mode-hook #'evil-collection-vterm-escape-stay)
+	(add-hook 'vterm-mode-hook 'evil-insert-state)
+	)
+      (use-package vterm-toggle
+	:preface
+	(defun petmacs/projectile-pop-vterm ()
+	  "Open a term buffer at projectile project root."
+	  (interactive)
+	  (let ((default-directory (projectile-project-root)))
+	    (call-interactively 'vterm-toggle))))
+      )
   (
    (use-package eshell
      :ensure nil
