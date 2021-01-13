@@ -12,9 +12,28 @@
     ;; sudo apt-get install libtool libtool-bin cmake
     (progn
       (use-package vterm
-	:init
-	(setq vterm-kill-buffer-on-exit t))
-      )
+	:preface
+	(defun petmacs/vterm--kill-vterm-buffer-and-window (process event)
+	  "Kill buffer and window on vterm process termination."
+	  (when (not (process-live-p process))
+	    (let ((buf (process-buffer process)))
+	      (when (buffer-live-p buf)
+		(with-current-buffer buf
+		  (kill-buffer)
+		  (ignore-errors (delete-window))
+		  (message "VTerm closed."))))))
+
+	(defun petmacs//send-C-r ()
+	  (interactive)
+	  (term-send-raw-string "\C-r"))
+
+	(defun petmacs/setup-term-mode ()
+	  (evil-local-set-key 'insert (kbd "C-r") 'petmacs//send-C-r))
+	:config
+	(add-hook 'vterm-mode-hook (lambda()
+				     (set-process-sentinel (get-buffer-process (buffer-name))
+							   #'petmacs/vterm--kill-vterm-buffer-and-window)))
+	(add-hook 'vterm-mode-hook 'petmacs/setup-term-mode)))
   (
    (use-package eshell
      :ensure nil
