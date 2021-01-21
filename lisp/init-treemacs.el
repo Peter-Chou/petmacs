@@ -23,6 +23,7 @@
            ([mouse-1]   . treemacs-single-click-expand-action))
     :config
     (setq treemacs-collapse-dirs           (if treemacs-python-executable 3 0)
+          treemacs-missing-project-action  'remove
           treemacs-sorting                 'alphabetic-asc
           treemacs-follow-after-init       t
           treemacs-width                   30)
@@ -39,7 +40,7 @@
     (use-package treemacs-projectile
       :after projectile
       :bind (:map projectile-command-map
-		  ("h" . treemacs-projectile)))
+	     ("h" . treemacs-projectile)))
 
     (use-package treemacs-magit
       :after magit
