@@ -53,7 +53,10 @@ not appropriate in some cases like terminals."
 	(evil-define-key 'normal vterm-mode-map (kbd ",p")       #'multi-vterm-prev)
 	(evil-define-key 'normal vterm-mode-map (kbd "i")        #'evil-insert-resume)
 	(evil-define-key 'normal vterm-mode-map (kbd "o")        #'evil-insert-resume)
-	(evil-define-key 'normal vterm-mode-map (kbd "<return>") #'evil-insert-resume))
+	(evil-define-key 'normal vterm-mode-map (kbd "<return>") #'evil-insert-resume)
+	(evil-define-key 'normal vterm-mode-map (kbd "P") 'vterm-yank)
+	(evil-define-key 'normal vterm-mode-map (kbd "p") 'vterm-yank)
+	)
 
       (use-package multi-vterm)
       (use-package vterm-toggle
