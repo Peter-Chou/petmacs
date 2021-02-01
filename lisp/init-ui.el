@@ -231,7 +231,11 @@
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
 
-  (doom-themes-treemacs-config))
+  ;; Enable customized theme
+  ;; FIXME https://github.com/emacs-lsp/lsp-treemacs/issues/89
+  (with-eval-after-load 'lsp-treemacs
+    (doom-themes-treemacs-config))
+  )
 
 ;; (use-package circadian
 ;;   :init
