@@ -66,7 +66,7 @@ Will work on both org-mode and any mode that accepts plain html."
 	org-pretty-entities t
 	org-hide-emphasis-markers t
 	org-startup-folded 'content
-        org-ellipsis (if (char-displayable-p ?⏷) "\t⏷" nil)
+	org-ellipsis (if (and (display-graphic-p) (char-displayable-p ?⏷)) "\t⏷" nil)
 	org-log-done t
 	org-startup-with-inline-images t
 	org-image-actual-width nil
