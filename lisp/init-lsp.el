@@ -71,7 +71,7 @@
 	lsp-modeline-workspace-status-enable nil
 
         lsp-enable-file-watchers nil
-        lsp-enable-folding nil
+        lsp-enable-folding t
         lsp-enable-symbol-highlighting nil
         lsp-enable-text-document-color nil
 

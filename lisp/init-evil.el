@@ -116,13 +116,6 @@
 (use-package evil-collection
   :config (evil-collection-init))
 
-(use-package evil-magit
-  ;; :pin melpa-stable
-  :init
-  (with-eval-after-load 'magit
-    (require 'evil-magit)
-    (add-hook 'git-commit-mode-hook 'evil-insert-state)))
-
 (provide 'init-evil)
 
 ;;; init-evil.el ends here
