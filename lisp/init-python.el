@@ -76,7 +76,9 @@
 			       (lsp-deferred)))
 	:init
 	(setq lsp-python-ms-auto-install-server t
-	      lsp-python-ms-nupkg-channel "stable"))
+	      ;; lsp-python-ms-nupkg-channel "stable"
+	      )
+	)
 
       ;; ;; Python: pyright
       ;; ;; install pyright:  npm install -g pyright
