@@ -15,10 +15,11 @@
 ;; (defvar petmacs-night-theme 'doom-dracula)
 
 (defvar petmacs-themes-list '(
+			      doom-monokai-pro
 			      sanityinc-tomorrow-day
-			      srcery
-			      doom-acario-light
-			      doom-dracula
+			      ;; srcery
+			      ;; doom-acario-light
+			      ;; doom-dracula
 			      )
   "List of themes for cycling.")
 
