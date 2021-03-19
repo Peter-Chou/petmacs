@@ -79,6 +79,7 @@ decrease this. If you experience stuttering, increase this.")
 (require 'init-custom)
 (require 'init-const)
 (require 'init-package)
+(require 'init-funcs)
 (require 'init-default)
 (require 'init-font)
 

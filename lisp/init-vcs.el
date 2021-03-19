@@ -226,6 +226,33 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 	    map))
     (magit-todos-mode 1)))
 
+;; Display transient in child frame
+(when (childframe-workable-p)
+  (use-package transient-posframe
+    :diminish
+    :custom-face
+    (transient-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face)))))
+    :hook (after-init . transient-posframe-mode)
+    :init
+    (setq transient-posframe-border-width 3
+          transient-posframe-min-height 21
+          transient-posframe-min-width 80
+          transient-posframe-poshandler #'ivy-poshandler-frame-center-near-bottom-fn)
+
+    (with-eval-after-load 'solaire-mode
+      (setq transient-posframe-parameters
+            `((background-color . ,(face-background 'solaire-default-face)))))
+    :config
+    (add-hook 'after-load-theme-hook
+              (lambda ()
+                (posframe-delete-all)
+                (custom-set-faces
+                 `(transient-posframe-border
+                   ((t (:background ,(face-foreground 'font-lock-comment-face))))))
+                (with-eval-after-load 'solaire-mode
+                  (setf (alist-get 'background-color transient-posframe-parameters)
+                        (face-background 'solaire-default-face)))))))
+
 ;; Git related modes
 (use-package gitattributes-mode)
 (use-package gitignore-mode)

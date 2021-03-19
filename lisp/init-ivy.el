@@ -10,94 +10,95 @@
 
 (use-package counsel
   :diminish ivy-mode counsel-mode
-  :defines (projectile-completion-system
-	    magit-completing-read-function)
-  :functions (my-ivy-fly-time-travel
-              my-swiper-toggle-counsel-rg
-              my-swiper-toggle-rg-dwim)
-  :commands (ivy--format-function-generic
-             ivy--add-face)
-  :bind (("C-s" . swiper)
-	 ("s-f" . swiper-isearch)
-	 ("C-S-s" . swiper-all)
+  :bind (("C-s"   . swiper-isearch)
+         ("C-r"   . swiper-isearch-backward)
+         ("s-f"   . swiper)
+         ("C-S-s" . swiper-all)
 
-	 ("C-c C-r" . ivy-resume)
-	 ("C-c v p" . ivy-push-view)
-	 ("C-c v o" . ivy-pop-view)
-	 ("C-c v ." . ivy-switch-view)
+         ("C-c C-r" . ivy-resume)
+         ("C-c v p" . ivy-push-view)
+         ("C-c v o" . ivy-pop-view)
+         ("C-c v ." . ivy-switch-view)
 
-	 :map counsel-mode-map
-	 ([remap swiper] . counsel-grep-or-swiper)
-	 ([remap swiper-backward] . counsel-grep-or-swiper-backward)
-	 ([remap dired] . counsel-dired)
-	 ([remap set-variable] . counsel-set-variable)
+         :map counsel-mode-map
+         ([remap swiper] . counsel-grep-or-swiper)
+         ([remap swiper-backward] . counsel-grep-or-swiper-backward)
+         ([remap dired] . counsel-dired)
+         ([remap set-variable] . counsel-set-variable)
          ([remap insert-char] . counsel-unicode-char)
-	 ("C-x C-r" . counsel-recentf)
-	 ("C-x j" . counsel-mark-ring)
+         ([remap recentf-open-files] . counsel-recentf)
 
-	 ("C-c L" . counsel-load-library)
-	 ("C-c P" . counsel-package)
-	 ("C-c f" . counsel-find-library)
-	 ("C-c g" . counsel-grep)
-	 ("C-c h" . counsel-command-history)
-	 ("C-c i" . counsel-git)
-	 ("C-c j" . counsel-git-grep)
-	 ("C-c l" . counsel-locate)
-	 ("C-c r" . counsel-rg)
-	 ("C-c z" . counsel-fzf)
+         ("C-x j"   . counsel-mark-ring)
+         ("C-h F"   . counsel-faces)
 
-	 ("C-c c F" . counsel-faces)
-	 ("C-c c L" . counsel-load-library)
-	 ("C-c c P" . counsel-package)
-	 ("C-c c a" . counsel-apropos)
-	 ("C-c c e" . counsel-colors-emacs)
-	 ("C-c c f" . counsel-find-library)
-	 ("C-c c g" . counsel-grep)
-	 ("C-c c h" . counsel-command-history)
-	 ("C-c c i" . counsel-git)
-	 ("C-c c j" . counsel-git-grep)
-	 ("C-c c l" . counsel-locate)
-	 ("C-c c m" . counsel-minibuffer-history)
-	 ("C-c c o" . counsel-outline)
-	 ("C-c c p" . counsel-pt)
-	 ("C-c c r" . counsel-rg)
-	 ("C-c c s" . counsel-ag)
-	 ("C-c c t" . counsel-load-theme)
-	 ("C-c c u" . counsel-unicode-char)
-	 ("C-c c w" . counsel-colors-web)
-	 ("C-c c z" . counsel-fzf)
+         ("C-c B" . counsel-bookmarked-directory)
+         ("C-c L" . counsel-load-library)
+         ("C-c O" . counsel-find-file-extern)
+         ("C-c P" . counsel-package)
+         ("C-c R" . counsel-list-processes)
+         ("C-c f" . counsel-find-library)
+         ("C-c g" . counsel-grep)
+         ("C-c h" . counsel-command-history)
+         ("C-c i" . counsel-git)
+         ("C-c j" . counsel-git-grep)
+         ("C-c o" . counsel-outline)
+         ("C-c r" . counsel-rg)
+         ("C-c z" . counsel-fzf)
 
-	 :map ivy-minibuffer-map
-	 ("C-w" . ivy-yank-word)
+         ("C-c c B" . counsel-bookmarked-directory)
+         ("C-c c F" . counsel-faces)
+         ("C-c c L" . counsel-load-library)
+         ("C-c c O" . counsel-find-file-extern)
+         ("C-c c P" . counsel-package)
+         ("C-c c R" . counsel-list-processes)
+         ("C-c c a" . counsel-apropos)
+         ("C-c c e" . counsel-colors-emacs)
+         ("C-c c f" . counsel-find-library)
+         ("C-c c g" . counsel-grep)
+         ("C-c c h" . counsel-command-history)
+         ("C-c c i" . counsel-git)
+         ("C-c c j" . counsel-git-grep)
+         ("C-c c l" . counsel-locate)
+         ("C-c c m" . counsel-minibuffer-history)
+         ("C-c c o" . counsel-outline)
+         ("C-c c p" . counsel-pt)
+         ("C-c c r" . counsel-rg)
+         ("C-c c s" . counsel-ag)
+         ("C-c c t" . counsel-load-theme)
+         ("C-c c u" . counsel-unicode-char)
+         ("C-c c w" . counsel-colors-web)
+         ("C-c c v" . counsel-set-variable)
+         ("C-c c z" . counsel-fzf)
 
-	 :map counsel-find-file-map
-	 ("C-h" . counsel-up-directory)
+         :map ivy-minibuffer-map
+         ("C-w" . ivy-yank-word)
+         ("C-`" . ivy-avy)
 
-	 :map swiper-map
-	 ("M-s" . swiper-isearch-toggle)
-	 ("M-%" . swiper-query-replace)
+         :map counsel-find-file-map
+         ("C-h" . counsel-up-directory)
 
-	 :map isearch-mode-map
-	 ("M-s" . swiper-isearch-toggle))
+         :map swiper-map
+         ("M-s" . swiper-isearch-toggle)
+         ("M-%" . swiper-query-replace)
+
+         :map isearch-mode-map
+         ("M-s" . swiper-isearch-toggle))
   :hook ((after-init . ivy-mode)
          (ivy-mode . counsel-mode))
   :init
   (setq enable-recursive-minibuffers t) ; Allow commands in minibuffers
 
   (setq ivy-use-selectable-prompt t
-	ivy-use-virtual-buffers t    ; Enable bookmarks and recentf
-	ivy-height 12
-	ivy-fixed-height-minibuffer t
-	ivy-count-format "(%d/%d) "
-	ivy-on-del-error-function nil
-	ivy-initial-inputs-alist nil)
+        ivy-use-virtual-buffers t    ; Enable bookmarks and recentf
+        ivy-height 10
+        ivy-fixed-height-minibuffer t
+        ivy-count-format "(%d/%d) "
+        ivy-on-del-error-function nil
+        ivy-initial-inputs-alist nil)
 
   ;; Better performance on Windows
   (when sys/win32p
     (setq ivy-dynamic-exhibit-delay-ms 200))
-
-  (setq ivy-format-functions-alist '((counsel-describe-face . counsel--faces-format-function)
-                                     (t . my-ivy-format-function-arrow)))
 
   (setq swiper-action-recenter t)
 
@@ -111,7 +112,6 @@
       (setq counsel-find-file-occur-use-find nil
             counsel-find-file-occur-cmd
             "gls -a | grep -i -E '%s' | tr '\\n' '\\0' | xargs -0 gls -d --group-directories-first")))
-
   :config
   (with-no-warnings
     ;; Display an arrow with the selected item
@@ -119,15 +119,13 @@
       "Transform CANDS into a string for minibuffer."
       (ivy--format-function-generic
        (lambda (str)
-         (concat (if (and (bound-and-true-p all-the-icons-ivy-rich-mode)
-                          (>= (length str) 1)
+         (concat (if (and (>= (length str) 1)
                           (string= " " (substring str 0 1)))
                      ">"
                    "> ")
                  (ivy--add-face str 'ivy-current-match)))
        (lambda (str)
-         (concat (if (and (bound-and-true-p all-the-icons-ivy-rich-mode)
-                          (>= (length str) 1)
+         (concat (if (and (>= (length str) 1)
                           (string= " " (substring str 0 1)))
                      " "
                    "  ")
@@ -156,17 +154,22 @@
                    (append unread-command-events
                            (listify-key-sequence (kbd "M-p")))))
             ((or (memq this-command '(self-insert-command
-                                      ivy-forward-char end-of-line mwim-end-of-line
+                                      ivy-forward-char
+                                      ivy-delete-char delete-forward-char
+                                      end-of-line mwim-end-of-line
                                       mwim-end-of-code-or-line mwim-end-of-line-or-code
                                       yank ivy-yank-word counsel-yank-pop))
                  (equal (this-command-keys-vector) (kbd "M-n")))
              (unless my-ivy-fly--travel
                (delete-region (point) (point-max))
                (when (memq this-command '(ivy-forward-char
+                                          ivy-delete-char delete-forward-char
                                           end-of-line mwim-end-of-line
                                           mwim-end-of-code-or-line
-                                          mwim-end-of-line-or-code ))
-                 (insert (ivy-cleanup-string ivy-text)))
+                                          mwim-end-of-line-or-code))
+                 (insert (ivy-cleanup-string ivy-text))
+                 (when (memq this-command '(ivy-delete-char delete-forward-char))
+                   (beginning-of-line)))
                (setq my-ivy-fly--travel t)))))
 
     (defun my-ivy-fly-time-travel ()
@@ -286,21 +289,21 @@
 
     ;; More actions
     (ivy-add-actions
-     'swiper-isearch
+     #'swiper-isearch
      '(("r" my-ivy-switch-to-counsel-rg "rg")
        ("d" my-ivy-switch-to-rg-dwim "rg dwim")
        ("s" my-ivy-switch-to-swiper "swiper")
        ("a" my-ivy-switch-to-swiper-all "swiper all")))
 
     (ivy-add-actions
-     'swiper
+     #'swiper
      '(("r" my-ivy-switch-to-counsel-rg "rg")
        ("d" my-ivy-switch-to-rg-dwim "rg dwim")
        ("s" my-ivy-switch-to-swiper-isearch "swiper isearch")
        ("a" my-ivy-switch-to-swiper-all "swiper all")))
 
     (ivy-add-actions
-     'swiper-all
+     #'swiper-all
      '(("g" my-ivy-switch-to-counsel-git-grep "git grep")
        ("r" my-ivy-switch-to-counsel-rg "rg")
        ("d" my-ivy-switch-to-rg-dwim "rg dwim")
@@ -308,14 +311,14 @@
        ("S" my-ivy-switch-to-swiper "swiper")))
 
     (ivy-add-actions
-     'counsel-rg
+     #'counsel-rg
      '(("s" my-ivy-switch-to-swiper-isearch "swiper isearch")
        ("S" my-ivy-switch-to-swiper "swiper")
        ("a" my-ivy-switch-to-swiper-all "swiper all")
        ("d" my-ivy-switch-to-rg-dwim "rg dwim")))
 
     (ivy-add-actions
-     'counsel-git-grep
+     #'counsel-git-grep
      '(("s" my-ivy-switch-to-swiper-isearch "swiper isearch")
        ("S" my-ivy-switch-to-swiper "swiper")
        ("r" my-ivy-switch-to-rg-dwim "rg")
@@ -323,12 +326,12 @@
        ("a" my-ivy-switch-to-swiper-all "swiper all")))
 
     (ivy-add-actions
-     'counsel-find-file
+     #'counsel-find-file
      '(("g" my-ivy-switch-to-counsel-git "git")
        ("z" my-ivy-switch-to-counsel-fzf "fzf")))
 
     (ivy-add-actions
-     'counsel-git
+     #'counsel-git
      '(("f" my-ivy-switch-to-counsel-find-file "find file")
        ("z" my-ivy-switch-to-counsel-fzf "fzf")))
 
@@ -352,8 +355,7 @@
   ;; Better sorting and filtering
   (use-package prescient
     :commands prescient-persist-mode
-    :init
-    (prescient-persist-mode 1))
+    :init (prescient-persist-mode 1))
 
   (use-package ivy-prescient
     :commands ivy-prescient-re-builder
@@ -390,17 +392,52 @@ This is for use in `ivy-re-builders-alist'."
             counsel-org-capture counsel-load-theme counsel-yank-pop
             counsel-recentf counsel-buffer-or-recentf))
 
-
     (ivy-prescient-mode 1))
 
   ;; Additional key bindings for Ivy
   (use-package ivy-hydra
-    :init (setq ivy-read-action-function #'ivy-hydra-read-action))
+    :init
+    (setq ivy-read-action-function 'ivy-hydra-read-action)
+
+    (when (childframe-workable-p)
+      (setq hydra-hint-display-type 'posframe)
+
+      (with-no-warnings
+        (defun ivy-hydra-poshandler-frame-center-below-fn (info)
+          (let ((parent-frame (plist-get info :parent-frame))
+                (height (plist-get info :posframe-height))
+                (pos (posframe-poshandler-frame-center info))
+                (num 0))
+            (dolist (frame (frame-list))
+              (when (and (frame-visible-p frame)
+                         (frame-parameter frame 'posframe-buffer))
+                (setq num (1+ num))))
+            (cons (car pos)
+                  (- (truncate (/ (frame-pixel-height parent-frame) 2))
+                     (if (>= num 1) height 0)))))
+
+        (defun ivy-hydra-set-posframe-show-params ()
+          "Set hydra-posframe style."
+          (posframe-delete-all)
+          (setq hydra-posframe-show-params
+                `(:internal-border-width 3
+                  :internal-border-color ,(face-foreground 'font-lock-comment-face)
+                  :poshandler ivy-hydra-poshandler-frame-center-below-fn))
+          (with-eval-after-load 'solaire-mode
+            (plist-put hydra-posframe-show-params
+                       :background-color (face-background 'solaire-default-face))))
+
+        (ivy-hydra-set-posframe-show-params)
+        (add-hook 'after-load-theme-hook #'ivy-hydra-set-posframe-show-params))))
 
   ;; Ivy integration for Projectile
   (use-package counsel-projectile
     :hook (counsel-mode . counsel-projectile-mode)
     :init (setq counsel-projectile-grep-initial-input '(ivy-thing-at-point)))
+
+  ;; Integrate yasnippet
+  (use-package ivy-yasnippet
+    :bind ("C-c C-y" . ivy-yasnippet))
 
   ;; Select from xref candidates with Ivy
   (use-package ivy-xref
@@ -409,21 +446,14 @@ This is for use in `ivy-re-builders-alist'."
       (setq xref-show-definitions-function #'ivy-xref-show-defs))
     (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
 
-  ;; Correcting words with flyspell via Ivy
-  (use-package flyspell-correct-ivy
-    :after flyspell
-    :bind (:map flyspell-mode-map
-           ([remap flyspell-correct-word-before-point] . flyspell-correct-wrapper))
-    :init (setq flyspell-correct-interface #'flyspell-correct-ivy))
-
   ;; Quick launch apps
   (cond
    (sys/linux-x-p
-    (bind-key "C-<f6>" #'counsel-linux-app counsel-mode-map))
+    (bind-key "s-<f6>" #'counsel-linux-app counsel-mode-map))
    (sys/macp
     (use-package counsel-osx-app
       :bind (:map counsel-mode-map
-             ("C-<f6>" . counsel-osx-app)))))
+             ("s-<f6>" . counsel-osx-app)))))
 
   ;; Display world clock using Ivy
   (use-package counsel-world-clock
@@ -446,9 +476,9 @@ This is for use in `ivy-re-builders-alist'."
       (defun ivy--regex-pinyin (str)
         "The regex builder wrapper to support pinyin."
         (or (pinyin-to-utf8 str)
-	    (and (fboundp 'ivy-prescient-non-fuzzy)
-		 (ivy-prescient-non-fuzzy str))
-	    (ivy--regex-plus str)))
+            (and (fboundp 'ivy-prescient-non-fuzzy)
+                 (ivy-prescient-non-fuzzy str))
+            (ivy--regex-plus str)))
 
       (defun my-pinyinlib-build-regexp-string (str)
         "Build a pinyin regexp sequence from STR."
@@ -493,8 +523,7 @@ This is for use in `ivy-re-builders-alist'."
 
 ;; More friendly display transformer for Ivy
 (use-package ivy-rich
-  :hook (;; Must load after `counsel-projectile'
-         (counsel-projectile-mode . ivy-rich-mode)
+  :hook ((counsel-projectile-mode . ivy-rich-mode) ; MUST after `counsel-projectile'
          (ivy-rich-mode . (lambda ()
                             "Use abbreviate in `ivy-rich-mode'."
                             (setq ivy-virtual-abbreviate
@@ -503,7 +532,49 @@ This is for use in `ivy-re-builders-alist'."
   ;; For better performance
   (setq ivy-rich-parse-remote-buffer nil))
 
-(use-package ivy-yasnippet)
+;; Display completion in child frame
+(when (childframe-workable-p)
+  (use-package ivy-posframe
+    :defines persp-filter-save-buffers-functions
+    :custom-face
+    (ivy-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face)))))
+    :hook (ivy-mode . ivy-posframe-mode)
+    :init
+    (setq ivy-posframe-border-width 3)
+
+    (with-eval-after-load 'solaire-mode
+      (setq ivy-posframe-parameters
+            `((background-color . ,(face-background 'solaire-default-face)))))
+
+    (with-eval-after-load 'persp-mode
+      (add-to-list 'persp-filter-save-buffers-functions
+                   (lambda (b)
+                     "Ignore posframe buffers."
+                     (let ((bname (file-name-nondirectory (buffer-name b))))
+                       (string= ivy-posframe-buffer bname)))))
+    :config
+    (add-hook 'after-load-theme-hook
+              (lambda ()
+                (posframe-delete-all)
+                (custom-set-faces
+                 `(ivy-posframe-border
+                   ((t (:background ,(face-foreground 'font-lock-comment-face))))))
+                (with-eval-after-load 'solaire-mode
+                  (setf (alist-get 'background-color ivy-posframe-parameters)
+                        (face-background 'solaire-default-face)))))
+
+    (with-no-warnings
+      (defun ivy-display-at-frame-center-near-bottom-fn (str)
+        (ivy-posframe--display str #'ivy-poshandler-frame-center-near-bottom-fn))
+
+      (defun ivy-poshandler-frame-center-near-bottom-fn (info)
+        (let ((parent-frame (plist-get info :parent-frame))
+              (pos (posframe-poshandler-frame-center info)))
+          (cons (car pos)
+                (truncate (/ (frame-pixel-height parent-frame) 2)))))
+
+      (setf (alist-get t ivy-posframe-display-functions-alist)
+            #'ivy-display-at-frame-center-near-bottom-fn))))
 
 (provide 'init-ivy)
 

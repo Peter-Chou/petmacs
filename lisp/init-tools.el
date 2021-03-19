@@ -36,6 +36,32 @@
       (push (cons (cons nil (concat "\\`" (car nd) "\\'")) (cons nil (cdr nd)))
             which-key-replacement-alist))))
 
+(when (childframe-workable-p)
+  (use-package which-key-posframe
+    :diminish
+    :functions ivy-poshandler-frame-center-near-bottom-fn
+    :custom-face
+    (which-key-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face)))))
+    :init
+    (setq which-key-posframe-border-width 3
+          which-key-posframe-poshandler #'ivy-poshandler-frame-center-near-bottom-fn)
+
+    (with-eval-after-load 'solaire-mode
+      (setq which-key-posframe-parameters
+            `((background-color . ,(face-background 'solaire-default-face)))))
+
+    (which-key-posframe-mode 1)
+    :config
+    (add-hook 'after-load-theme-hook
+              (lambda ()
+                (posframe-delete-all)
+                (custom-set-faces
+                 `(which-key-posframe-border
+                   ((t (:background ,(face-foreground 'font-lock-comment-face))))))
+                (with-eval-after-load 'solaire-mode
+                  (setf (alist-get 'background-color which-key-posframe-parameters)
+                        (face-background 'solaire-default-face)))))))
+
 (use-package hungry-delete
   :hook (after-init . global-hungry-delete-mode)
   :config
