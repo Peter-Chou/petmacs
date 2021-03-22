@@ -11,14 +11,14 @@
 ;; Emacs lisp mode
 (use-package elisp-mode
   :preface
-(defun petmacs/eval-current-form ()
-  "Find and evaluate the current def* or set* command.
+  (defun petmacs/eval-current-form ()
+    "Find and evaluate the current def* or set* command.
 Unlike `eval-defun', this does not go to topmost function."
-  (interactive)
-  (save-excursion
-    (search-backward-regexp "(def\\|(set")
-    (forward-list)
-    (call-interactively 'eval-last-sexp)))
+    (interactive)
+    (save-excursion
+      (search-backward-regexp "(def\\|(set")
+      (forward-list)
+      (call-interactively 'eval-last-sexp)))
 
   :ensure nil
   :defines calculate-lisp-indent-last-sexp
@@ -30,9 +30,9 @@ Unlike `eval-defun', this does not go to topmost function."
               end-of-sexp
               helpful-callable@advice-remove-button)
   :bind (:map emacs-lisp-mode-map
-	      ("C-c C-x" . ielm)
-	      ("C-c C-c" . eval-defun)
-	      ("C-c C-b" . eval-buffer))
+	 ("C-c C-x" . ielm)
+	 ("C-c C-c" . eval-defun)
+	 ("C-c C-b" . eval-buffer))
   :config
   (if (boundp 'elisp-flymake-byte-compile-load-path)
       (add-to-list 'elisp-flymake-byte-compile-load-path load-path))
@@ -193,16 +193,31 @@ Lisp function does not specify a special indentation."
 ;; `global-eldoc-mode' is enabled by default.
 (use-package eldoc
   :ensure nil
-  :diminish)
+  :diminish
+  :config
+  (when (childframe-workable-p)
+    (use-package eldoc-box
+      :diminish
+      :custom-face
+      (eldoc-box-border ((t (:background ,(face-foreground 'font-lock-comment-face)))))
+      (eldoc-box-body ((t (:inherit 'tooltip))))
+      :hook ((emacs-lisp-mode lisp-mode lisp-interaction-mode)
+             .
+             eldoc-box-hover-at-point-mode)
+      :config
+      (add-hook 'after-load-theme-hook
+                (lambda ()
+                  (custom-set-faces
+                   `(eldoc-box-border ((t (:background ,(face-foreground 'font-lock-comment-face)))))))))))
 
 ;; Interactive macro expander
 (use-package macrostep
   :custom-face
   (macrostep-expansion-highlight-face ((t (:background ,(face-background 'tooltip)))))
   :bind (:map emacs-lisp-mode-map
-	      ("C-c e" . macrostep-expand)
-	      :map lisp-interaction-mode-map
-	      ("C-c e" . macrostep-expand))
+	 ("C-c e" . macrostep-expand)
+	 :map lisp-interaction-mode-map
+	 ("C-c e" . macrostep-expand))
   :config
   (add-hook 'after-load-theme-hook
             (lambda ()
