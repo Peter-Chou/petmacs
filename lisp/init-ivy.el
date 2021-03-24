@@ -113,6 +113,10 @@
             counsel-find-file-occur-cmd
             "gls -a | grep -i -E '%s' | tr '\\n' '\\0' | xargs -0 gls -d --group-directories-first")))
   :config
+  ;; persist views
+  (with-eval-after-load 'savehist
+    (add-to-list 'savehist-additional-variables 'ivy-views))
+
   (with-no-warnings
     ;; Display an arrow with the selected item
     (defun my-ivy-format-function-arrow (cands)
@@ -426,7 +430,7 @@ This is for use in `ivy-re-builders-alist'."
                   :poshandler ivy-hydra-poshandler-frame-center-below-fn))
           (with-eval-after-load 'solaire-mode
             (plist-put hydra-posframe-show-params
-                       :background-color (face-background 'solaire-default-face))))
+                       :background-color (face-background 'solaire-default-face nil t))))
 
         (ivy-hydra-set-posframe-show-params)
         (add-hook 'after-load-theme-hook #'ivy-hydra-set-posframe-show-params))))
@@ -545,7 +549,7 @@ This is for use in `ivy-re-builders-alist'."
 
     (with-eval-after-load 'solaire-mode
       (setq ivy-posframe-parameters
-            `((background-color . ,(face-background 'solaire-default-face)))))
+            `((background-color . ,(face-background 'solaire-default-face nil t)))))
 
     (with-eval-after-load 'persp-mode
       (add-hook 'persp-load-buffer-functions
@@ -565,7 +569,7 @@ This is for use in `ivy-re-builders-alist'."
                    ((t (:background ,(face-foreground 'font-lock-comment-face))))))
                 (with-eval-after-load 'solaire-mode
                   (setf (alist-get 'background-color ivy-posframe-parameters)
-                        (face-background 'solaire-default-face)))))
+                        (face-background 'solaire-default-face nil t)))))
 
     (with-no-warnings
       (defun ivy-display-at-frame-center-near-bottom-fn (str)
