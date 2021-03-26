@@ -44,11 +44,8 @@
     (which-key-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face)))))
     :init
     (setq which-key-posframe-border-width 3
-          which-key-posframe-poshandler #'ivy-poshandler-frame-center-near-bottom-fn)
-
-    (with-eval-after-load 'solaire-mode
-      (setq which-key-posframe-parameters
-            `((background-color . ,(face-background 'solaire-default-face)))))
+          which-key-posframe-poshandler #'ivy-poshandler-frame-center-near-bottom-fn
+          which-key-posframe-parameters `((background-color . ,(face-background 'tooltip))))
 
     (which-key-posframe-mode 1)
     :config
@@ -58,9 +55,8 @@
                 (custom-set-faces
                  `(which-key-posframe-border
                    ((t (:background ,(face-foreground 'font-lock-comment-face))))))
-                (with-eval-after-load 'solaire-mode
-                  (setf (alist-get 'background-color which-key-posframe-parameters)
-                        (face-background 'solaire-default-face)))))))
+                (setq which-key-posframe-parameters
+                      `((background-color . ,(face-background 'tooltip))))))))
 
 (use-package hungry-delete
   :hook (after-init . global-hungry-delete-mode)

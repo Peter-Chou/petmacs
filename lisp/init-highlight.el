@@ -14,16 +14,8 @@
 ;; Highlight symbols
 (use-package symbol-overlay
   :diminish
-  :custom-face
-  (symbol-overlay-default-face ((t (:inherit 'region))))
-  (symbol-overlay-face-1 ((t (:inherit 'highlight))))
-  (symbol-overlay-face-2 ((t (:inherit 'font-lock-builtin-face :inverse-video t))))
-  (symbol-overlay-face-3 ((t (:inherit 'warning :inverse-video t))))
-  (symbol-overlay-face-4 ((t (:inherit 'font-lock-constant-face :inverse-video t))))
-  (symbol-overlay-face-5 ((t (:inherit 'error :inverse-video t))))
-  (symbol-overlay-face-6 ((t (:inherit 'dired-mark :inverse-video t :bold nil))))
-  (symbol-overlay-face-7 ((t (:inherit 'success :inverse-video t))))
-  (symbol-overlay-face-8 ((t (:inherit 'dired-symlink :inverse-video t :bold nil))))
+  :functions (turn-off-symbol-overlay turn-on-symbol-overlay)
+  :custom-face (symbol-overlay-default-face ((t (:inherit (region bold)))))
   :bind (("M-i" . symbol-overlay-put)
          ("M-n" . symbol-overlay-jump-next)
          ("M-p" . symbol-overlay-jump-prev)
@@ -32,30 +24,33 @@
          ("M-C" . symbol-overlay-remove-all)
          ([M-f3] . symbol-overlay-remove-all))
   :hook ((prog-mode . symbol-overlay-mode)
-         ((iedit-mode treemacs-mode) . (lambda ()
-                                         "Disabled symbol highlighting."
-                                         (symbol-overlay-mode -1)))
-         (iedit-mode-end . (lambda ()
-                             "Enable symbol highlighting if necessary."
-                             (when (derived-mode-p 'prog-mode)
-                               (symbol-overlay-mode 1)))))
+         (iedit-mode . turn-off-symbol-overlay)
+         (iedit-mode-end . turn-on-symbol-overlay))
   :init (setq symbol-overlay-idle-time 0.1)
+  (with-eval-after-load 'all-the-icons
+    (setq symbol-overlay-faces
+          '((:inherit (all-the-icons-blue bold) :inverse-video t)
+            (:inherit (all-the-icons-pink bold) :inverse-video t)
+            (:inherit (all-the-icons-yellow bold) :inverse-video t)
+            (:inherit (all-the-icons-purple bold) :inverse-video t)
+            (:inherit (all-the-icons-red bold) :inverse-video t)
+            (:inherit (all-the-icons-orange bold) :inverse-video t)
+            (:inherit (all-the-icons-green bold) :inverse-video t)
+            (:inherit (all-the-icons-cyan bold) :inverse-video t))))
   :config
-  (global-set-key (kbd "M-i") 'symbol-overlay-put)
-  (global-set-key (kbd "M-n") 'symbol-overlay-switch-forward)
-  (global-set-key (kbd "M-p") 'symbol-overlay-switch-backward)
-  (global-set-key (kbd "<f7>") 'symbol-overlay-mode)
-  (global-set-key (kbd "M-c") 'symbol-overlay-remove-all)
-  ;; (global-set-key (kbd "<f8>") 'symbol-overlay-remove-all)
-  ;; remap help tooltip keybinding from h to H in symbol-overlay-map
-  (define-key symbol-overlay-map (kbd "h") 'evil-backward-char)
-  (define-key symbol-overlay-map (kbd "H") 'symbol-overlay-map-help)
-
   ;; Disable symbol highlighting while selecting
-  (defadvice set-mark (after disable-symbol-overlay activate)
+  (defun turn-off-symbol-overlay (&rest _)
+    "Turn off symbol highlighting."
+    (interactive)
     (symbol-overlay-mode -1))
-  (defadvice deactivate-mark (after enable-symbol-overlay activate)
-    (symbol-overlay-mode 1)))
+  (advice-add #'set-mark :after #'turn-off-symbol-overlay)
+
+  (defun turn-on-symbol-overlay (&rest _)
+    "Turn on symbol highlighting."
+    (interactive)
+    (when (derived-mode-p 'prog-mode)
+      (symbol-overlay-mode 1)))
+  (advice-add #'deactivate-mark :after #'turn-on-symbol-overlay))
 
 ;; (use-package highlight-indentation
 ;;   :diminish
@@ -66,27 +61,40 @@
 ;;    (python-mode . highlight-indentation-current-column-mode)))
 ;; Highlight indentions
 
+;; Highlight indentions
 (when (display-graphic-p)
   (use-package highlight-indent-guides
     :diminish
-    :custom-face
-    (highlight-indent-guides-top-character-face ((t (:inherit (font-lock-keyword-face bold)))))
-    (highlight-indent-guides-character-face ((t (:inherit (font-lock-comment-face)))))
+    :functions (macrostep-expand macrostep-collapse)
     :hook (prog-mode . highlight-indent-guides-mode)
     :init (setq highlight-indent-guides-method 'character
-		highlight-indent-guides-character ?\┆ ;; candidates: , ⋮, ┆, ┊, ┋, ┇
-		highlight-indent-guides-auto-enabled nil
-		highlight-indent-guides-auto-character-face-perc 10
-		highlight-indent-guides-auto-top-character-face-perc 20
                 highlight-indent-guides-responsive 'top)
     :config
-    ;; Don't display first level of indentation
+    ;; WORKAROUND: Reset the faces after changing theme
+    (add-hook 'after-load-theme-hook
+              (lambda ()
+                "Re-render indentations after changing theme."
+                (when highlight-indent-guides-mode
+                  (highlight-indent-guides-auto-set-faces))))
+
     (with-no-warnings
+      ;; Don't display first level of indentation
       (defun my-indent-guides-for-all-but-first-column (level responsive display)
         (unless (< level 1)
           (highlight-indent-guides--highlighter-default level responsive display)))
       (setq highlight-indent-guides-highlighter-function
             #'my-indent-guides-for-all-but-first-column)
+
+      ;; Disable in `macrostep' expanding
+      (with-eval-after-load 'macrostep
+        (advice-add #'macrostep-expand
+                    :after (lambda (&rest _)
+                             (when highlight-indent-guides-mode
+                               (highlight-indent-guides-mode -1))))
+        (advice-add #'macrostep-collapse
+                    :after (lambda (&rest _)
+                             (when (derived-mode-p 'prog-mode)
+                               (highlight-indent-guides-mode 1)))))
 
       ;; Don't display indentations in `swiper'
       ;; https://github.com/DarthFennec/highlight-indent-guides/issues/40
@@ -203,10 +211,10 @@
 (use-package hl-todo
   :custom-face (hl-todo ((t (:box t :inherit 'hl-todo))))
   :bind (:map hl-todo-mode-map
-	      ([C-f3] . hl-todo-occur)
-	      ("C-c t p" . hl-todo-previous)
-	      ("C-c t n" . hl-todo-next)
-	      ("C-c t o" . hl-todo-occur))
+	 ([C-f3] . hl-todo-occur)
+	 ("C-c t p" . hl-todo-previous)
+	 ("C-c t n" . hl-todo-next)
+	 ("C-c t o" . hl-todo-occur))
   :hook (after-init . global-hl-todo-mode)
   :config
   (dolist (keyword '("BUG" "DEFECT" "ISSUE"))
@@ -218,8 +226,8 @@
 (use-package diff-hl
   :custom-face
   (diff-hl-change ((t (:foreground ,(face-background 'highlight) :background nil))))
-  (diff-hl-insert ((t (:background nil))))
-  (diff-hl-delete ((t (:background nil))))
+  (diff-hl-insert ((t (:inherit diff-added :background nil))))
+  (diff-hl-delete ((t (:inherit diff-removed :background nil))))
   :bind (:map diff-hl-command-map
          ("SPC" . diff-hl-mark-hunk))
   :hook ((after-init . global-diff-hl-mode)
@@ -231,6 +239,14 @@
 
   ;; Set fringe style
   (setq-default fringes-outside-margins t)
+
+  ;; Reset faces after changing the color theme
+  (add-hook 'after-load-theme-hook
+            (lambda ()
+              (custom-set-faces
+               `(diff-hl-change ((t (:foreground ,(face-background 'highlight) :background nil))))
+               '(diff-hl-insert ((t (:inherit diff-added :background nil))))
+               '(diff-hl-delete ((t (:inherit diff-removed :background nil)))))))
 
   (with-no-warnings
     (defun my-diff-hl-fringe-bmp-function (_type _pos)

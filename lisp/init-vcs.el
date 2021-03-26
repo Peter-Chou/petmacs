@@ -236,12 +236,9 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
     :init
     (setq transient-posframe-border-width 3
           transient-posframe-min-height 21
-          transient-posframe-min-width 80
-          transient-posframe-poshandler #'ivy-poshandler-frame-center-near-bottom-fn)
-
-    (with-eval-after-load 'solaire-mode
-      (setq transient-posframe-parameters
-            `((background-color . ,(face-background 'solaire-default-face)))))
+          transient-posframe-parameters
+          `((lines-truncate . t)
+            (background-color . ,(face-background 'tooltip))))
     :config
     (add-hook 'after-load-theme-hook
               (lambda ()
@@ -249,9 +246,8 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
                 (custom-set-faces
                  `(transient-posframe-border
                    ((t (:background ,(face-foreground 'font-lock-comment-face))))))
-                (with-eval-after-load 'solaire-mode
-                  (setf (alist-get 'background-color transient-posframe-parameters)
-                        (face-background 'solaire-default-face)))))))
+                (sett (alist-get 'background-color transient-posframe-parameters)
+                      (face-background 'tooltip))))))
 
 ;; Git related modes
 (use-package gitattributes-mode)
