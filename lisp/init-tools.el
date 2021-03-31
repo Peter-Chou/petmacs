@@ -58,10 +58,10 @@
                 (setq which-key-posframe-parameters
                       `((background-color . ,(face-background 'tooltip))))))))
 
-(use-package hungry-delete
-  :hook (after-init . global-hungry-delete-mode)
-  :config
-  (setq-default hungry-delete-chars-to-skip " \t\f\v"))
+;; (use-package hungry-delete
+;;   :hook (after-init . global-hungry-delete-mode)
+;;   :config
+;;   (setq-default hungry-delete-chars-to-skip " \t\f\v"))
 
 (use-package expand-region
   :init
