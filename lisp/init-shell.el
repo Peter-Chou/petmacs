@@ -19,7 +19,8 @@ cursor backwards. Moving cursor backwards is the default vim behavior but it is
 not appropriate in some cases like terminals."
 	  (setq-local evil-move-cursor-back nil))
 	:init
-	(setq vterm-kill-buffer-on-exit t)
+	(setq vterm-kill-buffer-on-exit t
+	      vterm-always-compile-module t)
 	:config
 	(add-hook 'vterm-mode-hook #'evil-collection-vterm-escape-stay)
 	(add-hook 'vterm-mode-hook

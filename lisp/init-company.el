@@ -14,7 +14,6 @@
   :commands company-cancel
   :bind (("M-/" . company-complete)
          ("C-M-i" . company-complete)
-         ("C-M-k" . company-files)
          :map company-mode-map
          ("<backtab>" . company-yasnippet)
          :map company-active-map
@@ -102,7 +101,7 @@
       (with-no-warnings
         ;; Prettify icons
         (defun my-company-box-icons--elisp (candidate)
-          (when (derived-mode-p 'emacs-lisp-mode)
+          (when (or (derived-mode-p 'emacs-lisp-mode) (derived-mode-p 'lisp-mode))
             (let ((sym (intern candidate)))
               (cond ((fboundp sym) 'Function)
                     ((featurep sym) 'Module)

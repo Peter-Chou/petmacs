@@ -11,8 +11,8 @@
 (defvar petmacs-proxy "127.0.0.1:1080"
   "Set network proxy.")
 
-;; (defvar petmacs-day-theme 'doom-solarized-light)
-;; (defvar petmacs-night-theme 'doom-dracula)
+(defvar petmacs-completion-style 'childframe
+  "Completion display style.  choice: minibuffer / childframe.")
 
 (defvar petmacs-themes-list '(
 			      doom-monokai-pro
