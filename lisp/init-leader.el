@@ -71,13 +71,14 @@
   "wp" "popout window"
   )
 
-(if sys/linuxp
-    (leader/set-keys "'"   #'vterm-toggle-cd)
-  (leader/set-keys "'"   #'petmacs/pop-eshell)
-  )
+;; (if sys/linuxp
+;;     (leader/set-keys "'"   #'vterm-toggle-cd)
+;;   (leader/set-keys "'"   #'petmacs/pop-eshell)
+;;   )
 
 (leader/set-keys
-  ;; "'"   #'petmacs/pop-eshell
+  "'"   #'petmacs/pop-eshell
+  ;;     (leader/set-keys "'"   #'vterm-toggle-cd)
   "?"   #'counsel-descbinds
   "/"   #'counsel-projectile-rg
   "v"   #'er/expand-region
@@ -278,14 +279,15 @@
     "x" #'flycheck-explain-error-at-point))
 
 
-(if sys/linuxp
-    (leader/set-keys "p'"   #'petmacs/projectile-pop-vterm)
-  (leader/set-keys "p'"   #'projectile-pop-eshell)
-  )
+;; (if sys/linuxp
+;;     (leader/set-keys "p'"   #'petmacs/projectile-pop-vterm)
+;;   (leader/set-keys "p'"   #'projectile-pop-eshell)
+;;   )
 
 (leader/with-prefix "p"
   (leader/set-keys
-    ;; "'"  #'petmacs/projectile-pop-eshell
+    "'"  #'petmacs/projectile-pop-eshell
+    ;;     (leader/set-keys "p'"   #'petmacs/projectile-pop-vterm)
     "t"  #'petmacs/treemacs-project-toggle
     "b"  #'counsel-projectile-switch-to-buffer
     "d"  #'counsel-projectile-find-dir
