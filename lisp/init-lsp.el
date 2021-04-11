@@ -9,6 +9,54 @@
   (require 'init-custom))
 
 (use-package lsp-mode
+  :preface
+  (defun petmacs//lsp-avy-document-symbol (all)
+    (interactive)
+    (let ((line 0) (col 0) (w (selected-window))
+          (ccls (and (memq major-mode '(c-mode c++-mode objc-mode)) (eq c-c++-backend 'lsp-ccls)))
+          (start-line (1- (line-number-at-pos (window-start))))
+          (end-line (1- (line-number-at-pos (window-end))))
+          ranges point0 point1
+          candidates)
+      (save-excursion
+	(goto-char 1)
+	(cl-loop for loc in
+		 (lsp--send-request
+                  (lsp--make-request
+                   "textDocument/documentSymbol"
+                   `(:textDocument ,(lsp--text-document-identifier)
+                     :all ,(if all t :json-false)
+                     :startLine ,start-line :endLine ,end-line)))
+		 for range = (if ccls
+				 loc
+                               (->> loc (gethash "location") (gethash "range")))
+		 for range_start = (gethash "start" range)
+		 for range_end = (gethash "end" range)
+		 for l0 = (gethash "line" range_start)
+		 for c0 = (gethash "character" range_start)
+		 for l1 = (gethash "line" range_end)
+		 for c1 = (gethash "character" range_end)
+		 while (<= l0 end-line)
+		 when (>= l0 start-line)
+		 do
+		 (forward-line (- l0 line))
+		 (forward-char c0)
+		 (setq point0 (point))
+		 (forward-line (- l1 l0))
+		 (forward-char c1)
+		 (setq point1 (point))
+		 (setq line l1 col c1)
+		 (push `((,point0 . ,point1) . ,w) candidates)))
+      (avy-with avy-document-symbol
+		(avy--process candidates
+			      (avy--style-fn avy-style)))))
+  (defun petmacs/lsp-avy-goto-word ()
+    (interactive)
+    (petmacs//lsp-avy-document-symbol t))
+
+  (defun petmacs/lsp-avy-goto-symbol ()
+    (interactive)
+    (petmacs//lsp-avy-document-symbol nil))
   :diminish
   :defines (lsp-clients-python-library-directories
             lsp-rust-server)

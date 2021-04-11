@@ -386,6 +386,8 @@
 ;;; lsp major mode settings
 (dolist (mode petmacs-lsp-active-modes)
   (leader/declare-prefix-for-mode!* mode
+    "=" "format"
+    "a" "code actions"
     "g" "goto"
     "G" "goto (other window)"
     "p" "peek"
@@ -393,21 +395,36 @@
     "r" "refactor"
     "h" "help"
     "F" "folders"
+    "x" "text/code"
     )
 
   (leader/set-keys-for-mode! mode
     ;; format
-    "rb" #'lsp-format-buffer
-    "rr" #'lsp-format-region
-    "rR" #'lsp-rename
+    "=b" #'lsp-format-buffer
+    "=r" #'lsp-format-region
+    "=o" #'lsp-organize-imports
+    ;; code actions
+    "aa" #'lsp-execute-code-action
+    ;; format
+    ;; "rb" #'lsp-format-buffer
+    ;; "rr" #'lsp-format-region
+    ;; "rR" #'lsp-rename
+    "rr" #'lsp-rename
+
     ;; goto
-    "gr" #'lsp-find-references
     "gt" #'lsp-find-type-definition
     "gd" #'xref-find-definitions
+    "gr" #'xref-find-references
+    ;; "gr" #'lsp-find-references
+    "ge" #'lsp-treemacs-errors-list
+    "gb" #'xref-pop-marker-stack
     "gD" #'lsp-find-declaration
     "gf" #'xref-find-definitions-other-frame
     "gi" #'lsp-find-implementation
-    "gs" #'lsp-ui-find-workspace-symbol
+    "gk" #'petmacs/lsp-avy-goto-word
+    "gK" #'petmacs/lsp-avy-goto-symbol
+    "gs" #'lsp-ivy-workspace-symbol
+    "gS" #'lsp-ivy-global-workspace-symbol
     "gM" #'lsp-ui-imenu
     ;; goto other window
     "Gr" #'petmacs/lsp-find-references-other-window
@@ -418,18 +435,26 @@
     ;; peek
     "pd" #'lsp-ui-peek-find-definitions
     "pi" #'lsp-ui-peek-find-implementation
+    "ps" #'lsp-ui-peek-find-workspace-symbol
+    "pS" #'lsp-treemacs-symbols
+    "pb" #'lsp-ui-peek-jump-backward
+    "pn" #'lSp-ui-peek-jump-forward
+    "pe" #'lsp-ui-flycheck-list
     "pr" #'lsp-ui-peek-find-references
     "pRn" #'lsp-ui-find-next-reference
     "pRp" #'lsp-ui-find-prev-reference
     ;; backend
-    "ba" #'lsp-execute-code-action
     "bd" #'lsp-describe-session
     "br" #'lsp-restart-workspace
     "bs" #'lsp-shutdown-workspace
+    "bv" #'lsp-version
 
     "hh" #'lsp-describe-thing-at-point
 
-
+    ;; text/code
+    "xh" #'lsp-document-highlight
+    "xl" #'lsp-lens-show
+    "xL" #'lsp-lens-hide
 
     ;; toggles
     ;; "Td" #'lsp-ui-doc-mode
