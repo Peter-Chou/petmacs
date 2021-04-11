@@ -23,21 +23,22 @@
       leader-key petmacs-evil-leader-key
       leader-major-mode-key petmacs-evil-major-leader-key)
 
+;; Ctrl-o go back from definitions
 (use-package spaceleader
   :ensure nil
   :commands (
-     leader/with-prefix
-     leader/with-major-mode-prefix
-     leader/without-prefix
-     leader/declare-prefix
-     leader/declare-prefix*
-     leader/declare-prefix-for-mode
-     leader/declare-prefix-for-mode*
-     leader/declare-prefix-for-mode!
-     leader/declare-prefix-for-mode!*
-     leader/set-keys
-     leader/set-keys-for-mode
-     leader/set-keys-for-mode!))
+	     leader/with-prefix
+	     leader/with-major-mode-prefix
+	     leader/without-prefix
+	     leader/declare-prefix
+	     leader/declare-prefix*
+	     leader/declare-prefix-for-mode
+	     leader/declare-prefix-for-mode*
+	     leader/declare-prefix-for-mode!
+	     leader/declare-prefix-for-mode!*
+	     leader/set-keys
+	     leader/set-keys-for-mode
+	     leader/set-keys-for-mode!))
 
 
 (leader/declare-prefix*
@@ -69,7 +70,16 @@
 
   "w" "window"
   "wp" "popout window"
+
+  "d" "debug"
+  "db"  "breakpoints"
+  "dd"  "debugging"
+  "de"  "eval"
+  "dI"  "inspect"
+  "dS"  "switch"
+  "dw"  "debug windows"
   )
+
 
 ;; (if sys/linuxp
 ;;     (leader/set-keys "'"   #'vterm-toggle-cd)
@@ -83,8 +93,57 @@
   "/"   #'counsel-projectile-rg
   "v"   #'er/expand-region
   "u"   #'universal-argument
-  "d"   #'xref-pop-marker-stack
+  ;; "d"   #'xref-pop-marker-stack
   "TAB"  #'petmacs/alternate-buffer)
+
+(leader/with-prefix "d"
+  (leader/set-keys
+    "." #'dap-hydra
+    ;; repl
+    "'"  #'dap-ui-repl
+    ;; abandon
+    "a"  #'dap-disconnect
+    "A"  #'dap-delete-all-sessions
+    ;; breakpoints
+    "bb" #'dap-breakpoint-toggle
+    "bc" #'dap-breakpoint-condition
+    "bl" #'dap-breakpoint-log-message
+    "bh" #'dap-breakpoint-hit-condition
+    "ba" #'dap-breakpoint-add
+    "bd" #'dap-breakpoint-delete
+    "bD" #'dap-breakpoint-delete-all
+    ;; debuging/running
+    "dd" #'dap-debug
+    "de" #'dap-debug-edit-template
+    "dl" #'dap-debug-last
+    "dr" #'dap-debug-recent
+    ;; eval
+    "ee" #'dap-eval
+    "er" #'dap-eval-region
+    "et" #'dap-eval-thing-at-point
+    "et" #'dap-ui-expressions-add
+    ;; inspect
+    "Ii" #'dap-ui-inspect
+    "Ir" #'dap-ui-inspect-region
+    "It" #'dap-ui-inspect-thing-at-point
+    ;; stepping
+    "c"  #'dap-continue
+    "i"  #'dap-step-in
+    "o"  #'dap-step-out
+    "r"  #'dap-restart-frame
+    "s"  #'dap-next
+    "v"  #'dap-ui-inspect-thing-at-point
+    ;; switching
+    "Ss" #'dap-switch-session
+    "St" #'dap-switch-thread
+    "Sf" #'dap-switch-frame
+    ;; windows
+    "wo" #'dap-go-to-output-buffer
+    "wl" #'dap-ui-locals
+    "ws" #'dap-ui-sessions
+    "wb" #'dap-ui-breakpoints
+    )
+  )
 
 (leader/with-prefix "a"
   (leader/set-keys
@@ -334,13 +393,7 @@
     "r" "refactor"
     "h" "help"
     "F" "folders"
-    "d" "debug"
-    "db"  "breakpoints"
-    "dd"  "debugging"
-    "de"  "eval"
-    "dI"  "inspect"
-    "dS"  "switch"
-    "dw"  "debug windows")
+    )
 
   (leader/set-keys-for-mode! mode
     ;; format
@@ -377,50 +430,6 @@
     "hh" #'lsp-describe-thing-at-point
 
 
-    "d." #'dap-hydra
-    ;; repl
-    "d'"  #'dap-ui-repl
-    ;; abandon
-    "da"  #'dap-disconnect
-    "dA"  #'dap-delete-all-sessions
-    ;; breakpoints
-    "dbb" #'dap-breakpoint-toggle
-    "dbc" #'dap-breakpoint-condition
-    "dbl" #'dap-breakpoint-log-message
-    "dbh" #'dap-breakpoint-hit-condition
-    "dba" #'dap-breakpoint-add
-    "dbd" #'dap-breakpoint-delete
-    "dbD" #'dap-breakpoint-delete-all
-    ;; debuging/running
-    "ddd" #'dap-debug
-    "dde" #'dap-debug-edit-template
-    "ddl" #'dap-debug-last
-    "ddr" #'dap-debug-recent
-    ;; eval
-    "dee" #'dap-eval
-    "der" #'dap-eval-region
-    "det" #'dap-eval-thing-at-point
-    "det" #'dap-ui-expressions-add
-    ;; inspect
-    "dIi" #'dap-ui-inspect
-    "dIr" #'dap-ui-inspect-region
-    "dIt" #'dap-ui-inspect-thing-at-point
-    ;; stepping
-    "dc"  #'dap-continue
-    "di"  #'dap-step-in
-    "do"  #'dap-step-out
-    "dr"  #'dap-restart-frame
-    "ds"  #'dap-next
-    "dv"  #'dap-ui-inspect-thing-at-point
-    ;; switching
-    "dSs" #'dap-switch-session
-    "dSt" #'dap-switch-thread
-    "dSf" #'dap-switch-frame
-    ;; windows
-    "dwo" #'dap-go-to-output-buffer
-    "dwl" #'dap-ui-locals
-    "dws" #'dap-ui-sessions
-    "dwb" #'dap-ui-breakpoints
 
     ;; toggles
     ;; "Td" #'lsp-ui-doc-mode
