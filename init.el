@@ -70,9 +70,12 @@ decrease this. If you experience stuttering, increase this.")
 
 ;; use mirror
 (setq package-archives '(("gnu"          . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-			 ("melpa"        . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+			 ;; ("melpa"        . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+			 ("melpa"        . "https://melpa.org/packages/")
 			 ("org"          . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
-			 ("melpa-stable" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa-stable/")))
+			 ;; ("melpa-stable" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa-stable/")
+			 ("melpa-stable" . "https://stable.melpa.org/packages/")
+			 ))
 
 (setq byte-compile-warnings '(cl-functions))
 
