@@ -15,9 +15,10 @@
   :init
   (setq evil-want-C-u-scroll t)
   (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
-  (setq evil-want-keybinding nil) ;; use evil-collection instead
+  ;; (setq evil-want-keybinding nil) ;; use evil-collection instead
   :config
   (require 'evil-anzu)
+  (evil-set-undo-system 'undo-tree)
   (evil-mode 1)
   (progn
     (defun petmacs//evil-visual-shift-left ()
@@ -113,8 +114,8 @@
 ;;   (with-eval-after-load 'cmake-mode (evil-collection-cmake-mode-setup))
 ;;   )
 
-(use-package evil-collection
-  :config (evil-collection-init))
+;; (use-package evil-collection
+;;   :config (evil-collection-init))
 
 (provide 'init-evil)
 
