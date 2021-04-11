@@ -158,11 +158,12 @@
 
 (leader/with-prefix "t"
   (leader/set-keys
-  "-" #'centered-cursor-mode
-  "s" #'flycheck-mode
-  "f" #'focus-mode
-  "F" #'toggle-frame-fullscreen
-  "M" #'maximize-window)
+    "-" #'centered-cursor-mode
+    "m" #'evil-visual-mark-mode
+    "s" #'flycheck-mode
+    "f" #'focus-mode
+    "F" #'toggle-frame-fullscreen
+    "M" #'maximize-window)
 
   (leader/with-prefix "p"
     (leader/set-keys
