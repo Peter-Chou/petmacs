@@ -2,8 +2,11 @@ alias :q exit
 alias goto git checkout $*
 alias g git $*
 alias d dired .
-alias lh ls -lsAd --color .[^.]*
-alias ll ls -lsA --color
+alias ls lsd
+alias l lsd -l
+alias la lsd -a
+alias lla lsd -la
+alias lt lsd --tree
 alias .... cd ../../..
 alias ... cd ../..
 alias .. cd ..
