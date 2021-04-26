@@ -285,14 +285,15 @@
 
 (leader/with-prefix "w"
   (leader/set-keys
-  "."  #'hydra-frame-window/body
-  "c"  #'olivetti-mode
-  "d"  #'delete-window
-  "D"  #'ace-delete-window
+    "."  #'hydra-frame-window/body
+    "c"  #'olivetti-mode
+    "r"  #'winner-undo
+    "d"  #'delete-window
+    "D"  #'ace-delete-window
 
-  "pm" #'petmacs/shackle-popup-message-buffer
-  "pc" #'petmacs/shackle-popup-compilation-buffer)
-)
+    "pm" #'petmacs/shackle-popup-message-buffer
+    "pc" #'petmacs/shackle-popup-compilation-buffer)
+  )
 
 (leader/with-prefix "g"
   (leader/set-keys

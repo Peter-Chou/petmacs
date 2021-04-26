@@ -315,5 +315,9 @@
   (setq proced-auto-update-flag t
         proced-auto-update-interval 3))
 
+(use-package winner-mode
+  :ensure nil
+  :hook (after-init . winner-mode))
+
 (provide 'init-default)
 ;;; init-default.el ends here
