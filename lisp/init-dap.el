@@ -5,7 +5,7 @@
 ;;; Code:
 
 ;; Debug
-;; python: pip install "ptvsd>=4.2"
+;; python: pip install "debugpy"
 ;; C++: apt-get install lldb nodejs npm
 ;; C++: follow instruction from https://github.com/llvm-mirror/lldb/tree/master/tools/lldb-vscode
 ;; `lsp-mode' and `treemacs' integration
