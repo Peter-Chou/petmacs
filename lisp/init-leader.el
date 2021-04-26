@@ -87,7 +87,8 @@
 ;;   )
 
 (leader/set-keys
-  "'"   #'petmacs/pop-eshell
+  ;; "'"   #'petmacs/pop-eshell
+  "'"   #'petmacs/shell-pop
   ;;     (leader/set-keys "'"   #'vterm-toggle-cd)
   "?"   #'counsel-descbinds
   "/"   #'counsel-projectile-rg
@@ -347,7 +348,8 @@
 
 (leader/with-prefix "p"
   (leader/set-keys
-    "'"  #'petmacs/projectile-pop-eshell
+    ;; "'"  #'petmacs/projectile-pop-eshell
+    "'"  #'petmacs/projectile-shell-pop
     ;;     (leader/set-keys "p'"   #'petmacs/projectile-pop-vterm)
     "t"  #'petmacs/treemacs-project-toggle
     "b"  #'counsel-projectile-switch-to-buffer

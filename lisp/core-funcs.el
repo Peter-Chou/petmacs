@@ -348,11 +348,25 @@ Pass arg to ‘shell’."
     '((side . right)
       (window-width . fit-window-to-buffer)))))
 
+
+(defun petmacs/shell-pop ()
+  "Open a term buffer at projectile project root."
+  (interactive)
+  (call-interactively 'shell-pop)
+  (evil-insert-state))
+
 (defun petmacs/projectile-pop-eshell ()
   "Open a term buffer at projectile project root."
   (interactive)
   (let ((default-directory (projectile-project-root)))
     (call-interactively 'petmacs/pop-eshell)))
+
+(defun petmacs/projectile-shell-pop ()
+  "Open a term buffer at projectile project root."
+  (interactive)
+  (let ((default-directory (projectile-project-root)))
+    (call-interactively 'shell-pop)
+    (evil-insert-state)))
 
 
 ;; Recompile site-lisp directory

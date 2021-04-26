@@ -189,6 +189,7 @@
 (use-package evil-textobj-line)
 (use-package evil-visual-mark-mode)
 
+
 (provide 'init-evil)
 
 ;;; init-evil.el ends here
