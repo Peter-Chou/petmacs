@@ -221,6 +221,7 @@
     "-" #'centered-cursor-mode
     "m" #'evil-visual-mark-mode
     "s" #'flycheck-mode
+    "l" #'display-fill-column-indicator-mode
     "f" #'focus-mode
     "F" #'toggle-frame-fullscreen
     "M" #'maximize-window)
