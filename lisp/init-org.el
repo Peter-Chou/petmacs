@@ -56,11 +56,12 @@ Will work on both org-mode and any mode that accepts plain html."
                               (setq show-paren-mode nil))))
   :init
   (require 'org)
-  (setq org-directory "~/org"
+  (setq org-modules nil ; Faster loading
+	org-directory "~/org"
 	org-use-sub-superscripts nil	;; disable ^ _ for (super/sub)script in display
 	org-default-notes-file (expand-file-name "notes.org" org-directory)
 	org-todo-keywords '((sequence "TODO(t)" "DOING(i)" "HANGUP(h)" "|" "DONE(d)" "CANCEL(c)")
-                            (sequence "⚑(T)" "🏴(I)" "❓(H)" "|" "✔(D)" "✘(C)"))
+			    (sequence "⚑(T)" "🏴(I)" "❓(H)" "|" "✔(D)" "✘(C)"))
 	org-todo-keyword-faces '(("HANGUP" . warning)
 				 ("❓" . warning))
 	org-pretty-entities t
