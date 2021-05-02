@@ -117,19 +117,41 @@
     (with-eval-after-load 'savehist
       (add-to-list 'savehist-additional-variables 'ivy-views))
 
-    ;; Display an arrow with the selected item
-    (defun my-ivy-format-function-arrow (cands)
+    ;; Highlight the selected item
+    (defun my-ivy--make-image (face width height)
+      "Create a PBM bitmap via FACE, WIDTH and HEIGHT."
+      (when (and (display-graphic-p)
+                 (image-type-available-p 'pbm))
+        (propertize
+         " " 'display
+         (let ((color (or (face-background face nil t) "None")))
+           (ignore-errors
+             (create-image
+              (concat (format "P1\n%i %i\n" width height)
+                      (make-string (* width height) ?1)
+                      "\n")
+              'pbm t :foreground color :ascent 'center))))))
+
+    (defun my-ivy-format-function (cands)
       "Transform CANDS into a string for minibuffer."
-      (if (display-graphic-p)
-          (ivy-format-function-line cands)
-        (ivy--format-function-generic
-         (lambda (str)
-           (ivy--add-face (concat "> " str "\n") 'ivy-current-match))
-         (lambda (str)
-           (concat "  " str "\n"))
-         cands
-         "")))
-    (setf (alist-get 't ivy-format-functions-alist) #'my-ivy-format-function-arrow)
+      (if (and (display-graphic-p)
+               (image-type-available-p 'pbm))
+          (let ((width 3)
+                (height (1+ (window-font-height))))
+            (ivy--format-function-generic
+             (lambda (str)
+               (concat
+                (my-ivy--make-image 'highlight width height)
+                (ivy--add-face (concat " " str) 'ivy-current-match)))
+             (lambda (str)
+               (concat
+                (my-ivy--make-image 'default width height)
+                " "
+                str))
+             cands
+             "\n"))
+        (ivy-format-function-arrow cands)))
+    (setf (alist-get 't ivy-format-functions-alist) #'my-ivy-format-function)
 
     ;; Pre-fill search keywords
     ;; @see https://www.reddit.com/r/emacs/comments/b7g1px/withemacs_execute_commands_like_marty_mcfly/
@@ -392,8 +414,7 @@ This is for use in `ivy-re-builders-alist'."
             counsel-grep counsel-git-grep counsel-rg counsel-ag
             counsel-ack counsel-fzf counsel-pt counsel-imenu
             counsel-org-capture counsel-load-theme counsel-yank-pop
-            counsel-recentf counsel-buffer-or-recentf
-            ))
+            counsel-recentf counsel-buffer-or-recentf))
 
     (ivy-prescient-mode 1))
 
