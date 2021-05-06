@@ -90,7 +90,14 @@
   (use-package vterm
     :bind (:map vterm-mode-map
            ([f9] . shell-pop))
-    :init (setq vterm-always-compile-module t)))
+    :init (setq vterm-kill-buffer-on-exit t
+		vterm-always-compile-module t)
+    :config
+    (add-hook 'vterm-mode-hook
+	      (lambda ()
+		;; (setq-local evil-insert-state-cursor 'box)
+		(evil-insert-state)))
+    (evil-define-key 'insert vterm-mode-map (kbd "C-r")      #'vterm--self-insert)))
 
 ;; Shell Pop
 (use-package shell-pop
