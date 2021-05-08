@@ -436,11 +436,11 @@
     "Gd" #'xref-find-definitions-other-window
     "GD" #'petmacs/lsp-find-declaration-other-window
     "Gi" #'petmacs/lsp-find-implementation-other-window
+    "GS" #'lsp-treemacs-symbols
     ;; peek
     "pd" #'lsp-ui-peek-find-definitions
     "pi" #'lsp-ui-peek-find-implementation
     "ps" #'lsp-ui-peek-find-workspace-symbol
-    "pS" #'lsp-treemacs-symbols
     "pb" #'lsp-ui-peek-jump-backward
     "pn" #'lSp-ui-peek-jump-forward
     "pe" #'lsp-ui-flycheck-list
