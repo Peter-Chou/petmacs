@@ -8,6 +8,8 @@
   (require 'init-const)
   (require 'init-custom))
 
+(define-key global-map (kbd "C-.") 'company-files)
+
 ;; install fcitx fcitx-googlepinyin
 ;; create ~/.xprofile which has:
 ;; ```sh
