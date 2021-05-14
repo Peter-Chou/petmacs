@@ -569,7 +569,7 @@ This is for use in `ivy-re-builders-alist'."
                       (face-background 'tooltip))))
 
     (with-no-warnings
-      (defun ivy-posframe-display-at-frame-center-near-bottom-fn (str)
+      (defun ivy-posframe-display-at-frame-center-near-bottom (str)
         (ivy-posframe--display str #'posframe-poshandler-frame-center-near-bottom-fn))
 
       (defun posframe-poshandler-frame-center-near-bottom-fn (info)
@@ -579,7 +579,7 @@ This is for use in `ivy-re-builders-alist'."
                 (truncate (/ (frame-pixel-height parent-frame) 2)))))
 
       (setf (alist-get t ivy-posframe-display-functions-alist)
-            #'ivy-posframe-display-at-frame-center-near-bottom-fn))))
+            #'ivy-posframe-display-at-frame-center-near-bottom))))
 
 (provide 'init-ivy)
 
