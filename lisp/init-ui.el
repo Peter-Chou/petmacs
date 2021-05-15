@@ -176,6 +176,7 @@
    doom-modeline-buffer-file-name-style 'relative-to-project
    ;; doom-modeline-buffer-file-name-style 'file-name
    doom-modeline-icon (display-graphic-p)
+   doom-modeline-hud t
    doom-modeline-major-mode-icon t
    doom-modeline-major-mode-color-icon t
    doom-modeline-buffer-state-icon t
