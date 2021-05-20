@@ -15,11 +15,8 @@
   "Completion display style.  choice: minibuffer / childframe.")
 
 (defvar petmacs-themes-list '(
-			      doom-monokai-pro
-			      sanityinc-tomorrow-day
-			      ;; srcery
-			      ;; doom-acario-light
-			      ;; doom-dracula
+			      doom-nord-light
+			      doom-nord
 			      )
   "List of themes for cycling.")
 

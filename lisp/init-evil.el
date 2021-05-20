@@ -126,12 +126,12 @@
 ;;   (with-eval-after-load 'cmake-mode (evil-collection-cmake-mode-setup))
 ;;   )
 
-(use-package evil-collection
-  :after evil
-  :config
-  ;; (setq evil-collection-mode-list petmacs-evil-collection-allowed-list)
-  (setq evil-collection-want-unimpaired-p nil)
-  (evil-collection-init))
+;; (use-package evil-collection
+;;   :after evil
+;;   :config
+;;   ;; (setq evil-collection-mode-list petmacs-evil-collection-allowed-list)
+;;   (setq evil-collection-want-unimpaired-p nil)
+;;   (evil-collection-init))
 
 (use-package evil-args
   :init

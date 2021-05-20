@@ -224,6 +224,7 @@
     "-" #'centered-cursor-mode
     "m" #'evil-visual-mark-mode
     "s" #'flycheck-mode
+    "t" #'transwin-toggle-transparent-frame
     "l" #'display-fill-column-indicator-mode
     "f" #'focus-mode
     "F" #'toggle-frame-fullscreen

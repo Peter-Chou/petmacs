@@ -111,6 +111,7 @@
 (use-package esup)                      ; Emacs startup profiler
 (use-package bazel-mode
   :after lsp-java)
+(use-package transwin)
 
 
 (provide 'init-tools)
