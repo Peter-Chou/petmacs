@@ -158,8 +158,6 @@
 (use-package doom-modeline
   :hook ((after-init . doom-modeline-mode)
          (doom-modeline-mode . setup-custom-doom-modeline))
-  :custom-face
-  (doom-modeline-buffer-file ((t (:inherit font-lock-string-face :weight bold))))
   :init
   ;; prevent flash of unstyled modeline at startup
   (unless after-init-time
