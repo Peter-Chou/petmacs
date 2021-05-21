@@ -16,7 +16,7 @@
 
 (defvar petmacs-themes-list '(
 			      doom-nord-light
-			      doom-nord
+			      doom-miramare
 			      )
   "List of themes for cycling.")
 
