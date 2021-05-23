@@ -399,6 +399,19 @@ This is for use in `ivy-re-builders-alist'."
       (setq hydra-hint-display-type 'posframe)
 
       (with-no-warnings
+        (defun my-hydra-posframe-show (str)
+          (require 'posframe)
+          (when hydra--posframe-timer
+            (cancel-timer hydra--posframe-timer))
+          (setq hydra--posframe-timer nil)
+          (apply #'posframe-show
+                 " *hydra-posframe*"
+                 :string (concat (propertize "\n" 'face '(:height 0.5))
+                                 str
+                                 (propertize "\n" 'face '(:height 0.5)))
+                 hydra-posframe-show-params))
+        (advice-add #'hydra-posframe-show :override #'my-hydra-posframe-show)
+
         (defun hydra-posframe-delete ()
           (require 'posframe)
           (unless hydra--posframe-timer
@@ -428,14 +441,14 @@ This is for use in `ivy-re-builders-alist'."
 
         (defun ivy-hydra-set-posframe-show-params ()
           "Set hydra-posframe style."
-          (posframe-delete-all)
           (setq hydra-posframe-show-params
                 `(:internal-border-width 3
-                  :internal-border-color ,(face-foreground 'font-lock-comment-face)
-                  :background-color ,(face-background 'tooltip)
+                  :internal-border-color ,(face-foreground 'font-lock-comment-face nil t)
+                  :background-color ,(face-background 'tooltip nil t)
+                  :left-fringe 16
+                  :right-fringe 16
                   :lines-truncate t
                   :poshandler ivy-hydra-poshandler-frame-center-below-fn)))
-
         (ivy-hydra-set-posframe-show-params)
         (add-hook 'after-load-theme-hook #'ivy-hydra-set-posframe-show-params))))
 
@@ -546,13 +559,14 @@ This is for use in `ivy-re-builders-alist'."
   (use-package ivy-posframe
     :defines persp-load-buffer-functions
     :custom-face
-    (ivy-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face)))))
+    (ivy-posframe ((t (:inherit tooltip))))
+    (ivy-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face nil t)))))
     :hook (ivy-mode . ivy-posframe-mode)
     :init
     (setq ivy-height 15
           ivy-posframe-border-width 3
-          ivy-posframe-parameters
-          `((background-color . ,(face-background 'tooltip))))
+          ivy-posframe-parameters '((left-fringe . 8)
+                                    (right-fringe . 8)))
 
     (with-eval-after-load 'persp-mode
       (add-hook 'persp-load-buffer-functions
@@ -561,12 +575,9 @@ This is for use in `ivy-re-builders-alist'."
     :config
     (add-hook 'after-load-theme-hook
               (lambda ()
-                (posframe-delete-all)
                 (custom-set-faces
-                 `(ivy-posframe-border
-                   ((t (:background ,(face-foreground 'font-lock-comment-face))))))
-                (setf (alist-get 'background-color ivy-posframe-parameters)
-                      (face-background 'tooltip))))
+                 '(ivy-posframe ((t (:inherit tooltip))))
+                 `(ivy-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face nil t))))))))
 
     (with-no-warnings
       (defun ivy-posframe-display-at-frame-center-near-bottom (str)

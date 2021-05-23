@@ -92,7 +92,8 @@
     (defun my-git-messenger:popup-message ()
       "Popup message with `posframe', `pos-tip', `lv' or `message', and dispatch actions with `hydra'."
       (interactive)
-      (let* ((vcs (git-messenger:find-vcs))
+      (let* ((hydra-hint-display-type 'message)
+             (vcs (git-messenger:find-vcs))
              (file (buffer-file-name (buffer-base-buffer)))
              (line (line-number-at-pos))
              (commit-info (git-messenger:commit-info-at-line vcs file line))
@@ -112,18 +113,23 @@
               git-messenger:last-commit-id commit-id)
         (run-hook-with-args 'git-messenger:before-popup-hook popuped-message)
         (git-messenger-hydra/body)
-        (cond ((posframe-workable-p)
+        (cond ((and (fboundp 'posframe-workable-p) (posframe-workable-p))
                (let ((buffer-name "*git-messenger*"))
                  (posframe-show buffer-name
-                                :string popuped-message
+                                :string (concat (propertize "\n" 'face '(:height 0.3))
+                                                popuped-message
+                                                "\n"
+                                                (propertize "\n" 'face '(:height 0.3)))
                                 :left-fringe 8
                                 :right-fringe 8
-                                :internal-border-color (face-foreground 'default)
-                                :internal-border-width 1)
+                                :internal-border-width 1
+                                :internal-border-color (face-foreground 'font-lock-comment-face nil t)
+                                :background-color (face-background 'tooltip nil t))
                  (unwind-protect
                      (push (read-event) unread-command-events)
                    (posframe-delete buffer-name))))
-              ((fboundp 'pos-tip-show) (pos-tip-show popuped-message))
+              ((and (fboundp 'pos-tip-show) (display-graphic-p))
+               (pos-tip-show popuped-message))
               ((fboundp 'lv-message)
                (lv-message popuped-message)
                (unwind-protect
@@ -174,13 +180,13 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
        "Save and bury buffer" :color blue)
       ("q" nil "cancel" :color blue)))
   :hook ((find-file . (lambda ()
-                         (save-excursion
-                           (goto-char (point-min))
-                           (when (re-search-forward "^<<<<<<< " nil t)
-                             (smerge-mode 1)))))
-          (magit-diff-visit-file . (lambda ()
-                                     (when smerge-mode
-				       (smerge-hydra/body))))))
+                        (save-excursion
+                          (goto-char (point-min))
+                          (when (re-search-forward "^<<<<<<< " nil t)
+                            (smerge-mode 1)))))
+         (magit-diff-visit-file . (lambda ()
+                                    (when smerge-mode
+				      (smerge-hydra/body))))))
 
 ;; Open github/gitlab/bitbucket page
 (use-package browse-at-remote
@@ -231,23 +237,21 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   (use-package transient-posframe
     :diminish
     :custom-face
-    (transient-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face)))))
+    (transient-posframe ((t (:inherit tooltip))))
+    (transient-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face nil t)))))
     :hook (after-init . transient-posframe-mode)
     :init
     (setq transient-posframe-border-width 3
-          transient-posframe-min-height 21
+          transient-posframe-min-height 22
           transient-posframe-min-width nil
-          transient-posframe-parameters
-          `((background-color . ,(face-background 'tooltip))))
+          transient-posframe-parameters '((left-fringe . 8)
+                                          (right-fringe . 8)))
     :config
     (add-hook 'after-load-theme-hook
               (lambda ()
-                (posframe-delete-all)
                 (custom-set-faces
-                 `(transient-posframe-border
-                   ((t (:background ,(face-foreground 'font-lock-comment-face))))))
-                (setf (alist-get 'background-color transient-posframe-parameters)
-                      (face-background 'tooltip))))
+                 '(transient-posframe ((t (:inherit tooltip))))
+                 `(transient-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face nil t))))))))
 
     (with-no-warnings
       (defun my-transient-posframe--show-buffer (buffer _alist)
@@ -267,7 +271,15 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 			   :internal-border-color (face-attribute 'transient-posframe-border :background nil t)
 			   :override-parameters transient-posframe-parameters)))
             (frame-selected-window posframe))))
-      (advice-add #'transient-posframe--show-buffer :override #'my-transient-posframe--show-buffer))))
+      (advice-add #'transient-posframe--show-buffer :override #'my-transient-posframe--show-buffer)
+
+      (defun my-transient-posframe--render-buffer ()
+        (with-current-buffer (get-buffer-create transient--buffer-name)
+          (goto-char (point-min))
+          (insert (propertize "\n" 'face '(:height 0.3)))
+          (goto-char (point-max))
+          (insert (propertize "\n\n" 'face '(:height 0.3)))))
+      (advice-add #'transient--show :after #'my-transient-posframe--render-buffer))))
 
 ;; Git related modes
 (use-package gitattributes-mode)
