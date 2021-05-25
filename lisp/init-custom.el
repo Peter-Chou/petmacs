@@ -11,12 +11,12 @@
 (defvar petmacs-proxy "127.0.0.1:1080"
   "Set network proxy.")
 
-(defvar petmacs-completion-style 'minibuffer
+(defvar petmacs-completion-style 'childframe
   "Completion display style.  choice: minibuffer / childframe.")
 
 (defvar petmacs-themes-list '(
-			      doom-nord-light
 			      doom-miramare
+			      doom-nord-light
 			      )
   "List of themes for cycling.")
 

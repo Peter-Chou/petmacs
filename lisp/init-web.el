@@ -43,8 +43,8 @@
                 ("node" . js2-jsx-mode))
   :hook ((js2-mode . js2-imenu-extras-mode)
          (js2-mode . js2-highlight-unused-variables-mode))
+  :init (setq js-indent-level 2)
   :config
-
   (with-eval-after-load 'flycheck
     (when (or (executable-find "eslint_d")
               (executable-find "eslint")
