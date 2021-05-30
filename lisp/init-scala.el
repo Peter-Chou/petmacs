@@ -37,12 +37,14 @@ point to the position of the join."
 
       (when join-pos
 	(goto-char join-pos))))
-  (defun petmacs//scala-display-sbt-at-bottom (buffer args)
-    "Display a short buffer in a dedicated window at frame bottom.
-For use with `sbt:display-buffer-action'."
-    (set-window-dedicated-p
-     (display-buffer-at-bottom buffer (cons '(window-height . 12) args))
-     t))
+;;   (defun petmacs//scala-display-sbt-at-bottom (buffer args)
+;;     "Display a short buffer in a dedicated window at frame bottom.
+;; For use with `sbt:display-buffer-action'."
+;;     (set-window-dedicated-p
+;;      (display-buffer-at-bottom buffer (cons '(window-height . 12) args))
+;;      t))
+  :interpreter
+  ("scala" . scala-mode)
   :hook (scala-mode . (lambda ()
 			(require 'lsp-metals)
 			(lsp-deferred)))
@@ -64,9 +66,9 @@ For use with `sbt:display-buffer-action'."
 
     (evil-define-key 'normal scala-mode-map "J" 'petmacs/scala-join-line)
 
-    (when (eq scala-sbt-window-position 'bottom)
-      (setq sbt:display-buffer-action
-            (list #'petmacs//scala-display-sbt-at-bottom)))
+    ;; (when (eq scala-sbt-window-position 'bottom)
+    ;;   (setq sbt:display-buffer-action
+    ;;         (list #'petmacs//scala-display-sbt-at-bottom)))
 
     ;; Compatibility with `aggressive-indent'
     (setq scala-indent:align-forms t
