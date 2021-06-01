@@ -245,19 +245,31 @@
     (doom-themes-treemacs-config))
   )
 
-;; (use-package circadian
-;;   :init
-;;   ;; (setq circadian-themes petmac-auto-themes)
-;;   (setq circadian-themes '(("8:00" . doom-solarized-light)
-;;                            ("19:30" . doom-dracula)))
-;;   (circadian-setup))
+(use-package circadian
+  :init
+  ;; (setq circadian-themes petmac-auto-themes)
+  (setq circadian-themes petmacs-auto-themes)
+  (circadian-setup))
 
-(load-theme petmacs--default-theme t)
+;; (use-package theme-changer
+;;   :init
+;;   (require 'theme-changer)
+;;   (setq calendar-longitude 121.473701
+;; 	calendar-latitude 31.230416)
+;;   :config
+;;   ;; setq the location here.
+;;   ;; (change-theme 'doom-vibrant 'doom-nord-light)
+;;   (change-theme 'doom-nord-light 'doom-vibrant )
+;;   )
+
+;; (load-theme petmacs--default-theme t)
+
 ;;; Disable theme before load a new theme
 (defadvice load-theme
     (before theme-dont-propagate activate)
   "Disable theme before load theme."
   (mapc #'disable-theme custom-enabled-themes))
+
 
 ;; (use-package display-line-numbers-mode
 ;;   :ensure nil
