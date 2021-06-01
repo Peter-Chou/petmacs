@@ -15,7 +15,7 @@
   "Completion display style.  choice: minibuffer / childframe.")
 
 (defvar petmacs-themes-list '(
-			      doom-miramare
+			      doom-vibrant
 			      doom-nord-light
 			      )
   "List of themes for cycling.")
