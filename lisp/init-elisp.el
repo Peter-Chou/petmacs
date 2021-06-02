@@ -192,11 +192,11 @@ Lisp function does not specify a special indentation."
   :ensure nil
   :diminish
   :config
-  ;; Display `eldoc' in child frame
   (with-no-warnings
-    (when (childframe-workable-p)
+    ;; Display `eldoc' in child frame
+    (when (and (require 'posframe nil t) (posframe-workable-p))
       (defvar eldoc-posframe-buffer "*eldoc-posframe-buffer*"
-        "The posframe buffer name use by eldoc-posframe.")
+	"The posframe buffer name use by eldoc-posframe.")
 
       (defvar eldoc-posframe-hide-posframe-hooks
         '(pre-command-hook post-command-hook focus-out-hook)
@@ -226,22 +226,22 @@ Lisp function does not specify a special indentation."
           (add-hook hook #'eldoc-posframe-hide-posframe nil t))
 
         (setq eldoc-posframe--timer
-              (run-with-idle-timer
-               eldoc-posframe-delay nil
-               (lambda ()
+	      (run-with-idle-timer
+	       eldoc-posframe-delay nil
+	       (lambda ()
                  (when str
                    (posframe-show
-                    eldoc-posframe-buffer
-                    :string (concat (propertize "\n" 'face '(:height 0.3))
-                                    (apply #'format str args)
-                                    (propertize "\n\n" 'face '(:height 0.3)))
-                    :postion (point)
-                    :left-fringe 8
-                    :right-fringe 8
-                    :poshandler #'posframe-poshandler-point-bottom-left-corner-upward
-                    :internal-border-width 1
-                    :internal-border-color (face-foreground 'font-lock-comment-face nil t)
-                    :background-color (face-background 'tooltip nil t)))))))
+		    eldoc-posframe-buffer
+		    :string (concat (propertize "\n" 'face '(:height 0.3))
+				    (apply #'format str args)
+				    (propertize "\n\n" 'face '(:height 0.3)))
+		    :postion (point)
+		    :left-fringe 8
+		    :right-fringe 8
+		    :poshandler #'posframe-poshandler-point-bottom-left-corner-upward
+		    :internal-border-width 1
+		    :internal-border-color (face-foreground 'font-lock-comment-face nil t)
+		    :background-color (face-background 'tooltip nil t)))))))
       (add-hook 'emacs-lisp-mode-hook
                 (lambda ()
                   (setq-local eldoc-message-function #'eldoc-posframe-show-posframe))))))
