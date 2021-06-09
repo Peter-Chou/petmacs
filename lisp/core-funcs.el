@@ -18,68 +18,6 @@
 (declare-function flymake-start 'flymake)
 (declare-function upgrade-packages 'init-package)
 
-;;; Network Proxy
-(defun proxy-http-show ()
-  "Show HTTP/HTTPS proxy."
-  (interactive)
-  (if url-proxy-services
-      ;; (message "Current HTTP proxy is \"%s\"" petmacs-proxy)
-      (message "Current HTTP proxy is \"%s\"" url-proxy-services)
-    (message "No HTTP proxy")))
-
-(defun proxy-http-enable ()
-  "Enable HTTP/HTTPS proxy."
-  (interactive)
-  (setq url-proxy-services `(("http" . ,petmacs-proxy)
-                             ("https" . ,petmacs-proxy)
-                             ("no_proxy" . "^\\(localhost\\|192.168.*\\|10.*\\)")))
-  (proxy-http-show))
-
-(defun proxy-http-customize (proxy)
-  (interactive "sEnter your proxy IP:PORT format: ")
-  (setq url-proxy-services `(("http" . ,proxy)
-                             ("https" . ,proxy)
-                             ("no_proxy" . "^\\(localhost\\|192.168.*\\|10.*\\)")))
-  (proxy-http-show))
-
-(defun proxy-http-disable ()
-  "Disable HTTP/HTTPS proxy."
-  (interactive)
-  (setq url-proxy-services nil)
-  (proxy-http-show))
-
-(defun proxy-http-toggle ()
-  "Toggle HTTP/HTTPS proxy."
-  (interactive)
-  (if (bound-and-true-p url-proxy-services)
-      (proxy-http-disable)
-    (proxy-http-enable)))
-
-(defun proxy-socks-show ()
-  "Show SOCKS proxy."
-  (interactive)
-  (when (fboundp 'cadddr)                ; defined 25.2+
-    (if (bound-and-true-p socks-noproxy)
-        (message "Current SOCKS%d proxy is %s:%d"
-                 (cadddr socks-server) (cadr socks-server) (caddr socks-server))
-      (message "No SOCKS proxy"))))
-
-(defun proxy-socks-enable ()
-  "Enable SOCKS proxy."
-  (interactive)
-  (require 'socks)
-  (setq url-gateway-method 'socks
-        socks-noproxy '("localhost")
-        socks-server '("Default server" "127.0.0.1" 1086 5))
-  (proxy-socks-show))
-
-(defun proxy-socks-disable ()
-  "Disable SOCKS proxy."
-  (interactive)
-  (setq url-gateway-method 'native
-        socks-noproxy nil)
-  (proxy-socks-show))
-
 (defun petmacs//setup-default-key-name (key desc)
   (which-key-add-key-based-replacements
     (format "%s %s" petmacs-evil-leader-key key) desc)

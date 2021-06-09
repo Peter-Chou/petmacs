@@ -255,6 +255,7 @@
 
 
 (use-package srcery-theme)
+(use-package ayu-theme)
 (use-package color-theme-sanityinc-tomorrow)
 
 (use-package doom-themes

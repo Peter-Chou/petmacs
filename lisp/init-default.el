@@ -282,10 +282,10 @@
   :hook ((prog-mode . subword-mode)
          (minibuffer-setup . subword-mode)))
 
-(defun icons-displayable-p ()
-  "Return non-nil if `all-the-icons' is displayable."
-  (and (display-graphic-p)
-       (require 'all-the-icons nil t)))
+;; (defun icons-displayable-p ()
+;;   "Return non-nil if `all-the-icons' is displayable."
+;;   (and (display-graphic-p)
+;;        (require 'all-the-icons nil t)))
 
 
 (use-package frame-cmds
