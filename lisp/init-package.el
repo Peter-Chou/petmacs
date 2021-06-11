@@ -17,6 +17,8 @@
   (setq package-enable-at-startup nil)          ; To prevent initializing twice
   (package-initialize))
 
+(require 'ert)
+
 ;; Setup `use-package'
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)

@@ -127,8 +127,8 @@ of the buffer text to be displayed in the popup"
 (use-package daemons)                   ; system services/daemons
 (use-package diffview)                  ; side-by-side diff view
 (use-package esup)                      ; Emacs startup profiler
-(use-package bazel-mode
-  :after lsp-java)
+;; (use-package bazel-mode
+;;   :after lsp-java)
 (use-package transwin)
 
 
