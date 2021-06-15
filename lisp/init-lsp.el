@@ -127,10 +127,10 @@
         lsp-enable-on-type-formatting nil)
   :config
   (with-no-warnings
-    (defun my-lsp--init-if-visible (func &rest args)
+    (defun my-lsp--init-if-visible (fn &rest args)
       "Not enabling lsp in `git-timemachine-mode'."
       (unless (bound-and-true-p git-timemachine-mode)
-        (apply func args)))
+        (apply fn args)))
     (advice-add #'lsp--init-if-visible :around #'my-lsp--init-if-visible))
 
   (defun lsp-update-server ()
