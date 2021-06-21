@@ -18,8 +18,8 @@
 			      ("19:00" . doom-ephemeral)))
 
 (defvar petmacs-themes-list '(
-			      doom-ephemeral
 			      doom-nord-light
+			      doom-ephemeral
 			      )
   "List of themes for cycling.")
 
