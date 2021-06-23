@@ -8,6 +8,9 @@
   (require 'init-const)
   (require 'init-custom))
 
+(add-to-list 'default-frame-alist '(height . 55))
+(add-to-list 'default-frame-alist '(width . 100))
+
 ;; use exec-path-from-shell in linux / mac
 (when (or (eq system-type 'gnu/linux) (eq system-type 'darwin))
   (use-package exec-path-from-shell

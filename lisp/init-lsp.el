@@ -233,11 +233,11 @@
      lsp-treemacs-deps-position-params
      `((side . right)
        (slot . 1)
-       (window-width . 35))
+       (window-width . 32))
      lsp-treemacs-symbols-position-params
      `((side . right)
        (slot . 2)
-       (window-width . 35)))
+       (window-width . 32)))
     :config
     (with-eval-after-load 'ace-window
       (when (boundp 'aw-ignored-buffers)
