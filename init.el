@@ -79,6 +79,8 @@ decrease this. If you experience stuttering, increase this.")
 
 (setq byte-compile-warnings '(cl-functions))
 
+(setq comp-deferred-compilation t)
+
 (require 'init-custom)
 (require 'init-const)
 (require 'init-package)
