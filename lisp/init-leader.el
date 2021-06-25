@@ -28,6 +28,7 @@
 ;; Ctrl-o go back from definitions
 (use-package spaceleader
   :ensure nil
+  :straight nil
   :commands (
 	     leader/with-prefix
 	     leader/with-major-mode-prefix

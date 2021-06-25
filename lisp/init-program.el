@@ -6,6 +6,7 @@
 
 (use-package display-fill-column-indicator
   :ensure nil
+  :straight nil
   :hook
   (prog-mode . display-fill-column-indicator-mode)
   :init
@@ -30,11 +31,13 @@
   :hook (prog-mode . rainbow-delimiters-mode))
 
 (use-package prettify-utils
+  :straight nil
   :quelpa
   (prettify-utils :repo "Ilazki/prettify-utils.el" :fetcher github))
 
 (use-package pretty-code
   :ensure nil
+  :straight nil
   :init
   (require 'pretty-code)
   (pretty-code-add-hook 'python-mode-hook     '((:def "def")
@@ -73,6 +76,7 @@
 ;; Compilation Mode
 (use-package compile
   :ensure nil
+  :straight nil
   :hook (compilation-filter . my-colorize-compilation-buffer)
   :init
   ;; ANSI Coloring

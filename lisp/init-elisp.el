@@ -11,6 +11,7 @@
 ;; Emacs lisp mode
 (use-package elisp-mode
   :ensure nil
+  :straight nil
   :defines flycheck-disabled-checkers
   :bind (:map emacs-lisp-mode-map
          ("C-c C-x" . ielm)
@@ -190,6 +191,7 @@ Lisp function does not specify a special indentation."
 ;; `global-eldoc-mode' is enabled by default.
 (use-package eldoc
   :ensure nil
+  :straight nil
   :diminish
   :config
   (with-no-warnings

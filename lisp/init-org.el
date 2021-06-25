@@ -126,6 +126,7 @@ Will work on both org-mode and any mode that accepts plain html."
 
 (use-package org-agenda
   :ensure nil
+  :straight nil
   :init
   (setq org-agenda-restore-windows-after-quit t)
   (setq org-agenda-current-time-string "← now")
@@ -219,7 +220,7 @@ Will work on both org-mode and any mode that accepts plain html."
 ;; Visually summarize progress
 (use-package org-dashboard)
 
-(use-package org-plus-contrib)
+;;(use-package org-plus-contrib :straight nil)
 (use-package htmlize)
 
 (use-package org-sticky-header

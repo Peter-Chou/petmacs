@@ -11,6 +11,7 @@
 ;; Directory operations
 (use-package dired
   :ensure nil
+  :straight nil
   :hook (dired-mode . dired-omit-mode)
   :preface
   (defun petmacs/dired-goto-parent-directory ()
@@ -121,9 +122,12 @@
   :init
   (diredfl-global-mode 1))
 
-(use-package dired-aux :ensure nil)
+(use-package dired-aux 
+  :ensure nil
+  :straight nil)
 (use-package dired-x
   :ensure nil
+  :straight nil
   :demand
   :config
   (let ((cmd (cond

@@ -104,6 +104,7 @@
 
 (use-package simple
   :ensure nil
+  :straight nil
   :hook ((after-init . size-indication-mode)
          (text-mode . visual-line-mode)
          ((prog-mode markdown-mode conf-mode) . enable-trailing-whitespace))
@@ -311,6 +312,7 @@
 
 (use-package winner-mode
   :ensure nil
+  :straight nil
   :hook (after-init . winner-mode))
 
 (provide 'init-default)

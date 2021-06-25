@@ -380,6 +380,7 @@
 (add-hook 'window-setup-hook #'size-indication-mode)
 (use-package composite
   :ensure nil
+  :straight nil
   :init (defvar composition-ligature-table (make-char-table nil))
   :hook (((prog-mode conf-mode nxml-mode markdown-mode help-mode)
           . (lambda () (setq-local composition-function-table composition-ligature-table))))
