@@ -92,11 +92,24 @@
            ([f9] . shell-pop))
     :init (setq vterm-kill-buffer-on-exit t
 		vterm-always-compile-module t)
+    :hook (vterm-mode . (lambda ()
+			  ;; (setq-local evil-insert-state-cursor 'box)
+			  (evil-insert-state)))
     :config
-    (add-hook 'vterm-mode-hook
-	      (lambda ()
-		;; (setq-local evil-insert-state-cursor 'box)
-		(evil-insert-state)))
+    (defun vterm-counsel-yank-pop-action (orig-fun &rest args)
+      (if (equal major-mode 'vterm-mode)
+	  (let ((inhibit-read-only t)
+		(yank-undo-function (lambda (_start _end) (vterm-undo))))
+            (cl-letf (((symbol-function 'insert-for-yank)
+		       (lambda (str) (vterm-send-string str t))))
+              (apply orig-fun args)))
+	(apply orig-fun args)))
+
+    (advice-add 'counsel-yank-pop-action :around #'vterm-counsel-yank-pop-action)
+    ;; (add-hook 'vterm-mode-hook
+    ;; 	      (lambda ()
+    ;; 		;; (setq-local evil-insert-state-cursor 'box)
+    ;; 		(evil-insert-state)))
     (evil-define-key 'insert vterm-mode-map (kbd "C-r")      #'vterm--self-insert)))
 
 ;; Shell Pop
