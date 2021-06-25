@@ -15,11 +15,11 @@
   "Completion display style.  choice: minibuffer / childframe.")
 
 (defvar petmacs-auto-themes '(("8:00"  . doom-nord-light)
-			      ("19:00" . doom-ephemeral)))
+			      ("19:00" . doom-xcode)))
 
 (defvar petmacs-themes-list '(
 			      doom-nord-light
-			      doom-ephemeral
+			      doom-xcode
 			      )
   "List of themes for cycling.")
 
