@@ -242,7 +242,7 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
     :hook (after-init . transient-posframe-mode)
     :init
     (setq transient-posframe-border-width 3
-          transient-posframe-min-height 22
+          transient-posframe-min-height 24
           transient-posframe-min-width nil
           transient-posframe-parameters '((left-fringe . 8)
                                           (right-fringe . 8)))
