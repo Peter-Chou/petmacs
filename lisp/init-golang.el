@@ -12,11 +12,8 @@
 (use-package go-mode
   :functions (go-packages-gopkgs go-update-tools)
   :bind (:map go-mode-map
-         ([remap xref-find-definitions] . godef-jump)
          ("C-c R" . go-remove-unused-imports)
          ("<f1>" . godoc-at-point))
-  :hook (go-mode . (lambda ()
-			 (lsp-deferred)))
   :config
   ;; Env vars
   (with-eval-after-load 'exec-path-from-shell
@@ -24,8 +21,8 @@
 
   ;; Install or update tools
   (defvar go--tools '("golang.org/x/tools/cmd/goimports"
-
                       "github.com/go-delve/delve/cmd/dlv"
+                      "github.com/zmb3/gogetdoc"
                       "github.com/josharian/impl"
                       "github.com/cweill/gotests/..."
                       "github.com/fatih/gomodifytags"
@@ -33,7 +30,7 @@
     "All necessary go tools.")
 
   ;; Do not use the -u flag for gopls, as it will update the dependencies to incompatible versions
-  ;; https://github.com/golang/tools/blob/master/gopls/doc/user.md#installation
+  ;; https://github.com/golang/tools/tree/master/gopls#installation
   (defvar go--tools-no-update '("golang.org/x/tools/gopls@latest")
     "All necessary go tools without update the dependencies.")
 
@@ -44,25 +41,23 @@
       (user-error "Unable to find `go' in `exec-path'!"))
 
     (message "Installing go tools...")
-    (let ((proc-name "go-tools")
-          (proc-buffer "*Go Tools*"))
-      (dolist (pkg go--tools-no-update)
-        (set-process-sentinel
-         (start-process proc-name proc-buffer "go" "get" "-v" pkg)
-         (lambda (proc _)
-           (let ((status (process-exit-status proc)))
-             (if (= 0 status)
-                 (message "Installed %s" pkg)
-               (message "Failed to install %s: %d" pkg status))))))
 
-      (dolist (pkg go--tools)
-        (set-process-sentinel
-         (start-process proc-name proc-buffer "go" "get" "-u" "-v" pkg)
-         (lambda (proc _)
-           (let ((status (process-exit-status proc)))
-             (if (= 0 status)
-                 (message "Installed %s" pkg)
-               (message "Failed to install %s: %d" pkg status))))))))
+    ;; https://github.com/golang/tools/tree/master/gopls#installation
+    (async-shell-command
+     "GO111MODULE=on go get golang.org/x/tools/gopls@latest")
+
+    ;; https://staticcheck.io/docs/install
+    (async-shell-command
+     "go install honnef.co/go/tools/cmd/staticcheck@latest")
+
+    (dolist (pkg go--tools)
+      (set-process-sentinel
+       (start-process "go-tools" "*Go Tools*" "go" "get" "-u" "-v" pkg)
+       (lambda (proc _)
+         (let ((status (process-exit-status proc)))
+           (if (= 0 status)
+               (message "Installed %s" pkg)
+             (message "Failed to install %s: %d" pkg status)))))))
 
   ;; Try to install go tools if `gopls' is not found
   (unless (executable-find "gopls")
@@ -107,7 +102,8 @@
 
 ;; Local Golang playground for short snippets
 (use-package go-playground
-  :diminish)
+  :diminish
+  :commands (go-playground-mode))
 
 (provide 'init-golang)
 
