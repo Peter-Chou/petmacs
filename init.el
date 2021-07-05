@@ -80,6 +80,8 @@ decrease this. If you experience stuttering, increase this.")
 (setq byte-compile-warnings '(cl-functions))
 
 (setq comp-deferred-compilation t)
+;; ignore warnings
+(setq warning-minimum-level :emergency)
 
 (require 'init-custom)
 (require 'init-const)
