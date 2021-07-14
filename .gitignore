@@ -84,3 +84,6 @@ workspace/
 .last*
 session*
 *.db
+
+# custom
+eln-cache/

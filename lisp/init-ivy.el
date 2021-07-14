@@ -387,8 +387,7 @@ This is for use in `ivy-re-builders-alist'."
             counsel-ack counsel-fzf counsel-pt counsel-imenu
             counsel-org-capture counsel-outline counsel-org-goto
             counsel-load-theme counsel-yank-pop
-            counsel-recentf counsel-buffer-or-recentf
-            centaur-load-theme))
+            counsel-recentf counsel-buffer-or-recentf))
 
     (ivy-prescient-mode 1))
 
