@@ -22,6 +22,7 @@
   (setq
    dashboard-banner-logo-title "Petmacs --- Adorable just like A PET"
    dashboard-startup-banner (expand-file-name "img/totoro_banner.png" user-emacs-directory)
+   dashboard-page-separator "\n\f\n"
    dashboard-center-content t
    dashboard-show-shortcuts nil
    dashboard-items '((recents  . 7)
