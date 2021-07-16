@@ -118,6 +118,33 @@ of the buffer text to be displayed in the popup"
   (rmsbolt-asm-format nil)
   (rmsbolt-default-directory "/tmp"))
 
+(use-package pyim
+  :init
+  (setq default-input-method "pyim"
+	pyim-page-length 7
+	pyim-punctuation-translate-p '(auto yes no) ;中文使用全角标点，英文使用半角标点
+	)
+  (if (posframe-workable-p)
+      (setq pyim-page-tooltip 'posframe)
+    (setq pyim-page-tooltip 'popup))
+  :config
+  (require 'pyim-tsinghua-dict)
+  (pyim-default-scheme 'quanpin)
+
+  ;; 金手指设置，可以将光标处的编码，比如：拼音字符串，转换为中文。
+  (global-set-key (kbd "M-j") 'pyim-convert-string-at-point)
+
+  (global-set-key (kbd "C-\\") 'toggle-input-method)
+
+  ;; 按 "C-<return>" 将光标前的 regexp 转换为可以搜索中文的 regexp.
+  (define-key minibuffer-local-map (kbd "C-<return>") 'pyim-cregexp-convert-at-point)
+
+
+  ;; 开启代码搜索中文功能（比如拼音，五笔码等）
+  (pyim-isearch-mode 1)
+  (pyim-tsinghua-dict-enable)
+  )
+
 (use-package centered-cursor-mode)
 
 (use-package general)

@@ -85,5 +85,5 @@ workspace/
 session*
 *.db
 
-# custom
 eln-cache/
+pyim/
