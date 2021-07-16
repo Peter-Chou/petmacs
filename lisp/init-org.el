@@ -212,6 +212,11 @@ Will work on both org-mode and any mode that accepts plain html."
   (evil-define-key 'normal evil-org-mode-map "O" 'evil-open-above)
   (evil-org-agenda-set-keys))
 
+;; Auto-toggle Org LaTeX fragments
+(use-package org-fragtog
+  :diminish
+  :hook (org-mode . org-fragtog-mode))
+
 ;; Preview
 (use-package org-preview-html
   :diminish)
