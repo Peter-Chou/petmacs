@@ -133,15 +133,19 @@ of the buffer text to be displayed in the popup"
 
   ;; 金手指设置，可以将光标处的编码，比如：拼音字符串，转换为中文。
   (global-set-key (kbd "M-j") 'pyim-convert-string-at-point)
-
   (global-set-key (kbd "C-\\") 'toggle-input-method)
 
   ;; 按 "C-<return>" 将光标前的 regexp 转换为可以搜索中文的 regexp.
   (define-key minibuffer-local-map (kbd "C-<return>") 'pyim-cregexp-convert-at-point)
 
+  (define-key pyim-mode-map "." 'pyim-page-next-page)
+  (define-key pyim-mode-map "," 'pyim-page-previous-page)
+  ;; 用 “;” 来选择第二个候选词
+  (define-key pyim-mode-map ";"
+    (lambda ()
+      (interactive)
+      (pyim-select-word-by-number 2)))
 
-  ;; 开启代码搜索中文功能（比如拼音，五笔码等）
-  (pyim-isearch-mode 1)
   (pyim-tsinghua-dict-enable)
   )
 
