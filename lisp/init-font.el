@@ -29,9 +29,9 @@
          return(set-fontset-font t 'unicode font nil 'prepend))
 
 ;; Specify font for Chinese characters
-(cl-loop for font in '("WenQuanYi Micro Hei" "Microsoft Yahei")
-         when (font-installed-p font)
-         return (set-fontset-font t '(#x4e00 . #x9fff) font))
+;; (cl-loop for font in '("WenQuanYi Micro Hei" "Microsoft Yahei")
+;;          when (font-installed-p font)
+;;          return (set-fontset-font t '(#x4e00 . #x9fff) font))
 
 
 (use-package fontify-face)
