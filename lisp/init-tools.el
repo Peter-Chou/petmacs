@@ -127,12 +127,13 @@ of the buffer text to be displayed in the popup"
   (if (posframe-workable-p)
       (setq pyim-page-tooltip 'posframe)
     (setq pyim-page-tooltip 'popup))
+
   :config
   (require 'pyim-tsinghua-dict)
   (pyim-default-scheme 'quanpin)
 
   ;; 金手指设置，可以将光标处的编码，比如：拼音字符串，转换为中文。
-  (global-set-key (kbd "M-j") 'pyim-convert-string-at-point)
+  (global-set-key (kbd "C-j") 'pyim-convert-string-at-point)
   (global-set-key (kbd "C-\\") 'toggle-input-method)
 
   ;; 按 "C-<return>" 将光标前的 regexp 转换为可以搜索中文的 regexp.
@@ -158,7 +159,6 @@ of the buffer text to be displayed in the popup"
 (use-package daemons)                   ; system services/daemons
 (use-package diffview)                  ; side-by-side diff view
 (use-package esup)                      ; Emacs startup profiler
-;; (use-package bazel-mode
 ;;   :after lsp-java)
 (use-package transwin)
 
