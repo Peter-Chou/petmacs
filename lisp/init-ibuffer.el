@@ -28,12 +28,12 @@
       (while (> arg 0)
         (cl-decf arg)
         (setq err1 (petmacs/ibuffer-advance-motion -1)
-              err2 (if (not (get-text-property (point) 'ibuffer-title)) 
+              err2 (if (not (get-text-property (point) 'ibuffer-title))
                        t
                      (goto-char (point-max))
                      (beginning-of-line)
-                     (ibuffer-skip-properties '(ibuffer-summary 
-                                                ibuffer-filter-group-name) 
+                     (ibuffer-skip-properties '(ibuffer-summary
+                                                ibuffer-filter-group-name)
                                               -1)
                      nil)))
       (and err1 err2)))
@@ -46,11 +46,11 @@
       (while (> arg 0)
         (cl-decf arg)
         (setq err1 (petmacs/ibuffer-advance-motion 1)
-              err2 (if (not (get-text-property (point) 'ibuffer-summary)) 
+              err2 (if (not (get-text-property (point) 'ibuffer-summary))
                        t
                      (goto-char (point-min))
                      (beginning-of-line)
-                     (ibuffer-skip-properties '(ibuffer-summary 
+                     (ibuffer-skip-properties '(ibuffer-summary
                                                 ibuffer-filter-group-name
                                                 ibuffer-title)
                                               1)
@@ -87,20 +87,19 @@
 
   ;; Display icons for buffers
   (use-package all-the-icons-ibuffer
-    :if (icons-displayable-p)
     :init (all-the-icons-ibuffer-mode 1))
 
   (with-no-warnings
-   (with-eval-after-load 'counsel
-     (defun my-ibuffer-find-file ()
-       (interactive)
-       (let ((default-directory (let ((buf (ibuffer-current-buffer)))
-                                  (if (buffer-live-p buf)
-                                      (with-current-buffer buf
-                                        default-directory)
-                                    default-directory))))
-         (counsel-find-file default-directory)))
-     (advice-add #'ibuffer-find-file :override #'my-ibuffer-find-file)))
+    (with-eval-after-load 'counsel
+      (defun my-ibuffer-find-file ()
+	(interactive)
+	(let ((default-directory (let ((buf (ibuffer-current-buffer)))
+                                   (if (buffer-live-p buf)
+                                       (with-current-buffer buf
+                                         default-directory)
+                                     default-directory))))
+          (counsel-find-file default-directory)))
+      (advice-add #'ibuffer-find-file :override #'my-ibuffer-find-file)))
 
   ;; Group ibuffer's list by project root
   (use-package ibuffer-projectile
