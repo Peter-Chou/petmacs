@@ -216,13 +216,10 @@
    ;; doom-modeline-height 21
    doom-modeline-lsp t
    doom-modeline-persp-name nil
-   doom-modeline-github nil
    doom-modeline-minor-modes t
-   doom-modeline-mu4e nil
    doom-modeline-buffer-file-name-style 'relative-to-project
    ;; doom-modeline-buffer-file-name-style 'file-name
    doom-modeline-icon (display-graphic-p)
-   doom-modeline-hud nil
    doom-modeline-major-mode-icon t
    doom-modeline-major-mode-color-icon t
    doom-modeline-buffer-state-icon t
