@@ -198,7 +198,7 @@ FACE defaults to inheriting from default and highlight."
   (diff-hl-insert ((t (:inherit diff-added :background nil))))
   (diff-hl-delete ((t (:inherit diff-removed :background nil))))
   :bind (:map diff-hl-command-map
-              ("SPC" . diff-hl-mark-hunk))
+         ("SPC" . diff-hl-mark-hunk))
   :hook ((after-init . global-diff-hl-mode)
          (dired-mode . diff-hl-dired-mode))
   :init (setq diff-hl-draw-borders nil)
@@ -227,9 +227,6 @@ FACE defaults to inheriting from default and highlight."
     (setq diff-hl-fringe-bmp-function #'my-diff-hl-fringe-bmp-function)
 
     (unless (display-graphic-p)
-      (setq diff-hl-margin-symbols-alist
-            '((insert . " ") (delete . " ") (change . " ")
-              (unknown . " ") (ignored . " ")))
       ;; Fall back to the display margin since the fringe is unavailable in tty
       (diff-hl-margin-mode 1)
       ;; Avoid restoring `diff-hl-margin-mode'

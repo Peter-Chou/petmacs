@@ -217,6 +217,10 @@ Will work on both org-mode and any mode that accepts plain html."
   :diminish
   :hook (org-mode . org-fragtog-mode))
 
+;; Add graphical view of agenda
+(use-package org-timeline
+  :hook (org-agenda-finalize . org-timeline-insert-timeline))
+
 ;; Preview
 (use-package org-preview-html
   :diminish)
