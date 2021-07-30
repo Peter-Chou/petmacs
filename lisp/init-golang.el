@@ -10,10 +10,11 @@
 
 ;; Golang
 (use-package go-mode
-  :functions (go-packages-gopkgs go-update-tools)
+  :functions go-update-tools
+  :commands godoc-gogetdoc
   :bind (:map go-mode-map
-         ("C-c R" . go-remove-unused-imports)
-         ("<f1>" . godoc-at-point))
+	 ("C-c R" . go-remove-unused-imports)
+	 ("<f1>" . godoc-at-point))
   :init (setq godoc-at-point-function #'godoc-gogetdoc)
   :config
   ;; Env vars
