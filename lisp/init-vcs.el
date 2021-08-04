@@ -264,7 +264,7 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 			   :poshandler transient-posframe-poshandler
 			   :background-color (face-attribute 'transient-posframe :background nil t)
 			   :foreground-color (face-attribute 'transient-posframe :foreground nil t)
-			   :min-width (or transient-posframe-min-width (round (* (frame-width) 0.62)))
+			   :min-width (or transient-posframe-min-width (round (* (frame-width) 0.618)))
 			   :min-height transient-posframe-min-height
                            :lines-truncate t
 			   :internal-border-width transient-posframe-border-width
