@@ -53,8 +53,7 @@
 
 (use-package page-break-lines
   :diminish
-  :hook (after-init . global-page-break-lines-mode)
-  :init (setq page-break-lines-max-width fill-column))
+  :hook (after-init . global-page-break-lines-mode))
 
 ;; Extensions
 ;; download / update packages

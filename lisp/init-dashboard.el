@@ -16,8 +16,7 @@
   	 (dashboard-mode  . (lambda ()
   			      (display-line-numbers-mode -1)
   			      (hl-line-mode -1)
-			      (setq-local frame-title-format nil
-					  page-break-lines-max-width nil)
+			      (setq-local frame-title-format nil)
   			      (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*"))))))
   :init
   (setq
