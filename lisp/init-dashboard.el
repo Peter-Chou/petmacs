@@ -6,7 +6,7 @@
 
 (use-package dashboard
   :custom-face (dashboard-banner-logo-title ((t (:height 1.1 :inherit default))))
-  :diminish (dashboard-mode page-break-lines-mode)
+  :diminish dashboard-mode
   :defines (persp-save-dir persp-special-last-buffer)
   :functions (all-the-icons-faicon
 	      all-the-icons-material
@@ -16,7 +16,8 @@
   	 (dashboard-mode  . (lambda ()
   			      (display-line-numbers-mode -1)
   			      (hl-line-mode -1)
-  			      (setq-local frame-title-format "")
+			      (setq-local frame-title-format nil
+					  page-break-lines-max-width nil)
   			      (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*"))))))
   :init
   (setq
