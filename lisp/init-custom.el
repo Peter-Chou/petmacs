@@ -23,6 +23,9 @@
 			      )
   "List of themes for cycling.")
 
+(defvar petmacs-icon (or (display-graphic-p) (daemonp))
+  "display icon if possible")
+
 (defvar petmacs-font-size 13.0
   "Default font size.")
 

@@ -134,17 +134,17 @@
     (advice-add #'lsp--init-if-visible :around #'my-lsp--init-if-visible)
 
     (defun my-lsp-icons-get-symbol-kind (fn &rest args)
-      (when (and centaur-icon (display-graphic-p))
+      (when (and petmacs-icon (display-graphic-p))
 	(apply fn args)))
     (advice-add #'lsp-icons-get-by-symbol-kind :around #'my-lsp-icons-get-symbol-kind)
 
     (defun my-lsp-icons-get-by-file-ext (fn &rest args)
-      (when (and centaur-icon (display-graphic-p))
+      (when (and petmacs-icon (display-graphic-p))
 	(apply fn args)))
     (advice-add #'lsp-icons-get-by-file-ext :around #'my-lsp-icons-get-by-file-ext)
 
     (defun my-lsp-icons-all-the-icons-material-icon (icon-name face fallback &optional feature)
-      (if (and centaur-icon
+      (if (and petmacs-icon
                (display-graphic-p)
                (functionp 'all-the-icons-material)
                (lsp-icons--enabled-for-feature feature))
