@@ -326,6 +326,7 @@
     "d" #'deer
     "j" #'avy-goto-char-timer
     "J" #'avy-goto-char-2
+    "t" #'ivy-magit-todos
     ))
 
 (leader/with-prefix "e"
