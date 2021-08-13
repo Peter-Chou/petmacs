@@ -68,7 +68,7 @@
   (interactive)
   (when (fboundp 'cadddr)                ; defined 25.2+
     (if (bound-and-true-p socks-noproxy)
-        (message "Current SOCKS%d proxy is %s:%d"
+        (message "Current SOCKS%d proxy is %s:%s"
                  (cadddr socks-server) (cadr socks-server) (caddr socks-server))
       (message "No SOCKS proxy"))))
 
