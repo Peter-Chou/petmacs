@@ -112,7 +112,7 @@
                           (t . nil)))))
               (advice-add #'company-box-icons--elisp :override #'my-company-box-icons--elisp)
 
-              ;; Display borders
+              ;; Display borders and optimize performance
               (defun my-company-box--display (string on-update)
                 "Display the completions."
                 (company-box--render-buffer string on-update)
@@ -136,8 +136,8 @@
               (advice-add #'company-box--display :override #'my-company-box--display)
 
               (setq company-box-doc-frame-parameters '((internal-border-width . 1)
-                                                       (left-fringe . 10)
-                                                       (right-fringe . 10)))
+                                                       (left-fringe . 8)
+                                                       (right-fringe . 8)))
 
               (defun my-company-box-doc--make-buffer (object)
                 (let* ((buffer-list-update-hook nil)
@@ -151,22 +151,28 @@
                       (insert string)
                       (insert (propertize "\n\n" 'face '(:height 0.5)))
 
-                      ;; handle hr lines of markdown
+                      ;; Handle hr lines of markdown
                       ;; @see `lsp-ui-doc--handle-hr-lines'
-                      (let (bolp next before after)
-                        (goto-char 1)
-                        (while (setq next (next-single-property-change (or next 1) 'markdown-hr))
-                          (when (get-text-property next 'markdown-hr)
-                            (goto-char next)
-                            (setq bolp (bolp)
-                                  before (char-before))
-                            (delete-region (point) (save-excursion (forward-visible-line 1) (point)))
-                            (setq after (char-after (1+ (point))))
-                            (insert
-                             (concat
-                              (and bolp (not (equal before ?\n)) "\n")
-                              (propertize (make-string (string-width string) ?─) 'face 'font-lock-comment-face)
-                              (and (not (equal after ?\n)) "\n"))))))
+                      (with-current-buffer (company-box--get-buffer "doc")
+                        (let (bolp next before after)
+                          (goto-char 1)
+                          (while (setq next (next-single-property-change (or next 1) 'markdown-hr))
+                            (when (get-text-property next 'markdown-hr)
+                              (goto-char next)
+                              (setq bolp (bolp)
+                                    before (char-before))
+                              (delete-region (point) (save-excursion (forward-visible-line 1) (point)))
+                              (setq after (char-after (1+ (point))))
+                              (insert
+                               (concat
+                                (and bolp (not (equal before ?\n)) (propertize "\n" 'face '(:height 0.5)))
+                                (propertize "\n" 'face '(:height 0.5))
+                                (propertize " "
+                                            'display '(space :height (1))
+                                            'company-box-doc--replace-hr t
+                                            'face `(:background ,(face-foreground 'font-lock-comment-face)))
+                                (propertize " " 'display '(space :height (1)))
+                                (and (not (equal after ?\n)) (propertize " \n" 'face '(:height 0.3)))))))))
 
                       (setq mode-line-format nil
                             display-line-numbers nil
@@ -200,6 +206,18 @@
                       (when (facep 'child-frame-border)
                         (set-face-background 'child-frame-border border-color frame))
                       (company-box-doc--set-frame-position frame)
+
+                      ;; Fix hr props
+                      ;; @see `lsp-ui-doc--fix-hr-props'
+                      (with-current-buffer (company-box--get-buffer "doc")
+                        (let (next)
+                          (while (setq next (next-single-property-change (or next 1) 'company-box-doc--replace-hr))
+                            (when (get-text-property next 'company-box-doc--replace-hr)
+                              (put-text-property next (1+ next) 'display
+                                                 '(space :align-to (- right-fringe 1) :height (1)))
+                              (put-text-property (1+ next) (+ next 2) 'display
+                                                 '(space :align-to right-fringe :height (1)))))))
+
                       (unless (frame-visible-p frame)
                         (make-frame-visible frame))))))
               (advice-add #'company-box-doc--show :override #'my-company-box-doc--show)
