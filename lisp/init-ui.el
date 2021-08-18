@@ -294,10 +294,10 @@
 (if (fboundp 'display-line-numbers-mode)
     (use-package display-line-numbers
       :ensure nil
-      :hook (prog-mode . display-line-numbers-mode)
-      :init
-      (setq-default display-line-numbers-type 'relative)
-      )
+      :hook ((prog-mode yaml-mode) . display-line-numbers-mode))
+  :init
+  (setq-default display-line-numbers-type 'relative)
+  )
   (use-package linum-off
     :demand
     :defines linum-format
