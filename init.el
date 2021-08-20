@@ -62,7 +62,7 @@
 
 (setq comp-deferred-compilation t)
 ;; ignore warnings
-(setq warning-minimum-level :emergency)
+;;(setq warning-minimum-level :emergency)
 
 (require 'init-custom)
 (require 'init-const)
