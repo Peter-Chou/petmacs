@@ -111,9 +111,10 @@
 
   ;; Use the faster search tools
   (when (executable-find "rg")
-    (setq counsel-grep-base-command "rg -S --no-heading --line-number --color never %s %s"))
-  (setq counsel-fzf-cmd
-        "fd --type f --hidden --follow --exclude .git --color never || git ls-tree -r --name-only HEAD || rg --files --hidden --follow --glob '!.git' --color never || find .")
+    (setq counsel-grep-base-command "rg -S --no-heading --line-number --color never '%s' '%s'"))
+  (when (executable-find "fd")
+    (setq counsel-fzf-cmd
+          "fd --type f --hidden --follow --exclude .git --color never '%s'"))
 
   ;; Be compatible with `gls'
   (when (and sys/macp (executable-find "gls"))
@@ -389,6 +390,7 @@ This is for use in `ivy-re-builders-alist'."
             (counsel-rg . ivy-prescient-non-fuzzy)
             (counsel-pt . ivy-prescient-non-fuzzy)
             (counsel-grep . ivy-prescient-non-fuzzy)
+            (counsel-fzf . ivy-prescient-non-fuzzy)
             (counsel-imenu . ivy-prescient-non-fuzzy)
             (counsel-yank-pop . ivy-prescient-non-fuzzy)
             (swiper . ivy-prescient-non-fuzzy)
@@ -432,11 +434,13 @@ This is for use in `ivy-re-builders-alist'."
               (when (and (frame-visible-p frame)
                          (frame-parameter frame 'posframe-buffer))
                 (setq num (1+ num))))
-            (cons (car pos)
-                  (- (cdr pos)
-                     (if (>= num 1)
-                         (plist-get info :posframe-height)
-                       0)))))
+            (cons
+             (car pos)
+             (- (cdr pos)
+                (if (>= num 1)
+                    (- (plist-get info :posframe-height)
+                       (plist-get hydra-posframe-show-params :internal-border-width))
+                  0)))))
 
         (defun ivy-hydra-set-posframe-show-params ()
           "Set hydra-posframe style."

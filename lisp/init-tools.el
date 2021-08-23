@@ -90,16 +90,20 @@ of the buffer text to be displayed in the popup"
   :diminish
   :hook (after-init . editorconfig-mode))
 
+;; Fast search tool `ripgrep'
 (use-package rg
+  :defines projectile-command-map
   :hook (after-init . rg-enable-default-bindings)
+  :bind (:map rg-global-map
+         ("c" . rg-dwim-current-dir)
+         ("f" . rg-dwim-current-file)
+         ("m" . rg-menu))
+  :init (setq rg-group-result t
+              rg-show-columns t)
   :config
-  (setq rg-group-result t)
-  (setq rg-show-columns t)
-
   (cl-pushnew '("tmpl" . "*.tmpl") rg-custom-type-aliases)
 
   (with-eval-after-load 'projectile
-    (defalias 'projectile-ripgrep 'rg-project)
     (bind-key "s R" #'rg-project projectile-command-map)))
 
 (use-package avy
