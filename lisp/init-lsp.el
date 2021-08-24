@@ -92,7 +92,7 @@
        :underline (:style wave :color ,(face-foreground 'success)))))
 
   :hook ((prog-mode . (lambda ()
-			(unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode)
+			(unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode 'makefile-mode)
 			  (lsp-deferred))))
 	 (lsp-mode . (lambda ()
                        ;; Integrate `which-key'
