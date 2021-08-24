@@ -155,11 +155,11 @@ of the buffer text to be displayed in the popup"
   )
 
 ;; Hungry deletion
-(use-package hungry-delete
-  :diminish
-  :hook (after-init . global-hungry-delete-mode)
-  :init (setq hungry-delete-except-modes
-              '(help-mode minibuffer-mode minibuffer-inactive-mode calc-mode)))
+;; (use-package hungry-delete
+;;   :diminish
+;;   :hook (after-init . global-hungry-delete-mode)
+;;   :init (setq hungry-delete-except-modes
+;;               '(help-mode minibuffer-mode minibuffer-inactive-mode calc-mode)))
 
 (use-package centered-cursor-mode)
 
