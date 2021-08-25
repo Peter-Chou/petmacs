@@ -25,82 +25,67 @@
       leader-key petmacs-evil-leader-key
       leader-major-mode-key petmacs-evil-major-leader-key)
 
-;; Ctrl-o go back from definitions
+
 (use-package spaceleader
   :ensure nil
-  :commands (
-	     leader/with-prefix
-	     leader/with-major-mode-prefix
-	     leader/without-prefix
-	     leader/declare-prefix
-	     leader/declare-prefix*
-	     leader/declare-prefix-for-mode
-	     leader/declare-prefix-for-mode*
-	     leader/declare-prefix-for-mode!
-	     leader/declare-prefix-for-mode!*
-	     leader/set-keys
-	     leader/set-keys-for-mode
-	     leader/set-keys-for-mode!))
+  :commands (leader-set-keys
+	     leader-set-keys-for-mode
+	     leader-set-keys-for-major-mode
+	     leader-declare-prefix
+	     leader-declare-prefix-for-major-mode
+	     leader-with-prefix
+	     leader-with-major-mode-prefix))
 
+(leader-declare-prefix
+ "a"  '("apps" . "applications")
+ "ao" "org"
 
-(leader/declare-prefix*
-  "a" "applications"
-  "ao" "org"
-  "ao" "org"
+ "f" "files"
+ "fy" "copy"
+ "fv" "variable"
+ "fe" "emacs conf"
+ "fC" "unix <-> dos"
 
-  "f" "files"
-  "fy" "copy"
-  "fv" "variable"
-  "fe" "emacs conf"
-  "fC" "unix <-> dos"
+ "F" "Frame"
+ "g" "git"
+ "gf" "magit file"
+ "T" "Theme"
+ "t" "toggle"
+ "tp" "proxy"
+ "q" "quit"
+ "i" "insert"
+ "p" "project"
+ "j" "jump"
+ "e" "error"
+ "b" "buffer"
+ "B" "bookmarks"
+ "n" "narrow"
+ "o" "origami (code fold)"
 
-  "F" "Frame"
-  "g" "git"
-  "gf" "magit file"
-  "T" "Theme"
-  "t" "toggle"
-  "tp" "proxy"
-  "q" "quit"
-  "i" "insert"
-  "p" "project"
-  "j" "jump"
-  "e" "error"
-  "b" "buffer"
-  "B" "bookmarks"
-  "n" "narrow"
-  "o" "origami (code fold)"
+ "w" "window"
+ "wp" "popout window"
 
-  "w" "window"
-  "wp" "popout window"
+ "d" "debug"
+ "db"  "breakpoints"
+ "dd"  "debugging"
+ "de"  "eval"
+ "dI"  "inspect"
+ "dS"  "switch"
+ "dw"  "debug windows"
+ )
 
-  "d" "debug"
-  "db"  "breakpoints"
-  "dd"  "debugging"
-  "de"  "eval"
-  "dI"  "inspect"
-  "dS"  "switch"
-  "dw"  "debug windows"
-  )
+(leader-set-keys
+ ;; "'"   #'petmacs/pop-eshell
+ "'"   #'petmacs/shell-pop
+ "?"   #'counsel-descbinds
+ "/"   #'counsel-projectile-rg
+ "v"   #'er/expand-region
+ "u"   #'universal-argument
+ ;; "d"   #'xref-pop-marker-stack
+ "TAB"  #'petmacs/alternate-buffer)
 
-
-;; (if sys/linuxp
-;;     (leader/set-keys "'"   #'vterm-toggle-cd)
-;;   (leader/set-keys "'"   #'petmacs/pop-eshell)
-;;   )
-
-(leader/set-keys
-  ;; "'"   #'petmacs/pop-eshell
-  "'"   #'petmacs/shell-pop
-  ;;     (leader/set-keys "'"   #'vterm-toggle-cd)
-  "?"   #'counsel-descbinds
-  "/"   #'counsel-projectile-rg
-  "v"   #'er/expand-region
-  "u"   #'universal-argument
-  ;; "d"   #'xref-pop-marker-stack
-  "TAB"  #'petmacs/alternate-buffer)
-
-(leader/with-prefix "d"
-  (leader/set-keys
+(leader-with-prefix "d"
+  (leader-set-keys
     "." #'dap-hydra
     ;; repl
     "'"  #'dap-ui-repl
@@ -145,11 +130,10 @@
     "wl" #'dap-ui-locals
     "ws" #'dap-ui-sessions
     "wb" #'dap-ui-breakpoints
-    )
-  )
+    ))
 
-(leader/with-prefix "a"
-  (leader/set-keys
+(leader-with-prefix "a"
+  (leader-set-keys
     "d"  #'deer
     "p"  #'list-processes
     "P"  #'proced
@@ -157,24 +141,23 @@
     "k"  #'paradox-list-packages
     "u"  #'paradox-upgrade-packages
     "w"  #'whitespace-cleanup
-    )
-  (leader/with-prefix "o"
-    (leader/set-keys
-      "a" #'org-agenda-list
-      "c" #'org-capture
-      "e" #'org-store-agenda-views
-      "p" #'org-projectile/capture
-      "o" #'org-agenda
-      "l" #'org-store-link
-      "m" #'org-tags-view
-      "s" #'org-search-view
-      "t" #'org-todo-list
-      "/" #'org-occur-in-agenda-files
-      ))
-  )
 
-(leader/with-prefix "f"
-  (leader/set-keys
+    ;; "ao" prefix
+    "oa" #'org-agenda-list
+    "oc" #'org-capture
+    "oe" #'org-store-agenda-views
+    "op" #'org-projectile/capture
+    "oo" #'org-agenda
+    "ol" #'org-store-link
+    "om" #'org-tags-view
+    "os" #'org-search-view
+    "ot" #'org-todo-list
+    "o/" #'org-occur-in-agenda-files
+    ))
+
+(leader-with-prefix "f"
+  (leader-set-keys
+
     "f"  #'counsel-find-file
     "w"  #'find-file-other-window
     "F"  #'find-file-other-frame
@@ -190,37 +173,31 @@
     "c"  #'petmacs/copy-file
     "b"  #'counsel-bookmark
     "B"  #'treemacs-bookmark
-    )
-  (leader/with-prefix "y"
-    (leader/set-keys
-      "y" #'petmacs/copy-file-path
-      "Y" #'petmacs/projectile-copy-file-path
-      "d" #'petmacs/copy-directory-path
-      "n" #'petmacs/copy-file-name
-      ))
-  (leader/with-prefix "v"
-    (leader/set-keys
-      "d" #'add-dir-local-variable
-      "f" #'add-file-local-variable
-      "p" #'add-file-local-variable-prop-line
-      ))
-  (leader/with-prefix "e"
-    (leader/set-keys
-      "o" #'petmacs/find-org-global-todos
-      "c" #'petmacs/find-custom-file
-      "d" #'petmacs/find-dotfile
-      ))
 
-  (leader/with-prefix "C"
-    (leader/set-keys
-      "u" #'dos2unix
-      "d" #'unix2dos
-      "r" #'petmacs/save-buffer-gbk-as-utf8
-      ))
-  )
+    ;; "fy" prefix
+    "yy" #'petmacs/copy-file-path
+    "yY" #'petmacs/projectile-copy-file-path
+    "yd" #'petmacs/copy-directory-path
+    "yn" #'petmacs/copy-file-name
 
-(leader/with-prefix "t"
-  (leader/set-keys
+    ;; "fv" prefix
+    "vd" #'add-dir-local-variable
+    "vf" #'add-file-local-variable
+    "vp" #'add-file-local-variable-prop-line
+
+    ;; "fe" prefix
+    "eo" #'petmacs/find-org-global-todos
+    "ec" #'petmacs/find-custom-file
+    "ed" #'petmacs/find-dotfile
+
+    ;; "fC" prefix
+    "Cu" #'dos2unix
+    "Cd" #'unix2dos
+    "Cr" #'petmacs/save-buffer-gbk-as-utf8
+    ))
+
+(leader-with-prefix "t"
+  (leader-set-keys
     "-" #'centered-cursor-mode
     "m" #'evil-visual-mark-mode
     "s" #'flycheck-mode
@@ -228,97 +205,98 @@
     "l" #'display-fill-column-indicator-mode
     "f" #'focus-mode
     "F" #'toggle-frame-fullscreen
-    "M" #'maximize-window)
+    "M" #'maximize-window
 
-  (leader/with-prefix "p"
-    (leader/set-keys
-      "t" #'proxy-http-toggle
-      "d" #'proxy-http-disable
-      "c" #'proxy-http-customize
-      "s" #'proxy-http-show))
-  )
+    ;; "tp" prefix
+    "pt" #'proxy-http-toggle
+    "pd" #'proxy-http-disable
+    "pc" #'proxy-http-customize
+    "ps" #'proxy-http-show
+    ))
 
-(leader/with-prefix "F"
-  (leader/set-keys
-  "f" #'find-file-other-frame
-  "d" #'delete-frame
-  "D" #'delete-other-frames
-  "b" #'switch-to-buffer-other-frame
-  "B" #'display-buffer-other-frame
-  "o" #'other-frame
-  "O" #'dired-other-frame
-  "n" #'make-frame)
-  )
+(leader-with-prefix "F"
+  (leader-set-keys
+    "f" #'find-file-other-frame
+    "d" #'delete-frame
+    "D" #'delete-other-frames
+    "b" #'switch-to-buffer-other-frame
+    "B" #'display-buffer-other-frame
+    "o" #'other-frame
+    "O" #'dired-other-frame
+    "n" #'make-frame
+    ))
 
-(leader/with-prefix "b"
-  (leader/set-keys
-  "b" #'ivy-switch-buffer
-  "B" #'ibuffer
-  "d" #'kill-this-buffer
-  "n" #'next-buffer
-  "p" #'previous-buffer
-  "R" #'petmacs/revert-this-buffer
-  "s" #'petmacs/goto-scratch-buffer
-  "x" #'kill-buffer-and-window
-  "h" #'petmacs/goto-dashboard
-  "m" #'petmacs/switch-to-minibuffer-window
-  "Y" #'petmacs/copy-whole-buffer-to-clipboard
-  "a" #'persp-add-buffer
-  "r" #'persp-remove-buffer
-  "j" #'ace-window
-  "t" #'imenu-list-smart-toggle
-  "I" #'lsp-ui-imenu
-  "i" #'imenu-list)
-)
 
-(leader/with-prefix "B"
-  (leader/set-keys
-  "s" #'bookmark-set
-  "d" #'bookmark-delete
-  "r" #'bookmark-rename
-  "l" #'bookmark-bmenu-list)
-)
+(leader-with-prefix "b"
+  (leader-set-keys
+    "b" #'ivy-switch-buffer
+    "B" #'ibuffer
+    "d" #'kill-this-buffer
+    "n" #'next-buffer
+    "p" #'previous-buffer
+    "R" #'petmacs/revert-this-buffer
+    "s" #'petmacs/goto-scratch-buffer
+    "x" #'kill-buffer-and-window
+    "h" #'petmacs/goto-dashboard
+    "m" #'petmacs/switch-to-minibuffer-window
+    "Y" #'petmacs/copy-whole-buffer-to-clipboard
+    "a" #'persp-add-buffer
+    "r" #'persp-remove-buffer
+    "j" #'ace-window
+    "t" #'imenu-list-smart-toggle
+    "I" #'lsp-ui-imenu
+    "i" #'imenu-list
+    ))
 
-(leader/with-prefix "n"
-  (leader/set-keys
-  "f" #'narrow-to-defun
-  "r" #'narrow-to-region
-  "p" #'narrow-to-page
-  "w" #'widen)
-)
+(leader-with-prefix "B"
+  (leader-set-keys
+    "s" #'bookmark-set
+    "d" #'bookmark-delete
+    "r" #'bookmark-rename
+    "l" #'bookmark-bmenu-list
+    ))
 
-(leader/with-prefix "w"
-  (leader/set-keys
+(leader-with-prefix "n"
+  (leader-set-keys
+    "f" #'narrow-to-defun
+    "r" #'narrow-to-region
+    "p" #'narrow-to-page
+    "w" #'widen
+    ))
+
+(leader-with-prefix "w"
+  (leader-set-keys
     "."  #'hydra-frame-window/body
     "c"  #'olivetti-mode
     "r"  #'winner-undo
     "d"  #'delete-window
     "D"  #'ace-delete-window
 
+    ;; "wp" prefix
     "pm" #'petmacs/shackle-popup-message-buffer
-    "pc" #'petmacs/shackle-popup-compilation-buffer)
-  )
+    "pc" #'petmacs/shackle-popup-compilation-buffer
+    ))
 
-(leader/with-prefix "g"
-  (leader/set-keys
-  "c"  #'magit-clone
-  "s"  #'magit-status
-  "i"  #'magit-init
-  "l"  #'magit-log-head
-  "L"  #'magit-list-repositories
-  "m"  #'magit-dispatch
-  "S"  #'magit-stage-file
-  "U"  #'magit-unstage-file
-  "w"  #'browse-at-remote
+(leader-with-prefix "g"
+  (leader-set-keys
+    "c"  #'magit-clone
+    "s"  #'magit-status
+    "i"  #'magit-init
+    "l"  #'magit-log-head
+    "L"  #'magit-list-repositories
+    "m"  #'magit-dispatch
+    "S"  #'magit-stage-file
+    "U"  #'magit-unstage-file
+    "w"  #'browse-at-remote
 
-  ;;; magit file
-  "ff" #'magit-find-file
-  "fl" #'magit-log-buffer-file
-  "fd" #'magit-diff)
-)
+  ;;; "gf" file
+    "ff" #'magit-find-file
+    "fl" #'magit-log-buffer-file
+    "fd" #'magit-diff
+    ))
 
-(leader/with-prefix "j"
-  (leader/set-keys
+(leader-with-prefix "j"
+  (leader-set-keys
     "i" #'petmacs/counsel-jump-in-buffer
     "w" #'evil-avy-goto-word-or-subword-1
     "D" #'deer-jump-other-window
@@ -329,8 +307,8 @@
     "t" #'ivy-magit-todos
     ))
 
-(leader/with-prefix "e"
-  (leader/set-keys
+(leader-with-prefix "e"
+  (leader-set-keys
     "b" #'flycheck-buffer
     "c" #'flycheck-clear
     "h" #'flycheck-describe-checker
@@ -342,19 +320,14 @@
     "S" #'flycheck-set-checker-executable
     "v" #'flycheck-verify-setup
     "y" #'flycheck-copy-errors-as-kill
-    "x" #'flycheck-explain-error-at-point))
+    "x" #'flycheck-explain-error-at-point
+    ))
 
-
-;; (if sys/linuxp
-;;     (leader/set-keys "p'"   #'petmacs/projectile-pop-vterm)
-;;   (leader/set-keys "p'"   #'projectile-pop-eshell)
-;;   )
-
-(leader/with-prefix "p"
-  (leader/set-keys
+(leader-with-prefix "p"
+  (leader-set-keys
     ;; "'"  #'petmacs/projectile-pop-eshell
     "'"  #'petmacs/projectile-shell-pop
-    ;;     (leader/set-keys "p'"   #'petmacs/projectile-pop-vterm)
+    ;;     (leader-set-keys "p'"   #'petmacs/projectile-pop-vterm)
     "t"  #'petmacs/treemacs-project-toggle
     "b"  #'counsel-projectile-switch-to-buffer
     "d"  #'counsel-projectile-find-dir
@@ -363,37 +336,38 @@
     "r"  #'projectile-recentf
     "o"  #'org-projectile/goto-todos
     "l"  #'petmacs/ivy-persp-switch-project
-    "v"  #'projectile-vc))
+    "v"  #'projectile-vc
+    ))
 
-(leader/with-prefix "i"
-  (leader/set-keys
-  "s" #'ivy-yasnippet
-  "f" #'insert-file
-  "u" #'counsel-unicode-char))
+(leader-with-prefix "i"
+  (leader-set-keys
+    "s" #'ivy-yasnippet
+    "f" #'insert-file
+    "u" #'counsel-unicode-char
+    ))
 
-(leader/with-prefix "T"
-  (leader/set-keys
+(leader-with-prefix "T"
+  (leader-set-keys
     "s"  #'petmacs/select-theme
-    "n"  #'petmacs/cycle-theme))
+    "n"  #'petmacs/cycle-theme
+    ))
 
-(leader/with-prefix "q"
-  (leader/set-keys
+(leader-with-prefix "q"
+  (leader-set-keys
     "q" #'petmacs/frame-killer
     "Q" #'kill-emacs
     "h" #'suspend-frame
-    "R" #'restart-emacs))
+    "R" #'restart-emacs
+    ))
 
-
-(leader/with-prefix "o"
-  (leader/set-keys
+(leader-with-prefix "o"
+  (leader-set-keys
     "o."  #'origami-hydra/body
     ))
 
-;;; major mode keybinidngs
-
-;;; lsp major mode settings
+;;; major mode keybinidngs ;;;;;;;;;;;;;;;;;;
 (dolist (mode petmacs-lsp-active-modes)
-  (leader/declare-prefix-for-mode!* mode
+  (leader-declare-prefix-for-major-mode mode
     "=" "format"
     "a" "code actions"
     "g" "goto"
@@ -406,7 +380,7 @@
     "x" "text/code"
     )
 
-  (leader/set-keys-for-mode! mode
+  (leader-set-keys-for-major-mode mode
     ;; format
     "=b" #'lsp-format-buffer
     "=r" #'lsp-format-region
@@ -474,18 +448,19 @@
     ;; folders
     "Fs" #'lsp-workspace-folders-switch
     "Fr" #'lsp-workspace-folders-remove
-    "Fa" #'lsp-workspace-folders-add))
+    "Fa" #'lsp-workspace-folders-add
+    )
+  )
 
 
 ;;; python mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(leader/declare-prefix-for-mode!* 'python-mode
+(leader-declare-prefix-for-major-mode 'python-mode
   "c" "compile"
   "v" "virtual environment"
   "vp" "pipenv"
-  "t" "test"
-  )
+  "t" "test")
 
-(leader/set-keys-for-mode! 'python-mode
+(leader-set-keys-for-major-mode 'python-mode
   "cc" #'petmacs/python-execute-file
   "cC" #'petmacs/python-execute-file-focus
   "ck" #'petmacs/quit-subjob
@@ -519,13 +494,13 @@
 
 ;;; emacs lisp mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (dolist (mode '(emacs-lisp-mode lisp-interaction-mode))
-  (leader/declare-prefix-for-mode!* mode
+  (leader-declare-prefix-for-major-mode mode
     "c" "compile"
     "e" "eval"
     "t" "test"
     )
 
-  (leader/set-keys-for-mode! mode
+  (leader-set-keys-for-major-mode mode
     "'"  #'ielm
     "si" #'ielm
     "cc" #'emacs-lisp-byte-compile
@@ -537,15 +512,14 @@
     "gG" #'petmacs/nav-find-elisp-thing-at-point-other-window
     "tq" #'ert))
 
-
 ;;; c-c++ mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (dolist (mode '(c-mode c++-mode))
-  (leader/declare-prefix-for-mode!* mode
+  (leader-declare-prefix-for-major-mode mode
     "gh" "hierarchy"
     "gm" "members"
     )
 
-  (leader/set-keys-for-mode! mode
+  (leader-set-keys-for-major-mode mode
     "bf"  #'ccls-reload
     "bp"  #'ccls-preprocess-file
     "ghc" #'ccls-call-hierarchy
