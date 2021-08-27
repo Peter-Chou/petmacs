@@ -22,7 +22,9 @@
     (exec-path-from-shell-copy-envs '("GOPATH" "GO111MODULE" "GOPROXY")))
 
   ;; Install or update tools
-  (defvar go--tools '("golang.org/x/tools/cmd/goimports"
+  (defvar go--tools '("golang.org/x/tools/gopls"
+                      "golang.org/x/tools/cmd/goimports"
+                      "honnef.co/go/tools/cmd/staticcheck"
                       "github.com/go-delve/delve/cmd/dlv"
                       "github.com/zmb3/gogetdoc"
                       "github.com/josharian/impl"
