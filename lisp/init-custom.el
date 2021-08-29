@@ -8,7 +8,7 @@
 
 (defvar petmacs-default-coding-env 'utf-8)
 
-(defvar petmacs-proxy "127.0.0.1:1080"
+(defvar petmacs-proxy "winhost:1080"
   "Set network proxy.")
 
 (defvar petmacs-completion-style 'minibuffer
