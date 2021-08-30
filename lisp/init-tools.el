@@ -112,6 +112,51 @@ of the buffer text to be displayed in the popup"
   :init
   (setq avy-timeout-seconds 0.0))
 
+;; Kill text between the point and the character CHAR
+(use-package avy-zap
+  :bind (("M-z" . avy-zap-to-char-dwim)
+         ("M-Z" . avy-zap-up-to-char-dwim)))
+
+;; Quickly follow links
+(use-package ace-link
+  :defines (org-mode-map
+            gnus-summary-mode-map
+            gnus-article-mode-map
+            ert-results-mode-map
+            paradox-menu-mode-map
+            elfeed-show-mode-map)
+  :bind ("M-o" . ace-link-addr)
+  :hook (after-init . ace-link-setup-default)
+  :config
+  (with-eval-after-load 'org
+    (bind-key "M-o" #'ace-link-org org-mode-map))
+
+  (with-eval-after-load 'gnus
+    (bind-keys
+     :map gnus-summary-mode-map
+     ("M-o" . ace-link-gnus)
+     :map gnus-article-mode-map
+     ("M-o" . ace-link-gnus)))
+
+  (with-eval-after-load 'ert
+    (bind-key "o" #'ace-link-help ert-results-mode-map))
+
+  (bind-keys
+   :map package-menu-mode-map
+   ("o" . ace-link-help)
+   :map process-menu-mode-map
+   ("o" . ace-link-help))
+  (with-eval-after-load 'paradox
+    (bind-key "o" #'ace-link-help paradox-menu-mode-map))
+
+  (with-eval-after-load 'elfeed
+    (bind-key "o" #'ace-link elfeed-show-mode-map)))
+
+;; Jump to Chinese characters
+(use-package ace-pinyin
+  :diminish
+  :hook (after-init . ace-pinyin-global-mode))
+
 (use-package quickrun
   :custom (quickrun-focus-p nil)
   :bind (("C-c x" . quickrun)))
