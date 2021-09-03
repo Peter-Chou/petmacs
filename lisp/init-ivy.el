@@ -358,7 +358,7 @@
   ;; Avy integration
   (use-package ivy-avy
     :bind (:map ivy-minibuffer-map
-		("C-'" . ivy-avy)))
+	   ("C-'" . ivy-avy)))
 
   ;; Better sorting and filtering
   (use-package prescient
@@ -395,12 +395,12 @@ This is for use in `ivy-re-builders-alist'."
             (t . ivy-prescient-re-builder))
           ivy-prescient-sort-commands
           '(:not swiper swiper-isearch ivy-switch-buffer
-		 lsp-ivy-workspace-symbol ivy-resume ivy--restore-session
-		 counsel-grep counsel-git-grep counsel-rg counsel-ag
-		 counsel-ack counsel-fzf counsel-pt counsel-imenu
-		 counsel-org-capture counsel-outline counsel-org-goto
-		 counsel-load-theme counsel-yank-pop
-		 counsel-recentf counsel-buffer-or-recentf))
+	    lsp-ivy-workspace-symbol ivy-resume ivy--restore-session
+	    counsel-grep counsel-git-grep counsel-rg counsel-ag
+	    counsel-ack counsel-fzf counsel-pt counsel-imenu
+	    counsel-org-capture counsel-outline counsel-org-goto
+	    counsel-load-theme counsel-yank-pop
+	    counsel-recentf counsel-buffer-or-recentf))
 
     (ivy-prescient-mode 1))
 
@@ -420,16 +420,17 @@ This is for use in `ivy-re-builders-alist'."
         (advice-add #'hydra-posframe-show :around #'my-hydra-posframe-prettify-string)
 
         (defun ivy-hydra-poshandler-frame-center-below (info)
-          (let ((num 0)
+          (let (ivy-posframe-visible-p
                 (pos (posframe-poshandler-frame-center-near-bottom info)))
             (dolist (frame (frame-list))
               (when (and (frame-visible-p frame)
-                         (frame-parameter frame 'posframe-buffer))
-                (setq num (1+ num))))
+                         (string= (car (frame-parameter frame 'posframe-buffer))
+                                  ivy-posframe-buffer))
+                (setq ivy-posframe-visible-p t)))
             (cons
              (car pos)
              (- (cdr pos)
-                (if (>= num 1)
+                (if ivy-posframe-visible-p
                     (- (plist-get info :posframe-height)
                        (plist-get hydra-posframe-show-params :internal-border-width))
                   0)))))
@@ -438,12 +439,12 @@ This is for use in `ivy-re-builders-alist'."
           "Set hydra-posframe style."
           (setq hydra-posframe-show-params
                 `(:internal-border-width 3
-					 :internal-border-color ,(face-foreground 'font-lock-comment-face nil t)
-					 :background-color ,(face-background 'tooltip nil t)
-					 :left-fringe 16
-					 :right-fringe 16
-					 :lines-truncate t
-					 :poshandler ivy-hydra-poshandler-frame-center-below)))
+		  :internal-border-color ,(face-foreground 'font-lock-comment-face nil t)
+		  :background-color ,(face-background 'tooltip nil t)
+		  :left-fringe 16
+		  :right-fringe 16
+		  :lines-truncate t
+		  :poshandler ivy-hydra-poshandler-frame-center-below)))
         (ivy-hydra-set-posframe-show-params)
         (add-hook 'after-load-theme-hook #'ivy-hydra-set-posframe-show-params))))
 
@@ -470,17 +471,17 @@ This is for use in `ivy-re-builders-alist'."
    (sys/macp
     (use-package counsel-osx-app
       :bind (:map counsel-mode-map
-		  ("s-<f6>" . counsel-osx-app)))))
+	     ("s-<f6>" . counsel-osx-app)))))
 
   ;; Display world clock using Ivy
   (use-package counsel-world-clock
     :bind (:map counsel-mode-map
-		("C-c c k" . counsel-world-clock)))
+	   ("C-c c k" . counsel-world-clock)))
 
   ;; Tramp ivy interface
   (use-package counsel-tramp
     :bind (:map counsel-mode-map
-		("C-c c T" . counsel-tramp)))
+	   ("C-c c T" . counsel-tramp)))
 
   ;; Support pinyin in Ivy
   ;; Input prefix ':' to match pinyin

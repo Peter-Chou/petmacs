@@ -213,8 +213,6 @@ of the buffer text to be displayed in the popup"
 (use-package focus)                     ; Focus on the current region
 (use-package carbon-now-sh)
 (use-package daemons)                   ; system services/daemons
-(use-package diffview)                  ; side-by-side diff view
-(use-package esup)                      ; Emacs startup profiler
 ;;   :after lsp-java)
 (use-package transwin)
 

@@ -9,8 +9,8 @@
   :mode (("\\COMMIT_EDITMSG\\'" . text-mode)
          ("\\MERGE_MSG\\'" . text-mode))
   :bind (("C-x g" . magit-status)
-          ("C-x M-g" . magit-dispatch-popup)
-          ("C-c M-g" . magit-file-popup))
+         ("C-x M-g" . magit-dispatch-popup)
+         ("C-c M-g" . magit-file-popup))
   :config
   (setq magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1)
   ;; (add-to-list 'magit-log-arguments "--color")
@@ -50,9 +50,12 @@
   (git-timemachine-minibuffer-detail-face ((t (:inherit warning))))
   :bind (:map vc-prefix-map
          ("t" . git-timemachine))
-  :hook (before-revert . (lambda ()
-                           (when (bound-and-true-p git-timemachine-mode)
-                             (user-error "Cannot revert the timemachine buffer")))))
+  :hook ((git-timemachine-mode . (lambda ()
+                                   "Display different colors in mode-line."
+                                   (face-remap-add-relative 'mode-line 'custom-saved)))
+         (before-revert . (lambda ()
+                            (when (bound-and-true-p git-timemachine-mode)
+                              (user-error "Cannot revert the timemachine buffer"))))))
 
 ;; Pop up last commit information of current line
 (use-package git-messenger

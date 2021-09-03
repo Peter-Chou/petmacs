@@ -83,32 +83,90 @@
 
 ;; Better term
 ;; @see https://github.com/akermu/emacs-libvterm#installation
+;; (when (and module-file-suffix           ; dynamic module
+;;            (executable-find "cmake")
+;;            (executable-find "libtool")
+;;            (executable-find "make"))
+;;   (use-package vterm
+;;     :bind (:map vterm-mode-map
+;;            ([f9] . shell-pop))
+;;     :init (setq vterm-kill-buffer-on-exit t
+;; 		vterm-always-compile-module t)
+;;     :hook (vterm-mode . (lambda ()
+;; 			  ;; (setq-local evil-insert-state-cursor 'box)
+;; 			  (evil-insert-state)))
+;;     :config
+;;     (evil-define-key 'insert vterm-mode-map (kbd "C-r")      #'vterm--self-insert)))
+
+;; Better term
+;; @see https://github.com/akermu/emacs-libvterm#installation
 (when (and module-file-suffix           ; dynamic module
            (executable-find "cmake")
            (executable-find "libtool")
            (executable-find "make"))
   (use-package vterm
+    :commands vterm--internal
     :bind (:map vterm-mode-map
-           ([f9] . shell-pop))
-    :init (setq vterm-kill-buffer-on-exit t
-		vterm-always-compile-module t)
-    :hook (vterm-mode . (lambda ()
-			  ;; (setq-local evil-insert-state-cursor 'box)
-			  (evil-insert-state)))
+           ([f9] . (lambda ()
+                     (interactive)
+                     (and (fboundp 'shell-pop)
+                          (shell-pop nil)))))
+    :init
+    (setq vterm-always-compile-module t)
+
+    (with-no-warnings
+      (when (childframe-workable-p)
+        (defvar vterm-posframe--frame nil)
+        (defun vterm-posframe-toggle ()
+          "Toggle `vterm' child frame."
+          (interactive)
+          (let ((buffer (vterm--internal #'ignore 100))
+                (width  (max 80 (/ (frame-width) 2)))
+                (height (/ (frame-height) 2)))
+            (if (and vterm-posframe--frame
+                     (frame-live-p vterm-posframe--frame)
+                     (frame-visible-p vterm-posframe--frame))
+                (progn
+                  (posframe-hide buffer)
+                  ;; Focus the parent frame forcibly to address macOS issue
+                  (select-frame-set-input-focus (frame-parent vterm-posframe--frame)))
+              (setq vterm-posframe--frame
+                    (posframe-show
+                     buffer
+                     :poshandler #'posframe-poshandler-frame-center
+                     :left-fringe 8
+                     :right-fringe 8
+                     :width width
+                     :height height
+                     :min-width width
+                     :min-height height
+                     :internal-border-width 3
+                     :internal-border-color (face-foreground 'font-lock-comment-face nil t)
+                     :background-color (face-background 'tooltip nil t)
+                     :accept-focus t))
+              ;; Focus the child frame forcibly since accept-focus has some bugs
+              (select-frame-set-input-focus vterm-posframe--frame))))
+        (bind-key "C-`" #'vterm-posframe-toggle)))
     :config
-    (evil-define-key 'insert vterm-mode-map (kbd "C-r")      #'vterm--self-insert)))
+    (evil-define-key 'insert vterm-mode-map (kbd "C-r")      #'vterm--self-insert)
+    ))
 
 ;; Shell Pop
+;; Shell Pop
 (use-package shell-pop
-  :bind ([f9] . shell-pop)
-  :init (setq shell-pop-window-size 50
-	      shell-pop-window-position "right"
-              shell-pop-shell-type
-              (cond ((fboundp 'vterm) '("vterm" "*vterm*" #'vterm))
-                    (sys/win32p '("eshell" "*eshell*" #'eshell))
-                    (t '("terminal" "*terminal*"
-                         (lambda () (term shell-pop-term-shell)))))))
-
+  :bind (("C-`" . (lambda ()
+                    (interactive)
+                    (if (fboundp 'vterm-posframe-toggle)
+                        (vterm-posframe-toggle)
+                      (shell-pop nil))))
+         ([f9] . shell-pop))
+  :init
+  (setq shell-pop-window-size 30
+        shell-pop-shell-type
+        (cond ((fboundp 'vterm) '("vterm" "*vterm*" #'vterm))
+              (sys/win32p '("eshell" "*eshell*" #'eshell))
+              (t '("terminal" "*terminal*"
+                   (lambda () (term shell-pop-term-shell)))))))
 
 ;; (use-package eshell
 ;;   :ensure nil
