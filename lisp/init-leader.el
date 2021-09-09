@@ -401,6 +401,7 @@
     "gt" #'lsp-find-type-definition
     "gd" #'xref-find-definitions
     "gr" #'xref-find-references
+    "gh" #'lsp-treemacs-call-hierarchy
     ;; "gr" #'lsp-find-references
     "ge" #'lsp-treemacs-errors-list
     "gb" #'xref-pop-marker-stack
@@ -517,22 +518,22 @@
     "tq" #'ert))
 
 ;;; c-c++ mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(dolist (mode '(c-mode c++-mode))
-  (leader-declare-prefix-for-major-mode mode
-    "gh" "hierarchy"
-    "gm" "members"
-    )
+;; (dolist (mode '(c-mode c++-mode))
+;;   (leader-declare-prefix-for-major-mode mode
+;;     "gh" "hierarchy"
+;;     "gm" "members"
+;;     )
 
-  (leader-set-keys-for-major-mode mode
-    "bf"  #'ccls-reload
-    "bp"  #'ccls-preprocess-file
-    "ghc" #'ccls-call-hierarchy
-    "ghC" #'petmacs/c-c++-lsp-ccls-call-hierarchy-inv
-    "ghi" #'ccls-inheritance-hierarchy
-    "ghI" #'petmacs/c-c++-lsp-ccls-inheritance-hierarchy-inv
+;;   (leader-set-keys-for-major-mode mode
+;;     "bf"  #'ccls-reload
+;;     "bp"  #'ccls-preprocess-file
+;;     "ghc" #'ccls-call-hierarchy
+;;     "ghC" #'petmacs/c-c++-lsp-ccls-call-hierarchy-inv
+;;     "ghi" #'ccls-inheritance-hierarchy
+;;     "ghI" #'petmacs/c-c++-lsp-ccls-inheritance-hierarchy-inv
 
-    "gmh" #'ccls-member-hierarchy
-    ))
+;;     "gmh" #'ccls-member-hierarchy
+;;     ))
 
 (provide 'init-leader)
 

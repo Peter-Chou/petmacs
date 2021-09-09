@@ -11,7 +11,7 @@
 (defvar petmacs-proxy "winhost:1080"
   "Set network proxy.")
 
-(defvar petmacs-completion-style 'minibuffer
+(defvar petmacs-completion-style 'childframe
   "Completion display style.  choice: minibuffer / childframe.")
 
 (defvar petmacs-auto-themes '(("8:00"  . doom-gruvbox-light)
