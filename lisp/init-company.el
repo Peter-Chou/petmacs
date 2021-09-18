@@ -13,32 +13,32 @@
   :defines (company-dabbrev-ignore-case company-dabbrev-downcase)
   :commands company-cancel
   :bind (("M-/" . company-complete)
-	 ("C-M-i" . company-complete)
-	 :map company-mode-map
-	 ("<backtab>" . company-yasnippet)
-	 :map company-active-map
-	 ("C-p" . company-select-previous)
-	 ("C-n" . company-select-next)
-	 ("<tab>" . company-complete-common-or-cycle)
-	 ("<backtab>" . my-company-yasnippet)
-	 :map company-search-map
-	 ("C-p" . company-select-previous)
-	 ("C-n" . company-select-next))
+         ("C-M-i" . company-complete)
+         :map company-mode-map
+         ("<backtab>" . company-yasnippet)
+         :map company-active-map
+         ("C-p" . company-select-previous)
+         ("C-n" . company-select-next)
+         ("<tab>" . company-complete-common-or-cycle)
+         ("<backtab>" . my-company-yasnippet)
+         :map company-search-map
+         ("C-p" . company-select-previous)
+         ("C-n" . company-select-next))
   :hook (after-init . global-company-mode)
   :init
   (setq company-tooltip-align-annotations t
-	company-tooltip-limit 12
-	company-idle-delay 0
-	company-echo-delay (if (display-graphic-p) nil 0)
-	company-minimum-prefix-length 1
-	company-require-match nil
-	company-dabbrev-ignore-case nil
-	company-dabbrev-downcase nil
-	company-global-modes '(not erc-mode message-mode help-mode
-				   gud-mode eshell-mode shell-mode)
-	company-backends '((company-capf :with company-yasnippet)
-			   (company-dabbrev-code company-keywords company-files)
-			   company-dabbrev))
+        company-tooltip-limit 12
+        company-idle-delay 0
+        company-echo-delay (if (display-graphic-p) nil 0)
+        company-minimum-prefix-length 1
+        company-require-match nil
+        company-dabbrev-ignore-case nil
+        company-dabbrev-downcase nil
+        company-global-modes '(not erc-mode message-mode help-mode
+                                   gud-mode eshell-mode shell-mode)
+        company-backends '((company-capf :with company-yasnippet)
+                           (company-dabbrev-code company-keywords company-files)
+                           company-dabbrev))
 
   (defun my-company-yasnippet ()
     "Hide the current completeions and show snippets."
@@ -50,38 +50,38 @@
   (with-no-warnings
     (with-eval-after-load 'yasnippet
       (defun company-backend-with-yas (backend)
-	"Add `yasnippet' to company backend."
-	(if (and (listp backend) (member 'company-yasnippet backend))
-	    backend
-	  (append (if (consp backend) backend (list backend))
-		  '(:with company-yasnippet))))
+        "Add `yasnippet' to company backend."
+        (if (and (listp backend) (member 'company-yasnippet backend))
+            backend
+          (append (if (consp backend) backend (list backend))
+                  '(:with company-yasnippet))))
 
       (defun my-company-enbale-yas (&rest _)
-	"Enable `yasnippet' in `company'."
-	(setq company-backends (mapcar #'company-backend-with-yas company-backends)))
+        "Enable `yasnippet' in `company'."
+        (setq company-backends (mapcar #'company-backend-with-yas company-backends)))
 
       (defun my-lsp-fix-company-capf ()
-	"Remove redundant `comapny-capf'."
-	(setq company-backends
-	      (remove 'company-backends (remq 'company-capf company-backends))))
+        "Remove redundant `comapny-capf'."
+        (setq company-backends
+              (remove 'company-backends (remq 'company-capf company-backends))))
       (advice-add #'lsp-completion--enable :after #'my-lsp-fix-company-capf)
 
       (defun my-company-yasnippet-disable-inline (fn cmd &optional arg &rest _ignore)
-	"Enable yasnippet but disable it inline."
-	(if (eq cmd  'prefix)
-	    (when-let ((prefix (funcall fn 'prefix)))
-	      (unless (memq (char-before (- (point) (length prefix)))
-			    '(?. ?< ?> ?\( ?\) ?\[ ?{ ?} ?\" ?' ?`))
-		prefix))
-	  (progn
-	    (when (and (bound-and-true-p lsp-mode)
-		       arg (not (get-text-property 0 'yas-annotation-patch arg)))
-	      (let* ((name (get-text-property 0 'yas-annotation arg))
-		     (snip (format "%s (Snippet)" name))
-		     (len (length arg)))
-		(put-text-property 0 len 'yas-annotation snip arg)
-		(put-text-property 0 len 'yas-annotation-patch t arg)))
-	    (funcall fn cmd  arg))))
+        "Enable yasnippet but disable it inline."
+        (if (eq cmd  'prefix)
+            (when-let ((prefix (funcall fn 'prefix)))
+              (unless (memq (char-before (- (point) (length prefix)))
+                            '(?. ?< ?> ?\( ?\) ?\[ ?{ ?} ?\" ?' ?`))
+                prefix))
+          (progn
+            (when (and (bound-and-true-p lsp-mode)
+                       arg (not (get-text-property 0 'yas-annotation-patch arg)))
+              (let* ((name (get-text-property 0 'yas-annotation arg))
+                     (snip (format "%s (Snippet)" name))
+                     (len (length arg)))
+                (put-text-property 0 len 'yas-annotation snip arg)
+                (put-text-property 0 len 'yas-annotation-patch t arg)))
+            (funcall fn cmd  arg))))
       (advice-add #'company-yasnippet :around #'my-company-yasnippet-disable-inline)))
 
   ;; Better sorting and filtering
@@ -172,7 +172,7 @@
                                             'company-box-doc--replace-hr t
                                             'face `(:background ,(face-foreground 'font-lock-comment-face)))
                                 (propertize " " 'display '(space :height (1)))
-                                (and (not (equal after ?\n)) (propertize " \n" 'face '(:height 0.3)))))))))
+                                (and (not (equal after ?\n)) (propertize " \n" 'face '(:height 0.5)))))))))
 
                       (setq mode-line-format nil
                             display-line-numbers nil
@@ -182,6 +182,7 @@
                       (current-buffer)))))
               (advice-add #'company-box-doc--make-buffer :override #'my-company-box-doc--make-buffer)
 
+              ;; Display the border and fix the markdown header properties
               (defun my-company-box-doc--show (selection frame)
                 (cl-letf (((symbol-function 'completing-read) #'company-box-completing-read)
                           (window-configuration-change-hook nil)
@@ -207,8 +208,7 @@
                         (set-face-background 'child-frame-border border-color frame))
                       (company-box-doc--set-frame-position frame)
 
-                      ;; Fix hr props
-                      ;; @see `lsp-ui-doc--fix-hr-props'
+                      ;; Fix hr props. @see `lsp-ui-doc--fix-hr-props'
                       (with-current-buffer (company-box--get-buffer "doc")
                         (let (next)
                           (while (setq next (next-single-property-change (or next 1) 'company-box-doc--replace-hr))
@@ -293,21 +293,21 @@
                         (Template . ,(all-the-icons-material "format_align_left" :height 1.0 :v-adjust -0.2)))
                       company-box-icons-alist 'company-box-icons-all-the-icons))))
 
-	;; Popup documentation for completion candidates
-	(use-package company-quickhelp
-	  :defines company-quickhelp-delay
-	  :bind (:map company-active-map
-		 ([remap company-show-doc-buffer] . company-quickhelp-manual-begin))
-	  :hook (global-company-mode . company-quickhelp-mode)
-	  :init (setq company-quickhelp-delay 0.3)))
+        ;; Popup documentation for completion candidates
+        (use-package company-quickhelp
+          :defines company-quickhelp-delay
+          :bind (:map company-active-map
+                 ([remap company-show-doc-buffer] . company-quickhelp-manual-begin))
+          :hook (global-company-mode . company-quickhelp-mode)
+          :init (setq company-quickhelp-delay 0.3)))
 
     ;; Display documentation for completion candidates in terminal
     (use-package company-quickhelp-terminal
       :defines company-quickhelp-delay
       :bind (:map company-active-map
-	     ([remap company-show-doc-buffer] . company-quickhelp-manual-begin))
+             ([remap company-show-doc-buffer] . company-quickhelp-manual-begin))
       :hook ((global-company-mode . company-quickhelp-mode)
-	     (company-quickhelp-mode  . company-quickhelp-terminal-mode))
+             (company-quickhelp-mode  . company-quickhelp-terminal-mode))
       :init (setq company-quickhelp-delay 0.3))))
 
 (provide 'init-company)
