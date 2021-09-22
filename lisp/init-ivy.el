@@ -27,7 +27,7 @@
          ([remap set-variable] . counsel-set-variable)
          ([remap insert-char] . counsel-unicode-char)
          ([remap recentf-open-files] . counsel-recentf)
-	 ([remap org-capture] . counsel-org-capture)
+         ([remap org-capture] . counsel-org-capture)
 
          ("C-x j"   . counsel-mark-ring)
          ("C-h F"   . counsel-faces)
@@ -42,6 +42,7 @@
          ("C-c h" . counsel-command-history)
          ("C-c i" . counsel-git)
          ("C-c j" . counsel-git-grep)
+         ("C-c l" . counsel-git-log)
          ("C-c o" . counsel-outline)
          ("C-c r" . counsel-rg)
          ("C-c z" . counsel-fzf)
@@ -59,7 +60,8 @@
          ("C-c c h" . counsel-command-history)
          ("C-c c i" . counsel-git)
          ("C-c c j" . counsel-git-grep)
-         ("C-c c l" . counsel-locate)
+         ("C-c c k" . counsel-ace-link)
+         ("C-c c l" . counsel-git-log)
          ("C-c c m" . counsel-minibuffer-history)
          ("C-c c o" . counsel-outline)
          ("C-c c p" . counsel-pt)
@@ -93,7 +95,7 @@
         ivy-use-virtual-buffers t    ; Enable bookmarks and recentf
         ivy-fixed-height-minibuffer t
         ivy-count-format "(%d/%d) "
-	ivy-ignore-buffers '("\\` " "\\`\\*tramp/" "\\`\\*xref" "\\`\\*helpful "
+        ivy-ignore-buffers '("\\` " "\\`\\*tramp/" "\\`\\*xref" "\\`\\*helpful "
                              "\\`\\*.+-posframe-buffer\\*")
         ivy-on-del-error-function #'ignore
         ivy-initial-inputs-alist nil)
@@ -226,6 +228,10 @@
       "Switch to `counsel-fzf' with the current input."
       (counsel-fzf ivy-text default-directory))
 
+    (defun my-ivy-switch-to-counsel-git (&rest _)
+      "Switch to `counsel-git' with the current input."
+      (counsel-git ivy-text))
+
     (defun my-ivy-copy-library-path (lib)
       "Copy the full path of LIB."
       (let ((path (find-library-name lib)))
@@ -352,7 +358,7 @@
   ;; Avy integration
   (use-package ivy-avy
     :bind (:map ivy-minibuffer-map
-	   ("C-'" . ivy-avy)))
+           ("C-'" . ivy-avy)))
 
   ;; Better sorting and filtering
   (use-package prescient
@@ -389,12 +395,13 @@ This is for use in `ivy-re-builders-alist'."
             (t . ivy-prescient-re-builder))
           ivy-prescient-sort-commands
           '(:not swiper swiper-isearch ivy-switch-buffer
-	    lsp-ivy-workspace-symbol ivy-resume ivy--restore-session
-	    counsel-grep counsel-git-grep counsel-rg counsel-ag
-	    counsel-ack counsel-fzf counsel-pt counsel-imenu
-	    counsel-org-capture counsel-outline counsel-org-goto
-	    counsel-load-theme counsel-yank-pop
-	    counsel-recentf counsel-buffer-or-recentf))
+            lsp-ivy-workspace-symbol ivy-resume ivy--restore-session
+            counsel-grep counsel-git-grep counsel-rg counsel-ag
+            counsel-ack counsel-fzf counsel-pt counsel-imenu
+            counsel-org-capture counsel-outline counsel-org-goto
+            counsel-load-theme counsel-yank-pop
+            counsel-recentf counsel-buffer-or-recentf
+            ))
 
     (ivy-prescient-mode 1))
 
@@ -433,12 +440,12 @@ This is for use in `ivy-re-builders-alist'."
           "Set hydra-posframe style."
           (setq hydra-posframe-show-params
                 `(:internal-border-width 3
-		  :internal-border-color ,(face-foreground 'font-lock-comment-face nil t)
-		  :background-color ,(face-background 'tooltip nil t)
-		  :left-fringe 16
-		  :right-fringe 16
-		  :lines-truncate t
-		  :poshandler ivy-hydra-poshandler-frame-center-below)))
+                  :internal-border-color ,(face-foreground 'font-lock-comment-face nil t)
+                  :background-color ,(face-background 'tooltip nil t)
+                  :left-fringe 16
+                  :right-fringe 16
+                  :lines-truncate t
+                  :poshandler ivy-hydra-poshandler-frame-center-below)))
         (ivy-hydra-set-posframe-show-params)
         (add-hook 'after-load-theme-hook #'ivy-hydra-set-posframe-show-params))))
 
@@ -465,17 +472,17 @@ This is for use in `ivy-re-builders-alist'."
    (sys/macp
     (use-package counsel-osx-app
       :bind (:map counsel-mode-map
-	     ("s-<f6>" . counsel-osx-app)))))
+             ("s-<f6>" . counsel-osx-app)))))
 
   ;; Display world clock using Ivy
   (use-package counsel-world-clock
     :bind (:map counsel-mode-map
-	   ("C-c c k" . counsel-world-clock)))
+           ("C-c c k" . counsel-world-clock)))
 
   ;; Tramp ivy interface
   (use-package counsel-tramp
     :bind (:map counsel-mode-map
-	   ("C-c c T" . counsel-tramp)))
+           ("C-c c T" . counsel-tramp)))
 
   ;; Support pinyin in Ivy
   ;; Input prefix ':' to match pinyin
@@ -530,8 +537,16 @@ This is for use in `ivy-re-builders-alist'."
 ;; Better experience with icons
 ;; Enable it before`ivy-rich-mode' for better performance
 (use-package all-the-icons-ivy-rich
-  :if (icons-displayable-p)
-  :hook (ivy-mode . all-the-icons-ivy-rich-mode))
+  :hook (ivy-mode . all-the-icons-ivy-rich-mode)
+  :init (setq all-the-icons-ivy-rich-icon t)
+  :config
+  (plist-put all-the-icons-ivy-rich-display-transformers-list
+             'counsel-load-theme
+             '(:columns
+               ((all-the-icons-ivy-rich-theme-icon)
+                (ivy-rich-candidate))
+               :delimiter "\t"))
+  (all-the-icons-ivy-rich-reload))
 
 ;; More friendly display transformer for Ivy
 (use-package ivy-rich
@@ -589,6 +604,7 @@ This is for use in `ivy-re-builders-alist'."
               (setq-local cursor-type nil)))))
       (advice-add #'ivy-posframe--minibuffer-setup :override #'my-ivy-posframe--minibuffer-setup)
 
+      ;; Prettify the buffer
       (defun my-ivy-posframe--prettify-buffer (&rest _)
         "Add top and bottom margin to the prompt."
         (with-current-buffer ivy-posframe-buffer
@@ -601,7 +617,6 @@ This is for use in `ivy-re-builders-alist'."
       ;; Adjust the postion
       (defun ivy-posframe-display-at-frame-center-near-bottom (str)
         (ivy-posframe--display str #'posframe-poshandler-frame-center-near-bottom))
-
       (setf (alist-get t ivy-posframe-display-functions-alist)
             #'ivy-posframe-display-at-frame-center-near-bottom))))
 
