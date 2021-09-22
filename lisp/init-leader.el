@@ -30,15 +30,22 @@
 (defalias 'which-key-declare-prefixes-for-mode
   'which-key-add-major-mode-key-based-replacements)
 
+;; (use-package spaceleader
+;;   :ensure nil
+;;   :commands (leader-set-keys
+;; 	      leader-set-keys-for-mode
+;; 	      leader-set-keys-for-major-mode
+;; 	      leader-declare-prefix
+;; 	      leader-declare-prefix-for-major-mode
+;; 	      leader-with-prefix
+;; 	      leader-with-major-mode-prefix))
+
 (use-package spaceleader
-  :ensure nil
-  :commands (leader-set-keys
-	      leader-set-keys-for-mode
-	      leader-set-keys-for-major-mode
-	      leader-declare-prefix
-	      leader-declare-prefix-for-major-mode
-	      leader-with-prefix
-	      leader-with-major-mode-prefix))
+  :quelpa
+  (spaceleader :fetcher github
+  	       :repo "mohkale/spaceleader"
+  	       :files ("*")))
+
 
 (leader-declare-prefix
  "a"  '("apps" . "applications")
