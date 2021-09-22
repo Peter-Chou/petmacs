@@ -149,7 +149,13 @@
                        :internal-border-width 3
                        :internal-border-color (face-foreground 'font-lock-comment-face nil t)
                        :background-color (face-background 'tooltip nil t)
+                       :override-parameters '((cursor-type . t))
                        :accept-focus t))
+                ;; Blink cursor
+                (with-current-buffer buffer
+                  (save-excursion
+                    (vterm-clear))
+                  (setq-local cursor-type 'box))
                 ;; Focus the child frame
                 (select-frame-set-input-focus vterm-posframe--frame)))))
         (bind-key "C-`" #'vterm-posframe-toggle)))
