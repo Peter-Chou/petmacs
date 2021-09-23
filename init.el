@@ -61,6 +61,20 @@
 (setq byte-compile-warnings '(cl-functions))
 
 (setq comp-deferred-compilation t)
+
+(if (and (fboundp 'native-comp-available-p)
+	 (native-comp-available-p))
+    (progn
+      (message "Native compilation is available")
+      ;; native-compile all Elisp files under a directory
+      (native-compile-async (expand-file-name "site-lisp" user-emacs-directory) 'recursively)
+      (setq package-native-compile t))
+  (message "Native complation is *not* available"))
+
+(if (functionp 'json-serialize)
+    (message "Native JSON is available")
+  (message "Native JSON is *not* available"))
+
 ;; ignore warnings
 ;;(setq warning-minimum-level :emergency)
 
