@@ -178,7 +178,6 @@ of the buffer text to be displayed in the popup"
     (setq pyim-page-tooltip 'popup))
 
   :config
-  (require 'pyim-tsinghua-dict)
   (pyim-default-scheme 'quanpin)
 
   ;; 金手指设置，可以将光标处的编码，比如：拼音字符串，转换为中文。
@@ -196,7 +195,13 @@ of the buffer text to be displayed in the popup"
       (interactive)
       (pyim-select-word-by-number 2)))
 
-  (pyim-tsinghua-dict-enable)
+
+  (pyim-extra-dicts-add-dict
+   `(:name "Great-dict-private"
+     :file, (expand-file-name "resources/dicts/pyim-greatdict.pyim.gz" user-emacs-directory)
+     :coding utf-8-unix
+     :dict-type pinyin-dict
+     :elpa t))
   )
 
 ;; Hungry deletion

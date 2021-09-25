@@ -48,6 +48,6 @@ git clone https://github.com/Peter-Chou/petmacs.git ~/.emacs.d
 
 ## Screenshots
 
-![petmacs](./img/screenshot_dashboard.png)
+![petmacs](./resources/img/screenshot_dashboard.png)
 
-![screenshot](./img/screenshot_elisp.png)
+![screenshot](./resources/img/screenshot_elisp.png)
