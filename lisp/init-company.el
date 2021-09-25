@@ -294,21 +294,23 @@
                       company-box-icons-alist 'company-box-icons-all-the-icons))))
 
         ;; Popup documentation for completion candidates
-        (use-package company-quickhelp
-          :defines company-quickhelp-delay
-          :bind (:map company-active-map
-                 ([remap company-show-doc-buffer] . company-quickhelp-manual-begin))
-          :hook (global-company-mode . company-quickhelp-mode)
-          :init (setq company-quickhelp-delay 0.3)))
+        ;; (use-package company-quickhelp
+        ;;   :defines company-quickhelp-delay
+        ;;   :bind (:map company-active-map
+        ;;          ([remap company-show-doc-buffer] . company-quickhelp-manual-begin))
+        ;;   :hook (global-company-mode . company-quickhelp-mode)
+        ;;   :init (setq company-quickhelp-delay 0.3))
+	)
 
     ;; Display documentation for completion candidates in terminal
-    (use-package company-quickhelp-terminal
-      :defines company-quickhelp-delay
-      :bind (:map company-active-map
-             ([remap company-show-doc-buffer] . company-quickhelp-manual-begin))
-      :hook ((global-company-mode . company-quickhelp-mode)
-             (company-quickhelp-mode  . company-quickhelp-terminal-mode))
-      :init (setq company-quickhelp-delay 0.3))))
+    ;; (use-package company-quickhelp-terminal
+    ;;   :defines company-quickhelp-delay
+    ;;   :bind (:map company-active-map
+    ;;          ([remap company-show-doc-buffer] . company-quickhelp-manual-begin))
+    ;;   :hook ((global-company-mode . company-quickhelp-mode)
+    ;;          (company-quickhelp-mode  . company-quickhelp-terminal-mode))
+    ;;   :init (setq company-quickhelp-delay 0.3))
+    ))
 
 (provide 'init-company)
 
