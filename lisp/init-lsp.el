@@ -48,8 +48,8 @@
 		 (setq line l1 col c1)
 		 (push `((,point0 . ,point1) . ,w) candidates)))
       (avy-with avy-document-symbol
-		(avy--process candidates
-			      (avy--style-fn avy-style)))))
+	(avy--process candidates
+		      (avy--style-fn avy-style)))))
   (defun petmacs/lsp-avy-goto-word ()
     (interactive)
     (petmacs//lsp-avy-document-symbol t))
@@ -113,9 +113,10 @@
         lsp-auto-guess-root nil
         lsp-keep-workspace-alive nil
         lsp-prefer-capf t
+	lsp-headerline-breadcrumb-enable nil
         lsp-signature-auto-activate nil
-        lsp-modeline-code-actions-enable nil
-        lsp-modeline-diagnostics-enable nil
+        lsp-modeline-code-actions-enable t
+        lsp-modeline-diagnostics-enable t
 	lsp-modeline-workspace-status-enable nil
 
         lsp-enable-file-watchers nil
