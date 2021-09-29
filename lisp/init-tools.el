@@ -90,6 +90,12 @@ of the buffer text to be displayed in the popup"
   :diminish
   :hook (after-init . editorconfig-mode))
 
+;; Code formatting
+;; Install: npm -g install prettier
+(use-package prettier
+  :diminish
+  :hook (after-init . global-prettier-mode))
+
 ;; Fast search tool `ripgrep'
 (use-package rg
   :defines projectile-command-map
