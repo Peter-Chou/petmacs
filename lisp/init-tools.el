@@ -204,6 +204,25 @@ of the buffer text to be displayed in the popup"
      :elpa t))
   )
 
+;; Cross-referencing commands
+(use-package xref
+  :ensure nil
+  :init
+  (when (and (boundp 'xref-search-program) (executable-find "rg"))
+    (setq xref-search-program 'ripgrep))
+
+  (with-no-warnings
+    (if emacs/>=28p
+        (setq xref-show-xrefs-function #'xref-show-definitions-completing-read
+              xref-show-definitions-function #'xref-show-definitions-completing-read)
+      ;; Select from xref candidates with Ivy
+      (use-package ivy-xref
+        :after ivy
+        :init
+        (when emacs/>=27p
+          (setq xref-show-definitions-function #'ivy-xref-show-defs))
+        (setq xref-show-xrefs-function #'ivy-xref-show-xrefs)))))
+
 ;; Hungry deletion
 ;; (use-package hungry-delete
 ;;   :diminish

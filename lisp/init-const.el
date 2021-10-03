@@ -49,6 +49,10 @@
       (and (= emacs-major-version 25) (>= emacs-minor-version 2)))
   "Emacs is 25.2 or above.")
 
+(defconst emacs/>=28p
+  (>= emacs-major-version 28)
+  "Emacs is 28 or above.")
+
 (provide 'init-const)
 
 ;;; init-const.el ends here
