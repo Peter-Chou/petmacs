@@ -284,41 +284,27 @@
   "Disable theme before load theme."
   (mapc #'disable-theme custom-enabled-themes))
 
-
-;; (use-package display-line-numbers-mode
-;;   :ensure nil
-;;   :init
-;;   (setq-default display-line-numbers-type 'relative)
-;;   (global-display-line-numbers-mode 1))
-
-;; Highlight current line number
-;; (use-package hlinum
-;;   :defines linum-highlight-in-all-buffersp
-;;   :custom-face (linum-highlight-face ((t (:inherit default :background nil :foreground nil))))
-;;   :hook (global-linum-mode . hlinum-activate)
-;;   :init
-;;   (setq linum-highlight-in-all-buffersp t))
-
 ;; Show native line numbers if possible, otherwise use `linum'
-(if (fboundp 'display-line-numbers-mode)
-    (use-package display-line-numbers
-      :ensure nil
-      :hook ((prog-mode yaml-mode) . display-line-numbers-mode)
-  :init
-  (setq-default display-line-numbers-type 'relative)
-  )
-  (use-package linum-off
-    :demand
-    :defines linum-format
-    :hook (after-init . global-linum-mode)
-    :init (setq linum-format "%4d ")
-    :config
-    ;; Highlight current line number
-    (use-package hlinum
-      :defines linum-highlight-in-all-buffersp
-      :custom-face (linum-highlight-face ((t (:inherit default :background nil :foreground nil))))
-      :hook (global-linum-mode . hlinum-activate)
-      :init (setq linum-highlight-in-all-buffersp t))))
+;; (if (fboundp 'display-line-numbers-mode)
+;;     (use-package display-line-numbers
+;;       :ensure nil
+;;       :hook ((prog-mode yaml-mode) . display-line-numbers-mode)
+;;       :init
+;;       (setq-default display-line-numbers-type 'relative)
+;;       )
+
+;;   (use-package linum-off
+;;     :demand
+;;     :defines linum-format
+;;     :hook (after-init . global-linum-mode)
+;;     :init (setq linum-format "%4d ")
+;;     :config
+;;     ;; Highlight current line number
+;;     (use-package hlinum
+;;       :defines linum-highlight-in-all-buffersp
+;;       :custom-face (linum-highlight-face ((t (:inherit default :background nil :foreground nil))))
+;;       :hook (global-linum-mode . hlinum-activate)
+;;       :init (setq linum-highlight-in-all-buffersp t))))
 
 ;; Display Time
 (use-package time
