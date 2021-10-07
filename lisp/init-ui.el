@@ -265,19 +265,6 @@
   (setq circadian-themes petmacs-auto-themes)
   (circadian-setup))
 
-;; (use-package theme-changer
-;;   :init
-;;   (require 'theme-changer)
-;;   (setq calendar-longitude 121.473701
-;; 	calendar-latitude 31.230416)
-;;   :config
-;;   ;; setq the location here.
-;;   ;; (change-theme 'doom-vibrant 'doom-nord-light)
-;;   (change-theme 'doom-nord-light 'doom-vibrant )
-;;   )
-
-;; (load-theme petmacs--default-theme t)
-
 ;;; Disable theme before load a new theme
 (defadvice load-theme
     (before theme-dont-propagate activate)
@@ -285,26 +272,26 @@
   (mapc #'disable-theme custom-enabled-themes))
 
 ;; Show native line numbers if possible, otherwise use `linum'
-;; (if (fboundp 'display-line-numbers-mode)
-;;     (use-package display-line-numbers
-;;       :ensure nil
-;;       :hook ((prog-mode yaml-mode) . display-line-numbers-mode)
-;;       :init
-;;       (setq-default display-line-numbers-type 'relative)
-;;       )
+(if (fboundp 'display-line-numbers-mode)
+    (use-package display-line-numbers
+      :ensure nil
+      ;; :hook ((prog-mode yaml-mode) . display-line-numbers-mode)
+      :init
+      (setq-default display-line-numbers-type 'relative)
+      )
 
-;;   (use-package linum-off
-;;     :demand
-;;     :defines linum-format
-;;     :hook (after-init . global-linum-mode)
-;;     :init (setq linum-format "%4d ")
-;;     :config
-;;     ;; Highlight current line number
-;;     (use-package hlinum
-;;       :defines linum-highlight-in-all-buffersp
-;;       :custom-face (linum-highlight-face ((t (:inherit default :background nil :foreground nil))))
-;;       :hook (global-linum-mode . hlinum-activate)
-;;       :init (setq linum-highlight-in-all-buffersp t))))
+  (use-package linum-off
+    :demand
+    :defines linum-format
+    :hook (after-init . global-linum-mode)
+    :init (setq linum-format "%4d ")
+    :config
+    ;; Highlight current line number
+    (use-package hlinum
+      :defines linum-highlight-in-all-buffersp
+      :custom-face (linum-highlight-face ((t (:inherit default :background nil :foreground nil))))
+      :hook (global-linum-mode . hlinum-activate)
+      :init (setq linum-highlight-in-all-buffersp t))))
 
 ;; Display Time
 (use-package time
