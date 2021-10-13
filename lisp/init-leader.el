@@ -207,6 +207,7 @@
     "n" #'display-line-numbers-mode
     "f" #'focus-mode
     "F" #'toggle-frame-fullscreen
+    "x" #'read-only-mode
     "M" #'maximize-window
 
     ;; "tp" prefix
