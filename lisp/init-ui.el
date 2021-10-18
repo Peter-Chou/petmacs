@@ -119,6 +119,7 @@
            ("conf" all-the-icons-octicon "settings"    :v-adjust 0.0 :face all-the-icons-yellow)
            ("eln"  all-the-icons-octicon "file-binary" :v-adjust 0.0 :face all-the-icons-dsilver)
            ("epub" all-the-icons-faicon "book"         :height 1.0 :v-adjust -0.1 :face all-the-icons-green)
+	   ("exe" all-the-icons-octicon "file-binary" :v-adjust 0.0 :face all-the-icons-dsilver)
            ("make" all-the-icons-fileicon "gnu"        :face all-the-icons-dorange)
            ("rss"  all-the-icons-octicon "rss"         :height 1.1 :v-adjust 0.0 :face all-the-icons-lorange)
            ("toml" all-the-icons-octicon "settings"    :v-adjust 0.0 :face all-the-icons-yellow)
