@@ -96,6 +96,7 @@
             :defines company-box-icons-all-the-icons
             :hook (company-mode . company-box-mode)
             :init (setq company-box-enable-icon t
+			company-box-doc-enable nil
                         company-box-backends-colors nil
                         company-box-doc-delay 0.1)
             :config
