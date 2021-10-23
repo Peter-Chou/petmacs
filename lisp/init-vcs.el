@@ -271,10 +271,8 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
       (advice-add #'transient--show :after #'my-transient-posframe--prettify-frame))))
 
 ;; Git related modes
-(use-package gitattributes-mode)
-(use-package gitignore-mode)
-(use-package gitconfig-mode)
-(use-package git-commit)
+(use-package git-modes)
+;; (use-package git-commit)
 
 (provide 'init-vcs)
 
