@@ -11,13 +11,16 @@
 (use-package projectile
   :diminish
   :bind (:map projectile-mode-map
-              ("s-t" . projectile-find-file) ; `cmd-t' or `super-t'
-              ("C-c p" . projectile-command-map))
+         ("s-t" . projectile-find-file) ; `cmd-t' or `super-t'
+         ("C-c p" . projectile-command-map))
   :hook (after-init . projectile-mode)
   :init
   (setq projectile-mode-line-prefix ""
 	projectile-sort-order 'recentf
-	projectile-use-git-grep t)
+	projectile-use-git-grep t
+	projectile-enable-caching t
+	projectile-indexing-method 'native
+	)
   :config
   ;; (projectile-update-mode-line)         ; Update mode-line at the first time
 
