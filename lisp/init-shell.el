@@ -116,26 +116,26 @@
 
     (with-no-warnings
       (when (childframe-workable-p)
-        (defvar vterm-posframe--frame nil)
+	(defvar vterm-posframe--frame nil)
 
-        (defun vterm-posframe-hidehandler (_)
+	(defun vterm-posframe-hidehandler (_)
           "Hidehandler used by `vterm-posframe-toggle'."
           (not (eq (selected-frame) posframe--frame)))
 
-        (defun vterm-posframe-toggle ()
+	(defun vterm-posframe-toggle ()
           "Toggle `vterm' child frame."
           (interactive)
           (let ((buffer (vterm--internal #'ignore 100)))
             (if (and vterm-posframe--frame
                      (frame-live-p vterm-posframe--frame)
                      (frame-visible-p vterm-posframe--frame))
-                (progn
+		(progn
                   (posframe-hide buffer)
                   ;; Focus the parent frame
                   (select-frame-set-input-focus (frame-parent vterm-posframe--frame)))
               (let ((width  (max 80 (/ (frame-width) 2)))
                     (height (/ (frame-height) 2)))
-                (setq vterm-posframe--frame
+		(setq vterm-posframe--frame
                       (posframe-show
                        buffer
                        :poshandler #'posframe-poshandler-frame-center
@@ -151,16 +151,63 @@
                        :background-color (face-background 'tooltip nil t)
                        :override-parameters '((cursor-type . t))
                        :accept-focus t))
-                ;; Blink cursor
-                (with-current-buffer buffer
+		;; Blink cursor
+		(with-current-buffer buffer
                   (save-excursion
                     (vterm-clear t))
                   (setq-local cursor-type 'box))
-                ;; Focus the child frame
-                (select-frame-set-input-focus vterm-posframe--frame)))))
-        (bind-key "C-`" #'vterm-posframe-toggle)))
+		;; Focus the child frame
+		(select-frame-set-input-focus vterm-posframe--frame)))))
+	(bind-key "C-`" #'vterm-posframe-toggle)))
     :config
+    (defun vterm-evil-insert ()
+      (interactive)
+      (vterm-goto-char (point))
+      (call-interactively #'evil-insert))
+
+    (defun vterm-evil-append ()
+      (interactive)
+      (vterm-goto-char (1+ (point)))
+      (call-interactively #'evil-append))
+
+    (defun vterm-evil-delete ()
+      "Provide similar behavior as `evil-delete'."
+      (interactive)
+      (let ((inhibit-read-only t)
+            )
+	(cl-letf (((symbol-function #'delete-region) #'vterm-delete-region))
+	  (call-interactively 'evil-delete))))
+
+    (defun vterm-evil-change ()
+      "Provide similar behavior as `evil-change'."
+      (interactive)
+      (let ((inhibit-read-only t))
+	(cl-letf (((symbol-function #'delete-region) #'vterm-delete-region))
+	  (call-interactively 'evil-change))))
+
     (evil-define-key 'insert vterm-mode-map (kbd "C-r")      #'vterm--self-insert)
+    (evil-define-key 'visual vterm-mode-map "d" 'vterm-send-M-w)
+
+    (defun my-vterm-hook()
+      (evil-local-mode 1)
+      (evil-define-key 'normal 'local "a" 'vterm-evil-append)
+      (evil-define-key 'normal 'local "d" 'vterm-evil-delete)
+      (evil-define-key 'normal 'local "i" 'vterm-evil-insert)
+      (evil-define-key 'normal 'local "c" 'vterm-evil-change))
+    (add-hook 'vterm-mode-hook 'my-vterm-hook)
+
+
+    (evil-define-key 'normal vterm-mode-map "h" 'vterm-send-left)
+    (evil-define-key 'normal vterm-mode-map "l" 'vterm-send-right)
+    (evil-define-key 'normal vterm-mode-map "b" 'vterm-send-M-b)
+    (evil-define-key 'normal vterm-mode-map "e" 'vterm-send-M-f)
+    (evil-define-key 'normal vterm-mode-map "db" 'vterm-send-C-w)
+    (evil-define-key 'normal vterm-mode-map "de" 'vterm-send-M-d)
+    (evil-define-key 'normal vterm-mode-map "p" 'vterm-yank)
+    (evil-define-key 'normal vterm-mode-map "P" '(lambda ()
+						   (interactive)
+						   (vterm-send-C-b)
+						   (vterm-yank)))
     ))
 
 ;; Shell Pop
