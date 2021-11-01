@@ -230,6 +230,14 @@ of the buffer text to be displayed in the popup"
 ;;   :init (setq hungry-delete-except-modes
 ;;               '(help-mode minibuffer-mode minibuffer-inactive-mode calc-mode)))
 
+
+(use-package toggle-one-window
+  :quelpa
+  (toggle-one-window :fetcher github
+  		     :repo "manateelazycat/toggle-one-window"
+  		     :files ("*.el"))
+  :commands (toggle-one-window))
+
 (use-package centered-cursor-mode)
 
 (use-package general)

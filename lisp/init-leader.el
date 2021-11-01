@@ -274,6 +274,7 @@
     "r"  #'winner-undo
     "d"  #'delete-window
     "D"  #'ace-delete-window
+    "f"  #'toggle-one-window
 
     ;; "wp" prefix
     "pm" #'petmacs/shackle-popup-message-buffer
