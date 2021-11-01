@@ -83,23 +83,6 @@
 
 ;; Better term
 ;; @see https://github.com/akermu/emacs-libvterm#installation
-;; (when (and module-file-suffix           ; dynamic module
-;;            (executable-find "cmake")
-;;            (executable-find "libtool")
-;;            (executable-find "make"))
-;;   (use-package vterm
-;;     :bind (:map vterm-mode-map
-;;            ([f9] . shell-pop))
-;;     :init (setq vterm-kill-buffer-on-exit t
-;; 		vterm-always-compile-module t)
-;;     :hook (vterm-mode . (lambda ()
-;; 			  ;; (setq-local evil-insert-state-cursor 'box)
-;; 			  (evil-insert-state)))
-;;     :config
-;;     (evil-define-key 'insert vterm-mode-map (kbd "C-r")      #'vterm--self-insert)))
-
-;; Better term
-;; @see https://github.com/akermu/emacs-libvterm#installation
 (when (and module-file-suffix           ; dynamic module
            (executable-find "cmake")
            (executable-find "libtool")
@@ -210,7 +193,6 @@
 						   (vterm-yank)))
     ))
 
-;; Shell Pop
 ;; Shell Pop
 (use-package shell-pop
   :bind (("C-`" . (lambda ()
