@@ -267,7 +267,7 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
             (goto-char (point-max))
             (delete-char -3)          ; delete separate
             (insert (propertize "\n" 'face '(:height 0.5)))
-            (posframe--set-frame-size posframe--frame nil nil nil nil))))
+	    (posframe--set-frame-size posframe--frame nil nil nil nil nil nil))))
       (advice-add #'transient--show :after #'my-transient-posframe--prettify-frame))))
 
 ;; Git related modes
