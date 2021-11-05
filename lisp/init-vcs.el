@@ -125,6 +125,8 @@
                                                 (propertize "\n" 'face '(:height 0.3)))
                                 :left-fringe 8
                                 :right-fringe 8
+                                :max-width (round (* (frame-width) 0.62))
+                                :max-height (round (* (frame-height) 0.62))
                                 :internal-border-width 1
                                 :internal-border-color (face-foreground 'font-lock-comment-face nil t)
                                 :background-color (face-background 'tooltip nil t))
@@ -259,16 +261,10 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
         `(transient-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face nil t))))))))
 
     (with-no-warnings
-      (defun my-transient-posframe--prettify-frame ()
-        (with-current-buffer (get-buffer-create transient--buffer-name)
-          (when posframe--frame
-            (goto-char (point-min))
-            (insert (propertize "\n" 'face '(:height 0.3)))
-            (goto-char (point-max))
-            (delete-char -3)          ; delete separate
-            (insert (propertize "\n" 'face '(:height 0.5)))
-	    (posframe--set-frame-size '(posframe--frame nil nil nil nil nil nil)))))
-      (advice-add #'transient--show :after #'my-transient-posframe--prettify-frame))))
+      (defun my-transient-posframe--hide ()
+        "Hide transient posframe."
+        (posframe-hide transient--buffer-name))
+      (advice-add #'transient-posframe--delete :override #'my-transient-posframe--hide))))
 
 ;; Git related modes
 (use-package git-modes)
