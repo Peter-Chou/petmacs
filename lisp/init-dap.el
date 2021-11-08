@@ -6,8 +6,7 @@
 
 ;; Debug
 ;; python: pip install "debugpy"
-;; C++: apt-get install lldb nodejs npm
-;; C++: follow instruction from https://github.com/llvm-mirror/lldb/tree/master/tools/lldb-vscode
+;; install built llvm project to /opt/llvm
 ;; `lsp-mode' and `treemacs' integration
 (use-package dap-mode
   :diminish
@@ -29,6 +28,7 @@
   (require 'cl-lib)
   (setq dap-enable-mouse-support t
 	dap-auto-configure-features '(sessions locals controls tooltip repl)
+	dap-lldb-debug-program '("/opt/llvm/bin/lldb-vscode")
 	)
   :config
   (with-eval-after-load 'dap-ui
