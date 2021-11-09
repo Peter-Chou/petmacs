@@ -382,11 +382,11 @@ Also, delete any process that is exited or signaled."
   :ensure nil
   :init (require 'frame-cmds))
 
-(when emacs/>=27p
-  (use-package so-long
-    :ensure nil
-    :hook (after-init . global-so-long-mode)
-    :config (setq so-long-threshold 400)))
+;; (when emacs/>=27p
+;;   (use-package so-long
+;;     :ensure nil
+;;     :hook (after-init . global-so-long-mode)
+;;     :config (setq so-long-threshold 400)))
 
 ;; Process
 (use-package proced
