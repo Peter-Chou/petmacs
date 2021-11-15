@@ -16,6 +16,7 @@
   (global-set-key (kbd "C-x O") 'other-frame))
 
 (use-package winum
+  :after lsp-treemacs
   :init
   (winum-mode)
   :config
@@ -26,7 +27,9 @@
   (define-key winum-keymap (kbd "M-5") 'winum-select-window-5)
   (define-key winum-keymap (kbd "M-6") 'winum-select-window-6)
   (define-key winum-keymap (kbd "M-7") 'winum-select-window-7)
-  (define-key winum-keymap (kbd "M-8") 'winum-select-window-8))
+  (define-key winum-keymap (kbd "M-8") 'winum-select-window-8)
+  (define-key winum-keymap (kbd "M-9") 'lsp-treemacs-symbols)
+  )
 
 ;; Enforce rules for popups
 (defvar shackle--popup-window-list nil) ; all popup windows
