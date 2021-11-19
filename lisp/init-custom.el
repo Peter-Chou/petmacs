@@ -14,8 +14,8 @@
 (defvar petmacs-completion-style 'minibuffer
   "Completion display style.  choice: minibuffer / childframe.")
 
-(defvar petmacs-auto-themes '(("7:00"  . srcery)
-			      ("19:00" . doom-gruvbox-light)))
+(defvar petmacs-auto-themes '(("6:30"  . doom-solarized-light)
+			      ("18:30" . srcery)))
 
 (defvar petmacs-themes-list '(
 			      doom-gruvbox-light
