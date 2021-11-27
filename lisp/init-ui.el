@@ -278,6 +278,7 @@
       :ensure nil
       ;; :hook ((prog-mode yaml-mode) . display-line-numbers-mode)
       :init
+      (setq display-line-numbers-width-start t)
       (setq-default display-line-numbers-type 'relative)
       )
 
