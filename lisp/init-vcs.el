@@ -266,15 +266,6 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
         (posframe-hide transient--buffer-name))
       (advice-add #'transient-posframe--delete :override #'my-transient-posframe--hide))))
 
-;; Show git blame info
-(use-package blamer
-  :custom-face (blamer-face ((t (:inherit completions-annotations :height 0.85))))
-  :hook (after-init . global-blamer-mode)
-  :init (setq blamer-idle-time 0.5
-              blamer-min-offset 40
-              blamer-author-formatter " ✏ %s "
-              blamer-datetime-formatter "[%s]"))
-
 ;; Git related modes
 (use-package git-modes)
 ;; (use-package git-commit)
