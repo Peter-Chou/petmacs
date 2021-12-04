@@ -8,8 +8,12 @@
   (require 'init-const)
   (require 'init-custom))
 
-(add-to-list 'default-frame-alist '(height . 55))
-(add-to-list 'default-frame-alist '(width . 100))
+(setq default-frame-alist
+      '(
+	(height . 55)
+	(width . 100)
+        (left . 10)
+        (top . 50)))
 
 ;; maximize emacs after initialization
 ;; (toggle-frame-maximized)

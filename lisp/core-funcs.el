@@ -29,6 +29,14 @@
   (which-key-add-key-based-replacements (format "%s m%s" petmacs-evil-major-leader-insert-default-key key) name)
   (which-key-add-key-based-replacements (format ", %s" key) name))
 
+(defun petmacs//vterm-other-window ()
+  "Open a `shell' in a new window."
+  (interactive)
+  (select-frame (make-frame))
+  (toggle-frame-maximized)
+  (vterm)
+  (evil-insert-state))
+
 (defun petmacs/cycle-theme ()
   "Cycle through a list of themes, petmacs-themes-list."
   (interactive)

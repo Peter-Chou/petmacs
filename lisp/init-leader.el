@@ -227,6 +227,7 @@
     "o" #'other-frame
     "O" #'dired-other-frame
     "n" #'make-frame
+    "'" #'petmacs//vterm-other-window
     ))
 
 
