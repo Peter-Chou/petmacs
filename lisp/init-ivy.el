@@ -30,7 +30,7 @@
          ([remap org-capture] . counsel-org-capture)
 
          ("C-x j"   . counsel-mark-ring)
-         ("C-h F"   . counsel-faces)
+         ;; ("C-h F"   . counsel-faces)
 
          ("C-c B" . counsel-bookmarked-directory)
          ("C-c L" . counsel-load-library)

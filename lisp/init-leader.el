@@ -10,6 +10,15 @@
 
 (define-key global-map (kbd "C-.") 'company-files)
 
+(define-key global-map (kbd "C-l") 'evil-window-right)
+(define-key global-map (kbd "C-h") 'evil-window-left)
+(define-key global-map (kbd "C-k") 'evil-window-up)
+(define-key global-map (kbd "C-j") 'evil-window-down)
+;; (define-key global-map (kbd "C-S-l") 'evil-window-move-far-right)
+;; (define-key global-map (kbd "C-S-h") 'evil-window-move-far-left)
+;; (define-key global-map (kbd "C-S-k") 'evil-window-move-very-top)
+;; (define-key global-map (kbd "C-S-j") 'evil-window-move-very-bottom)
+
 ;; install fcitx fcitx-googlepinyin
 ;; create ~/.xprofile which has:
 ;; ```sh
