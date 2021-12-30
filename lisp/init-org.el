@@ -165,33 +165,33 @@ Will work on both org-mode and any mode that accepts plain html."
   :init
   (setq toc-org-max-depth 10))
 
-(use-package org-projectile
-  :defer nil
-  :commands (org-projectile-location-for-project)
-  :preface
-  (defun org-projectile/capture (&optional arg)
-    (interactive "P")
-    (if arg
-	(org-projectile-project-todo-completing-read :empty-lines 1)
-      (org-projectile-capture-for-current-project :empty-lines 1)))
-
-  (defun org-projectile/goto-todos ()
-    (interactive)
-    (org-projectile-goto-location-for-project (projectile-project-name))
-    (revert-buffer))
-
-  :init
-  (with-eval-after-load 'org-capture
-    (require 'org-projectile))
-
-  :config
-  (if (file-name-absolute-p org-projectile-file)
-      (progn
-        (setq org-projectile-projects-file org-projectile-file)
-        (push (org-projectile-project-todo-entry :empty-lines 1)
-              org-capture-templates))
-    (org-projectile-per-project)
-    (setq org-projectile-per-project-filepath org-projectile-file)))
+;; (use-package org-projectile
+;;   :defer nil
+;;   :commands (org-projectile-location-for-project)
+;;   :preface
+;;   (defun org-projectile/capture (&optional arg)
+;;     (interactive "P")
+;;     (if arg
+;; 	(org-projectile-project-todo-completing-read :empty-lines 1)
+;;       (org-projectile-capture-for-current-project :empty-lines 1)))
+;;
+;;   (defun org-projectile/goto-todos ()
+;;     (interactive)
+;;     (org-projectile-goto-location-for-project (projectile-project-name))
+;;     (revert-buffer))
+;;
+;;   :init
+;;   (with-eval-after-load 'org-capture
+;;     (require 'org-projectile))
+;;
+;;   :config
+;;   (if (file-name-absolute-p org-projectile-file)
+;;       (progn
+;;         (setq org-projectile-projects-file org-projectile-file)
+;;         (push (org-projectile-project-todo-entry :empty-lines 1)
+;;               org-capture-templates))
+;;     (org-projectile-per-project)
+;;     (setq org-projectile-per-project-filepath org-projectile-file)))
 
 (use-package evil-org
   :preface
