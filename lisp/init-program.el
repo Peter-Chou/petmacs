@@ -91,6 +91,13 @@
 			   (setq imenu-generic-expression
 				 '((nil "^[[:space:]]*\\(message\\|service\\|enum\\)[[:space:]]+\\([[:alnum:]]+\\)" 2))))))
 
+;; Tree-sitter
+(use-package tree-sitter
+  :ensure tree-sitter-langs
+  :diminish
+  :hook ((after-init . global-tree-sitter-mode)
+         (tree-sitter-after-on . tree-sitter-hl-mode)))
+
 ;; Docker
 (use-package docker
   :bind ("C-c d" . docker)
