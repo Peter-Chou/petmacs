@@ -212,9 +212,6 @@
               (and (not (equal after ?\n)) (propertize " \n" 'face '(:height 0.5)))))))))
     (advice-add #'lsp-ui-doc--handle-hr-lines :override #'my-lsp-ui-doc--handle-hr-lines))
 
-  ;; `C-g'to close doc
-  (advice-add #'keyboard-quit :before #'lsp-ui-doc-hide)
-
   ;; Reset `lsp-ui-doc-background' after loading theme
   (add-hook 'after-load-theme-hook
             (lambda ()
