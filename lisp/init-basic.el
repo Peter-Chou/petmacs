@@ -20,12 +20,7 @@
 ;; use exec-path-from-shell in linux / mac
 (when (or (eq system-type 'gnu/linux) (eq system-type 'darwin) (daemonp))
   (use-package exec-path-from-shell
-    :init
-    (setq exec-path-from-shell-variables '("PATH" "MANPATH" "PYTHONPATH" "GOPATH"
-					   "WORKON_HOME" "JAVA_HOME"
-					   "LLVM_HOME" "LD_LIBRARY_PATH")
-	  exec-path-from-shell-arguments '("-l"))
-    (exec-path-from-shell-initialize)))
+    :init (exec-path-from-shell-initialize)))
 
 (provide 'init-basic)
 
