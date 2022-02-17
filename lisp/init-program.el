@@ -92,11 +92,13 @@
 				 '((nil "^[[:space:]]*\\(message\\|service\\|enum\\)[[:space:]]+\\([[:alnum:]]+\\)" 2))))))
 
 ;; Tree-sitter
-(use-package tree-sitter
-  :ensure tree-sitter-langs
-  :diminish
-  :hook ((after-init . global-tree-sitter-mode)
-         (tree-sitter-after-on . tree-sitter-hl-mode)))
+;; Only support with dynamic module
+(when (functionp 'module-load)
+  (use-package tree-sitter
+    :ensure tree-sitter-langs
+    :diminish
+    :hook ((after-init . global-tree-sitter-mode)
+           (tree-sitter-after-on . tree-sitter-hl-mode))))
 
 ;; Docker
 (use-package docker
