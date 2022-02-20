@@ -227,15 +227,16 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 ;; Show TODOs in magit
 (when emacs/>=25.2p
   (use-package magit-todos
+    :bind ("C-c C-t" . ivy-magit-todos)
     :init
     (setq magit-todos-nice (if (executable-find "nice") t nil))
     (setq magit-todos-exclude-globs '("third_party"))
-    (setq magit-todos-section-map
-	  (let ((map (make-sparse-keymap)))
-	    (define-key map "j" #'evil-next-visual-line)
-	    (define-key map "k" #'evil-previous-visual-line)
-	    map))
-    (magit-todos-mode 1)))
+    (let ((inhibit-message t))
+      (magit-todos-mode 1))
+    :config
+    (with-eval-after-load 'magit-status
+      (transient-append-suffix 'magit-status-jump '(0 0 -1)
+        '("t " "Todos" magit-todos-jump-to-todos)))))
 
 ;; Display transient in child frame
 (when (childframe-workable-p)
