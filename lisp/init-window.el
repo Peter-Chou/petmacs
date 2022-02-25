@@ -169,7 +169,7 @@
 (use-package olivetti
   :diminish
   :bind ("<f7>" . olivetti-mode)
-  :init (setq olivetti-body-width 0.56))
+  :init (setq olivetti-body-width 0.62))
 
 ;; (use-package writeroom-mode
 ;;   :init

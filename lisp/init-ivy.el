@@ -249,24 +249,6 @@
     (bind-key "<C-return>" #'my-swiper-toggle-counsel-rg swiper-map)
     (bind-key "<C-return>" #'my-swiper-toggle-counsel-rg counsel-ag-map)
 
-    (with-eval-after-load 'rg
-      (defun my-swiper-toggle-rg-dwim ()
-        "Toggle `rg-dwim' with the current input."
-        (interactive)
-        (ivy-quit-and-run
-          (rg-dwim default-directory)))
-      (bind-key "<M-return>" #'my-swiper-toggle-rg-dwim swiper-map)
-      (bind-key "<M-return>" #'my-swiper-toggle-rg-dwim counsel-ag-map))
-
-    (defun my-swiper-toggle-swiper-isearch ()
-      "Toggle `swiper' and `swiper-isearch' with the current input."
-      (interactive)
-      (ivy-quit-and-run
-        (if (eq (ivy-state-caller ivy-last) 'swiper-isearch)
-            (swiper ivy-text)
-          (swiper-isearch ivy-text))))
-    (bind-key "<s-return>" #'my-swiper-toggle-swiper-isearch swiper-map)
-
     (defun my-counsel-find-file-toggle-fzf ()
       "Toggle `counsel-fzf' with the current `counsel-find-file' input."
       (interactive)
