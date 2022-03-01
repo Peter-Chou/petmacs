@@ -23,6 +23,13 @@
 			      )
   "List of themes for cycling.")
 
+(defvar petmacs-evil-collection-active-list '(
+					      dired
+					      magit
+					      vterm
+					      )
+  "List of active evil collection modes.")
+
 (defvar petmacs-icon (or (display-graphic-p) (daemonp))
   "display icon if possible")
 
