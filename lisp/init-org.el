@@ -148,7 +148,14 @@ Will work on both org-mode and any mode that accepts plain html."
 ;; Prettify UI
 (if emacs/>=27p
     (use-package org-modern
-      :hook (org-mode . org-modern-mode))
+      :hook ((org-mode . org-modern-mode)
+             (org-modern-mode . (lambda ()
+                                  "Adapt `org-modern-mode'."
+                                  ;; Looks better for tags
+                                  (setq line-spacing 0.1)
+                                  ;; Disable Prettify Symbols mode
+                                  (setq prettify-symbols-alist nil)
+                                  (prettify-symbols-mode -1)))))
   (progn
     (when emacs/>=26p
       (use-package org-superstar
@@ -160,7 +167,7 @@ Will work on both org-mode and any mode that accepts plain html."
       :hook (org-mode . org-fancy-priorities-mode)
       :init (setq org-fancy-priorities-list
                   (if (and (display-graphic-p) (char-displayable-p ?🅐))
-                      '("🅐" "🅑" "🅒" "🅓")
+		      '("🅐" "🅑" "🅒" "🅓")
                     '("HIGH" "MEDIUM" "LOW" "OPTIONAL"))))))
 
 (use-package toc-org
