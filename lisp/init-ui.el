@@ -184,46 +184,58 @@
 (use-package all-the-icons-ivy
   :hook (after-init . all-the-icons-ivy-setup))
 
-(use-package doom-modeline
-  :hook (after-init . doom-modeline-mode)
-  :init
-  ;; prevent flash of unstyled modeline at startup
-  (unless after-init-time
-    (setq-default mode-line-format nil))
-  (setq
-   find-file-visit-truename t  ; display the real names for symlink files
-   ;; doom-modeline-height 21
-   doom-modeline-lsp t
-   doom-modeline-persp-name nil
-   doom-modeline-minor-modes t
-   doom-modeline-buffer-file-name-style 'relative-to-project
-   ;; doom-modeline-buffer-file-name-style 'file-name
-   doom-modeline-icon (display-graphic-p)
-   doom-modeline-major-mode-icon t
-   doom-modeline-major-mode-color-icon t
-   doom-modeline-buffer-state-icon t
-   doom-modeline-buffer-modification-icon t
-   doom-modeline-indent-info nil)
-  :config
-  (doom-modeline-def-segment petmacs||python-venv
-    "The current python virtual environment state."
-    (when (eq major-mode 'python-mode)
-      (if (eq python-shell-virtualenv-root nil)
-	  ""
-	(propertize
-	 (let ((base-dir-name (file-name-nondirectory (substring python-shell-virtualenv-root 0 -1))))
-	   (if (< 10 (length base-dir-name))
-	       (format " (%s..)" (substring base-dir-name 0 15))
-	     (format " (%s)" base-dir-name)))
-	 'face (if (doom-modeline--active) 'doom-modeline-buffer-major-mode)))))
+;; (use-package doom-modeline
+;;   :hook (after-init . doom-modeline-mode)
+;;   :init
+;;   ;; prevent flash of unstyled modeline at startup
+;;   (unless after-init-time
+;;     (setq-default mode-line-format nil))
+;;   (setq
+;;    find-file-visit-truename t  ; display the real names for symlink files
+;;    ;; doom-modeline-height 21
+;;    doom-modeline-lsp t
+;;    doom-modeline-persp-name nil
+;;    doom-modeline-minor-modes t
+;;    doom-modeline-buffer-file-name-style 'relative-to-project
+;;    ;; doom-modeline-buffer-file-name-style 'file-name
+;;    doom-modeline-icon (display-graphic-p)
+;;    doom-modeline-major-mode-icon t
+;;    doom-modeline-major-mode-color-icon t
+;;    doom-modeline-buffer-state-icon t
+;;    doom-modeline-buffer-modification-icon t
+;;    doom-modeline-indent-info nil)
+;;   :config
+;;   (doom-modeline-def-segment petmacs||python-venv
+;;     "The current python virtual environment state."
+;;     (when (eq major-mode 'python-mode)
+;;       (if (eq python-shell-virtualenv-root nil)
+;; 	  ""
+;; 	(propertize
+;; 	 (let ((base-dir-name (file-name-nondirectory (substring python-shell-virtualenv-root 0 -1))))
+;; 	   (if (< 10 (length base-dir-name))
+;; 	       (format " (%s..)" (substring base-dir-name 0 15))
+;; 	     (format " (%s)" base-dir-name)))
+;; 	 'face (if (doom-modeline--active) 'doom-modeline-buffer-major-mode)))))
 
-  ;; (doom-modeline-def-modeline 'my-modeline-layout
-  ;;   '(bar workspace-name window-number modals matches buffer-info remote-host buffer-position word-count parrot selection-info)
-  ;;   ;; '(objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl input-method indent-info buffer-encoding petmacs||python-venv process vcs checker))
-  ;;   '(objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl input-method indent-info buffer-encoding process vcs checker))
+;;   ;; (doom-modeline-def-modeline 'my-modeline-layout
+;;   ;;   '(bar workspace-name window-number modals matches buffer-info remote-host buffer-position word-count parrot selection-info)
+;;   ;;   ;; '(objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl input-method indent-info buffer-encoding petmacs||python-venv process vcs checker))
+;;   ;;   '(objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl input-method indent-info buffer-encoding process vcs checker))
 
-  ;; (defun setup-custom-doom-modeline ()
-  ;;   (doom-modeline-set-modeline 'my-modeline-layout 'default))
+;;   ;; (defun setup-custom-doom-modeline ()
+;;   ;;   (doom-modeline-set-modeline 'my-modeline-layout 'default))
+;;   )
+
+
+(use-package awesome-tray
+  :quelpa
+  (awesome-tray :fetcher github
+  		:repo "manateelazycat/awesome-tray"
+  		:files ("*.el"))
+
+  :hook (after-init . awesome-tray-mode)
+  ;; :config
+  ;; (awesome-tray-mode 1)
   )
 
 ;; A minor-mode menu for mode-line
