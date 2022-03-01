@@ -146,19 +146,22 @@ Will work on both org-mode and any mode that accepts plain html."
          ("P" . org-pomodoro)))
 
 ;; Prettify UI
-(when emacs/>=26p
-  (use-package org-superstar
-    :if (char-displayable-p ?⚫)
-    :hook (org-mode . org-superstar-mode)
-    :init (setq org-superstar-headline-bullets-list '("⚫" "⚫" "⚫" "⚫"))))
-
-(use-package org-fancy-priorities
-  :diminish
-  :hook (org-mode . org-fancy-priorities-mode)
-  :init (setq org-fancy-priorities-list
-	      (if (char-displayable-p ?■)
-		  '("■" "■" "■" "■")
-		'("HIGH" "MEDIUM" "LOW" "OPTIONAL"))))
+(if emacs/>=27p
+    (use-package org-modern
+      :hook (org-mode . org-modern-mode))
+  (progn
+    (when emacs/>=26p
+      (use-package org-superstar
+        :if (and (display-graphic-p) (char-displayable-p ?◉))
+        :hook (org-mode . org-superstar-mode)
+        :init (setq org-superstar-headline-bullets-list '("◉""○""◈""◇""⁕"))))
+    (use-package org-fancy-priorities
+      :diminish
+      :hook (org-mode . org-fancy-priorities-mode)
+      :init (setq org-fancy-priorities-list
+                  (if (and (display-graphic-p) (char-displayable-p ?🅐))
+                      '("🅐" "🅑" "🅒" "🅓")
+                    '("HIGH" "MEDIUM" "LOW" "OPTIONAL"))))))
 
 (use-package toc-org
   :hook (org-mode . toc-org-enable)
