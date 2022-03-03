@@ -14,6 +14,9 @@
 (defvar petmacs-completion-style 'minibuffer
   "Completion display style.  choice: minibuffer / childframe.")
 
+(defvar petmacs-modeline-style 'doom-modeline
+  "modeline display style.  choice: doom-modeline / tray")
+
 (defvar petmacs-auto-themes '(("6:30"  . doom-solarized-light)
 			      ("18:30" . doom-gruvbox)))
 
