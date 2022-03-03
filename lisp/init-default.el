@@ -391,6 +391,8 @@ Also, delete any process that is exited or signaled."
 ;;     :ensure nil
 ;;     :hook (after-init . global-so-long-mode)
 ;;     :config (setq so-long-threshold 400)))
+(use-package so-long
+  :hook (after-init . global-so-long-mode))
 
 ;; Process
 (use-package proced
