@@ -237,6 +237,12 @@
     "O" #'dired-other-frame
     "n" #'make-frame
     "'" #'petmacs//vterm-other-window
+    "m" #'petmacs-frame-maximize
+    "r" #'petmacs-frame-restore
+    "H" #'petmacs-frame-left-half
+    "L" #'petmacs-frame-right-half
+    "K" #'petmacs-frame-top-half
+    "J" #'petmacs-frame-bottom-half
     ))
 
 
