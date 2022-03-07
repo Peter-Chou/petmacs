@@ -37,12 +37,12 @@
   ;;           (append '("compile_commands.json" ".ccls")
   ;;                   projectile-project-root-files-top-down-recurring))))
 
-  :hook ((c-mode c++-mode) . (lambda ()
-			       "Format and add/delete imports."
-			       (add-hook 'before-save-hook #'lsp-format-buffer t t)
-			       (add-hook 'before-save-hook #'lsp-organize-imports t t)
-			       ;; enable lsp
-			       (lsp-deferred)))
+  :hook ((c-mode c++-mode cuda-mode) . (lambda ()
+					 "Format and add/delete imports."
+					 (add-hook 'before-save-hook #'lsp-format-buffer t t)
+					 (add-hook 'before-save-hook #'lsp-organize-imports t t)
+					 ;; enable lsp
+					 (lsp-deferred)))
   :config
   (require 'compile))
 
@@ -72,10 +72,18 @@
   (add-hook 'cmake-mode-hook (lambda()
                                (add-to-list (make-local-variable 'company-backends)
                                             'company-cmake))))
-(use-package google-c-style
-  :init
-  (add-hook 'c-mode-common-hook 'google-set-c-style)
-  (add-hook 'c-mode-common-hook 'google-make-newline-indent))
+;; (use-package google-c-style
+;;   :init
+;;   (add-hook 'c-mode-common-hook 'google-set-c-style)
+;;   (add-hook 'c-mode-common-hook 'google-make-newline-indent))
+
+;; (use-package cuda-mode
+;;   :config
+;;   (setq auto-mode-alist
+;; 	(cons (cons "\\.cu$" 'c++-mode) auto-mode-alist))
+;; )
+(add-to-list 'auto-mode-alist '("\.cu$" . c++-mode))
+
 
 (provide 'init-c-c++)
 

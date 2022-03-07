@@ -27,7 +27,7 @@
   "List of themes for cycling.")
 
 (defvar petmacs-evil-collection-active-list '(
-					      dired
+					      ;; dired
 					      magit
 					      vterm
 					      )
