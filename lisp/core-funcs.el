@@ -371,12 +371,12 @@ current window."
 (defvar petmacs-frame--geometry nil)
 (defun petmacs-frame--save-geometry ()
   "Save current frame's geometry."
-  (setq-local petmacs-frame--geometry
+  (setq-local centaur-frame--geometry
               `((left . ,(frame-parameter nil 'left))
                 (top . ,(frame-parameter nil 'top))
                 (width . ,(frame-parameter nil 'width))
                 (height . ,(frame-parameter nil 'height))
-                (fullscreen . ,(frame-parameter nil 'fullscreen)))))
+                (fullscreen))))
 
 (defun petmacs-frame--fullscreen-p ()
   "Returns Non-nil if the frame is fullscreen."
