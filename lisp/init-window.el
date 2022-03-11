@@ -185,6 +185,7 @@
           "\\*Apropos\\*"
           "\\*Backtrace\\*"
           "\\*Calendar\\*"
+          "\\*Finder\\*"
 
           bookmark-bmenu-mode
           comint-mode
@@ -236,7 +237,16 @@
   (setq popper-echo-dispatch-actions t)
   :config
   (popper-echo-mode 1)
+
   (with-no-warnings
+    (defun my-popper-fit-window-height (win)
+      "Determine the height of popup window WIN by fitting it to the buffer's content."
+      (fit-window-to-buffer
+       win
+       (floor (frame-height) 3)
+       (floor (frame-height) 3)))
+    (setq popper-window-height #'my-popper-fit-window-height)
+
     (defun popper-close-window-hack (&rest _)
       "Close popper window via `C-g'."
       ;; `C-g' can deactivate region
