@@ -209,6 +209,7 @@
 (leader-with-prefix "t"
   (leader-set-keys
     "-" #'centered-cursor-mode
+    "'" #'petmacs/open-gnome-terminal
     "m" #'evil-visual-mark-mode
     "s" #'flycheck-mode
     "t" #'transwin-toggle-transparent-frame

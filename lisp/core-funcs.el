@@ -11,6 +11,10 @@
 (defvar socks-noproxy)
 (defvar socks-server)
 
+(defun petmacs/open-gnome-terminal ()
+  (interactive)
+  (shell-command "gnome-terminal"))
+
 ;; Suppress warnings
 (declare-function async-inject-variables 'async)
 (declare-function chart-bar-quickie 'chart)
