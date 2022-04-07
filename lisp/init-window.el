@@ -186,6 +186,7 @@
           "\\*Backtrace\\*"
           "\\*Calendar\\*"
           "\\*Finder\\*"
+	  "\\*Embark Actions\\*"
 
           bookmark-bmenu-mode
           comint-mode

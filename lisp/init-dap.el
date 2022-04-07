@@ -17,6 +17,7 @@
          ("M-<f5>" . dap-hydra))
   :hook ((after-init . dap-auto-configure-mode)
          ;; (dap-stopped . (lambda (arg) (call-interactively #'dap-hydra)))
+	 ;;; dap-lldb needs lldb-vscode which is in LLVM prebuilt package
 	 ((c-mode c++-mode objc-mode swift-mode) . (lambda () (require 'dap-lldb)))
          (python-mode . (lambda () (require 'dap-python)))
 	 ;;;; go install github.com/go-delve/delve/cmd/dlv@latest

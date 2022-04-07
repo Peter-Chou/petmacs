@@ -327,7 +327,9 @@
       window-divider-default-right-width 1)
 (add-hook 'window-setup-hook #'window-divider-mode)
 
-(fset 'yes-or-no-p 'y-or-n-p)
+(if (boundp use-short-answers)
+    (setq use-short-answers t)
+  (fset 'yes-or-no-p 'y-or-n-p))
 (setq visible-bell t)
 (setq inhibit-compacting-font-caches t) ; Don’t compact font caches during GC.
 
