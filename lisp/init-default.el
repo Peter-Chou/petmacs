@@ -334,6 +334,9 @@ Also, delete any process that is exited or signaled."
   :hook (after-init . electric-pair-mode)
   :init (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit))
 
+(use-package hydra
+  :hook (emacs-lisp-mode . hydra-add-imenu))
+
 (use-package pretty-hydra
   :init
   (with-no-warnings
