@@ -17,8 +17,12 @@
 (defvar petmacs-modeline-style 'doom-modeline
   "modeline display style.  choice: doom-modeline / tray")
 
-(defvar petmacs-auto-themes '(("6:30"  . doom-solarized-light)
-			      ("18:30" . doom-gruvbox)))
+(defvar petmacs-auto-themes
+  '(("6:30"  . doom-dracula)
+    ("18:30" . doom-dracula))
+  ;; '(("6:30"  . doom-solarized-light)
+  ;;   ("18:30" . doom-gruvbox))
+  )
 
 (defvar petmacs-themes-list '(
 			      doom-gruvbox-light
