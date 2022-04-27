@@ -271,9 +271,9 @@
       (advice-add #'lsp-ivy--format-symbol-match :override #'my-lsp-ivy--format-symbol-match))))
 
 ;; Origami integration
-(use-package lsp-origami
-  :after lsp-mode
-  :hook (origami-mode . lsp-origami-mode))
+;; (use-package lsp-origami
+;;   :after lsp-mode
+;;   :hook (origami-mode . lsp-origami-mode))
 
 (when emacs/>=25.2p
   (use-package lsp-treemacs

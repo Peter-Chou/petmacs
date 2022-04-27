@@ -67,7 +67,7 @@ Will work on both org-mode and any mode that accepts plain html."
 	org-pretty-entities t
 	org-hide-emphasis-markers t
 	org-startup-folded 'content
-	org-ellipsis (if (and (display-graphic-p) (char-displayable-p ?⏷)) "\t⏷" nil)
+	org-ellipsis (if (char-displayable-p ?⏷) "\t⏷" nil)
 	org-log-done t
 	org-startup-with-inline-images t
 	org-image-actual-width nil
@@ -149,13 +149,13 @@ Will work on both org-mode and any mode that accepts plain html."
 (if emacs/>=27p
     (use-package org-modern
       :hook ((org-mode . org-modern-mode)
+             (org-agenda-finalize . org-modern-agenda)
              (org-modern-mode . (lambda ()
                                   "Adapt `org-modern-mode'."
-                                  ;; Looks better for tags
-                                  (setq line-spacing 0.1)
                                   ;; Disable Prettify Symbols mode
                                   (setq prettify-symbols-alist nil)
-                                  (prettify-symbols-mode -1)))))
+                                  (prettify-symbols-mode -1))))
+      :init (setq org-modern-label-border nil))
   (progn
     (when emacs/>=26p
       (use-package org-superstar

@@ -87,3 +87,4 @@ session*
 
 eln-cache/
 pyim/
+forge-database.sqlite

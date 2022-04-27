@@ -289,7 +289,7 @@
       )
 
   (use-package linum-off
-    :demand
+    :demand t
     :defines linum-format
     :hook (after-init . global-linum-mode)
     :init (setq linum-format "%4d ")

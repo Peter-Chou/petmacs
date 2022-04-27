@@ -96,7 +96,7 @@
         ivy-fixed-height-minibuffer t
         ivy-count-format "(%d/%d) "
         ivy-ignore-buffers '("\\` " "\\`\\*tramp/" "\\`\\*xref" "\\`\\*helpful "
-                             "\\`\\*.+-posframe-buffer\\*")
+                             "\\`\\*.+-posframe-buffer\\*" "\\` ?\\*company-.+\\*")
         ivy-on-del-error-function #'ignore
         ivy-initial-inputs-alist nil)
 
@@ -516,6 +516,14 @@ This is for use in `ivy-re-builders-alist'."
                 (ivy-rich-candidate))
                :delimiter "\t"))
   (all-the-icons-ivy-rich-reload))
+
+;; Ivy
+(use-package ivy-dired-history
+  :demand t
+  :after (savehist dired)
+  :bind (:map dired-mode-map
+         ("," . dired))
+  :init (add-to-list 'savehist-additional-variables 'ivy-dired-history-variable))
 
 ;; More friendly display transformer for Ivy
 (use-package ivy-rich
