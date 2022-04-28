@@ -74,31 +74,6 @@
 (use-package hideshow
   :ensure nil
   :diminish hs-minor-mode
-  :pretty-hydra
-  ((:title (pretty-hydra-title "HideShow" 'octicon "fold" :height 1.1 :v-adjust -0.05)
-    :color amaranth :quit-key "q")
-   ("Fold"
-    (("t" hs-toggle-all "toggle all")
-     ("a" hs-show-all "show all")
-     ("i" hs-hide-all "hide all")
-     ("g" hs-toggle-hiding "toggle hiding")
-     ("c" hs-cycle "cycle block")
-     ("s" hs-show-block "show block")
-     ("h" hs-hide-block "hide block")
-     ("l" hs-hide-level "hide level"))
-    "Move"
-    (("C-a" mwim-beginning-of-code-or-line "⭰")
-     ("C-e" mwim-end-of-code-or-line "⭲")
-     ("C-b" backward-char "←")
-     ("C-n" next-line "↓")
-     ("C-p" previous-line "↑")
-     ("C-f" forward-char "→")
-     ("C-v" pager-page-down "↘")
-     ("M-v" pager-page-up "↖")
-     ("M-<" beginning-of-buffer "⭶")
-     ("M->" end-of-buffer "⭸"))))
-  :bind (:map hs-minor-mode-map
-         ("C-~" . hideshow-hydra/body))
   :hook (prog-mode . hs-minor-mode)
   :config
   ;; More functions
