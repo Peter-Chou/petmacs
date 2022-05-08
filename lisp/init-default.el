@@ -119,99 +119,37 @@
 
   ;; Prettify the process list
   (with-no-warnings
-    (define-derived-mode process-menu-mode tabulated-list-mode "Process Menu"
-      "Major mode for listing the processes called by Emacs."
-      (setq tabulated-list-format `[("" ,(if (icons-displayable-p) 2 0))
-                                    ("Process" 25 t)
-			            ("PID"      7 t)
-			            ("Status"   7 t)
-                                    ;; 25 is the length of the long standard buffer
-                                    ;; name "*Async Shell Command*<10>" (bug#30016)
-			            ("Buffer"  25 t)
-			            ("TTY"     12 t)
-			            ("Thread"  12 t)
-			            ("Command"  0 t)])
-      (make-local-variable 'process-menu-query-only)
-      (setq tabulated-list-sort-key (cons "Process" nil))
-      (add-hook 'tabulated-list-revert-hook 'list-processes--refresh nil t))
+    (add-hook 'process-menu-mode-hook
+              (lambda ()
+                (setq tabulated-list-format
+                      (vconcat `(("" ,(if (icons-displayable-p) 2 0))) tabulated-list-format))))
 
-    (defun list-processes--refresh ()
-      "Recompute the list of processes for the Process List buffer.
-Also, delete any process that is exited or signaled."
-      (setq tabulated-list-entries nil)
-      (dolist (p (process-list))
-        (cond ((memq (process-status p) '(exit signal closed))
-	       (delete-process p))
-	      ((or (not process-menu-query-only)
-	           (process-query-on-exit-flag p))
-	       (let* ((icon
-                       (or
-                        (and (icons-displayable-p)
-                             (all-the-icons-octicon "zap"
-                                                    :height 1.0 :v-adjust -0.05
-                                                    :face 'all-the-icons-lblue))
-                        ""))
-                      (buf (process-buffer p))
-		      (type (process-type p))
-		      (pid  (if (process-id p) (format "%d" (process-id p)) "--"))
-		      (name (process-name p))
-                      (status (process-status p))
-		      (status `(,(symbol-name status)
-                                face ,(if (memq status '(stop exit closed failed))
-                                          'error
-                                        'success)))
-		      (buf-label (if (buffer-live-p buf)
-				     `(,(buffer-name buf)
-				       face link
-				       help-echo ,(format-message
-					           "Visit buffer `%s'"
-					           (buffer-name buf))
-				       follow-link t
-				       process-buffer ,buf
-				       action process-menu-visit-buffer)
-			           "--"))
-		      (tty `(,(or (process-tty-name p) "--")
-                             face font-lock-doc-face))
-		      (thread
-                       `(,(cond
-                           ((or
-                             (null (process-thread p))
-                             (not (fboundp 'thread-name))) "--")
-                           ((eq (process-thread p) main-thread) "Main")
-		           ((thread-name (process-thread p)))
-		           (t "--"))
-                         face font-lock-doc-face))
-		      (cmd
-		       `(,(if (memq type '(network serial pipe))
-		              (let ((contact (process-contact p t t)))
-			        (if (eq type 'network)
-			            (format "(%s %s)"
-				            (if (plist-get contact :type)
-					        "datagram"
-				              "network")
-				            (if (plist-get contact :server)
-					        (format
-                                                 "server on %s"
-					         (if (plist-get contact :host)
-                                                     (format "%s:%s"
-						             (plist-get contact :host)
-                                                             (plist-get
-                                                              contact :service))
-					           (plist-get contact :local)))
-				              (format "connection to %s:%s"
-					              (plist-get contact :host)
-					              (plist-get contact :service))))
-			          (format "(serial port %s%s)"
-				          (or (plist-get contact :port) "?")
-				          (let ((speed (plist-get contact :speed)))
-				            (if speed
-					        (format " at %s b/s" speed)
-				              "")))))
-		            (mapconcat 'identity (process-command p) " "))
-                         face completions-annotations)))
-	         (push (list p (vector icon name pid status buf-label tty thread cmd))
-		       tabulated-list-entries)))))
-      (tabulated-list-init-header))))
+    (defun my-list-processes--prettify ()
+      "Prettify process list."
+      (let ((entries tabulated-list-entries))
+        (setq tabulated-list-entries nil)
+        (dolist (p (process-list))
+          (when-let* ((val (cadr (assoc p entries)))
+                      (icon (if (icons-displayable-p)
+                                (all-the-icons-octicon "zap"
+                                                       :height 0.8 :v-adjust -0.05
+                                                       :face 'all-the-icons-lblue)
+                              "x"))
+                      (name (aref val 0))
+                      (pid (aref val 1))
+                      (status (aref val 2))
+                      (status (list status
+                                    'face
+                                    (if (memq status '(stop exit closed failed))
+                                        'error
+                                      'success)))
+                      (buf-label (aref val 3))
+                      (tty (list (aref val 4) 'face 'font-lock-doc-face))
+                      (thread (list (aref val 5) 'face 'font-lock-doc-face))
+                      (cmd (list (aref val 6) 'face 'completions-annotations)))
+            (push (list p (vector icon name pid status buf-label tty thread cmd))
+		  tabulated-list-entries)))))
+    (advice-add #'list-processes--refresh :after #'my-list-processes--prettify)))
 
 ;; Don't open a file in a new frame
 (when (boundp 'ns-pop-up-frames)
@@ -293,7 +231,7 @@ Also, delete any process that is exited or signaled."
                             (aggressive-indent-mode -1)))))
   :config
   ;; Disable in some modes
-  (dolist (mode '(asm-mode web-mode html-mode css-mode go-mode scala-mode prolog-inferior-mode))
+  (dolist (mode '(gitconfig-mode asm-mode web-mode html-mode css-mode go-mode scala-mode prolog-inferior-mode))
     (push mode aggressive-indent-excluded-modes))
 
   ;; Disable in some commands

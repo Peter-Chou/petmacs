@@ -152,9 +152,12 @@ FACE defaults to inheriting from default and highlight."
 ;; Colorize color names in buffers
 (use-package rainbow-mode
   :diminish
-  :bind (:map special-mode-map
+  :defines helpful-mode-map
+  :bind (:map help-mode-map
          ("w" . rainbow-mode))
-  :hook ((html-mode php-mode) . rainbow-mode)
+  :hook ((html-mode php-mode help-mode helpful-mode) . rainbow-mode)
+  :init (with-eval-after-load 'helpful
+          (bind-key "w" #'rainbow-mode helpful-mode-map))
   :config
   (with-no-warnings
     ;; HACK: Use overlay instead of text properties to override `hl-line' faces.

@@ -8,6 +8,10 @@
   (require 'init-const)
   (require 'init-custom))
 
+;; @see https://emacs-lsp.github.io/lsp-mode/page/performance
+(setq read-process-output-max (* 1024 1024)) ;; 1MB
+(setenv "LSP_USE_PLISTS" "true")
+
 (use-package lsp-mode
   :preface
   (defun petmacs//lsp-avy-document-symbol (all)
@@ -106,26 +110,28 @@
          ([remap xref-find-definitions] . lsp-find-definition)
          ([remap xref-find-references] . lsp-find-references))
   :init
-  ;; @see https://emacs-lsp.github.io/lsp-mode/page/performance
-  (setq read-process-output-max (* 1024 1024)) ;; 1MB
-
   (setq lsp-keymap-prefix "C-c l"
-        lsp-auto-guess-root nil
         lsp-keep-workspace-alive nil
-        lsp-prefer-capf t
-	lsp-headerline-breadcrumb-enable nil
         lsp-signature-auto-activate nil
-        lsp-modeline-code-actions-enable t
-        lsp-modeline-diagnostics-enable t
+        lsp-modeline-code-actions-enable nil
+        ;; lsp-modeline-code-actions-enable t
+        lsp-modeline-diagnostics-enable nil
+        ;; lsp-modeline-diagnostics-enable t
 	lsp-modeline-workspace-status-enable nil
+	lsp-headerline-breadcrumb-enable nil
 
         lsp-enable-file-watchers nil
-        lsp-enable-folding t
+        lsp-enable-folding nil
+        ;; lsp-enable-folding t
         lsp-enable-symbol-highlighting nil
         lsp-enable-text-document-color nil
 
         lsp-enable-indentation nil
-        lsp-enable-on-type-formatting nil)
+	lsp-enable-on-type-formatting nil
+        lsp-auto-guess-root nil
+        ;; lsp-prefer-capf t
+
+	lsp-enable-on-type-formatting nil)
   :config
   (with-no-warnings
     ;; Disable `lsp-mode' in `git-timemachine-mode'
@@ -186,8 +192,47 @@
 				    ,(face-foreground 'font-lock-string-face)
 				    ,(face-foreground 'font-lock-constant-face)
 				    ,(face-foreground 'font-lock-variable-name-face)))
+  ;; Set correct color to borders
+  (defun my-lsp-ui-doc-set-border ()
+    "Set the border color of lsp doc."
+    (setq lsp-ui-doc-border
+          (if (facep 'posframe-border)
+              (face-background 'posframe-border nil t)
+            (face-foreground 'shadow nil t))))
+  (my-lsp-ui-doc-set-border)
+  (add-hook 'after-load-theme-hook #'my-lsp-ui-doc-set-border t)
   :config
   (with-no-warnings
+    ;; Display peek in child frame if possible
+    ;; @see https://github.com/emacs-lsp/lsp-ui/issues/441
+    (defvar lsp-ui-peek--buffer nil)
+    (defun lsp-ui-peek--peek-display (fn src1 src2)
+      (if (childframe-workable-p)
+          (-let* ((win-width (frame-width))
+                  (lsp-ui-peek-list-width (/ (frame-width) 2))
+                  (string (-some--> (-zip-fill "" src1 src2)
+                            (--map (lsp-ui-peek--adjust win-width it) it)
+                            (-map-indexed 'lsp-ui-peek--make-line it)
+                            (-concat it (lsp-ui-peek--make-footer)))))
+            (setq lsp-ui-peek--buffer (get-buffer-create " *lsp-peek--buffer*"))
+            (posframe-show lsp-ui-peek--buffer
+                           :string (mapconcat 'identity string "")
+                           :min-width (frame-width)
+                           :internal-border-color (face-background 'posframe-border nil t)
+                           :internal-border-width 1
+                           :poshandler #'posframe-poshandler-frame-center))
+        (funcall fn src1 src2)))
+    (defun lsp-ui-peek--peek-destroy (fn)
+      (if (childframe-workable-p)
+          (progn
+            (when (bufferp lsp-ui-peek--buffer)
+              (posframe-hide lsp-ui-peek--buffer))
+            (setq lsp-ui-peek--last-xref nil))
+        (funcall fn)))
+    (advice-add #'lsp-ui-peek--peek-new :around #'lsp-ui-peek--peek-display)
+    (advice-add #'lsp-ui-peek--peek-hide :around #'lsp-ui-peek--peek-destroy)
+
+    ;; Handle docs
     (defun my-lsp-ui-doc--handle-hr-lines nil
       (let (bolp next before after)
         (goto-char 1)
@@ -210,13 +255,7 @@
               ;; :align-to is added here too
               (propertize " " 'display '(space :height (1)))
               (and (not (equal after ?\n)) (propertize " \n" 'face '(:height 0.5)))))))))
-    (advice-add #'lsp-ui-doc--handle-hr-lines :override #'my-lsp-ui-doc--handle-hr-lines))
-
-  ;; Reset `lsp-ui-doc-background' after loading theme
-  (add-hook 'after-load-theme-hook
-            (lambda ()
-              (setq lsp-ui-doc-border (face-foreground 'font-lock-comment-face nil t))
-              (set-face-background 'lsp-ui-doc-background (face-background 'tooltip nil t)))))
+    (advice-add #'lsp-ui-doc--handle-hr-lines :override #'my-lsp-ui-doc--handle-hr-lines)))
 
 (use-package lsp-ivy
   :after lsp-mode

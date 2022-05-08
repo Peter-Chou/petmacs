@@ -32,7 +32,7 @@
    dashboard-set-init-info t
    dashboard-set-file-icons t
    dashboard-set-heading-icons t
-   dashboard-heading-icons '((recents   . "file-text")
+   dashboard-heading-icons '((recents   . "history")
 			     (bookmarks . "bookmark")
 			     (agenda    . "calendar")
 			     (projects  . "file-directory")

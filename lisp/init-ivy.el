@@ -155,6 +155,13 @@
         yank ivy-yank-word ivy-yank-char ivy-yank-symbol counsel-yank-pop))
 
     (defvar-local my-ivy-fly--travel nil)
+    (defvar my-ivy-fly-back-commands
+      '(self-insert-command
+        ivy-forward-char ivy-delete-char delete-forward-char kill-word kill-sexp
+        end-of-line mwim-end-of-line mwim-end-of-code-or-line mwim-end-of-line-or-code
+        yank ivy-yank-word ivy-yank-char ivy-yank-symbol counsel-yank-pop))
+
+    (defvar-local my-ivy-fly--travel nil)
     (defun my-ivy-fly-back-to-present ()
       (cond ((and (memq last-command my-ivy-fly-commands)
                   (equal (this-command-keys-vector) (kbd "M-p")))
@@ -176,7 +183,8 @@
                  (when (memq this-command '(ivy-delete-char
                                             delete-forward-char
                                             kill-word kill-sexp))
-                   (beginning-of-line)))))))
+                   (beginning-of-line)))
+               (setq my-ivy-fly--travel t)))))
 
     (defun my-ivy-fly-time-travel ()
       (when (memq this-command my-ivy-fly-commands)
@@ -210,8 +218,7 @@
 
     (defun my-ivy-switch-to-rg-dwim (&rest _)
       "Switch to `rg-dwim' with the current input."
-      (ivy-quit-and-run
-        (rg-dwim default-directory)))
+      (ivy-quit-and-run (rg-dwim default-directory)))
 
     (defun my-ivy-switch-to-counsel-rg (&rest _)
       "Switch to `counsel-rg' with the current input."
@@ -233,6 +240,22 @@
       "Switch to `counsel-git' with the current input."
       (counsel-git ivy-text))
 
+    (defun my-ivy-switch-to-list-bookmarks (&rest _)
+      "Switch to `list-bookmarks'."
+      (ivy-quit-and-run (call-interactively #'list-bookmarks)))
+
+    (defun my-ivy-switch-to-list-colors (&rest _)
+      "Switch to `list-colors-display'."
+      (ivy-quit-and-run (list-colors-display)))
+
+    (defun my-ivy-switch-to-list-packages (&rest _)
+      "Switch to `list-packages'."
+      (ivy-quit-and-run (list-packages)))
+
+    (defun my-ivy-switch-to-list-processes (&rest _)
+      "Switch to `list-processes'."
+      (ivy-quit-and-run (list-processes)))
+
     (defun my-ivy-copy-library-path (lib)
       "Copy the full path of LIB."
       (let ((path (find-library-name lib)))
@@ -250,6 +273,24 @@
     (bind-key "<C-return>" #'my-swiper-toggle-counsel-rg swiper-map)
     (bind-key "<C-return>" #'my-swiper-toggle-counsel-rg counsel-ag-map)
 
+    (with-eval-after-load 'rg
+      (defun my-swiper-toggle-rg-dwim ()
+        "Toggle `rg-dwim' with the current input."
+        (interactive)
+        (ivy-quit-and-run
+          (rg-dwim default-directory)))
+      (bind-key "<M-return>" #'my-swiper-toggle-rg-dwim swiper-map)
+      (bind-key "<M-return>" #'my-swiper-toggle-rg-dwim counsel-ag-map))
+
+    (defun my-swiper-toggle-swiper-isearch ()
+      "Toggle `swiper' and `swiper-isearch' with the current input."
+      (interactive)
+      (ivy-quit-and-run
+        (if (eq (ivy-state-caller ivy-last) 'swiper-isearch)
+            (swiper ivy-text)
+          (swiper-isearch ivy-text))))
+    (bind-key "<s-return>" #'my-swiper-toggle-swiper-isearch swiper-map)
+
     (defun my-counsel-find-file-toggle-fzf ()
       "Toggle `counsel-fzf' with the current `counsel-find-file' input."
       (interactive)
@@ -257,21 +298,17 @@
         (counsel-fzf (or ivy-text "") default-directory)))
     (bind-key "<C-return>" #'my-counsel-find-file-toggle-fzf counsel-find-file-map)
 
-    (defun my-swiper-toggle-rg-dwim ()
-      "Toggle `rg-dwim' with the current input."
+    (defun my-counsel-toggle ()
+      "Toggle `counsel' commands and original commands."
       (interactive)
-      (ivy-quit-and-run (my-ivy-switch-to-rg-dwim)))
-    (bind-key "<M-return>" #'my-swiper-toggle-rg-dwim swiper-map)
-    (bind-key "<M-return>" #'my-swiper-toggle-rg-dwim counsel-ag-map)
-
-    (defun my-swiper-toggle-swiper-isearch ()
-      "Toggle `swiper' and `swiper-isearch' with the current input."
-      (interactive)
-      (ivy-quit-and-run
-        (if (eq (ivy-state-caller ivy-last) 'swiper-isearch)
-            (my-ivy-switch-to-swiper)
-          (my-ivy-switch-to-swiper-isearch))))
-    (bind-key "<s-return>" #'my-swiper-toggle-swiper-isearch swiper-map)
+      (pcase (ivy-state-caller ivy-last)
+        ('counsel-bookmark (my-ivy-switch-to-list-bookmarks))
+        ('counsel-colors-emacs (my-ivy-switch-to-list-colors))
+        ('counsel-colors-web (my-ivy-switch-to-list-colors))
+        ('counsel-list-processes (my-ivy-switch-to-list-processes))
+        ('counsel-package (my-ivy-switch-to-list-packages))
+        (_ (ignore))))
+    (bind-key "<C-return>" #'my-counsel-toggle ivy-minibuffer-map)
 
     ;; More actions
     (ivy-add-actions
@@ -332,7 +369,27 @@
 
     (ivy-add-actions
      'counsel-load-library
-     '(("p" my-ivy-copy-library-path "copy path"))))
+     '(("p" my-ivy-copy-library-path "copy path")))
+
+    (ivy-add-actions
+     #'counsel-bookmark
+     '(("l" my-ivy-switch-to-list-bookmarks "list")))
+
+    (ivy-add-actions
+     #'counsel-colors-emacs
+     '(("l" my-ivy-switch-to-list-colors "list")))
+
+    (ivy-add-actions
+     #'counsel-colors-web
+     '(("l" my-ivy-switch-to-list-colors "list")))
+
+    (ivy-add-actions
+     #'counsel-package
+     '(("l" my-ivy-switch-to-list-packages "list packages")))
+
+    (ivy-add-actions
+     #'counsel-list-processes
+     '(("l" my-ivy-switch-to-list-processes "list"))))
 
   ;; Enhance M-x
   (use-package amx
