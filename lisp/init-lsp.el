@@ -1,17 +1,12 @@
 ;; init-lsp.el --- Better default configurations.	-*- lexical-binding: t -*-
 
 (use-package lsp-mode
-  :custom
-  (lsp-completion-provider :none) ;; we use Corfu!
-  ;; :hook
-  ;; (lsp-completion-mode . my/lsp-mode-setup-completion)
-  ;; (lsp-completion-mode . (lambda ()
-  ;;                          (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
-  ;;                                '(flex))))
+  ;; :custom (lsp-completion-provider :none) ;; we use Corfu!
+  ;; :hook ((lsp-completion-mode . my/lsp-mode-setup-completion)
+  ;;        (lsp-completion-mode . (lambda ()
+  ;;                                 (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
+  ;;                                       '(flex)))))
   :init
-  ;; (defun my/lsp-mode-setup-completion ()
-  ;;   (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
-  ;;         '(flex))) ;; Configure flex
   (setq lsp-keymap-prefix "C-c l"
         lsp-keep-workspace-alive nil
         lsp-signature-auto-activate nil

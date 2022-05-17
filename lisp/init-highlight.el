@@ -1,10 +1,10 @@
 ;; init-highlight.el --- Better default configurations.	-*- lexical-binding: t -*-
 
-(use-package beacon
-  :custom
-  (beacon-color "yellow")
-  :init
-  (beacon-mode 1))
+;; (use-package beacon
+;;   :custom
+;;   (beacon-color "yellow")
+;;   :init
+;;   (beacon-mode 1))
 
 ;; Highlight the current line
 (use-package hl-line

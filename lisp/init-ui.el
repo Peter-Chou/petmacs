@@ -215,13 +215,16 @@
 ;;          (marginalia-mode . all-the-icons-completion-marginalia-setup)))
 
 (use-package awesome-tray
-  :quelpa
-  (awesome-tray :fetcher github
-  		        :repo "manateelazycat/awesome-tray"
-  		        :files ("*.el"))
+  :quelpa (awesome-tray :fetcher github
+  		                :repo "manateelazycat/awesome-tray"
+  		                :files ("*.el"))
+  :commands (awesome-tray-update)
   :hook (after-init . awesome-tray-mode)
   :init
-  (setq awesome-tray-update-interval 0.25)
+  (setq
+   awesome-tray-update-interval 0.45
+   awesome-tray-file-path-show-filename t
+   )
   (defun awesome-tray-module-winum-info ()
     (format "%s " (winum-get-number-string)))
   (winum-get-number-string)
@@ -234,7 +237,7 @@
     :group 'awesome-tray)
 
   :config
-  (add-to-list 'awesome-tray-module-alist '("winum" . (awesome-tray-module-winum-info )))
+  (add-to-list 'awesome-tray-module-alist '("winum" . (awesome-tray-module-winum-info awesome-tray-module-winum-face)))
   (setq awesome-tray-active-modules   '("winum" "location" "belong" "file-path" "date")
         awesome-tray-essential-modules '("winum" "location" "belong" "file-path")
         ))
