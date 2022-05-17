@@ -1,14 +1,5 @@
-;; init-python.el --- Setup Python IDE.  -*- lexical-binding: t -*-
+;; init-python.el --- Better default configurations.	-*- lexical-binding: t -*-
 
-;;; Commentary:
-
-;;; Code:
-
-(eval-when-compile
-  (require 'init-const)
-  (require 'init-custom))
-
-;; Python Mode
 ;; Install:
 ;;   pip install yapf
 ;;   pip install isort
@@ -17,11 +8,11 @@
   :ensure nil
   :hook
   ((python-mode . (lambda ()
-		    (setq-local flycheck-checkers '(python-pylint))
-		    (pyvenv-mode 1)))
+		            (setq-local flycheck-checkers '(python-pylint))
+		            (pyvenv-mode 1)))
    (inferior-python-mode . (lambda ()
-			     (process-query-on-exit-flag
-			      (get-process "Python")))))
+			                 (process-query-on-exit-flag
+			                  (get-process "Python")))))
   :init
   ;; Disable readline based native completion
   (setq python-shell-completion-native-enable nil)
@@ -53,69 +44,47 @@
                            (nth 0 (split-string (buffer-string))))))))
   :hook (python-mode . pyvenv-autoload))
 
-(use-package pipenv
-  :commands (pipenv-activate
-             pipenv-deactivate
-             pipenv-shell
-             pipenv-open
-             pipenv-install
-             pipenv-uninstall))
 (use-package virtualenvwrapper)
 
-;; Format using YAPF
-;; Install: pip install yapf
 (use-package yapfify
   :diminish yapf-mode
   :hook (python-mode . yapf-mode))
 
-(if (member 'python-mode petmacs-lsp-active-modes)
-    (progn
-      ;; (use-package lsp-python-ms
-      ;; 	:hook (pyvenv-mode . (lambda ()
-      ;; 			       (require 'lsp-python-ms)
-      ;; 			       (lsp-deferred)))
-      ;; 	:init
-      ;; 	(setq lsp-python-ms-auto-install-server t
-      ;; 	      ;; lsp-python-ms-nupkg-channel "stable"
-      ;; 	      )
-      ;; 	)
 
-      ;; ;; Python: pyright
-      ;; ;; install pyright:  npm install -g pyright
-      (use-package lsp-pyright
-	:preface
-	;; Use yapf to format
-	(defun lsp-pyright-format-buffer ()
-	  (interactive)
-	  (when (and (executable-find "yapf") buffer-file-name)
-            (call-process "yapf" nil nil nil "-i" buffer-file-name)))
-	:hook ((python-mode . (lambda ()
-				(require 'lsp-pyright)
-				(add-hook 'after-save-hook #'lsp-pyright-format-buffer t t)))
-	       (pyvenv-mode . (lambda () (lsp-deferred))))
-	:init
-	;; too much noise in "real" projects
-	(setq lsp-pyright-typechecking-mode "basic"
-	      lsp-pyright-venv-path (file-truename "~/miniconda3/envs")))
-      )
-  (progn
-    (use-package anaconda-mode
-      :defines anaconda-mode-localhost-address
-      :diminish anaconda-mode
-      :hook ((python-mode . anaconda-mode)
-	     (python-mode . anaconda-eldoc-mode))
-      :config
-      ;; WORKAROUND: https://github.com/proofit404/anaconda-mode#faq
-      (setq anaconda-mode-localhost-address "localhost"))
+;; Debug
+;; python: pip install "debugpy"
+;; install built llvm project to /opt/llvm
+;; `lsp-mode' and `treemacs' integration
+(use-package dap-mode
+  :diminish
+  :defines dap-python-executable
+  :diminish
+  :hook ((after-init . dap-auto-configure-mode)
+         ;; (dap-stopped . (lambda (arg) (call-interactively #'dap-hydra)))
+	 ;;; dap-lldb needs lldb-vscode which is in LLVM prebuilt package
+	     ((c-mode c++-mode objc-mode swift-mode) . (lambda () (require 'dap-lldb)))
+         (python-mode . (lambda () (require 'dap-python)))
+	 ;;;; go install github.com/go-delve/delve/cmd/dlv@latest
+         (go-mode . (lambda () (require 'dap-go)))
+         (java-mode . (lambda () (require 'dap-java)))
+         ((js-mode js2-mode) . (lambda () (require 'dap-chrome)))
+	     )
+  :init
+  (require 'cl-lib)
+  (setq dap-enable-mouse-support t
+	    dap-auto-configure-features '(sessions locals controls tooltip repl)
+	    dap-lldb-debug-program '("/opt/llvm/bin/lldb-vscode")
+	    )
+  :config
+  (with-eval-after-load 'dap-ui
+    (setq dap-ui-buffer-configurations
+          `((,dap-ui--locals-buffer . ((side . right) (slot . 1) (window-width . 0.20)))
+            (,dap-ui--expressions-buffer . ((side . right) (slot . 2) (window-width . 0.20)))
+            (,dap-ui--sessions-buffer . ((side . right) (slot . 3) (window-width . 0.20)))
+            (,dap-ui--breakpoints-buffer . ((side . left) (slot . 2) (window-width . ,treemacs-width)))
+            (,dap-ui--debug-window-buffer . ((side . bottom) (slot . 3) (window-width . 0.20)))
+            (,dap-ui--repl-buffer . ((side . bottom) (slot . 1) (window-width . 0.35))))))
+  )
 
-    (use-package company-anaconda
-      :after company
-      :defines company-backends
-      :init (cl-pushnew 'company-anaconda company-backends)
-      :config
-      (evil-define-minor-mode-key 'normal 'anaconda-mode (kbd "C-M-i") 'company-anaconda)
-      (evil-define-minor-mode-key 'insert 'anaconda-mode (kbd "C-M-i") 'company-anaconda))))
 
 (provide 'init-python)
-
-;;; init-python.el ends here

@@ -1,23 +1,20 @@
-;; init-package.el --- Setup download / update packages.  -*- lexical-binding: t -*-
+;;; init-package.el --- Initialize package configurations.	-*- lexical-binding: t -*-
 
-;;; Commentary:
-
-;;; Code:
-
-;; HACK: DO NOT copy package-selected-packages to init/custom file forcibly.
+;; HACK: DO NOT save package-selected-packages to `custom-file'.
 ;; https://github.com/jwiegley/use-package/issues/383#issuecomment-247801751
-(defun my-save-selected-packages (&optional value)
+(defun my-package--save-selected-packages (&optional value)
   "Set `package-selected-packages' to VALUE but don't save to `custom-file'."
   (when value
-    (setq package-selected-packages value)))
-(advice-add 'package--save-selected-packages :override #'my-save-selected-packages)
+    (setq package-selected-packages value))
+  (unless after-init-time
+    (add-hook 'after-init-hook #'my-package--save-selected-packages)))
+(advice-add 'package--save-selected-packages :override #'my-package--save-selected-packages)
+
 
 ;; Initialize packages
 (unless (bound-and-true-p package--initialized) ; To avoid warnings in 27
   (setq package-enable-at-startup nil)          ; To prevent initializing twice
   (package-initialize))
-
-(require 'ert)
 
 ;; Setup `use-package'
 (unless (package-installed-p 'use-package)
@@ -34,55 +31,13 @@
 (eval-when-compile
   (require 'use-package))
 
-;; package.el updates the saved version of package-selected-packages correctly only
-;; after custom-file has been loaded, which is a bug. We work around this by adding
-;; the required packages to package-selected-packages after startup is complete.
-;; Make `package-autoremove' work with `use-package'
-
-(defvar use-package-selected-packages '(use-package)
-  "Packages pulled in by use-package.")
-
-(eval-and-compile
-  (define-advice use-package-handler/:ensure (:around (fn name-symbol keyword args rest state) select)
-    (let ((items (funcall fn name-symbol keyword args rest state)))
-      (dolist (ensure args items)
-        (let ((package
-               (or (and (eq ensure t) (use-package-as-symbol name-symbol))
-                   ensure)))
-          (when package
-            (when (consp package)
-              (setq package (car package)))
-            (push `(add-to-list 'use-package-selected-packages ',package) items)))))))
-
-(when (fboundp 'package--save-selected-packages)
-  (add-hook 'after-init-hook
-            (lambda ()
-              (package--save-selected-packages
-               (seq-uniq (append use-package-selected-packages package-selected-packages))))))
-
-(use-package quelpa
-  :init
-  (setq quelpa-self-upgrade-p nil)
-  (setq quelpa-update-melpa-p nil)
-  (setq quelpa-checkout-melpa-p nil))
-
 ;; Required by `use-package'
-(use-package quelpa-use-package
-  :init
-  (require 'quelpa-use-package)
-  (quelpa-use-package-activate-advice))
-
 (use-package diminish)
 (use-package bind-key)
+
 ;; Update GPG keyring for GNU ELPA
 (use-package gnu-elpa-keyring-update)
 
-(use-package page-break-lines
-  :diminish
-  :hook (after-init . global-page-break-lines-mode))
-
-;; Extensions
-;; download / update packages
 ;; A modern Packages Menu
 (use-package paradox
   :custom-face
@@ -117,13 +72,25 @@
               t)))
 
 ;; Auto update packages
-;; M-x auto-package-update-now
 (use-package auto-package-update
   :init
   (setq auto-package-update-delete-old-versions t
-	auto-package-update-hide-results t)
+        auto-package-update-hide-results t)
   (defalias 'upgrade-packages #'auto-package-update-now))
+
+(use-package quelpa
+  :init
+  (setq quelpa-self-upgrade-p nil)
+  (setq quelpa-update-melpa-p nil)
+  (setq quelpa-checkout-melpa-p nil))
+
+;; Required by `use-package'
+(use-package quelpa-use-package
+  :init
+  (require 'quelpa-use-package)
+  (quelpa-use-package-activate-advice))
 
 (provide 'init-package)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init-package.el ends here

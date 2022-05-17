@@ -1,13 +1,7 @@
 ;;; init.el --- Petmacs configurations  -*- lexical-binding: t no-byte-compile: t -*-
 
-;;; Commentary:
-
-;;; Code:
-
 ;; Speed up startup
 (setq auto-mode-case-fold nil)
-
-(require 'package)
 
 (unless (or (daemonp) noninteractive)
   (let ((old-file-name-handler-alist file-name-handler-alist))
@@ -31,36 +25,8 @@
             (setq gc-cons-threshold 800000
                   gc-cons-percentage 0.1)))
 
-;; Load path
-;; Optimize: Force "lisp"" and "site-lisp" at the head to reduce the startup time.
-(defun update-load-path (&rest _)
-  "Update `load-path'."
-  (dolist (dir '("site-lisp" "lisp"))
-    (push (expand-file-name dir user-emacs-directory) load-path)))
-
-(defun add-subdirs-to-load-path (&rest _)
-  "Add subdirectories to `load-path'."
-  (let ((default-directory (expand-file-name "site-lisp" user-emacs-directory)))
-    (normal-top-level-add-subdirs-to-load-path)))
-
-(advice-add #'package-initialize :after #'update-load-path)
-(advice-add #'package-initialize :after #'add-subdirs-to-load-path)
-
-(update-load-path)
-(add-subdirs-to-load-path)
-
-;; use mirror
-(setq package-archives '(("gnu"          . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-			 ;; ("melpa"        . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-			 ("melpa"        . "https://melpa.org/packages/")
-			 ("org"          . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
-			 ;; ("melpa-stable" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa-stable/")
-			 ("melpa-stable" . "https://stable.melpa.org/packages/")
-			 ))
 
 (setq byte-compile-warnings '(cl-functions))
-
-(setq comp-deferred-compilation t)
 
 (if (and (fboundp 'native-comp-available-p)
 	 (native-comp-available-p))
@@ -76,63 +42,73 @@
     (message "Native JSON is available")
   (message "Native JSON is *not* available"))
 
-;; ignore warnings
-;;(setq warning-minimum-level :emergency)
+;; Load path
+;; Optimize: Force "lisp"" and "site-lisp" at the head to reduce the startup time.
+(defun update-load-path (&rest _)
+  "Update `load-path'."
+  (dolist (dir '("site-lisp" "lisp"))
+    (push (expand-file-name dir user-emacs-directory) load-path)))
 
-(require 'init-custom)
-(require 'init-const)
+(defun add-subdirs-to-load-path (&rest _)
+  "Add subdirectories to `load-path'.
+Don't put large files in `site-lisp' directory, e.g. EAF.
+Otherwise the startup will be very slow. "
+  (let ((default-directory (expand-file-name "site-lisp" user-emacs-directory)))
+    (normal-top-level-add-subdirs-to-load-path)))
+
+(advice-add #'package-initialize :after #'update-load-path)
+(advice-add #'package-initialize :after #'add-subdirs-to-load-path)
+
+(update-load-path)
+
+;; use mirror
+(setq package-archives '(("gnu"          . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+			 ;; ("melpa"        . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+			 ("melpa"        . "https://melpa.org/packages/")
+			 ("org"          . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
+			 ;; ("melpa-stable" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa-stable/")
+			 ("melpa-stable" . "https://stable.melpa.org/packages/")
+			 ))
+
+
 (require 'init-package)
-
 (require 'init-basic)
 
-(require 'init-funcs)
-(require 'init-default)
 (require 'init-font)
 
 (require 'init-evil)
 
-(require 'init-ui)
+(require 'init-git)
+(require 'init-flycheck)
 
-(require 'init-window)
-;; (require 'init-layout)
-(require 'init-bookmark)
-(require 'init-dashboard)
-
-(require 'init-yasnippet)
-(require 'init-ivy)
-(require 'init-company)
-(require 'init-dired)
-(require 'init-treemacs)
+(require 'init-edit)
 
 (require 'init-tools)
+(require 'init-ui)
 (require 'init-highlight)
-(require 'init-ibuffer)
-(require 'init-vcs)
-(require 'init-project)
+(require 'init-dashboard)
 
-(require 'init-program)
-(require 'init-flycheck)
+(require 'init-ibuffer)
+(require 'init-treemacs)
+(require 'init-projectile)
+(require 'init-shell)
+
+(require 'init-dired)
+
+(require 'init-consult)
+(require 'init-company)
+;; (require 'init-corfu)
 (require 'init-lsp)
-(require 'init-dap)
-;; (require 'init-ctags)
 
 (require 'init-elisp)
 (require 'init-c-c++)
 (require 'init-python)
+(require 'init-golang)
 (require 'init-java)
 (require 'init-scala)
-(require 'init-golang)
-(require 'init-web)
-(require 'init-sql)
 
 (require 'init-org)
-(require 'init-markdown)
-(require 'init-yaml)
-
-(require 'init-shell)
-(require 'init-misc)
+(require 'init-snippets)
 
 (require 'core-funcs)
-(require 'init-leader)
-
-;;; init.el ends here
+(require 'init-keybindings)

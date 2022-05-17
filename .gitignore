@@ -73,8 +73,10 @@ smex-items
 amx-items
 .lsp-*
 projectile*
+projects
 bookmarks
 ido*
+schedules.org
 lisp/emacs_backtrace.txt
 mspyls/
 eclipse.jdt.ls/

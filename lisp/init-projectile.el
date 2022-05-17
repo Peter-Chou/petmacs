@@ -1,26 +1,15 @@
-;; init-project.el --- Setup project related packages.  -*- lexical-binding: t -*-
-
-;;; Commentary:
-
-;;; Code:
-
-(eval-when-compile
-  (require 'init-const)
-  (require 'init-custom))
+;; init-projectile.el --- Better default configurations.	-*- lexical-binding: t -*-
 
 (use-package projectile
   :diminish
-  :bind (:map projectile-mode-map
-         ("s-t" . projectile-find-file) ; `cmd-t' or `super-t'
-         ("C-c p" . projectile-command-map))
   :hook (after-init . projectile-mode)
   :init
   (setq projectile-mode-line-prefix ""
-	projectile-sort-order 'recentf
-	projectile-use-git-grep t
-	projectile-enable-caching t
-	projectile-indexing-method 'native
-	)
+	    projectile-sort-order 'recentf
+	    projectile-use-git-grep t
+	    projectile-enable-caching t
+	    projectile-indexing-method 'native
+	    )
   :config
   ;; (projectile-update-mode-line)         ; Update mode-line at the first time
 
@@ -41,6 +30,5 @@
     ;; FIXME: too slow while getting submodule files on Windows
     (setq projectile-git-submodule-command nil)))
 
-(provide 'init-project)
 
-;;; init-project.el ends here
+(provide 'init-projectile)

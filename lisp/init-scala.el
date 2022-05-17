@@ -1,21 +1,4 @@
-;; init-scala.el --- Setup scala IDE.  -*- lexical-binding: t -*-
-
-;;; Commentary:
-
-;;; Code:
-
-(eval-when-compile
-  (require 'init-const)
-  (require 'init-custom))
-
-;; Add metals backend for lsp-mode
-(use-package lsp-metals)
-
-;; please install metals-emacs -> https://scalameta.org/metals/docs/editors/emacs.html
-;; Enable scala-mode for highlighting, indentation and motion commands
-;; (use-package scala-mode
-;;   :interpreter
-;;   ("scala" . scala-mode))
+;; -*- lexical-binding: t -*-
 
 (use-package scala-mode
   :preface
@@ -29,25 +12,25 @@ point to the position of the join."
     (interactive)
     (let (join-pos)
       (save-excursion
-	(goto-char (line-end-position))
-	(unless (eobp)
+	    (goto-char (line-end-position))
+	    (unless (eobp)
           (forward-line)
           (call-interactively 'scala-indent:join-line)
           (setq join-pos (point))))
 
       (when join-pos
-	(goto-char join-pos))))
-;;   (defun petmacs//scala-display-sbt-at-bottom (buffer args)
-;;     "Display a short buffer in a dedicated window at frame bottom.
-;; For use with `sbt:display-buffer-action'."
-;;     (set-window-dedicated-p
-;;      (display-buffer-at-bottom buffer (cons '(window-height . 12) args))
-;;      t))
+	    (goto-char join-pos))))
+  ;;   (defun petmacs//scala-display-sbt-at-bottom (buffer args)
+  ;;     "Display a short buffer in a dedicated window at frame bottom.
+  ;; For use with `sbt:display-buffer-action'."
+  ;;     (set-window-dedicated-p
+  ;;      (display-buffer-at-bottom buffer (cons '(window-height . 12) args))
+  ;;      t))
   :interpreter
   ("scala" . scala-mode)
   :hook (scala-mode . (lambda ()
-			(require 'lsp-metals)
-			(lsp-deferred)))
+			            (require 'lsp-metals)
+			            (lsp-deferred)))
   :init
   (progn
     (dolist (ext '(".cfe" ".cfs" ".si" ".gen" ".lock"))
@@ -76,20 +59,5 @@ point to the position of the join."
           scala-indent:default-run-on-strategy
           scala-indent:operator-strategy)))
 
-;; ;; Enable sbt mode for executing sbt commands
-;; (use-package sbt-mode
-;;   :commands sbt-start sbt-command
-;;   :config
-;;   ;; WORKAROUND: https://github.com/ensime/emacs-sbt-mode/issues/31
-;;   ;; allows using SPACE when in the minibuffer
-;;   (substitute-key-definition
-;;    'minibuffer-complete-word
-;;    'self-insert-command
-;;    minibuffer-local-completion-map)
-;;   ;; sbt-supershell kills sbt-mode:  https://github.com/hvesalai/emacs-sbt-mode/issues/152
-;;   (setq sbt:program-options '("-Dsbt.supershell=false"))
-;;   )
 
 (provide 'init-scala)
-
-;;; init-scala.el ends here

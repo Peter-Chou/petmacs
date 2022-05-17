@@ -1,20 +1,9 @@
-;; init-golang.el --- Setup Golang IDE.  -*- lexical-binding: t -*-
-
-;;; Commentary:
-
-;;; Code:
-
-(eval-when-compile
-  (require 'init-const)
-  (require 'init-custom))
+;;	-*- lexical-binding: t -*-
 
 ;; Golang
 (use-package go-mode
   :functions go-update-tools
   :commands godoc-gogetdoc
-  :bind (:map go-mode-map
-	 ("C-c R" . go-remove-unused-imports)
-	 ("<f1>" . godoc-at-point))
   :init (setq godoc-at-point-function #'godoc-gogetdoc)
   :config
   ;; Env vars
@@ -51,50 +40,32 @@
 
   ;; Try to install go tools if `gopls' is not found
   (unless (executable-find "gopls")
-    (go-update-tools))
+    (go-update-tools)))
 
-  ;; Misc
-  (use-package go-dlv)
-  (use-package go-fill-struct)
-  (use-package go-impl)
+;; Misc
+(use-package go-dlv)
+(use-package go-fill-struct)
+(use-package go-impl)
 
-  ;; Install: See https://github.com/golangci/golangci-lint#install
-  (use-package flycheck-golangci-lint
-    :if (executable-find "golangci-lint")
-    :after flycheck
-    :defines flycheck-disabled-checkers
-    :hook (go-mode . (lambda ()
-                       "Enable golangci-lint."
-                       (setq flycheck-disabled-checkers '(go-gofmt
-                                                          go-golint
-                                                          go-vet
-                                                          go-build
-                                                          go-test
-                                                          go-errcheck))
-                       (flycheck-golangci-lint-setup))))
+;; Install: See https://github.com/golangci/golangci-lint#install
+(use-package flycheck-golangci-lint
+  :if (executable-find "golangci-lint")
+  :after flycheck
+  :defines flycheck-disabled-checkers
+  :hook (go-mode . (lambda ()
+                     "Enable golangci-lint."
+                     (setq flycheck-disabled-checkers '(go-gofmt
+                                                        go-golint
+                                                        go-vet
+                                                        go-build
+                                                        go-test
+                                                        go-errcheck))
+                     (flycheck-golangci-lint-setup))))
 
-  (use-package go-tag
-    :bind (:map go-mode-map
-           ("C-c t t" . go-tag-add)
-           ("C-c t T" . go-tag-remove))
-    :init (setq go-tag-args (list "-transform" "camelcase")))
+(use-package go-tag
+  :init (setq go-tag-args (list "-transform" "camelcase")))
 
-  (use-package go-gen-test
-    :bind (:map go-mode-map
-           ("C-c t g" . go-gen-test-dwim)))
-
-  (use-package gotest
-    :bind (:map go-mode-map
-           ("C-c t a" . go-test-current-project)
-           ("C-c t m" . go-test-current-file)
-           ("C-c t ." . go-test-current-test)
-           ("C-c t x" . go-run))))
-
-;; Local Golang playground for short snippets
-(use-package go-playground
-  :diminish
-  :commands (go-playground-mode))
+(use-package go-gen-test)
+(use-package gotest)
 
 (provide 'init-golang)
-
-;;; init-golang.el ends here

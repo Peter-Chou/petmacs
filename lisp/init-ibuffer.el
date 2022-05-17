@@ -1,13 +1,4 @@
-;; init-ibuffer.el --- Setup ibuffer.  -*- lexical-binding: t -*-
-
-;;; Commentary:
-
-;;; Code:
-
-(eval-when-compile
-  (require 'init-const)
-  (require 'init-custom))
-
+;; init-ibuffer.el --- Better default configurations.	-*- lexical-binding: t -*-
 (use-package ibuffer
   :ensure nil
   :preface
@@ -83,46 +74,31 @@
   (define-key ibuffer-mode-map (kbd "k") 'petmacs/ibuffer-previous-line)
   (define-key ibuffer-mode-map (kbd "J") 'petmacs/ibuffer-next-group)
   (define-key ibuffer-mode-map (kbd "K") 'petmacs/ibuffer-previous-group)
-  (define-key ibuffer-mode-map (kbd "RET") 'petmacs/ibuffer-visit-buffer)
+  (define-key ibuffer-mode-map (kbd "RET") 'petmacs/ibuffer-visit-buffer))
 
-  ;; Display icons for buffers
-  (use-package all-the-icons-ibuffer
-    :hook (ibuffer-mode . all-the-icons-ibuffer-mode)
-    :init (setq all-the-icons-ibuffer-icon t))
+;; Display icons for buffers
+(use-package all-the-icons-ibuffer
+  :hook (ibuffer-mode . all-the-icons-ibuffer-mode)
+  :init (setq all-the-icons-ibuffer-icon t))
 
-
-  (with-no-warnings
-    (with-eval-after-load 'counsel
-      (defun my-ibuffer-find-file ()
-	(interactive)
-	(let ((default-directory (let ((buf (ibuffer-current-buffer)))
-                                   (if (buffer-live-p buf)
-                                       (with-current-buffer buf
-                                         default-directory)
-                                     default-directory))))
-          (counsel-find-file default-directory)))
-      (advice-add #'ibuffer-find-file :override #'my-ibuffer-find-file)))
-
-  ;; Group ibuffer's list by project root
-  (use-package ibuffer-projectile
-    :functions all-the-icons-octicon ibuffer-do-sort-by-alphabetic
-    :hook ((ibuffer . (lambda ()
-                        (ibuffer-projectile-set-filter-groups)
-                        (unless (eq ibuffer-sorting-mode 'alphabetic)
-                          (ibuffer-do-sort-by-alphabetic)))))
-    :config
-    (setq ibuffer-projectile-prefix
-          (if (display-graphic-p)
-              (concat
-               (all-the-icons-octicon "file-directory"
-                                      :face ibuffer-filter-group-name-face
-                                      :v-adjust -0.05
-                                      :height 1.25)
-               " ")
-            "Project: "))))
+;; Group ibuffer's list by project root
+(use-package ibuffer-projectile
+  :functions all-the-icons-octicon ibuffer-do-sort-by-alphabetic
+  :hook ((ibuffer . (lambda ()
+                      (ibuffer-projectile-set-filter-groups)
+                      (unless (eq ibuffer-sorting-mode 'alphabetic)
+                        (ibuffer-do-sort-by-alphabetic)))))
+  :config
+  (setq ibuffer-projectile-prefix
+        (if (display-graphic-p)
+            (concat
+             (all-the-icons-octicon "file-directory"
+                                    :face ibuffer-filter-group-name-face
+                                    :v-adjust -0.05
+                                    :height 1.25)
+             " ")
+          "Project: ")))
 
 
 
 (provide 'init-ibuffer)
-
-;;; init-ibuffer.el ends here

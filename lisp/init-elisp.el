@@ -1,21 +1,9 @@
-;; init-elisp.el --- Setup Emacs lisp IDE.  -*- lexical-binding: t -*-
-
-;;; Commentary:
-
-;;; Code:
-
-(eval-when-compile
-  (require 'init-const)
-  (require 'init-custom))
+;; init-elisp.el --- Initialize elisping configurations.	-*- lexical-binding: t -*-
 
 ;; Emacs lisp mode
 (use-package elisp-mode
   :ensure nil
   :defines flycheck-disabled-checkers
-  :bind (:map emacs-lisp-mode-map
-         ("C-c C-x" . ielm)
-         ("C-c C-c" . eval-defun)
-         ("C-c C-b" . eval-buffer))
   :hook (emacs-lisp-mode . (lambda ()
                              "Disable the checkdoc checker."
                              (setq-local flycheck-disabled-checkers
@@ -23,11 +11,6 @@
   :config
   (when (boundp 'elisp-flymake-byte-compile-load-path)
     (add-to-list 'elisp-flymake-byte-compile-load-path load-path))
-
-  ;; Syntax highlighting of known Elisp symbols
-  (use-package highlight-defined
-    :hook (emacs-lisp-mode . highlight-defined-mode)
-    :init (setq highlight-defined-face-use-itself t))
 
   ;; Align indent keywords
   ;; @see https://emacs.stackexchange.com/questions/10230/how-to-indent-keywords-aligned
@@ -104,158 +87,23 @@ Lisp function does not specify a special indentation."
             (lambda () (setq-local lisp-indent-function #'my-lisp-indent-function)))
 
   ;; Add remove buttons for advices
-  (add-hook 'help-mode-hook 'cursor-sensor-mode)
+  (add-hook 'help-mode-hook 'cursor-sensor-mode))
 
-  (defun function-advices (function)
-    "Return FUNCTION's advices."
-    (let ((flist (indirect-function function)) advices)
-      (while (advice--p flist)
-        (setq advices `(,@advices ,(advice--car flist)))
-        (setq flist (advice--cdr flist)))
-      advices))
-
-  (defun add-remove-advice-button (advice function)
-    (when (and advice (symbolp advice))
-      (let ((inhibit-read-only t))
-        (insert "\t")
-        (insert-text-button
-         "[Remove]"
-         'cursor-sensor-functions `((lambda (&rest _) (message "Remove advice `%s'" ',advice)))
-         'help-echo (format "Remove advice `%s'" advice)
-         'action (lambda (_)
-                   (when (yes-or-no-p (format "Remove advice `%s'?" advice))
-                     (message "Removing advice `%s' from function `%s'" advice function)
-                     (advice-remove function advice)
-                     (if (eq major-mode 'helpful-mode)
-                         (helpful-update)
-                       (revert-buffer nil t))))
-         'follow-link t))))
-
-  (defun add-button-to-remove-advice (buffer-name function)
-    "Add a button to remove advice."
-    (when (get-buffer buffer-name)
-      (with-current-buffer buffer-name
-        (save-excursion
-          (goto-char (point-min))
-          (let ((ad-list (function-advices function)))
-            (while (re-search-forward "^\\(?:This function has \\)?:[-a-z]+ advice: \\(.+\\)\\.$" nil t)
-              (let* ((name (string-trim (match-string 1) "[‘'`]" "[’']"))
-                     (advice (intern-soft name)))
-                (when (memq advice ad-list)
-                  (add-remove-advice-button advice function)
-                  (setq ad-list (delq advice ad-list)))))
-
-            ;; Search `:around' advice
-            (goto-char (point-min))
-            (when (re-search-forward "^This function is advised.$" nil t)
-              (add-remove-advice-button (car ad-list) function)))))))
-
-  (define-advice describe-function-1 (:after (function) advice-remove-button)
-    (add-button-to-remove-advice "*Help*" function))
-
-  ;; Remove hook
-  (defun remove-hook-at-point ()
-    "Remove the hook at the point in the *Help* buffer."
-    (interactive)
-    (unless (or (eq major-mode 'help-mode)
-                (eq major-mode 'helpful-mode)
-                (string= (buffer-name) "*Help*"))
-      (error "Only for help-mode or helpful-mode"))
-    (let ((orig-point (point)))
-      (save-excursion
-        (when-let
-            ((hook (progn (goto-char (point-min)) (symbol-at-point)))
-             (func (when (and
-                          (or (re-search-forward (format "^Value:?[\s|\n]") nil t)
-                              (goto-char orig-point))
-                          (sexp-at-point))
-                     (end-of-sexp)
-                     (backward-char 1)
-                     (catch 'break
-                       (while t
-                         (condition-case _err
-                             (backward-sexp)
-                           (scan-error (throw 'break nil)))
-                         (let ((bounds (bounds-of-thing-at-point 'sexp)))
-                           (when (<= (car bounds) orig-point (cdr bounds))
-                             (throw 'break (sexp-at-point)))))))))
-          (when (yes-or-no-p (format "Remove %s from %s? " func hook))
-            (remove-hook hook func)
-            (if (eq major-mode 'helpful-mode)
-                (helpful-update)
-              (revert-buffer nil t)))))))
-  (bind-key "r" #'remove-hook-at-point help-mode-map))
+;; Syntax highlighting of known Elisp symbols
+(use-package highlight-defined
+  :hook (emacs-lisp-mode . highlight-defined-mode)
+  :init (setq highlight-defined-face-use-itself t))
 
 ;; Show function arglist or variable docstring
 ;; `global-eldoc-mode' is enabled by default.
 (use-package eldoc
   :ensure nil
-  :diminish
-  :config
-  (with-no-warnings
-    ;; Display `eldoc' in child frame
-    (when (and (require 'posframe nil t) (posframe-workable-p))
-      (defvar eldoc-posframe-buffer "*eldoc-posframe-buffer*"
-        "The posframe buffer name use by eldoc-posframe.")
-
-      (defvar eldoc-posframe-hide-posframe-hooks
-        '(pre-command-hook post-command-hook focus-out-hook)
-        "The hooks which should trigger automatic removal of the posframe.")
-
-      (defvar eldoc-posframe-delay 0.2
-        "Delay seconds to display `eldoc'.")
-
-      (defvar-local eldoc-posframe--timer nil)
-
-      (defun eldoc-posframe-hide-posframe ()
-        "Hide messages currently being shown if any."
-        (when eldoc-posframe--timer
-          (cancel-timer eldoc-posframe--timer))
-
-        (posframe-hide eldoc-posframe-buffer)
-        (dolist (hook eldoc-posframe-hide-posframe-hooks)
-          (remove-hook hook #'eldoc-posframe-hide-posframe t)))
-
-      (defun eldoc-posframe-show-posframe (str &rest args)
-        "Display STR with ARGS."
-        (when eldoc-posframe--timer
-          (cancel-timer eldoc-posframe--timer))
-
-        (posframe-hide eldoc-posframe-buffer)
-        (dolist (hook eldoc-posframe-hide-posframe-hooks)
-          (add-hook hook #'eldoc-posframe-hide-posframe nil t))
-
-        (setq eldoc-posframe--timer
-              (run-with-idle-timer
-               eldoc-posframe-delay nil
-               (lambda ()
-                 (when str
-                   (posframe-show
-                    eldoc-posframe-buffer
-                    :string (concat (propertize "\n" 'face '(:height 0.3))
-                                    (apply #'format str args)
-                                    (propertize "\n\n" 'face '(:height 0.3)))
-                    :postion (point)
-                    :left-fringe 8
-                    :right-fringe 8
-                    :max-width (round (* (frame-width) 0.62))
-                    :max-height (round (* (frame-height) 0.62))
-                    :poshandler #'posframe-poshandler-point-bottom-left-corner-upward
-                    :internal-border-width 1
-                    :internal-border-color (face-foreground 'font-lock-comment-face nil t)
-                    :background-color (face-background 'tooltip nil t)))))))
-      (add-hook 'emacs-lisp-mode-hook
-                (lambda ()
-                  (setq-local eldoc-message-function #'eldoc-posframe-show-posframe))))))
+  :diminish)
 
 ;; Interactive macro expander
 (use-package macrostep
   :custom-face
-  (macrostep-expansion-highlight-face ((t (:inherit tooltip :extend t))))
-  :bind (:map emacs-lisp-mode-map
-         ("C-c e" . macrostep-expand)
-         :map lisp-interaction-mode-map
-         ("C-c e" . macrostep-expand)))
+  (macrostep-expansion-highlight-face ((t (:inherit tooltip :extend t)))))
 
 ;; Semantic code search for emacs lisp
 (use-package elisp-refs)
@@ -275,12 +123,6 @@ Lisp function does not specify a special indentation."
          ("C-c d" . remove-hook-at-point))
   :init
   (with-no-warnings
-    (with-eval-after-load 'counsel
-      (setq counsel-describe-function-function #'helpful-callable
-            counsel-describe-variable-function #'helpful-variable
-            counsel-describe-symbol-function #'helpful-symbol
-            counsel-descbinds-function #'helpful-callable))
-
     (with-eval-after-load 'apropos
       ;; patch apropos buttons to call helpful instead of help
       (dolist (fun-bt '(apropos-function apropos-macro apropos-command))
@@ -299,11 +141,4 @@ Lisp function does not specify a special indentation."
   (define-advice helpful-callable (:after (function) advice-remove-button)
     (add-button-to-remove-advice (helpful--buffer function t) function)))
 
-;; Syntax highlighting of known Elisp symbols
-(use-package highlight-defined
-  :hook (emacs-lisp-mode . highlight-defined-mode)
-  :init (setq highlight-defined-face-use-itself t))
-
 (provide 'init-elisp)
-
-;;; init-elisp.el ends here

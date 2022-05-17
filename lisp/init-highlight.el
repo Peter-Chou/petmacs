@@ -1,10 +1,10 @@
-;; init-highlight.el --- Setup highlights.  -*- lexical-binding: t -*-
+;; init-highlight.el --- Better default configurations.	-*- lexical-binding: t -*-
 
-;;; Commentary:
-
-;;; Code:
-
-
+(use-package beacon
+  :custom
+  (beacon-color "yellow")
+  :init
+  (beacon-mode 1))
 
 ;; Highlight the current line
 (use-package hl-line
@@ -12,6 +12,7 @@
   :hook ((after-init . global-hl-line-mode)
          ((dashboard-mode eshell-mode shell-mode term-mode vterm-mode) .
           (lambda () (setq-local global-hl-line-mode nil)))))
+
 
 ;; Highlight matching parens
 (use-package paren
@@ -64,46 +65,15 @@ FACE defaults to inheriting from default and highlight."
           (blink-matching-open))))
     (advice-add #'show-paren-function :after #'show-paren-off-screen)))
 
-;; Highlight symbols
 (use-package symbol-overlay
-  :diminish
-  :functions (turn-off-symbol-overlay turn-on-symbol-overlay)
   :custom-face (symbol-overlay-default-face ((t (:inherit (region bold)))))
   :bind (("M-i" . symbol-overlay-put)
          ("M-n" . symbol-overlay-jump-next)
          ("M-p" . symbol-overlay-jump-prev)
          ("M-N" . symbol-overlay-switch-forward)
          ("M-P" . symbol-overlay-switch-backward)
-         ("M-C" . symbol-overlay-remove-all)
-         ([M-f3] . symbol-overlay-remove-all))
-  :hook (((prog-mode yaml-mode) . symbol-overlay-mode)
-         (iedit-mode . turn-off-symbol-overlay)
-         (iedit-mode-end . turn-on-symbol-overlay))
-  :init (setq symbol-overlay-idle-time 0.1)
-  (with-eval-after-load 'all-the-icons
-    (setq symbol-overlay-faces
-          '((:inherit (all-the-icons-blue bold) :inverse-video t)
-            (:inherit (all-the-icons-pink bold) :inverse-video t)
-            (:inherit (all-the-icons-yellow bold) :inverse-video t)
-            (:inherit (all-the-icons-purple bold) :inverse-video t)
-            (:inherit (all-the-icons-red bold) :inverse-video t)
-            (:inherit (all-the-icons-orange bold) :inverse-video t)
-            (:inherit (all-the-icons-green bold) :inverse-video t)
-            (:inherit (all-the-icons-cyan bold) :inverse-video t))))
-  :config
-  ;; Disable symbol highlighting while selecting
-  (defun turn-off-symbol-overlay (&rest _)
-    "Turn off symbol highlighting."
-    (interactive)
-    (symbol-overlay-mode -1))
-  (advice-add #'set-mark :after #'turn-off-symbol-overlay)
-
-  (defun turn-on-symbol-overlay (&rest _)
-    "Turn on symbol highlighting."
-    (interactive)
-    (when (derived-mode-p 'prog-mode 'yaml-mode)
-      (symbol-overlay-mode 1)))
-  (advice-add #'deactivate-mark :after #'turn-on-symbol-overlay))
+         ("M-C" . symbol-overlay-remove-all))
+  :hook ((prog-mode yaml-mode) . symbol-overlay-mode))
 
 ;; Highlight indentions
 (use-package highlight-indent-guides
@@ -130,53 +100,9 @@ FACE defaults to inheriting from default and highlight."
       (advice-add #'macrostep-collapse
                   :after (lambda (&rest _)
                            (when (derived-mode-p 'prog-mode 'yaml-mode)
-                             (highlight-indent-guides-mode 1)))))
+                             (highlight-indent-guides-mode 1)))))))
 
-    ;; Don't display indentations in `swiper'
-    ;; https://github.com/DarthFennec/highlight-indent-guides/issues/40
-    (with-eval-after-load 'ivy
-      (defun my-ivy-cleanup-indentation (str)
-        "Clean up indentation highlighting in ivy minibuffer."
-        (let ((pos 0)
-              (next 0)
-              (limit (length str))
-              (prop 'highlight-indent-guides-prop))
-          (while (and pos next)
-            (setq next (text-property-not-all pos limit prop nil str))
-            (when next
-              (setq pos (text-property-any next limit prop nil str))
-              (ignore-errors
-                (remove-text-properties next pos '(display nil face nil) str))))))
-      (advice-add #'ivy-cleanup-string :after #'my-ivy-cleanup-indentation))))
-
-;; Colorize color names in buffers
-(use-package rainbow-mode
-  :diminish
-  :defines helpful-mode-map
-  :bind (:map help-mode-map
-         ("w" . rainbow-mode))
-  :hook ((html-mode php-mode help-mode helpful-mode) . rainbow-mode)
-  :init (with-eval-after-load 'helpful
-          (bind-key "w" #'rainbow-mode helpful-mode-map))
-  :config
-  (with-no-warnings
-    ;; HACK: Use overlay instead of text properties to override `hl-line' faces.
-    ;; @see https://emacs.stackexchange.com/questions/36420
-    (defun my-rainbow-colorize-match (color &optional match)
-      (let* ((match (or match 0))
-             (ov (make-overlay (match-beginning match) (match-end match))))
-        (overlay-put ov 'ovrainbow t)
-        (overlay-put ov 'face `((:foreground ,(if (> 0.5 (rainbow-x-color-luminance color))
-                                                  "white" "black"))
-                                (:background ,color)))))
-    (advice-add #'rainbow-colorize-match :override #'my-rainbow-colorize-match)
-
-    (defun my-rainbow-clear-overlays ()
-      "Clear all rainbow overlays."
-      (remove-overlays (point-min) (point-max) 'ovrainbow t))
-    (advice-add #'rainbow-turn-off :after #'my-rainbow-clear-overlays)))
-
-;; ;; Highlight brackets according to their depth
+;; Highlight brackets according to their depth
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
@@ -184,11 +110,6 @@ FACE defaults to inheriting from default and highlight."
 (use-package hl-todo
   :custom-face
   (hl-todo ((t (:inherit default :height 0.9 :width condensed :weight bold :underline nil :inverse-video t))))
-  :bind (:map hl-todo-mode-map
-	 ([C-f3] . hl-todo-occur)
-	 ("C-c t p" . hl-todo-previous)
-	 ("C-c t n" . hl-todo-next)
-	 ("C-c t o" . hl-todo-occur))
   :hook (after-init . global-hl-todo-mode)
   :config
   (dolist (keyword '("BUG" "DEFECT" "ISSUE"))
@@ -196,55 +117,7 @@ FACE defaults to inheriting from default and highlight."
   (dolist (keyword '("WORKAROUND" "HACK" "TRICK"))
     (cl-pushnew `(,keyword . ,(face-foreground 'warning)) hl-todo-keyword-faces)))
 
-;; ;; Highlight uncommitted changes using VC
-(use-package diff-hl
-  :custom-face
-  (diff-hl-change ((t (:foreground ,(face-background 'highlight) :background nil))))
-  (diff-hl-insert ((t (:inherit diff-added :background nil))))
-  (diff-hl-delete ((t (:inherit diff-removed :background nil))))
-  :bind (:map diff-hl-command-map
-         ("SPC" . diff-hl-mark-hunk))
-  :hook ((after-init . global-diff-hl-mode)
-         (dired-mode . diff-hl-dired-mode))
-  :init (setq diff-hl-draw-borders nil)
-  :config
-  ;; Highlight on-the-fly
-  (diff-hl-flydiff-mode 1)
-
-  ;; Set fringe style
-  (setq-default fringes-outside-margins t)
-
-  ;; Reset faces after changing the color theme
-  (add-hook 'after-load-theme-hook
-            (lambda ()
-              (custom-set-faces
-               `(diff-hl-change ((t (:foreground ,(face-background 'highlight) :background nil))))
-               '(diff-hl-insert ((t (:inherit diff-added :background nil))))
-               '(diff-hl-delete ((t (:inherit diff-removed :background nil)))))))
-
-  (with-no-warnings
-    (defun my-diff-hl-fringe-bmp-function (_type _pos)
-      "Fringe bitmap function for use as `diff-hl-fringe-bmp-function'."
-      (define-fringe-bitmap 'my-diff-hl-bmp
-        (vector (if sys/macp #b11100000 #b11111100))
-        1 8
-        '(center t)))
-    (setq diff-hl-fringe-bmp-function #'my-diff-hl-fringe-bmp-function)
-
-    (when (or (not (display-graphic-p)) (daemonp))
-      ;; Fall back to the display margin since the fringe is unavailable in tty
-      (diff-hl-margin-mode 1)
-      ;; Avoid restoring `diff-hl-margin-mode'
-      (with-eval-after-load 'desktop
-        (add-to-list 'desktop-minor-mode-table
-                     '(diff-hl-margin-mode nil))))
-
-    ;; Integration with magit
-    (with-eval-after-load 'magit
-      (add-hook 'magit-pre-refresh-hook #'diff-hl-magit-pre-refresh)
-      (add-hook 'magit-post-refresh-hook #'diff-hl-magit-post-refresh))))
-
-;; ;; Highlight some operations
+;; Highlight some operations
 (use-package volatile-highlights
   :diminish
   :hook (after-init . volatile-highlights-mode)
@@ -257,5 +130,3 @@ FACE defaults to inheriting from default and highlight."
       (advice-add #'vhl/.make-hl :override #'my-vhl-pulse))))
 
 (provide 'init-highlight)
-
-;;; init-highlight.el ends here

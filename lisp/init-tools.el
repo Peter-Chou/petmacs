@@ -1,12 +1,13 @@
-;; init-tools.el --- Setup useful tools.  -*- lexical-binding: t -*-
+;; init-tools.el --- Better default configurations.	-*- lexical-binding: t -*-
 
-;;; Commentary:
+(use-package posframe)
 
-;;; Code:
+(use-package general)
+(use-package bind-map)
+(use-package bind-key)
 
 (use-package which-key
   :diminish
-  :bind ("C-h M-m" . which-key-show-major-mode)
   :hook (after-init . which-key-mode)
   :init
   (setq which-key-idle-delay 0.2)
@@ -28,7 +29,7 @@
            ("shell-command" . "shell cmd")
            ("universal-argument" . "universal arg")
            ("er/expand-region" . "expand region")
-	   ("counsel-projectile-rg". "project rg")
+	       ("counsel-projectile-rg". "project rg")
            ("evil-lisp-state-\\(.+\\)" . "\\1")
            ("helm-mini\\|ivy-switch-buffer" . "list-buffers"))))
     (dolist (nd new-descriptions)
@@ -36,146 +37,75 @@
       (push (cons (cons nil (concat "\\`" (car nd) "\\'")) (cons nil (cdr nd)))
             which-key-replacement-alist))))
 
-(when (childframe-workable-p)
-  (use-package which-key-posframe
-    :diminish
-    :functions posframe-poshandler-frame-center-near-bottom
-    :custom-face
-    (which-key-posframe ((t (:inherit tooltip))))
-    (which-key-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face nil t)))))
-    :init
-    (setq which-key-posframe-border-width 3
-          which-key-posframe-poshandler #'posframe-poshandler-frame-center-near-bottom
-          which-key-posframe-parameters '((left-fringe . 8)
-                                          (right-fringe . 8)))
-    (which-key-posframe-mode 1)
-    :config
-    (with-no-warnings
-      (defun my-which-key-posframe--show-buffer (act-popup-dim)
-        "Show which-key buffer when popup type is posframe.
-Argument ACT-POPUP-DIM includes the dimension, (height . width)
-of the buffer text to be displayed in the popup"
-        (when (posframe-workable-p)
-          (with-current-buffer (get-buffer-create which-key-buffer-name)
-            (let ((inhibit-read-only t))
-              (goto-char (point-min))
-              (insert (propertize "\n" 'face '(:height 0.3)))
-              (goto-char (point-max))
-              (insert (propertize "\n\n\n" 'face '(:height 0.3)))))
-          (posframe-show which-key--buffer
-		         :font which-key-posframe-font
-		         :position (point)
-		         :poshandler which-key-posframe-poshandler
-		         :background-color (face-attribute 'which-key-posframe :background nil t)
-		         :foreground-color (face-attribute 'which-key-posframe :foreground nil t)
-		         :height (1+ (car act-popup-dim))
-		         :width (1+ (cdr act-popup-dim))
-		         :internal-border-width which-key-posframe-border-width
-		         :internal-border-color (face-attribute 'which-key-posframe-border :background nil t)
-		         :override-parameters which-key-posframe-parameters)))
-      (advice-add #'which-key-posframe--show-buffer :override #'my-which-key-posframe--show-buffer))
-
-    (add-hook 'after-load-theme-hook
-              (lambda ()
-                (custom-set-faces
-                 '(which-key-posframe ((t (:inherit tooltip))))
-                 `(which-key-posframe-border ((t (:background ,(face-foreground 'font-lock-comment-face nil t))))))))))
-
-(use-package expand-region
+(use-package display-fill-column-indicator
+  :ensure nil
+  :hook
+  (prog-mode . display-fill-column-indicator-mode)
   :init
-  (setq expand-region-contract-fast-key "V"
-        expand-region-reset-fast-key "r"))
+  (setq-default fill-column  80)
+  (setq display-fill-column-indicator-character "|"))
+
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
+
+(use-package visual-regexp
+  :defer
+  :commands (vr/replace vr/query-replace))
+
+
+(use-package visual-regexp-steroids
+  :defer
+  :commands (vr/select-replace vr/select-query-replace))
+
+
+(use-package org-super-agenda)
+
+(use-package protobuf-mode
+  :hook (protobuf-mode . disable-curly-bracket-electric-pair))
+
+(use-package olivetti
+  :init
+  (setq olivetti-body-width nil)
+  :config
+  (defun distraction-free ()
+    "Distraction-free writing environment"
+    (interactive)
+    (if (equal olivetti-mode nil)
+        (olivetti-mode t)
+      (progn
+        (olivetti-mode 0)))))
 
 (use-package editorconfig
   :diminish
   :hook (after-init . editorconfig-mode))
 
-;; Fast search tool `ripgrep'
-(use-package rg
-  :defines projectile-command-map
-  :hook (after-init . rg-enable-default-bindings)
-  :bind (:map rg-global-map
-         ("c" . rg-dwim-current-dir)
-         ("f" . rg-dwim-current-file)
-         ("m" . rg-menu))
-  :init (setq rg-group-result t
-              rg-show-columns t)
-  :config
-  (cl-pushnew '("tmpl" . "*.tmpl") rg-custom-type-aliases)
+(use-package toggle-one-window
+  :quelpa
+  (toggle-one-window :fetcher github
+  		             :repo "manateelazycat/toggle-one-window"
+  		             :files ("*.el"))
+  :commands (toggle-one-window))
 
-  (with-eval-after-load 'projectile
-    (bind-key "s R" #'rg-project projectile-command-map)))
-
-(use-package avy
-  :defer nil
-  :commands (avy-with)
+(use-package ace-window
+  :custom-face
+  (aw-leading-char-face ((t (:inherit font-lock-keyword-face :bold t :height 2.0))))
+  (aw-minibuffer-leading-char-face ((t (:inherit font-lock-keyword-face :bold t :height 1.0))))
+  (aw-mode-line-face ((t (:inherit mode-line-emphasis :bold t))))
+  :bind ([remap other-window] . ace-window)
   :init
-  (setq avy-timeout-seconds 0.0))
-
-;; Kill text between the point and the character CHAR
-(use-package avy-zap
-  :bind (("M-z" . avy-zap-to-char-dwim)
-         ("M-Z" . avy-zap-up-to-char-dwim)))
-
-;; Quickly follow links
-(use-package ace-link
-  :defines (org-mode-map
-            gnus-summary-mode-map
-            gnus-article-mode-map
-            ert-results-mode-map
-            paradox-menu-mode-map
-            elfeed-show-mode-map)
-  :bind ("M-o" . ace-link-addr)
-  :hook (after-init . ace-link-setup-default)
-  :config
-  (with-eval-after-load 'org
-    (bind-key "M-o" #'ace-link-org org-mode-map))
-
-  (with-eval-after-load 'gnus
-    (bind-keys
-     :map gnus-summary-mode-map
-     ("M-o" . ace-link-gnus)
-     :map gnus-article-mode-map
-     ("M-o" . ace-link-gnus)))
-
-  (with-eval-after-load 'ert
-    (bind-key "o" #'ace-link-help ert-results-mode-map))
-
-  (bind-keys
-   :map package-menu-mode-map
-   ("o" . ace-link-help)
-   :map process-menu-mode-map
-   ("o" . ace-link-help))
-  (with-eval-after-load 'paradox
-    (bind-key "o" #'ace-link-help paradox-menu-mode-map))
-
-  (with-eval-after-load 'elfeed
-    (bind-key "o" #'ace-link elfeed-show-mode-map)))
-
-;; Jump to Chinese characters
-(use-package ace-pinyin
-  :diminish
-  :hook (after-init . ace-pinyin-global-mode))
-
-(use-package quickrun
-  :custom (quickrun-focus-p nil)
-  :bind (("C-c x" . quickrun)))
-
-;; M-x rmsbolt-starter to see assembly code
-(use-package rmsbolt
-  :custom
-  (rmsbolt-asm-format nil)
-  (rmsbolt-default-directory "/tmp"))
+  ;; (setq aw-scope 'frame) ;; jump only in current frame
+  (setq aw-minibuffer-flag t))
 
 (use-package pyim
   :init
   (setq default-input-method "pyim"
-	pyim-page-length 7
-	pyim-punctuation-translate-p '(auto yes no) ;中文使用全角标点，英文使用半角标点
-	)
+	    pyim-page-length 7
+	    pyim-punctuation-translate-p '(auto yes no) ;中文使用全角标点，英文使用半角标点
+	    )
   (if (posframe-workable-p)
       (setq pyim-page-tooltip 'posframe)
     (setq pyim-page-tooltip 'popup))
+  ;; (setq pyim-page-tooltip 'popup)
 
   :config
   (pyim-default-scheme 'quanpin)
@@ -195,7 +125,6 @@ of the buffer text to be displayed in the popup"
       (interactive)
       (pyim-select-word-by-number 2)))
 
-
   (pyim-extra-dicts-add-dict
    `(:name "Great-dict-private"
      :file, (expand-file-name "resources/dicts/pyim-greatdict.pyim.gz" user-emacs-directory)
@@ -204,52 +133,47 @@ of the buffer text to be displayed in the popup"
      :elpa t))
   )
 
-;; Cross-referencing commands
-(use-package xref
-  :ensure nil
-  :init
-  (with-no-warnings
-    (when (executable-find "rg")
-      (setq xref-search-program 'ripgrep))
-
-    (if emacs/>=28p
-        (setq xref-show-definitions-function #'xref-show-definitions-completing-read
-              xref-show-xrefs-function #'xref-show-definitions-completing-read)
-
-      ;; Select from xref candidates with Ivy
-      (use-package ivy-xref
-        :after ivy
-        :init
-        (when emacs/>=27p
-          (setq xref-show-definitions-function #'ivy-xref-show-defs))
-        (setq xref-show-xrefs-function #'ivy-xref-show-xrefs)))))
-
-;; Hungry deletion
-;; (use-package hungry-delete
-;;   :diminish
-;;   :hook (after-init . global-hungry-delete-mode)
-;;   :init (setq hungry-delete-except-modes
-;;               '(help-mode minibuffer-mode minibuffer-inactive-mode calc-mode)))
-
-
 (use-package toggle-one-window
   :quelpa
   (toggle-one-window :fetcher github
-  		     :repo "manateelazycat/toggle-one-window"
-  		     :files ("*.el"))
+  		             :repo "manateelazycat/toggle-one-window"
+  		             :files ("*.el"))
   :commands (toggle-one-window))
 
-(use-package centered-cursor-mode)
+(use-package hydra
+  :functions hydra-frame-window/body
+  :config
+  (defhydra hydra-frame-window (:color pink :hint nil)
+    "
+^Frame^                 ^Window^      ^Window Size^^^^     ^Text Zoom^
+^^----------------------^^------------^^----------^^^^-----^^---------------         (__)
+_0_: delete             _t_oggle        ^ ^ _k_ ^ ^            _+_                   (oo)
+_1_: delete others      _s_wap          _h_ ^+^ _l_            _=_             /------\\/
+_2_: new                _d_elete        ^ ^ _j_ ^ ^            _-_            / |    ||
+_F_ullscreen            _o_ther         _b_alance^^^^          ^ ^         *  /\\-----/\\  ~~  C-c w/C-x o w
+"
+    ("0" delete-frame :exit t)
+    ("1" delete-other-frames :exit t)
+    ("2" make-frame  :exit t)
+    ("b" balance-windows)
+    ("s" ace-swap-window)
+    ("F" toggle-frame-fullscreen)
+    ("t" toggle-window-split)
+    ("d" ace-delete-window :exit t)
+    ("o" ace-window :exit t)
+    ("-" text-scale-decrease)
+    ("=" (text-scale-increase 0))
+    ("+" text-scale-increase)
+    ("h" shrink-window-horizontally)
+    ("k" shrink-window)
+    ("j" enlarge-window)
+    ("l" enlarge-window-horizontally)
+    ("q" nil "quit"))
+  )
 
-(use-package general)
+(use-package centered-cursor-mode)
 (use-package restart-emacs)
 (use-package focus)                     ; Focus on the current region
 (use-package carbon-now-sh)
-(use-package daemons)                   ; system services/daemons
-;;   :after lsp-java)
-(use-package transwin)
-
 
 (provide 'init-tools)
-
-;;; init-tools.el ends here
