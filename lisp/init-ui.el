@@ -222,9 +222,8 @@
   :hook (after-init . awesome-tray-mode)
   :init
   (setq
-   awesome-tray-update-interval 0.45
-   awesome-tray-file-path-show-filename t
-   )
+   awesome-tray-update-interval 0.75
+   awesome-tray-file-path-show-filename t)
   (defun awesome-tray-module-winum-info ()
     (format "%s " (winum-get-number-string)))
   (winum-get-number-string)
@@ -237,10 +236,10 @@
     :group 'awesome-tray)
 
   :config
+  (add-hook 'buffer-list-update-hook #'awesome-tray-update)
   (add-to-list 'awesome-tray-module-alist '("winum" . (awesome-tray-module-winum-info awesome-tray-module-winum-face)))
   (setq awesome-tray-active-modules   '("winum" "location" "belong" "file-path" "date")
-        awesome-tray-essential-modules '("winum" "location" "belong" "file-path")
-        ))
+        awesome-tray-essential-modules '("winum" "location" "belong" "file-path")))
 
 (provide 'init-ui)
 

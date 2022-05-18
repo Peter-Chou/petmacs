@@ -43,12 +43,27 @@
 	    (apply fn args)))
     (advice-add #'lsp-icons-get-by-symbol-kind :around #'my-lsp-icons-get-symbol-kind)))
 
+(use-package lsp-ui
+  :hook (lsp-mode . lsp-ui-mode)
+  :init (setq lsp-ui-sideline-show-diagnostics nil
+	          lsp-ui-sideline-enable nil
+	          lsp-ui-sideline-show-code-actions nil
+              lsp-ui-sideline-ignore-duplicate t
+	          lsp-ui-doc-enable nil
+	          lsp-ui-doc-delay 0.1
+	          lsp-ui-doc-border (face-foreground 'font-lock-comment-face nil t)
+              lsp-ui-imenu-colors `(,(face-foreground 'font-lock-keyword-face)
+				                    ,(face-foreground 'font-lock-string-face)
+				                    ,(face-foreground 'font-lock-constant-face)
+				                    ,(face-foreground 'font-lock-variable-name-face)))
+  )
+
 (use-package lsp-treemacs
   :after lsp-mode
   :bind (:map lsp-mode-map
-              ("C-<f8>" . lsp-treemacs-errors-list)
-              ("M-<f8>" . lsp-treemacs-symbols)
-              ("s-<f8>" . lsp-treemacs-java-deps-list))
+         ("C-<f8>" . lsp-treemacs-errors-list)
+         ("M-<f8>" . lsp-treemacs-symbols)
+         ("s-<f8>" . lsp-treemacs-java-deps-list))
   :init (lsp-treemacs-sync-mode 1)
   (setq
    lsp-treemacs-deps-position-params
@@ -111,7 +126,7 @@
 
 ;;; scala
 (use-package lsp-metals)
-
+(use-package consult-lsp)
 
 
 (provide 'init-lsp)

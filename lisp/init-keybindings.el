@@ -16,12 +16,12 @@
         leader-major-mode-key "\,"))
 
 (leader-set-keys
-  ;; "'"   #'petmacs/shell-pop
+  "'"   #'petmacs/shell-pop
   "/"   #'consult-ripgrep
 
   "v"   #'er/expand-region
   "u"   #'universal-argument
-  "d"   #'xref-pop-marker-stack
+  ;; "d"   #'xref-pop-marker-stack
   "TAB"  #'petmacs/alternate-buffer
   )
 
@@ -101,7 +101,6 @@
     "er" #'petmacs/reload-init-file
     ))
 
-
 (leader-declare-prefix
   "b" "buffer")
 (leader-with-prefix "b"
@@ -123,7 +122,21 @@
     "j" #'ace-window
     "t" #'imenu-list-smart-toggle
     "i" #'imenu-list
+    ))
 
+(leader-declare-prefix
+  "w" "window")
+(leader-with-prefix "w"
+  (leader-set-keys
+    "."  #'hydra-frame-window/body
+    "j" #'ace-window
+    "c"  #'olivetti-mode
+    "r"  #'winner-undo
+    "d"  #'delete-window
+    "D"  #'ace-delete-window
+    "o" #'toggle-one-window
+
+    ;; "wp" prefix
     ))
 
 (leader-declare-prefix
@@ -179,21 +192,6 @@
     ))
 
 (leader-declare-prefix
-  "w" "window")
-(leader-with-prefix "w"
-  (leader-set-keys
-    "."  #'hydra-frame-window/body
-    "j" #'ace-window
-    "c"  #'olivetti-mode
-    "r"  #'winner-undo
-    "d"  #'delete-window
-    "D"  #'ace-delete-window
-    "o" #'toggle-one-window
-
-    ;; "wp" prefix
-    ))
-
-(leader-declare-prefix
   "g" "git"
   "gf" "file")
 (leader-with-prefix "g"
@@ -235,7 +233,8 @@
     "b" #'flycheck-buffer
     "c" #'flycheck-clear
     "h" #'flycheck-describe-checker
-    "l" #'petmacs/toggle-flycheck-error-list
+    ;; "l" #'petmacs/toggle-flycheck-error-list
+    "l" #'consult-flycheck
     "n" #'petmacs/next-error
     "N" #'petmacs/previous-error
     "p" #'petmacs/previous-error
@@ -262,6 +261,168 @@
     "o"  #'org-projectile/goto-todos
     "v"  #'projectile-vc
     ))
+
+(leader-declare-prefix
+  "i" "insert")
+(leader-with-prefix "i"
+  (leader-set-keys
+    "s" #'consult-yasnippet
+    "f" #'insert-file
+    ))
+
+
+(leader-declare-prefix
+  "l" "lsp"
+  "l=" "format"
+  "la" "code actions"
+  "lg" "goto"
+  "lG" "goto (other window)"
+  "lp" "peek"
+  "lb" "backend"
+  "lr" "refactor"
+  "lh" "help"
+  "lF" "folders"
+  "lx" "text/code")
+(leader-with-prefix "l"
+  (leader-set-keys
+    ;; format
+    "=b" #'lsp-format-buffer
+    "=r" #'lsp-format-region
+    "=o" #'lsp-organize-imports
+    ;; code actions
+    "aa" #'lsp-execute-code-action
+    ;; format
+    "rb" #'lsp-format-buffer
+    "rr" #'lsp-rename
+    ;; goto
+    "gt" #'lsp-find-type-definition
+    "gd" #'xref-find-definitions
+    "gr" #'xref-find-references
+    "gh" #'lsp-treemacs-call-hierarchy
+    "ge" #'lsp-treemacs-errors-list
+    "gb" #'xref-pop-marker-stack
+    "gD" #'lsp-find-declaration
+    "gf" #'xref-find-definitions-other-frame
+    "gi" #'lsp-find-implementation
+    "gs" #'consult-lsp-file-symbols
+    "gS" #'consult-lsp-symbols
+    "gM" #'lsp-ui-imenu
+    ;; goto other window
+    "Gd" #'xref-find-definitions-other-window
+    ;; peek
+    "pd" #'lsp-ui-peek-find-definitions
+    "pi" #'lsp-ui-peek-find-implementation
+    "ps" #'lsp-ui-peek-find-workspace-symbol
+    "pb" #'lsp-ui-peek-jump-backward
+    "pn" #'lSp-ui-peek-jump-forward
+    "pe" #'lsp-ui-flycheck-list
+    "pr" #'lsp-ui-peek-find-references
+    "pRn" #'lsp-ui-find-next-reference
+    "pRp" #'lsp-ui-find-prev-reference
+    ;; backend
+    "bd" #'lsp-describe-session
+    "br" #'lsp-restart-workspace
+    "bs" #'lsp-shutdown-workspace
+    "bv" #'lsp-version
+
+    "hh" #'lsp-describe-thing-at-point
+
+    ;; text/code
+    "xh" #'lsp-document-highlight
+    "xl" #'lsp-lens-show
+    "xL" #'lsp-lens-hide
+    ;; folders
+    "Fs" #'lsp-workspace-folders-switch
+    "Fr" #'lsp-workspace-folders-remove
+    "Fa" #'lsp-workspace-folders-add
+    ))
+
+(leader-declare-prefix
+  "d" "debug"
+  "db" "breakpoints"
+  "dd" "running"
+  "de" "eval"
+  "di" "inspect"
+  "ds" "switch"
+  "dw" "window"
+  )
+(leader-with-prefix "d"
+  (leader-set-keys
+    "." #'dap-hydra
+    ;; repl
+    "'"  #'dap-ui-repl
+    ;; abandon
+    "a"  #'dap-disconnect
+    "A"  #'dap-delete-all-sessions
+    ;; breakpoints
+    "bb" #'dap-breakpoint-toggle
+    "bc" #'dap-breakpoint-condition
+    "bl" #'dap-breakpoint-log-message
+    "bh" #'dap-breakpoint-hit-condition
+    "ba" #'dap-breakpoint-add
+    "bd" #'dap-breakpoint-delete
+    "bD" #'dap-breakpoint-delete-all
+    ;; debuging/running
+    "dd" #'dap-debug
+    "de" #'dap-debug-edit-template
+    "dl" #'dap-debug-last
+    "dr" #'dap-debug-recent
+    ;; eval
+    "ee" #'dap-eval
+    "er" #'dap-eval-region
+    "et" #'dap-eval-thing-at-point
+    "et" #'dap-ui-expressions-add
+    ;; inspect
+    "Ii" #'dap-ui-inspect
+    "Ir" #'dap-ui-inspect-region
+    "It" #'dap-ui-inspect-thing-at-point
+    ;; stepping
+    "c"  #'dap-continue
+    "i"  #'dap-step-in
+    "o"  #'dap-step-out
+    "r"  #'dap-restart-frame
+    "s"  #'dap-next
+    "v"  #'dap-ui-inspect-thing-at-point
+    ;; switching
+    "Ss" #'dap-switch-session
+    "St" #'dap-switch-thread
+    "Sf" #'dap-switch-frame
+    ;; windows
+    "wo" #'dap-go-to-output-buffer
+    "wl" #'dap-ui-locals
+    "ws" #'dap-ui-sessions
+    "wb" #'dap-ui-breakpoints
+    ))
+
+
+(leader-declare-prefix
+  "q" "quit")
+(leader-with-prefix "q"
+  (leader-set-keys
+    "q" #'petmacs/frame-killer
+    "Q" #'kill-emacs
+    "h" #'suspend-frame
+    "R" #'restart-emacs
+    ))
+
+;;; python mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(leader-declare-prefix-for-major-mode 'python-mode
+  "c" "compile"
+  "v" "virtual environment"
+  "t" "test")
+
+(leader-set-keys-for-major-mode 'python-mode
+  "cc" #'petmacs/python-execute-file
+  "ck" #'petmacs/quit-subjob
+
+  "ri" #'py-isort-buffer
+  "rr" #'petmacs/python-remove-unused-imports
+  "rb" #'yapfify-buffer
+
+  "va" #'pyvenv-activate
+  "vd" #'pyvenv-deactivate
+  "vw" #'pyvenv-workon
+  )
 
 
 (provide 'init-keybindings)

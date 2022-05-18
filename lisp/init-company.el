@@ -11,6 +11,7 @@
   :diminish
   :defines (company-dabbrev-ignore-case company-dabbrev-downcase)
   :bind (("M-/" . company-complete)
+         ("C-/" . company-files)
          ("C-M-i" . company-complete)
          :map company-active-map
          ("C-p" . company-select-previous)

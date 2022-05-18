@@ -50,6 +50,31 @@ current window."
       (with-current-buffer (get-buffer "*compilation*")
         (inferior-python-mode)))))
 
+(defun petmacs/python-remove-unused-imports()
+  "Use Autoflake to remove unused function"
+  "autoflake --remove-all-unused-imports -i unused_imports.py"
+  (interactive)
+  (if (executable-find "autoflake")
+      (progn
+        (shell-command (format "autoflake --remove-all-unused-imports -i %s"
+                               (shell-quote-argument (buffer-file-name))))
+        (revert-buffer t t t))
+    (message "Error: Cannot find autoflake executable.")))
+
+
+(defun petmacs/quit-subjob ()
+  "quit runing job in python buffer"
+  (interactive)
+  (save-excursion
+    (setq petmacs--current-buffer-name (buffer-name))
+    (previous-buffer)
+
+    (setq petmacs--previous-buffer-name (buffer-name))
+    (switch-to-buffer "*compilation*")
+    (comint-quit-subjob)
+    (switch-to-buffer petmacs--previous-buffer-name)
+    (switch-to-buffer petmacs--current-buffer-name)))
+
 (defun petmacs/rename-current-buffer-file (&optional arg)
   "Rename the current buffer and the file it is visiting.
 If the buffer isn't visiting a file, ask if it should
@@ -209,6 +234,12 @@ If the error list is visible, hide it.  Otherwise, show it."
     (cond
      ((eq 'flycheck sys) (call-interactively 'flycheck-previous-error))
      ((eq 'emacs sys) (call-interactively 'previous-error)))))
+
+(defun petmacs/shell-pop ()
+  "Open a term buffer at projectile project root."
+  (interactive)
+  (call-interactively 'shell-pop)
+  (evil-insert-state))
 
 (defun petmacs/projectile-shell-pop ()
   "Open a term buffer at projectile project root."

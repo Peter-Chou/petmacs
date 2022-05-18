@@ -270,6 +270,14 @@ This issue has been addressed in 28."
        (bound-and-true-p ns-use-native-fullscreen)
        (setq ns-use-native-fullscreen nil)))
 
+(defun petmacs/frame-killer ()
+  "Kill server buffer and hide the main Emacs window"
+  (interactive)
+  (condition-case nil
+      (delete-frame nil 1)
+    (error
+     (make-frame-invisible nil 1))))
+
 (provide 'init-funcs)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
