@@ -193,6 +193,7 @@ targets."
   :config
   (add-hook 'embark-collect-mode-hook #'consult-preview-at-point-mode))
 
+(use-package cape)
 
 ;; edit the text in the grep buffer after typing C-c C-p
 (use-package wgrep

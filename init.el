@@ -107,6 +107,9 @@ Otherwise the startup will be very slow. "
 (require 'init-java)
 (require 'init-scala)
 
+(require 'init-markdown)
+(require 'init-yaml)
+
 (require 'init-org)
 (require 'init-snippets)
 
