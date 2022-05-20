@@ -74,8 +74,10 @@
 (if (fboundp 'display-line-numbers-mode)
     (use-package display-line-numbers
       :ensure nil
-      :hook ((prog-mode yaml-mode conf-mode) . display-line-numbers-mode)
-      :init (setq display-line-numbers-width-start t))
+      ;; :hook ((prog-mode yaml-mode conf-mode) . display-line-numbers-mode)
+      :init
+      (setq display-line-numbers-width-start t
+            display-line-numbers-type 'relative))
   (use-package linum-off
     :demand t
     :defines linum-format
@@ -93,7 +95,11 @@
 (setq use-file-dialog nil
       use-dialog-box nil
       inhibit-startup-screen t
-      inhibit-startup-echo-area-message t)
+      inhibit-startup-echo-area-message user-login-name
+      inhibit-default-init t
+      initial-scratch-message nil)
+(unless (daemonp)
+  (advice-add #'display-startup-echo-area-message :override #'ignore))
 
 ;; Display dividers between windows
 (setq window-divider-default-places t

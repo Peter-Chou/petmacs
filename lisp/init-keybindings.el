@@ -105,9 +105,9 @@
   "b" "buffer")
 (leader-with-prefix "b"
   (leader-set-keys
-    "b"  #'consult-buffer
+    "b" #'consult-buffer
+    "B" #'consult-buffer-other-window
     "I" #'ibuffer
-    "b"  #'consult-buffer-other-window
 	"d" #'kill-this-buffer
     "n" #'next-buffer
     "p" #'previous-buffer

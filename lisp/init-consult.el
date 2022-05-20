@@ -141,6 +141,8 @@
         ;; press C-h after a prefix key, it shows all the possible key bindings and let you choose what you want
         prefix-help-command #'embark-prefix-help-command)
 
+  (define-key evil-normal-state-map (kbd "C-.") 'embark-act)
+  (define-key evil-normal-state-map (kbd "M-.") 'embark-dwim)
   (setq
    embark-verbose-indicator-display-action
    '((display-buffer-at-bottom)
