@@ -250,6 +250,7 @@
 (leader-with-prefix "p"
   (leader-set-keys
     ;; "'"  #'petmacs/projectile-pop-eshell
+    "."  #'consult-project-extra-find
     "'"  #'petmacs/projectile-shell-pop
     ;;     (leader-set-keys "p'"   #'petmacs/projectile-pop-vterm)
     "t"  #'petmacs/treemacs-project-toggle

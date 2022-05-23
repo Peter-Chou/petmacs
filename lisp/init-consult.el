@@ -202,4 +202,6 @@ targets."
   :commands wgrep-change-to-wgrep-mode
   :config (setq wgrep-auto-save-buffer t))
 
+(use-package consult-project-extra)
+
 (provide 'init-consult)
