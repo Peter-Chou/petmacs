@@ -50,8 +50,8 @@
     (orderless-matching-styles '(orderless-initialism orderless-literal orderless-regexp)))
 
   (setq
-   completion-styles '(orderless partial-completion)
-   ;; completion-styles '(orderless partial-completion basic)
+   ;; completion-styles '(orderless partial-completion)
+   completion-styles '(orderless partial-completion basic)
    completion-category-defaults nil
    completion-category-overrides '((file (styles partial-completion)) ;; partial-completion is tried first
                                    (command (styles +orderless-with-initialism))
