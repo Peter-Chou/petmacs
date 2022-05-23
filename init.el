@@ -96,8 +96,9 @@ Otherwise the startup will be very slow. "
 
 (require 'init-consult)
 
-(require 'init-corfu)
-;; (require 'init-company)
+(if (display-graphic-p)
+    (require 'init-corfu)
+  (require 'init-company))
 
 (require 'init-lsp)
 
