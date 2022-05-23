@@ -95,6 +95,12 @@
   :init
   (diredfl-global-mode 1))
 
+(use-package all-the-icons-dired
+  :diminish
+  :hook (dired-mode . (lambda ()
+                        (when (icons-displayable-p)
+                          (all-the-icons-dired-mode)))))
+
 (use-package ranger
   :diminish
   :commands (ranger deer deer-jump-other-window ranger-override-dired-mode)

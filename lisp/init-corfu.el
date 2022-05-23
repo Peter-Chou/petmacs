@@ -35,65 +35,56 @@
 (when (display-graphic-p)
   (use-package corfu
     :init
-    (setq corfu-cycle t)
-    (setq corfu-auto t)
-    ;; (setq corfu-quit-at-boundary t)
-    ;; (setq corfu-quit-no-match t)
-    ;; (setq corfu-preview-current nil)
-    ;; (setq corfu-min-width 80)
-    ;; (setq corfu-max-width 100)
-    ;; (setq corfu-auto-delay 0.2)
-    ;; (setq corfu-auto-prefix 1)
+    (setq corfu-cycle t
+          corfu-auto t
+          corfu-quit-at-boundary t
+          corfu-quit-no-match t
+          corfu-preview-current nil
+          corfu-preselect-first t
+          corfu-auto-delay 0.2
+          corfu-auto-prefix 1)
     (global-corfu-mode)
     ;; :hook (prog-mode . nasy/setup-corfu)
     :config
-    ;; (define-key corfu-map (kbd "C-j") 'corfu-next)
-    ;; (define-key corfu-map (kbd "C-k") 'corfu-previous)
+    (define-key corfu-map (kbd "C-n") 'corfu-next)
+    (define-key corfu-map (kbd "C-p") 'corfu-previous)
     )
 
-  ;; (use-package corfu-doc
-  ;;   :hook (corfu-mode . corfu-doc-mode))
+  (use-package corfu-doc
+    :hook (corfu-mode . corfu-doc-mode))
 
   ;; ;; elisp requires emacs28
   ;; (use-package kind-icon
   ;;   :after corfu
-  ;;   :custom ;;   (kind-icon-default-face 'corfu-default)
+  ;;   :custom (kind-icon-default-face 'corfu-default)
   ;;   :config
-  ;;   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+  ;;   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter)
+  ;;   (add-hook 'my-completion-ui-mode-hook
+  ;;  	          (lambda ()
+  ;;  	            (setq completion-in-region-function
+  ;;  		              (kind-icon-enhance-completion
+  ;;  		               completion-in-region-function)))))
+
+  (use-package kind-all-the-icons
+    :ensure nil
+    :init
+    (require 'kind-all-the-icons)
+    (add-to-list 'corfu-margin-formatters #'kind-all-the-icons-margin-formatter))
 
   ;; ;; Use dabbrev with Corfu!
-  ;; (use-package dabbrev
-  ;;   ;; Swap M-/ and C-M-/
-  ;;   :bind (("M-/" . dabbrev-completion)
-  ;;          ("C-M-/" . dabbrev-expand)))
+  (use-package dabbrev
+    ;; Swap M-/ and C-M-/
+    :bind (("M-/" . dabbrev-completion)
+           ("C-M-/" . dabbrev-expand)))
 
-  ;; ;; A few more useful configurations...
-  ;; (use-package emacs
-  ;;   :init
-  ;;   ;; TAB cycle if there are only few candidates
-  ;;   (setq completion-cycle-threshold 3)
-  ;;   ;; Enable recursive minibuffers
-  ;;   ;; (setq enable-recursive-minibuffers t)
+  (use-package cape
+    :bind (("C-M-o"   . cape-file))
+    :init
+    (add-to-list 'completion-at-point-functions #'cape-file)
+    (add-to-list 'completion-at-point-functions #'cape-dabbrev)))
 
-  ;;   ;; Emacs 28: Hide commands in M-x which do not apply to the current mode.
-  ;;   ;; Corfu commands are hidden, since they are not supposed to be used via M-x.
-  ;;   ;; (setq read-extended-command-predicate
-  ;;   ;;       #'command-completion-default-include-p)
 
-  ;;   ;; Enable indentation+completion using the TAB key.
-  ;;   ;; `completion-at-point' is often bound to M-TAB.
-  ;;   (setq tab-always-indent 'complete))
-  ;; ;; Add extensions
-  ;; (use-package cape
-  ;;   :init
-  ;;   ;; Add `completion-at-point-functions', used by `completion-at-point'.
-  ;;   (add-to-list 'completion-at-point-functions #'cape-file)
-  ;;   (add-to-list 'completion-at-point-functions #'cape-tex)
-  ;;   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-  ;;   (setq cape-dabbrev-check-other-buffers nil)
-  ;;   (add-to-list 'completion-at-point-functions #'cape-keyword)
-  ;;   )
-  )
+;; ;; Add extensions
 
 (provide 'init-corfu)
 

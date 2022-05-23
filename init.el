@@ -63,6 +63,8 @@ Otherwise the startup will be very slow. "
 
 ;; use mirror
 (setq package-archives '(("gnu"          . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+                         ("elpa"         . "https://elpa.gnu.org/packages/")
+
 			             ;; ("melpa"        . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
 			             ("melpa"        . "https://melpa.org/packages/")
 			             ("org"          . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
@@ -96,8 +98,8 @@ Otherwise the startup will be very slow. "
 (require 'init-dired)
 
 (require 'init-consult)
-(require 'init-company)
-;; (require 'init-corfu)
+;; (require 'init-company)
+(require 'init-corfu)
 (require 'init-lsp)
 
 (require 'init-elisp)

@@ -28,8 +28,27 @@
   (push '(tool-bar-lines . 0) default-frame-alist)
   (push '(vertical-scroll-bars) default-frame-alist))
 
-;; make "unreal" buffers (like popups, sidebars, log buffers,
-;; terminals by giving the latter a slightly different (often darker) background
+
+(use-package winum
+  :init
+  (winum-mode)
+  :config
+  (define-key winum-keymap (kbd "M-1") 'winum-select-window-1)
+  (define-key winum-keymap (kbd "M-2") 'winum-select-window-2)
+  (define-key winum-keymap (kbd "M-3") 'winum-select-window-3)
+  (define-key winum-keymap (kbd "M-4") 'winum-select-window-4)
+  (define-key winum-keymap (kbd "M-5") 'winum-select-window-5)
+  (define-key winum-keymap (kbd "M-6") 'winum-select-window-6)
+  (define-key winum-keymap (kbd "M-7") 'winum-select-window-7)
+  (define-key winum-keymap (kbd "M-8") 'winum-select-window-8)
+  (define-key winum-keymap (kbd "M-9") 'lsp-treemacs-symbols))
+
+(use-package all-the-icons-completion
+  :hook ((after-init . all-the-icons-completion-mode)
+         (marginalia-mode . all-the-icons-completion-marginalia-setup)))
+
+;; ;; make "unreal" buffers (like popups, sidebars, log buffers,
+;; ;; terminals by giving the latter a slightly different (often darker) background
 (use-package solaire-mode
   :hook (after-load-theme . solaire-global-mode))
 
@@ -53,9 +72,45 @@
 ;;   (unless after-init-time
 ;;     (setq-default mode-line-format nil)))
 
+(use-package awesome-tray
+  :quelpa (awesome-tray :fetcher github
+  		                :repo "manateelazycat/awesome-tray"
+  		                :files ("*.el"))
+  :commands (awesome-tray-update)
+  :hook (after-init . awesome-tray-mode)
+  :init
+  (setq
+   awesome-tray-update-interval 0.6
+   awesome-tray-file-path-show-filename t)
+  (defun awesome-tray-module-winum-info ()
+    (format "%s" (winum-get-number-string)))
+  (winum-get-number-string)
+  (defface awesome-tray-module-winum-face
+    '((((background light))
+       :foreground "#0673d7" :bold t)
+      (t
+       :foreground "#369bf8" :bold t))
+    "Date face."
+    :group 'awesome-tray)
+  :config
+  (defun awesome-tray-update-git-command-cache ()
+    (let* ((git-info (awesome-tray-process-exit-code-and-output "git" "symbolic-ref" "--short" "HEAD"))
+           (status (nth 0 git-info))
+           (result (format "%s" (nth 1 git-info))))
+      (setq awesome-tray-git-command-cache
+            (if (equal status 0)
+                (replace-regexp-in-string "\n" "" result)
+              ""))
+      awesome-tray-git-command-cache))
+  (add-hook 'buffer-list-update-hook #'awesome-tray-update)
+  (add-to-list 'awesome-tray-module-alist '("winum" . (awesome-tray-module-winum-info awesome-tray-module-winum-face)))
+  (setq awesome-tray-active-modules   '("winum" "evil" "location" "belong" "file-path" "git" "date")
+        awesome-tray-essential-modules '("winum" "evil" "location" "belong" "file-path")))
+
 (use-package hide-mode-line
-  :hook (((completion-list-mode
-           completion-in-region-mode
+  :hook (((
+           completion-list-mode
+           ;; completion-in-region-mode
            eshell-mode
            shell-mode
            term-mode
@@ -202,50 +257,6 @@
                               `([,(cdr char-regexp) 0 font-shape-gstring]))))
     (set-char-table-parent composition-ligature-table composition-function-table)))
 
-(use-package winum
-  :init
-  (winum-mode)
-  :config
-  (define-key winum-keymap (kbd "M-1") 'winum-select-window-1)
-  (define-key winum-keymap (kbd "M-2") 'winum-select-window-2)
-  (define-key winum-keymap (kbd "M-3") 'winum-select-window-3)
-  (define-key winum-keymap (kbd "M-4") 'winum-select-window-4)
-  (define-key winum-keymap (kbd "M-5") 'winum-select-window-5)
-  (define-key winum-keymap (kbd "M-6") 'winum-select-window-6)
-  (define-key winum-keymap (kbd "M-7") 'winum-select-window-7)
-  (define-key winum-keymap (kbd "M-8") 'winum-select-window-8)
-  (define-key winum-keymap (kbd "M-9") 'lsp-treemacs-symbols))
-
-;; (use-package all-the-icons-completion
-;;   :hook ((after-init . all-the-icons-completion-mode)
-;;          (marginalia-mode . all-the-icons-completion-marginalia-setup)))
-
-(use-package awesome-tray
-  :quelpa (awesome-tray :fetcher github
-  		                :repo "manateelazycat/awesome-tray"
-  		                :files ("*.el"))
-  :commands (awesome-tray-update)
-  :hook (after-init . awesome-tray-mode)
-  :init
-  (setq
-   awesome-tray-update-interval 0.75
-   awesome-tray-file-path-show-filename t)
-  (defun awesome-tray-module-winum-info ()
-    (format "%s" (winum-get-number-string)))
-  (winum-get-number-string)
-  (defface awesome-tray-module-winum-face
-    '((((background light))
-       :foreground "#0673d7" :bold t)
-      (t
-       :foreground "#369bf8" :bold t))
-    "Date face."
-    :group 'awesome-tray)
-
-  :config
-  (add-hook 'buffer-list-update-hook #'awesome-tray-update)
-  (add-to-list 'awesome-tray-module-alist '("winum" . (awesome-tray-module-winum-info awesome-tray-module-winum-face)))
-  (setq awesome-tray-active-modules   '("winum" "evil" "location" "belong" "file-path" "date")
-        awesome-tray-essential-modules '("winum" "evil" "location" "belong" "file-path")))
 
 (provide 'init-ui)
 
