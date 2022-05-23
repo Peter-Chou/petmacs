@@ -5,11 +5,14 @@
 
 (use-package corfu
   :preface
+  (defun petmacs/orderless-dispatch-flex-first (_pattern index _total)
+    "orderless-flex for corfu."
+    (and (eq index 0) 'orderless-flex))
   (defun petmacs/setup-corfu ()
     "Setup corfu."
     (setq-local orderless-matching-styles '(orderless-flex)
                 orderless-style-dispatchers nil)
-    (add-hook 'orderless-style-dispatchers #'nasy/orderless-dispatch-flex-first nil 'local))
+    (add-hook 'orderless-style-dispatchers #'petmacs/orderless-dispatch-flex-first nil 'local))
   (defun corfu-move-to-minibuffer ()
     (interactive)
     (let ((completion-extra-properties corfu--extra)
@@ -29,7 +32,14 @@
         corfu-auto-delay 0.2
         corfu-auto-prefix 1
         )
-  (global-corfu-mode))
+  (global-corfu-mode)
+  :config
+  (with-eval-after-load 'lsp-mode
+    (defun petmacs/lsp-mode-setup-completion ()
+      (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
+            '(flex))) ;; Configure flex
+    (setq lsp-completion-provider :none) ;; we use Corfu!
+    (add-hook 'lsp-completion-mode-hook #'petmacs/lsp-mode-setup-completion)))
 
 ;; elisp requires emacs28
 ;; (use-package kind-icon
@@ -54,13 +64,6 @@
   ;; Swap M-/ and C-M-/
   :bind (("M-/" . dabbrev-completion)
          ("C-M-/" . dabbrev-expand)))
-
-(use-package cape
-  :bind (("C-M-o" . cape-file))
-  :init
-  (add-to-list 'completion-at-point-functions #'cape-file)
-  (add-to-list 'completion-at-point-functions #'cape-dabbrev))
-
 
 ;; ;; Add extensions
 

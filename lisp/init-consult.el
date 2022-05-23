@@ -9,8 +9,7 @@
   ;; Cleans up path when moving directories with shadowed paths syntax, e.g.
   ;; cleans ~/foo/bar/// to /, and ~/foo/bar/~/ to ~/.
   (add-hook 'rfn-eshadow-update-overlay-hook #'vertico-directory-tidy)
-  (add-hook 'minibuffer-setup-hook #'vertico-repeat-save)
-  (define-key vertico-map [backspace] #'vertico-directory-delete-char))
+  (add-hook 'minibuffer-setup-hook #'vertico-repeat-save))
 
 (use-package orderless
   :demand t
@@ -25,14 +24,6 @@
       (?= . orderless-literal)
       (?~ . orderless-flex)))
 
-  ;; Recognizes the following patterns:
-  ;; * ~flex flex~
-  ;; * =literal literal=
-  ;; * %char-fold char-fold%
-  ;; * `initialism initialism`
-  ;; * !without-literal without-literal!
-  ;; * .ext (file extension)
-  ;; * regexp$ (regexp matching at end)
   (defun +orderless-dispatch (pattern index _total)
     (cond
      ;; Ensure that $ works with Consult commands, which add disambiguation suffixes
@@ -59,16 +50,10 @@
     (orderless-matching-styles '(orderless-initialism orderless-literal orderless-regexp)))
 
   (setq
-   ;; completion-styles '(orderless partial-completion)
-   completion-styles '(orderless partial-completion basic)
+   completion-styles '(orderless partial-completion)
+   ;; completion-styles '(orderless partial-completion basic)
    completion-category-defaults nil
-;;; Enable partial-completion for files.
-;;; Either give orderless precedence or partial-completion.
-;;; Note that completion-category-overrides is not really an override,
-;;; but rather prepended to the default completion-styles.
-   ;; completion-category-overrides '((file (styles orderless partial-completion))) ;; orderless is tried first
    completion-category-overrides '((file (styles partial-completion)) ;; partial-completion is tried first
-                                   ;; enable initialism by default for symbols
                                    (command (styles +orderless-with-initialism))
                                    (variable (styles +orderless-with-initialism))
                                    (symbol (styles +orderless-with-initialism)))
@@ -78,7 +63,7 @@
 
 (use-package consult
   :bind (("C-s"   . consult-line))
-  :hook (completion-list-mode . consult-preview-at-point-mode)
+  ;; :hook (completion-list-mode . consult-preview-at-point-mode)
   :init
   (if sys/win32p
       (progn
@@ -86,21 +71,16 @@
         (add-to-list 'process-coding-system-alist '("explorer" gbk . gbk))
         (setq consult-locate-args (encode-coding-string "es.exe -i -p -r" 'gbk))))
 
-  ;; Optionally configure the register formatting. This improves the register
-  ;; preview for `consult-register', `consult-register-load',
-  ;; `consult-register-store' and the Emacs built-ins.
-  (setq register-preview-delay 0.5
-        register-preview-function #'consult-register-format)
-
-  ;; Optionally tweak the register preview window.
-  ;; This adds thin lines, sorting and hides the mode line of the window.
-  (advice-add #'register-preview :override #'consult-register-window)
-
-  ;; Use Consult to select xref locations with preview
-  (setq xref-show-xrefs-function #'consult-xref
-        xref-show-definitions-function #'consult-xref)
-
   :config
+  (setq ;; consult-project-root-function #'doom-project-root
+   consult-narrow-key "<"
+   consult-project-function (lambda (_) (projectile-project-root))
+   consult-line-numbers-widen t
+   consult-async-min-input 2
+   consult-async-refresh-delay  0.15
+   consult-async-input-throttle 0.2
+   consult-async-input-debounce 0.1)
+
   (consult-customize
    consult-theme
    :preview-key '(:debounce 0.2 any)
@@ -108,17 +88,7 @@
    consult-bookmark consult-recent-file consult-xref
    consult--source-bookmark consult--source-recent-file
    consult--source-project-recent-file
-   :preview-key (kbd "M-."))
-  (setq
-   ;; Optionally configure the narrowing key.
-   ;; Both < and C-+ work reasonably well.
-   consult-narrow-key "<" ;; (kbd "C-+")
-   consult-project-function (lambda (_) (projectile-project-root))
-   consult-line-numbers-widen t
-   consult-async-min-input 2
-   consult-async-refresh-delay  0.15
-   consult-async-input-throttle 0.2
-   consult-async-input-debounce 0.1))
+   :preview-key (kbd "M-.")))
 
 (use-package consult-dir
   :bind (([remap list-directory] . consult-dir)))
@@ -195,7 +165,8 @@ targets."
   :config
   (add-hook 'embark-collect-mode-hook #'consult-preview-at-point-mode))
 
-(use-package cape)
+(use-package cape
+  :bind (("C-M-o" . cape-file)))
 
 ;; edit the text in the grep buffer after typing C-c C-p
 (use-package wgrep
