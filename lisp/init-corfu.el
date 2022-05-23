@@ -36,22 +36,14 @@
   (use-package corfu
     :init
     (setq corfu-cycle t
-          corfu-auto t
+          ;; corfu-auto t
           corfu-quit-at-boundary t
           corfu-quit-no-match t
           corfu-preview-current nil
           corfu-preselect-first t
           corfu-auto-delay 0.2
           corfu-auto-prefix 1)
-    (global-corfu-mode)
-    ;; :hook (prog-mode . nasy/setup-corfu)
-    :config
-    (define-key corfu-map (kbd "C-n") 'corfu-next)
-    (define-key corfu-map (kbd "C-p") 'corfu-previous)
-    )
-
-  (use-package corfu-doc
-    :hook (corfu-mode . corfu-doc-mode))
+    (global-corfu-mode))
 
   ;; ;; elisp requires emacs28
   ;; (use-package kind-icon
