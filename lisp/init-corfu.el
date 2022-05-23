@@ -35,12 +35,12 @@
 (when (display-graphic-p)
   (use-package corfu
     :init
-    (setq corfu-cycle t
-          ;; corfu-auto t
-          corfu-quit-at-boundary t
-          corfu-quit-no-match t
+    (setq ;; corfu-cycle t
+          corfu-auto t
+          ;; corfu-quit-at-boundary t
+          ;; corfu-quit-no-match t
           corfu-preview-current nil
-          corfu-preselect-first t
+          ;; corfu-preselect-first t
           corfu-auto-delay 0.2
           corfu-auto-prefix 1)
     (global-corfu-mode))
