@@ -98,8 +98,11 @@ Otherwise the startup will be very slow. "
 (require 'init-dired)
 
 (require 'init-consult)
-;; (require 'init-company)
-(require 'init-corfu)
+;; (if (display-graphic-p)
+;;     (require 'init-corfu)
+;;   (require 'init-company))
+(require 'init-company)
+
 (require 'init-lsp)
 
 (require 'init-elisp)
