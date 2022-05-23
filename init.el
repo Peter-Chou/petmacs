@@ -75,33 +75,29 @@ Otherwise the startup will be very slow. "
 
 (require 'init-package)
 (require 'init-basic)
-
 (require 'init-font)
 
 (require 'init-evil)
 
 (require 'init-git)
 (require 'init-flycheck)
-
 (require 'init-edit)
-
 (require 'init-tools)
+
 (require 'init-ui)
 (require 'init-highlight)
 (require 'init-dashboard)
-
 (require 'init-ibuffer)
 (require 'init-treemacs)
+
 (require 'init-projectile)
+(require 'init-dired)
 (require 'init-shell)
 
-(require 'init-dired)
-
 (require 'init-consult)
-;; (if (display-graphic-p)
-;;     (require 'init-corfu)
-;;   (require 'init-company))
-(require 'init-company)
+
+(require 'init-corfu)
+;; (require 'init-company)
 
 (require 'init-lsp)
 

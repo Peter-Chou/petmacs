@@ -36,7 +36,12 @@
 ;;   :after corfu
 ;;   :custom (kind-icon-default-face 'corfu-default)
 ;;   :config
-;;   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+;;   ;; (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter)
+;;   (add-hook 'my-completion-ui-mode-hook
+;;    	        (lambda ()
+;;    	          (setq completion-in-region-function
+;;    		            (kind-icon-enhance-completion
+;;    		             completion-in-region-function)))))
 
 ;; (use-package kind-all-the-icons
 ;;   :ensure nil

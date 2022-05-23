@@ -142,6 +142,10 @@
                   company-box-backends-colors nil
                   company-box-doc-delay 0.1)))
 
+(use-package company-flx
+  :init
+  (company-flx-mode 1))
+
 ;; Popup documentation for completion candidates
 ;; (use-package company-quickhelp
 ;;   :defines company-quickhelp-delay
