@@ -53,11 +53,11 @@
 ;;    		            (kind-icon-enhance-completion
 ;;    		             completion-in-region-function)))))
 
-;; (use-package kind-all-the-icons
-;;   :ensure nil
-;;   :init
-;;   (require 'kind-all-the-icons)
-;;   (add-to-list 'corfu-margin-formatters #'kind-all-the-icons-margin-formatter))
+(use-package kind-all-the-icons
+  :ensure nil
+  :init
+  (require 'kind-all-the-icons)
+  (add-to-list 'corfu-margin-formatters #'kind-all-the-icons-margin-formatter))
 
 ;; ;; Use dabbrev with Corfu!
 (use-package dabbrev
