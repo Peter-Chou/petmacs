@@ -115,6 +115,14 @@
 (use-package evil-matchit
   :hook (after-init . global-evil-matchit-mode))
 
+(use-package evil-collection
+  :init
+  (setq evil-collection-setup-minibuffer t
+	    evil-collection-mode-list '(magit
+                                    magit-todos
+                                    ))
+  :hook (after-init . evil-collection-init))
+
 (use-package evil-textobj-line)
 
 (provide 'init-evil)

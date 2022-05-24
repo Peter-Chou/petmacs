@@ -41,7 +41,6 @@
 
 ;; Show TODOs in magit
 (use-package magit-todos
-  :bind ("C-c C-t" . ivy-magit-todos)
   :init
   (setq magit-todos-nice (if (executable-find "nice") t nil))
   (setq magit-todos-exclude-globs '("third_party"))
