@@ -1,6 +1,9 @@
 ;; init-consult.el --- Better default configurations.	-*- lexical-binding: t -*-
 
 (use-package vertico
+  :bind (:map minibuffer-mode-map
+         ("M-n" . vertico-next)
+         ("M-p" . vertico-previous))
   :hook (after-init . vertico-mode)
   :config
   (setq vertico-resize nil
