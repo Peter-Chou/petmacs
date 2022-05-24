@@ -11,6 +11,10 @@
 	    evil-want-keybinding nil ;; use evil-collection instead
 	    evil-overriding-maps nil)
   (evil-mode 1)
+
+  ;; https://emacs.stackexchange.com/questions/46371/how-can-i-get-ret-to-follow-org-mode-links-when-using-evil-mode
+  (with-eval-after-load 'evil-maps
+    (define-key evil-motion-state-map (kbd "RET") nil))
   :config
   (define-key evil-normal-state-map (kbd "C-w C-w") 'ace-window)
 
