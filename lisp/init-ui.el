@@ -53,7 +53,7 @@
   :hook (after-load-theme . solaire-global-mode))
 
 (use-package doom-themes
-  :init (petmacs--load-theme 'doom-dracula)
+  ;; :init (petmacs--load-theme 'doom-dracula)
   :config
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
@@ -62,6 +62,9 @@
   ;; FIXME: https://github.com/emacs-lsp/lsp-treemacs/issues/89
   (with-eval-after-load 'lsp-treemacs
     (doom-themes-treemacs-config)))
+
+(use-package srcery-theme
+  :init (petmacs--load-theme 'srcery))
 
 ;; (use-package doom-modeline
 ;;   :hook (after-init . doom-modeline-mode)

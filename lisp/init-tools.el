@@ -6,6 +6,9 @@
 (use-package bind-map)
 (use-package bind-key)
 
+(use-package pretty-hydra
+  :init (require 'pretty-hydra))
+
 (use-package which-key
   :diminish
   :hook (after-init . which-key-mode)
@@ -87,6 +90,36 @@
   :commands (toggle-one-window))
 
 (use-package ace-window
+  :pretty-hydra
+  ((:foreign-keys warn :quit-key "q")
+   ("Actions"
+    (("TAB" other-window "switch")
+     ("x" ace-delete-window "delete" :exit t)
+     ("X" ace-delete-other-windows "delete other" :exit t)
+     ("s" ace-swap-window "swap" :exit t)
+     ("a" ace-select-window "select" :exit t)
+     ("m" toggle-frame-maximized "maximize" :exit t)
+     ("f" toggle-frame-fullscreen "fullscreen" :exit t))
+    "Resize"
+    (("h" shrink-window-horizontally "←")
+     ("j" enlarge-window "↓")
+     ("k" shrink-window "↑")
+     ("l" enlarge-window-horizontally "→")
+     ("n" balance-windows "balance" :exit t))
+    "Split"
+    (("r" split-window-right "horizontally")
+     ("R" split-window-horizontally-instead "horizontally instead")
+     ("v" split-window-below "vertically")
+     ("V" split-window-vertically-instead "vertically instead")
+     ("t" toggle-window-split "toggle"))
+    "Zoom"
+    (("+" text-scale-increase "in")
+     ("=" text-scale-increase "in")
+     ("-" text-scale-decrease "out")
+     ("0" (text-scale-increase 0) "reset"))
+    "Appearance"
+    (("F" set-frame-font "font")
+     ("T" centaur-load-theme "theme"))))
   :custom-face
   (aw-leading-char-face ((t (:inherit font-lock-keyword-face :bold t :height 2.0))))
   (aw-minibuffer-leading-char-face ((t (:inherit font-lock-keyword-face :bold t :height 1.0))))
@@ -140,36 +173,58 @@
   		             :files ("*.el"))
   :commands (toggle-one-window))
 
-(use-package hydra
-  :functions hydra-frame-window/body
+(defconst tree-sitter--fold-supported-major-mode-hooks
+  '(
+    sh-mode-hook
+    c-mode-hook
+    c++-mode-hook
+    csharp-mode-hook
+    css-mode-hook
+    ess-r-mode-hook
+    go-mode-hook
+    html-mode-hook
+    java-mode-hook
+    javascript-mode-hook
+    js-mode-hook
+    js2-mode-hook
+    js3-mode-hook
+    json-mode-hook
+    jsonc-mode-hook
+    nix-mode-hook
+    php-mode-hook
+    python-mode-hook
+    rjsx-mode-hook
+    ruby-mode-hook
+    rust-mode-hook
+    rustic-mode-hook
+    scala-mode-hook
+    swift-mode-hook
+    typescript-mode-hook))
+
+(use-package tree-sitter
+  :init
+  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
   :config
-  (defhydra hydra-frame-window (:color pink :hint nil)
-    "
-^Frame^                 ^Window^      ^Window Size^^^^     ^Text Zoom^
-^^----------------------^^------------^^----------^^^^-----^^---------------         (__)
-_0_: delete             _t_oggle        ^ ^ _k_ ^ ^            _+_                   (oo)
-_1_: delete others      _s_wap          _h_ ^+^ _l_            _=_             /------\\/
-_2_: new                _d_elete        ^ ^ _j_ ^ ^            _-_            / |    ||
-_F_ullscreen            _o_ther         _b_alance^^^^          ^ ^         *  /\\-----/\\  ~~  C-c w/C-x o w
-"
-    ("0" delete-frame :exit t)
-    ("1" delete-other-frames :exit t)
-    ("2" make-frame  :exit t)
-    ("b" balance-windows)
-    ("s" ace-swap-window)
-    ("F" toggle-frame-fullscreen)
-    ("t" toggle-window-split)
-    ("d" ace-delete-window :exit t)
-    ("o" ace-window :exit t)
-    ("-" text-scale-decrease)
-    ("=" (text-scale-increase 0))
-    ("+" text-scale-increase)
-    ("h" shrink-window-horizontally)
-    ("k" shrink-window)
-    ("j" enlarge-window)
-    ("l" enlarge-window-horizontally)
-    ("q" nil "quit"))
-  )
+  (global-tree-sitter-mode))
+
+(use-package tree-sitter-langs)
+(use-package tree-sitter-indent
+  :hook (rust-mode . tree-sitter-indent-mode))
+
+(use-package ts-fold
+  :quelpa (ts-fold :fetcher github
+  		           :repo "jcs090218/ts-fold"
+  		           :files ("*.el")
+                   )
+  :init
+  (setq ts-fold-indicators-fringe 'right-fringe
+        ;; don't obscure lint and breakpoint indicators
+        ts-fold-indicators-priority 0
+        )
+  (dolist (mode-hook tree-sitter--fold-supported-major-mode-hooks)
+    (when (boundp mode-hook)
+      (add-hook mode-hook #'ts-fold-mode)
+      (add-hook mode-hook #'ts-fold-indicators-mode))))
 
 (use-package centered-cursor-mode)
 (use-package restart-emacs)

@@ -128,7 +128,7 @@
   "w" "window")
 (leader-with-prefix "w"
   (leader-set-keys
-    "."  #'hydra-frame-window/body
+    "."  #'ace-window-hydra/body
     "j" #'ace-window
     "c"  #'olivetti-mode
     "r"  #'winner-undo
