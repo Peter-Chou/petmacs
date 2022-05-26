@@ -25,6 +25,14 @@
   "TAB"  #'petmacs/alternate-buffer
   )
 
+
+(leader-declare-prefix
+  "z" "fold/zip")
+(leader-with-prefix "z"
+  (leader-set-keys
+    "."  #'ts-fold-hydra/body
+    ))
+
 (leader-declare-prefix
   "a" "apps"
   "ao" "org")
@@ -96,7 +104,8 @@
     "Cr" #'save-buffer-gbk-as-utf8
 
 	;; "fe" prefix
-    "eo" #'petmacs/goto-org-global-todos
+    "es" #'petmacs/goto-org-global-schedules
+    "et" #'petmacs/goto-org-global-todos
     "ed" #'petmacs/find-dotfile
     "er" #'petmacs/reload-init-file
     ))
@@ -259,7 +268,7 @@
     "p"  #'consult-projectile-switch-project
     "f"  #'consult-projectile-find-file
     "r"  #'consult-projectile-recentf
-    "o"  #'org-projectile/goto-todos
+    "o"  #'org-projectile/goto-project-todos
     "v"  #'projectile-vc
     ))
 

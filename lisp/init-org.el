@@ -48,4 +48,25 @@
                   '("🅐" "🅑" "🅒" "🅓")
                 '("HIGH" "MEDIUM" "LOW" "OPTIONAL"))))
 
+(use-package org-projectile
+  :commands (org-projectile-location-for-project
+             org-projectile-todo-files)
+  :preface
+  (defun org-projectile/goto-project-todos ()
+    (interactive)
+    (org-projectile-goto-location-for-project (projectile-project-name))
+    (revert-buffer))
+  :init
+
+  (setq org-projectile-projects-file (expand-file-name "todos.org" (concat user-emacs-directory "org"))
+        org-agenda-files (append org-agenda-files (org-projectile-todo-files))
+        org-projectile-per-project-filepath "todos.org")
+
+  (unless (file-exists-p org-projectile-projects-file)
+    (write-region "" "" org-projectile-projects-file))
+
+  (with-eval-after-load 'org-capture
+    (require 'org-projectile)))
+
+
 (provide 'init-org)

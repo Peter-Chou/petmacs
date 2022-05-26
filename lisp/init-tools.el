@@ -119,7 +119,7 @@
      ("0" (text-scale-increase 0) "reset"))
     "Appearance"
     (("F" set-frame-font "font")
-     ("T" centaur-load-theme "theme"))))
+     ("T" consult-theme "theme"))))
   :custom-face
   (aw-leading-char-face ((t (:inherit font-lock-keyword-face :bold t :height 2.0))))
   (aw-minibuffer-leading-char-face ((t (:inherit font-lock-keyword-face :bold t :height 1.0))))
@@ -216,6 +216,18 @@
   		           :repo "jcs090218/ts-fold"
   		           :files ("*.el")
                    )
+  :pretty-hydra
+  ((:foreign-keys warn :quit-key "q")
+   ("Toggle"
+    (("t" ts-fold-toggle "toggle at point" :exit t))
+    "Open"
+    (
+     ("o" ts-fold-open "open at point" :exit t)
+     ("r" ts-fold-open-all "open all" :exit t)
+     ("O" ts-fold-open-recursively "recursive open at point" :exit t))
+    "Close"
+    (("c" ts-fold-close "close at point" :exit t)
+     ("m" ts-fold-close-all "close all" :exit t))))
   :init
   (setq ts-fold-indicators-fringe 'right-fringe
         ;; don't obscure lint and breakpoint indicators
@@ -230,5 +242,6 @@
 (use-package restart-emacs)
 (use-package focus)                     ; Focus on the current region
 (use-package carbon-now-sh)
+(use-package imenu-list)
 
 (provide 'init-tools)

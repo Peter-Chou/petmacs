@@ -64,10 +64,18 @@ Same as `replace-string C-q C-m RET RET'."
   (interactive)
   (switch-to-buffer "*dashboard*"))
 
+(defun petmacs/goto-org-global-schedules ()
+  "Edit the `dotfile', in the current window."
+  (interactive)
+  (let ((filename (expand-file-name "schedules.org" (concat user-emacs-directory "org"))))
+    (find-file filename)
+    (if (file-exists-p filename)
+	    (revert-buffer nil t))))
+
 (defun petmacs/goto-org-global-todos ()
   "Edit the `dotfile', in the current window."
   (interactive)
-  (let ((filename (expand-file-name "schedules.org" user-emacs-directory)))
+  (let ((filename (expand-file-name "todos.org" (concat user-emacs-directory "org"))))
     (find-file filename)
     (if (file-exists-p filename)
 	    (revert-buffer nil t))))
