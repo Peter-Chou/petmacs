@@ -1,5 +1,13 @@
 ;; init-lsp.el --- Better default configurations.	-*- lexical-binding: t -*-
 
+
+(use-package kind-all-the-icons
+  :ensure nil
+  :init
+  (require 'kind-all-the-icons)
+  (add-to-list 'corfu-margin-formatters #'kind-all-the-icons-margin-formatter))
+
+
 (use-package lsp-mode
   ;; :custom (lsp-completion-provider :none) ;; we use Corfu!
   ;; :hook ((lsp-completion-mode . my/lsp-mode-setup-completion)

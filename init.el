@@ -101,6 +101,7 @@ Otherwise the startup will be very slow. "
   (require 'init-company))
 
 (require 'init-lsp)
+;; (require 'init-lsp-bridge)
 
 (require 'init-elisp)
 (require 'init-c-c++)

@@ -19,6 +19,10 @@
   (when (> (frame-pixel-width) 3000) (custom-set-faces '(corfu-default ((t (:height 1.3))))))
   (global-corfu-mode)
   :config
+  ;; 默认用这三个补全后端
+  (add-to-list 'completion-at-point-functions #'cape-symbol)
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (with-eval-after-load 'lsp-mode
     (setq lsp-completion-provider :none) ;; we use Corfu!
 
@@ -27,12 +31,6 @@
             '(orderless))) ;; Configure orderless
 
     (add-hook 'lsp-completion-mode-hook #'petmacs/lsp-mode-setup-completion)))
-
-(use-package kind-all-the-icons
-  :ensure nil
-  :init
-  (require 'kind-all-the-icons)
-  (add-to-list 'corfu-margin-formatters #'kind-all-the-icons-margin-formatter))
 
 ;; ;; Use dabbrev with Corfu!
 (use-package dabbrev
