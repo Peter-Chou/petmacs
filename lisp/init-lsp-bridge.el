@@ -2,6 +2,7 @@
 
 (use-package corfu-doc)
 
+;;; pip install epc
 (use-package lsp-bridge
   :load-path "site-lisp"
   :ensure nil
