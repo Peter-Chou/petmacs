@@ -5,6 +5,10 @@
          ("M-n" . vertico-next)
          ("M-p" . vertico-previous))
   :hook (after-init . vertico-mode)
+  :init
+  (setq read-file-name-completion-ignore-case t
+        read-buffer-completion-ignore-case t
+        completion-ignore-case t)
   :config
   (setq vertico-resize nil
         vertico-count 10

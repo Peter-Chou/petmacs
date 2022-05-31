@@ -280,21 +280,90 @@
     "f" #'insert-file
     ))
 
+(leader-declare-prefix
+  "q" "quit")
+(leader-with-prefix "q"
+  (leader-set-keys
+    "q" #'petmacs/frame-killer
+    "Q" #'kill-emacs
+    "h" #'suspend-frame
+    "R" #'restart-emacs
+    ))
 
 (leader-declare-prefix
-  "l" "lsp"
-  "l=" "format"
-  "la" "code actions"
-  "lg" "goto"
-  "lG" "goto (other window)"
-  "lp" "peek"
-  "lb" "backend"
-  "lr" "refactor"
-  "lh" "help"
-  "lF" "folders"
-  "lx" "text/code")
-(leader-with-prefix "l"
+  "d" "debug"
+  "db"  "breakpoints"
+  "dd"  "debugging"
+  "de"  "eval"
+  "dI"  "inspect"
+  "dS"  "switch"
+  "dw"  "debug windows")
+(leader-with-prefix "d"
   (leader-set-keys
+    "." #'dap-hydra
+    ;; repl
+    "'"  #'dap-ui-repl
+    ;; abandon
+    "a"  #'dap-disconnect
+    "A"  #'dap-delete-all-sessions
+    ;; breakpoints
+    "bb" #'dap-breakpoint-toggle
+    "bc" #'dap-breakpoint-condition
+    "bl" #'dap-breakpoint-log-message
+    "bh" #'dap-breakpoint-hit-condition
+    "ba" #'dap-breakpoint-add
+    "bd" #'dap-breakpoint-delete
+    "bD" #'dap-breakpoint-delete-all
+    ;; debuging/running
+    "dd" #'dap-debug
+    "de" #'dap-debug-edit-template
+    "dl" #'dap-debug-last
+    "dr" #'dap-debug-recent
+    ;; eval
+    "ee" #'dap-eval
+    "er" #'dap-eval-region
+    "et" #'dap-eval-thing-at-point
+    "et" #'dap-ui-expressions-add
+    ;; inspect
+    "Ii" #'dap-ui-inspect
+    "Ir" #'dap-ui-inspect-region
+    "It" #'dap-ui-inspect-thing-at-point
+    ;; stepping
+    "c"  #'dap-continue
+    "i"  #'dap-step-in
+    "o"  #'dap-step-out
+    "r"  #'dap-restart-frame
+    "s"  #'dap-next
+    "v"  #'dap-ui-inspect-thing-at-point
+    ;; switching
+    "Ss" #'dap-switch-session
+    "St" #'dap-switch-thread
+    "Sf" #'dap-switch-frame
+    ;; windows
+    "wo" #'dap-go-to-output-buffer
+    "wl" #'dap-ui-locals
+    "ws" #'dap-ui-sessions
+    "wb" #'dap-ui-breakpoints
+    ))
+
+;;; major mode keybinidngs ;;;;;;;;;;;;;;;;;;
+
+;;; lsp for major mode
+(dolist (mode petmacs-lsp-active-modes)
+  (leader-declare-prefix-for-major-mode mode
+    "=" "format"
+    "a" "code actions"
+    "g" "goto"
+    "G" "goto (other window)"
+    "p" "peek"
+    "b" "backend"
+    "r" "refactor"
+    "h" "help"
+    "F" "folders"
+    "x" "text/code"
+    )
+
+  (leader-set-keys-for-major-mode mode
     ;; format
     "=b" #'lsp-format-buffer
     "=r" #'lsp-format-region
@@ -344,76 +413,9 @@
     ;; folders
     "Fs" #'lsp-workspace-folders-switch
     "Fr" #'lsp-workspace-folders-remove
-    "Fa" #'lsp-workspace-folders-add
-    ))
-
-(leader-declare-prefix
-  "d" "debug"
-  "db" "breakpoints"
-  "dd" "running"
-  "de" "eval"
-  "di" "inspect"
-  "ds" "switch"
-  "dw" "window"
+    "Fa" #'lsp-workspace-folders-add)
   )
-(leader-with-prefix "d"
-  (leader-set-keys
-    "." #'dap-hydra
-    ;; repl
-    "'"  #'dap-ui-repl
-    ;; abandon
-    "a"  #'dap-disconnect
-    "A"  #'dap-delete-all-sessions
-    ;; breakpoints
-    "bb" #'dap-breakpoint-toggle
-    "bc" #'dap-breakpoint-condition
-    "bl" #'dap-breakpoint-log-message
-    "bh" #'dap-breakpoint-hit-condition
-    "ba" #'dap-breakpoint-add
-    "bd" #'dap-breakpoint-delete
-    "bD" #'dap-breakpoint-delete-all
-    ;; debuging/running
-    "dd" #'dap-debug
-    "de" #'dap-debug-edit-template
-    "dl" #'dap-debug-last
-    "dr" #'dap-debug-recent
-    ;; eval
-    "ee" #'dap-eval
-    "er" #'dap-eval-region
-    "et" #'dap-eval-thing-at-point
-    "et" #'dap-ui-expressions-add
-    ;; inspect
-    "Ii" #'dap-ui-inspect
-    "Ir" #'dap-ui-inspect-region
-    "It" #'dap-ui-inspect-thing-at-point
-    ;; stepping
-    "c"  #'dap-continue
-    "i"  #'dap-step-in
-    "o"  #'dap-step-out
-    "r"  #'dap-restart-frame
-    "s"  #'dap-next
-    "v"  #'dap-ui-inspect-thing-at-point
-    ;; switching
-    "Ss" #'dap-switch-session
-    "St" #'dap-switch-thread
-    "Sf" #'dap-switch-frame
-    ;; windows
-    "wo" #'dap-go-to-output-buffer
-    "wl" #'dap-ui-locals
-    "ws" #'dap-ui-sessions
-    "wb" #'dap-ui-breakpoints
-    ))
 
-
-(leader-declare-prefix
-  "q" "quit")
-(leader-with-prefix "q"
-  (leader-set-keys
-    "q" #'petmacs/frame-killer
-    "Q" #'kill-emacs
-    "h" #'suspend-frame
-    "R" #'restart-emacs
-    ))
 
 ;;; python mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (leader-declare-prefix-for-major-mode 'python-mode
@@ -433,6 +435,24 @@
   "vd" #'pyvenv-deactivate
   "vw" #'pyvenv-workon
   )
+
+;;; emacs lisp mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(dolist (mode '(emacs-lisp-mode lisp-interaction-mode))
+  (leader-declare-prefix-for-major-mode mode
+    "c" "compile"
+    "e" "eval"
+    "t" "test"
+    )
+
+  (leader-set-keys-for-major-mode mode
+    "'"  #'ielm
+    "si" #'ielm
+    "cc" #'emacs-lisp-byte-compile
+    "eb" #'eval-buffer
+    "ee" #'eval-last-sexp
+    "er" #'eval-region
+    "ef" #'eval-defun
+    "tq" #'ert))
 
 
 (provide 'init-keybindings)

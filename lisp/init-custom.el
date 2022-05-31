@@ -23,15 +23,20 @@
 
 (defcustom  petmacs-font-size 13.0
   "font size"
-	:group 'petmacs
+  :group 'petmacs
   :type 'integer)
 
-;; (defgroup petmacs-theme 'doom-dracula
-;; 	"petmacs defaut theme"
-;;   :group 'petmacs
-;;   :type '(choice (const :tag "dracula" doom-dracula)
-;;                  (const :tag "gruvbox" doom-gruvbox)))
+(defvar petmacs-lsp-active-modes '(
+				                   c-mode
+				                   c++-mode
+				                   python-mode
+				                   java-mode
+				                   scala-mode
+				                   go-mode
+				                   sh-mode
+				                   )
+  "Primary major modes of the lsp activated layer.")
 ;;
-	(provide 'init-custom)
+(provide 'init-custom)
 
 ;;; init-custom.el ends here

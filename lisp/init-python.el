@@ -33,16 +33,18 @@
 
 (use-package pyvenv
   :preface
-  ;; autoload virtual environment if project_root/.venv file exists,
-  ;; .venv file only has the name of the virtual environment.
-  (defun pyvenv-autoload ()
+  ;; autoload virtual environment if project_root/pyrightconfig.json file exists,
+  (defun pyvenv-pyright-autoload ()
     (require 'projectile)
-    (let* ((pdir (projectile-project-root)) (pfile (concat pdir ".venv")))
+    (require 'json)
+    (let* ((pdir (projectile-project-root))
+           (pfile (concat pdir "pyrightconfig.json"))
+           (json-object-type 'hash-table)
+           (json-array-type 'string)
+           (json-key-type 'string))
       (if (file-exists-p pfile)
-          (pyvenv-workon (with-temp-buffer
-                           (insert-file-contents pfile)
-                           (nth 0 (split-string (buffer-string))))))))
-  :hook (python-mode . pyvenv-autoload))
+          (pyvenv-workon (gethash "venv" (json-read-file pfile))))))
+  :hook (python-mode . pyvenv-pyright-autoload))
 
 (use-package virtualenvwrapper)
 
