@@ -82,7 +82,7 @@
   :init
   (setq quelpa-self-upgrade-p nil)
   (setq quelpa-update-melpa-p nil)
-  (setq quelpa-checkout-melpa-p nil))
+  (setq quelpa-checkout-melpa-p t))
 
 ;; Required by `use-package'
 (use-package quelpa-use-package
