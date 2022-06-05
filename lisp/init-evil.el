@@ -1,6 +1,10 @@
 ;;; init-evil.el -*- lexical-binding: t no-byte-compile: t -*-
 
 (use-package evil
+  :preface
+  ;; (defun petmacs/evil-hook ()
+  ;;   (dolist (mode '(git-rebase-mode))
+  ;;     (add-to-list 'evil-emacs-state-modes mode)))
   :init
   (setq evil-want-C-u-scroll t
 	    evil-want-integration t
@@ -11,12 +15,21 @@
 	    evil-want-keybinding nil ;; use evil-collection instead
 	    evil-overriding-maps nil)
   (evil-mode 1)
+  ;; (add-hook 'evil-mode-hook 'petmacs/evil-hook)
 
   ;; https://emacs.stackexchange.com/questions/46371/how-can-i-get-ret-to-follow-org-mode-links-when-using-evil-mode
   (with-eval-after-load 'evil-maps
     (define-key evil-motion-state-map (kbd "RET") nil))
   :config
+  (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
   (define-key evil-normal-state-map (kbd "C-w C-w") 'ace-window)
+
+  ;; Use visual line motions even outside of visual-line-mode buffers
+  (evil-global-set-key 'motion "j" 'evil-next-visual-line)
+  (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+
+  (evil-set-initial-state 'messages-buffer-mode 'normal)
+  (evil-set-initial-state 'dashboard-mode 'normal)
 
   (evil-set-undo-system 'undo-tree)
   (defun petmacs//evil-visual-shift-left ()
@@ -117,8 +130,8 @@
 
 (use-package evil-collection
   :init
-  (setq evil-collection-setup-minibuffer t
-	    evil-collection-mode-list '(magit
+  (setq evil-collection-outline-bind-tab-p nil
+        evil-collection-mode-list '(magit
                                     magit-todos
                                     ))
   :hook (after-init . evil-collection-init))
