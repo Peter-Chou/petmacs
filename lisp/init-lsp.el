@@ -5,7 +5,8 @@
   :ensure nil
   :init
   (require 'kind-all-the-icons)
-  (add-to-list 'corfu-margin-formatters #'kind-all-the-icons-margin-formatter))
+  (if (display-graphic-p)
+      (add-to-list 'corfu-margin-formatters #'kind-all-the-icons-margin-formatter)))
 
 
 (use-package lsp-mode
