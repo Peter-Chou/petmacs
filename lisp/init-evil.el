@@ -132,6 +132,8 @@
                                     diff-mode
                                     ediff
 
+                                    proced
+
                                     ;; dired
                                     ;; ibuffer
                                     ))
