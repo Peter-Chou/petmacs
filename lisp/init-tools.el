@@ -131,6 +131,8 @@
 
 (use-package pyim
   :init
+  (require 'pyim-dict-manager)
+
   (setq default-input-method "pyim"
 	    pyim-page-length 7
 	    pyim-punctuation-translate-p '(auto yes no) ;中文使用全角标点，英文使用半角标点
