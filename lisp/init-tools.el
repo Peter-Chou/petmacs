@@ -32,9 +32,8 @@
            ("shell-command" . "shell cmd")
            ("universal-argument" . "universal arg")
            ("er/expand-region" . "expand region")
-	       ("counsel-projectile-rg". "project rg")
            ("evil-lisp-state-\\(.+\\)" . "\\1")
-           ("helm-mini\\|ivy-switch-buffer" . "list-buffers"))))
+           )))
     (dolist (nd new-descriptions)
       ;; ensure the target matches the whole string
       (push (cons (cons nil (concat "\\`" (car nd) "\\'")) (cons nil (cdr nd)))
@@ -128,6 +127,87 @@
   :init
   ;; (setq aw-scope 'frame) ;; jump only in current frame
   (setq aw-minibuffer-flag t))
+
+;; Enforce rules for popups
+(use-package popper
+  :defines popper-echo-dispatch-actions
+  :commands popper-group-by-projectile
+  :hook (emacs-startup . popper-mode)
+  :init
+  (setq popper-reference-buffers
+        '("\\*Messages\\*"
+          "Output\\*$" "\\*Pp Eval Output\\*$"
+          "\\*Compile-Log\\*"
+          "\\*Completions\\*"
+          "\\*Warnings\\*"
+          "\\*Async Shell Command\\*"
+          "\\*Apropos\\*"
+          "\\*Backtrace\\*"
+          "\\*Calendar\\*"
+          "\\*Embark Actions\\*"
+          "\\*Finder\\*"
+          "\\*Kill Ring\\*"
+
+          bookmark-bmenu-mode
+          comint-mode
+          compilation-mode
+          help-mode helpful-mode
+          tabulated-list-mode
+          Buffer-menu-mode
+
+          grep-mode occur-mode rg-mode deadgrep-mode ag-mode pt-mode
+          process-menu-mode list-environment-mode cargo-process-mode
+
+          "^\\*eshell.*\\*.*$" eshell-mode
+          "^\\*shell.*\\*.*$"  shell-mode
+          "^\\*terminal.*\\*.*$" term-mode
+          "^\\*vterm.*\\*.*$"  vterm-mode
+
+          "\\*DAP Templates\\*$" dap-server-log-mode
+          "\\*ELP Profiling Restuls\\*" profiler-report-mode
+          "\\*Flycheck errors\\*$" " \\*Flycheck checker\\*$"
+          "\\*Paradox Report\\*$" "\\*package update results\\*$" "\\*Package-Lint\\*$"
+          "\\*[Wo]*Man.*\\*$"
+          "\\*ert\\*$" overseer-buffer-mode
+          "\\*gud-debug\\*$"
+          "\\*lsp-help\\*$" "\\*lsp session\\*$"
+          "\\*quickrun\\*$"
+          "\\*tldr\\*$"
+          "\\*vc-.*\\*$"
+          "^\\*elfeed-entry\\*$"
+          "^\\*macro expansion\\**"
+
+          "\\*Agenda Commands\\*" "\\*Org Select\\*" "\\*Capture\\*" "^CAPTURE-.*\\.org*"
+          "\\*Gofmt Errors\\*$" "\\*Go Test\\*$" godoc-mode
+          "\\*docker-containers\\*" "\\*docker-images\\*" "\\*docker-networks\\*" "\\*docker-volumes\\*"
+          "\\*prolog\\*" inferior-python-mode inf-ruby-mode swift-repl-mode
+          "\\*rustfmt\\*$" rustic-compilation-mode rustic-cargo-clippy-mode
+          rustic-cargo-outdated-mode rustic-cargo-test-moed))
+  (with-eval-after-load 'projectile
+    (setq popper-group-function #'popper-group-by-projectile))
+  (setq popper-echo-dispatch-actions t)
+  :config
+  (popper-echo-mode 1)
+
+  (with-no-warnings
+    (defun petmacs/popper-fit-window-height (win)
+      "Determine the height of popup window WIN by fitting it to the buffer's content."
+      (fit-window-to-buffer
+       win
+       (floor (frame-height) 3)
+       (floor (frame-height) 3)))
+    (setq popper-window-height #'petmacs/popper-fit-window-height)
+
+    (defun popper-close-window-hack (&rest _)
+      "Close popper window via `C-g'."
+      ;; `C-g' can deactivate region
+      (when (and (called-interactively-p 'interactive)
+                 (not (region-active-p))
+                 popper-open-popup-alist)
+        (let ((window (caar popper-open-popup-alist)))
+          (when (window-live-p window)
+            (delete-window window)))))
+    (advice-add #'keyboard-quit :before #'popper-close-window-hack)))
 
 (use-package pyim
   :init

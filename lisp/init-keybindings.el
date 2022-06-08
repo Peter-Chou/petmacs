@@ -16,7 +16,8 @@
         leader-major-mode-key "\,"))
 
 (leader-set-keys
-  "'"   #'petmacs/shell-pop
+  ;; "'"   #'petmacs/shell-pop
+  "'"   #'multi-vterm-dedicated-toggle
   "/"   #'consult-ripgrep
 
   "v"   #'er/expand-region
@@ -144,6 +145,8 @@
     "d"  #'delete-window
     "D"  #'ace-delete-window
     "o" #'toggle-one-window
+    "t" #'popper-toggle-type
+    "p" #'popper-cycle
 
     ;; "wp" prefix
     ))
@@ -260,8 +263,8 @@
   (leader-set-keys
     ;; "'"  #'petmacs/projectile-pop-eshell
     "."  #'consult-project-extra-find
-    "'"  #'petmacs/projectile-shell-pop
-    ;;     (leader-set-keys "p'"   #'petmacs/projectile-pop-vterm)
+    ;; "'"  #'petmacs/projectile-shell-pop
+    "'"  #'multi-vterm-project
     "t"  #'petmacs/treemacs-project-toggle
     "b"  #'consult-projectile-switch-to-buffer
     "d"  #'consult-projectile-find-dir

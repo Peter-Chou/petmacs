@@ -29,6 +29,7 @@
 
   (evil-set-initial-state 'messages-buffer-mode 'normal)
   (evil-set-initial-state 'dashboard-mode 'normal)
+  (evil-set-initial-state 'vterm-mode 'insert)
 
   (evil-set-undo-system 'undo-tree)
   (defun petmacs//evil-visual-shift-left ()

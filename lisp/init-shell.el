@@ -83,17 +83,49 @@
   (use-package vterm
     :commands vterm--internal
     :init
-    (setq vterm-always-compile-module t)))
+    (setq vterm-always-compile-module t))
+
+  (use-package multi-vterm
+	:config
+	(define-key vterm-mode-map [return]                      #'vterm-send-return)
+
+	(setq vterm-keymap-exceptions nil)
+	(evil-define-key 'insert vterm-mode-map (kbd "C-e")      #'vterm--self-insert)
+	(evil-define-key 'insert vterm-mode-map (kbd "C-f")      #'vterm--self-insert)
+	(evil-define-key 'insert vterm-mode-map (kbd "C-a")      #'vterm--self-insert)
+	(evil-define-key 'insert vterm-mode-map (kbd "C-v")      #'vterm--self-insert)
+	(evil-define-key 'insert vterm-mode-map (kbd "C-b")      #'vterm--self-insert)
+	(evil-define-key 'insert vterm-mode-map (kbd "C-w")      #'vterm--self-insert)
+	(evil-define-key 'insert vterm-mode-map (kbd "C-u")      #'vterm--self-insert)
+	(evil-define-key 'insert vterm-mode-map (kbd "C-d")      #'vterm--self-insert)
+	(evil-define-key 'insert vterm-mode-map (kbd "C-n")      #'vterm--self-insert)
+	(evil-define-key 'insert vterm-mode-map (kbd "C-m")      #'vterm--self-insert)
+	(evil-define-key 'insert vterm-mode-map (kbd "C-p")      #'vterm--self-insert)
+	(evil-define-key 'insert vterm-mode-map (kbd "C-j")      #'vterm--self-insert)
+	(evil-define-key 'insert vterm-mode-map (kbd "C-k")      #'vterm--self-insert)
+	(evil-define-key 'insert vterm-mode-map (kbd "C-r")      #'vterm--self-insert)
+	(evil-define-key 'insert vterm-mode-map (kbd "C-t")      #'vterm--self-insert)
+	(evil-define-key 'insert vterm-mode-map (kbd "C-g")      #'vterm--self-insert)
+	(evil-define-key 'insert vterm-mode-map (kbd "C-c")      #'vterm--self-insert)
+	(evil-define-key 'insert vterm-mode-map (kbd "C-SPC")    #'vterm--self-insert)
+	(evil-define-key 'normal vterm-mode-map (kbd "C-d")      #'vterm--self-insert)
+	(evil-define-key 'normal vterm-mode-map (kbd ",c")       #'multi-vterm)
+	(evil-define-key 'normal vterm-mode-map (kbd ",n")       #'multi-vterm-next)
+	(evil-define-key 'normal vterm-mode-map (kbd ",p")       #'multi-vterm-prev)
+	(evil-define-key 'normal vterm-mode-map (kbd "i")        #'evil-insert-resume)
+	(evil-define-key 'normal vterm-mode-map (kbd "o")        #'evil-insert-resume)
+	(evil-define-key 'normal vterm-mode-map (kbd "<return>") #'evil-insert-resume)
+    ))
 
 ;; Shell Pop
-(use-package shell-pop
-  :init
-  (setq shell-pop-window-size 30
-        shell-pop-shell-type
-        (cond ((fboundp 'vterm) '("vterm" "*vterm*" #'vterm))
-              (sys/win32p '("eshell" "*eshell*" #'eshell))
-              (t '("terminal" "*terminal*"
-                   (lambda () (term shell-pop-term-shell)))))))
+;; (use-package shell-pop
+;;   :init
+;;   (setq shell-pop-window-size 30
+;;         shell-pop-shell-type
+;;         (cond ((fboundp 'vterm) '("vterm" "*vterm*" #'vterm))
+;;               (sys/win32p '("eshell" "*eshell*" #'eshell))
+;;               (t '("terminal" "*terminal*"
+;;                    (lambda () (term shell-pop-term-shell)))))))
 
 
 
