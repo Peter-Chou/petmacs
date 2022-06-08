@@ -91,14 +91,6 @@
     (define-key evil-visual-state-map (kbd "#")
       'evil-visualstar/begin-search-backward)))
 
-;; (use-package evil-collection
-;;   :after evil
-;;   :init
-;;   (setq evil-collection-setup-minibuffer t
-;; 	    ;; evil-collection-mode-list petmacs-evil-collection-active-list
-;; 	    )
-;;   :hook (after-init . evil-collection-init))
-
 (use-package evil-goggles
   :config
   (evil-goggles-mode)
@@ -133,8 +125,18 @@
   (setq evil-collection-outline-bind-tab-p nil
         evil-collection-mode-list '(magit
                                     magit-todos
+                                    replace
+                                    consult
+                                    embark
+                                    diff-hl
+                                    diff-mode
+                                    ediff
+
+                                    ;; dired
+                                    ;; ibuffer
                                     ))
   :hook (after-init . evil-collection-init))
+
 
 (use-package evil-textobj-line)
 
