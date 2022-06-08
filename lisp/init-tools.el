@@ -132,6 +132,7 @@
 (use-package pyim
   :init
   (require 'pyim-dict-manager)
+  ;; (require 'pyim-basedict)
 
   (setq default-input-method "pyim"
 	    pyim-page-length 7
@@ -146,7 +147,7 @@
   (pyim-default-scheme 'quanpin)
 
   ;; 金手指设置，可以将光标处的编码，比如：拼音字符串，转换为中文。
-  (global-set-key (kbd "C-j") 'pyim-convert-string-at-point)
+  ;; (global-set-key (kbd "C-j") 'pyim-convert-string-at-point)
   (global-set-key (kbd "C-\\") 'toggle-input-method)
 
   ;; 按 "C-<return>" 将光标前的 regexp 转换为可以搜索中文的 regexp.
@@ -161,11 +162,77 @@
       (pyim-select-word-by-number 2)))
 
   (pyim-extra-dicts-add-dict
-   `(:name "Great-dict-private"
-     :file, (expand-file-name "resources/dicts/pyim-greatdict.pyim.gz" user-emacs-directory)
+   `(:name "tsinghua-dict"
+     :file, (expand-file-name "resources/dicts/pyim-tsinghua-dict.pyim" user-emacs-directory)
      :coding utf-8-unix
      :dict-type pinyin-dict
-     :elpa t))
+     ))
+  (pyim-extra-dicts-add-dict
+   `(:name "daily-dict"
+     :file, (expand-file-name "resources/dicts/daily.pyim" user-emacs-directory)
+     :coding utf-8-unix
+     :dict-type pinyin-dict
+     ))
+  (pyim-extra-dicts-add-dict
+   `(:name "math-dict"
+     :file, (expand-file-name "resources/dicts/math.pyim" user-emacs-directory)
+     :coding utf-8-unix
+     :dict-type pinyin-dict
+     ))
+  (pyim-extra-dicts-add-dict
+   `(:name "computer-dict"
+     :file, (expand-file-name "resources/dicts/computer.pyim" user-emacs-directory)
+     :coding utf-8-unix
+     :dict-type pinyin-dict
+     ))
+  (pyim-extra-dicts-add-dict
+   `(:name "computer-nouns-dict"
+     :file, (expand-file-name "resources/dicts/computer-nouns.pyim" user-emacs-directory)
+     :coding utf-8-unix
+     :dict-type pinyin-dict
+     ))
+  (pyim-extra-dicts-add-dict
+   `(:name "coder-dict"
+     :file, (expand-file-name "resources/dicts/coder.pyim" user-emacs-directory)
+     :coding utf-8-unix
+     :dict-type pinyin-dict
+     ))
+  (pyim-extra-dicts-add-dict
+   `(:name "code-lang-dict"
+     :file, (expand-file-name "resources/dicts/code-lang.pyim" user-emacs-directory)
+     :coding utf-8-unix
+     :dict-type pinyin-dict
+     ))
+  (pyim-extra-dicts-add-dict
+   `(:name "data-structure-dict"
+     :file, (expand-file-name "resources/dicts/data-structure.pyim" user-emacs-directory)
+     :coding utf-8-unix
+     :dict-type pinyin-dict
+     ))
+  (pyim-extra-dicts-add-dict
+   `(:name "ai-dict"
+     :file, (expand-file-name "resources/dicts/ai.pyim" user-emacs-directory)
+     :coding utf-8-unix
+     :dict-type pinyin-dict
+     ))
+  (pyim-extra-dicts-add-dict
+   `(:name "nlp-dict"
+     :file, (expand-file-name "resources/dicts/nlp.pyim" user-emacs-directory)
+     :coding utf-8-unix
+     :dict-type pinyin-dict
+     ))
+  (pyim-extra-dicts-add-dict
+   `(:name "chengyu-dict"
+     :file, (expand-file-name "resources/dicts/chengyu.pyim" user-emacs-directory)
+     :coding utf-8-unix
+     :dict-type pinyin-dict
+     ))
+  (pyim-extra-dicts-add-dict
+   `(:name "program-dict"
+     :file, (expand-file-name "resources/dicts/program.pyim" user-emacs-directory)
+     :coding utf-8-unix
+     :dict-type pinyin-dict
+     ))
   )
 
 (use-package toggle-one-window
