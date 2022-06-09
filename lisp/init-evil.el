@@ -150,8 +150,8 @@
                                     lsp-ui-imenu
 
                                     dired
-                                    ;; ibuffer
-                                    ;; org
+                                    ibuffer
+                                    org
                                     ))
   :hook (after-init . evil-collection-init))
 
