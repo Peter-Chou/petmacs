@@ -130,10 +130,23 @@
 (if (fboundp 'display-line-numbers-mode)
     (use-package display-line-numbers
       :ensure nil
-      ;; :hook ((prog-mode yaml-mode conf-mode) . display-line-numbers-mode)
+      :hook ((prog-mode yaml-mode conf-mode) . display-line-numbers-mode)
       :init
-      (setq display-line-numbers-width-start t
-            display-line-numbers-type 'relative))
+      (setq-default display-line-numbers 'visual
+                    display-line-numbers-widen t
+                    display-line-numbers-type 'relative
+                    display-line-numbers-current-absolute t)
+
+      (defun petmacs/display-line-numbers-relative ()
+        "Show relative line numbers."
+        (setq-local display-line-numbers 'visual))
+
+      (defun petmacs/display-line-numbers-absolute ()
+        "Show absolute line numbers."
+        (setq-local display-line-numbers t))
+
+      (add-hook 'evil-insert-state-entry-hook #'petmacs/display-line-numbers-absolute)
+      (add-hook 'evil-insert-state-exit-hook #'petmacs/display-line-numbers-relative))
   (use-package linum-off
     :demand t
     :defines linum-format
