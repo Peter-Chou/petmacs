@@ -68,6 +68,7 @@
   :init
   (setq doom-modeline-icon petmacs-icon
         doom-modeline-minor-modes nil
+        doom-modeline-height 1
         doom-modeline-buffer-file-name-style 'relative-to-project)
   ;; Prevent flash of unstyled modeline at startup
   (unless after-init-time
@@ -228,14 +229,16 @@
   (setq x-gtk-use-system-tooltips nil))
 
 ;; use font supported ligatures
-(use-package composite
-  :ensure nil
-  :init (defvar composition-ligature-table (make-char-table nil))
-  :hook (((prog-mode conf-mode nxml-mode markdown-mode help-mode)
-          . (lambda () (setq-local composition-function-table composition-ligature-table))))
-  :config
-  ;; support ligatures, some toned down to prevent hang
-  (when emacs/>=27p
+(when emacs/>=27p
+  (use-package composite
+    :ensure nil
+    :init (defvar composition-ligature-table (make-char-table nil))
+    :hook (((prog-mode
+             conf-mode nxml-mode markdown-mode help-mode
+             shell-mode eshell-mode term-mode vterm-mode)
+            . (lambda () (setq-local composition-function-table composition-ligature-table))))
+    :config
+    ;; support ligatures, some toned down to prevent hang
     (let ((alist
            '((33 . ".\\(?:\\(==\\|[!=]\\)[!=]?\\)")
              (35 . ".\\(?:\\(###?\\|_(\\|[(:=?[_{]\\)[#(:=?[_{]?\\)")
@@ -270,7 +273,6 @@
         (set-char-table-range composition-ligature-table (car char-regexp)
                               `([,(cdr char-regexp) 0 font-shape-gstring]))))
     (set-char-table-parent composition-ligature-table composition-function-table)))
-
 
 (provide 'init-ui)
 
