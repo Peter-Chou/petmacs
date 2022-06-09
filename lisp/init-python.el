@@ -9,6 +9,7 @@
   :hook
   ((python-mode . (lambda ()
 		            (setq-local flycheck-checkers '(python-pylint))
+                    (pyvenv-tracking-mode 1)
 		            (pyvenv-mode 1)))
    (inferior-python-mode . (lambda ()
 			                 (process-query-on-exit-flag
@@ -34,7 +35,7 @@
 (use-package pyvenv
   :preface
   ;; autoload virtual environment if project_root/pyrightconfig.json file exists,
-  (defun pyvenv-pyright-autoload ()
+  (defun petmacs/pyvenv-pyright-autoload ()
     (require 'projectile)
     (require 'json)
     (let* ((pdir (projectile-project-root))
@@ -43,8 +44,10 @@
            (json-array-type 'string)
            (json-key-type 'string))
       (if (file-exists-p pfile)
-          (pyvenv-workon (gethash "venv" (json-read-file pfile))))))
-  :hook (python-mode . pyvenv-pyright-autoload))
+          (progn
+            (setq-local pyvenv-workon (gethash "venv" (json-read-file pfile)))
+            (pyvenv-workon pyvenv-workon)))))
+  :hook (python-mode . petmacs/pyvenv-pyright-autoload))
 
 (use-package virtualenvwrapper)
 
