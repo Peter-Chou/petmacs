@@ -72,6 +72,8 @@ Otherwise the startup will be very slow. "
 			             ("melpa-stable" . "https://stable.melpa.org/packages/")
 			             ))
 
+;; load custom-set-variables & custom-set-faces in custom file
+(load-file (expand-file-name "custom.el" user-emacs-directory))
 
 (require 'init-package)
 (require 'init-basic)

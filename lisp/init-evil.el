@@ -21,6 +21,12 @@
   (with-eval-after-load 'evil-maps
     (define-key evil-motion-state-map (kbd "RET") nil))
   :config
+  (define-key evil-normal-state-map   (kbd "C-g") #'keyboard-quit)
+  (define-key evil-motion-state-map   (kbd "C-g") #'keyboard-quit)
+  (define-key evil-insert-state-map   (kbd "C-g") #'keyboard-quit)
+  (define-key evil-window-map         (kbd "C-g") #'keyboard-quit)
+  (define-key evil-operator-state-map (kbd "C-g") #'keyboard-quit)
+
   (define-key evil-normal-state-map (kbd "C-w C-w") 'ace-window)
 
   ;; Use visual line motions even outside of visual-line-mode buffers
@@ -143,7 +149,7 @@
 
                                     lsp-ui-imenu
 
-                                    ;; dired
+                                    dired
                                     ;; ibuffer
                                     ;; org
                                     ))

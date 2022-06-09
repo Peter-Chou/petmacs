@@ -65,7 +65,7 @@ flycheck_*.el
 # cache
 .cache*
 
-/custom.el
+# /custom.el
 recentf
 history
 places
