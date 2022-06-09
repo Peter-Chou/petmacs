@@ -123,19 +123,29 @@
 (use-package evil-collection
   :init
   (setq evil-collection-outline-bind-tab-p nil
-        evil-collection-mode-list '(magit
+        evil-collection-mode-list '(replace
+                                    proced
+                                    simple
+
+                                    magit
                                     magit-todos
-                                    replace
+
+                                    vertico
                                     consult
                                     embark
+
                                     diff-hl
                                     diff-mode
                                     ediff
 
-                                    proced
+                                    vterm
+                                    which-key
+
+                                    lsp-ui-imenu
 
                                     ;; dired
                                     ;; ibuffer
+                                    ;; org
                                     ))
   :hook (after-init . evil-collection-init))
 
