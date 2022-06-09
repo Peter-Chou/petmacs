@@ -106,7 +106,8 @@
   :hook ((python-mode . (lambda ()
 				          (require 'lsp-pyright)
 				          (add-hook 'after-save-hook #'lsp-pyright-format-buffer t t)))
-	     (pyvenv-mode . (lambda () (lsp-deferred))))
+	     ;; (pyvenv-mode . (lambda () (lsp-deferred)))
+         )
   :init
   ;; too much noise in "real" projects
   (setq lsp-pyright-typechecking-mode "basic"

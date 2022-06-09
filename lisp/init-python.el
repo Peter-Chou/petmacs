@@ -9,7 +9,7 @@
   :hook
   ((python-mode . (lambda ()
 		            (setq-local flycheck-checkers '(python-pylint))
-		            (setq-local python-mode t)
+		            ;; (setq-local python-mode t)
                     (pyvenv-tracking-mode 1)
 		            (pyvenv-mode 1)))
    (inferior-python-mode . (lambda ()
@@ -46,10 +46,13 @@
            (json-key-type 'string))
       (when (file-exists-p pfile)
         (setq-local pyvenv-workon (gethash "venv" (json-read-file pfile)))
-        (pyvenv-workon pyvenv-workon))))
+        (pyvenv-workon pyvenv-workon)
+        (if (boundp 'lsp-mode)
+            (lsp-deferred))
+        )))
 
   (defun petmacs/auto-toggle-pyvenv-mode ()
-    (if python-mode
+    (if (equal major-mode 'python-mode)
         (unless (member '(pyvenv-mode pyvenv-mode-line-indicator) mode-line-misc-info)
           (add-to-list 'mode-line-misc-info '(pyvenv-mode pyvenv-mode-line-indicator)))
       (when (member '(pyvenv-mode pyvenv-mode-line-indicator) mode-line-misc-info)
@@ -59,7 +62,8 @@
 
   :hook (python-mode . petmacs/pyvenv-pyright-autoload)
   :config
-  (add-hook 'buffer-list-update-hook #'petmacs/auto-toggle-pyvenv-mode))
+  (add-hook 'buffer-list-update-hook #'petmacs/auto-toggle-pyvenv-mode)
+  )
 
 (use-package virtualenvwrapper)
 
