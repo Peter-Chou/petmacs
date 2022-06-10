@@ -5,9 +5,9 @@
 
 (setq package-enable-at-startup nil)
 
-(setq frame-inhibit-implied-resize t)
+(setq load-prefer-newer noninteractive)
 
-(set-language-environment "UTF-8")
+(setq frame-inhibit-implied-resize t)
 
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(tool-bar-lines . 0) default-frame-alist)

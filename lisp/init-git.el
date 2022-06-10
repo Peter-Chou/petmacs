@@ -1,7 +1,7 @@
 ;; init-git.el --- Better default configurations.	-*- lexical-binding: t -*-
 
 (use-package magit
-  :pin melpa-stable
+  ;; :pin melpa-stable
   :mode (("\\COMMIT_EDITMSG\\'" . text-mode)
          ("\\MERGE_MSG\\'" . text-mode))
   :bind (("C-x g" . magit-status)

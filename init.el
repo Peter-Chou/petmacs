@@ -3,13 +3,9 @@
 ;; Speed up startup
 (setq auto-mode-case-fold nil)
 
-(unless (or (daemonp) noninteractive)
+(unless (or (daemonp) noninteractive init-file-debug)
   (let ((old-file-name-handler-alist file-name-handler-alist))
-    ;; If `file-name-handler-alist' is nil, no 256 colors in TUI
-    ;; @see https://emacs-china.org/t/spacemacs-petmacs-emacs/3802/839
-    (setq file-name-handler-alist
-          (unless (display-graphic-p)
-            '(("\\(?:\\.tzst\\|\\.zst\\|\\.dz\\|\\.txz\\|\\.xz\\|\\.lzma\\|\\.lz\\|\\.g?z\\|\\.\\(?:tgz\\|svgz\\|sifz\\)\\|\\.tbz2?\\|\\.bz2\\|\\.Z\\)\\(?:~\\|\\.~[-[:alnum:]:#@^._]+\\(?:~[[:digit:]]+\\)?~\\)?\\'" . jka-compr-handler))))
+    (setq file-name-handler-alist nil)
     (add-hook 'emacs-startup-hook
               (lambda ()
                 "Recover file name handlers."
@@ -17,14 +13,12 @@
                       (delete-dups (append file-name-handler-alist
                                            old-file-name-handler-alist)))))))
 
-(setq gc-cons-threshold most-positive-fixnum
-      gc-cons-percentage 0.5)
+;; Defer garbage collection further back in the startup process
+(setq gc-cons-threshold most-positive-fixnum)
 (add-hook 'emacs-startup-hook
           (lambda ()
             "Recover GC values after startup."
-            (setq gc-cons-threshold 800000
-                  gc-cons-percentage 0.1)))
-
+            (setq gc-cons-threshold 800000)))
 
 (setq byte-compile-warnings '(cl-functions))
 
@@ -62,14 +56,15 @@ Otherwise the startup will be very slow. "
 (update-load-path)
 
 ;; use mirror
-(setq package-archives '(("gnu"          . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-                         ("elpa"         . "https://elpa.gnu.org/packages/")
-
-			             ;; ("melpa"        . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-			             ("melpa"        . "https://melpa.org/packages/")
+(setq package-archives '(("gnu"          . "http://mirrors.sjtug.sjtu.edu.cn/emacs-elpa/gnu/")
+                         ("nongnu"          . "http://mirrors.sjtug.sjtu.edu.cn/emacs-elpa/nongnu/")
+			             ("melpa"        . "http://mirrors.sjtug.sjtu.edu.cn/emacs-elpa/melpa/")
 			             ("org"          . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
+
+                         ;; ("elpa"         . "http://elpa.gnu.org/packages/")
+			             ;; ("melpa"        . "http://melpa.org/packages/")
 			             ;; ("melpa-stable" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa-stable/")
-			             ("melpa-stable" . "https://stable.melpa.org/packages/")
+			             ;; ("melpa-stable" . "http://stable.melpa.org/packages/")
 			             ))
 
 ;; load custom-set-variables & custom-set-faces in custom file
