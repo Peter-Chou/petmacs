@@ -56,10 +56,9 @@ Otherwise the startup will be very slow. "
 (update-load-path)
 
 ;; use mirror
-(setq package-archives '(("gnu"          . "http://mirrors.sjtug.sjtu.edu.cn/emacs-elpa/gnu/")
-                         ("nongnu"          . "http://mirrors.sjtug.sjtu.edu.cn/emacs-elpa/nongnu/")
-			             ("melpa"        . "http://mirrors.sjtug.sjtu.edu.cn/emacs-elpa/melpa/")
-			             ("org"          . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
+(setq package-archives '(("gnu"          . "https://elpa.gnu.org/packages/")
+                         ("melpa"        . "https://melpa.org/packages/")
+                         ("org"          . "https://orgmode.org/elpa/")
 
                          ;; ("elpa"         . "http://elpa.gnu.org/packages/")
 			             ;; ("melpa"        . "http://melpa.org/packages/")
