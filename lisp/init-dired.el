@@ -60,6 +60,7 @@
   ;; was dired-up-director
   ;; (evil-define-key 'normal dired-mode-map (kbd "^") 'petmacs/dired-goto-parent-directory)
   (evil-define-key 'normal dired-mode-map (kbd "-") 'petmacs/dired-goto-parent-directory)
+  (evil-define-key 'normal dired-mode-map (kbd "F") 'dired-create-empty-file)
   ;; kill current buffer when leaving dired mode
   ;; (evil-define-key 'normal dired-mode-map (kbd "q") 'kill-this-buffer)
   )
