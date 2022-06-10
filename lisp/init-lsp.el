@@ -2,7 +2,7 @@
 
 
 (use-package kind-all-the-icons
-  :ensure nil
+  :load-path (lambda () (expand-file-name "site-lisp/kind-all-the-icons" user-emacs-directory))
   :init
   (require 'kind-all-the-icons)
   (if (display-graphic-p)

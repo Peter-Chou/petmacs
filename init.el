@@ -43,16 +43,6 @@
   (dolist (dir '("site-lisp" "lisp"))
     (push (expand-file-name dir user-emacs-directory) load-path)))
 
-(defun add-subdirs-to-load-path (&rest _)
-  "Add subdirectories to `load-path'.
-Don't put large files in `site-lisp' directory, e.g. EAF.
-Otherwise the startup will be very slow. "
-  (let ((default-directory (expand-file-name "site-lisp" user-emacs-directory)))
-    (normal-top-level-add-subdirs-to-load-path)))
-
-(advice-add #'package-initialize :after #'update-load-path)
-(advice-add #'package-initialize :after #'add-subdirs-to-load-path)
-
 (update-load-path)
 
 ;; use mirror
@@ -62,8 +52,6 @@ Otherwise the startup will be very slow. "
 
                          ;; ("elpa"         . "http://elpa.gnu.org/packages/")
 			             ;; ("melpa"        . "http://melpa.org/packages/")
-			             ;; ("melpa-stable" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa-stable/")
-			             ;; ("melpa-stable" . "http://stable.melpa.org/packages/")
 			             ))
 
 ;; load custom-set-variables & custom-set-faces in custom file
@@ -111,6 +99,7 @@ Otherwise the startup will be very slow. "
 
 (require 'init-org)
 (require 'init-snippets)
+(require 'init-eaf)
 
 (require 'core-funcs)
 (require 'init-keybindings)
