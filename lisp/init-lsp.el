@@ -10,11 +10,6 @@
 
 
 (use-package lsp-mode
-  ;; :custom (lsp-completion-provider :none) ;; we use Corfu!
-  ;; :hook ((lsp-completion-mode . my/lsp-mode-setup-completion)
-  ;;        (lsp-completion-mode . (lambda ()
-  ;;                                 (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
-  ;;                                       '(flex)))))
   :init
   (setq lsp-keymap-prefix "C-c l"
         lsp-keep-workspace-alive nil
