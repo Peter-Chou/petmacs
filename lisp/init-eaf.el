@@ -10,10 +10,16 @@
   (let ((default-directory (expand-file-name "site-lisp/emacs-application-framework/app" user-emacs-directory)))
     (normal-top-level-add-subdirs-to-load-path))
   (require 'eaf)
-  (require 'eaf-all-the-icons)
-  (require 'eaf-browser)
+  (require 'eaf-jupyter)
   (require 'eaf-markdown-previewer)
+  (require 'eaf-pdf-viewer)
+  (require 'eaf-image-viewer)
+  (require 'eaf-org-previewer)
+  (require 'eaf-browser)
+
+  (require 'eaf-all-the-icons)
   (require 'eaf-evil)
-  )
+
+  (setq eaf-python-command (expand-file-name "eaf/bin/python" (getenv "WORKON_HOME"))))
 
 (provide 'init-eaf)

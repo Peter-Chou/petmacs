@@ -10,24 +10,28 @@ Petmacs requires fonts for better display:
 
   - [Fira Code](https://github.com/tonsky/FiraCode)
 
-  - [Fira Code Symbol](https://github.com/tonsky/FiraCode/files/412440/FiraCode-Regular-Symbol.zip)
-
   - [all the icons](https://github.com/domtronn/all-the-icons.el/tree/master/fonts)
 
 - global tools
 
   - [ripgrep](https://github.com/BurntSushi/ripgrep) in your $PATH
 
-- eaf
+- npm
 
 ``` bash
-git clone --depth=1 -b master https://github.com/emacs-eaf/emacs-application-framework.git ~/.emacs.d/site-lisp/emacs-application-framework/
+sudo apt install nodejs npm
 ```
 
-- Python related Packages
+- git modules
 
-```sh
-pip install pylint yapf isort
+``` bash
+git submodule update --init --recursive
+```
+
+``` bash
+conda create -n eaf python=3.8
+conda activate eaf
+python site-lisp/emacs-application-framework/install-eaf.py
 ```
 
 - C/C++ packages
