@@ -23,6 +23,22 @@
   (add-to-list 'completion-at-point-functions #'cape-symbol)
   (add-to-list 'completion-at-point-functions #'cape-file)
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+
+  (defun corfu-beginning-of-prompt ()
+    "Move to beginning of completion input."
+    (interactive)
+    (corfu--goto -1)
+    (goto-char (car completion-in-region--data)))
+
+  (defun corfu-end-of-prompt ()
+    "Move to end of completion input."
+    (interactive)
+    (corfu--goto -1)
+    (goto-char (cadr completion-in-region--data)))
+
+  (define-key corfu-map [remap move-beginning-of-line] #'corfu-beginning-of-prompt)
+  (define-key corfu-map [remap move-end-of-line] #'corfu-end-of-prompt)
+
   (with-eval-after-load 'lsp-mode
     (setq lsp-completion-provider :none) ;; we use Corfu!
 
