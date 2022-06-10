@@ -47,7 +47,7 @@
       (when (file-exists-p pfile)
         (setq-local pyvenv-workon (gethash "venv" (json-read-file pfile)))
         (pyvenv-workon pyvenv-workon)
-        (if (boundp 'lsp-mode)
+        (if (equal petmacs-lsp-client-type 'lsp-mode)
             (lsp-deferred))
         )))
 

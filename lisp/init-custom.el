@@ -4,27 +4,15 @@
 
 ;;; Code:
 
-(defgroup petmacs nil
-  "Centaur Emacs customization."
-  :group 'convenience
-  :link '(url-link :tag "Homepage" "https://github.com/Peter-Chou/petmacs")
-  )
+(defvar  petmacs-proxy "winhost:1080"
+  "Set network proxy.")
 
-(defcustom  petmacs-proxy "winhost:1080"
-  "Set network proxy."
-	:group 'petmacs
-  :type 'string)
-
-(defcustom petmacs-icon (or (display-graphic-p) (daemonp))
-  "Display icons or not."
-  :group 'petmacs
-  :type 'boolean)
+(defvar petmacs-icon (or (display-graphic-p) (daemonp))
+  "Display icons or not.")
 
 
-(defcustom  petmacs-font-size 13.0
-  "font size"
-  :group 'petmacs
-  :type 'integer)
+(defvar  petmacs-font-size 13.0
+  "font size")
 
 (defvar petmacs-lsp-active-modes '(
 				                   c-mode
@@ -36,7 +24,10 @@
 				                   sh-mode
 				                   )
   "Primary major modes of the lsp activated layer.")
-;;
+
+(defvar petmacs-lsp-client-type 'lsp-mode
+  "lsp-mode or lsp-bridge-mode")
+
 (provide 'init-custom)
 
 ;;; init-custom.el ends here
