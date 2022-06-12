@@ -48,14 +48,15 @@
 ;; use mirror
 (setq package-archives '(("gnu"          . "https://elpa.gnu.org/packages/")
                          ("melpa"        . "https://melpa.org/packages/")
-                         ("org"          . "https://orgmode.org/elpa/")
+                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+                         ;; ("org"          . "https://orgmode.org/elpa/")
 
                          ;; ("elpa"         . "http://elpa.gnu.org/packages/")
 			             ;; ("melpa"        . "http://melpa.org/packages/")
 			             ))
 
 ;; load custom-set-variables & custom-set-faces in custom file
-(load-file (expand-file-name "custom.el" user-emacs-directory))
+(load (expand-file-name "custom.el" user-emacs-directory) 'no-error 'no-message)
 
 (require 'init-package)
 (require 'init-basic)

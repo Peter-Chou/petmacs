@@ -1,6 +1,9 @@
 ;; -*- lexical-binding: t -*-
 
+(require'org-tempo) ;; start easy template
+
 (use-package org
+  :pin melpa
   :ensure nil
   :custom-face (org-ellipsis ((t (:foreground nil))))
   :hook ((org-babel-after-execute org-mode) . org-redisplay-inline-images) ; display image
@@ -67,6 +70,9 @@
 
   (with-eval-after-load 'org-capture
     (require 'org-projectile)))
+
+(use-package org-contrib
+  :pin nongnu)
 
 
 (provide 'init-org)

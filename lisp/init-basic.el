@@ -166,8 +166,9 @@
 (when (display-graphic-p)
   (add-hook 'window-setup-hook #'fix-fullscreen-cocoa))
 
+(setq confirm-kill-processes nil)
+
 (provide 'init-basic)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init-basic.el ends here
-
