@@ -1,7 +1,12 @@
 ;;; early-init.el --- Early initialization. -*- lexical-binding: t -*-
 
-(setq gc-cons-threshold most-positive-fixnum
-      gc-cons-percentage 0.5)
+;; Defer garbage collection further back in the startup process
+(setq gc-cons-threshold most-positive-fixnum)
+
+;; Prevent unwanted runtime compilation for gccemacs (native-comp) users;
+;; packages are compiled ahead-of-time when they are installed and site files
+;; are compiled when gccemacs is installed.
+(setq native-comp-deferred-compilation nil)
 
 (setq package-enable-at-startup nil)
 

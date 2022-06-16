@@ -74,5 +74,4 @@
 (use-package org-contrib
   :pin nongnu)
 
-
 (provide 'init-org)

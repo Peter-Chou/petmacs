@@ -125,7 +125,8 @@
   :hook (doom-modeline-mode . minions-mode))
 
 (use-package all-the-icons
-  :if (and petmacs-icon (display-graphic-p)))
+  :if (and petmacs-icon (display-graphic-p))
+  :custom (all-the-icons-scale-factor 1.1))
 
 ;; Show native line numbers if possible, otherwise use `linum'
 (if (fboundp 'display-line-numbers-mode)
