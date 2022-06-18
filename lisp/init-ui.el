@@ -63,51 +63,90 @@
   (with-eval-after-load 'lsp-treemacs
     (doom-themes-treemacs-config)))
 
-(use-package doom-modeline
-  :hook (after-init . doom-modeline-mode)
-  :init
-  (setq doom-modeline-icon petmacs-icon
-        doom-modeline-minor-modes nil
-        doom-modeline-height 1
-        doom-modeline-buffer-file-name-style 'relative-to-project)
-  ;; Prevent flash of unstyled modeline at startup
-  (unless after-init-time
-    (setq-default mode-line-format nil)))
-
-;; (use-package awesome-tray
-;;   :quelpa (awesome-tray :fetcher github
-;;   		                :repo "manateelazycat/awesome-tray"
-;;   		                :files ("*.el"))
-;;   :commands (awesome-tray-update)
-;;   :hook (after-init . awesome-tray-mode)
+;; (use-package doom-modeline
+;;   :preface
+;;   (defun petmacs/auto-toggle-pyvenv-mode ()
+;;     (if (equal major-mode 'python-mode)
+;;         (unless (member '(pyvenv-mode pyvenv-mode-line-indicator) mode-line-misc-info)
+;;           (add-to-list 'mode-line-misc-info '(pyvenv-mode pyvenv-mode-line-indicator)))
+;;       (when (member '(pyvenv-mode pyvenv-mode-line-indicator) mode-line-misc-info)
+;;         (setq mode-line-misc-info (delete '(pyvenv-mode pyvenv-mode-line-indicator)
+;;                                           mode-line-misc-info)))
+;;       ))
+;;   :hook (after-init . doom-modeline-mode)
 ;;   :init
-;;   (setq
-;;    awesome-tray-update-interval 0.6
-;;    awesome-tray-file-path-show-filename t)
-;;   (defun awesome-tray-module-winum-info ()
-;;     (format "%s" (winum-get-number-string)))
-;;   (winum-get-number-string)
-;;   (defface awesome-tray-module-winum-face
-;;     '((((background light))
-;;        :foreground "#0673d7" :bold t)
-;;       (t
-;;        :foreground "#369bf8" :bold t))
-;;     "Date face."
-;;     :group 'awesome-tray)
+;;   (setq doom-modeline-icon petmacs-icon
+;;         doom-modeline-minor-modes nil
+;;         doom-modeline-height 1
+;;         doom-modeline-buffer-file-name-style 'relative-to-project)
+;;   ;; Prevent flash of unstyled modeline at startup
+;;   (unless after-init-time
+;;     (setq-default mode-line-format nil))
 ;;   :config
-;;   (defun awesome-tray-update-git-command-cache ()
-;;     (let* ((git-info (awesome-tray-process-exit-code-and-output "git" "symbolic-ref" "--short" "HEAD"))
-;;            (status (nth 0 git-info))
-;;            (result (format "%s" (nth 1 git-info))))
-;;       (setq awesome-tray-git-command-cache
-;;             (if (equal status 0)
-;;                 (replace-regexp-in-string "\n" "" result)
-;;               ""))
-;;       awesome-tray-git-command-cache))
-;;   (add-hook 'buffer-list-update-hook #'awesome-tray-update)
-;;   (add-to-list 'awesome-tray-module-alist '("winum" . (awesome-tray-module-winum-info awesome-tray-module-winum-face)))
-;;   (setq awesome-tray-active-modules   '("winum" "evil" "location" "belong" "file-path" "git" "date")
-;;         awesome-tray-essential-modules '("winum" "evil" "location" "belong" "file-path")))
+;;   (add-hook 'buffer-list-update-hook #'petmacs/auto-toggle-pyvenv-mode))
+
+
+(use-package sort-tab
+  :quelpa (sort-tab :fetcher github
+  		            :repo "manateelazycat/sort-tab"
+  		            :files ("*.el"))
+  :hook (after-init . sort-tab-mode))
+
+(use-package awesome-tray
+  :quelpa (awesome-tray :fetcher github
+  		                :repo "manateelazycat/awesome-tray"
+  		                :files ("*.el"))
+  :preface
+  (defun awesome-tray-module-winum-info ()
+    (format "%s" (winum-get-number-string)))
+
+  (defface awesome-tray-module-winum-face
+    '((((background light))
+       :foreground "#0673d7" :bold t)
+      (t
+       :foreground "#369bf8" :bold t))
+    "winum face."
+    :group 'awesome-tray)
+
+  (defun awesome-tray-module-pyvenv-info ()
+    ;; (if (bound-and-true-p pyvenv-mode)
+    (if (equal major-mode 'python-mode)
+        (format "[%s]" pyvenv-virtual-env-name)
+      ""))
+
+  (defface awesome-tray-module-pyvenv-face
+    '((((background light))
+       :foreground "#0673d8" :bold t)
+      (t
+       :foreground "#369bf7" :bold t))
+    "pyvenv face."
+    :group 'awesome-tray)
+  :commands (awesome-tray-update)
+  :hook (after-init . awesome-tray-mode)
+  :init
+  (setq
+   awesome-tray-update-interval 0.6
+   awesome-tray-file-path-show-filename nil)
+
+  :config
+  (defun awesome-tray-update-git-command-cache ()
+    (let* ((git-info (awesome-tray-process-exit-code-and-output "git" "symbolic-ref" "--short" "HEAD"))
+           (status (nth 0 git-info))
+           (result (format "%s" (nth 1 git-info))))
+      (setq awesome-tray-git-command-cache
+            (if (equal status 0)
+                (replace-regexp-in-string "\n" "" result)
+              ""))
+      awesome-tray-git-command-cache))
+  (add-hook 'buffer-list-update-hook #'awesome-tray-update)
+
+  (add-to-list 'awesome-tray-module-alist '("winum" . (awesome-tray-module-winum-info awesome-tray-module-winum-face)))
+  (add-to-list 'awesome-tray-module-alist '("pyvenv" . (awesome-tray-module-pyvenv-info awesome-tray-module-pyvenv-face)))
+
+  (setq
+   ;; awesome-tray-active-modules   '("winum" "evil" "location" "belong" "pyvenv" "file-path" "git" "date")
+   awesome-tray-active-modules   '("winum" "location" "belong" "pyvenv" "file-path" "git" "date")
+   awesome-tray-essential-modules '("winum" "evil" "location" "belong" "file-path")))
 
 (use-package hide-mode-line
   :hook (((

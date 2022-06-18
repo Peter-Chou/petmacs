@@ -51,18 +51,7 @@
             (lsp-deferred))
         )))
 
-  (defun petmacs/auto-toggle-pyvenv-mode ()
-    (if (equal major-mode 'python-mode)
-        (unless (member '(pyvenv-mode pyvenv-mode-line-indicator) mode-line-misc-info)
-          (add-to-list 'mode-line-misc-info '(pyvenv-mode pyvenv-mode-line-indicator)))
-      (when (member '(pyvenv-mode pyvenv-mode-line-indicator) mode-line-misc-info)
-        (setq mode-line-misc-info (delete '(pyvenv-mode pyvenv-mode-line-indicator)
-                                          mode-line-misc-info)))
-      ))
-
   :hook (python-mode . petmacs/pyvenv-pyright-autoload)
-  :config
-  (add-hook 'buffer-list-update-hook #'petmacs/auto-toggle-pyvenv-mode)
   )
 
 (use-package virtualenvwrapper)
