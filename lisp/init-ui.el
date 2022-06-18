@@ -126,10 +126,14 @@
   :init
   (setq
    awesome-tray-update-interval 0.6
-   awesome-tray-file-path-show-filename nil)
+   awesome-tray-buffer-name-max-length 15
+   awesome-tray-file-path-show-filename t
+
+   awesome-tray-active-modules   '("winum" "location" "belong" "pyvenv" "file-path" "git" "date")
+   awesome-tray-essential-modules '("winum" "location" "belong" "file-path"))
 
   :config
-  (defun awesome-tray-update-git-command-cache ()
+  (defun petmacs/awesome-tray-update-git-command-cache ()
     (let* ((git-info (awesome-tray-process-exit-code-and-output "git" "symbolic-ref" "--short" "HEAD"))
            (status (nth 0 git-info))
            (result (format "%s" (nth 1 git-info))))
@@ -138,15 +142,12 @@
                 (replace-regexp-in-string "\n" "" result)
               ""))
       awesome-tray-git-command-cache))
-  (add-hook 'buffer-list-update-hook #'awesome-tray-update)
+  (advice-add #'awesome-tray-update-git-command-cache :override #'petmacs/awesome-tray-update-git-command-cache)
 
   (add-to-list 'awesome-tray-module-alist '("winum" . (awesome-tray-module-winum-info awesome-tray-module-winum-face)))
   (add-to-list 'awesome-tray-module-alist '("pyvenv" . (awesome-tray-module-pyvenv-info awesome-tray-module-pyvenv-face)))
 
-  (setq
-   ;; awesome-tray-active-modules   '("winum" "evil" "location" "belong" "pyvenv" "file-path" "git" "date")
-   awesome-tray-active-modules   '("winum" "location" "belong" "pyvenv" "file-path" "git" "date")
-   awesome-tray-essential-modules '("winum" "evil" "location" "belong" "file-path")))
+  (add-hook 'buffer-list-update-hook #'awesome-tray-update))
 
 (use-package hide-mode-line
   :hook (((
