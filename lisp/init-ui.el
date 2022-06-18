@@ -86,11 +86,11 @@
 ;;   (add-hook 'buffer-list-update-hook #'petmacs/auto-toggle-pyvenv-mode))
 
 
-(use-package sort-tab
-  :quelpa (sort-tab :fetcher github
-  		            :repo "manateelazycat/sort-tab"
-  		            :files ("*.el"))
-  :hook (after-init . sort-tab-mode))
+;; (use-package sort-tab
+;;   :quelpa (sort-tab :fetcher github
+;;   		            :repo "manateelazycat/sort-tab"
+;;   		            :files ("*.el"))
+;;   :hook (after-init . sort-tab-mode))
 
 (use-package awesome-tray
   :quelpa (awesome-tray :fetcher github
@@ -110,7 +110,7 @@
 
   (defun awesome-tray-module-pyvenv-info ()
     ;; (if (bound-and-true-p pyvenv-mode)
-    (if (equal major-mode 'python-mode)
+    (if (and (equal major-mode 'python-mode) (bound-and-true-p pyvenv-virtual-env-name))
         (format "[%s]" pyvenv-virtual-env-name)
       ""))
 

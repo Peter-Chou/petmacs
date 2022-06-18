@@ -50,7 +50,6 @@
         (if (equal petmacs-lsp-client-type 'lsp-mode)
             (lsp-deferred))
         )))
-
   :hook (python-mode . petmacs/pyvenv-pyright-autoload)
   )
 
