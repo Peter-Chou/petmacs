@@ -41,13 +41,20 @@
 
 ;; Environment
 (when (or sys/mac-x-p sys/linux-x-p (daemonp))
-  (use-package exec-path-from-shell
-    :init (exec-path-from-shell-initialize)))
+  (use-package exec-path-from-shell)
 
-	;; Start server
-(use-package server
-  :ensure nil
-  :hook (after-init . server-mode))
+  (use-package cache-path-from-shell
+    :quelpa (cache-path-from-shell :fetcher github
+  		                           :repo "manateelazycat/cache-path-from-shell"
+  		                           :files ("*.el"))
+    :init
+    (require 'cache-path-from-shell)
+    (exec-path-from-shell-initialize)))
+
+  ;; Start server
+  (use-package server
+    :ensure nil
+    :hook (after-init . server-mode))
 
 
 (use-package recentf
