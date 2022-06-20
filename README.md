@@ -28,6 +28,9 @@ sudo apt install nodejs npm
 
 ``` bash
 git submodule update --init --recursive
+
+# udpate
+# git submodule update --remote --merge
 ```
 
 ``` bash
