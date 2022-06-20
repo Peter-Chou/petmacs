@@ -48,13 +48,14 @@
   :hook ((after-init . all-the-icons-completion-mode)
          (marginalia-mode . all-the-icons-completion-marginalia-setup)))
 
+
+(use-package monokai-theme
+  :init (petmacs--load-theme 'monokai))
+
 ;; ;; make "unreal" buffers (like popups, sidebars, log buffers,
 ;; ;; terminals by giving the latter a slightly different (often darker) background
 (use-package solaire-mode
   :hook (after-load-theme . solaire-global-mode))
-
-(use-package spacemacs-theme
-  :init (petmacs--load-theme 'spacemacs-light))
 
 ;; (use-package doom-themes
 ;;   :init
