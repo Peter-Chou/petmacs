@@ -39,6 +39,7 @@
   (define-key winum-keymap (kbd "M-4") 'winum-select-window-4)
   (define-key winum-keymap (kbd "M-5") 'winum-select-window-5)
   (define-key winum-keymap (kbd "M-6") 'winum-select-window-6)
+
   (define-key winum-keymap (kbd "M-7") 'winum-select-window-7)
   (define-key winum-keymap (kbd "M-8") 'winum-select-window-8)
   (define-key winum-keymap (kbd "M-9") 'lsp-treemacs-symbols))
@@ -53,7 +54,9 @@
   :hook (after-load-theme . solaire-global-mode))
 
 (use-package doom-themes
-  :init (petmacs--load-theme 'doom-dracula)
+  :init
+  ;; (petmacs--load-theme 'doom-dracula)
+  (petmacs--load-theme 'doom-gruvbox-light)
   :config
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
@@ -126,11 +129,14 @@
   :init
   (setq
    awesome-tray-update-interval 0.6
-   awesome-tray-buffer-name-max-length 15
+   awesome-tray-buffer-name-max-length 30
    awesome-tray-file-path-show-filename t
 
-   awesome-tray-active-modules   '("winum" "location" "belong" "pyvenv" "file-path" "git" "date")
-   awesome-tray-essential-modules '("winum" "location" "belong" "file-path"))
+   ;; awesome-tray-active-modules   '("winum" "location" "belong" "pyvenv" "file-path" "git" "date")
+   ;; awesome-tray-essential-modules '("winum" "location" "belong" "file-path")
+   awesome-tray-active-modules   '("winum" "location" "belong" "pyvenv" "buffer-name" "git" "date")
+   awesome-tray-essential-modules '("winum" "location" "belong" "buffer-name")
+   )
 
   :config
   (defun petmacs/awesome-tray-update-git-command-cache ()
