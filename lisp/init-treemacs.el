@@ -18,6 +18,8 @@
         treemacs-follow-after-init       t
         treemacs-width                   30)
   :config
+  (add-hook 'treemacs-mode-hook (lambda() (display-line-numbers-mode -1)))
+
   (treemacs-follow-mode t)
   (treemacs-filewatch-mode t)
   (pcase (cons (not (null (executable-find "git")))
