@@ -30,6 +30,11 @@
 (defvar petmacs-lsp-client-type 'lsp-mode
   "lsp-mode or lsp-bridge-mode")
 
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+
+(when (file-exists-p custom-file)
+  (load custom-file))
+
 (provide 'init-custom)
 
 ;;; init-custom.el ends here

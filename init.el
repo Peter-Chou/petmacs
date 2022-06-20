@@ -55,9 +55,6 @@
 			             ;; ("melpa"        . "http://melpa.org/packages/")
 			             ))
 
-;; load custom-set-variables & custom-set-faces in custom file
-(load (expand-file-name "custom.el" user-emacs-directory) 'no-error 'no-message)
-
 (require 'init-package)
 (require 'init-basic)
 (require 'init-font)
