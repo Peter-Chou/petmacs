@@ -48,26 +48,26 @@
   :hook ((after-init . all-the-icons-completion-mode)
          (marginalia-mode . all-the-icons-completion-marginalia-setup)))
 
-(use-package vscode-dark-plus-theme
-  :init (petmacs--load-theme 'vscode-dark-plus))
+;; (use-package vscode-dark-plus-theme
+;;   :init (petmacs--load-theme 'vscode-dark-plus))
 
 ;; ;; make "unreal" buffers (like popups, sidebars, log buffers,
 ;; ;; terminals by giving the latter a slightly different (often darker) background
 (use-package solaire-mode
   :hook (after-load-theme . solaire-global-mode))
 
-;; (use-package doom-themes
-;;   :init
-;;   ;; (petmacs--load-theme 'doom-dracula)
-;;   ;; (petmacs--load-theme 'doom-gruvbox-light)
-;;   :config
-;;   ;; Enable flashing mode-line on errors
-;;   (doom-themes-visual-bell-config)
+(use-package doom-themes
+  :init
+  ;; (petmacs--load-theme 'doom-dracula)
+  (petmacs--load-theme 'doom-acario-light)
+  :config
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
 
-;;   ;; Enable customized theme
-;;   ;; FIXME: https://github.com/emacs-lsp/lsp-treemacs/issues/89
-;;   (with-eval-after-load 'lsp-treemacs
-;;     (doom-themes-treemacs-config)))
+  ;; Enable customized theme
+  ;; FIXME: https://github.com/emacs-lsp/lsp-treemacs/issues/89
+  (with-eval-after-load 'lsp-treemacs
+    (doom-themes-treemacs-config)))
 
 ;; (use-package doom-modeline
 ;;   :preface
