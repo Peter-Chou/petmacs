@@ -97,7 +97,9 @@
 
 (require 'init-org)
 (require 'init-snippets)
-(require 'init-eaf)
+
+(if (display-graphic-p)
+    (require 'init-eaf))
 
 (require 'core-funcs)
 (require 'init-keybindings)
