@@ -8,7 +8,9 @@ Petmacs requires fonts for better display:
 
 - Fonts
 
-  - [Fira Code](https://github.com/tonsky/FiraCode)
+  - [Hack](https://github.com/source-foundry/Hack)
+
+- icons
 
   - [all the icons](https://github.com/domtronn/all-the-icons.el/tree/master/fonts)
 

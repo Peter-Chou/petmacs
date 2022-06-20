@@ -4,7 +4,8 @@
 (require 'init-custom)
 (require 'init-funcs)
 
-(set-face-attribute 'default nil :font (format "JetBrains Mono-%S" petmacs-font-size))
+;; (set-face-attribute 'default nil :font (format "JetBrains Mono-%S" petmacs-font-size))
+(set-face-attribute 'default nil :font (format "Hack-%S" petmacs-font-size))
 (setq-default line-spacing 0.2) ; add 0.2 height between lines
 
 ;; fix the delay when showing text in chinese
@@ -26,4 +27,3 @@
 (provide 'init-font)
 
 ;;; init-font.el ends here
-
