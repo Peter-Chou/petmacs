@@ -54,6 +54,9 @@
 	    (after dired-after-updating-hook first () activate)
       "Sort dired listings with directories first before adding marks."
       (petmacs//dired-sort)))
+
+  (add-hook 'dired-mode-hook (lambda() (display-line-numbers-mode -1)))
+
   ;; was dired-advertised-find-file
   ;; (evil-define-key 'normal dired-mode-map (kbd "RET") 'dired-find-alternate-file)
   ;; (evil-define-key 'normal dired-mode-map (kbd "f") 'dired-find-alternate-file)

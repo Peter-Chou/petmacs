@@ -8,6 +8,7 @@
          ("C-x M-g" . magit-dispatch-popup)
          ("C-c M-g" . magit-file-popup))
   :config
+
   (setq magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1)
   ;; (add-to-list 'magit-log-arguments "--color")
 
@@ -24,6 +25,9 @@
               (add-hook 'with-editor-post-finish-hook
   			            #'kill-magit-diff-buffer-in-current-repo
   			            nil t))) ; the t is important
+
+
+  (add-hook 'magit-mode-hook (lambda() (display-line-numbers-mode -1)))
 
   ;; ;; kill magit status buffer when quitting magit status
   (define-key magit-mode-map (kbd "q") (lambda()
