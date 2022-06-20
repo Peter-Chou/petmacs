@@ -48,13 +48,14 @@
   :hook ((after-init . all-the-icons-completion-mode)
          (marginalia-mode . all-the-icons-completion-marginalia-setup)))
 
-;; (use-package vscode-dark-plus-theme
-;;   :init (petmacs--load-theme 'vscode-dark-plus))
-
 ;; ;; make "unreal" buffers (like popups, sidebars, log buffers,
 ;; ;; terminals by giving the latter a slightly different (often darker) background
 (use-package solaire-mode
-  :hook (after-load-theme . solaire-global-mode))
+  :hook (after-load-theme . solaire-global-mode)
+
+  ;; (use-package vscode-dark-plus-theme
+  ;;   :init (petmacs--load-theme 'vscode-dark-plus))
+  )
 
 (use-package doom-themes
   :init
