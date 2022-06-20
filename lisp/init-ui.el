@@ -53,18 +53,21 @@
 (use-package solaire-mode
   :hook (after-load-theme . solaire-global-mode))
 
-(use-package doom-themes
-  :init
-  ;; (petmacs--load-theme 'doom-dracula)
-  (petmacs--load-theme 'doom-gruvbox-light)
-  :config
-  ;; Enable flashing mode-line on errors
-  (doom-themes-visual-bell-config)
+(use-package spacemacs-theme
+  :init (petmacs--load-theme 'spacemacs-light))
 
-  ;; Enable customized theme
-  ;; FIXME: https://github.com/emacs-lsp/lsp-treemacs/issues/89
-  (with-eval-after-load 'lsp-treemacs
-    (doom-themes-treemacs-config)))
+;; (use-package doom-themes
+;;   :init
+;;   ;; (petmacs--load-theme 'doom-dracula)
+;;   ;; (petmacs--load-theme 'doom-gruvbox-light)
+;;   :config
+;;   ;; Enable flashing mode-line on errors
+;;   (doom-themes-visual-bell-config)
+
+;;   ;; Enable customized theme
+;;   ;; FIXME: https://github.com/emacs-lsp/lsp-treemacs/issues/89
+;;   (with-eval-after-load 'lsp-treemacs
+;;     (doom-themes-treemacs-config)))
 
 ;; (use-package doom-modeline
 ;;   :preface
@@ -94,6 +97,8 @@
 ;;   		            :repo "manateelazycat/sort-tab"
 ;;   		            :files ("*.el"))
 ;;   :hook (after-init . sort-tab-mode))
+
+
 
 (use-package awesome-tray
   :quelpa (awesome-tray :fetcher github
