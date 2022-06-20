@@ -53,7 +53,7 @@
 ;;   :init (petmacs--load-theme 'monokai))
 
 (use-package vs-dark-theme
-  :init (petmacs--load-theme 'vs-light))
+  :init (petmacs--load-theme 'vs-dark))
 
 ;; ;; make "unreal" buffers (like popups, sidebars, log buffers,
 ;; ;; terminals by giving the latter a slightly different (often darker) background
