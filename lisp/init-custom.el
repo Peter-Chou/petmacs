@@ -10,8 +10,10 @@
 (defvar petmacs-icon (or (display-graphic-p) (daemonp))
   "Display icons or not.")
 
+(defvar  petmacs-font "Fira Code Retina"
+  "font")
 
-(defvar  petmacs-font-size 13.0
+(defvar  petmacs-font-size 14.5
   "font size")
 
 (defvar petmacs-lsp-active-modes '(
