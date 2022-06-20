@@ -53,14 +53,10 @@
 (use-package solaire-mode
   :hook (after-load-theme . solaire-global-mode)
 
-  ;; (use-package vscode-dark-plus-theme
-  ;;   :init (petmacs--load-theme 'vscode-dark-plus))
+  (use-package vscode-dark-plus-theme)
   )
 
 (use-package doom-themes
-  :init
-  ;; (petmacs--load-theme 'doom-dracula)
-  (petmacs--load-theme 'doom-acario-light)
   :config
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
@@ -69,6 +65,9 @@
   ;; FIXME: https://github.com/emacs-lsp/lsp-treemacs/issues/89
   (with-eval-after-load 'lsp-treemacs
     (doom-themes-treemacs-config)))
+
+;; load theme
+(petmacs--load-theme 'doom-acario-light)
 
 ;; (use-package doom-modeline
 ;;   :preface
