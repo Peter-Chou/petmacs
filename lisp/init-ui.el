@@ -326,6 +326,21 @@
                               `([,(cdr char-regexp) 0 font-shape-gstring]))))
     (set-char-table-parent composition-ligature-table composition-function-table)))
 
+(use-package pretty-code
+  :load-path (lambda () (expand-file-name "site-lisp/pretty-code" user-emacs-directory))
+  :commands (pretty-code-add-hook)
+  :init
+  (use-package prettify-utils
+    :load-path (lambda () (expand-file-name "site-lisp/prettify-utils" user-emacs-directory)))
+
+  (pretty-code-add-hook 'python-mode-hook     '((:def "def")
+    					                        (:lambda "lambda")))
+  (pretty-code-add-hook 'scala-mode-hook     '((:def "def")
+    					                       (:lambda "lambda")))
+  (pretty-code-add-hook 'go-mode-hook     '((:def "func")))
+  (pretty-code-add-hook 'emacs-lisp-mode-hook '((:def "defun")
+						                        (:lambda "lambda"))))
+
 (provide 'init-ui)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
