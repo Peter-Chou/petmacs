@@ -49,8 +49,11 @@
          (marginalia-mode . all-the-icons-completion-marginalia-setup)))
 
 
-(use-package monokai-theme
-  :init (petmacs--load-theme 'monokai))
+;; (use-package monokai-theme
+;;   :init (petmacs--load-theme 'monokai))
+
+(use-package vs-dark-theme
+  :init (petmacs--load-theme 'vs-light))
 
 ;; ;; make "unreal" buffers (like popups, sidebars, log buffers,
 ;; ;; terminals by giving the latter a slightly different (often darker) background

@@ -22,8 +22,8 @@
    dashboard-center-content t
    dashboard-show-shortcuts nil
    dashboard-items '((recents  . 7)
-		             (bookmarks . 5)
 		             (projects . 5)
+		             (bookmarks . 5)
 		             (agenda . 5))
    dashboard-set-init-info t
    dashboard-set-file-icons t
