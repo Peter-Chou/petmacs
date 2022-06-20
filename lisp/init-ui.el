@@ -141,10 +141,10 @@
    awesome-tray-buffer-name-max-length 30
    awesome-tray-file-path-show-filename t
 
-   ;; awesome-tray-active-modules   '("winum" "location" "belong" "pyvenv" "file-path" "git" "date")
-   ;; awesome-tray-essential-modules '("winum" "location" "belong" "file-path")
-   awesome-tray-active-modules   '("winum" "location" "belong" "pyvenv" "buffer-name" "git" "date")
-   awesome-tray-essential-modules '("winum" "location" "belong" "buffer-name")
+   awesome-tray-active-modules   '("winum" "location" "belong" "pyvenv" "file-path" "git" "date")
+   awesome-tray-essential-modules '("winum" "location" "belong" "file-path")
+   ;; awesome-tray-active-modules   '("winum" "location" "belong" "pyvenv" "buffer-name" "git" "date")
+   ;; awesome-tray-essential-modules '("winum" "location" "belong" "buffer-name")
    )
 
   :config
