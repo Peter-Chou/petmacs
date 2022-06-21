@@ -28,7 +28,8 @@
      ((member major-mode petmacs-lsp-active-modes)
       (lsp-bridge-return-from-def))
      (t
-      (evil-jump-backward))))
+      (require 'dumb-jump)
+      (dumb-jump-back))))
 
   :init (require 'lsp-bridge)
   :config
