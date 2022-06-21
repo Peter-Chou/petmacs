@@ -163,7 +163,8 @@
     ))
 
 (leader-declare-prefix
-  "t" "toggle")
+  "t" "toggle"
+  "tt" "theme")
 (leader-with-prefix "t"
   (leader-set-keys
     "-" #'centered-cursor-mode
@@ -175,7 +176,8 @@
     "F" #'toggle-frame-fullscreen
     "x" #'read-only-mode
     "M" #'maximize-window
-    "t" #'consult-theme
+    "ts" #'consult-theme
+    "tt" #'modus-themes-toggle
 
     ;; "tp" prefix
     "p" #'proxy-http-toggle

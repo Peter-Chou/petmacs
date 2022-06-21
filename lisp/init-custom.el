@@ -31,9 +31,8 @@
   "lsp-mode or lsp-bridge-mode")
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-
 (when (file-exists-p custom-file)
-  (load custom-file))
+  (load custom-file 'noerror 'nomessage))
 
 (provide 'init-custom)
 
