@@ -282,4 +282,10 @@ If the error list is visible, hide it.  Otherwise, show it."
       (treemacs-do-add-project-to-workspace path name)
       (treemacs-select-window))))
 
+(defun petmacs/consult-theme ()
+  (interactive)
+  (call-interactively #'consult-theme)
+  (if (featurep 'awesome-tray)
+      (awesome-tray-enable)))
+
 (provide 'core-funcs)

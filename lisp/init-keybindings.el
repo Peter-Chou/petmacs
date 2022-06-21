@@ -176,8 +176,8 @@
     "F" #'toggle-frame-fullscreen
     "x" #'read-only-mode
     "M" #'maximize-window
-    "ts" #'consult-theme
     "tt" #'modus-themes-toggle
+    "ts" #'petmacs/consult-theme
 
     ;; "tp" prefix
     "p" #'proxy-http-toggle
