@@ -9,6 +9,13 @@
   (if (display-graphic-p)
       (add-to-list 'corfu-margin-formatters #'kind-all-the-icons-margin-formatter)))
 
+
+;; optimize lsp-mode
+(setq gc-cons-threshold 100000000
+      read-process-output-max (* 1024 1024)
+      lsp-use-plists t
+      lsp-log-io nil)
+
 ;; sudo apt-get install libjansson-dev
 (use-package lsp-mode
   :hook (((c-mode c++-mode cuda-mode) . (lambda ()
@@ -26,13 +33,7 @@
                        ;; Format and organize imports
                        (unless (apply #'derived-mode-p petmacs-lsp-format-on-save-ignore-modes)
                          (add-hook 'before-save-hook #'lsp-format-buffer t t)
-                         (add-hook 'before-save-hook #'lsp-organize-imports t t))))
-         )
-  :custom (
-           gc-cons-threshold 100000000
-           read-process-output-max (* 1024 1024)
-           lsp-use-plists t
-           lsp-log-io nil)
+                         (add-hook 'before-save-hook #'lsp-organize-imports t t)))))
   :init
   (setq lsp-keymap-prefix "C-c l"
         lsp-keep-workspace-alive nil
