@@ -38,6 +38,7 @@
         ;; lsp-modeline-diagnostics-enable t
 	    lsp-modeline-workspace-status-enable nil
 	    lsp-headerline-breadcrumb-enable t
+        lsp-headerline-breadcrumb-segments '(symbols)
 
         lsp-enable-file-watchers nil
         lsp-enable-folding nil
