@@ -38,17 +38,15 @@
   (setq lsp-keymap-prefix "C-c l"
         lsp-keep-workspace-alive nil
         lsp-signature-auto-activate nil
-        lsp-modeline-code-actions-enable nil
-        ;; lsp-modeline-code-actions-enable t
-        lsp-modeline-diagnostics-enable nil
-        ;; lsp-modeline-diagnostics-enable t
+        lsp-modeline-code-actions-enable t
+        lsp-modeline-diagnostics-enable t
+        lsp-modeline-diagnostics-scope :workspace
 	    lsp-modeline-workspace-status-enable nil
 	    lsp-headerline-breadcrumb-enable t
         lsp-headerline-breadcrumb-segments '(symbols)
 
+        lsp-enable-folding t
         lsp-enable-file-watchers nil
-        lsp-enable-folding nil
-        ;; lsp-enable-folding t
         lsp-enable-symbol-highlighting nil
         lsp-enable-text-document-color nil
 
