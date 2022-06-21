@@ -26,11 +26,7 @@ point to the position of the join."
   ;;     (set-window-dedicated-p
   ;;      (display-buffer-at-bottom buffer (cons '(window-height . 12) args))
   ;;      t))
-  :interpreter
-  ("scala" . scala-mode)
-  :hook (scala-mode . (lambda ()
-			            (require 'lsp-metals)
-			            (lsp-deferred)))
+  :interpreter ("scala" . scala-mode)
   :init
   (progn
     (dolist (ext '(".cfe" ".cfs" ".si" ".gen" ".lock"))

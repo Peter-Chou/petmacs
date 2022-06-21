@@ -27,8 +27,13 @@
 				                   )
   "Primary major modes of the lsp activated layer.")
 
-(defvar petmacs-lsp-client-type 'lsp-mode
+(defvar petmacs-lsp-client-type
+  'lsp-mode
+  ;; 'lsp-bridge-mode
   "lsp-mode or lsp-bridge-mode")
+
+(defvar petmacs-lsp-format-on-save-ignore-modes
+  '(c-mode c++-mode python-mode markdown-mode))
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (when (file-exists-p custom-file)

@@ -1,5 +1,6 @@
 ;; init-lsp.el --- Better default configurations.	-*- lexical-binding: t -*-
 
+(require 'init-custom)
 
 (use-package kind-all-the-icons
   :load-path (lambda () (expand-file-name "site-lisp/kind-all-the-icons" user-emacs-directory))
@@ -10,6 +11,23 @@
 
 
 (use-package lsp-mode
+  :hook (((c-mode c++-mode cuda-mode) . (lambda ()
+					                      (lsp-deferred)))
+         (scala-mode . (lambda ()
+			             (require 'lsp-metals)
+			             (lsp-deferred)))
+         ((markdown-mode yaml-mode) . lsp-deferred)
+         (go-mode . lsp-deferred)
+         (java-mode . lsp-deferred)
+         (lsp-mode . (lambda ()
+                       ;; Integrate `which-key'
+                       (lsp-enable-which-key-integration)
+
+                       ;; Format and organize imports
+                       (unless (apply #'derived-mode-p petmacs-lsp-format-on-save-ignore-modes)
+                         (add-hook 'before-save-hook #'lsp-format-buffer t t)
+                         (add-hook 'before-save-hook #'lsp-organize-imports t t))))
+         )
   :init
   (setq lsp-keymap-prefix "C-c l"
         lsp-keep-workspace-alive nil

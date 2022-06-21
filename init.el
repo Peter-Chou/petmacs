@@ -55,6 +55,7 @@
 			             ;; ("melpa"        . "http://melpa.org/packages/")
 			             ))
 
+(require 'init-custom)
 (require 'init-package)
 (require 'init-basic)
 (require 'init-font)
@@ -78,12 +79,14 @@
 
 (require 'init-consult)
 
-(if (display-graphic-p)
-    (require 'init-corfu)
-  (require 'init-company))
 
-(require 'init-lsp)
-;; (require 'init-lsp-bridge)
+(cond ((equal petmacs-lsp-client-type 'lsp-mode)
+       (if (display-graphic-p)
+           (require 'init-corfu)
+         (require 'init-company))
+       (require 'init-lsp))
+      ((equal petmacs-lsp-client-type 'lsp-bridge-mode)
+       (require 'init-lsp-bridge)))
 
 (require 'init-elisp)
 (require 'init-c-c++)
