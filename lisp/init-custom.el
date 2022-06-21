@@ -28,8 +28,8 @@
   "Primary major modes of the lsp activated layer.")
 
 (defvar petmacs-lsp-client-type
-  ;; 'lsp-mode
-  'lsp-bridge-mode
+  'lsp-mode
+  ;; 'lsp-bridge-mode
   "lsp-mode or lsp-bridge-mode")
 
 (defvar petmacs-lsp-format-on-save-ignore-modes
