@@ -12,7 +12,7 @@
   (define-key evil-motion-state-map "gR" #'lsp-bridge-rename)
   (define-key evil-motion-state-map "gr" #'lsp-bridge-find-references)
   (define-key evil-normal-state-map "gi" #'lsp-bridge-find-impl)
-  (define-key evil-motion-state-map "gd" #'lsp-bridge-jump)
+  ;; (define-key evil-motion-state-map "gd" #'lsp-bridge-jump)
   (define-key evil-motion-state-map "gs" #'lsp-bridge-restart-process)
   (define-key evil-normal-state-map "gh" #'lsp-bridge-lookup-documentation)
 
