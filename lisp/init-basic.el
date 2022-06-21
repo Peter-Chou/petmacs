@@ -41,7 +41,11 @@
 
 ;; Environment
 (when (or sys/mac-x-p sys/linux-x-p (daemonp))
-  (use-package exec-path-from-shell)
+  (use-package exec-path-from-shell
+    :config
+    (dolist (var '("LSP_USE_PLISTS"))
+      (add-to-list 'exec-path-from-shell-variables var))
+    )
 
   (use-package cache-path-from-shell
     :quelpa (cache-path-from-shell :fetcher github

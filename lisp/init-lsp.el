@@ -9,7 +9,7 @@
   (if (display-graphic-p)
       (add-to-list 'corfu-margin-formatters #'kind-all-the-icons-margin-formatter)))
 
-
+;; sudo apt-get install libjansson-dev
 (use-package lsp-mode
   :hook (((c-mode c++-mode cuda-mode) . (lambda ()
 					                      (lsp-deferred)))
@@ -28,6 +28,11 @@
                          (add-hook 'before-save-hook #'lsp-format-buffer t t)
                          (add-hook 'before-save-hook #'lsp-organize-imports t t))))
          )
+  :custom (
+           gc-cons-threshold 100000000
+           read-process-output-max (* 1024 1024)
+           lsp-use-plists t
+           lsp-log-io nil)
   :init
   (setq lsp-keymap-prefix "C-c l"
         lsp-keep-workspace-alive nil
@@ -72,6 +77,7 @@
 	          lsp-ui-sideline-enable nil
 	          lsp-ui-sideline-show-code-actions nil
               lsp-ui-sideline-ignore-duplicate t
+              lsp-idle-delay 0.25
 	          lsp-ui-doc-enable nil
 	          lsp-ui-doc-delay 0.1
 	          lsp-ui-doc-border (face-foreground 'font-lock-comment-face nil t)
