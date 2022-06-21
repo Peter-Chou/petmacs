@@ -43,6 +43,8 @@
   (define-key evil-motion-state-map "gs" #'lsp-bridge-restart-process)
   (define-key evil-normal-state-map "gh" #'lsp-bridge-lookup-documentation)
 
+  (evil-add-command-properties #'lsp-bridge-jump :jump t)
+
   (evil-define-key 'normal lsp-bridge-ref-mode-map
     (kbd "RET") 'lsp-bridge-ref-open-file-and-stay
     "q" 'lsp-bridge-ref-quit)
