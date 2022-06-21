@@ -19,7 +19,7 @@
         lsp-modeline-diagnostics-enable nil
         ;; lsp-modeline-diagnostics-enable t
 	    lsp-modeline-workspace-status-enable nil
-	    lsp-headerline-breadcrumb-enable nil
+	    lsp-headerline-breadcrumb-enable t
 
         lsp-enable-file-watchers nil
         lsp-enable-folding nil
