@@ -72,8 +72,7 @@
    '((1 . (rainbow overline background 1.4))
      (2 . (rainbow background 1.3))
      (3 . (rainbow bold 1.2))
-     (t . (semilight 1.1)))
-   ))
+     (t . (semilight 1.1)))))
 
 (use-package doom-themes
   :config
