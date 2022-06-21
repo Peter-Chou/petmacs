@@ -13,7 +13,7 @@
 (defvar  petmacs-font "Fira Code Retina"
   "font")
 
-(defvar  petmacs-font-size 14.5
+(defvar  petmacs-font-size 14.0
   "font size")
 
 (defvar petmacs-lsp-active-modes '(
