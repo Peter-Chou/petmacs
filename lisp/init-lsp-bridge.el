@@ -33,6 +33,10 @@
 
   :init (require 'lsp-bridge)
   :config
+  ;; don't show lsp-bridge-info in modeline
+  (setq mode-line-misc-info (delete '(lsp-bridge-mode (" [" lsp-bridge--mode-line-format "] "))
+                                    mode-line-misc-info))
+
   ;; (setq-local evil-goto-definition-functions '(lsp-bridge-jump))
 
   (define-key evil-motion-state-map "\C-o" #'petmacs/lsp-bridge-jump-back)
@@ -49,8 +53,7 @@
     (kbd "RET") 'lsp-bridge-ref-open-file-and-stay
     "q" 'lsp-bridge-ref-quit)
 
-  (global-lsp-bridge-mode)
-  )
+  (global-lsp-bridge-mode))
 
 
 (provide 'init-lsp-bridge)

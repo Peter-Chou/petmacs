@@ -88,6 +88,8 @@
       ((equal petmacs-lsp-client-type 'lsp-bridge-mode)
        (require 'init-lsp-bridge)))
 
+(require 'init-dap)
+
 (require 'init-elisp)
 (require 'init-c-c++)
 (require 'init-python)
