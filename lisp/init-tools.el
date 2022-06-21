@@ -148,6 +148,8 @@
           "\\*Finder\\*"
           "\\*Kill Ring\\*"
 
+          "\\*lsp-bridge-ref\\*"
+
           bookmark-bmenu-mode
           comint-mode
           compilation-mode
