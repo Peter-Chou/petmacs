@@ -100,7 +100,9 @@
   :hook (after-init . doom-modeline-mode)
   :init
   (setq doom-modeline-icon petmacs-icon
+        doom-modeline-support-imenu t
         doom-modeline-minor-modes nil
+
         ;; doom-modeline-height 1
         doom-modeline-height 0.9
         doom-modeline-buffer-file-name-style 'relative-to-project)
