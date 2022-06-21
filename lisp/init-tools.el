@@ -393,4 +393,6 @@
 (use-package carbon-now-sh)
 (use-package imenu-list)
 
+(use-package dumb-jump)
+
 (provide 'init-tools)
