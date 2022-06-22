@@ -90,7 +90,8 @@
 
 ;; load theme
 ;; (petmacs--load-theme 'doom-acario-light)
-(petmacs--load-theme 'modus-operandi)
+;; (petmacs--load-theme 'modus-operandi) ;; light theme
+(petmacs--load-theme 'modus-vivendi) ;; dark theme
 
 (use-package doom-modeline
   :preface
