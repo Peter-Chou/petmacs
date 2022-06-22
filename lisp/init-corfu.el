@@ -48,6 +48,14 @@
 
     (add-hook 'lsp-completion-mode-hook #'petmacs/lsp-mode-setup-completion)))
 
+(use-package corfu-terminal
+  :quelpa (corfu-terminal :fetcher git
+  		                  :url "https://codeberg.org/akib/emacs-corfu-terminal.git"
+  		                  :files ("*.el"))
+  :init
+  (unless (display-graphic-p)
+    (corfu-terminal-mode +1)))
+
 ;; ;; Use dabbrev with Corfu!
 (use-package dabbrev
   ;; Swap M-/ and C-M-/
