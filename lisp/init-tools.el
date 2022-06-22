@@ -394,6 +394,7 @@
 (use-package focus)                     ; Focus on the current region
 (use-package carbon-now-sh)
 (use-package imenu-list)
+(use-package iedit)
 
 (use-package dumb-jump)
 
