@@ -47,7 +47,7 @@
       (when (file-exists-p pfile)
         (setq-local pyvenv-workon (gethash "venv" (json-read-file pfile)))
         (pyvenv-workon pyvenv-workon)
-        (if (equal petmacs-lsp-client-type 'lsp-mode)
+        (if (equal petmacs-lsp-client-mode 'lsp-mode)
             (lsp-deferred))
         )))
   :hook (python-mode . petmacs/pyvenv-pyright-autoload))
