@@ -11,9 +11,8 @@
   "Display icons or not.")
 
 (defvar  petmacs-font
-  "Monego Nerd Font Fix"
-  ;; "Monego Ligatures"
   ;; "Fira Code Retina"
+  "Iosevka"
   "font")
 
 (defvar  petmacs-font-size 14.0

@@ -6,8 +6,7 @@
 
 - Fonts
 
-  - [Fira Code](https://github.com/tonsky/FiraCode)
-  - [Monego Nerd Font](https://github.com/cseelus/monego)
+  - [Iosevka](https://github.com/be5invis/Iosevka)
 
 - icons
 

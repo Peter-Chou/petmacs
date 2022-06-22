@@ -4,8 +4,6 @@
 (require 'init-custom)
 (require 'init-funcs)
 
-;; (set-face-attribute 'default nil :font (format "JetBrains Mono-%S" petmacs-font-size))
-
 (if (font-installed-p petmacs-font)
     (set-face-attribute 'default nil :font (format "%s-%d" petmacs-font petmacs-font-size))
   (message  (format "%s font is not installed, please install it for better ui display." petmacs-font)))
