@@ -92,16 +92,17 @@
          ("C-<f8>" . lsp-treemacs-errors-list)
          ("M-<f8>" . lsp-treemacs-symbols)
          ("s-<f8>" . lsp-treemacs-java-deps-list))
-  :init (lsp-treemacs-sync-mode 1)
-  (setq
-   lsp-treemacs-deps-position-params
-   `((side . right)
-     (slot . 1)
-     (window-width . 32))
-   lsp-treemacs-symbols-position-params
-   `((side . right)
-     (slot . 2)
-     (window-width . 32)))
+  :init
+  (lsp-treemacs-sync-mode 1)
+  ;; (setq
+  ;;  lsp-treemacs-deps-position-params
+  ;;  `((side . right)
+  ;;    (slot . 1)
+  ;;    (window-width . 32))
+  ;;  lsp-treemacs-symbols-position-params
+  ;;  `((side . right)
+  ;;    (slot . 2)
+  ;;    (window-width . 32)))
   :config
   (with-eval-after-load 'ace-window
     (when (boundp 'aw-ignored-buffers)
