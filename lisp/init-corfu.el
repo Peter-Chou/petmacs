@@ -48,13 +48,6 @@
 
     (add-hook 'lsp-completion-mode-hook #'petmacs/lsp-mode-setup-completion)))
 
-(use-package kind-all-the-icons
-  :load-path (lambda () (expand-file-name "site-lisp/kind-all-the-icons" user-emacs-directory))
-  :init
-  (require 'kind-all-the-icons)
-  (if (display-graphic-p)
-      (add-to-list 'corfu-margin-formatters #'kind-all-the-icons-margin-formatter)))
-
 (use-package corfu-terminal
   :quelpa (corfu-terminal :fetcher git
   		                  :url "https://codeberg.org/akib/emacs-corfu-terminal.git"

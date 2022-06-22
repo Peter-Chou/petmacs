@@ -1,5 +1,7 @@
 ;; init-ui.el --- Better lookings and appearances.	-*- lexical-binding: t -*-
 
+(require 'init-funcs)
+
 (when (and sys/mac-ns-p sys/mac-x-p)
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
   (add-to-list 'default-frame-alist '(ns-appearance . dark))
@@ -357,6 +359,15 @@
   (pretty-code-add-hook 'go-mode-hook     '((:def "func")))
   (pretty-code-add-hook 'emacs-lisp-mode-hook '((:def "defun")
 						                        (:lambda "lambda"))))
+
+(use-package kind-all-the-icons
+  :load-path (lambda () (expand-file-name "site-lisp/kind-all-the-icons" user-emacs-directory))
+  :after corfu
+  :init
+  (when (icon-displayable-p)
+    (require 'kind-all-the-icons)
+    (if (display-graphic-p)
+        (add-to-list 'corfu-margin-formatters #'kind-all-the-icons-margin-formatter))))
 
 (provide 'init-ui)
 
