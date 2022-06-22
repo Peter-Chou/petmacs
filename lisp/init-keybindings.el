@@ -176,6 +176,8 @@
     "F" #'toggle-frame-fullscreen
     "x" #'read-only-mode
     "M" #'maximize-window
+    "c" #'prettify-symbols-mode
+
     "tt" #'modus-themes-toggle
     "ts" #'petmacs/consult-theme
 
