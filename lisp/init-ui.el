@@ -68,7 +68,7 @@
    modus-themes-paren-match '(bold intense)
    ;; modus-themes-mode-line '(accented borderless (height . 0.9))
    modus-themes-mode-line '(accented borderless 3d)
-   modus-themes-region '(bg-only)
+   modus-themes-region '(accented bg-only no-extend)
    modus-themes-completions '((matches . (extrabold))
                               (selection . (semibold accented))
                               (popup . (accented intense)))
