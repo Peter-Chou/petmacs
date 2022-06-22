@@ -26,6 +26,13 @@
   "Check if font with FONT-NAME is available."
   (find-font (font-spec :name font-name)))
 
+(defun icon-displayable-p ()
+  "Return non-nil if icons are displayable."
+  (and petmacs-icon
+       (or (display-graphic-p) (daemonp))
+       (or (featurep 'all-the-icons)
+           (require 'all-the-icons nil t))))
+
 ;; Dos2Unix/Unix2Dos
 (defun dos2unix ()
   "Convert the current buffer to UNIX file format."
