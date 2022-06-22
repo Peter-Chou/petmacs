@@ -2,14 +2,6 @@
 
 (require 'init-custom)
 
-(use-package kind-all-the-icons
-  :load-path (lambda () (expand-file-name "site-lisp/kind-all-the-icons" user-emacs-directory))
-  :init
-  (require 'kind-all-the-icons)
-  (if (display-graphic-p)
-      (add-to-list 'corfu-margin-formatters #'kind-all-the-icons-margin-formatter)))
-
-
 ;; optimize lsp-mode
 (setq gc-cons-threshold 100000000
       read-process-output-max (* 1024 1024)
