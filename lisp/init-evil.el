@@ -157,6 +157,7 @@
 
 
 (use-package evil-textobj-line)
-(use-package evil-iedit-state)
+(use-package evil-iedit-state
+  :init (require 'evil-iedit-state))
 
 (provide 'init-evil)
