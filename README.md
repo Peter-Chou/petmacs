@@ -75,6 +75,8 @@ use mirror if you have timeout error.
 
 ## Screenshots
 
-![petmacs](./resources/img/screenshot_dashboard.png)
+![dashboard](./resources/pics/dashboard.png)
 
-![screenshot](./resources/img/screenshot_elisp.png)
+![markdown](./resources/pics/markdown.png)
+
+![elisp](./resources/pics/elisp.png)
