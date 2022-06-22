@@ -79,7 +79,6 @@
 
 (require 'init-consult)
 
-
 (cond ((equal petmacs-lsp-client-type 'lsp-mode)
        (if (display-graphic-p)
            (require 'init-corfu)

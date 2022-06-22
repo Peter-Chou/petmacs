@@ -52,6 +52,11 @@
 (use-package solaire-mode
   :hook (after-load-theme . solaire-global-mode))
 
+(use-package spacemacs-theme
+  :init
+  (setq spacemacs-theme-comment-italic t
+        spacemacs-theme-org-priority-bold t))
+
 (use-package modus-themes
   :init
   (setq

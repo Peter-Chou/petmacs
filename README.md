@@ -3,12 +3,11 @@
 ---
 
 ## Prerequisite
-Petmacs requires fonts for better display:
-
 
 - Fonts
 
   - [Fira Code](https://github.com/tonsky/FiraCode)
+  - [Monego Nerd Font](https://github.com/cseelus/monego)
 
 - icons
 
@@ -16,7 +15,33 @@ Petmacs requires fonts for better display:
 
 - global tools
 
-  - [ripgrep](https://github.com/BurntSushi/ripgrep) in your $PATH
+  - [ripgrep](https://github.com/BurntSushi/ripgrep)
+    put rg binary into your $PATH
+
+- nodejs
+
+  - [nodejs](https://nodejs.org)
+    put npm binary into your $PATH
+
+---
+
+## Install
+
+```bash
+git clone --depth=1 https://github.com/Peter-Chou/petmacs.git ~/.emacs.d
+```
+
+install git submodules:
+
+``` bash
+git submodule update --init --recursive
+
+# udpate submodule to latest version
+# git submodule update --remote --merge
+```
+
+### install tools
+
 
 - npm
 
@@ -24,19 +49,13 @@ Petmacs requires fonts for better display:
 sudo apt install nodejs npm
 ```
 
-- git modules
-
-``` bash
-git submodule update --init --recursive
-
-# udpate
-# git submodule update --remote --merge
-```
+- eaf
 
 ``` bash
 conda create -n eaf python=3.8
 conda activate eaf
 python site-lisp/emacs-application-framework/install-eaf.py
+# install browser image-viewer jupyter markdown-previewer org-previewer pdf-viewer
 ```
 
 - C/C++ packages
@@ -51,14 +70,6 @@ npm install -g eslint_d prettier markdownlint-cli vmd
 ```
 
 use mirror if you have timeout error.
-
----
-
-## Install
-
-```bash
-git clone https://github.com/Peter-Chou/petmacs.git ~/.emacs.d
-```
 
 ---
 
