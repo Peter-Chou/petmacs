@@ -58,4 +58,6 @@
   :diminish yapf-mode
   :hook (python-mode . yapf-mode))
 
+(use-package pip-requirements)
+
 (provide 'init-python)

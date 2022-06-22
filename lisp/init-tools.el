@@ -389,12 +389,14 @@
       (add-hook mode-hook #'ts-fold-mode)
       (add-hook mode-hook #'ts-fold-indicators-mode))))
 
+
 (use-package centered-cursor-mode)
 (use-package restart-emacs)
 (use-package focus)                     ; Focus on the current region
 (use-package carbon-now-sh)
 (use-package imenu-list)
 (use-package iedit)
+(use-package dotenv-mode)
 
 (use-package dumb-jump)
 
