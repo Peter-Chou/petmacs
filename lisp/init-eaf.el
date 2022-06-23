@@ -13,23 +13,23 @@
   :init
   ;; add folders in app to load-path
   (let ((default-directory (expand-file-name "site-lisp/emacs-application-framework/app" user-emacs-directory)))
-    (normal-top-level-add-subdirs-to-load-path))
-  (require 'eaf)
-  (require 'eaf-browser)
-  (require 'eaf-image-viewer)
-  (require 'eaf-jupyter)
-  (require 'eaf-markdown-previewer)
-  (require 'eaf-org-previewer)
-  (require 'eaf-pdf-viewer)
+    (when (file-directory-p default-directory)
+      (normal-top-level-add-subdirs-to-load-path)
+      (require 'eaf)
+      (require 'eaf-browser)
+      (require 'eaf-image-viewer)
+      (require 'eaf-jupyter)
+      (require 'eaf-markdown-previewer)
+      (require 'eaf-org-previewer)
+      (require 'eaf-pdf-viewer)
 
-  (require 'eaf-all-the-icons)
-  (require 'eaf-evil)
+      (require 'eaf-all-the-icons)
+      (require 'eaf-evil)
 
-  (setq eaf-python-command (expand-file-name "eaf/bin/python" (getenv "WORKON_HOME")))
+      (setq eaf-python-command (expand-file-name "eaf/bin/python" (getenv "WORKON_HOME")))))
   :config
   (defalias 'browse-web #'eaf-open-browser)
   (eaf-bind-key scroll_up "C-n" eaf-pdf-viewer-keybinding)
-  (eaf-bind-key scroll_down "C-p" eaf-pdf-viewer-keybinding)
-  )
+  (eaf-bind-key scroll_down "C-p" eaf-pdf-viewer-keybinding))
 
 (provide 'init-eaf)
