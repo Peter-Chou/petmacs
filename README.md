@@ -6,7 +6,7 @@
 
 - Fonts
 
-  - [FiraMonaco](https://github.com/GianCastle/FiraMonaco)
+  - [Monego Ligatures](https://github.com/cseelus/monego)
 
 - icons
 
