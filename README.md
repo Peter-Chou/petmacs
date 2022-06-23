@@ -14,13 +14,11 @@
 
 - global tools
 
-  - [ripgrep](https://github.com/BurntSushi/ripgrep)
-    put rg binary into your $PATH
+  - put [ripgrep](https://github.com/BurntSushi/ripgrep) binary into your $PATH
 
 - nodejs
 
-  - [nodejs](https://nodejs.org)
-    put npm binary into your $PATH
+  - put [nodejs](https://nodejs.org) binaries into your $PATH
 
 ---
 
@@ -35,40 +33,39 @@ install git submodules:
 ``` bash
 git submodule update --init --recursive
 
-# udpate submodule to latest version
+# udpate submodules to latest version
 # git submodule update --remote --merge
 ```
 
 ### install tools
-
-
-- npm
-
-``` bash
-sudo apt install nodejs npm
-```
 
 - eaf
 
 ``` bash
 conda create -n eaf python=3.8
 conda activate eaf
-python site-lisp/emacs-application-framework/install-eaf.py
 # install browser image-viewer jupyter markdown-previewer org-previewer pdf-viewer
+python site-lisp/emacs-application-framework/install-eaf.py
 ```
-
-- C/C++ packages
-
-lsp use clangd in LLVM project
-dap use lldb-vscode in LLVM/lldb/tools/lldb-vscode (https://github.com/llvm-mirror/lldb/tree/master/tools/lldb-vscode)
 
 - nodejs packages
 
 ```sh
-npm install -g eslint_d prettier markdownlint-cli vmd
+npm install -g eslint_d prettier markdownlint-cli
 ```
 
-use mirror if you have timeout error.
+### install prebuilt language servers
+
+- C/C++
+
+lsp use clangd in [LLVM project](https://github.com/llvm/llvm-project).
+lldb-vscode for debug is also in LLVM project
+
+- python
+
+``` sh
+npm install -g pyright
+```
 
 ---
 
