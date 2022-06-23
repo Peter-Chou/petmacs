@@ -6,7 +6,7 @@
 
 - Fonts
 
-  - [Iosevka](https://github.com/be5invis/Iosevka)
+  - [FiraMonaco](https://github.com/GianCastle/FiraMonaco)
 
 - icons
 

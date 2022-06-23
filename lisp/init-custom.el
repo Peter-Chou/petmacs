@@ -8,7 +8,8 @@
 
 (defvar  petmacs-font
   ;; "Fira Code Retina"
-  "Iosevka"
+  "Ligamonacop"
+  ;; "Iosevka"
   "font")
 
 (defvar  petmacs-font-size 14.5
