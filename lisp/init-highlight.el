@@ -1,4 +1,4 @@
-;; init-highlight.el --- Better default configurations.	-*- lexical-binding: t -*-
+;; -*- lexical-binding: t no-byte-compile: t -*-
 
 ;; (use-package beacon
 ;;   :custom

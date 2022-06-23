@@ -1,4 +1,4 @@
-;; init-treemacs.el --- Better default configurations.	-*- lexical-binding: t -*-
+;; -*- lexical-binding: t no-byte-compile: t -*-
 
 ;; A tree layout file explorer
 (use-package treemacs

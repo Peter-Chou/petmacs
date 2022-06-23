@@ -1,4 +1,4 @@
-;; init-projectile.el --- Better default configurations.	-*- lexical-binding: t -*-
+;; -*- lexical-binding: t no-byte-compile: t -*-
 
 (use-package projectile
   :diminish
@@ -29,6 +29,5 @@
 
     ;; FIXME: too slow while getting submodule files on Windows
     (setq projectile-git-submodule-command nil)))
-
 
 (provide 'init-projectile)

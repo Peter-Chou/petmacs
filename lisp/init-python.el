@@ -1,4 +1,4 @@
-;; init-python.el --- Better default configurations.	-*- lexical-binding: t -*-
+;; -*- lexical-binding: t no-byte-compile: t -*-
 
 ;; Install:
 ;;   pip install yapf

@@ -1,4 +1,4 @@
-;; -*- lexical-binding: t -*-
+;; -*- lexical-binding: t no-byte-compile: t -*-
 
 (use-package markdown-mode
   :hook ((markdown-mode . auto-fill-mode))

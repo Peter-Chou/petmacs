@@ -1,4 +1,4 @@
-;; init-lsp.el --- Better default configurations.	-*- lexical-binding: t -*-
+;; -*- lexical-binding: t no-byte-compile: t -*-
 
 (require 'init-custom)
 
@@ -149,6 +149,5 @@
 ;;; scala
 (use-package lsp-metals)
 (use-package consult-lsp)
-
 
 (provide 'init-lsp)

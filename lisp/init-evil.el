@@ -1,4 +1,4 @@
-;;; init-evil.el -*- lexical-binding: t no-byte-compile: t -*-
+;; -*- lexical-binding: t no-byte-compile: t -*-
 
 (use-package evil
   :preface

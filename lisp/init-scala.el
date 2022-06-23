@@ -1,4 +1,4 @@
-;; -*- lexical-binding: t -*-
+;; -*- lexical-binding: t no-byte-compile: t -*-
 
 (use-package scala-mode
   :preface
@@ -54,6 +54,5 @@ point to the position of the join."
           scala-indent:align-parameters t
           scala-indent:default-run-on-strategy
           scala-indent:operator-strategy)))
-
 
 (provide 'init-scala)

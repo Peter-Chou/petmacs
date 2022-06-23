@@ -1,4 +1,5 @@
-;; init-ibuffer.el --- Better default configurations.	-*- lexical-binding: t -*-
+;; -*- lexical-binding: t no-byte-compile: t -*-
+
 (use-package ibuffer
   :ensure nil
   :preface
@@ -101,7 +102,5 @@
                                     :height 1.25)
              " ")
           "Project: ")))
-
-
 
 (provide 'init-ibuffer)

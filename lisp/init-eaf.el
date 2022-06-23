@@ -1,4 +1,4 @@
-;; -*- lexical-binding: t -*-
+;; -*- lexical-binding: t no-byte-compile: t -*-
 
 ;; sudo apt install python3-pip
 ;; /usr/bin/python3 -m pip install pip setuptools --upgrade

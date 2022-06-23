@@ -1,4 +1,4 @@
-;; init-corfu.el --- Better default configurations.	-*- lexical-binding: t -*-
+;; -*- lexical-binding: t no-byte-compile: t -*-
 
 (require 'init-const)
 (require 'init-funcs)
@@ -65,6 +65,3 @@
 ;; ;; Add extensions
 
 (provide 'init-corfu)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; init-corfu.el ends here

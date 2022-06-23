@@ -1,4 +1,4 @@
-;; init-font.el --- Setup fonts.  -*- lexical-binding: t -*-
+;; -*- lexical-binding: t no-byte-compile: t -*-
 
 (require 'init-const)
 (require 'init-custom)
@@ -33,5 +33,3 @@
 (use-package fontify-face)
 
 (provide 'init-font)
-
-;;; init-font.el ends here

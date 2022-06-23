@@ -1,4 +1,4 @@
-;; init-funcs.el --- Define functions.	-*- lexical-binding: t -*-
+;; -*- lexical-binding: t no-byte-compile: t -*-
 
 (require 'cl-lib)
 
@@ -294,6 +294,3 @@ This issue has been addressed in 28."
      (make-frame-invisible nil 1))))
 
 (provide 'init-funcs)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; init-funcs.el ends here

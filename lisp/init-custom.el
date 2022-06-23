@@ -1,8 +1,4 @@
-;; init-custom.el --- Setup custom.el.  -*- lexical-binding: t -*-
-
-;;; Commentary:
-
-;;; Code:
+;; -*- lexical-binding: t no-byte-compile: t -*-
 
 (defvar  petmacs-proxy "winhost:1080"
   "Set network proxy.")
@@ -42,5 +38,3 @@
   (load custom-file 'noerror 'nomessage))
 
 (provide 'init-custom)
-
-;;; init-custom.el ends here

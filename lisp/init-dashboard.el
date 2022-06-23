@@ -1,4 +1,4 @@
-;;  -*- lexical-binding: t -*-
+;; -*- lexical-binding: t no-byte-compile: t -*-
 
 (use-package dashboard
   :custom-face (dashboard-banner-logo-title ((t (:height 1.1 :inherit default))))
@@ -33,9 +33,7 @@
 			                 (agenda    . "calendar")
 			                 (projects  . "file-directory")
 			                 (registers . "database"))
-   dashboard-set-footer t
-   )
-
+   dashboard-set-footer t)
   :config
   (evil-define-key 'normal dashboard-mode-map
     (kbd "RET") 'widget-button-press
@@ -47,8 +45,7 @@
     (kbd "k") 'widget-backward
     (kbd "gr") #'dashboard-refresh-buffer
     (kbd "}") #'dashboard-next-section
-    (kbd "{") #'dashboard-previous-section
-    )
+    (kbd "{") #'dashboard-previous-section)
   (evil-define-key 'normal dashboard-mode-map (kbd "gd") 'widget-button-press)
   (evil-define-key 'normal dashboard-mode-map [mouse-1] 'widget-button-click))
 

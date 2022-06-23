@@ -1,4 +1,4 @@
-;; -*- lexical-binding: t -*-
+;; -*- lexical-binding: t no-byte-compile: t -*-
 
 (require 'init-custom)
 
@@ -40,7 +40,5 @@
             (,dap-ui--debug-window-buffer . ((side . bottom) (slot . 3) (window-width . 0.20)))
             (,dap-ui--repl-buffer . ((side . bottom) (slot . 1) (window-width . 0.35))))))
   )
-
-
 
 (provide 'init-dap)

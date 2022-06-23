@@ -1,4 +1,4 @@
-;; init-snippets.el --- Better default configurations.	-*- lexical-binding: t -*-
+;; -*- lexical-binding: t no-byte-compile: t -*-
 
 (use-package yasnippet
   :diminish yas-minor-mode

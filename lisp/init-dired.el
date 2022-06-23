@@ -1,4 +1,4 @@
-;; init-dired.el --- Better default configurations.	-*- lexical-binding: t -*-
+;; -*- lexical-binding: t no-byte-compile: t -*-
 
 (require 'init-const)
 (require 'init-custom)
@@ -120,6 +120,5 @@
 	    ranger-ignored-extensions '("mkv" "iso" "mp4")
         ;; set the max files size (in MB) to preview
 	    ranger-max-preview-size 5))
-
 
 (provide 'init-dired)

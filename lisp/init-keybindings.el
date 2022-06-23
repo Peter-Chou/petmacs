@@ -1,4 +1,4 @@
-;; init-keybindings.el --- Better default configurations.	-*- lexical-binding: t -*-
+;; -*- lexical-binding: t no-byte-compile: t -*-
 
 (require 'init-funcs)
 (require 'core-funcs)
@@ -463,6 +463,3 @@
 
 
 (provide 'init-keybindings)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; init-keybindings.el ends here

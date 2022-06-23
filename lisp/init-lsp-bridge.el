@@ -1,4 +1,4 @@
-;;	-*- lexical-binding: t -*-
+;; -*- lexical-binding: t no-byte-compile: t -*-
 
 (require 'init-custom)
 
@@ -54,6 +54,5 @@
     "q" 'lsp-bridge-ref-quit)
 
   (global-lsp-bridge-mode))
-
 
 (provide 'init-lsp-bridge)

@@ -1,4 +1,4 @@
-;; init-edit.el --- Initialize editing configurations.	-*- lexical-binding: t -*-
+;; -*- lexical-binding: t no-byte-compile: t -*-
 
 (require 'init-const)
 
@@ -196,6 +196,3 @@
   (setq hs-set-up-overlay #'hs-display-code-line-counts))
 
 (provide 'init-edit)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; init-edit.el ends here

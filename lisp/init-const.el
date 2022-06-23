@@ -1,8 +1,4 @@
-;; init-const.el --- Define constants.	-*- lexical-binding: t -*-
-
-;;; Commentary:
-
-;;; Code:
+;; -*- lexical-binding: t no-byte-compile: t -*-
 
 (defconst sys/win32p
   (eq system-type 'windows-nt)
@@ -57,5 +53,3 @@
   "Emacs is 29 or above.")
 
 (provide 'init-const)
-
-;;; init-const.el ends here

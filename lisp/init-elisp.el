@@ -1,4 +1,4 @@
-;; init-elisp.el --- Initialize elisping configurations.	-*- lexical-binding: t -*-
+;; -*- lexical-binding: t no-byte-compile: t -*-
 
 ;; Emacs lisp mode
 (use-package elisp-mode

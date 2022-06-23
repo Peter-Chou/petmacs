@@ -1,4 +1,4 @@
-;; init-c-c++.el --- Better default configurations.	-*- lexical-binding: t -*-
+;; -*- lexical-binding: t no-byte-compile: t -*-
 
 (use-package cc-mode
   :init

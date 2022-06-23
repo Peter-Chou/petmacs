@@ -1,4 +1,4 @@
-;; init-shell.el --- Better default configurations.	-*- lexical-binding: t -*-
+;; -*- lexical-binding: t no-byte-compile: t -*-
 
 (use-package shell
   :ensure nil
@@ -127,7 +127,5 @@
 ;;               (sys/win32p '("eshell" "*eshell*" #'eshell))
 ;;               (t '("terminal" "*terminal*"
 ;;                    (lambda () (term shell-pop-term-shell)))))))
-
-
 
 (provide 'init-shell)

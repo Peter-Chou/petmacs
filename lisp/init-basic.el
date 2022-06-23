@@ -1,4 +1,4 @@
-;; init-basic.el --- Better default configurations.	-*- lexical-binding: t -*-
+;; -*- lexical-binding: t no-byte-compile: t -*-
 
 (require 'subr-x)
 (require 'init-const)
@@ -182,6 +182,3 @@
 (setq confirm-kill-processes nil)
 
 (provide 'init-basic)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; init-basic.el ends here
