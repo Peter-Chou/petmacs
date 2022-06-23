@@ -3,4 +3,5 @@
 -/quelpa
 -/eaf
 -/pyim
-
+-/site-lisp/emacs-application-framework
+-/site-lisp/lsp-bridge
