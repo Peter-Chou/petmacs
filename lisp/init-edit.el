@@ -11,7 +11,8 @@
 (use-package autorevert
   :ensure nil
   :diminish
-  :hook (after-init . global-auto-revert-mode))
+  :hook (after-init . global-auto-revert-mode)
+  :init (setq global-auto-revert-non-file-buffers t))
 
 ;; Jump to things in Emacs tree-style
 (use-package avy
