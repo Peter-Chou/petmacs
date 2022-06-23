@@ -19,7 +19,8 @@
 
 (defvar pretty-code-options-alist
   ;; Functions
-  '((:lambda "λ") (:def "ƒ")
+  '((:lambda "λ") (:def "ƒ") (:class "♜") (:struct "♖")
+    ;; (:class "Ċ")
 
     ;; Types
     (:true "𝕋") (:false "𝔽") (:int "ℤ") (:float "ℝ") (:str "𝕊") (:bool "𝔹")
@@ -31,7 +32,7 @@
     (:not "￢") (:and "∧") (:or "∨")
 
     ;; Misc
-    (:return "⟼") (:yield "⟻") (:some "∃") (:composition "∘") (:tuple "⨂"))
+    (:return "⬅") (:yield "⇦") (:some "∃") (:composition "∘") (:tuple "⨂"))
   "kwd and composition-str alist.")
 
 ;;;; Core
