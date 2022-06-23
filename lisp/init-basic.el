@@ -87,6 +87,10 @@
                                               extended-command-history)
               savehist-autosave-interval 300))
 
+(use-package save-place
+  :ensure nil
+  :hook (after-init . save-place-mode))
+
 (use-package simple
   :ensure nil
   :hook ((after-init . size-indication-mode)
