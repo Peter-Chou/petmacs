@@ -2,11 +2,11 @@
 
 (require 'init-custom)
 
-(use-package corfu-doc)
-
 ;;; pip install epc
 (use-package lsp-bridge
-  :load-path (lambda () (expand-file-name "site-lisp/lsp-bridge" user-emacs-directory))
+  :quelpa (lsp-bridge :fetcher github
+  		              :repo "manateelazycat/lsp-bridge"
+  		              :files ("*"))
   :preface
   ;; 融合 `lsp-bridge' `find-function' 以及 `dumb-jump' 的智能跳转
   (defun petmacs/lsp-bridge-jump ()

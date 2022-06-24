@@ -62,6 +62,8 @@
   :bind (("M-/" . dabbrev-completion)
          ("C-M-/" . dabbrev-expand)))
 
+(use-package corfu-doc)
+
 ;; ;; Add extensions
 
 (provide 'init-corfu)
