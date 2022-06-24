@@ -113,6 +113,7 @@
 
 ;;         ;; doom-modeline-height 1
 ;;         doom-modeline-height 0.9
+;;         doom-modeline-window-width-limit 90
 ;;         doom-modeline-buffer-file-name-style 'relative-to-project)
 ;;   ;; Prevent flash of unstyled modeline at startup
 ;;   (unless after-init-time
