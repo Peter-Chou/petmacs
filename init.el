@@ -30,8 +30,8 @@
 	     (native-comp-available-p))
     (progn
       (message "Native compilation is available")
-      ;; native-compile all Elisp files under a directory
-      (native-compile-async (expand-file-name "site-lisp" user-emacs-directory) 'recursively)
+      ;; native-compile all Elisp files under a site-lisp/local directory
+      (native-compile-async (expand-file-name "site-lisp/local" user-emacs-directory) 'recursively)
       (setq package-native-compile t
 	        native-comp-async-report-warnings-errors nil))
   (message "Native complation is *not* available"))

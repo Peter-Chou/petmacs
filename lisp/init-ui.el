@@ -346,11 +346,11 @@
     (set-char-table-parent composition-ligature-table composition-function-table)))
 
 (use-package pretty-code
-  :load-path (lambda () (expand-file-name "site-lisp/pretty-code" user-emacs-directory))
+  :load-path (lambda () (expand-file-name "site-lisp/local/pretty-code" user-emacs-directory))
   :commands (pretty-code-add-hook)
   :init
   (use-package prettify-utils
-    :load-path (lambda () (expand-file-name "site-lisp/prettify-utils" user-emacs-directory)))
+    :load-path (lambda () (expand-file-name "site-lisp/local/prettify-utils" user-emacs-directory)))
 
   (pretty-code-add-hook 'python-mode-hook     '((:def "def")
                                                 (:class "class")
@@ -370,7 +370,7 @@
 						                        (:lambda "lambda"))))
 
 (use-package kind-all-the-icons
-  :load-path (lambda () (expand-file-name "site-lisp/kind-all-the-icons" user-emacs-directory))
+  :load-path (lambda () (expand-file-name "site-lisp/local/kind-all-the-icons" user-emacs-directory))
   :after corfu
   :init
   (when (icon-displayable-p)
