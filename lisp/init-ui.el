@@ -177,7 +177,6 @@
 
   (add-to-list 'awesome-tray-module-alist '("winum" . (awesome-tray-module-winum-info awesome-tray-module-winum-face)))
   (add-to-list 'awesome-tray-module-alist '("pyvenv" . (awesome-tray-module-pyvenv-info awesome-tray-module-pyvenv-face)))
-
   (add-hook 'buffer-list-update-hook #'awesome-tray-update))
 
 (use-package hide-mode-line
