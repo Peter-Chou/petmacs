@@ -48,12 +48,7 @@
 ;; use mirror
 (setq package-archives '(("gnu"          . "https://elpa.gnu.org/packages/")
                          ("melpa"        . "https://melpa.org/packages/")
-                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")
-                         ;; ("org"          . "https://orgmode.org/elpa/")
-
-                         ;; ("elpa"         . "http://elpa.gnu.org/packages/")
-			             ;; ("melpa"        . "http://melpa.org/packages/")
-			             ))
+                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
 
 (require 'init-custom)
 (require 'init-package)
