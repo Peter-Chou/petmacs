@@ -31,6 +31,8 @@ git clone --depth=1 https://github.com/Peter-Chou/petmacs.git ~/.emacs.d
 install git submodules:
 
 ``` bash
+cd ~/.emacs.d
+
 git submodule update --init --recursive
 
 # udpate submodules to latest version
