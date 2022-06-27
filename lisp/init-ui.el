@@ -157,9 +157,12 @@
    awesome-tray-update-interval 0.6
    awesome-tray-buffer-name-max-length 30
    awesome-tray-file-path-show-filename t
+   awesome-tray-buffer-name-buffer-changed t
 
-   awesome-tray-active-modules   '("winum" "location" "belong" "pyvenv" "file-path" "date")
-   awesome-tray-essential-modules '("winum" "location" "belong" "file-path"))
+   ;; awesome-tray-active-modules   '("winum" "location" "belong" "pyvenv" "file-path" "date")
+   ;; awesome-tray-essential-modules '("winum" "location" "belong" "file-path")
+   awesome-tray-active-modules   '("winum" "location" "belong" "pyvenv" "buffer-name" "date")
+   awesome-tray-essential-modules '("winum" "location" "belong" "buffer-name"))
   :config
   (defun petmacs/awesome-tray-update-git-command-cache ()
     (let* ((git-info (awesome-tray-process-exit-code-and-output "git" "symbolic-ref" "--short" "HEAD"))
@@ -171,6 +174,17 @@
               ""))
       awesome-tray-git-command-cache))
   (advice-add #'awesome-tray-update-git-command-cache :override #'petmacs/awesome-tray-update-git-command-cache)
+
+  (defun petmacs/awesome-tray-module-buffer-name-info ()
+    (let (bufname)
+      (setq bufname (if awesome-tray-buffer-name-buffer-changed
+                        (if (and (buffer-modified-p)
+                                 (not (eq buffer-file-name nil)))
+                            (concat  awesome-tray-buffer-name-buffer-changed-style (buffer-name))
+                          (buffer-name))
+                      (format "%s" (buffer-name))))
+      (awesome-tray-truncate-string bufname awesome-tray-buffer-name-max-length t)))
+  (advice-add #'awesome-tray-module-buffer-name-info :override #'petmacs/awesome-tray-module-buffer-name-info)
 
   (with-eval-after-load 'modus-themes
     (advice-add #'modus-themes-toggle :after #'awesome-tray-enable))
