@@ -28,6 +28,10 @@
 
       (setq eaf-python-command (expand-file-name "eaf/bin/python" (getenv "WORKON_HOME")))))
   :config
+  (with-eval-after-load 'spaceleader
+    (setq eaf-evil-leader-key leader-key
+          eaf-evil-leader-keymap leader-map))
+
   (defalias 'browse-web #'eaf-open-browser)
   (eaf-bind-key scroll_up "C-n" eaf-pdf-viewer-keybinding)
   (eaf-bind-key scroll_down "C-p" eaf-pdf-viewer-keybinding))
