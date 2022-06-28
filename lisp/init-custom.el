@@ -8,9 +8,13 @@
 
 (defvar  petmacs-font
   ;; "Fira Code Retina"
-  "Mona Code"
+  ;; "MonegoLigatures Nerd Font"
+  "Monaco Nerd Font Mono"
   ;; "Iosevka"
   "font")
+
+(defvar petmacs-enable-ligatures nil
+  "enable ligatures")
 
 (defvar  petmacs-font-size 14.0
   "font size")

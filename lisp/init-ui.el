@@ -1,5 +1,6 @@
 ;; -*- lexical-binding: t no-byte-compile: t -*-
 
+(require 'init-custom)
 (require 'init-funcs)
 
 (when (and sys/mac-ns-p sys/mac-x-p)
@@ -314,7 +315,7 @@
   (setq x-gtk-use-system-tooltips nil))
 
 ;; use font supported ligatures
-(when emacs/>=27p
+(when (and emacs/>=27p petmacs-enable-ligatures)
   (use-package composite
     :ensure nil
     :init (defvar composition-ligature-table (make-char-table nil))
