@@ -8,7 +8,7 @@
 
 (defvar  petmacs-font
   ;; "Fira Code Retina"
-  "Monacode"
+  "Mona Code"
   ;; "Iosevka"
   "font")
 

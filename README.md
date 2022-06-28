@@ -6,7 +6,7 @@
 
 - Fonts
 
-  - [Monacode](https://github.com/ApplicationDeveloper/fonts)
+  - [Mona Code](https://github.com/smithrosser/mona-code)
 
 - icons
 
