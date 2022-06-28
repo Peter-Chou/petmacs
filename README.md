@@ -6,7 +6,7 @@
 
 - Fonts
 
-  - [Monaco Nerd Font Mono](https://github.com/Karmenzind/monaco-nerd-fonts)
+  - [Monego](https://github.com/cseelus/monego)
 
 - icons
 

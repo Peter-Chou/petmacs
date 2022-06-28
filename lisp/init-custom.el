@@ -9,7 +9,8 @@
 (defvar  petmacs-font
   ;; "Fira Code Retina"
   ;; "MonegoLigatures Nerd Font"
-  "Monaco Nerd Font Mono"
+  "Monego"
+  ;; "Monaco Nerd Font Mono"
   ;; "Iosevka"
   "font")
 
