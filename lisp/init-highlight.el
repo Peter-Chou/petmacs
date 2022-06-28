@@ -80,7 +80,7 @@ FACE defaults to inheriting from default and highlight."
   :diminish
   :custom-face
   (highlight-indent-guides-character-face ((t (:inherit 'font-lock-keyword-face :bold nil))))
-  (highlight-indent-guides-top-character-face ((t (:foreground "red" :bold t))))
+  (highlight-indent-guides-top-character-face ((t (:foreground "#ff6a07" :bold t))))  ;; Hermès hex color
   :hook ((prog-mode yaml-mode) . highlight-indent-guides-mode)
   :init (setq highlight-indent-guides-auto-enabled nil
               highlight-indent-guides-method 'character
