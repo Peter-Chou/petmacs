@@ -7,14 +7,12 @@
   "Display icons or not.")
 
 (defvar  petmacs-font
-  ;; "Fira Code Retina"
+  "Monego Ligatures"
+  ;; "Monego"
   ;; "MonegoLigatures Nerd Font"
-  "Monego"
-  ;; "Monaco Nerd Font Mono"
-  ;; "Iosevka"
   "font")
 
-(defvar petmacs-enable-ligatures nil
+(defvar petmacs-enable-ligatures t
   "enable ligatures")
 
 (defvar  petmacs-font-size 14.0

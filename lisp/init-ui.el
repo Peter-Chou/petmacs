@@ -57,14 +57,14 @@
 
 (use-package spacemacs-theme
   :init
-  (setq spacemacs-theme-comment-italic t
-        spacemacs-theme-org-priority-bold t))
+  (setq ;; spacemacs-theme-comment-italic t
+   spacemacs-theme-org-priority-bold t))
 
 (use-package modus-themes
   :init
   (setq
    modus-themes-bold-constructs t
-   modus-themes-italic-constructs t
+   ;; modus-themes-italic-constructs t
    modus-themes-org-blocks 'tinted-background
    ;; modus-themes-syntax '(yellow-comments green-strings)
 
