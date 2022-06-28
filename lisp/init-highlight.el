@@ -84,6 +84,7 @@ FACE defaults to inheriting from default and highlight."
   :hook ((prog-mode yaml-mode) . highlight-indent-guides-mode)
   :init (setq highlight-indent-guides-auto-enabled nil
               highlight-indent-guides-method 'character
+              highlight-indent-guides-character ?⸽
               highlight-indent-guides-responsive 'top
               highlight-indent-guides-suppress-auto-error t)
   :config
