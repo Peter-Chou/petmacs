@@ -6,7 +6,7 @@
 
 - Fonts
 
-  - [Monego Ligatures](https://github.com/cseelus/monego)
+  - [Monacode](https://github.com/ApplicationDeveloper/fonts)
 
 - icons
 

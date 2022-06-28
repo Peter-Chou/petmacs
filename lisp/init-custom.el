@@ -8,7 +8,7 @@
 
 (defvar  petmacs-font
   ;; "Fira Code Retina"
-  "Monego Ligatures"
+  "Monacode"
   ;; "Iosevka"
   "font")
 
