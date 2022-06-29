@@ -6,7 +6,7 @@
 (use-package eaf
   :load-path (lambda () (expand-file-name "site-lisp/emacs-application-framework" user-emacs-directory))
   :init
-  (setq eaf-config-location  (expand-file-name "var/eaf" user-emacs-directory)
+  (setq eaf-config-location  (expand-file-name "var/eaf-config" user-emacs-directory)
         eaf-browser-continue-where-left-off t
         eaf-browser-enable-adblocker t
         browse-url-browser-function 'eaf-open-browser)
