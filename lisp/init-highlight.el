@@ -78,16 +78,17 @@ FACE defaults to inheriting from default and highlight."
 ;; Highlight indentions
 (use-package highlight-indent-guides
   :diminish
-  :custom-face
-  (highlight-indent-guides-character-face ((t (:inherit 'font-lock-type-face :bold nil))))
-  (highlight-indent-guides-top-character-face ((t (:foreground "#ff6a07" :bold t))))  ;; Hermès hex color
   :hook ((prog-mode yaml-mode) . highlight-indent-guides-mode)
-  :init (setq highlight-indent-guides-auto-enabled nil
-              highlight-indent-guides-method 'character
-              ;; highlight-indent-guides-character ?⸽
-              highlight-indent-guides-responsive 'top
-              highlight-indent-guides-suppress-auto-error t)
+  :init
+  (setq highlight-indent-guides-auto-enabled nil
+        highlight-indent-guides-method 'character
+        ;; highlight-indent-guides-character ?⸽
+        highlight-indent-guides-responsive 'top
+        highlight-indent-guides-suppress-auto-error t)
+
   :config
+  (set-face-attribute 'highlight-indent-guides-character-face nil :foreground (color-lighten-name (face-foreground 'font-lock-type-face nil 'default) 20) :bold nil)
+  (set-face-attribute 'highlight-indent-guides-top-character-face nil :foreground "#ff6a07" :bold t)  ;; Hermès hex color
   (with-no-warnings
     ;; Don't display first level of indentation
     (defun my-indent-guides-for-all-but-first-column (level responsive display)
