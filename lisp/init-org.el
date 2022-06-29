@@ -9,10 +9,10 @@
   :hook ((org-babel-after-execute org-mode) . org-redisplay-inline-images) ; display image
   :config
   (setq org-modules nil                 ; Faster loading
-        org-directory (expand-file-name "org" user-emacs-directory)
+        org-directory (expand-file-name "var/org" user-emacs-directory)
 
         ;; Agenda styling
-        org-agenda-files (list (expand-file-name "org" user-emacs-directory))
+        org-agenda-files (list (expand-file-name "var/org" user-emacs-directory))
         org-agenda-block-separator ?─
         org-agenda-time-grid
         '((daily today require-timed)
@@ -61,7 +61,7 @@
     (revert-buffer))
   :init
 
-  (setq org-projectile-projects-file (expand-file-name "todos.org" (concat user-emacs-directory "org"))
+  (setq org-projectile-projects-file (expand-file-name "todos.org" (concat user-emacs-directory "var/gtd"))
         org-agenda-files (append org-agenda-files (org-projectile-todo-files))
         org-projectile-per-project-filepath "todos.org")
 
