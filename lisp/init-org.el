@@ -8,13 +8,13 @@
   :custom-face (org-ellipsis ((t (:foreground nil))))
   :hook ((org-babel-after-execute org-mode) . org-redisplay-inline-images) ; display image
   :init
-  (make-directory (expand-file-name "var/org" user-emacs-directory) t)
+  (make-directory (expand-file-name "var/gtd" user-emacs-directory) t)
   :config
   (setq org-modules nil                 ; Faster loading
-        org-directory (expand-file-name "var/org" user-emacs-directory)
+        org-directory (expand-file-name "var/gtd" user-emacs-directory)
 
         ;; Agenda styling
-        org-agenda-files (list (expand-file-name "var/org" user-emacs-directory))
+        org-agenda-files (list (expand-file-name "var/gtd" user-emacs-directory))
         org-agenda-block-separator ?─
         org-agenda-time-grid
         '((daily today require-timed)
