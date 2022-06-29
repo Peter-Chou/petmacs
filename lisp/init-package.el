@@ -1,5 +1,7 @@
 ;; -*- lexical-binding: t no-byte-compile: t -*-
 
+(setq package-user-dir (expand-file-name "var/elpa" user-emacs-directory))
+
 ;; HACK: DO NOT save package-selected-packages to `custom-file'.
 ;; https://github.com/jwiegley/use-package/issues/383#issuecomment-247801751
 (defun my-package--save-selected-packages (&optional value)
@@ -80,9 +82,10 @@
 
 (use-package quelpa
   :init
-  (setq quelpa-self-upgrade-p nil)
-  (setq quelpa-update-melpa-p nil)
-  (setq quelpa-checkout-melpa-p t))
+  (setq quelpa-self-upgrade-p nil
+        quelpa-update-melpa-p nil
+        quelpa-checkout-melpa-p t
+        quelpa-dir (expand-file-name "var/quelpa" user-emacs-directory)))
 
 ;; Required by `use-package'
 (use-package quelpa-use-package
