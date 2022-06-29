@@ -90,4 +90,6 @@ session*
 eln-cache/
 pyim/
 eaf/
+var/
+etc/
 forge-database.sqlite

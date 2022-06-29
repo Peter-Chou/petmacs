@@ -5,13 +5,13 @@
 (require 'init-custom)
 (require 'init-funcs)
 
-;; (use-package no-littering
-;;   :init
-;;   (setq auto-save-file-name-transforms
-;; 	    `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
-;;   (require 'recentf)
-;;   (add-to-list 'recentf-exclude no-littering-var-directory)
-;;   (add-to-list 'recentf-exclude no-littering-etc-directory))
+(use-package no-littering
+  :init
+  (setq auto-save-file-name-transforms
+	    `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
+  (require 'recentf)
+  (add-to-list 'recentf-exclude no-littering-var-directory)
+  (add-to-list 'recentf-exclude no-littering-etc-directory))
 
 (with-no-warnings
   ;; Optimization
