@@ -7,6 +7,8 @@
   :ensure nil
   :custom-face (org-ellipsis ((t (:foreground nil))))
   :hook ((org-babel-after-execute org-mode) . org-redisplay-inline-images) ; display image
+  :init
+  (make-directory (expand-file-name "var/org" user-emacs-directory) t)
   :config
   (setq org-modules nil                 ; Faster loading
         org-directory (expand-file-name "var/org" user-emacs-directory)
