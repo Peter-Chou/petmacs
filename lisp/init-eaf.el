@@ -5,12 +5,11 @@
 ;; python3 install install-eaf.py
 (use-package eaf
   :load-path (lambda () (expand-file-name "site-lisp/emacs-application-framework" user-emacs-directory))
-  :custom
-  ;; See https://github.com/emacs-eaf/emacs-application-framework/wiki/Customization
-  (eaf-browser-continue-where-left-off t)
-  (eaf-browser-enable-adblocker t)
-  (browse-url-browser-function 'eaf-open-browser)
   :init
+  (setq eaf-config-location  (expand-file-name "var/eaf" user-emacs-directory)
+        eaf-browser-continue-where-left-off t
+        eaf-browser-enable-adblocker t
+        browse-url-browser-function 'eaf-open-browser)
   ;; add folders in app to load-path
   (let ((default-directory (expand-file-name "site-lisp/emacs-application-framework/app" user-emacs-directory)))
     (when (file-directory-p default-directory)
