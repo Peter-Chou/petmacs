@@ -37,8 +37,4 @@
 (defvar petmacs-lsp-format-on-save-ignore-modes
   '(c-mode c++-mode python-mode markdown-mode))
 
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(when (file-exists-p custom-file)
-  (load custom-file 'noerror 'nomessage))
-
 (provide 'init-custom)
