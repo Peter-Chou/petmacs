@@ -83,7 +83,8 @@
   (use-package vterm
     :commands vterm--internal
     :init
-    (setq vterm-always-compile-module t))
+    (setq vterm-always-compile-module t
+          vterm-max-scrollback 10000))
 
   (use-package multi-vterm
 	;; :config
@@ -115,17 +116,6 @@
 	;; (evil-define-key 'normal vterm-mode-map (kbd "i")        #'evil-insert-resume)
 	;; (evil-define-key 'normal vterm-mode-map (kbd "o")        #'evil-insert-resume)
 	;; (evil-define-key 'normal vterm-mode-map (kbd "<return>") #'evil-insert-resume)
-    )
-  )
-
-;; Shell Pop
-;; (use-package shell-pop
-;;   :init
-;;   (setq shell-pop-window-size 30
-;;         shell-pop-shell-type
-;;         (cond ((fboundp 'vterm) '("vterm" "*vterm*" #'vterm))
-;;               (sys/win32p '("eshell" "*eshell*" #'eshell))
-;;               (t '("terminal" "*terminal*"
-;;                    (lambda () (term shell-pop-term-shell)))))))
+    ))
 
 (provide 'init-shell)
