@@ -151,6 +151,17 @@
        :foreground "#369bf7" :bold t))
     "pyvenv face."
     :group 'awesome-tray)
+
+  (defun awesome-tray-module-pomodoro-info () (format "%s" pomodoro-mode-line-string))
+
+  (defface awesome-tray-module-pomodoro-face
+    '((((background light))
+       :foreground "#008080" :bold t)
+      (t
+       :foreground "#00ced1" :bold t))
+    "pomodoro face."
+    :group 'awesome-tray)
+
   :commands (awesome-tray-update)
   :hook (after-init . awesome-tray-mode)
   :init
@@ -160,9 +171,7 @@
    awesome-tray-file-path-show-filename t
    awesome-tray-buffer-name-buffer-changed t
 
-   ;; awesome-tray-active-modules   '("winum" "location" "belong" "pyvenv" "file-path" "date")
-   ;; awesome-tray-essential-modules '("winum" "location" "belong" "file-path")
-   awesome-tray-active-modules   '("winum" "location" "belong" "pyvenv" "buffer-name" "date")
+   awesome-tray-active-modules   '("winum" "location" "belong" "pyvenv" "buffer-name" "pomodoro" "date")
    awesome-tray-essential-modules '("winum" "location" "belong" "buffer-name"))
   :config
   (defun petmacs/awesome-tray-update-git-command-cache ()
@@ -192,6 +201,7 @@
 
   (add-to-list 'awesome-tray-module-alist '("winum" . (awesome-tray-module-winum-info awesome-tray-module-winum-face)))
   (add-to-list 'awesome-tray-module-alist '("pyvenv" . (awesome-tray-module-pyvenv-info awesome-tray-module-pyvenv-face)))
+  (add-to-list 'awesome-tray-module-alist '("pomodoro" . (awesome-tray-module-pomodoro-info awesome-tray-module-pomodoro-face)))
   (add-hook 'buffer-list-update-hook #'awesome-tray-update))
 
 (use-package hide-mode-line

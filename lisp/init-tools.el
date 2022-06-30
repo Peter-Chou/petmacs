@@ -9,6 +9,11 @@
 (use-package pretty-hydra
   :init (require 'pretty-hydra))
 
+(use-package pomodoro
+  :init
+  (require 'pomodoro)
+  (pomodoro-add-to-mode-line))
+
 (use-package which-key
   :diminish
   :hook (after-init . which-key-mode)
