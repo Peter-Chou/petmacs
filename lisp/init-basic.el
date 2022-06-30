@@ -11,6 +11,7 @@
         no-littering-var-directory (expand-file-name "data/" user-emacs-directory)
         auto-save-file-name-transforms
         `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
+  (require 'no-littering)
   (require 'recentf)
   (add-to-list 'recentf-exclude no-littering-var-directory)
   (add-to-list 'recentf-exclude no-littering-etc-directory))

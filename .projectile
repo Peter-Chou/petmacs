@@ -2,6 +2,8 @@
 -/eln-cache
 -/quelpa
 -/eaf
+-/data
+-/config
 -/pyim
 -/site-lisp/emacs-application-framework
 -/site-lisp/lsp-bridge

@@ -73,12 +73,12 @@ npm install -g pyright
 
 ## Screenshots
 
-![dashboard](./var/pics/dashboard.png)
+![dashboard](./data/pics/dashboard.png)
 
 <br>
 
-![markdown](./var/pics/markdown.png)
+![markdown](./data/pics/markdown.png)
 
 <br>
 
-![elisp](./var/pics/elisp.png)
+![elisp](./data/pics/elisp.png)
