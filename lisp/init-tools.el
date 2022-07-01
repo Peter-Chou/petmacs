@@ -12,7 +12,12 @@
 (use-package pomodoro
   :init
   (require 'pomodoro)
-  (pomodoro-add-to-mode-line))
+  (defun petmacs/pomodoro-toggle ()
+    (interactive)
+    (if (string= "" pomodoro-mode-line-string)
+        (pomodoro-start pomodoro-work-time)
+      (pomodoro-stop)))
+  )
 
 (use-package which-key
   :diminish

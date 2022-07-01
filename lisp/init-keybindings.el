@@ -36,7 +36,9 @@
 
 (leader-declare-prefix
   "a" "apps"
-  "ao" "org")
+  "ao" "org"
+  "at" "pomodoro"
+  )
 (leader-with-prefix "a"
   (leader-set-keys
     "d"  #'deer
@@ -58,6 +60,11 @@
     "os" #'org-search-view
     "ot" #'org-todo-list
     "o/" #'org-occur-in-agenda-files
+
+    ;; "ap" prefix
+    "tt" #'petmacs/pomodoro-toggle
+    "tp" #'pomodoro-pause
+    "tr" #'pomodoro-resume
     ))
 
 (leader-declare-prefix
