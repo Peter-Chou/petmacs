@@ -408,6 +408,4 @@
 (use-package iedit)
 (use-package dotenv-mode)
 
-(use-package dumb-jump)
-
 (provide 'init-tools)

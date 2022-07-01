@@ -2,6 +2,8 @@
 
 (require 'init-custom)
 
+(use-package dumb-jump)
+
 ;;; pip install epc
 (use-package lsp-bridge
   :quelpa (lsp-bridge :fetcher github
