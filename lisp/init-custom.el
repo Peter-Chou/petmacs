@@ -3,6 +3,9 @@
 (defvar  petmacs-proxy "winhost:1080"
   "Set network proxy.")
 
+(defvar petmacs-socks-proxy "127.0.0.1:1086"
+  "Set SOCKS proxy.")
+
 (defvar petmacs-icon (or (display-graphic-p) (daemonp))
   "Display icons or not.")
 

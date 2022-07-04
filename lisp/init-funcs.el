@@ -245,7 +245,6 @@ Same as `replace-string C-q C-m RET RET'."
       (set-frame-position nil left top)
       (set-frame-size nil width height t))))
 
-
 ;; Network Proxy
 (defun proxy-http-show ()
   "Show HTTP/HTTPS proxy."
@@ -275,6 +274,43 @@ Same as `replace-string C-q C-m RET RET'."
   (if (bound-and-true-p url-proxy-services)
       (proxy-http-disable)
     (proxy-http-enable)))
+
+(defun proxy-socks-show ()
+  "Show SOCKS proxy."
+  (interactive)
+  (if (bound-and-true-p socks-noproxy)
+      (message "Current SOCKS%d proxy is %s:%s"
+               (cadddr socks-server) (cadr socks-server) (caddr socks-server))
+    (message "No SOCKS proxy")))
+
+(defun proxy-socks-enable ()
+  "Enable SOCKS proxy."
+  (interactive)
+  (require 'socks)
+  (setq url-gateway-method 'socks
+        socks-noproxy '("localhost"))
+  (let* ((proxy (split-string petmacs-socks-proxy ":"))
+         (host (car proxy))
+         (port (string-to-number (cadr proxy))))
+    (setq socks-server `("Default server" ,host ,port 5)))
+  (setenv "all_proxy" (concat "socks5://" petmacs-socks-proxy))
+  (proxy-socks-show))
+
+(defun proxy-socks-disable ()
+  "Disable SOCKS proxy."
+  (interactive)
+  (setq url-gateway-method 'native
+        socks-noproxy nil
+        socks-server nil)
+  (setenv "all_proxy" "")
+  (proxy-socks-show))
+
+(defun proxy-socks-toggle ()
+  "Toggle SOCKS proxy."
+  (interactive)
+  (if (bound-and-true-p socks-noproxy)
+      (proxy-socks-disable)
+    (proxy-socks-enable)))
 
 ;; WORKAROUND: fix blank screen issue on macOS.
 (defun fix-fullscreen-cocoa ()
