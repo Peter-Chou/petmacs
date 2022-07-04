@@ -50,6 +50,8 @@
                          ("melpa"        . "https://melpa.org/packages/")
                          ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
 
+(require 'init-funcs)
+
 (require 'init-custom)
 (require 'init-package)
 (require 'init-basic)
@@ -95,7 +97,8 @@
 (require 'init-org)
 (require 'init-snippets)
 
-(if (display-graphic-p)
+(if (and (display-graphic-p)
+         (file-directory-p (petmacs/get-eaf-app-directory)))
     (require 'init-eaf))
 
 (require 'core-funcs)
