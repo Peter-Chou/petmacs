@@ -10,12 +10,12 @@
   "Display icons or not.")
 
 (defvar  petmacs-font
-  ;; "Monego Ligatures"
-  "Monego"
+  "Monego Ligatures"
+  ;; "Monego"
   ;; "MonegoLigatures Nerd Font"
   "font")
 
-(defvar petmacs-enable-ligatures nil
+(defvar petmacs-enable-ligatures t
   "enable ligatures")
 
 (defvar  petmacs-font-size 14.0
