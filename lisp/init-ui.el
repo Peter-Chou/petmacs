@@ -245,7 +245,13 @@
         (setq-local display-line-numbers t))
 
       (add-hook 'evil-insert-state-entry-hook #'petmacs/display-line-numbers-absolute)
-      (add-hook 'evil-insert-state-exit-hook #'petmacs/display-line-numbers-relative))
+      (add-hook 'evil-insert-state-exit-hook #'petmacs/display-line-numbers-relative)
+      ;; Disable line numbers for some modes
+      (dolist (mode '(org-mode-hook
+                      term-mode-hook
+                      shell-mode-hook
+                      eshell-mode-hook))
+        (add-hook mode (lambda () (display-line-numbers-mode 0)))))
   (use-package linum-off
     :demand t
     :defines linum-format

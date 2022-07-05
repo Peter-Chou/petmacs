@@ -1,15 +1,46 @@
 ;; -*- lexical-binding: t no-byte-compile: t -*-
 
+(require 'init-custom)
+
 (require'org-tempo) ;; start easy template
 
 (use-package org
+  :preface
+  (defun petmacs/org-mode-setup ()
+    (org-indent-mode)
+    (variable-pitch-mode 1)
+    (visual-line-mode 1))
+  (defun petmacs/org-font-setup ()
+    ;; Replace list hyphen with dot
+    (font-lock-add-keywords 'org-mode
+                            '(("^ *\\([-]\\) "
+                               (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+    ;; Set faces for heading levels
+    (dolist (face '((org-level-1 . 1.2)
+                    (org-level-2 . 1.1)
+                    (org-level-3 . 1.05)
+                    (org-level-4 . 1.0)
+                    (org-level-5 . 1.1)
+                    (org-level-6 . 1.1)
+                    (org-level-7 . 1.1)
+                    (org-level-8 . 1.1)))
+      (set-face-attribute (car face) nil :font petmacs-font :weight 'regular :height (cdr face)))
+    ;; Ensure that anything that should be fixed-pitch in Org files appears that way
+    (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+    (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
+    (set-face-attribute 'org-table nil   :inherit '(shadow fixed-pitch))
+    (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+    (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+    (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+    (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch))
   :pin melpa
-  :ensure nil
   :custom-face (org-ellipsis ((t (:foreground nil))))
-  :hook ((org-babel-after-execute org-mode) . org-redisplay-inline-images) ; display image
+  :hook ((org-mode . petmacs/org-mode-setup)
+         ((org-babel-after-execute org-mode) . org-redisplay-inline-images)) ; display image
   :init
   (make-directory (expand-file-name "data/gtd" user-emacs-directory) t)
   :config
+  (petmacs/org-font-setup)
   (setq org-modules nil                 ; Faster loading
         org-directory (expand-file-name "data/gtd" user-emacs-directory)
 
