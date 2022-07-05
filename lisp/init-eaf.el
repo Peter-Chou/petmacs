@@ -8,12 +8,12 @@
 (use-package eaf
   :load-path (lambda () (expand-file-name "site-lisp/emacs-application-framework" user-emacs-directory))
   :init
-  (setq eaf-config-location  (petmacs/get-eaf-app-directory)
+  (setq eaf-config-location  (expand-file-name "data/eaf-config" user-emacs-directory)
         eaf-browser-continue-where-left-off t
         eaf-browser-enable-adblocker t
         browse-url-browser-function 'eaf-open-browser)
   ;; add folders in app to load-path
-  (let ((default-directory (expand-file-name "site-lisp/emacs-application-framework/app" user-emacs-directory)))
+  (let ((default-directory (petmacs/get-eaf-app-directory)))
     (normal-top-level-add-subdirs-to-load-path)
     (require 'eaf)
     (require 'eaf-browser)
