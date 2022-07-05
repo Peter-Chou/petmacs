@@ -15,11 +15,11 @@
 
 - global tools
 
-  - put [ripgrep](https://github.com/BurntSushi/ripgrep) binary into your $PATH
+  - put [ripgrep](https://github.com/BurntSushi/ripgrep) binary into your `PATH`
 
 - nodejs
 
-  - put [nodejs](https://nodejs.org) binaries into your $PATH
+  - put [nodejs](https://nodejs.org) binaries into your `PATH`
 
 ---
 
