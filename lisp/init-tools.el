@@ -17,7 +17,9 @@
     (if (string= "" pomodoro-mode-line-string)
         (pomodoro-start pomodoro-work-time)
       (pomodoro-stop)))
-  )
+  (setq
+   pomodoro-break-start-sound (expand-file-name "data/sounds/emacs.d_sounds_three_beeps.wav" user-emacs-directory)
+   pomodoro-work-start-sound (expand-file-name "data/sounds/emacs.d_sounds_jabber_message.wav" user-emacs-directory)))
 
 (use-package which-key
   :diminish
