@@ -257,73 +257,73 @@
 
   (pyim-extra-dicts-add-dict
    `(:name "tsinghua-dict"
-     :file, (expand-file-name "var/dicts/pyim-tsinghua-dict.pyim" user-emacs-directory)
+     :file, (expand-file-name "data/dicts/pyim-tsinghua-dict.pyim" user-emacs-directory)
      :coding utf-8-unix
      :dict-type pinyin-dict
      ))
   (pyim-extra-dicts-add-dict
    `(:name "daily-dict"
-     :file, (expand-file-name "var/dicts/daily.pyim" user-emacs-directory)
+     :file, (expand-file-name "data/dicts/daily.pyim" user-emacs-directory)
      :coding utf-8-unix
      :dict-type pinyin-dict
      ))
   (pyim-extra-dicts-add-dict
    `(:name "math-dict"
-     :file, (expand-file-name "var/dicts/math.pyim" user-emacs-directory)
+     :file, (expand-file-name "data/dicts/math.pyim" user-emacs-directory)
      :coding utf-8-unix
      :dict-type pinyin-dict
      ))
   (pyim-extra-dicts-add-dict
    `(:name "computer-dict"
-     :file, (expand-file-name "var/dicts/computer.pyim" user-emacs-directory)
+     :file, (expand-file-name "data/dicts/computer.pyim" user-emacs-directory)
      :coding utf-8-unix
      :dict-type pinyin-dict
      ))
   (pyim-extra-dicts-add-dict
    `(:name "computer-nouns-dict"
-     :file, (expand-file-name "var/dicts/computer-nouns.pyim" user-emacs-directory)
+     :file, (expand-file-name "data/dicts/computer-nouns.pyim" user-emacs-directory)
      :coding utf-8-unix
      :dict-type pinyin-dict
      ))
   (pyim-extra-dicts-add-dict
    `(:name "coder-dict"
-     :file, (expand-file-name "var/dicts/coder.pyim" user-emacs-directory)
+     :file, (expand-file-name "data/dicts/coder.pyim" user-emacs-directory)
      :coding utf-8-unix
      :dict-type pinyin-dict
      ))
   (pyim-extra-dicts-add-dict
    `(:name "code-lang-dict"
-     :file, (expand-file-name "var/dicts/code-lang.pyim" user-emacs-directory)
+     :file, (expand-file-name "data/dicts/code-lang.pyim" user-emacs-directory)
      :coding utf-8-unix
      :dict-type pinyin-dict
      ))
   (pyim-extra-dicts-add-dict
    `(:name "data-structure-dict"
-     :file, (expand-file-name "var/dicts/data-structure.pyim" user-emacs-directory)
+     :file, (expand-file-name "data/dicts/data-structure.pyim" user-emacs-directory)
      :coding utf-8-unix
      :dict-type pinyin-dict
      ))
   (pyim-extra-dicts-add-dict
    `(:name "ai-dict"
-     :file, (expand-file-name "var/dicts/ai.pyim" user-emacs-directory)
+     :file, (expand-file-name "data/dicts/ai.pyim" user-emacs-directory)
      :coding utf-8-unix
      :dict-type pinyin-dict
      ))
   (pyim-extra-dicts-add-dict
    `(:name "nlp-dict"
-     :file, (expand-file-name "var/dicts/nlp.pyim" user-emacs-directory)
+     :file, (expand-file-name "data/dicts/nlp.pyim" user-emacs-directory)
      :coding utf-8-unix
      :dict-type pinyin-dict
      ))
   (pyim-extra-dicts-add-dict
    `(:name "chengyu-dict"
-     :file, (expand-file-name "var/dicts/chengyu.pyim" user-emacs-directory)
+     :file, (expand-file-name "data/dicts/chengyu.pyim" user-emacs-directory)
      :coding utf-8-unix
      :dict-type pinyin-dict
      ))
   (pyim-extra-dicts-add-dict
    `(:name "program-dict"
-     :file, (expand-file-name "var/dicts/program.pyim" user-emacs-directory)
+     :file, (expand-file-name "data/dicts/program.pyim" user-emacs-directory)
      :coding utf-8-unix
      :dict-type pinyin-dict
      ))
