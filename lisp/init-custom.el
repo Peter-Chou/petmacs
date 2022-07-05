@@ -12,8 +12,11 @@
 (defvar  petmacs-font
   "Monego Ligatures"
   ;; "Monego"
-  ;; "MonegoLigatures Nerd Font"
   "font")
+
+(defvar  petmacs-chinese-font
+  "等距更纱黑体 SC"
+  "chinese font")
 
 (defvar petmacs-enable-ligatures t
   "enable ligatures")

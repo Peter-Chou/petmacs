@@ -4,17 +4,16 @@
 (require 'init-custom)
 (require 'init-funcs)
 
+;; set default font
 (if (font-installed-p petmacs-font)
     (set-face-attribute 'default nil :font (format "%s-%d" petmacs-font petmacs-font-size))
   (message  (format "%s font is not installed, please install it for better ui display." petmacs-font)))
 (setq-default line-spacing 0.2) ; add 0.2 height between lines
 
-;; fix the delay when showing text in chinese
-(if window-system
-    (dolist (charset '(kana han cjk-misc bopomofo))
-      (set-fontset-font (frame-parameter nil 'font) charset
-			            ;; (font-spec :family "Microsoft Yahei" :size 18.5))
-			            (font-spec :family "等距更纱黑体 SC" :size petmacs-font-size))))
+;; set chinese font
+(dolist (charset '(kana han cjk-misc bopomofo))
+  (set-fontset-font (frame-parameter nil 'font) charset
+			        (font-spec :family petmacs-chinese-font :size petmacs-font-size)))
 
 
 ;; Specify font for all unicode characters

@@ -7,6 +7,7 @@
 - Fonts
 
   - [Monego Ligatures](https://github.com/cseelus/monego)
+  - [等距更纱黑体 SC](https://github.com/be5invis/Sarasa-Gothic)
 
 - icons
 
