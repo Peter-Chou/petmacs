@@ -250,6 +250,10 @@
       (dolist (mode '(org-mode-hook
                       term-mode-hook
                       shell-mode-hook
+                      magit-mode-hook
+                      ibuffer-mode-hook
+                      dired-mode-hook
+                      treemacs-mode-hook
                       eshell-mode-hook))
         (add-hook mode (lambda () (display-line-numbers-mode 0)))))
   (use-package linum-off

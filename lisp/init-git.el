@@ -26,9 +26,6 @@
   			            #'kill-magit-diff-buffer-in-current-repo
   			            nil t))) ; the t is important
 
-
-  (add-hook 'magit-mode-hook (lambda() (display-line-numbers-mode -1)))
-
   ;; ;; kill magit status buffer when quitting magit status
   (define-key magit-mode-map (kbd "q") (lambda()
   					                     (interactive)

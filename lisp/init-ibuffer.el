@@ -71,9 +71,6 @@
   :bind ("C-x C-b" . ibuffer)
   :init (setq ibuffer-filter-group-name-face '(:inherit (font-lock-string-face bold)))
   :config
-
-  (add-hook 'ibuffer-mode-hook (lambda() (display-line-numbers-mode -1)))
-
   (define-key ibuffer-mode-map (kbd "j") 'petmacs/ibuffer-next-line)
   (define-key ibuffer-mode-map (kbd "k") 'petmacs/ibuffer-previous-line)
   (define-key ibuffer-mode-map (kbd "J") 'petmacs/ibuffer-next-group)
