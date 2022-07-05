@@ -107,4 +107,12 @@
 (use-package org-contrib
   :pin nongnu)
 
+(use-package visual-fill-column
+  :preface
+  (defun petmacs/org-mode-visual-fill ()
+    (setq visual-fill-column-width 100
+          visual-fill-column-center-text t)
+    (visual-fill-column-mode 1))
+  :hook (org-mode . petmacs/org-mode-visual-fill))
+
 (provide 'init-org)
