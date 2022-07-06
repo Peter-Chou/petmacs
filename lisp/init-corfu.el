@@ -48,15 +48,7 @@
 
     (add-hook 'lsp-completion-mode-hook #'petmacs/lsp-mode-setup-completion)))
 
-(use-package corfu-terminal
-  :quelpa (corfu-terminal :fetcher git
-  		                  :url "https://codeberg.org/akib/emacs-corfu-terminal.git"
-  		                  :files ("*.el"))
-  :init
-  (unless (display-graphic-p)
-    (corfu-terminal-mode +1)))
-
-;; ;; Use dabbrev with Corfu!
+;; Use dabbrev with Corfu!
 (use-package dabbrev
   ;; Swap M-/ and C-M-/
   :bind (("M-/" . dabbrev-completion)
@@ -69,6 +61,18 @@
   (define-key corfu-map (kbd "C-M-p") #'corfu-doc-scroll-down)
   (define-key corfu-map (kbd "C-M-n") #'corfu-doc-scroll-up))
 
-;; ;; Add extensions
+(unless (display-graphic-p)
+  (use-package corfu-terminal
+    :quelpa (corfu-terminal :fetcher git
+  		                    :url "https://codeberg.org/akib/emacs-corfu-terminal.git"
+  		                    :files ("*.el"))
+    :init (corfu-terminal-mode +1))
+
+  (use-package corfu-doc-terminal
+    :quelpa (corfu-doc-terminal :fetcher git
+  		                        :url "https://codeberg.org/akib/emacs-corfu-doc-terminal.git"
+  		                        :files ("*.el"))
+    :init (corfu-doc-terminal-mode +1)))
+
 
 (provide 'init-corfu)
