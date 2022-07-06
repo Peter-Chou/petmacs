@@ -76,11 +76,11 @@
 
 (require 'init-consult)
 
-(cond ((equal petmacs-lsp-client-mode 'lsp-mode)
-       (require 'init-corfu)
-       (require 'init-lsp))
-      ((equal petmacs-lsp-client-mode 'lsp-bridge-mode)
-       (require 'init-lsp-bridge)))
+(if (and (equal petmacs-lsp-client-mode 'lsp-bridge-mode) (display-graphic-p))
+    (require 'init-lsp-bridge)
+  (progn
+    (require 'init-corfu)
+    (require 'init-lsp)))
 
 (require 'init-dap)
 
