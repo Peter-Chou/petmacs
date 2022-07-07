@@ -390,7 +390,7 @@
     :load-path (lambda () (expand-file-name "site-lisp/local/prettify-utils" user-emacs-directory)))
 
   (pretty-code-add-hook 'python-mode-hook     '(;; (:class "class")
-                                                ;; (:lambda "lambda")
+                                                (:lambda "lambda")
     					                        (:def "def")))
   ;; (pretty-code-add-hook 'c-mode-hook     '((:class "class")
   ;;                                          (:struct "struct")))
