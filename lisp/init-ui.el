@@ -406,26 +406,25 @@
   (pretty-code-add-hook 'emacs-lisp-mode-hook '((:def "defun")
 						                        (:lambda "lambda"))))
 
-;; (use-package kind-all-the-icons
-;;   :load-path (lambda () (expand-file-name "site-lisp/local/kind-all-the-icons" user-emacs-directory))
-;;   :after corfu
-;;   :init
-;;   (when (icon-displayable-p)
-;;     (require 'kind-all-the-icons)
-;;     (if (display-graphic-p)
-;;         (add-to-list 'corfu-margin-formatters #'kind-all-the-icons-margin-formatter))))
+(if (display-graphic-p)
+    (use-package kind-all-the-icons
+      :load-path (lambda () (expand-file-name "site-lisp/local/kind-all-the-icons" user-emacs-directory))
+      :after corfu
+      :init
+      (when (icon-displayable-p)
+        (require 'kind-all-the-icons)
+        (add-to-list 'corfu-margin-formatters #'kind-all-the-icons-margin-formatter)))
+  ;; M-x kind-icon-preview-all to reset and preview all icons after installation
+  (use-package kind-icon
+    :quelpa (kind-icon :fetcher github
+  		               :repo "jdtsmith/kind-icon"
+  		               :files ("*.el"))
+    :after corfu
+    :init
+    (require 'kind-icon)
+    ;; to compute blended backgrounds correctly
+    (setq kind-icon-default-face 'corfu-default)
+    :config
+    (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter)))
 
-;; M-x kind-icon-preview-all to reset and preview all icons after installation
-(use-package kind-icon
-  :quelpa (kind-icon :fetcher github
-  		             :repo "jdtsmith/kind-icon"
-  		             :files ("*.el"))
-  :after corfu
-  :init
-  (require 'kind-icon)
-  ;; to compute blended backgrounds correctly
-  (setq kind-icon-default-face 'corfu-default)
-  :config
-  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
-
-  (provide 'init-ui)
+(provide 'init-ui)
