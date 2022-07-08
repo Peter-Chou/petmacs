@@ -55,10 +55,6 @@
   (define-key winum-keymap (kbd "M-8") 'winum-select-window-8)
   (define-key winum-keymap (kbd "M-9") 'lsp-treemacs-symbols))
 
-(use-package all-the-icons-completion
-  :hook ((after-init . all-the-icons-completion-mode)
-         (marginalia-mode . all-the-icons-completion-marginalia-setup)))
-
 ;; ;; make "unreal" buffers (like popups, sidebars, log buffers,
 ;; ;; terminals by giving the latter a slightly different (often darker) background
 (use-package solaire-mode
@@ -296,7 +292,16 @@
 
 (use-package all-the-icons
   :if (and petmacs-icon (display-graphic-p))
+  :init (unless (or sys/win32p
+                    (daemonp)
+                    (font-installed-p "all-the-icons"))
+          (all-the-icons-install-fonts t))
   :custom (all-the-icons-scale-factor 1.1))
+
+(use-package all-the-icons-completion
+  :after marginalia
+  :hook ((after-init . all-the-icons-completion-mode)
+         (marginalia-mode . all-the-icons-completion-marginalia-setup)))
 
 ;; Show native line numbers if possible, otherwise use `linum'
 (if (fboundp 'display-line-numbers-mode)
