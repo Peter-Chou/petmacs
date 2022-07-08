@@ -33,7 +33,9 @@
       (require 'dumb-jump)
       (dumb-jump-back))))
 
-  :init (require 'lsp-bridge)
+  :init
+  (require 'lsp-bridge)
+  (setq lsp-bridge-python-command (expand-file-name "lsp-bridge/bin/python" (getenv "WORKON_HOME")))
   :config
   ;; don't show lsp-bridge-info in modeline
   (setq mode-line-misc-info (delete '(lsp-bridge-mode (" [" lsp-bridge--mode-line-format "] "))
