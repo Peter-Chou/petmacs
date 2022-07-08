@@ -57,12 +57,12 @@
 
 (use-package all-the-icons
   :if (and petmacs-icon (display-graphic-p))
+  :init
   ;; fonts will be installed in ~/.local/share/fonts
-  :init (unless (or sys/win32p
-                    (daemonp)
-                    (font-installed-p "all-the-icons"))
-          (all-the-icons-install-fonts t))
-  ;; :custom (all-the-icons-scale-factor 1.1)
+  (unless (or sys/win32p
+              (daemonp)
+              (font-installed-p "all-the-icons"))
+    (all-the-icons-install-fonts t))
   :config
   ;; Support more icons
   (let ((extension-icon-alist
