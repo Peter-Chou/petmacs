@@ -249,7 +249,7 @@
     (propertize
      (concat
       doom-modeline-spc (format "%s" display-time-string) doom-modeline-spc)
-     'face (doom-modeline-face 'doom-modeline-buffer-timemachine)))
+     'face (doom-modeline-face 'doom-modeline-project-root-dir)))
 
   (doom-modeline-def-modeline 'dashboard
     '(bar window-number buffer-default-directory-simple)
