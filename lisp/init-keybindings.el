@@ -63,7 +63,7 @@
 
     ;; "ap" prefix
     "tt" #'petmacs/pomodoro-toggle
-    "tp" #'pomodoro-pause
+    "ts" #'pomodoro-pause
     "tr" #'pomodoro-resume
     ))
 
