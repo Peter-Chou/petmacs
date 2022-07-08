@@ -55,6 +55,19 @@
   (define-key winum-keymap (kbd "M-8") 'winum-select-window-8)
   (define-key winum-keymap (kbd "M-9") 'lsp-treemacs-symbols))
 
+(use-package all-the-icons
+  :if (and petmacs-icon (display-graphic-p))
+  :init (unless (or sys/win32p
+                    (daemonp)
+                    (font-installed-p "all-the-icons"))
+          (all-the-icons-install-fonts t))
+  :custom (all-the-icons-scale-factor 1.1))
+
+(use-package all-the-icons-completion
+  :after marginalia
+  :hook ((after-init . all-the-icons-completion-mode)
+         (marginalia-mode . all-the-icons-completion-marginalia-setup)))
+
 ;; ;; make "unreal" buffers (like popups, sidebars, log buffers,
 ;; ;; terminals by giving the latter a slightly different (often darker) background
 (use-package solaire-mode
@@ -216,10 +229,7 @@
   (setq doom-modeline-icon petmacs-icon
         doom-modeline-support-imenu t
         doom-modeline-minor-modes nil
-
-        ;; doom-modeline-height 1
-        doom-modeline-height 0.9
-        doom-modeline-window-width-limit 90
+        doom-modeline-height 1
         doom-modeline-buffer-file-name-style 'relative-to-project)
   ;; Prevent flash of unstyled modeline at startup
   (unless after-init-time
@@ -289,19 +299,6 @@
 ;; A minor-mode menu for mode-line
 (use-package minions
   :hook (doom-modeline-mode . minions-mode))
-
-(use-package all-the-icons
-  :if (and petmacs-icon (display-graphic-p))
-  :init (unless (or sys/win32p
-                    (daemonp)
-                    (font-installed-p "all-the-icons"))
-          (all-the-icons-install-fonts t))
-  :custom (all-the-icons-scale-factor 1.1))
-
-(use-package all-the-icons-completion
-  :after marginalia
-  :hook ((after-init . all-the-icons-completion-mode)
-         (marginalia-mode . all-the-icons-completion-marginalia-setup)))
 
 ;; Show native line numbers if possible, otherwise use `linum'
 (if (fboundp 'display-line-numbers-mode)
