@@ -322,7 +322,7 @@
     (propertize
      (concat
       doom-modeline-spc (format "%s" display-time-string) doom-modeline-spc)
-     'face (doom-modeline-face 'doom-modeline-project-root-dir)))
+     'face (doom-modeline-face 'doom-modeline-evil-normal-state)))
 
   (doom-modeline-def-modeline 'dashboard
     '(bar window-number buffer-default-directory-simple)
