@@ -10,15 +10,15 @@
   "Display icons or not.")
 
 (defvar  petmacs-font
-  "Monego Ligatures"
-  ;; "Monego"
+  ;; "Monego Ligatures"
+  "Monego"
   "font")
 
 (defvar  petmacs-chinese-font
   "等距更纱黑体 SC"
   "chinese font")
 
-(defvar petmacs-enable-ligatures t
+(defvar petmacs-enable-ligatures nil
   "enable ligatures")
 
 (defvar  petmacs-font-size 14.0
@@ -36,8 +36,8 @@
   "Primary major modes of the lsp activated layer.")
 
 (defvar petmacs-lsp-client-mode
-  'lsp-mode
-  ;; 'lsp-bridge-mode
+  ;; 'lsp-mode
+  'lsp-bridge-mode
   "lsp-mode or lsp-bridge-mode")
 
 (defvar petmacs-lsp-format-on-save-ignore-modes
