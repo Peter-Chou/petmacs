@@ -242,16 +242,14 @@
     (propertize
      (concat
       doom-modeline-spc (format "%s" pomodoro-mode-line-string) doom-modeline-spc)
-     'face (doom-modeline-face 'doom-modeline-debug)))
+     'face (doom-modeline-face 'doom-modeline-urgent)))
 
   (doom-modeline-def-segment date
     "date"
     (propertize
      (concat
       doom-modeline-spc (format "%s" display-time-string) doom-modeline-spc)
-     'face (doom-modeline-face 'doom-modeline-urgent)))
-
-  (defun awesome-tray-module-pomodoro-info () (format "%s" pomodoro-mode-line-string))
+     'face (doom-modeline-face 'doom-modeline-buffer-timemachine)))
 
   (doom-modeline-def-modeline 'dashboard
     '(bar window-number buffer-default-directory-simple)
