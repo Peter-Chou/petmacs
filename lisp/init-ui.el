@@ -269,7 +269,7 @@
 
   ;; Define your custom doom-modeline
   (doom-modeline-def-modeline 'petmacs/custom-modeline
-    '(bar window-number modals matches buffer-info remote-host buffer-position selection-info)
+    '(bar window-number modals matches buffer-info remote-host buffer-position parrot selection-info)
     ;; misc-info removed from the right part of the modeline
     '(python-venv persp-name github debug repl input-method pomodoro buffer-encoding process vcs date))
 
