@@ -362,8 +362,8 @@
            flycheck-error-list-mode) . hide-mode-line-mode)))
 
 ;; A minor-mode menu for mode-line
-(use-package minions
-  :hook (doom-modeline-mode . minions-mode))
+;; (use-package minions
+;;   :hook (doom-modeline-mode . minions-mode))
 
 ;; Show native line numbers if possible, otherwise use `linum'
 (if (fboundp 'display-line-numbers-mode)

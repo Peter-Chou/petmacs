@@ -47,14 +47,6 @@ conda activate eaf
 python site-lisp/emacs-application-framework/install-eaf.py
 ```
 
-- lsp-bridge *[Optional]*
-
-``` bash
-conda create -n lsp-bridge python=3.8
-conda activate lsp-bridge
-pip install epc
-```
-
 - nodejs packages
 
 ```sh
