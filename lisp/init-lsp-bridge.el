@@ -43,7 +43,7 @@
 
   ;; (setq-local evil-goto-definition-functions '(lsp-bridge-jump))
 
-  (define-key evil-motion-state-map "\C-o" #'petmacs/lsp-bridge-jump-back)
+  (define-key evil-motion-state-map (kbd "C-o") #'petmacs/lsp-bridge-jump-back)
   (define-key evil-motion-state-map "gR" #'lsp-bridge-rename)
   (define-key evil-motion-state-map "gr" #'lsp-bridge-find-references)
   (define-key evil-normal-state-map "gi" #'lsp-bridge-find-impl)

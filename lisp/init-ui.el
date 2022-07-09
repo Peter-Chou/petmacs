@@ -177,9 +177,69 @@
     (doom-themes-treemacs-config)))
 
 ;; load theme
-;; (petmacs--load-theme 'doom-acario-light)
-;; (petmacs--load-theme 'modus-vivendi) ;; dark theme
 (petmacs--load-theme 'modus-operandi) ;; light theme
+
+(use-package doom-modeline
+  :hook (after-init . doom-modeline-mode)
+  :init
+  (setq doom-modeline-icon petmacs-icon
+        doom-modeline-support-imenu t
+        doom-modeline-minor-modes nil
+        doom-modeline-height 1
+        doom-modeline-buffer-file-name-style 'relative-to-project)
+  ;; Prevent flash of unstyled modeline at startup
+  (unless after-init-time
+    (setq-default mode-line-format nil))
+  :config
+  (doom-modeline-def-segment python-venv
+    "python venv"
+    (propertize
+     (if (and (equal major-mode 'python-mode) (bound-and-true-p pyvenv-workon))
+         (format "[%s]" pyvenv-workon)
+       "")
+     'face (doom-modeline-face 'doom-modeline-buffer-timemachine)))
+
+  (doom-modeline-def-segment pomodoro
+    "pomodoro"
+    (propertize
+     (concat
+      doom-modeline-spc (format "%s" pomodoro-mode-line-string) doom-modeline-spc)
+     'face (doom-modeline-face 'doom-modeline-urgent)))
+
+  (doom-modeline-def-segment date
+    "date"
+    (propertize
+     (concat
+      doom-modeline-spc (format "%s" display-time-string) doom-modeline-spc)
+     'face (doom-modeline-face 'doom-modeline-evil-normal-state)))
+
+  (doom-modeline-def-modeline 'dashboard
+    '(bar window-number buffer-default-directory-simple)
+    '(battery irc mu4e gnus github debug minor-modes input-method pomodoro process date))
+
+  (doom-modeline-def-modeline 'project
+    '(bar window-number modals buffer-default-directory)
+    '(battery irc mu4e gnus github debug minor-modes input-method pomodoro process date))
+
+  (doom-modeline-def-modeline 'vcs
+    '(bar window-number modals matches buffer-info buffer-position parrot selection-info)
+    '(battery irc mu4e gnus github debug minor-modes pomodoro buffer-encoding process date))
+
+  (doom-modeline-def-modeline 'info
+    '(bar window-number buffer-info info-nodes buffer-position parrot selection-info)
+    '(pomodoro buffer-encoding date))
+
+  ;; Define your custom doom-modeline
+  (doom-modeline-def-modeline 'petmacs/custom-modeline
+    '(bar window-number modals matches buffer-info remote-host buffer-position parrot selection-info)
+    ;; misc-info removed from the right part of the modeline
+    '(python-venv persp-name github debug repl input-method pomodoro buffer-encoding process vcs date))
+
+  ;; Add to `doom-modeline-mode-hook` or other hooks
+  (defun petmacs/setup-custom-doom-modeline ()
+    (doom-modeline-set-modeline 'petmacs/custom-modeline 'default))
+
+  (add-hook 'doom-modeline-mode-hook 'petmacs/setup-custom-doom-modeline))
 
 ;; (if (and (display-graphic-p) (not (equal petmacs-lsp-client-mode 'lsp-bridge-mode)))
 ;;     (use-package awesome-tray
@@ -289,68 +349,6 @@
 ;;     :config
 ;;     (add-hook 'buffer-list-update-hook #'petmacs/auto-toggle-pyvenv-mode))
 ;;   )
-
-(use-package doom-modeline
-  :hook (after-init . doom-modeline-mode)
-  :init
-  (setq doom-modeline-icon petmacs-icon
-        doom-modeline-support-imenu t
-        doom-modeline-minor-modes nil
-        doom-modeline-height 1
-        doom-modeline-buffer-file-name-style 'relative-to-project)
-  ;; Prevent flash of unstyled modeline at startup
-  (unless after-init-time
-    (setq-default mode-line-format nil))
-  :config
-  (doom-modeline-def-segment python-venv
-    "python venv"
-    (propertize
-     (if (and (equal major-mode 'python-mode) (bound-and-true-p pyvenv-workon))
-         (format "[%s]" pyvenv-workon)
-       "")
-     'face (doom-modeline-face 'doom-modeline-buffer-timemachine)))
-
-  (doom-modeline-def-segment pomodoro
-    "pomodoro"
-    (propertize
-     (concat
-      doom-modeline-spc (format "%s" pomodoro-mode-line-string) doom-modeline-spc)
-     'face (doom-modeline-face 'doom-modeline-urgent)))
-
-  (doom-modeline-def-segment date
-    "date"
-    (propertize
-     (concat
-      doom-modeline-spc (format "%s" display-time-string) doom-modeline-spc)
-     'face (doom-modeline-face 'doom-modeline-evil-normal-state)))
-
-  (doom-modeline-def-modeline 'dashboard
-    '(bar window-number buffer-default-directory-simple)
-    '(battery irc mu4e gnus github debug minor-modes input-method pomodoro process date))
-
-  (doom-modeline-def-modeline 'project
-    '(bar window-number modals buffer-default-directory)
-    '(battery irc mu4e gnus github debug minor-modes input-method pomodoro process date))
-
-  (doom-modeline-def-modeline 'vcs
-    '(bar window-number modals matches buffer-info buffer-position parrot selection-info)
-    '(battery irc mu4e gnus github debug minor-modes pomodoro buffer-encoding process date))
-
-  (doom-modeline-def-modeline 'info
-    '(bar window-number buffer-info info-nodes buffer-position parrot selection-info)
-    '(pomodoro buffer-encoding date))
-
-  ;; Define your custom doom-modeline
-  (doom-modeline-def-modeline 'petmacs/custom-modeline
-    '(bar window-number modals matches buffer-info remote-host buffer-position parrot selection-info)
-    ;; misc-info removed from the right part of the modeline
-    '(python-venv persp-name github debug repl input-method pomodoro buffer-encoding process vcs date))
-
-  ;; Add to `doom-modeline-mode-hook` or other hooks
-  (defun petmacs/setup-custom-doom-modeline ()
-    (doom-modeline-set-modeline 'petmacs/custom-modeline 'default))
-
-  (add-hook 'doom-modeline-mode-hook 'petmacs/setup-custom-doom-modeline))
 
 (use-package hide-mode-line
   :hook (((
