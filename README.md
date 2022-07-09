@@ -66,6 +66,8 @@ lldb-vscode for debug is also in LLVM project
 npm install -g pyright
 ```
 
+set WORKON_HOME environment variable that has virtual environment directories.
+
 ---
 
 ## Screenshots

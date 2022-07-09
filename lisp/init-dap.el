@@ -15,9 +15,9 @@
   :defines dap-python-executable
   :diminish
   :hook ((after-init . dap-auto-configure-mode)
-         ;; (dap-stopped . (lambda (arg) (call-interactively #'dap-hydra)))
 	 ;;; dap-lldb needs lldb-vscode which is in LLVM prebuilt package
-	     ((c-mode c++-mode objc-mode swift-mode) . (lambda () (require 'dap-lldb)))
+	     ((c-mode c++-mode)      . (lambda () (require 'dap-lldb)))
+         ((objc-mode swift-mode) . (lambda () (require 'dap-lldb)))
          (python-mode . (lambda () (require 'dap-python)))
 	 ;;;; go install github.com/go-delve/delve/cmd/dlv@latest
          (go-mode . (lambda () (require 'dap-go)))
@@ -27,7 +27,8 @@
   :init
   (require 'cl-lib)
   (setq dap-enable-mouse-support t
-	    dap-auto-configure-features '(sessions locals controls tooltip repl)
+	    ;; dap-auto-configure-features '(sessions locals controls tooltip repl)
+        dap-auto-configure-features '(sessions locals breakpoints expressions controls)
 	    dap-lldb-debug-program '("/opt/llvm/bin/lldb-vscode")
 	    )
   :config

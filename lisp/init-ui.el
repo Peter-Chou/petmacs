@@ -179,176 +179,150 @@
 ;; load theme
 (petmacs--load-theme 'modus-operandi) ;; light theme
 
-(use-package doom-modeline
-  :hook (after-init . doom-modeline-mode)
-  :init
-  (setq doom-modeline-icon petmacs-icon
-        doom-modeline-support-imenu t
-        doom-modeline-minor-modes nil
-        doom-modeline-height 1
-        doom-modeline-buffer-file-name-style 'relative-to-project)
-  ;; Prevent flash of unstyled modeline at startup
-  (unless after-init-time
-    (setq-default mode-line-format nil))
-  :config
-  (doom-modeline-def-segment python-venv
-    "python venv"
-    (propertize
-     (if (and (equal major-mode 'python-mode) (bound-and-true-p pyvenv-workon))
-         (format "[%s]" pyvenv-workon)
-       "")
-     'face (doom-modeline-face 'doom-modeline-buffer-timemachine)))
+(if (and (equal petmacs-modeline-style 'awesome-tray)
+         (display-graphic-p))
+    (use-package awesome-tray
+      :quelpa (awesome-tray :fetcher github
+  		                    :repo "manateelazycat/awesome-tray"
+  		                    :files ("*.el"))
+      :preface
+      (defun awesome-tray-module-winum-info ()
+        (format "%s" (winum-get-number-string)))
 
-  (doom-modeline-def-segment pomodoro
-    "pomodoro"
-    (propertize
-     (concat
-      doom-modeline-spc (format "%s" pomodoro-mode-line-string) doom-modeline-spc)
-     'face (doom-modeline-face 'doom-modeline-urgent)))
+      (defface awesome-tray-module-winum-face
+        '((((background light))
+           :foreground "#0673d7" :bold t)
+          (t
+           :foreground "#369bf8" :bold t))
+        "winum face."
+        :group 'awesome-tray)
 
-  (doom-modeline-def-segment date
-    "date"
-    (propertize
-     (concat
-      doom-modeline-spc (format "%s" display-time-string) doom-modeline-spc)
-     'face (doom-modeline-face 'doom-modeline-evil-normal-state)))
+      (defun awesome-tray-module-pyvenv-info ()
+        (if (and (equal major-mode 'python-mode) (bound-and-true-p pyvenv-workon))
+            (format "[%s]" pyvenv-workon)
+          ""))
 
-  (doom-modeline-def-modeline 'dashboard
-    '(bar window-number buffer-default-directory-simple)
-    '(battery irc mu4e gnus github debug minor-modes input-method pomodoro process date))
+      (defface awesome-tray-module-pyvenv-face
+        '((((background light))
+           :foreground "#0673d8" :bold t)
+          (t
+           :foreground "#369bf7" :bold t))
+        "pyvenv face."
+        :group 'awesome-tray)
 
-  (doom-modeline-def-modeline 'project
-    '(bar window-number modals buffer-default-directory)
-    '(battery irc mu4e gnus github debug minor-modes input-method pomodoro process date))
+      (defun awesome-tray-module-pomodoro-info () (format "%s" pomodoro-mode-line-string))
 
-  (doom-modeline-def-modeline 'vcs
-    '(bar window-number modals matches buffer-info buffer-position parrot selection-info)
-    '(battery irc mu4e gnus github debug minor-modes pomodoro buffer-encoding process date))
+      (defface awesome-tray-module-pomodoro-face
+        '((((background light))
+           :foreground "#008080" :bold t)
+          (t
+           :foreground "#00ced1" :bold t))
+        "pomodoro face."
+        :group 'awesome-tray)
 
-  (doom-modeline-def-modeline 'info
-    '(bar window-number buffer-info info-nodes buffer-position parrot selection-info)
-    '(pomodoro buffer-encoding date))
+      :commands (awesome-tray-update)
+      :hook (after-init . awesome-tray-mode)
+      :init
+      (setq
+       awesome-tray-update-interval 0.6
+       awesome-tray-buffer-name-max-length 30
+       awesome-tray-file-path-show-filename t
+       awesome-tray-buffer-name-buffer-changed t
 
-  ;; Define your custom doom-modeline
-  (doom-modeline-def-modeline 'petmacs/custom-modeline
-    '(bar window-number modals matches buffer-info remote-host buffer-position parrot selection-info)
-    ;; misc-info removed from the right part of the modeline
-    '(python-venv persp-name github debug repl input-method pomodoro buffer-encoding process vcs date))
+       awesome-tray-active-modules   '("winum" "location" "belong" "pyvenv" "buffer-name" "pomodoro" "date")
+       awesome-tray-essential-modules '("winum" "location" "belong" "buffer-name"))
+      :config
+      (defun petmacs/awesome-tray-update-git-command-cache ()
+        (let* ((git-info (awesome-tray-process-exit-code-and-output "git" "symbolic-ref" "--short" "HEAD"))
+               (status (nth 0 git-info))
+               (result (format "%s" (nth 1 git-info))))
+          (setq awesome-tray-git-command-cache
+                (if (equal status 0)
+                    (replace-regexp-in-string "\n" "" result)
+                  ""))
+          awesome-tray-git-command-cache))
+      (advice-add #'awesome-tray-update-git-command-cache :override #'petmacs/awesome-tray-update-git-command-cache)
 
-  ;; Add to `doom-modeline-mode-hook` or other hooks
-  (defun petmacs/setup-custom-doom-modeline ()
-    (doom-modeline-set-modeline 'petmacs/custom-modeline 'default))
+      (defun petmacs/awesome-tray-module-buffer-name-info ()
+        (let (bufname)
+          (setq bufname (if awesome-tray-buffer-name-buffer-changed
+                            (if (and (buffer-modified-p)
+                                     (not (eq buffer-file-name nil)))
+                                (concat  awesome-tray-buffer-name-buffer-changed-style (buffer-name))
+                              (buffer-name))
+                          (format "%s" (buffer-name))))
+          (awesome-tray-truncate-string bufname awesome-tray-buffer-name-max-length t)))
+      (advice-add #'awesome-tray-module-buffer-name-info :override #'petmacs/awesome-tray-module-buffer-name-info)
 
-  (add-hook 'doom-modeline-mode-hook 'petmacs/setup-custom-doom-modeline))
+      (with-eval-after-load 'modus-themes
+        (advice-add #'modus-themes-toggle :after #'awesome-tray-enable))
 
-;; (if (and (display-graphic-p) (not (equal petmacs-lsp-client-mode 'lsp-bridge-mode)))
-;;     (use-package awesome-tray
-;;       :quelpa (awesome-tray :fetcher github
-;;   		                    :repo "manateelazycat/awesome-tray"
-;;   		                    :files ("*.el"))
-;;       :preface
-;;       (defun awesome-tray-module-winum-info ()
-;;         (format "%s" (winum-get-number-string)))
+      (add-to-list 'awesome-tray-module-alist '("winum" . (awesome-tray-module-winum-info awesome-tray-module-winum-face)))
+      (add-to-list 'awesome-tray-module-alist '("pyvenv" . (awesome-tray-module-pyvenv-info awesome-tray-module-pyvenv-face)))
+      (add-to-list 'awesome-tray-module-alist '("pomodoro" . (awesome-tray-module-pomodoro-info awesome-tray-module-pomodoro-face)))
+      (add-hook 'buffer-list-update-hook #'awesome-tray-update))
+  (use-package doom-modeline
+    :hook (after-init . doom-modeline-mode)
+    :init
+    (setq doom-modeline-icon petmacs-icon
+          doom-modeline-support-imenu t
+          doom-modeline-minor-modes nil
+          doom-modeline-height 1
+          doom-modeline-buffer-file-name-style 'relative-to-project)
+    ;; Prevent flash of unstyled modeline at startup
+    (unless after-init-time
+      (setq-default mode-line-format nil))
+    :config
+    (doom-modeline-def-segment python-venv
+                               "python venv"
+                               (propertize
+                                (if (and (equal major-mode 'python-mode) (bound-and-true-p pyvenv-workon))
+                                    (format "[%s]" pyvenv-workon)
+                                  "")
+                                'face (doom-modeline-face 'doom-modeline-buffer-timemachine)))
 
-;;       (defface awesome-tray-module-winum-face
-;;         '((((background light))
-;;            :foreground "#0673d7" :bold t)
-;;           (t
-;;            :foreground "#369bf8" :bold t))
-;;         "winum face."
-;;         :group 'awesome-tray)
+    (doom-modeline-def-segment pomodoro
+                               "pomodoro"
+                               (propertize
+                                (concat
+                                 doom-modeline-spc (format "%s" pomodoro-mode-line-string) doom-modeline-spc)
+                                'face (doom-modeline-face 'doom-modeline-urgent)))
 
-;;       (defun awesome-tray-module-pyvenv-info ()
-;;         ;; (if (bound-and-true-p pyvenv-mode)
-;;         (if (and (equal major-mode 'python-mode) (bound-and-true-p pyvenv-virtual-env-name))
-;;             (format "[%s]" pyvenv-virtual-env-name)
-;;           ""))
+    (doom-modeline-def-segment date
+                               "date"
+                               (propertize
+                                (concat
+                                 doom-modeline-spc (format "%s" display-time-string) doom-modeline-spc)
+                                'face (doom-modeline-face 'doom-modeline-evil-normal-state)))
 
-;;       (defface awesome-tray-module-pyvenv-face
-;;         '((((background light))
-;;            :foreground "#0673d8" :bold t)
-;;           (t
-;;            :foreground "#369bf7" :bold t))
-;;         "pyvenv face."
-;;         :group 'awesome-tray)
+    (doom-modeline-def-modeline 'dashboard
+                                '(bar window-number buffer-default-directory-simple)
+                                '(battery irc mu4e gnus github debug minor-modes input-method pomodoro process date))
 
-;;       (defun awesome-tray-module-pomodoro-info () (format "%s" pomodoro-mode-line-string))
+    (doom-modeline-def-modeline 'project
+                                '(bar window-number modals buffer-default-directory)
+                                '(battery irc mu4e gnus github debug minor-modes input-method pomodoro process date))
 
-;;       (defface awesome-tray-module-pomodoro-face
-;;         '((((background light))
-;;            :foreground "#008080" :bold t)
-;;           (t
-;;            :foreground "#00ced1" :bold t))
-;;         "pomodoro face."
-;;         :group 'awesome-tray)
+    (doom-modeline-def-modeline 'vcs
+                                '(bar window-number modals matches buffer-info buffer-position parrot selection-info)
+                                '(battery irc mu4e gnus github debug minor-modes pomodoro buffer-encoding process date))
 
-;;       :commands (awesome-tray-update)
-;;       :hook (after-init . awesome-tray-mode)
-;;       :init
-;;       (setq
-;;        awesome-tray-update-interval 0.6
-;;        awesome-tray-buffer-name-max-length 30
-;;        awesome-tray-file-path-show-filename t
-;;        awesome-tray-buffer-name-buffer-changed t
+    (doom-modeline-def-modeline 'info
+                                '(bar window-number buffer-info info-nodes buffer-position parrot selection-info)
+                                '(pomodoro buffer-encoding date))
 
-;;        awesome-tray-active-modules   '("winum" "location" "belong" "pyvenv" "buffer-name" "pomodoro" "date")
-;;        awesome-tray-essential-modules '("winum" "location" "belong" "buffer-name"))
-;;       :config
-;;       (defun petmacs/awesome-tray-update-git-command-cache ()
-;;         (let* ((git-info (awesome-tray-process-exit-code-and-output "git" "symbolic-ref" "--short" "HEAD"))
-;;                (status (nth 0 git-info))
-;;                (result (format "%s" (nth 1 git-info))))
-;;           (setq awesome-tray-git-command-cache
-;;                 (if (equal status 0)
-;;                     (replace-regexp-in-string "\n" "" result)
-;;                   ""))
-;;           awesome-tray-git-command-cache))
-;;       (advice-add #'awesome-tray-update-git-command-cache :override #'petmacs/awesome-tray-update-git-command-cache)
+    ;; Define your custom doom-modeline
+    (doom-modeline-def-modeline 'petmacs/custom-modeline
+                                '(bar window-number modals matches buffer-info remote-host buffer-position parrot selection-info)
+                                ;; misc-info removed from the right part of the modeline
+                                '(python-venv persp-name github debug repl input-method pomodoro buffer-encoding process vcs date))
 
-;;       (defun petmacs/awesome-tray-module-buffer-name-info ()
-;;         (let (bufname)
-;;           (setq bufname (if awesome-tray-buffer-name-buffer-changed
-;;                             (if (and (buffer-modified-p)
-;;                                      (not (eq buffer-file-name nil)))
-;;                                 (concat  awesome-tray-buffer-name-buffer-changed-style (buffer-name))
-;;                               (buffer-name))
-;;                           (format "%s" (buffer-name))))
-;;           (awesome-tray-truncate-string bufname awesome-tray-buffer-name-max-length t)))
-;;       (advice-add #'awesome-tray-module-buffer-name-info :override #'petmacs/awesome-tray-module-buffer-name-info)
+    ;; Add to `doom-modeline-mode-hook` or other hooks
+    (defun petmacs/setup-custom-doom-modeline ()
+      (doom-modeline-set-modeline 'petmacs/custom-modeline 'default))
 
-;;       (with-eval-after-load 'modus-themes
-;;         (advice-add #'modus-themes-toggle :after #'awesome-tray-enable))
-
-;;       (add-to-list 'awesome-tray-module-alist '("winum" . (awesome-tray-module-winum-info awesome-tray-module-winum-face)))
-;;       (add-to-list 'awesome-tray-module-alist '("pyvenv" . (awesome-tray-module-pyvenv-info awesome-tray-module-pyvenv-face)))
-;;       (add-to-list 'awesome-tray-module-alist '("pomodoro" . (awesome-tray-module-pomodoro-info awesome-tray-module-pomodoro-face)))
-;;       (add-hook 'buffer-list-update-hook #'awesome-tray-update))
-;;   (use-package doom-modeline
-;;     :preface
-;;     (defun petmacs/auto-toggle-pyvenv-mode ()
-;;       (if (equal major-mode 'python-mode)
-;;           (unless (member '(pyvenv-mode pyvenv-mode-line-indicator) mode-line-misc-info)
-;;             (add-to-list 'mode-line-misc-info '(pyvenv-mode pyvenv-mode-line-indicator)))
-;;         (when (member '(pyvenv-mode pyvenv-mode-line-indicator) mode-line-misc-info)
-;;           (setq mode-line-misc-info (delete '(pyvenv-mode pyvenv-mode-line-indicator)
-;;                                             mode-line-misc-info)))
-;;         ))
-;;     :hook (after-init . doom-modeline-mode)
-;;     :init
-;;     (setq doom-modeline-icon petmacs-icon
-;;           doom-modeline-support-imenu t
-;;           doom-modeline-minor-modes nil
-
-;;           ;; doom-modeline-height 1
-;;           doom-modeline-height 0.9
-;;           doom-modeline-window-width-limit 90
-;;           doom-modeline-buffer-file-name-style 'relative-to-project)
-;;     ;; Prevent flash of unstyled modeline at startup
-;;     (unless after-init-time
-;;       (setq-default mode-line-format nil))
-;;     :config
-;;     (add-hook 'buffer-list-update-hook #'petmacs/auto-toggle-pyvenv-mode))
-;;   )
+    (add-hook 'doom-modeline-mode-hook 'petmacs/setup-custom-doom-modeline))
+  )
 
 (use-package hide-mode-line
   :hook (((

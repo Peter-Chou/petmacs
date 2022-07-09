@@ -35,6 +35,13 @@
 				                   )
   "Primary major modes of the lsp activated layer.")
 
+
+(defvar petmacs-modeline-style
+  'awesome-tray
+  ;; 'doom-modeline
+  "awesome-tray or doom-modeline.
+    doom-modeline is default in TUI.")
+
 (defvar petmacs-lsp-client-mode
   'lsp-mode
   ;; 'lsp-bridge-mode

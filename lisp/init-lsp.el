@@ -3,6 +3,7 @@
 (require 'init-custom)
 
 ;; optimize lsp-mode
+(setenv "LSP_USE_PLISTS" "true")
 (setq gc-cons-threshold 100000000
       read-process-output-max (* 1024 1024)
       lsp-use-plists t
@@ -63,6 +64,8 @@
     (advice-add #'lsp-icons-get-by-symbol-kind :around #'my-lsp-icons-get-symbol-kind)))
 
 (use-package lsp-ui
+  :custom-face
+  (lsp-ui-sideline-code-action ((t (:inherit warning))))
   :hook (lsp-mode . lsp-ui-mode)
   :init (setq lsp-ui-sideline-show-diagnostics nil
 	          lsp-ui-sideline-enable nil
@@ -80,12 +83,7 @@
 
 (use-package lsp-treemacs
   :after lsp-mode
-  :bind (:map lsp-mode-map
-         ("C-<f8>" . lsp-treemacs-errors-list)
-         ("M-<f8>" . lsp-treemacs-symbols)
-         ("s-<f8>" . lsp-treemacs-java-deps-list))
   :init
-  (lsp-treemacs-sync-mode 1)
   (setq
    lsp-treemacs-deps-position-params
    `((side . right)
@@ -95,17 +93,13 @@
    `((side . right)
      (slot . 2)
      (window-width . 32)))
-  :config
-  (with-eval-after-load 'ace-window
-    (when (boundp 'aw-ignored-buffers)
-      (push 'lsp-treemacs-symbols-mode aw-ignored-buffers)
-      (push 'lsp-treemacs-java-deps-mode aw-ignored-buffers))))
-
-(when sys/macp
-  (use-package lsp-sourcekit
-    :init (setq lsp-sourcekit-executable
-                "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp")))
-
+  (lsp-treemacs-sync-mode 1)
+  ;; :config
+  ;; (with-eval-after-load 'ace-window
+  ;;   (when (boundp 'aw-ignored-buffers)
+  ;;     (push 'lsp-treemacs-symbols-mode aw-ignored-buffers)
+  ;;     (push 'lsp-treemacs-java-deps-mode aw-ignored-buffers)))
+  )
 
 ;;; python
 (use-package lsp-pyright
@@ -117,13 +111,11 @@
       (call-process "yapf" nil nil nil "-i" buffer-file-name)))
   :hook ((python-mode . (lambda ()
 				          (require 'lsp-pyright)
-				          (add-hook 'after-save-hook #'lsp-pyright-format-buffer t t)))
-	     ;; (pyvenv-mode . (lambda () (lsp-deferred)))
-         )
+				          (add-hook 'after-save-hook #'lsp-pyright-format-buffer t t))))
   :init
   ;; too much noise in "real" projects
   (setq lsp-pyright-typechecking-mode "basic"
-	    lsp-pyright-venv-path (file-truename "~/miniconda3/envs")))
+	    lsp-pyright-venv-path (getenv "WORKON_HOME")))
 
 ;;; java
 
