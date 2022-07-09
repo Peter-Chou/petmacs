@@ -30,7 +30,7 @@
   :init
   (setq lsp-keymap-prefix "C-c l"
         lsp-keep-workspace-alive nil
-        lsp-signature-auto-activate nil
+        lsp-signature-auto-activate t
         lsp-modeline-code-actions-enable t
         lsp-modeline-diagnostics-enable t
         lsp-modeline-diagnostics-scope :workspace
