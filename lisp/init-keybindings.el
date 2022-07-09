@@ -420,6 +420,7 @@
 
     "hh" #'lsp-describe-thing-at-point
     "hs" #'lsp-signature-activate
+    "hg" #'lsp-ui-doc-glance
 
     ;; text/code
     "xh" #'lsp-document-highlight
