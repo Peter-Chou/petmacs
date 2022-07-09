@@ -37,8 +37,8 @@
 
 
 (defvar petmacs-modeline-style
-  'awesome-tray
-  ;; 'doom-modeline
+  'doom-modeline
+  ;; 'awesome-tray
   "awesome-tray or doom-modeline.
     doom-modeline is default in TUI.")
 

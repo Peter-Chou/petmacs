@@ -71,7 +71,7 @@
 	          lsp-ui-sideline-enable nil
 	          lsp-ui-sideline-show-code-actions nil
               lsp-ui-sideline-ignore-duplicate t
-              lsp-idle-delay 0.25
+              lsp-idle-delay 0
 	          lsp-ui-doc-enable nil
 	          lsp-ui-doc-delay 0.1
 	          lsp-ui-doc-border (face-foreground 'font-lock-comment-face nil t)

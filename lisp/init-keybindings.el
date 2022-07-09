@@ -419,6 +419,7 @@
     "bv" #'lsp-version
 
     "hh" #'lsp-describe-thing-at-point
+    "hs" #'lsp-signature-activate
 
     ;; text/code
     "xh" #'lsp-document-highlight
