@@ -11,8 +11,7 @@
 
 (defvar  petmacs-font
   ;; "Monego Ligatures"
-  ;; "Monego"
-  "Monego Nerd Font Fix"
+  "Monego"
   "font")
 
 (defvar  petmacs-chinese-font
