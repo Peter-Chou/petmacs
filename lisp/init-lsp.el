@@ -142,4 +142,8 @@
 (use-package lsp-metals)
 (use-package consult-lsp)
 
+(use-package lsp-focus
+  :after focus
+  :hook (focus-mode . lsp-focus-mode))
+
 (provide 'init-lsp)
