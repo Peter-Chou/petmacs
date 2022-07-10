@@ -20,22 +20,6 @@
             "Recover GC values after startup."
             (setq gc-cons-threshold 800000)))
 
-(setq byte-compile-warnings '(cl-functions))
-
-(if (functionp 'json-serialize)
-    (message "Native JSON is available")
-  (message "Native JSON is *not* available"))
-
-(if (and (fboundp 'native-comp-available-p)
-	     (native-comp-available-p))
-    (progn
-      (message "Native compilation is available")
-      ;; native-compile all Elisp files under a site-lisp/local directory
-      (native-compile-async (expand-file-name "site-lisp/local" user-emacs-directory) 'recursively)
-      (setq package-native-compile t
-	        native-comp-async-report-warnings-errors nil))
-  (message "Native complation is *not* available"))
-
 ;; Load path
 ;; Optimize: Force "lisp"" and "site-lisp" at the head to reduce the startup time.
 (defun update-load-path (&rest _)
@@ -44,11 +28,6 @@
     (push (expand-file-name dir user-emacs-directory) load-path)))
 
 (update-load-path)
-
-;; use mirror
-(setq package-archives '(("gnu"          . "https://elpa.gnu.org/packages/")
-                         ("melpa"        . "https://melpa.org/packages/")
-                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
 
 (require 'init-funcs)
 

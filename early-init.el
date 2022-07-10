@@ -3,10 +3,31 @@
 ;; Defer garbage collection further back in the startup process
 (setq gc-cons-threshold most-positive-fixnum)
 
-;; Prevent unwanted runtime compilation for gccemacs (native-comp) users;
-;; packages are compiled ahead-of-time when they are installed and site files
-;; are compiled when gccemacs is installed.
-(setq native-comp-deferred-compilation nil)
+;; Prefer loading newest compiled .el file
+(customize-set-variable 'load-prefer-newer noninteractive)
+
+(setq byte-compile-warnings '(cl-functions))
+
+;; use mirror
+(setq package-archives '(("gnu"          . "https://elpa.gnu.org/packages/")
+                         ("melpa"        . "https://melpa.org/packages/")
+                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
+
+(if (functionp 'json-serialize)
+    (message "Native JSON is available")
+  (message "Native JSON is *not* available"))
+
+(if (and (fboundp 'native-comp-available-p)
+	     (native-comp-available-p))
+    (progn
+      (message "Native compilation is available")
+      ;; native-compile all Elisp files under a site-lisp/local directory
+      (native-compile-async (expand-file-name "site-lisp/local" user-emacs-directory) 'recursively)
+      (setq package-native-compile t
+	        native-comp-async-report-warnings-errors nil
+            ;; Make native compilation happens asynchronously
+            native-comp-deferred-compilation nil))
+  (message "Native complation is *not* available"))
 
 (setq package-enable-at-startup nil)
 
