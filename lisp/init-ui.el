@@ -275,48 +275,48 @@
       (setq-default mode-line-format nil))
     :config
     (doom-modeline-def-segment python-venv
-                               "python venv"
-                               (propertize
-                                (if (and (equal major-mode 'python-mode) (bound-and-true-p pyvenv-workon))
-                                    (format "[%s]" pyvenv-workon)
-                                  "")
-                                'face (doom-modeline-face 'doom-modeline-buffer-timemachine)))
+      "python venv"
+      (propertize
+       (if (and (equal major-mode 'python-mode) (bound-and-true-p pyvenv-workon))
+           (format "[%s]" pyvenv-workon)
+         "")
+       'face (doom-modeline-face 'doom-modeline-buffer-timemachine)))
 
     (doom-modeline-def-segment pomodoro
-                               "pomodoro"
-                               (propertize
-                                (concat
-                                 doom-modeline-spc (format "%s" pomodoro-mode-line-string) doom-modeline-spc)
-                                'face (doom-modeline-face 'doom-modeline-urgent)))
+      "pomodoro"
+      (propertize
+       (concat
+        doom-modeline-spc (format "%s" pomodoro-mode-line-string) doom-modeline-spc)
+       'face (doom-modeline-face 'doom-modeline-urgent)))
 
     (doom-modeline-def-segment date
-                               "date"
-                               (propertize
-                                (concat
-                                 doom-modeline-spc (format "%s" display-time-string) doom-modeline-spc)
-                                'face (doom-modeline-face 'doom-modeline-evil-normal-state)))
+      "date"
+      (propertize
+       (concat
+        doom-modeline-spc (format "%s" display-time-string) doom-modeline-spc)
+       'face (doom-modeline-face 'doom-modeline-evil-normal-state)))
 
     (doom-modeline-def-modeline 'dashboard
-                                '(bar window-number buffer-default-directory-simple)
-                                '(battery irc mu4e gnus github debug minor-modes input-method pomodoro process date))
+      '(bar window-number buffer-default-directory-simple)
+      '(battery irc mu4e gnus github debug minor-modes input-method pomodoro process date))
 
     (doom-modeline-def-modeline 'project
-                                '(bar window-number modals buffer-default-directory)
-                                '(battery irc mu4e gnus github debug minor-modes input-method pomodoro process date))
+      '(bar window-number modals buffer-default-directory)
+      '(battery irc mu4e gnus github debug minor-modes input-method pomodoro process date))
 
     (doom-modeline-def-modeline 'vcs
-                                '(bar window-number modals matches buffer-info buffer-position parrot selection-info)
-                                '(battery irc mu4e gnus github debug minor-modes pomodoro buffer-encoding process date))
+      '(bar window-number modals matches buffer-info buffer-position parrot selection-info)
+      '(battery irc mu4e gnus github debug minor-modes pomodoro buffer-encoding process date))
 
     (doom-modeline-def-modeline 'info
-                                '(bar window-number buffer-info info-nodes buffer-position parrot selection-info)
-                                '(pomodoro buffer-encoding date))
+      '(bar window-number buffer-info info-nodes buffer-position parrot selection-info)
+      '(pomodoro buffer-encoding date))
 
     ;; Define your custom doom-modeline
     (doom-modeline-def-modeline 'petmacs/custom-modeline
-                                '(bar window-number modals matches buffer-info remote-host buffer-position parrot selection-info checker)
-                                ;; misc-info removed from the right part of the modeline
-                                '(python-venv persp-name github debug repl input-method pomodoro buffer-encoding process vcs date))
+      '(bar window-number modals matches buffer-info remote-host buffer-position parrot selection-info checker)
+      ;; misc-info removed from the right part of the modeline
+      '(python-venv persp-name github debug repl input-method pomodoro buffer-encoding process vcs date))
 
     ;; Add to `doom-modeline-mode-hook` or other hooks
     (defun petmacs/setup-custom-doom-modeline ()
