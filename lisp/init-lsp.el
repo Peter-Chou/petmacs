@@ -11,6 +11,33 @@
 
 ;; sudo apt-get install libjansson-dev
 (use-package lsp-mode
+  :preface
+
+  (defun petmacs/lsp-find-definition-other-window ()
+    (interactive)
+    (switch-to-buffer-other-window (buffer-name))
+    (lsp-find-definition))
+
+  (defun petmacs/lsp-find-declaration-other-window ()
+    (interactive)
+    (switch-to-buffer-other-window (buffer-name))
+    (lsp-find-declaration))
+
+  (defun petmacs/lsp-find-implementation-other-window ()
+    (interactive)
+    (switch-to-buffer-other-window (buffer-name))
+    (lsp-find-implementation))
+
+  (defun petmacs/lsp-find-type-definition-other-window ()
+    (interactive)
+    (switch-to-buffer-other-window (buffer-name))
+    (lsp-find-type-definition))
+
+  (defun petmacs/lsp-find-references-other-window ()
+    (interactive)
+    (switch-to-buffer-other-window (buffer-name))
+    (lsp-find-references))
+
   :hook (((c-mode c++-mode cuda-mode) . (lambda ()
 					                      (lsp-deferred)))
          (scala-mode . (lambda ()

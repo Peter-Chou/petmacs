@@ -1,5 +1,6 @@
 ;; -*- lexical-binding: t no-byte-compile: t -*-
 
+(require 'init-custom)
 (require 'init-funcs)
 (require 'core-funcs)
 
@@ -371,68 +372,102 @@
     "g" "goto"
     "G" "goto (other window)"
     "p" "peek"
-    "b" "backend"
+    "w" "workspace"
+    "t" "toggle module"
     "r" "refactor"
     "h" "help"
     "F" "folders"
-    "x" "text/code"
-    )
+    "x" "text/code")
 
-  (leader-set-keys-for-major-mode mode
-    ;; format
-    "=b" #'lsp-format-buffer
-    "=r" #'lsp-format-region
-    "=o" #'lsp-organize-imports
-    ;; code actions
-    "aa" #'lsp-execute-code-action
-    ;; format
-    "rb" #'lsp-format-buffer
-    "rr" #'lsp-rename
-    ;; goto
-    "gt" #'lsp-find-type-definition
-    "gd" #'xref-find-definitions
-    "gr" #'xref-find-references
-    "gh" #'lsp-treemacs-call-hierarchy
-    "ge" #'lsp-treemacs-errors-list
-    "gb" #'xref-pop-marker-stack
-    "gD" #'lsp-find-declaration
-    "gf" #'xref-find-definitions-other-frame
-    "gi" #'lsp-find-implementation
-    "gs" #'consult-lsp-file-symbols
-    "gS" #'consult-lsp-symbols
-    "gM" #'lsp-ui-imenu
-    ;; goto other window
-    "Gd" #'xref-find-definitions-other-window
-    ;; peek
-    "pd" #'lsp-ui-peek-find-definitions
-    "pi" #'lsp-ui-peek-find-implementation
-    "ps" #'lsp-ui-peek-find-workspace-symbol
-    "pb" #'lsp-ui-peek-jump-backward
-    "pn" #'lSp-ui-peek-jump-forward
-    "pe" #'lsp-ui-flycheck-list
-    "pr" #'lsp-ui-peek-find-references
-    "pRn" #'lsp-ui-find-next-reference
-    "pRp" #'lsp-ui-find-prev-reference
-    ;; backend
-    "bd" #'lsp-describe-session
-    "br" #'lsp-restart-workspace
-    "bs" #'lsp-shutdown-workspace
-    "bv" #'lsp-version
+  (cond ((equal petmacs-lsp-client-mode 'lsp-mode)
+         (leader-set-keys-for-major-mode mode
+           ;; format
+           "==" #'lsp-format-buffer
+           "=r" #'lsp-format-region
 
-    "hh" #'lsp-describe-thing-at-point
-    "hs" #'lsp-signature-activate
-    "hg" #'lsp-ui-doc-glance
+           ;; code actions
+           "aa" #'lsp-execute-code-action
+           "ah" #'lsp-document-highlight
+           "al" #'lsp-avy-lens
 
-    ;; text/code
-    "xh" #'lsp-document-highlight
-    "xl" #'lsp-lens-show
-    "xL" #'lsp-lens-hide
-    ;; folders
-    "Fs" #'lsp-workspace-folders-switch
-    "Fr" #'lsp-workspace-folders-remove
-    "Fa" #'lsp-workspace-folders-add)
+           ;; format
+           "ri" #'lsp-organize-imports
+           "rb" #'lsp-format-buffer
+           "rr" #'lsp-rename
+
+           ;; goto
+           "gd" #'lsp-find-definition
+           "gD" #'lsp-find-declaration
+           "ga" #'consult-apropos
+           "ge" #'lsp-treemacs-errors-list
+           "gh" #'lsp-treemacs-call-hierarchy
+           "gr" #'lsp-find-references
+           "gi" #'lsp-find-implementation
+           "gt" #'lsp-find-type-definition
+           "gs" #'consult-lsp-file-symbols
+           "gS" #'consult-lsp-symbols
+           "gM" #'lsp-ui-imenu
+
+           "gb" #'xref-pop-marker-stack
+           "gf" #'xref-find-definitions-other-frame
+
+           ;; goto other window
+           "Gd" #'petmacs/lsp-find-definition-other-window
+           "GD" #'petmacs/lsp-find-declaration-other-window
+           "Gi" #'petmacs/lsp-find-implementation-other-window
+           "Gt" #'petmacs/lsp-find-type-definition-other-window
+           "Gr" #'petmacs/lsp-find-references-other-window
+
+           ;; peek
+           "pd" #'lsp-ui-peek-find-definitions
+           "pi" #'lsp-ui-peek-find-implementation
+           "pr" #'lsp-ui-peek-find-references
+           "ps" #'lsp-ui-peek-find-workspace-symbol
+           "pe" #'lsp-ui-flycheck-list
+           "pb" #'lsp-ui-peek-jump-backward
+           "pn" #'lSp-ui-peek-jump-forward
+           "pRn" #'lsp-ui-find-next-reference
+           "pRp" #'lsp-ui-find-prev-reference
+
+           ;; workspace
+           "wd" #'lsp-describe-session
+           "wD" #'lsp-disconnect
+           "wq" #'lsp-workspace-shutdown
+           "wr" #'lsp-restart-workspace
+           "wv" #'lsp-version
+           "ws" #'lsp
+
+           ;; help
+           "hh" #'lsp-describe-thing-at-point
+           "hs" #'lsp-signature-activate
+           "hg" #'lsp-ui-doc-glance
+
+           ;; text/code
+           "xh" #'lsp-document-highlight
+           "xl" #'lsp-lens-show
+           "xL" #'lsp-lens-hide
+
+           ;; folders
+           "Fs" #'lsp-workspace-folders-switch
+           "Fr" #'lsp-workspace-folders-remove
+           "Fb" #'lsp-workspace-blacklist-remove
+           "Fa" #'lsp-workspace-folders-add
+
+           ;; toggles
+           "tD" #'lsp-modeline-diagnostics-mode
+           "tL" #'lsp-toggle-trace-io
+           "tS" #'lsp-ui-sideline-mode
+           "tT" #'lsp-treemacs-sync-mode
+           "ta" #'lsp-modeline-code-actions-mode
+           "tb" #'lsp-headerline-breadcrumb-mode
+           "td" #'lsp-ui-doc-mode
+           "tf" #'lsp-toggle-on-type-formatting
+           "th" #'lsp-toggle-symbol-highlight
+           "tl" #'lsp-lens-mode
+           "ts" #'lsp-toggle-signature-auto-activate
+           ))
+        )
   )
-
 
 ;;; python mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (leader-declare-prefix-for-major-mode 'python-mode
