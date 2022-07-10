@@ -178,7 +178,9 @@ targets."
 ;; edit the text in the grep buffer after typing C-c C-p
 (use-package wgrep
   :commands wgrep-change-to-wgrep-mode
-  :config (setq wgrep-auto-save-buffer t))
+  :init
+  (setq wgrep-auto-save-buffer t
+        wgrep-change-readonly-file t))
 
 (use-package consult-project-extra)
 

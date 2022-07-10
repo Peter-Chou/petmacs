@@ -43,6 +43,7 @@
   (leader-set-keys
     "d"  #'deer
     "p"  #'list-processes
+    "e" #'list-environment
     "P"  #'proced
     "r"  #'ranger
     "k"  #'paradox-list-packages

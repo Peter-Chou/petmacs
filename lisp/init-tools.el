@@ -78,16 +78,8 @@
   :hook (protobuf-mode . disable-curly-bracket-electric-pair))
 
 (use-package olivetti
-  :init
-  (setq olivetti-body-width nil)
-  :config
-  (defun distraction-free ()
-    "Distraction-free writing environment"
-    (interactive)
-    (if (equal olivetti-mode nil)
-        (olivetti-mode t)
-      (progn
-        (olivetti-mode 0)))))
+  :diminish
+  :init (setq olivetti-body-width 0.62))
 
 (use-package editorconfig
   :diminish
@@ -364,13 +356,15 @@
     swift-mode-hook
     typescript-mode-hook))
 
-(use-package tree-sitter
-  :init
-  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
-  :config
-  (global-tree-sitter-mode))
+;; Tree-sitter: need dynamic module feature
+(when (functionp 'module-load)
+  (use-package tree-sitter
+    :diminish
+    :hook ((after-init . global-tree-sitter-mode)
+           (tree-sitter-after-on . tree-sitter-hl-mode))))
 
 (use-package tree-sitter-langs)
+
 (use-package tree-sitter-indent
   :hook (rust-mode . tree-sitter-indent-mode))
 
@@ -401,6 +395,28 @@
       (add-hook mode-hook #'ts-fold-mode)
       (add-hook mode-hook #'ts-fold-indicators-mode))))
 
+(use-package list-environment
+  :hook (list-environment-mode . (lambda ()
+                                   (setq tabulated-list-format
+                                         (vconcat `(("" ,(if (icon-displayable-p) 2 0)))
+                                                  tabulated-list-format))
+                                   (tabulated-list-init-header)))
+  :init
+  (with-no-warnings
+    (defun my-list-environment-entries ()
+      "Generate environment variable entries list for tabulated-list."
+      (mapcar (lambda (env)
+                (let* ((kv (split-string env "="))
+                       (key (car kv))
+                       (val (mapconcat #'identity (cdr kv) "=")))
+                  (list key (vector
+                             (if (icon-displayable-p)
+                                 (all-the-icons-octicon "key" :height 0.8 :v-adjust -0.05)
+                               "")
+                             `(,key face font-lock-keyword-face)
+                             `(,val face font-lock-string-face)))))
+              process-environment))
+    (advice-add #'list-environment-entries :override #'my-list-environment-entries)))
 
 (use-package centered-cursor-mode)
 (use-package restart-emacs)
@@ -409,5 +425,9 @@
 (use-package imenu-list)
 (use-package iedit)
 (use-package dotenv-mode)
+
+(unless sys/win32p
+  (use-package daemons)                 ; system services/daemons
+  (use-package tldr))
 
 (provide 'init-tools)

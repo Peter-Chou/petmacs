@@ -2,7 +2,10 @@
 
 (require 'init-custom)
 
-(use-package dumb-jump)
+(use-package dumb-jump
+  :init
+  (setq dumb-jump-prefer-searcher 'rg)
+  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))
 
 ;;; pip install epc
 (use-package lsp-bridge

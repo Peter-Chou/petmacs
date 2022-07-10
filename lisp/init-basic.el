@@ -20,6 +20,25 @@
 (when (file-exists-p custom-file)
   (load custom-file 'noerror 'nomessage))
 
+	;; Cross-referencing commands
+(use-package xref
+  :ensure nil
+  :init
+  (with-no-warnings
+    (when (executable-find "rg")
+      (setq xref-search-program 'ripgrep))
+    (if emacs/>=28p
+        (setq xref-show-definitions-function #'xref-show-definitions-completing-read
+              xref-show-xrefs-function #'xref-show-definitions-completing-read))))
+
+;; Process
+(use-package proced
+  :ensure nil
+  :init
+  (setq-default proced-format 'verbose)
+  (setq proced-auto-update-flag t
+        proced-auto-update-interval 3))
+
 (with-no-warnings
   ;; Optimization
   (when sys/win32p
@@ -38,13 +57,13 @@
   (setq ffap-machine-p-known 'reject)
 
   ;; Garbage Collector Magic Hack
-(use-package gcmh
-  :diminish
-  :hook (emacs-startup . gcmh-mode)
-  :init
-  (setq gcmh-idle-delay 'auto
-        gcmh-auto-idle-delay-factor 10
-        gcmh-high-cons-threshold #x1000000))) ; 16MB
+  (use-package gcmh
+    :diminish
+    :hook (emacs-startup . gcmh-mode)
+    :init
+    (setq gcmh-idle-delay 'auto
+          gcmh-auto-idle-delay-factor 10
+          gcmh-high-cons-threshold #x1000000))) ; 16MB
 
 ;; Encoding
 ;; UTF-8 as the default coding system
