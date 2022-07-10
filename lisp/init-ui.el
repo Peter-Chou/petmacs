@@ -177,7 +177,7 @@
     (doom-themes-treemacs-config)))
 
 ;; load theme
-(petmacs--load-theme 'modus-operandi) ;; light theme
+(petmacs--load-theme 'modus-vivendi)
 
 (if (and (equal petmacs-modeline-style 'awesome-tray)
          (display-graphic-p))
