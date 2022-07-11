@@ -266,6 +266,7 @@
           doom-modeline-support-imenu t
           doom-modeline-minor-modes nil
           doom-modeline-height 1
+          doom-modeline-window-width-limit 120
           doom-modeline-buffer-file-name-style 'relative-to-project)
     ;; Prevent flash of unstyled modeline at startup
     (unless after-init-time

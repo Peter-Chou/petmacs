@@ -162,7 +162,9 @@
           Buffer-menu-mode
 
           grep-mode occur-mode rg-mode deadgrep-mode ag-mode pt-mode
-          process-menu-mode list-environment-mode cargo-process-mode
+
+          "^\\*Process List\\*" process-menu-mode
+          list-environment-mode cargo-process-mode
 
           "^\\*eshell.*\\*.*$" eshell-mode
           "^\\*shell.*\\*.*$"  shell-mode
