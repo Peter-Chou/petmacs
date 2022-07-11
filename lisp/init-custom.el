@@ -24,6 +24,10 @@
 (defvar petmacs-enable-ligatures nil
   "enable ligatures")
 
+(defvar  petmacs-default-theme 'modus-operandi
+  "default theme")
+
+
 (defvar petmacs-lsp-active-modes '(
 				                   c-mode
 				                   c++-mode
@@ -39,8 +43,7 @@
 (defvar petmacs-modeline-style
   ;; 'doom-modeline
   'awesome-tray
-  "awesome-tray or doom-modeline.
-    doom-modeline is default in TUI.")
+  "awesome-tray or doom-modeline. doom-modeline is default in TUI.")
 
 (defvar petmacs-lsp-client-mode
   'lsp-mode
