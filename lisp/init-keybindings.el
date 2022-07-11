@@ -242,7 +242,7 @@
   (leader-set-keys
     "i" #'consult-imenu
     "w" #'evil-avy-goto-word-or-subword-1
-    "D" #'deer-jump-other-window
+    "D" #'dired-jump-other-window
     "c" #'goto-last-change
     "d" #'deer
     "j" #'avy-goto-char-timer
