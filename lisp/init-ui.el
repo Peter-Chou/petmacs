@@ -226,20 +226,11 @@
        ;; awesome-tray-mode-line-height 0.15
        awesome-tray-file-path-show-filename t
        awesome-tray-buffer-name-buffer-changed t
+       awesome-tray-git-format "%s"
 
-       awesome-tray-active-modules   '("winum" "location" "belong" "pyvenv" "buffer-read-only" "buffer-name" "pomodoro" "date")
+       awesome-tray-active-modules   '("winum" "location" "belong" "pyvenv" "buffer-read-only" "buffer-name" "git" "pomodoro" "date")
        awesome-tray-essential-modules '("winum" "location" "belong" "buffer-read-only" "buffer-name"))
       :config
-      (defun petmacs/awesome-tray-update-git-command-cache ()
-        (let* ((git-info (awesome-tray-process-exit-code-and-output "git" "symbolic-ref" "--short" "HEAD"))
-               (status (nth 0 git-info))
-               (result (format "%s" (nth 1 git-info))))
-          (setq awesome-tray-git-command-cache
-                (if (equal status 0)
-                    (replace-regexp-in-string "\n" "" result)
-                  ""))
-          awesome-tray-git-command-cache))
-      (advice-add #'awesome-tray-update-git-command-cache :override #'petmacs/awesome-tray-update-git-command-cache)
 
       (defun petmacs/awesome-tray-module-buffer-name-info ()
         (let (bufname)
