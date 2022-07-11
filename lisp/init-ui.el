@@ -226,7 +226,7 @@
       (setq
        awesome-tray-update-interval 0.6
        awesome-tray-buffer-name-max-length 30
-       awesome-tray-mode-line-height 0.15
+       ;; awesome-tray-mode-line-height 0.15
        awesome-tray-file-path-show-filename t
        awesome-tray-buffer-name-buffer-changed t
 
