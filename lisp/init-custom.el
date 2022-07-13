@@ -9,9 +9,9 @@
 (defvar petmacs-icon (or (display-graphic-p) (daemonp))
   "Display icons or not.")
 
-(defvar  petmacs-font
-  ;; "Monego Ligatures"
+(defvar petmacs-font
   "Monego"
+  ;; "Monego Ligatures"
   "font")
 
 (defvar  petmacs-chinese-font
@@ -27,6 +27,15 @@
 (defvar  petmacs-default-theme 'modus-operandi
   "default theme")
 
+(defvar petmacs-modeline-style
+  'awesome-tray
+  ;; 'doom-modeline
+  "awesome-tray or doom-modeline. doom-modeline is default in TUI.")
+
+(defvar petmacs-lsp-client-mode
+  'lsp-mode
+  ;; 'lsp-bridge-mode
+  "lsp-mode or lsp-bridge-mode")
 
 (defvar petmacs-lsp-active-modes '(
 				                   c-mode
@@ -38,17 +47,6 @@
 				                   sh-mode
 				                   )
   "Primary major modes of the lsp activated layer.")
-
-
-(defvar petmacs-modeline-style
-  ;; 'doom-modeline
-  'awesome-tray
-  "awesome-tray or doom-modeline. doom-modeline is default in TUI.")
-
-(defvar petmacs-lsp-client-mode
-  'lsp-mode
-  ;; 'lsp-bridge-mode
-  "lsp-mode or lsp-bridge-mode")
 
 (defvar petmacs-lsp-format-on-save-ignore-modes
   '(c-mode c++-mode python-mode markdown-mode))
