@@ -228,8 +228,8 @@
        awesome-tray-buffer-name-buffer-changed t
        awesome-tray-git-format "%s"
 
-       awesome-tray-active-modules   '("winum" "location" "belong" "pyvenv" "buffer-read-only" "buffer-name" "git" "pomodoro" "date")
-       awesome-tray-essential-modules '("winum" "location" "belong" "buffer-read-only" "buffer-name"))
+       awesome-tray-active-modules   '("winum" "location" "pyvenv" "buffer-read-only" "buffer-name" "git" "pomodoro" "date")
+       awesome-tray-essential-modules '("winum" "location" "buffer-read-only" "buffer-name"))
       :config
 
       (defun petmacs/awesome-tray-module-buffer-name-info ()
