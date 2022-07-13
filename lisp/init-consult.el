@@ -106,7 +106,8 @@
 (use-package consult-yasnippet
   :after (consult yasnippet))
 
-(use-package consult-projectile)
+(use-package consult-projectile
+  :init (setq consult-projectile-use-projectile-switch-project t))
 
 (use-package embark
   :bind
