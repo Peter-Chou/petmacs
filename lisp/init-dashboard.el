@@ -9,11 +9,7 @@
 	          winner-undo
 	          widget-forward)
   :hook ((after-init . dashboard-setup-startup-hook)
-  	     (dashboard-mode  . (lambda ()
-  			                  (display-line-numbers-mode -1)
-  			                  (hl-line-mode -1)
-			                  (setq-local frame-title-format nil)
-  			                  (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*"))))))
+  	     (dashboard-mode  . (lambda () (setq-local frame-title-format nil))))
   :init
   (setq
    dashboard-banner-logo-title "Petmacs --- Adorable just like A PET"

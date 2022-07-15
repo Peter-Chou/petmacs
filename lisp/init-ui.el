@@ -356,6 +356,7 @@
                       shell-mode-hook
                       magit-mode-hook
                       ibuffer-mode-hook
+                      dashboard-mode-hook
                       dired-mode-hook
                       treemacs-mode-hook
                       eshell-mode-hook))
