@@ -38,7 +38,9 @@
 
   :init
   (require 'lsp-bridge)
-  (setq lsp-bridge-python-command (expand-file-name "lsp-bridge/bin/python" (getenv "WORKON_HOME")))
+  (setq lsp-bridge-python-command (expand-file-name "lsp-bridge/bin/python" (getenv "WORKON_HOME"))
+        acm-candidate-match-function 'orderless-flex
+        )
   :config
   ;; don't show lsp-bridge-info in modeline
   (setq mode-line-misc-info (delete '(lsp-bridge-mode (" [" lsp-bridge--mode-line-format "] "))

@@ -47,9 +47,10 @@
       (when (file-exists-p pfile)
         (setq-local pyvenv-workon (gethash "venv" (json-read-file pfile)))
         (pyvenv-workon pyvenv-workon)
-        (if (equal petmacs-lsp-client-mode 'lsp-mode)
-            (lsp-deferred))
-        )))
+        (cond ((equal petmacs-lsp-client-mode 'lsp-mode)
+               (lsp-deferred))
+              ((equal petmacs-lsp-client-mode 'lsp-bridge-mode)
+               (lsp-bridge-mode))))))
   :hook (python-mode . petmacs/pyvenv-pyright-autoload))
 
 (use-package virtualenvwrapper)
