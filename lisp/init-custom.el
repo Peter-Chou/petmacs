@@ -33,7 +33,7 @@
 
 (defvar petmacs-lsp-active-modes '(
 				                   c-mode
-				                   c++-mode
+			                       c++-mode
 				                   python-mode
 				                   java-mode
 				                   scala-mode
