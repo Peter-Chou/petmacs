@@ -50,7 +50,9 @@
         (cond ((equal petmacs-lsp-client-mode 'lsp-mode)
                (lsp-deferred))
               ((equal petmacs-lsp-client-mode 'lsp-bridge-mode)
-               (lsp-bridge-mode))))))
+               (if (bound-and-true-p lsp-bridge-mode)
+                   (lsp-bridge-restart-process)
+                 (lsp-bridge-mode)))))))
   :hook (python-mode . petmacs/pyvenv-pyright-autoload))
 
 (use-package virtualenvwrapper)

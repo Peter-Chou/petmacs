@@ -10,8 +10,8 @@
 ;;; pip install epc
 (use-package lsp-bridge
   :quelpa (lsp-bridge :fetcher github
-  		              :repo "manateelazycat/lsp-bridge"
-  		              :files ("*"))
+		              :repo "manateelazycat/lsp-bridge"
+		              :files ("*"))
   :preface
   ;; 融合 `lsp-bridge' `find-function' 以及 `dumb-jump' 的智能跳转
   (defun petmacs/lsp-bridge-jump ()
