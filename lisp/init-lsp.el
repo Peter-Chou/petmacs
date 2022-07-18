@@ -141,7 +141,7 @@
 				          (add-hook 'after-save-hook #'lsp-pyright-format-buffer t t))))
   :init
   ;; too much noise in "real" projects
-  (setq lsp-pyright-typechecking-mode "basic"
+  (setq ;; lsp-pyright-typechecking-mode "basic"
 	    lsp-pyright-venv-path (getenv "WORKON_HOME")))
 
 ;;; java
