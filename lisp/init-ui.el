@@ -177,6 +177,8 @@
     (doom-themes-treemacs-config)))
 
 (if (and (equal petmacs-modeline-style 'awesome-tray)
+         ;; acm popup in lsp-bridge somehow conflict with awesome-tray
+         (not (equal petmacs-lsp-client-mode 'lsp-bridge-mode))
          (display-graphic-p))
     (use-package awesome-tray
       :quelpa (awesome-tray :fetcher github

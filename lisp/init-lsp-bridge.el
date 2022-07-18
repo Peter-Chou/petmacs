@@ -39,6 +39,9 @@
   :init
   (require 'lsp-bridge)
   (setq lsp-bridge-python-command (expand-file-name "lsp-bridge/bin/python" (getenv "WORKON_HOME"))
+        lsp-bridge-enable-candidate-doc-preview nil
+        lsp-bridge-enable-signature-help t
+        acm-enable-doc nil
         acm-candidate-match-function 'orderless-flex
         )
   :config
