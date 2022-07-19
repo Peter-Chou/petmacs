@@ -20,7 +20,7 @@
 (when (file-exists-p custom-file)
   (load custom-file 'noerror 'nomessage))
 
-	;; Cross-referencing commands
+;; Cross-referencing commands
 (use-package xref
   :ensure nil
   :init
