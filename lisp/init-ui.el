@@ -360,6 +360,7 @@
                       term-mode-hook
                       shell-mode-hook
                       magit-mode-hook
+                      help-mode-hook
                       ibuffer-mode-hook
                       dashboard-mode-hook
                       dired-mode-hook
