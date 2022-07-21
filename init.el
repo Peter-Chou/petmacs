@@ -13,12 +13,6 @@
                       (delete-dups (append file-name-handler-alist
                                            old-file-name-handler-alist)))))))
 
-;; Defer garbage collection further back in the startup process
-(setq gc-cons-threshold most-positive-fixnum)
-(add-hook 'emacs-startup-hook
-          (lambda ()
-            "Recover GC values after startup."
-            (setq gc-cons-threshold 800000)))
 
 ;; Load path
 ;; Optimize: Force "lisp"" and "site-lisp" at the head to reduce the startup time.
@@ -28,10 +22,19 @@
     (push (expand-file-name dir user-emacs-directory) load-path)))
 
 (update-load-path)
+(require 'init-custom)
+
+;; Defer garbage collection further back in the startup process
+(setq gc-cons-threshold most-positive-fixnum)
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            "Recover GC values after startup."
+            (if (equal petmacs-lsp-client-mode 'lsp-mode)
+                (setq gc-cons-threshold 100000000)
+              (setq gc-cons-threshold 800000))))
 
 (require 'init-funcs)
 
-(require 'init-custom)
 (require 'init-package)
 (require 'init-basic)
 (require 'init-font)
