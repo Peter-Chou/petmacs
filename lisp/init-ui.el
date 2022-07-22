@@ -228,14 +228,13 @@
        ;; awesome-tray-mode-line-height 0.15
        awesome-tray-file-path-show-filename t
        awesome-tray-buffer-name-buffer-changed t
-       awesome-tray-git-format "%s"
-
-       ;; awesome-tray-active-modules   '("winum" "location" "pyvenv" "buffer-read-only" "buffer-name" "git" "pomodoro" "date")
-       ;; awesome-tray-essential-modules '("winum" "location" "buffer-read-only" "buffer-name")
-       awesome-tray-active-modules   '("anzu" "winum" "location" "pyvenv" "buffer-read-only" "file-path" "git" "pomodoro" "date")
-       awesome-tray-essential-modules '("winum" "location" "buffer-read-only" "file-path")
-       )
+       awesome-tray-git-format "<%s>"
+       awesome-tray-active-modules   '("anzu" "winum" "location" "pyvenv" "buffer-read-only" "buffer-name" "git" "pomodoro" "date")
+       awesome-tray-essential-modules '("winum" "location" "buffer-read-only" "buffer-name"))
       :config
+      (setq awesome-tray-module-alist (delete '("buffer-name" . (awesome-tray-module-buffer-name-info awesome-tray-module-buffer-name-face)) awesome-tray-module-alist))
+      ;; use file-path face to show buffer-name info
+      (add-to-list 'awesome-tray-module-alist '("buffer-name" . (awesome-tray-module-buffer-name-info awesome-tray-module-file-path-face)))
 
       (defun petmacs/awesome-tray-module-buffer-name-info ()
         (let (bufname)

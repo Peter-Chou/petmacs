@@ -18,7 +18,9 @@
 (defvar petmacs-enable-ligatures nil
   "enable ligatures")
 
-(defvar  petmacs-default-theme 'modus-operandi
+(defvar  petmacs-default-theme
+  'modus-operandi ;; light theme
+  ;; 'modus-vivendi  ;; dark theme
   "default theme")
 
 (defvar petmacs-modeline-style
