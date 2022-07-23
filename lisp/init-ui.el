@@ -232,7 +232,7 @@
        awesome-tray-active-modules   '("anzu" "winum" "location" "pyvenv" "buffer-read-only" "buffer-name" "git" "pomodoro" "date")
        awesome-tray-essential-modules '("winum" "location" "buffer-read-only" "buffer-name"))
       :config
-      (setq awesome-tray-module-alist (delete '("buffer-name" . (awesome-tray-module-buffer-name-info awesome-tray-module-buffer-name-face)) awesome-tray-module-alist))
+      (setq awesome-tray-module-alist (delq (assoc "buffer-name"  awesome-tray-module-alist) awesome-tray-module-alist))
       ;; use file-path face to show buffer-name info
       (add-to-list 'awesome-tray-module-alist '("buffer-name" . (awesome-tray-module-buffer-name-info awesome-tray-module-file-path-face)))
 
