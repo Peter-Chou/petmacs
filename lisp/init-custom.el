@@ -24,8 +24,8 @@
   "default theme")
 
 (defvar petmacs-modeline-style
-  'awesome-tray
-  ;; 'doom-modeline
+  ;; 'awesome-tray
+  'doom-modeline
   "awesome-tray or doom-modeline. doom-modeline is default in TUI.")
 
 (defvar petmacs-lsp-client-mode
