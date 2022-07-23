@@ -66,8 +66,7 @@ set WORKON_HOME environment variable that has virtual environment directories.
 
 - C/C++
 
-use `clangd` in [LLVM project](https://github.com/llvm/llvm-project).
-soft link llvm project to `/opt/llvm`
+use `clangd` in [LLVM project](https://github.com/llvm/llvm-project). soft link llvm project to `/opt/llvm`.
 
 - Golang
 
