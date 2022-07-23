@@ -43,7 +43,7 @@
          (scala-mode . (lambda ()
 			             (require 'lsp-metals)
 			             (lsp-deferred)))
-         ((markdown-mode yaml-mode) . lsp-deferred)
+         ;; ((markdown-mode yaml-mode) . lsp-deferred)
          (go-mode . lsp-deferred)
          (java-mode . lsp-deferred)
          (lsp-mode . (lambda ()
