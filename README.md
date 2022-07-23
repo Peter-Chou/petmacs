@@ -7,7 +7,10 @@
 - Fonts
 
   - [Monego](https://github.com/cseelus/monego)
+
   - [等距更纱黑体 SC](https://github.com/be5invis/Sarasa-Gothic)
+
+  - [all-the-icons](https://github.com/domtronn/all-the-icons.el)
 
 - global tools
 
