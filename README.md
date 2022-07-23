@@ -74,8 +74,6 @@ use `clangd` in [LLVM project](https://github.com/llvm/llvm-project). soft link 
 go install golang.org/x/tools/gopls@latest
 ```
 
----
-
 ### install DAP servers
 
 - python
@@ -93,6 +91,8 @@ pip install debugpy
 ``` bash
 go install github.com/go-delve/delve/cmd/dlv@latest
 ```
+
+---
 
 
 ## Screenshots
