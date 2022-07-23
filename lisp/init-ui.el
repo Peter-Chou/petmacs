@@ -228,7 +228,7 @@
        ;; awesome-tray-mode-line-height 0.15
        awesome-tray-file-path-show-filename t
        awesome-tray-buffer-name-buffer-changed t
-       awesome-tray-git-format "<%s>"
+       awesome-tray-git-format "·%s·"
        awesome-tray-active-modules   '("anzu" "winum" "location" "pyvenv" "buffer-read-only" "buffer-name" "git" "pomodoro" "date")
        awesome-tray-essential-modules '("winum" "location" "buffer-read-only" "buffer-name"))
       :config
