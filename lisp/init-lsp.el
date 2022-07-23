@@ -56,7 +56,7 @@
                          (add-hook 'before-save-hook #'lsp-organize-imports t t)))))
   :init
   (setq lsp-keymap-prefix "C-c l"
-        lsp-keep-workspace-alive nil
+        lsp-auto-guess-root nil
         lsp-signature-auto-activate t
         lsp-modeline-code-actions-enable t
         lsp-modeline-diagnostics-enable t
@@ -65,16 +65,16 @@
 	    lsp-headerline-breadcrumb-enable t
         lsp-headerline-breadcrumb-segments '(symbols)
 
+        ;; how often lsp-mode will refresh the highlights, lenses, links, etc while you type
+        lsp-idle-delay 0.5
+
+        lsp-keep-workspace-alive nil
+        lsp-enable-indentation nil
+	    lsp-enable-on-type-formatting nil
         lsp-enable-folding t
         lsp-enable-file-watchers nil
         lsp-enable-symbol-highlighting nil
         lsp-enable-text-document-color nil
-
-        lsp-enable-indentation nil
-	    lsp-enable-on-type-formatting nil
-        lsp-auto-guess-root nil
-        ;; lsp-prefer-capf t
-
 	    lsp-enable-on-type-formatting nil)
   :config
   (with-no-warnings
@@ -98,16 +98,13 @@
 	          lsp-ui-sideline-enable nil
 	          lsp-ui-sideline-show-code-actions nil
               lsp-ui-sideline-ignore-duplicate t
-              ;; how often lsp-mode will refresh the highlights, lenses, links, etc while you type
-              lsp-idle-delay 0.5
 	          lsp-ui-doc-enable nil
 	          lsp-ui-doc-delay 0.1
 	          lsp-ui-doc-border (face-foreground 'font-lock-comment-face nil t)
               lsp-ui-imenu-colors `(,(face-foreground 'font-lock-keyword-face)
 				                    ,(face-foreground 'font-lock-string-face)
 				                    ,(face-foreground 'font-lock-constant-face)
-				                    ,(face-foreground 'font-lock-variable-name-face)))
-  )
+				                    ,(face-foreground 'font-lock-variable-name-face))))
 
 (use-package lsp-treemacs
   :after lsp-mode
