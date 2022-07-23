@@ -1,16 +1,29 @@
 ;; -*- lexical-binding: t no-byte-compile: t -*-
 
 (use-package magit
-  ;; :pin melpa-stable
-  :mode (("\\COMMIT_EDITMSG\\'" . text-mode)
-         ("\\MERGE_MSG\\'" . text-mode))
-  :bind (("C-x g" . magit-status)
-         ("C-x M-g" . magit-dispatch-popup)
-         ("C-c M-g" . magit-file-popup))
+  :init
+  (setq magit-diff-refine-hunk t
+        magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1)
   :config
+  (when sys/win32p
+    (setenv "GIT_ASKPASS" "git-gui--askpass"))
 
-  (setq magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1)
-  ;; (add-to-list 'magit-log-arguments "--color")
+  ;; Exterminate Magit buffers
+  (with-no-warnings
+    (defun my-magit-kill-buffers (&rest _)
+      "Restore window configuration and kill all Magit buffers."
+      (interactive)
+      (magit-restore-window-configuration)
+      (let ((buffers (magit-mode-get-buffers)))
+        (when (eq major-mode 'magit-status-mode)
+          (mapc (lambda (buf)
+                  (with-current-buffer buf
+                    (if (and magit-this-process
+                             (eq (process-status magit-this-process) 'run))
+                        (bury-buffer buf)
+                      (kill-buffer buf))))
+                buffers))))
+    (setq magit-bury-buffer-function #'my-magit-kill-buffers))
 
   ;; When 'C-c C-c' is pressed in the magit commit message buffer,
   ;; delete the magit-diff buffer related to the current repo.
@@ -42,6 +55,7 @@
 
 ;; Show TODOs in magit
 (use-package magit-todos
+  :defines magit-todos-nice
   :init
   (setq magit-todos-nice (if (executable-find "nice") t nil))
   (setq magit-todos-exclude-globs '("third_party"))
@@ -51,6 +65,33 @@
   (with-eval-after-load 'magit-status
     (transient-append-suffix 'magit-status-jump '(0 0 -1)
       '("t " "Todos" magit-todos-jump-to-todos))))
+
+;; Walk through git revisions of a file
+(use-package git-timemachine
+  :custom-face
+  (git-timemachine-minibuffer-author-face ((t (:inherit success))))
+  (git-timemachine-minibuffer-detail-face ((t (:inherit warning))))
+  :bind (:map vc-prefix-map
+         ("t" . git-timemachine))
+  :hook ((git-timemachine-mode . (lambda ()
+                                   "Improve `git-timemachine' buffers."
+                                   ;; Display different colors in mode-line
+                                   (if (facep 'mode-line-active)
+                                       (face-remap-add-relative 'mode-line-active 'custom-state)
+                                     (face-remap-add-relative 'mode-line 'custom-state))
+
+                                   ;; Highlight symbols in elisp
+                                   (and (derived-mode-p 'emacs-lisp-mode)
+                                        (fboundp 'highlight-defined-mode)
+                                        (highlight-defined-mode t))
+
+                                   ;; Display line numbers
+                                   (and (derived-mode-p 'prog-mode 'yaml-mode)
+                                        (fboundp 'display-line-numbers-mode)
+                                        (display-line-numbers-mode t))))
+         (before-revert . (lambda ()
+                            (when (bound-and-true-p git-timemachine-mode)
+                              (user-error "Cannot revert the timemachine buffer"))))))
 
 ;; Git related modes
 (use-package git-modes)
