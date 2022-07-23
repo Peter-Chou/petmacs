@@ -10,11 +10,14 @@
   (setq corfu-cycle t
         corfu-auto t
         corfu-quit-at-boundary t
-        corfu-quit-no-match t
+        ;; corfu-quit-no-match t
+        corfu-quit-no-match 'separator
         corfu-preview-current nil
         ;; corfu-preselect-first t
-        corfu-auto-delay 0.2
-        corfu-auto-prefix 1
+        ;; corfu-auto-delay 0.2
+        corfu-auto-delay 0
+        ;; corfu-auto-prefix 1
+        corfu-auto-prefix 0
         )
   (when (> (frame-pixel-width) 3000) (custom-set-faces '(corfu-default ((t (:height 1.3))))))
   (global-corfu-mode)
