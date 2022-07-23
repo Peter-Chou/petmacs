@@ -21,15 +21,16 @@
 
 ## Install
 
+### clone repository
+
 ```bash
 git clone --depth=1 https://github.com/Peter-Chou/petmacs.git ~/.emacs.d
 ```
 
-install git submodules:
+### install git submodules:
 
 ``` bash
 cd ~/.emacs.d
-
 git submodule update --init --recursive
 
 # udpate submodules to latest version
@@ -43,22 +44,14 @@ git submodule update --init --recursive
 ``` bash
 conda create -n eaf python=3.8
 conda activate eaf
+
 # install browser image-viewer jupyter markdown-previewer org-previewer pdf-viewer
 python site-lisp/emacs-application-framework/install-eaf.py
 ```
 
-- nodejs packages
+### install LSP servers
 
-```sh
-npm install -g eslint_d prettier markdownlint-cli
-```
-
-### install prebuilt language servers
-
-- C/C++
-
-lsp use clangd in [LLVM project](https://github.com/llvm/llvm-project).
-lldb-vscode for debug is also in LLVM project
+install the language servers needed by LSP service
 
 - python
 
@@ -68,7 +61,36 @@ npm install -g pyright
 
 set WORKON_HOME environment variable that has virtual environment directories.
 
+- C/C++
+
+use `clangd` in [LLVM project](https://github.com/llvm/llvm-project).
+
+- Golang
+
+``` bash
+go install golang.org/x/tools/gopls@latest
+```
+
 ---
+
+### install DAP servers
+
+- python
+
+``` bash
+pip install debugpy
+```
+
+- C/C++
+
+`lldb-vscode` is in LLVM project
+
+- Golang
+
+``` bash
+go install github.com/go-delve/delve/cmd/dlv@latest
+```
+
 
 ## Screenshots
 

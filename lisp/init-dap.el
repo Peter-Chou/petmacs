@@ -19,14 +19,15 @@
 	     ((c-mode c++-mode)      . (lambda () (require 'dap-lldb)))
          ((objc-mode swift-mode) . (lambda () (require 'dap-lldb)))
          (python-mode . (lambda () (require 'dap-python)))
-	 ;;;; go install github.com/go-delve/delve/cmd/dlv@latest
-         (go-mode . (lambda () (require 'dap-go)))
+         (go-mode . (lambda () (require 'dap-dlv-go)))
          (java-mode . (lambda () (require 'dap-java)))
          ((js-mode js2-mode) . (lambda () (require 'dap-chrome)))
 	     )
   :init
   (require 'cl-lib)
   (setq dap-enable-mouse-support t
+        dap-python-debugger 'debugpy
+
 	    ;; dap-auto-configure-features '(sessions locals controls tooltip repl)
         dap-auto-configure-features '(sessions locals breakpoints expressions controls)
 	    dap-lldb-debug-program '("/opt/llvm/bin/lldb-vscode")
