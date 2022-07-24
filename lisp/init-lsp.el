@@ -58,6 +58,7 @@
   (setq lsp-keymap-prefix "C-c l"
         lsp-auto-guess-root nil
         lsp-signature-auto-activate t
+        lsp-signature-render-documentation nil
         lsp-modeline-code-actions-enable t
         lsp-modeline-diagnostics-enable t
         lsp-modeline-diagnostics-scope :workspace
