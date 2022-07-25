@@ -289,10 +289,13 @@
       "date"
       (propertize
        (concat
+        doom-modeline-spc
         (doom-modeline-icon 'faicon  "calendar" "📅" ""
                             :face 'doom-modeline-evil-normal-state
                             :height 1.1 :v-adjust -0.0275)
-        doom-modeline-spc (format "%s" display-time-string) doom-modeline-spc)
+        doom-modeline-spc
+        (format "%s" display-time-string)
+        doom-modeline-spc)
        'face (doom-modeline-face 'doom-modeline-evil-normal-state)))
 
     (defun petmacs/doom-modeline-def-modeline (orig-func name lhs &optional rhs)
