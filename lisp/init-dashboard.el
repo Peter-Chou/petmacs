@@ -13,8 +13,11 @@
   :init
   (setq
    dashboard-banner-logo-title "Petmacs --- Adorable just like A PET"
-   dashboard-footer-messages '("Enjoy Emacs, Enjoy Petmacs!")
-   dashboard-startup-banner (expand-file-name "data/pics/totoro_banner.png" user-emacs-directory)
+   dashboard-startup-banner (or (expand-file-name
+                                 (if (display-graphic-p)
+                                     "data/pics/petmacs_banner.png"
+                                   "data/pics/petmacs_banner.txt")
+                                 user-emacs-directory) 'official)
    dashboard-page-separator "\n\f\n"
    dashboard-center-content t
    dashboard-show-shortcuts nil
@@ -30,7 +33,16 @@
 			                 (agenda    . "calendar")
 			                 (projects  . "file-directory")
 			                 (registers . "database"))
-   dashboard-set-footer t)
+   dashboard-set-footer t
+   dashboard-footer-messages '("Enjoy Emacs, Enjoy Petmacs!")
+   dashboard-footer-icon (cond ((icon-displayable-p)
+                                (all-the-icons-faicon "heart"
+                                                      :height 1.1
+                                                      :v-adjust -0.05
+                                                      :face 'error))
+                               ((char-displayable-p ?🧡) "🧡 ")
+                               (t (propertize ">" 'face 'dashboard-footer)))
+   )
   :config
   (evil-define-key 'normal dashboard-mode-map
     (kbd "RET") 'widget-button-press
