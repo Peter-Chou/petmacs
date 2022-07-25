@@ -287,17 +287,18 @@
 
     (doom-modeline-def-segment date
       "date"
-      (propertize
-       (concat
-        (when display-time-mode
+      (when (bound-and-true-p display-time-mode)
+        (propertize
+         (concat
+          (when doom-modeline-icon
+            doom-modeline-spc
+            (doom-modeline-icon 'faicon  "calendar" "📅" ""
+                                :face 'doom-modeline-evil-normal-state
+                                :height 1.2 :v-adjust -0.0575))
           doom-modeline-spc
-          (doom-modeline-icon 'faicon  "calendar" "📅" ""
-                              :face 'doom-modeline-evil-normal-state
-                              :height 1.2 :v-adjust -0.0575))
-        doom-modeline-spc
-        (format "%s" display-time-string)
-        doom-modeline-spc)
-       'face (doom-modeline-face 'doom-modeline-evil-normal-state)))
+          (format "%s" display-time-string)
+          doom-modeline-spc)
+         'face (doom-modeline-face 'doom-modeline-evil-normal-state))))
 
     (defun petmacs/doom-modeline-def-modeline (orig-func name lhs &optional rhs)
       ;; add date module to the end of the right part segments
