@@ -292,7 +292,7 @@
         doom-modeline-spc
         (doom-modeline-icon 'faicon  "calendar" "📅" ""
                             :face 'doom-modeline-evil-normal-state
-                            :height 1.1 :v-adjust -0.0275)
+                            :height 1.2 :v-adjust -0.0575)
         doom-modeline-spc
         (format "%s" display-time-string)
         doom-modeline-spc)
