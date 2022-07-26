@@ -45,6 +45,8 @@
            (json-array-type 'string)
            (json-key-type 'string))
       (when (file-exists-p pfile)
+        ;; set pyvenv-workon buffer local variable for pyvenv-tracking-mode
+        ;; to compare whether pyvenv-workon and pyvenv-virtual-env-name is equal
         (setq-local pyvenv-workon (gethash "venv" (json-read-file pfile)))
         (pyvenv-workon pyvenv-workon)
         (cond ((equal petmacs-lsp-client-mode 'lsp-mode)

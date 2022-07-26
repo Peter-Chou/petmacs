@@ -257,8 +257,6 @@
   (use-package doom-modeline
     :hook (after-init . doom-modeline-mode)
     :init
-    (require 'doom-modeline-core)
-
     (setq doom-modeline-icon petmacs-icon
           doom-modeline-support-imenu t
           doom-modeline-minor-modes nil
@@ -269,15 +267,7 @@
     ;; Prevent flash of unstyled modeline at startup
     (unless after-init-time
       (setq-default mode-line-format nil))
-
-    (doom-modeline-def-segment python-venv
-      "python venv"
-      (propertize
-       (if (and (equal major-mode 'python-mode) (bound-and-true-p pyvenv-workon))
-           (format "[%s]" pyvenv-workon)
-         "")
-       'face (doom-modeline-face 'doom-modeline-buffer-timemachine)))
-
+    :config
     (doom-modeline-def-segment pomodoro
       "pomodoro"
       (propertize
@@ -285,34 +275,44 @@
         doom-modeline-spc (format "%s" pomodoro-mode-line-string) doom-modeline-spc)
        'face (doom-modeline-face 'doom-modeline-urgent)))
 
-    (doom-modeline-def-segment date
-      "date"
-      (when (bound-and-true-p display-time-mode)
+    (doom-modeline-def-segment python-venv
+      "python venv"
+      (when (and (doom-modeline--active)
+                 (equal major-mode 'python-mode)
+                 (bound-and-true-p pyvenv-workon))
         (propertize
          (concat
-          (when doom-modeline-icon
-            doom-modeline-spc
-            (doom-modeline-icon 'faicon  "calendar" "📅" ""
-                                :face 'doom-modeline-evil-normal-state
-                                :height 1.2 :v-adjust -0.0575))
           doom-modeline-spc
-          (format "%s" display-time-string)
+          (format "[%s]" (file-name-nondirectory python-shell-virtualenv-root))
           doom-modeline-spc)
-         'face (doom-modeline-face 'doom-modeline-evil-normal-state))))
+         'face (doom-modeline-face 'doom-modeline-buffer-timemachine))))
 
-    (defun petmacs/doom-modeline-def-modeline (orig-func name lhs &optional rhs)
-      ;; add date module to the end of the right part segments
-      (nconc rhs '(date))
-      ;; remove misc-info module for cleanness
-      (when (member 'misc-info rhs)
-        (message "has misc-info in %s" name)
-        (setq rhs (delete 'misc-info rhs)))
-      (funcall orig-func name lhs rhs))
-    (advice-add 'doom-modeline-def-modeline :around #'petmacs/doom-modeline-def-modeline)
-    :config
+    (defun doom-modeline--check-python-venv-in-modeline ()
+      (member '(pyvenv-mode pyvenv-mode-line-indicator) mode-line-misc-info))
+
+    (defun doom-modeline-override-python-venv-modeline ()
+      "Override default display-time mode-line."
+      (if (and (bound-and-true-p doom-modeline-mode)
+               (bound-and-true-p pyvenv-mode)
+               (doom-modeline--check-python-venv-in-modeline))
+          (setq mode-line-misc-info (delete '(pyvenv-mode pyvenv-mode-line-indicator) mode-line-misc-info))
+        (when (and (bound-and-true-p pyvenv-mode)
+                   (not (doom-modeline--check-python-venv-in-modeline)))
+          (add-to-list 'mode-line-misc-info '(pyvenv-mode pyvenv-mode-line-indicator)))))
+    (add-hook 'pyvenv-mode-hook #'doom-modeline-override-python-venv-modeline)
+    (add-hook 'doom-modeline-mode-hook #'doom-modeline-override-python-venv-modeline)
+
+    ;; (defun petmacs/doom-modeline-def-modeline (orig-func name lhs &optional rhs)
+    ;;   ;; remove misc-info module for cleanness
+    ;;   (when (member 'misc-info rhs)
+    ;;     (message "has misc-info in %s" name)
+    ;;     (setq rhs (delete 'misc-info rhs)))
+    ;;   (funcall orig-func name lhs rhs))
+    ;; (advice-add 'doom-modeline-def-modeline :around #'petmacs/doom-modeline-def-modeline)
+
     (doom-modeline-def-modeline 'petmacs/custom-modeline
-      '(bar window-number checker matches buffer-info remote-host buffer-position parrot selection-info )
-      '(python-venv persp-name github debug repl input-method pomodoro buffer-encoding process vcs))
+      '(bar window-number checker matches buffer-info remote-host buffer-position parrot selection-info)
+      '(misc-info python-venv persp-name github debug repl input-method pomodoro buffer-encoding process vcs time))
 
     ;; Add to `doom-modeline-mode-hook` or other hooks
     (defun petmacs/setup-custom-doom-modeline ()
