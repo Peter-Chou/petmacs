@@ -60,7 +60,7 @@
    ;; completion-styles '(orderless partial-completion)
    completion-styles '(orderless partial-completion basic)
    completion-category-defaults nil
-   completion-category-overrides '((file (styles partial-completion)) ;; partial-completion is tried first
+   completion-category-overrides '((file (styles orderless partial-completion)) ;; partial-completion is tried first
                                    (command (styles +orderless-with-initialism))
                                    (variable (styles +orderless-with-initialism))
                                    (symbol (styles +orderless-with-initialism)))
