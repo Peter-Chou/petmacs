@@ -140,10 +140,17 @@ FACE defaults to inheriting from default and highlight."
   :hook ((after-init . global-diff-hl-mode)
          (dired-mode . diff-hl-dired-mode)
          ((after-init after-load-theme server-after-make-frame) . my-set-diff-hl-faces))
-  :init (setq diff-hl-draw-borders nil)
+  :init (setq diff-hl-draw-borders nil
+              ;; diff-hl-margin-symbols-alist
+              ;; '((insert . "+") (delete . "-") (change . "=")
+              ;;   (unknown . "?") (ignored . "i"))
+              diff-hl-margin-symbols-alist
+              '((insert . " ") (delete . " ") (change . " ")
+                (unknown . " ") (ignored . " ")))
   :config
   ;; Highlight on-the-fly
   (diff-hl-flydiff-mode 1)
+  (diff-hl-margin-mode 1)
 
   ;; Set fringe style
   (setq-default fringes-outside-margins t)
