@@ -63,9 +63,9 @@
     "ot" #'org-todo-list
     "o/" #'org-occur-in-agenda-files
 
-    ;; "ap" prefix
+    ;; "at" prefix
     "tt" #'petmacs/pomodoro-toggle
-    "ts" #'pomodoro-pause
+    "tp" #'pomodoro-pause
     "tr" #'pomodoro-resume
     ))
 
