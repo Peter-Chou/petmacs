@@ -6,6 +6,7 @@
 (defvar petmacs-font
   "Monego"
   ;; "Monego Ligatures"
+  ;; "MonegoLigatures Nerd Font"
   "font")
 
 (defvar  petmacs-chinese-font
