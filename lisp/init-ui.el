@@ -291,7 +291,14 @@
         (propertize
          (concat
           doom-modeline-spc
-          (format "[%s]" (file-name-nondirectory python-shell-virtualenv-root))
+          (doom-modeline-icon 'material  "check_circle" "✔" ""
+                              :face 'doom-modeline-python-venv
+                              :height 1.3 :v-adjust -0.15)
+          (unless doom-modeline-icon
+            (doom-modeline-display-text "✔ "))
+          (and (or doom-modeline-icon doom-modeline-unicode-fallback)
+               doom-modeline-spc)
+          (format "%s" (file-name-nondirectory python-shell-virtualenv-root))
           doom-modeline-spc)
          'face (doom-modeline-face 'doom-modeline-python-venv))))
 
@@ -321,7 +328,7 @@
     (defun petmacs/custom-doom-modeline-main ()
       (doom-modeline-def-modeline 'main
         '(bar window-number checker matches buffer-info remote-host buffer-position parrot selection-info)
-        '(misc-info python-venv persp-name github debug repl input-method pomodoro buffer-encoding process vcs time)))
+        '(misc-info persp-name github debug repl input-method pomodoro buffer-encoding process python-venv vcs time)))
     (add-hook 'doom-modeline-mode-hook 'petmacs/custom-doom-modeline-main)))
 
 (use-package hide-mode-line
