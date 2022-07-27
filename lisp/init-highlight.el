@@ -88,7 +88,7 @@ FACE defaults to inheriting from default and highlight."
 
   :config
   (set-face-attribute 'highlight-indent-guides-character-face nil :foreground (color-lighten-name (face-foreground 'font-lock-type-face nil 'default) 20) :bold nil)
-  (set-face-attribute 'highlight-indent-guides-top-character-face nil :foreground "#ff6a07" :bold t)  ;; Hermès hex color
+  (set-face-attribute 'highlight-indent-guides-top-character-face nil :foreground "#F37022" :bold t)  ;; Hermès hex color: #ff6a07
   (with-no-warnings
     ;; Don't display first level of indentation
     (defun my-indent-guides-for-all-but-first-column (level responsive display)

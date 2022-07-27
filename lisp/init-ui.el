@@ -255,6 +255,14 @@
       (add-to-list 'awesome-tray-module-alist '("pomodoro" . (awesome-tray-module-pomodoro-info awesome-tray-module-pomodoro-face)))
       (add-hook 'buffer-list-update-hook #'awesome-tray-update))
   (use-package doom-modeline
+    :preface
+    (defface doom-modeline-python-venv
+      '((((background light))
+         :foreground "#136207" :bold t)
+        (t
+         :foreground "#F37022" :bold t))
+      "Face to use for the mode-line python venv."
+      :group 'doom-modeline-faces)
     :hook (after-init . doom-modeline-mode)
     :init
     (setq doom-modeline-icon petmacs-icon
@@ -285,7 +293,7 @@
           doom-modeline-spc
           (format "[%s]" (file-name-nondirectory python-shell-virtualenv-root))
           doom-modeline-spc)
-         'face (doom-modeline-face 'doom-modeline-buffer-timemachine))))
+         'face (doom-modeline-face 'doom-modeline-python-venv))))
 
     (defun doom-modeline--check-python-venv-in-modeline ()
       (member '(pyvenv-mode pyvenv-mode-line-indicator) mode-line-misc-info))
