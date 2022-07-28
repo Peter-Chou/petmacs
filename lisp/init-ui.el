@@ -324,11 +324,14 @@
     ;;   (funcall orig-func name lhs rhs))
     ;; (advice-add 'doom-modeline-def-modeline :around #'petmacs/doom-modeline-def-modeline)
 
-    (defun petmacs/custom-doom-modeline-main ()
-      (doom-modeline-def-modeline 'main
-        '(bar window-number checker matches buffer-info remote-host buffer-position parrot selection-info)
-        '(misc-info persp-name github debug repl input-method pomodoro buffer-encoding process python-venv vcs time)))
-    (add-hook 'doom-modeline-mode-hook 'petmacs/custom-doom-modeline-main)))
+    (doom-modeline-def-modeline 'petmacs--default-modeline
+      '(bar window-number checker matches buffer-info remote-host buffer-position parrot selection-info)
+      '(misc-info persp-name github debug repl input-method pomodoro buffer-encoding process python-venv vcs time))
+
+    ;; Add to `doom-modeline-mode-hook` or other hooks
+    (defun petmacs/setup-custom-default-doom-modeline ()
+      (doom-modeline-set-modeline 'petmacs--default-modeline 'default))
+    (add-hook 'doom-modeline-mode-hook 'petmacs/setup-custom-default-doom-modeline)))
 
 (use-package hide-mode-line
   :hook (((

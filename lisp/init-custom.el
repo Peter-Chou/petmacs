@@ -20,9 +20,9 @@
   "enable ligatures")
 
 (defvar  petmacs-default-theme
-  ;; 'modus-operandi ;; light theme
+  'modus-operandi ;; light theme
   ;; 'modus-vivendi  ;; dark theme
-  'doom-ayu-dark
+  ;; 'doom-ayu-dark
   "default theme")
 
 (defvar petmacs-modeline-style
