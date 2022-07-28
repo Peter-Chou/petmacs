@@ -558,8 +558,8 @@
   :load-path (lambda () (expand-file-name "site-lisp/local/circadian" user-emacs-directory))
   :commands (circadian-setup)
   :init
-  (setq circadian-themes '((:sunrise . modus-operandi)
-                           (:sunset  . modus-vivendi)))
+  (setq circadian-themes '(("8:00" . modus-operandi)
+                           ("20:00"  . modus-vivendi)))
   (circadian-setup))
 
 (provide 'init-ui)
