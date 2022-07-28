@@ -551,6 +551,15 @@
     (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter)))
 
 ;; load theme
-(petmacs--load-theme petmacs-default-theme)
+;; (petmacs--load-theme petmacs-default-theme)
+
+(use-package circadian
+  ;; native Compilation don't perform correct
+  :load-path (lambda () (expand-file-name "site-lisp/local/circadian" user-emacs-directory))
+  :commands (circadian-setup)
+  :init
+  (setq circadian-themes '((:sunrise . modus-operandi)
+                           (:sunset  . modus-vivendi)))
+  (circadian-setup))
 
 (provide 'init-ui)

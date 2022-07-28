@@ -20,6 +20,13 @@
 (when (file-exists-p custom-file)
   (load custom-file 'noerror 'nomessage))
 
+(use-package solar
+  :ensure nil
+  :config
+  ;; Shanghai, Asia
+  (setq calendar-latitude 31.23
+        calendar-longitude 121.47))
+
 ;; Cross-referencing commands
 (use-package xref
   :ensure nil
