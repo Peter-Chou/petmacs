@@ -2,11 +2,11 @@
 
 ---
 
-## Prerequisite
+## Prerequisites
 
 - Fonts
 
-  - [Monego](https://github.com/cseelus/monego)
+  - [Monego Ligatures](https://github.com/cseelus/monego)
 
   - [等距更纱黑体 SC](https://github.com/be5invis/Sarasa-Gothic)
 
@@ -30,19 +30,17 @@
 git clone --depth=1 https://github.com/Peter-Chou/petmacs.git ~/.emacs.d
 ```
 
-### install git submodules:
+### install tools
+
+- eaf [Optional]
 
 ``` bash
-cd ~/.emacs.d
+# in .emacs.d folder
 git submodule update --init --recursive
 
 # udpate submodules to latest version
 # git submodule update --remote --merge
 ```
-
-### install tools
-
-- eaf
 
 ``` bash
 conda create -n eaf python=3.8
