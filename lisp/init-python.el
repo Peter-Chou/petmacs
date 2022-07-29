@@ -9,9 +9,7 @@
   :hook
   ((python-mode . (lambda ()
 		            (setq-local flycheck-checkers '(python-pylint))
-		            ;; (setq-local python-mode t)
-                    (pyvenv-tracking-mode 1)
-		            (pyvenv-mode 1)))
+                    ))
    (inferior-python-mode . (lambda ()
 			                 (process-query-on-exit-flag
 			                  (get-process "Python")))))
@@ -55,7 +53,10 @@
                (if (bound-and-true-p lsp-bridge-mode)
                    (lsp-bridge-restart-process)
                  (lsp-bridge-mode 1)))))))
-  :hook (python-mode . petmacs/pyvenv-pyright-autoload))
+  :hook (python-mode . petmacs/pyvenv-pyright-autoload)
+  :config
+  (pyvenv-mode 1)
+  (pyvenv-tracking-mode 1))
 
 (use-package virtualenvwrapper)
 

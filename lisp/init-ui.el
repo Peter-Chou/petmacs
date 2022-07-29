@@ -286,18 +286,15 @@
       "python venv"
       (when (and (doom-modeline--active)
                  (equal major-mode 'python-mode)
-                 (bound-and-true-p pyvenv-workon))
+                 (bound-and-true-p python-shell-virtualenv-root))
         (propertize
          (concat
           doom-modeline-spc
-          (doom-modeline-icon 'material  "check_circle" "✔" ""
+          (doom-modeline-icon 'material  "check_circle" "☑" "✔"
                               :face 'doom-modeline-python-venv
                               :height 1.3 :v-adjust -0.15)
-          (unless doom-modeline-icon
-            (doom-modeline-display-text "✔ "))
-          (and (or doom-modeline-icon doom-modeline-unicode-fallback)
-               doom-modeline-spc)
-          (format "%s" (file-name-nondirectory python-shell-virtualenv-root))
+          doom-modeline-spc
+          (file-name-nondirectory python-shell-virtualenv-root)
           doom-modeline-spc)
          'face (doom-modeline-face 'doom-modeline-python-venv))))
 
