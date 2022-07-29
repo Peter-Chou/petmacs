@@ -1,5 +1,8 @@
 ;;; early-init.el --- Early initialization. -*- lexical-binding: t -*-
 
+(setq frame-resize-pixelwise t
+      frame-inhibit-implied-resize t)
+
 ;; Defer garbage collection further back in the startup process
 (setq gc-cons-threshold most-positive-fixnum)
 
@@ -32,8 +35,6 @@
 (setq package-enable-at-startup nil)
 
 (setq load-prefer-newer noninteractive)
-
-(setq frame-inhibit-implied-resize t)
 
 (when (fboundp 'startup-redirect-eln-cache)
   (startup-redirect-eln-cache

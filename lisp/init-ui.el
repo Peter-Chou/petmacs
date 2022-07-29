@@ -30,10 +30,6 @@
 (setq fast-but-imprecise-scrolling t)
 (setq redisplay-skip-fontification-on-input t)
 
-;; Inhibit resizing frame
-(setq frame-inhibit-implied-resize t
-      frame-resize-pixelwise t)
-
 ;; Menu/Tool/Scroll bars
 (unless emacs/>=27p
   (push '(menu-bar-lines . 0) default-frame-alist)
