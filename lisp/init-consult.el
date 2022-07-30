@@ -173,9 +173,6 @@ targets."
   :config
   (add-hook 'embark-collect-mode-hook #'consult-preview-at-point-mode))
 
-(use-package cape
-  :bind (("C-M-o" . cape-file)))
-
 ;; edit the text in the grep buffer after typing C-c C-p
 (use-package wgrep
   :commands wgrep-change-to-wgrep-mode

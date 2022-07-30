@@ -4,7 +4,6 @@
   :diminish yas-minor-mode
   :hook (after-init . yas-global-mode))
 
-(use-package yasnippet-snippets
-  :after yasnippet)
+(use-package yasnippet-snippets)
 
 (provide 'init-snippets)

@@ -3,6 +3,9 @@
 (require 'init-const)
 (require 'init-funcs)
 
+(use-package cape
+  :bind (("C-M-o" . cape-file)))
+
 (use-package corfu
   :bind (:map corfu-map
          ("C-M-m" . corfu-move-to-minibuffer))

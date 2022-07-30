@@ -55,6 +55,7 @@
 (require 'init-projectile)
 (require 'init-dired)
 (require 'init-shell)
+(require 'init-snippets)
 
 (require 'init-consult)
 
@@ -77,7 +78,6 @@
 (require 'init-yaml)
 
 (require 'init-org)
-(require 'init-snippets)
 
 (if (and (display-graphic-p)
          (file-directory-p (petmacs/get-eaf-app-directory)))
