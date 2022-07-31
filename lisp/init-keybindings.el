@@ -17,8 +17,7 @@
         leader-major-mode-key "\,"))
 
 (leader-set-keys
-  ;; "'"   #'petmacs/shell-pop
-  "'"   #'multi-vterm-dedicated-toggle
+  "'"   #'multi-vterm
   "/"   #'consult-ripgrep
 
   "v"   #'er/expand-region
