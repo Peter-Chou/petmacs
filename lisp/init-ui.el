@@ -85,8 +85,7 @@
            ("\\.zshenv$"                     all-the-icons-alltheicon "script"   :height 0.9 :face all-the-icons-dred)
            ("Cask\\'"                        all-the-icons-fileicon "elisp"      :height 1.0 :v-adjust -0.2 :face all-the-icons-blue)
            ("NEWS$"                          all-the-icons-faicon "newspaper-o"  :height 0.9 :v-adjust -0.2)
-           ("^Rakefile$"                     all-the-icons-alltheicon "ruby-alt" :face all-the-icons-red)
-           ("^go.\\(sum\\|mod\\)$"           all-the-icons-fileicon "go"         :face all-the-icons-dpurple))))
+           ("^Rakefile$"                     all-the-icons-alltheicon "ruby-alt" :face all-the-icons-red))))
     (dolist (icon regexp-icon-alist)
       (add-to-list 'all-the-icons-regexp-icon-alist icon)))
 
@@ -101,8 +100,6 @@
            (message-mode                  all-the-icons-octicon "mail"           :height 1.1 :v-adjust 0.0 :face all-the-icons-lblue)
            (diff-mode                     all-the-icons-octicon "git-compare"    :v-adjust 0.0 :face all-the-icons-lred)
            (flycheck-error-list-mode      all-the-icons-octicon "checklist"      :height 1.1 :v-adjust 0.0 :face all-the-icons-lred)
-           (elfeed-search-mode            all-the-icons-faicon "rss-square"      :v-adjust -0.1 :face all-the-icons-orange)
-           (elfeed-show-mode              all-the-icons-octicon "rss"            :height 1.1 :v-adjust 0.0 :face all-the-icons-lorange)
            (newsticker-mode               all-the-icons-faicon "rss-square"      :v-adjust -0.1 :face all-the-icons-orange)
            (newsticker-treeview-mode      all-the-icons-faicon "rss-square"      :v-adjust -0.1 :face all-the-icons-orange)
            (newsticker-treeview-list-mode all-the-icons-octicon "rss"            :height 1.1 :v-adjust 0.0 :face all-the-icons-orange)
@@ -547,15 +544,15 @@
     (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter)))
 
 ;; load theme
-;; (petmacs--load-theme petmacs-default-theme)
+(petmacs--load-theme petmacs-default-theme)
 
-(use-package circadian
-  ;; native Compilation don't perform correct
-  :load-path (lambda () (expand-file-name "site-lisp/local/circadian" user-emacs-directory))
-  :commands (circadian-setup)
-  :init
-  (setq circadian-themes '(("8:00" . modus-operandi)
-                           ("20:00"  . modus-vivendi)))
-  (circadian-setup))
+;; (use-package circadian
+;;   ;; native Compilation don't perform correct
+;;   :load-path (lambda () (expand-file-name "site-lisp/local/circadian" user-emacs-directory))
+;;   :commands (circadian-setup)
+;;   :init
+;;   (setq circadian-themes '(("8:00" . modus-operandi)
+;;                            ("20:00"  . modus-vivendi)))
+;;   (circadian-setup))
 
 (provide 'init-ui)
