@@ -479,8 +479,8 @@
   "cc" #'petmacs/python-execute-file
   "ck" #'petmacs/quit-subjob
 
-  "ri" #'py-isort-buffer
-  "rr" #'petmacs/python-remove-unused-imports
+  "=i" #'py-isort-buffer
+  "=I" #'petmacs/python-remove-unused-imports
   "rb" #'yapfify-buffer
 
   "va" #'pyvenv-activate
