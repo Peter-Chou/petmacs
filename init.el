@@ -41,10 +41,10 @@
 
 (require 'init-evil)
 
-(require 'init-git)
 (require 'init-flycheck)
 (require 'init-edit)
 (require 'init-tools)
+(require 'init-vcs)
 
 (require 'init-ui)
 (require 'init-highlight)
