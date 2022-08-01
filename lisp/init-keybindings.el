@@ -233,6 +233,7 @@
     "ff" #'magit-find-file
     "fl" #'magit-log-buffer-file
     "fd" #'magit-diff
+    "fm" 'magit-file-dispatch
     ))
 
 (leader-declare-prefix
