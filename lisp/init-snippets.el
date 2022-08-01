@@ -2,7 +2,7 @@
 
 (use-package yasnippet
   :diminish yas-minor-mode
-  :bind ("M-e" . yas-expand)
+  :bind ("C-M-e" . yas-expand)
   :hook (after-init . yas-global-mode))
 
 (use-package yasnippet-snippets)
