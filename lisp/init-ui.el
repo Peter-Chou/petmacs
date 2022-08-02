@@ -543,7 +543,19 @@
     :config
     (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter)))
 
-;; load theme
+(when petmacs-enable-mini-frame
+  (use-package mini-frame
+    :defer nil
+    :custom ((mini-frame-show-parameters '((top    . 0.4)
+                                           (width  . 0.8)
+                                           (left   . 0.5)
+                                           (left-fringe . 4)
+                                           (right-fringe . 4)
+                                           (height . 15)))
+             (mini-frame-color-shift-step 6))
+    :hook (after-init . mini-frame-mode)))
+
+;;; load theme
 ;; (petmacs--load-theme petmacs-default-theme)
 
 (use-package circadian
