@@ -547,8 +547,8 @@
   (use-package mini-frame
     :hook (after-init . mini-frame-mode)
     :init
-    (setq mini-frame-show-parameters '((top    . 0.4)
-                                       (width  . 0.8)
+    (setq mini-frame-show-parameters '((top    . 0.45)
+                                       (width  . 0.65)
                                        (left   . 0.5)
                                        (left-fringe . 4)
                                        (right-fringe . 4)
