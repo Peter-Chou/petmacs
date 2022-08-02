@@ -46,7 +46,7 @@ git submodule update --init --recursive
 conda create -n eaf python=3.8
 conda activate eaf
 
-# install browser image-viewer jupyter markdown-previewer org-previewer pdf-viewer
+# install browser image-viewer jupyter markdown-previewer org-previewer pdf-viewer git
 python site-lisp/emacs-application-framework/install-eaf.py
 ```
 

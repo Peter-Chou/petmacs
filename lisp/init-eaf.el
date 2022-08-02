@@ -22,6 +22,7 @@
     (require 'eaf-markdown-previewer)
     (require 'eaf-org-previewer)
     (require 'eaf-pdf-viewer)
+    (require 'eaf-git)
 
     (require 'eaf-all-the-icons)
     (require 'eaf-evil)
