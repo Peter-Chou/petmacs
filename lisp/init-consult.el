@@ -11,7 +11,8 @@
         completion-ignore-case t)
   :config
   (setq vertico-resize nil
-        vertico-count 10
+        ;; vertico-count 10
+        vertico-count 15
         vertico-cycle t)
   ;; Cleans up path when moving directories with shadowed paths syntax, e.g.
   ;; cleans ~/foo/bar/// to /, and ~/foo/bar/~/ to ~/.
