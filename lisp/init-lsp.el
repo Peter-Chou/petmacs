@@ -110,21 +110,16 @@
 (use-package lsp-treemacs
   :after lsp-mode
   :init
-  (setq
-   lsp-treemacs-deps-position-params
-   `((side . right)
-     (slot . 1)
-     (window-width . 32))
-   lsp-treemacs-symbols-position-params
-   `((side . right)
-     (slot . 2)
-     (window-width . 32)))
+  ;; (setq
+  ;;  lsp-treemacs-deps-position-params
+  ;;  `((side . right)
+  ;;    (slot . 1)
+  ;;    (window-width . 32))
+  ;;  lsp-treemacs-symbols-position-params
+  ;;  `((side . right)
+  ;;    (slot . 2)
+  ;;    (window-width . 32)))
   (lsp-treemacs-sync-mode 1)
-  ;; :config
-  ;; (with-eval-after-load 'ace-window
-  ;;   (when (boundp 'aw-ignored-buffers)
-  ;;     (push 'lsp-treemacs-symbols-mode aw-ignored-buffers)
-  ;;     (push 'lsp-treemacs-java-deps-mode aw-ignored-buffers)))
   )
 
 ;;; python
