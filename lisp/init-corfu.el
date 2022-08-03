@@ -3,9 +3,6 @@
 (require 'init-const)
 (require 'init-funcs)
 
-(use-package cape
-  :bind (("C-M-o" . cape-file)))
-
 (use-package corfu
   :bind (:map corfu-map
          ("C-M-m" . corfu-move-to-minibuffer))
@@ -15,16 +12,12 @@
         corfu-quit-at-boundary 'separator
         corfu-quit-no-match 'separator
         corfu-preview-current nil
+        ;; corfu-preselect-first nil
         corfu-auto-delay 0
         corfu-auto-prefix 1
         )
   (when (> (frame-pixel-width) 3000) (custom-set-faces '(corfu-default ((t (:height 1.3))))))
   (global-corfu-mode)
-  :config
-  ;; 默认用这三个补全后端
-  (add-to-list 'completion-at-point-functions #'cape-symbol)
-  (add-to-list 'completion-at-point-functions #'cape-file)
-  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
 
   (defun corfu-beginning-of-prompt ()
     "Move to beginning of completion input."
@@ -62,6 +55,25 @@
   (define-key corfu-map (kbd "M-d") #'corfu-doc-toggle)
   (define-key corfu-map (kbd "C-M-p") #'corfu-doc-scroll-down)
   (define-key corfu-map (kbd "C-M-n") #'corfu-doc-scroll-up))
+
+(use-package company)
+
+(use-package cape
+  :preface
+  (defun petmacs/lsp-capf ()
+    (setq-local completion-at-point-functions
+                (list (cape-super-capf
+                       #'lsp-completion-at-point
+                       (cape-company-to-capf #'company-yasnippet)
+                       ;; #'cape-dabbrev
+                       #'cape-symbol))))
+  :bind (("C-M-o" . cape-file))
+  :hook ((lsp-completion-mode . petmacs/lsp-capf))
+  :config
+  ;; 默认用这三个补全后端
+  (add-to-list 'completion-at-point-functions #'cape-symbol)
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev))
 
 (unless (display-graphic-p)
   (use-package corfu-terminal
