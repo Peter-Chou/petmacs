@@ -258,8 +258,7 @@
     "b" #'flycheck-buffer
     "c" #'flycheck-clear
     "h" #'flycheck-describe-checker
-    ;; "l" #'petmacs/toggle-flycheck-error-list
-    "l" #'consult-flycheck
+    "l" #'flycheck-list-errors
     "n" #'petmacs/next-error
     "N" #'petmacs/previous-error
     "p" #'petmacs/previous-error

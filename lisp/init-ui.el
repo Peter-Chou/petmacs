@@ -315,7 +315,8 @@
     ;; (advice-add 'doom-modeline-def-modeline :around #'petmacs/doom-modeline-def-modeline)
 
     (doom-modeline-def-modeline 'petmacs--default-modeline
-      '(bar window-number checker matches buffer-info remote-host buffer-position parrot selection-info)
+      ;; checker is moved from left side of modeline
+      '(bar window-number matches buffer-info remote-host buffer-position parrot selection-info)
       '(misc-info persp-name github debug repl input-method pomodoro buffer-encoding process python-venv vcs time))
 
     ;; Add to `doom-modeline-mode-hook` or other hooks

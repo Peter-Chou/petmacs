@@ -30,7 +30,7 @@
   'doom-modeline
   "awesome-tray or doom-modeline. doom-modeline is default in TUI.")
 
-(defvar petmacs-enable-mini-frame t
+(defvar petmacs-enable-mini-frame nil
   "enable mini frame feature")
 
 (defvar petmacs-lsp-client-mode
