@@ -388,8 +388,7 @@
 (use-package ts-fold
   :quelpa (ts-fold :fetcher github
   		           :repo "jcs090218/ts-fold"
-  		           :files ("*.el")
-                   )
+  		           :files ("*.el"))
   :pretty-hydra
   ((:foreign-keys warn :quit-key "q")
    ("Toggle"
