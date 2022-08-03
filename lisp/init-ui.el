@@ -566,7 +566,7 @@
   :commands (circadian-setup)
   :init
   (setq circadian-themes '(("8:00" . modus-operandi)
-                           ("20:00"  . modus-vivendi)))
+                           ("19:00"  . modus-vivendi)))
   (circadian-setup))
 
 (provide 'init-ui)
