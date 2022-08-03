@@ -64,9 +64,8 @@
     (setq-local completion-at-point-functions
                 (list (cape-super-capf
                        #'lsp-completion-at-point
-                       (cape-company-to-capf #'company-yasnippet)
-                       ;; #'cape-dabbrev
-                       #'cape-symbol))))
+                       ;; #'cape-symbol
+                       (cape-company-to-capf #'company-yasnippet)))))
   :bind (("C-M-o" . cape-file))
   :hook ((lsp-completion-mode . petmacs/lsp-capf))
   :config
