@@ -12,10 +12,11 @@
         custom-file (no-littering-expand-etc-file-name "custom.el")
         auto-save-file-name-transforms
         `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
-  (require 'no-littering)
-  (require 'recentf)
-  (add-to-list 'recentf-exclude no-littering-var-directory)
-  (add-to-list 'recentf-exclude no-littering-etc-directory))
+  ;; (require 'no-littering)
+
+  (with-eval-after-load 'recentf-mode
+    (add-to-list 'recentf-exclude no-littering-var-directory)
+    (add-to-list 'recentf-exclude no-littering-etc-directory)))
 
 (when (file-exists-p custom-file)
   (load custom-file 'noerror 'nomessage))
@@ -116,7 +117,8 @@
                 (lambda (file) (file-in-directory-p file package-user-dir))))
   :config
   (push (expand-file-name recentf-save-file) recentf-exclude)
-  (add-to-list 'recentf-filename-handlers #'abbreviate-file-name))
+  (add-to-list 'recentf-filename-handlers #'abbreviate-file-name)
+  (add-hook 'buffer-list-update-hook 'recentf-track-opened-file))
 
 (use-package savehist
   :ensure nil
