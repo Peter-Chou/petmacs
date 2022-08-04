@@ -436,7 +436,7 @@
 
 (use-package minimap
   :init (setq minimap-width-fraction 0.1
-              minimap-minimum-width 20
+              minimap-minimum-width 16
               minimap-window-location 'right)
   :hook (after-init . minimap-mode)
   :config
