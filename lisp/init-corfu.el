@@ -62,10 +62,12 @@
   :preface
   (defun petmacs/lsp-capf ()
     (setq-local completion-at-point-functions
-                (list (cape-super-capf
-                       #'lsp-completion-at-point
-                       ;; #'cape-symbol
-                       (cape-company-to-capf #'company-yasnippet)))))
+                (list
+                 #'cape-file
+                 (cape-super-capf
+                  #'lsp-completion-at-point
+                  ;; #'cape-symbol
+                  (cape-company-to-capf #'company-yasnippet)))))
   :bind (("C-M-o" . cape-file))
   :hook ((lsp-completion-mode . petmacs/lsp-capf))
   :config
