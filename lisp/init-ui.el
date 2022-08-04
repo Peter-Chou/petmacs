@@ -340,50 +340,51 @@
 ;;   :hook (doom-modeline-mode . minions-mode))
 
 ;; Show native line numbers if possible, otherwise use `linum'
-(if (fboundp 'display-line-numbers-mode)
-    (use-package display-line-numbers
-      :ensure nil
-      :hook ((prog-mode yaml-mode conf-mode) . display-line-numbers-mode)
-      :init
-      (setq-default display-line-numbers 'visual
-                    display-line-numbers-widen t
-                    display-line-numbers-type 'relative
-                    display-line-numbers-current-absolute t)
+(when petmacs-enable-display-line-numbers
+  (if (fboundp 'display-line-numbers-mode)
+      (use-package display-line-numbers
+        :ensure nil
+        :hook ((prog-mode yaml-mode conf-mode) . display-line-numbers-mode)
+        :init
+        (setq-default display-line-numbers 'visual
+                      display-line-numbers-widen t
+                      display-line-numbers-type 'relative
+                      display-line-numbers-current-absolute t)
 
-      (defun petmacs/display-line-numbers-relative ()
-        "Show relative line numbers."
-        (setq-local display-line-numbers 'visual))
+        (defun petmacs/display-line-numbers-relative ()
+          "Show relative line numbers."
+          (setq-local display-line-numbers 'visual))
 
-      (defun petmacs/display-line-numbers-absolute ()
-        "Show absolute line numbers."
-        (setq-local display-line-numbers t))
+        (defun petmacs/display-line-numbers-absolute ()
+          "Show absolute line numbers."
+          (setq-local display-line-numbers t))
 
-      (add-hook 'evil-insert-state-entry-hook #'petmacs/display-line-numbers-absolute)
-      (add-hook 'evil-insert-state-exit-hook #'petmacs/display-line-numbers-relative)
-      ;; Disable line numbers for some modes
-      (dolist (mode '(org-mode-hook
-                      term-mode-hook
-                      shell-mode-hook
-                      magit-mode-hook
-                      help-mode-hook
-                      ibuffer-mode-hook
-                      dashboard-mode-hook
-                      dired-mode-hook
-                      treemacs-mode-hook
-                      eshell-mode-hook))
-        (add-hook mode (lambda () (display-line-numbers-mode 0)))))
-  (use-package linum-off
-    :demand t
-    :defines linum-format
-    :hook (after-init . global-linum-mode)
-    :init (setq linum-format "%4d ")
-    :config
-    ;; Highlight current line number
-    (use-package hlinum
-      :defines linum-highlight-in-all-buffersp
-      :custom-face (linum-highlight-face ((t (:inherit default :background nil :foreground nil))))
-      :hook (global-linum-mode . hlinum-activate)
-      :init (setq linum-highlight-in-all-buffersp t))))
+        (add-hook 'evil-insert-state-entry-hook #'petmacs/display-line-numbers-absolute)
+        (add-hook 'evil-insert-state-exit-hook #'petmacs/display-line-numbers-relative)
+        ;; Disable line numbers for some modes
+        (dolist (mode '(org-mode-hook
+                        term-mode-hook
+                        shell-mode-hook
+                        magit-mode-hook
+                        help-mode-hook
+                        ibuffer-mode-hook
+                        dashboard-mode-hook
+                        dired-mode-hook
+                        treemacs-mode-hook
+                        eshell-mode-hook))
+          (add-hook mode (lambda () (display-line-numbers-mode 0)))))
+    (use-package linum-off
+      :demand t
+      :defines linum-format
+      :hook (after-init . global-linum-mode)
+      :init (setq linum-format "%4d ")
+      :config
+      ;; Highlight current line number
+      (use-package hlinum
+        :defines linum-highlight-in-all-buffersp
+        :custom-face (linum-highlight-face ((t (:inherit default :background nil :foreground nil))))
+        :hook (global-linum-mode . hlinum-activate)
+        :init (setq linum-highlight-in-all-buffersp t)))))
 
 ;; Suppress GUI features
 (setq use-file-dialog nil
