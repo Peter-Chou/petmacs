@@ -92,9 +92,15 @@
 (use-package protobuf-mode
   :hook (protobuf-mode . disable-curly-bracket-electric-pair))
 
-(use-package olivetti
-  :diminish
-  :init (setq olivetti-body-width 0.62))
+;; (use-package olivetti
+;;   :diminish
+;;   :init (setq olivetti-body-width 0.62))
+
+(use-package writeroom-mode
+  :init (setq writeroom-mode-line t
+              writeroom-maximize-window nil
+              writeroom-fullscreen-effect 'maximized
+              writeroom-width 100))
 
 (use-package editorconfig
   :diminish

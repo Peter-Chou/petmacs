@@ -148,7 +148,7 @@
   (leader-set-keys
     "."  #'ace-window-hydra/body
     "j" #'ace-window
-    "c"  #'olivetti-mode
+    "c"  #'writeroom-mode
     "r"  #'winner-undo
     "d"  #'delete-window
     "D"  #'ace-delete-window
@@ -186,6 +186,8 @@
     "m" #'minimap-mode
     "M" #'maximize-window
     "c" #'prettify-symbols-mode
+
+    "z" #'writeroom-mode
 
     "tt" #'modus-themes-toggle
     "ts" #'petmacs/consult-theme
