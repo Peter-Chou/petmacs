@@ -97,10 +97,16 @@
 ;;   :init (setq olivetti-body-width 0.62))
 
 (use-package writeroom-mode
+  :hook ((prog-mode yaml-mode markdown-mode) . writeroom-mode)
   :init (setq writeroom-mode-line t
               writeroom-maximize-window nil
               writeroom-fullscreen-effect 'maximized
-              writeroom-width 100))
+              writeroom-width 100)
+  :config
+  (with-eval-after-load 'writeroom-mode
+    (define-key writeroom-mode-map (kbd "C-M-<") #'writeroom-decrease-width)
+    (define-key writeroom-mode-map (kbd "C-M->") #'writeroom-increase-width)
+    (define-key writeroom-mode-map (kbd "C-M-=") #'writeroom-adjust-width)))
 
 (use-package editorconfig
   :diminish
@@ -443,17 +449,18 @@
 (use-package minimap
   :init (setq minimap-width-fraction 0.1
               minimap-minimum-width 16
-              minimap-window-location 'right)
+              minimap-window-location 'right
+              minimap-major-modes '(prog-mode
+                                    yaml-mode
+                                    ;; markdown-mode
+                                    ;; org-mode
+                                    ))
   :hook (after-init . minimap-mode)
   :config
   (defun petmacs/minimap-fix-width ()
     (with-current-buffer minimap-buffer-name
       (setq window-size-fixed 'width)))
   (advice-add #'minimap-new-minimap :after #'petmacs/minimap-fix-width))
-
-;; (use-package perfect-margin
-;;   :hook (after-init . perfect-margin-mode)
-;;   :init (setq perfect-margin-hide-fringes nil))
 
 (use-package centered-cursor-mode)
 (use-package restart-emacs)
