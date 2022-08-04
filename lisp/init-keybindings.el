@@ -242,12 +242,13 @@
 (leader-with-prefix "j"
   (leader-set-keys
     "i" #'consult-imenu
-    "w" #'evil-avy-goto-word-or-subword-1
+    "w" #'avy-goto-word-or-subword-1
     "D" #'dired-jump-other-window
     "c" #'goto-last-change
     "d" #'deer
-    "j" #'avy-goto-char-timer
-    "J" #'avy-goto-char-2
+    "j" #'avy-goto-char-2
+    "J" #'avy-goto-char-timer
+    "l" #'avy-goto-line
     "t" #'magit-todos-list
     "y" #'consult-yank-pop
     ))
