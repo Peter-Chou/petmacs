@@ -153,7 +153,11 @@
                                     ibuffer
                                     org
                                     ))
-  :hook (after-init . evil-collection-init))
+  :hook (after-init . evil-collection-init)
+  :config
+  (defun petmacs/evil-collection-dired-setup ()
+    (evil-define-key 'normal dired-mode-map (kbd "RET") 'dired-find-alternate-file))
+  (advice-add #'evil-collection-dired-setup :after #'petmacs/evil-collection-dired-setup))
 
 
 (use-package evil-textobj-line)
