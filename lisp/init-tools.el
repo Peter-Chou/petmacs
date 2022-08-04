@@ -434,7 +434,8 @@
               process-environment))
     (advice-add #'list-environment-entries :override #'my-list-environment-entries)))
 
-(use-package perfect-margin)
+(use-package perfect-margin
+  :hook (after-init . perfect-margin-mode))
 (use-package centered-cursor-mode)
 (use-package restart-emacs)
 (use-package focus)                     ; Focus on the current region
