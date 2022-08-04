@@ -41,16 +41,16 @@
 
 (require 'init-evil)
 
-(require 'init-flycheck)
-(require 'init-edit)
-(require 'init-tools)
-(require 'init-vcs)
-
 (require 'init-ui)
 (require 'init-highlight)
 (require 'init-dashboard)
 (require 'init-ibuffer)
 (require 'init-treemacs)
+
+(require 'init-flycheck)
+(require 'init-edit)
+(require 'init-tools)
+(require 'init-vcs)
 
 (require 'init-projectile)
 (require 'init-dired)
