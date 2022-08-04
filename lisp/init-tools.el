@@ -434,8 +434,21 @@
               process-environment))
     (advice-add #'list-environment-entries :override #'my-list-environment-entries)))
 
-(use-package perfect-margin
-  :hook (after-init . perfect-margin-mode))
+(use-package minimap
+  :init (setq minimap-width-fraction 0.1
+              minimap-minimum-width 20
+              minimap-window-location 'right)
+  :hook (after-init . minimap-mode)
+  :config
+  (defun petmacs/minimap-fix-width ()
+    (with-current-buffer minimap-buffer-name
+      (setq window-size-fixed 'width)))
+  (advice-add #'minimap-new-minimap :after #'petmacs/minimap-fix-width))
+
+;; (use-package perfect-margin
+;;   :hook (after-init . perfect-margin-mode)
+;;   :init (setq perfect-margin-hide-fringes nil))
+
 (use-package centered-cursor-mode)
 (use-package restart-emacs)
 (use-package focus)                     ; Focus on the current region

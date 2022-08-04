@@ -183,6 +183,7 @@
     "f" #'focus-mode
     "F" #'toggle-frame-fullscreen
     "x" #'read-only-mode
+    "m" #'minimap-mode
     "M" #'maximize-window
     "c" #'prettify-symbols-mode
 
