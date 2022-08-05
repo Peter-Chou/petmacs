@@ -1,7 +1,8 @@
 ;; -*- lexical-binding: t no-byte-compile: t -*-
 
-(use-package posframe)
+(require 'init-custom)
 
+(use-package posframe)
 (use-package general)
 (use-package bind-map)
 (use-package bind-key)
@@ -447,6 +448,9 @@
     (advice-add #'list-environment-entries :override #'my-list-environment-entries)))
 
 (use-package minimap
+  :custom-face
+  (minimap-font-face ((default :family petmacs-font :height 30)))
+  (minimap-current-line-face ((t (:background "#F37022" :bold t))))
   :init (setq minimap-width-fraction 0.1
               minimap-minimum-width 16
               minimap-window-location 'right
