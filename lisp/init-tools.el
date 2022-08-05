@@ -453,9 +453,11 @@
     (with-current-buffer minimap-buffer-name
       (setq window-size-fixed 'width)))
   :custom-face
-  (minimap-font-face ((default :family petmacs-font :height 30)))
   :init (setq minimap-width-fraction 0.1
               minimap-minimum-width 15
+              minimap-width-fraction 0.0 ; slightly smaller minimap
+              minimap-dedicated-window t ; seems to work better
+              minimap-enlarge-certain-faces nil ; enlarge breaks BlockFont
               minimap-window-location 'right
               minimap-major-modes '(prog-mode
                                     yaml-mode
@@ -463,6 +465,7 @@
   :hook (after-init . minimap-mode)
   :config
   (set-face-attribute 'minimap-current-line-face nil :background petmacs-favor-color)
+  (set-face-attribute 'minimap-font-face nil :height 25 :font (font-spec :name petmacs-font))
   (advice-add #'minimap-new-minimap :after #'petmacs/minimap-fix-width))
 
 (use-package centered-cursor-mode)
