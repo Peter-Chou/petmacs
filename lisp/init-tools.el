@@ -102,7 +102,7 @@
   :init (setq writeroom-mode-line t
               writeroom-maximize-window nil
               writeroom-fullscreen-effect 'maximized
-              writeroom-width 100)
+              writeroom-width 110)
   :config
   (with-eval-after-load 'writeroom-mode
     (define-key writeroom-mode-map (kbd "C-M-<") #'writeroom-decrease-width)
