@@ -3,6 +3,9 @@
 (defvar petmacs-icon (or (display-graphic-p) (daemonp))
   "Display icons or not.")
 
+(defvar petmacs-favor-color "#F37022"
+  "petmacs favor color")
+
 (defvar petmacs-font
   ;; "Monego"
   "Monego Ligatures"

@@ -448,9 +448,12 @@
     (advice-add #'list-environment-entries :override #'my-list-environment-entries)))
 
 (use-package minimap
+  :preface
+  (defun petmacs/minimap-fix-width ()
+    (with-current-buffer minimap-buffer-name
+      (setq window-size-fixed 'width)))
   :custom-face
   (minimap-font-face ((default :family petmacs-font :height 30)))
-  (minimap-current-line-face ((t (:background "#F37022" :bold t))))
   :init (setq minimap-width-fraction 0.1
               minimap-minimum-width 16
               minimap-window-location 'right
@@ -461,9 +464,7 @@
                                     ))
   :hook (after-init . minimap-mode)
   :config
-  (defun petmacs/minimap-fix-width ()
-    (with-current-buffer minimap-buffer-name
-      (setq window-size-fixed 'width)))
+  (set-face-attribute 'minimap-current-line-face nil :background petmacs-favor-color)
   (advice-add #'minimap-new-minimap :after #'petmacs/minimap-fix-width))
 
 (use-package centered-cursor-mode)

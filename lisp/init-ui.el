@@ -252,7 +252,7 @@
       '((((background light))
          :foreground "#136207" :bold t)
         (t
-         :foreground "#F37022" :bold t))
+         :foreground petmacs-favor-color :bold t))
       "Face to use for the mode-line python venv."
       :group 'doom-modeline-faces)
     :hook (after-init . doom-modeline-mode)
