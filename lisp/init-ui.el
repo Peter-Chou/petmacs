@@ -144,7 +144,7 @@
         ;; modus-themes-italic-constructs t
         modus-themes-org-blocks 'tinted-background
         ;; modus-themes-syntax '(yellow-comments green-strings)
-        modus-themes-hl-line '(intense accented)
+        modus-themes-hl-line '(intense)
 
         modus-themes-paren-match '(bold intense)
         ;; modus-themes-mode-line '(accented borderless (height . 0.9))
