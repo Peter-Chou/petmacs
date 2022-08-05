@@ -98,7 +98,7 @@
 ;;   :init (setq olivetti-body-width 0.62))
 
 (use-package writeroom-mode
-  :hook ((prog-mode yaml-mode markdown-mode org-mode) . writeroom-mode)
+  :hook ((prog-mode yaml-mode) . writeroom-mode)
   :init (setq writeroom-mode-line t
               writeroom-maximize-window nil
               writeroom-fullscreen-effect 'maximized
@@ -459,8 +459,6 @@
               minimap-window-location 'right
               minimap-major-modes '(prog-mode
                                     yaml-mode
-                                    markdown-mode
-                                    org-mode
                                     ))
   :hook (after-init . minimap-mode)
   :config
