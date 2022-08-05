@@ -74,26 +74,25 @@
   (advice-add 'gud-filter :around #'my-advice-compilation-filter))
 
 
-	;; Better term
+;; Better terminal emulator
 ;; @see https://github.com/akermu/emacs-libvterm#installation
 (when (and module-file-suffix           ; dynamic module
            (executable-find "cmake")
            (executable-find "libtool")
            (executable-find "make"))
   (use-package vterm
-    :commands vterm--internal
-    :init
-    (setq vterm-always-compile-module t
-          vterm-max-scrollback 10000))
+    :init (setq vterm-always-compile-module t))
 
   (use-package multi-vterm
+    :init (setq multi-vterm-buffer-name "vterm")
     :config
     (with-no-warnings
       (defun my-multi-vterm ()
         "Create new vterm buffer."
         (interactive)
-        (let* ((vterm-buffer (multi-vterm-get-buffer)))
-          (setq multi-vterm-buffer-list (nconc multi-vterm-buffer-list (list vterm-buffer)))
+        (let ((vterm-buffer (multi-vterm-get-buffer)))
+          (setq multi-vterm-buffer-list
+                (nconc multi-vterm-buffer-list (list vterm-buffer)))
           (set-buffer vterm-buffer)
           (multi-vterm-internal)
           (pop-to-buffer vterm-buffer)))
