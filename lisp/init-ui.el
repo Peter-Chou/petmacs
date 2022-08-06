@@ -38,6 +38,8 @@
 
 (use-package winum
   :init
+  (setq winum-ignored-buffers '(" *which-key*"
+                                " *MINIMAP*"))
   (winum-mode)
   :config
   (define-key winum-keymap (kbd "M-1") 'winum-select-window-1)
