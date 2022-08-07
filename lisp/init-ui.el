@@ -38,7 +38,8 @@
 
 (use-package winum
   :init
-  (setq winum-ignored-buffers '(" *which-key*"
+  (setq winum-scope 'visible
+        winum-ignored-buffers '(" *which-key*"
                                 " *MINIMAP*"))
   (winum-mode)
   :config
@@ -51,7 +52,7 @@
 
   (define-key winum-keymap (kbd "M-7") 'winum-select-window-7)
   (define-key winum-keymap (kbd "M-8") 'winum-select-window-8)
-  (define-key winum-keymap (kbd "M-9") 'lsp-treemacs-symbols))
+  (define-key winum-keymap (kbd "M-0") 'winum-select-window-0-or-10))
 
 (use-package all-the-icons
   :if (and petmacs-icon (display-graphic-p))

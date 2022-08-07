@@ -8,7 +8,7 @@
              treemacs-git-mode)
   :custom-face
   (cfrs-border-color ((t (:background ,(face-foreground 'font-lock-comment-face nil t)))))
-  :bind (("M-0"       . treemacs-select-window)
+  :bind (("M-9"       . treemacs-select-window)
          :map treemacs-mode-map
          ([mouse-1]   . treemacs-single-click-expand-action))
   :config

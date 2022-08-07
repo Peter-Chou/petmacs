@@ -120,7 +120,8 @@
   ;;    (slot . 2)
   ;;    (window-width . 32)))
   (lsp-treemacs-sync-mode 1)
-  )
+  :config
+  (define-key winum-keymap (kbd "C-M-9") 'lsp-treemacs-symbols))
 
 ;;; python
 (use-package lsp-pyright

@@ -22,6 +22,7 @@
     (push (expand-file-name dir user-emacs-directory) load-path)))
 
 (update-load-path)
+
 (require 'init-custom)
 
 ;; Defer garbage collection further back in the startup process
