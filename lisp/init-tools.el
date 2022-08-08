@@ -157,8 +157,11 @@
   (aw-mode-line-face ((t (:inherit mode-line-emphasis :bold t))))
   :bind ([remap other-window] . ace-window)
   :init
-  ;; (setq aw-scope 'frame) ;; jump only in current frame
-  (setq aw-minibuffer-flag t))
+  (setq aw-scope 'visible
+        aw-minibuffer-flag t)
+  :config
+  (with-eval-after-load 'minimap
+    (add-to-list 'aw-ignored-buffers minimap-buffer-name)))
 
 ;; Enforce rules for popups
 (use-package popper
