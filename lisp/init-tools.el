@@ -458,7 +458,7 @@
       (set-window-fringes (minimap-get-window) 0 1 nil)))
   :custom-face
   :init (setq minimap-width-fraction 0.1
-              minimap-minimum-width 12
+              minimap-minimum-width 10
               minimap-width-fraction 0.0 ;; slightly smaller minimap
               minimap-window-location 'right
               minimap-major-modes '(prog-mode
@@ -466,7 +466,7 @@
   :hook (after-init . minimap-mode)
   :config
   (set-face-attribute 'minimap-current-line-face nil :background petmacs-favor-color)
-  (set-face-attribute 'minimap-font-face nil :height 28 :font (font-spec :name petmacs-font))
+  (set-face-attribute 'minimap-font-face nil :height 25 :font (font-spec :name petmacs-font))
   (advice-add #'minimap-new-minimap :after #'petmacs/minimap-fix-width))
 
 (use-package centered-cursor-mode)
