@@ -457,8 +457,8 @@
       (setq window-size-fixed 'width)
       (set-window-fringes (minimap-get-window) 0 1 nil)))
   :custom-face
-  :init (setq minimap-width-fraction 0.1
-              minimap-minimum-width 10
+  :init (setq minimap-minimum-width 10
+              ;; minimap-width-fraction 0.1
               minimap-width-fraction 0.0 ;; slightly smaller minimap
               minimap-window-location 'right
               minimap-major-modes '(prog-mode
