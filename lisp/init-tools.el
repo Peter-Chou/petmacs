@@ -484,9 +484,23 @@
                                     yaml-mode))
   :hook (after-init . minimap-mode)
   :config
+  (defun petmacs/autoload-enable-disable-minimap (&rest _)
+    (if (and (< (window-width) 80)
+             (bound-and-true-p minimap-mode)
+             (apply 'derived-mode-p minimap-major-modes))
+        (progn
+          (minimap-mode 0)
+          (balance-windows))
+      (when (and (>= (- (window-width) minimap-minimum-width) 80)
+                 (apply 'derived-mode-p minimap-major-modes))
+        (minimap-mode 1))))
+
   (set-face-attribute 'minimap-current-line-face nil :background petmacs-favor-color)
   (set-face-attribute 'minimap-font-face nil :height 25 :font (font-spec :name petmacs-font))
-  (advice-add #'minimap-new-minimap :after #'petmacs/minimap-fix-width))
+  (advice-add #'minimap-new-minimap :after #'petmacs/minimap-fix-width)
+
+  (add-hook #'window-size-change-functions #'petmacs/autoload-enable-disable-minimap)
+  )
 
 (use-package centered-cursor-mode)
 (use-package restart-emacs)
