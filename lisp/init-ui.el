@@ -137,11 +137,6 @@
 (use-package solaire-mode
   :hook (after-load-theme . solaire-global-mode))
 
-(use-package spacemacs-theme
-  :init
-  (setq ;; spacemacs-theme-comment-italic t
-        spacemacs-theme-org-priority-bold t))
-
 (use-package modus-themes
   :init
   (setq modus-themes-bold-constructs t
@@ -311,14 +306,6 @@
     (add-hook 'pyvenv-mode-hook #'doom-modeline-override-python-venv-modeline)
     (add-hook 'doom-modeline-mode-hook #'doom-modeline-override-python-venv-modeline)
 
-    ;; (defun petmacs/doom-modeline-def-modeline (orig-func name lhs &optional rhs)
-    ;;   ;; remove misc-info module for cleanness
-    ;;   (when (member 'misc-info rhs)
-    ;;     (message "has misc-info in %s" name)
-    ;;     (setq rhs (delete 'misc-info rhs)))
-    ;;   (funcall orig-func name lhs rhs))
-    ;; (advice-add 'doom-modeline-def-modeline :around #'petmacs/doom-modeline-def-modeline)
-
     (doom-modeline-def-modeline 'petmacs--default-modeline
       ;; checker is moved from left side of modeline
       '(bar window-number matches buffer-info remote-host buffer-position parrot selection-info)
@@ -332,17 +319,12 @@
 (use-package hide-mode-line
   :hook (((
            completion-list-mode
-           ;; completion-in-region-mode
            eshell-mode
            shell-mode
            term-mode
            vterm-mode
            pdf-annot-list-mode
            flycheck-error-list-mode) . hide-mode-line-mode)))
-
-;; A minor-mode menu for mode-line
-;; (use-package minions
-;;   :hook (doom-modeline-mode . minions-mode))
 
 ;; Show native line numbers if possible, otherwise use `linum'
 (when petmacs-enable-display-line-numbers
@@ -407,10 +389,6 @@
       window-divider-default-bottom-width 1
       window-divider-default-right-width 1)
 (add-hook 'window-setup-hook #'window-divider-mode)
-
-;; Easily adjust the font size in all frames
-(use-package default-text-scale
-  :hook (after-init . default-text-scale-mode))
 
 ;; Mouse & Smooth Scroll
 ;; Scroll one line at a time (less "jumpy" than defaults)

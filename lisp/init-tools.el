@@ -7,6 +7,10 @@
 (use-package bind-map)
 (use-package bind-key)
 
+;; Easily adjust the font size in all frames
+(use-package default-text-scale
+  :hook (after-init . default-text-scale-mode))
+
 (use-package pretty-hydra
   :init
   (require 'pretty-hydra)
