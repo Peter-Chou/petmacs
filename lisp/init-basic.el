@@ -108,7 +108,7 @@
 (use-package recentf
   :ensure nil
   :hook (after-init . recentf-mode)
-  :init (setq recentf-max-saved-items 300
+  :init (setq recentf-max-saved-items 500
               recentf-exclude
               '("\\.?cache" ".cask" "url" "COMMIT_EDITMSG\\'" "bookmarks"
                 "\\.\\(?:gz\\|gif\\|svg\\|png\\|jpe?g\\|bmp\\|xpm\\)$"
@@ -134,7 +134,9 @@
 
 (use-package save-place
   :ensure nil
-  :hook (after-init . save-place-mode))
+  :hook (after-init . save-place-mode)
+  :init (setq save-place-limit 500
+              save-place-abbreviate-file-names t))
 
 (use-package simple
   :ensure nil
@@ -200,11 +202,6 @@
 		          tabulated-list-entries)))))
     (advice-add #'list-processes--refresh :after #'my-list-processes--prettify)))
 
-(use-package time
-  :ensure nil
-  :init (setq display-time-24hr-format t
-              display-time-day-and-date t))
-
 (use-package so-long
   :hook (after-init . global-so-long-mode))
 
@@ -212,6 +209,7 @@
 (if (boundp 'use-short-answers)
     (setq use-short-answers t)
   (fset 'yes-or-no-p 'y-or-n-p))
+
 (setq-default major-mode 'text-mode
               fill-column 80
               tab-width 4
