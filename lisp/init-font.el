@@ -29,7 +29,4 @@
                     (set-fontset-font t 'emoji (font-spec :family font) nil 'prepend)
                   (set-fontset-font t 'symbol (font-spec :family font) nil 'prepend)))
 
-;; Fontify symbols representing faces with that face
-(use-package fontify-face)
-
 (provide 'init-font)

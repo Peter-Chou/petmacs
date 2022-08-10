@@ -505,6 +505,9 @@
                               `([,(cdr char-regexp) 0 font-shape-gstring]))))
     (set-char-table-parent composition-ligature-table composition-function-table)))
 
+;; Fontify symbols representing faces with that face
+(use-package fontify-face)
+
 (use-package pretty-code
   :load-path (lambda () (expand-file-name "site-lisp/local/pretty-code" user-emacs-directory))
   :commands (pretty-code-add-hook)
