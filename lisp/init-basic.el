@@ -95,8 +95,8 @@
     :quelpa (cache-path-from-shell :fetcher github
   		                           :repo "manateelazycat/cache-path-from-shell"
   		                           :files ("*.el"))
+    :commands (exec-path-from-shell-initialize)
     :init
-    (require 'cache-path-from-shell)
     (exec-path-from-shell-initialize)))
 
   ;; Start server
