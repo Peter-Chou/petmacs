@@ -2,9 +2,19 @@
 
 (use-package evil
   :preface
-  ;; (defun petmacs/evil-hook ()
-  ;;   (dolist (mode '(git-rebase-mode))
-  ;;     (add-to-list 'evil-emacs-state-modes mode)))
+  (defun petmacs//evil-visual-shift-left ()
+    "evil left shift without losing selection"
+    (interactive)
+    (call-interactively 'evil-shift-left)
+    (evil-normal-state)
+    (evil-visual-restore))
+
+  (defun petmacs//evil-visual-shift-right ()
+    "evil right shift without losing selection"
+    (interactive)
+    (call-interactively 'evil-shift-right)
+    (evil-normal-state)
+    (evil-visual-restore))
   :init
   (setq evil-want-C-u-scroll t
 	    evil-want-integration t
@@ -15,7 +25,6 @@
 	    evil-want-keybinding nil ;; use evil-collection instead
 	    evil-overriding-maps nil)
   (evil-mode 1)
-  ;; (add-hook 'evil-mode-hook 'petmacs/evil-hook)
 
   ;; https://emacs.stackexchange.com/questions/46371/how-can-i-get-ret-to-follow-org-mode-links-when-using-evil-mode
   (with-eval-after-load 'evil-maps
@@ -38,19 +47,7 @@
   (evil-set-initial-state 'vterm-mode 'insert)
 
   (evil-set-undo-system 'undo-tree)
-  (defun petmacs//evil-visual-shift-left ()
-    "evil left shift without losing selection"
-    (interactive)
-    (call-interactively 'evil-shift-left)
-    (evil-normal-state)
-    (evil-visual-restore))
 
-  (defun petmacs//evil-visual-shift-right ()
-    "evil right shift without losing selection"
-    (interactive)
-    (call-interactively 'evil-shift-right)
-    (evil-normal-state)
-    (evil-visual-restore))
   ;; treat _ as word like vim
   (with-eval-after-load 'evil
     (defalias #'forward-evil-word #'forward-evil-symbol))
@@ -68,19 +65,20 @@
     (define-key evil-motion-state-map (kbd "C-u") 'evil-scroll-up))
   ;; Overload shifts so that they don't lose the selection
   (define-key evil-visual-state-map (kbd "<") 'petmacs//evil-visual-shift-left)
-  (define-key evil-visual-state-map (kbd ">") 'petmacs//evil-visual-shift-right)
-  )
+  (define-key evil-visual-state-map (kbd ">") 'petmacs//evil-visual-shift-right))
 
-(use-package evil-anzu)
+(use-package evil-anzu
+  :after anzu)
 
 (use-package evil-escape
   :hook (after-init . evil-escape-mode)
-  :init (setq-default evil-escape-delay 0.3))
+  :init (setq evil-escape-delay 0.3))
 
 (use-package evil-nerd-commenter
   :init
   (evil-define-key 'normal prog-mode-map
     "gc" 'evilnc-comment-or-uncomment-lines
+    "gp" 'evilnc-comment-or-uncomment-paragraphs
     "gy" 'evilnc-comment-and-kill-ring-save))
 
 (use-package evil-surround
@@ -90,12 +88,11 @@
 (use-package evil-visualstar
   :commands (evil-visualstar/begin-search-forward
              evil-visualstar/begin-search-backward)
-  :init
-  (progn
-    (define-key evil-visual-state-map (kbd "*")
-      'evil-visualstar/begin-search-forward)
-    (define-key evil-visual-state-map (kbd "#")
-      'evil-visualstar/begin-search-backward)))
+  :config
+  (define-key evil-visual-state-map (kbd "*")
+    'evil-visualstar/begin-search-forward)
+  (define-key evil-visual-state-map (kbd "#")
+    'evil-visualstar/begin-search-backward))
 
 (use-package evil-goggles
   :config
@@ -160,7 +157,8 @@
   (advice-add #'evil-collection-dired-setup :after #'petmacs/evil-collection-dired-setup))
 
 
-(use-package evil-textobj-line)
+(use-package evil-textobj-line
+  :init (require 'evil-textobj-line))
 (use-package evil-iedit-state
   :init (require 'evil-iedit-state))
 

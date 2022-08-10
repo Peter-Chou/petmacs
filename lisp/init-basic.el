@@ -130,7 +130,7 @@
                                               search-ring
                                               regexp-search-ring
                                               extended-command-history)
-              savehist-autosave-interval 300))
+              savehist-autosave-interval 100))
 
 (use-package save-place
   :ensure nil
