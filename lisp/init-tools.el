@@ -124,6 +124,21 @@
   		             :files ("*.el"))
   :commands (toggle-one-window))
 
+;; Search tool
+(use-package grep
+  :ensure nil
+  :commands grep-apply-setting
+  :config
+  (when (executable-find "rg")
+    (grep-apply-setting
+     'grep-command "rg --color=auto --null -nH --no-heading -e ")
+    (grep-apply-setting
+     'grep-template "rg --color=auto --null --no-heading -g '!*/' -e <R> <D>")
+    (grep-apply-setting
+     'grep-find-command '("rg --color=auto --null -nH --no-heading -e ''" . 38))
+    (grep-apply-setting
+     'grep-find-template "rg --color=auto --null -nH --no-heading -e <R> <D>")))
+
 (use-package ace-window
   :pretty-hydra
   ((:foreign-keys warn :quit-key "q")
