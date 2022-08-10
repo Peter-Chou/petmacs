@@ -474,7 +474,7 @@
   (defun petmacs/minimap-fix-width ()
     (with-current-buffer minimap-buffer-name
       (setq window-size-fixed 'width)
-      (set-window-fringes (minimap-get-window) 0 1 nil)))
+      (set-window-fringes (minimap-get-window) 1 1 nil)))
   :custom-face
   :init (setq minimap-minimum-width 10
               ;; minimap-width-fraction 0.1
