@@ -469,39 +469,39 @@
               process-environment))
     (advice-add #'list-environment-entries :override #'my-list-environment-entries)))
 
-(use-package minimap
-  :preface
-  (defun petmacs/minimap-fix-width ()
-    (with-current-buffer minimap-buffer-name
-      (setq window-size-fixed 'width)
-      (set-window-fringes (minimap-get-window) 1 1 nil)))
-  :custom-face
-  :init (setq minimap-minimum-width 10
-              ;; minimap-width-fraction 0.1
-              minimap-width-fraction 0.0 ;; slightly smaller minimap
-              minimap-window-location 'right
-              minimap-major-modes '(prog-mode
-                                    yaml-mode))
-  :hook (after-init . minimap-mode)
-  :config
-  (defun petmacs/autoload-enable-disable-minimap (&rest _)
-    (cond ((and (< (window-width) fill-column)
-                (bound-and-true-p minimap-mode)
-                (apply 'derived-mode-p minimap-major-modes))
+;; (use-package minimap
+;;   :preface
+;;   (defun petmacs/minimap-fix-width ()
+;;     (with-current-buffer minimap-buffer-name
+;;       (setq window-size-fixed 'width)
+;;       (set-window-fringes (minimap-get-window) 1 1 nil)))
+;;   :custom-face
+;;   :init (setq minimap-minimum-width 10
+;;               ;; minimap-width-fraction 0.1
+;;               minimap-width-fraction 0.0 ;; slightly smaller minimap
+;;               minimap-window-location 'right
+;;               minimap-major-modes '(prog-mode
+;;                                     yaml-mode))
+;;   :hook (after-init . minimap-mode)
+;;   :config
+;;   (defun petmacs/autoload-enable-disable-minimap (&rest _)
+;;     (cond ((and (< (window-width) fill-column)
+;;                 (bound-and-true-p minimap-mode)
+;;                 (apply 'derived-mode-p minimap-major-modes))
 
-           (minimap-mode 0)
-           (balance-windows))
-          ((and (>= (- (window-width) minimap-minimum-width) fill-column)
-                (apply 'derived-mode-p minimap-major-modes))
-           (minimap-mode 1))))
+;;            (minimap-mode 0)
+;;            (balance-windows))
+;;           ((and (>= (- (window-width) minimap-minimum-width) fill-column)
+;;                 (apply 'derived-mode-p minimap-major-modes))
+;;            (minimap-mode 1))))
 
 
-  (set-face-attribute 'minimap-current-line-face nil :background petmacs-favor-color)
-  (set-face-attribute 'minimap-font-face nil :height 25 :font (font-spec :name petmacs-font))
-  (advice-add #'minimap-new-minimap :after #'petmacs/minimap-fix-width)
+;;   (set-face-attribute 'minimap-current-line-face nil :background petmacs-favor-color)
+;;   (set-face-attribute 'minimap-font-face nil :height 25 :font (font-spec :name petmacs-font))
+;;   (advice-add #'minimap-new-minimap :after #'petmacs/minimap-fix-width)
 
-  (add-hook #'window-size-change-functions #'petmacs/autoload-enable-disable-minimap)
-  )
+;;   (add-hook #'window-size-change-functions #'petmacs/autoload-enable-disable-minimap)
+;;   )
 
 (use-package centered-cursor-mode)
 (use-package restart-emacs)
