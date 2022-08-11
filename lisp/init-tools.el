@@ -485,15 +485,16 @@
   :hook (after-init . minimap-mode)
   :config
   (defun petmacs/autoload-enable-disable-minimap (&rest _)
-    (if (and (< (window-width) 80)
-             (bound-and-true-p minimap-mode)
-             (apply 'derived-mode-p minimap-major-modes))
-        (progn
-          (minimap-mode 0)
-          (balance-windows))
-      (when (and (>= (- (window-width) minimap-minimum-width) 80)
-                 (apply 'derived-mode-p minimap-major-modes))
-        (minimap-mode 1))))
+    (cond ((and (< (window-width) fill-column)
+                (bound-and-true-p minimap-mode)
+                (apply 'derived-mode-p minimap-major-modes))
+
+           (minimap-mode 0)
+           (balance-windows))
+          ((and (>= (- (window-width) minimap-minimum-width) fill-column)
+                (apply 'derived-mode-p minimap-major-modes))
+           (minimap-mode 1))))
+
 
   (set-face-attribute 'minimap-current-line-face nil :background petmacs-favor-color)
   (set-face-attribute 'minimap-font-face nil :height 25 :font (font-spec :name petmacs-font))
