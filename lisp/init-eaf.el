@@ -13,21 +13,32 @@
         eaf-browser-enable-adblocker t
         browse-url-browser-function 'eaf-open-browser)
   ;; add folders in app to load-path
-  (let ((default-directory (petmacs/get-eaf-app-directory)))
-    (normal-top-level-add-subdirs-to-load-path)
-    (require 'eaf)
-    (require 'eaf-browser)
-    (require 'eaf-image-viewer)
-    (require 'eaf-jupyter)
-    (require 'eaf-markdown-previewer)
-    (require 'eaf-org-previewer)
-    (require 'eaf-pdf-viewer)
-    (require 'eaf-git)
+  ;; (let ((default-directory (petmacs/get-eaf-app-directory)))
+  ;;   (normal-top-level-add-subdirs-to-load-path)
 
-    (require 'eaf-all-the-icons)
-    (require 'eaf-evil)
+  (add-to-list 'load-path (concat (petmacs/get-eaf-app-directory) "browser"))
+  (add-to-list 'load-path (concat (petmacs/get-eaf-app-directory) "image-viewer"))
+  (add-to-list 'load-path (concat (petmacs/get-eaf-app-directory) "jupyter"))
+  (add-to-list 'load-path (concat (petmacs/get-eaf-app-directory) "markdown-previewer"))
+  (add-to-list 'load-path (concat (petmacs/get-eaf-app-directory) "org-previewer"))
+  (add-to-list 'load-path (concat (petmacs/get-eaf-app-directory) "pdf-viewer"))
+  (add-to-list 'load-path (concat (petmacs/get-eaf-app-directory) "git"))
+  (add-to-list 'load-path (expand-file-name "site-lisp/emacs-application-framework/extension" user-emacs-directory))
 
-    (setq eaf-python-command (expand-file-name "eaf/bin/python" (getenv "WORKON_HOME"))))
+  (require 'eaf)
+  (require 'eaf-browser)
+  (require 'eaf-image-viewer)
+  (require 'eaf-jupyter)
+  (require 'eaf-markdown-previewer)
+  (require 'eaf-org-previewer)
+  (require 'eaf-pdf-viewer)
+  (require 'eaf-git)
+
+  (require 'eaf-all-the-icons)
+  (require 'eaf-evil)
+
+  (setq eaf-python-command (expand-file-name "eaf/bin/python" (getenv "WORKON_HOME")))
+  ; )
   :config
   (with-eval-after-load 'spaceleader
     (setq eaf-evil-leader-key leader-key
