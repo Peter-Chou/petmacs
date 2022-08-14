@@ -12,9 +12,17 @@
 (setq byte-compile-warnings '(cl-functions))
 
 ;; use mirror
-(setq package-archives '(("gnu"          . "https://elpa.gnu.org/packages/")
-                         ("melpa"        . "https://melpa.org/packages/")
-                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
+(setq package-archives '(
+                         ("gnu" . "https://mirrors.163.com/elpa/gnu/")
+                         ("melpa" . "https://mirrors.163.com/elpa/melpa/")
+                         ("nongnu" . "https://mirrors.163.com/elpa/nongnu/")
+
+                         ;; ("gnu"          . "https://elpa.gnu.org/packages/")
+                         ;; ("melpa"        . "https://melpa.org/packages/")
+                         ;; ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+
+                         ("org" . "https://orgmode.org/elpa/")
+                         ))
 
 (if (functionp 'json-serialize)
     (message "Native JSON is available")
