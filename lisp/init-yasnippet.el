@@ -7,4 +7,4 @@
 
 (use-package yasnippet-snippets)
 
-(provide 'init-snippets)
+(provide 'init-yasnippet)

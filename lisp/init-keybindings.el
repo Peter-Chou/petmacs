@@ -45,7 +45,6 @@
     "p"  #'list-processes
     "e" #'list-environment
     "P"  #'proced
-    "r"  #'ranger
     "k"  #'paradox-list-packages
     "u"  #'paradox-upgrade-packages
     "w"  #'whitespace-cleanup

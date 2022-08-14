@@ -54,8 +54,6 @@
     (kbd "k") 'widget-backward
     (kbd "gr") #'dashboard-refresh-buffer
     (kbd "}") #'dashboard-next-section
-    (kbd "{") #'dashboard-previous-section)
-  (evil-define-key 'normal dashboard-mode-map (kbd "gd") 'widget-button-press)
-  (evil-define-key 'normal dashboard-mode-map [mouse-1] 'widget-button-click))
+    (kbd "{") #'dashboard-previous-section))
 
 (provide 'init-dashboard)

@@ -153,7 +153,8 @@
   :hook (after-init . evil-collection-init)
   :config
   (defun petmacs/evil-collection-dired-setup ()
-    (evil-define-key 'normal dired-mode-map (kbd "RET") 'dired-find-alternate-file))
+    (evil-define-key 'normal dired-mode-map (kbd "RET") 'dired-find-alternate-file)
+    (evil-define-key 'normal dired-mode-map (kbd "F") 'find-file))
   (advice-add #'evil-collection-dired-setup :after #'petmacs/evil-collection-dired-setup))
 
 

@@ -1,6 +1,212 @@
 ;; -*- lexical-binding: t no-byte-compile: t -*-
 
 (require 'init-custom)
+(require 'init-const)
+
+(use-package which-key
+  :diminish
+  :hook (after-init . which-key-mode)
+  :init
+  (setq which-key-idle-delay 0.2)
+  (setq which-key-separator " ")
+  (setq which-key-prefix-prefix " ")
+
+  ;; Needed to avoid nil variable error before update to recent which-key
+  (defvar which-key-replacement-alist nil)
+  ;; Reset to the default or customized value before adding our values in order
+  ;; to make this initialization code idempotent.
+  (custom-reevaluate-setting 'which-key-replacement-alist)
+  ;; Replace rules for better naming of functions
+  (let ((new-descriptions
+         ;; being higher in this list means the replacement is applied later
+         '(
+           ("petmacs/\\(.+\\)" . "\\1")
+           ("petmacs/toggle-\\(.+\\)" . "\\1")
+           ("avy-goto-word-or-subword-1" . "avy word")
+           ("shell-command" . "shell cmd")
+           ("universal-argument" . "universal arg")
+           ("er/expand-region" . "expand region")
+           ("evil-lisp-state-\\(.+\\)" . "\\1")
+           )))
+    (dolist (nd new-descriptions)
+      ;; ensure the target matches the whole string
+      (push (cons (cons nil (concat "\\`" (car nd) "\\'")) (cons nil (cdr nd)))
+            which-key-replacement-alist))))
+
+;; Jump to things in Emacs tree-style
+(use-package avy
+  :hook (after-init . avy-setup-default)
+  :config (setq avy-all-windows nil
+                avy-all-windows-alt t
+                avy-background t
+                avy-style 'pre))
+
+;; Minor mode to aggressively keep your code always indented
+(use-package aggressive-indent
+  :diminish
+  :hook ((after-init . global-aggressive-indent-mode)
+         ;; WORKAROUND: Disable in big files due to the performance issues
+         ;; https://github.com/Malabarba/aggressive-indent-mode/issues/73
+         (find-file . (lambda ()
+                        (if (> (buffer-size) (* 3000 80))
+                            (aggressive-indent-mode -1)))))
+  :config
+  ;; Disable in some modes
+  (dolist (mode '(gitconfig-mode asm-mode web-mode html-mode css-mode go-mode scala-mode prolog-inferior-mode))
+    (push mode aggressive-indent-excluded-modes))
+
+  ;; Disable in some commands
+  (add-to-list 'aggressive-indent-protected-commands #'delete-trailing-whitespace t)
+
+  ;; Be slightly less aggressive in C/C++/C#/Java/Go/Swift
+  (add-to-list 'aggressive-indent-dont-indent-if
+               '(and (derived-mode-p 'c-mode 'c++-mode 'csharp-mode
+                                     'java-mode 'go-mode 'swift-mode)
+                     (null (string-match "\\([;{}]\\|\\b\\(if\\|for\\|while\\)\\b\\)"
+                                         (thing-at-point 'line))))))
+
+;; Show number of matches in mode-line while searching
+(use-package anzu
+  :diminish
+  :bind (([remap query-replace] . anzu-query-replace)
+         ([remap query-replace-regexp] . anzu-query-replace-regexp)
+         :map isearch-mode-map
+         ([remap isearch-query-replace] . anzu-isearch-query-replace)
+         ([remap isearch-query-replace-regexp] . anzu-isearch-query-replace-regexp))
+  :hook (after-init . global-anzu-mode))
+
+;; An all-in-one comment command to rule them all
+(use-package comment-dwim-2
+  :bind ([remap comment-dwim] . comment-dwim-2))
+
+;; A comprehensive visual interface to diff & patch
+(use-package ediff
+  :ensure nil
+  :hook(;; show org ediffs unfolded
+        (ediff-prepare-buffer . outline-show-all)
+        ;; restore window layout when done
+        (ediff-quit . winner-undo))
+  :config
+  (setq ediff-window-setup-function 'ediff-setup-windows-plain
+        ediff-split-window-function 'split-window-horizontally
+        ediff-merge-split-window-function 'split-window-horizontally))
+
+;; Automatic parenthesis pairing
+(use-package elec-pair
+  :ensure nil
+  :hook (after-init . electric-pair-mode)
+  :init (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit))
+
+(use-package expand-region)
+
+;; Hungry deletion
+(use-package hungry-delete
+  :diminish
+  :hook (after-init . global-hungry-delete-mode)
+  :init (setq hungry-delete-chars-to-skip " \t\f\v"
+              hungry-delete-except-modes
+              '(help-mode minibuffer-mode minibuffer-inactive-mode calc-mode)))
+
+;; Drag stuff (lines, words, region, etc...) around
+(use-package drag-stuff
+  :diminish
+  :commands drag-stuff-define-keys
+  :hook (after-init . drag-stuff-global-mode)
+  :config
+  (add-to-list 'drag-stuff-except-modes 'org-mode)
+  (drag-stuff-define-keys))
+
+;; Move to the beginning/end of line or code
+(use-package mwim
+  :bind (([remap move-beginning-of-line] . mwim-beginning-of-code-or-line)
+         ([remap move-end-of-line] . mwim-end-of-code-or-line)))
+
+;; Windows-scroll commands
+(use-package pager
+  :bind (([remap scroll-up-command] . pager-page-down)
+         ([remap scroll-down-command] . pager-page-up)
+         ([next]   . pager-page-down)
+         ([prior]  . pager-page-up)
+         ([M-up]   . pager-row-up)
+         ([M-kp-8] . pager-row-up)
+         ([M-down] . pager-row-down)
+         ([M-kp-2] . pager-row-down)))
+
+;; Preview when `goto-char'
+(use-package goto-char-preview
+  :bind ([remap goto-char] . goto-char-preview))
+
+;; Preview when `goto-line'
+(use-package goto-line-preview
+  :bind ([remap goto-line] . goto-line-preview))
+
+;; Handling capitalized subwords in a nomenclature
+(use-package subword
+  :ensure nil
+  :diminish
+  :hook ((prog-mode . subword-mode)
+         (minibuffer-setup . subword-mode)))
+
+;; Open files as another user
+(unless sys/win32p
+  (use-package sudo-edit))
+
+;; Flexible text folding
+(use-package hideshow
+  :ensure nil
+  :diminish hs-minor-mode
+  :hook (prog-mode . hs-minor-mode)
+  :config
+  ;; More functions
+  ;; @see https://karthinks.com/software/simple-folding-with-hideshow/
+  (defun hs-cycle (&optional level)
+    (interactive "p")
+    (let (message-log-max
+          (inhibit-message t))
+      (if (= level 1)
+          (pcase last-command
+            ('hs-cycle
+             (hs-hide-level 1)
+             (setq this-command 'hs-cycle-children))
+            ('hs-cycle-children
+             (save-excursion (hs-show-block))
+             (setq this-command 'hs-cycle-subtree))
+            ('hs-cycle-subtree
+             (hs-hide-block))
+            (_
+             (if (not (hs-already-hidden-p))
+                 (hs-hide-block)
+               (hs-hide-level 1)
+               (setq this-command 'hs-cycle-children))))
+        (hs-hide-level level)
+        (setq this-command 'hs-hide-level))))
+
+  (defun hs-toggle-all ()
+    "Toggle hide/show all."
+    (interactive)
+    (pcase last-command
+      ('hs-toggle-all
+       (save-excursion (hs-show-all))
+       (setq this-command 'hs-global-show))
+      (_ (hs-hide-all))))
+
+  ;; Display line counts
+  (defun hs-display-code-line-counts (ov)
+    "Display line counts when hiding codes."
+    (when (eq 'code (overlay-get ov 'hs))
+      (overlay-put ov 'display
+                   (concat
+                    " "
+                    (propertize
+                     (if (char-displayable-p ?⏷) "⏷" "...")
+                     'face 'shadow)
+                    (propertize
+                     (format " (%d lines)"
+                             (count-lines (overlay-start ov)
+                                          (overlay-end ov)))
+                     'face '(:inherit shadow :height 0.8))
+                    " "))))
+  (setq hs-set-up-overlay #'hs-display-code-line-counts))
 
 (use-package posframe)
 (use-package general)
@@ -41,47 +247,6 @@
    pomodoro-break-start-sound (expand-file-name "data/sounds/emacs.d_sounds_three_beeps.wav" user-emacs-directory)
    pomodoro-work-start-sound (expand-file-name "data/sounds/emacs.d_sounds_jabber_message.wav" user-emacs-directory)))
 
-(use-package which-key
-  :diminish
-  :hook (after-init . which-key-mode)
-  :init
-  (setq which-key-idle-delay 0.2)
-  (setq which-key-separator " ")
-  (setq which-key-prefix-prefix " ")
-
-  ;; Needed to avoid nil variable error before update to recent which-key
-  (defvar which-key-replacement-alist nil)
-  ;; Reset to the default or customized value before adding our values in order
-  ;; to make this initialization code idempotent.
-  (custom-reevaluate-setting 'which-key-replacement-alist)
-  ;; Replace rules for better naming of functions
-  (let ((new-descriptions
-         ;; being higher in this list means the replacement is applied later
-         '(
-           ("petmacs/\\(.+\\)" . "\\1")
-           ("petmacs/toggle-\\(.+\\)" . "\\1")
-           ("avy-goto-word-or-subword-1" . "avy word")
-           ("shell-command" . "shell cmd")
-           ("universal-argument" . "universal arg")
-           ("er/expand-region" . "expand region")
-           ("evil-lisp-state-\\(.+\\)" . "\\1")
-           )))
-    (dolist (nd new-descriptions)
-      ;; ensure the target matches the whole string
-      (push (cons (cons nil (concat "\\`" (car nd) "\\'")) (cons nil (cdr nd)))
-            which-key-replacement-alist))))
-
-(use-package display-fill-column-indicator
-  :ensure nil
-  :hook
-  (prog-mode . display-fill-column-indicator-mode)
-  :init
-  (setq-default fill-column  80)
-  (setq display-fill-column-indicator-character "|"))
-
-(use-package rainbow-delimiters
-  :hook (prog-mode . rainbow-delimiters-mode))
-
 (use-package visual-regexp
   :defer
   :commands (vr/replace vr/query-replace))
@@ -91,15 +256,8 @@
   :defer
   :commands (vr/select-replace vr/select-query-replace))
 
-
-(use-package org-super-agenda)
-
 (use-package protobuf-mode
   :hook (protobuf-mode . disable-curly-bracket-electric-pair))
-
-;; (use-package olivetti
-;;   :diminish
-;;   :init (setq olivetti-body-width 0.62))
 
 (use-package writeroom-mode
   :hook ((prog-mode yaml-mode markdown-mode org-mode) . writeroom-mode)
@@ -139,134 +297,6 @@
     (grep-apply-setting
      'grep-find-template "rg --color=auto --null -nH --no-heading -e <R> <D>")))
 
-(use-package ace-window
-  :pretty-hydra
-  ((:foreign-keys warn :quit-key "q")
-   ("Actions"
-    (("TAB" other-window "switch")
-     ("x" ace-delete-window "delete" :exit t)
-     ("X" ace-delete-other-windows "delete other" :exit t)
-     ("s" ace-swap-window "swap" :exit t)
-     ("a" ace-select-window "select" :exit t)
-     ("m" toggle-frame-maximized "maximize" :exit t)
-     ("f" toggle-frame-fullscreen "fullscreen" :exit t))
-    "Resize"
-    (("h" shrink-window-horizontally "←")
-     ("j" enlarge-window "↓")
-     ("k" shrink-window "↑")
-     ("l" enlarge-window-horizontally "→")
-     ("n" balance-windows "balance" :exit t))
-    "Split"
-    (("r" split-window-right "horizontally")
-     ("R" split-window-horizontally-instead "horizontally instead")
-     ("v" split-window-below "vertically")
-     ("V" split-window-vertically-instead "vertically instead")
-     ("t" toggle-window-split "toggle"))
-    "Zoom"
-    (("+" text-scale-increase "in")
-     ("=" text-scale-increase "in")
-     ("-" text-scale-decrease "out")
-     ("0" (text-scale-increase 0) "reset"))
-    "Appearance"
-    (("F" set-frame-font "font")
-     ("T" consult-theme "theme"))))
-  :custom-face
-  (aw-leading-char-face ((t (:inherit font-lock-keyword-face :bold t :height 2.0))))
-  (aw-minibuffer-leading-char-face ((t (:inherit font-lock-keyword-face :bold t :height 1.0))))
-  (aw-mode-line-face ((t (:inherit mode-line-emphasis :bold t))))
-  :bind ([remap other-window] . ace-window)
-  :init
-  (setq aw-scope 'visible
-        aw-minibuffer-flag t)
-  :config
-  (with-eval-after-load 'minimap
-    (add-to-list 'aw-ignored-buffers minimap-buffer-name)))
-
-;; Enforce rules for popups
-(use-package popper
-  :defines popper-echo-dispatch-actions
-  :commands popper-group-by-projectile
-  :hook (emacs-startup . popper-mode)
-  :init
-  (setq popper-reference-buffers
-        '("\\*Messages\\*"
-          "Output\\*$" "\\*Pp Eval Output\\*$"
-          "\\*Compile-Log\\*"
-          "\\*Completions\\*"
-          "\\*Warnings\\*"
-          "\\*Async Shell Command\\*"
-          "\\*Apropos\\*"
-          "\\*Backtrace\\*"
-          "\\*Calendar\\*"
-          "\\*Embark Actions\\*"
-          "\\*Finder\\*"
-          "\\*Kill Ring\\*"
-
-          "\\*lsp-bridge-ref\\*"
-
-          bookmark-bmenu-mode
-          comint-mode
-          compilation-mode
-          help-mode helpful-mode
-          tabulated-list-mode
-          Buffer-menu-mode
-
-          grep-mode occur-mode rg-mode deadgrep-mode ag-mode pt-mode
-
-          "^\\*Process List\\*" process-menu-mode
-          list-environment-mode cargo-process-mode
-
-          "^\\*eshell.*\\*.*$" eshell-mode
-          "^\\*shell.*\\*.*$"  shell-mode
-          "^\\*terminal.*\\*.*$" term-mode
-          "^\\*vterm.*\\*.*$"  vterm-mode
-
-          "\\*DAP Templates\\*$" dap-server-log-mode
-          "\\*ELP Profiling Restuls\\*" profiler-report-mode
-          "\\*Flycheck errors\\*$" " \\*Flycheck checker\\*$"
-          "\\*Paradox Report\\*$" "\\*package update results\\*$" "\\*Package-Lint\\*$"
-          "\\*[Wo]*Man.*\\*$"
-          "\\*ert\\*$" overseer-buffer-mode
-          "\\*gud-debug\\*$"
-          "\\*lsp-help\\*$" "\\*lsp session\\*$"
-          "\\*quickrun\\*$"
-          "\\*tldr\\*$"
-          "\\*vc-.*\\*$"
-          "^\\*elfeed-entry\\*$"
-          "^\\*macro expansion\\**"
-
-          "\\*Agenda Commands\\*" "\\*Org Select\\*" "\\*Capture\\*" "^CAPTURE-.*\\.org*"
-          "\\*Gofmt Errors\\*$" "\\*Go Test\\*$" godoc-mode
-          "\\*docker-containers\\*" "\\*docker-images\\*" "\\*docker-networks\\*" "\\*docker-volumes\\*"
-          "\\*prolog\\*" inferior-python-mode inf-ruby-mode swift-repl-mode
-          "\\*rustfmt\\*$" rustic-compilation-mode rustic-cargo-clippy-mode
-          rustic-cargo-outdated-mode rustic-cargo-test-moed))
-  (with-eval-after-load 'projectile
-    (setq popper-group-function #'popper-group-by-projectile))
-  (setq popper-echo-dispatch-actions t)
-  :config
-  (popper-echo-mode 1)
-
-  (with-no-warnings
-    (defun petmacs/popper-fit-window-height (win)
-      "Determine the height of popup window WIN by fitting it to the buffer's content."
-      (fit-window-to-buffer
-       win
-       (floor (frame-height) 3)
-       (floor (frame-height) 3)))
-    (setq popper-window-height #'petmacs/popper-fit-window-height)
-
-    (defun popper-close-window-hack (&rest _)
-      "Close popper window via `C-g'."
-      ;; `C-g' can deactivate region
-      (when (and (called-interactively-p 'interactive)
-                 (not (region-active-p))
-                 popper-open-popup-alist)
-        (let ((window (caar popper-open-popup-alist)))
-          (when (window-live-p window)
-            (delete-window window)))))
-    (advice-add #'keyboard-quit :before #'popper-close-window-hack)))
-
 (use-package pyim
   :init
   (require 'pyim-dict-manager)
@@ -279,7 +309,6 @@
   (if (posframe-workable-p)
       (setq pyim-page-tooltip 'posframe)
     (setq pyim-page-tooltip 'popup))
-  ;; (setq pyim-page-tooltip 'popup)
 
   :config
   (pyim-default-scheme 'quanpin)
@@ -370,15 +399,7 @@
      :file, (expand-file-name "data/dicts/program.pyim" user-emacs-directory)
      :coding utf-8-unix
      :dict-type pinyin-dict
-     ))
-  )
-
-(use-package toggle-one-window
-  :quelpa
-  (toggle-one-window :fetcher github
-  		             :repo "manateelazycat/toggle-one-window"
-  		             :files ("*.el"))
-  :commands (toggle-one-window))
+     )))
 
 (defconst tree-sitter--fold-supported-major-mode-hooks
   '(
@@ -469,44 +490,9 @@
               process-environment))
     (advice-add #'list-environment-entries :override #'my-list-environment-entries)))
 
-;; (use-package minimap
-;;   :preface
-;;   (defun petmacs/minimap-fix-width ()
-;;     (with-current-buffer minimap-buffer-name
-;;       (setq window-size-fixed 'width)
-;;       (set-window-fringes (minimap-get-window) 1 1 nil)))
-;;   :custom-face
-;;   :init (setq minimap-minimum-width 10
-;;               ;; minimap-width-fraction 0.1
-;;               minimap-width-fraction 0.0 ;; slightly smaller minimap
-;;               minimap-window-location 'right
-;;               minimap-major-modes '(prog-mode
-;;                                     yaml-mode))
-;;   :hook (after-init . minimap-mode)
-;;   :config
-;;   (defun petmacs/autoload-enable-disable-minimap (&rest _)
-;;     (cond ((and (< (window-width) fill-column)
-;;                 (bound-and-true-p minimap-mode)
-;;                 (apply 'derived-mode-p minimap-major-modes))
-
-;;            (minimap-mode 0)
-;;            (balance-windows))
-;;           ((and (>= (- (window-width) minimap-minimum-width) fill-column)
-;;                 (apply 'derived-mode-p minimap-major-modes))
-;;            (minimap-mode 1))))
-
-
-;;   (set-face-attribute 'minimap-current-line-face nil :background petmacs-favor-color)
-;;   (set-face-attribute 'minimap-font-face nil :height 25 :font (font-spec :name petmacs-font))
-;;   (advice-add #'minimap-new-minimap :after #'petmacs/minimap-fix-width)
-
-;;   (add-hook #'window-size-change-functions #'petmacs/autoload-enable-disable-minimap)
-;;   )
-
 (use-package centered-cursor-mode)
 (use-package restart-emacs)
 (use-package focus)                     ; Focus on the current region
-(use-package carbon-now-sh)
 (use-package imenu-list)
 (use-package iedit)
 (use-package dotenv-mode)

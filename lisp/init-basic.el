@@ -18,6 +18,21 @@
     (add-to-list 'recentf-exclude no-littering-var-directory)
     (add-to-list 'recentf-exclude no-littering-etc-directory)))
 
+;; Treat undo history as a tree
+(use-package undo-tree
+  :diminish
+  :hook (after-init . global-undo-tree-mode)
+  :init
+  (setq undo-tree-visualizer-timestamps t
+        undo-tree-enable-undo-in-region nil
+        undo-tree-auto-save-history nil)
+
+  ;; HACK: keep the diff window
+  (with-no-warnings
+    (make-variable-buffer-local 'undo-tree-visualizer-diff)
+    (setq-default undo-tree-visualizer-diff t)))
+
+
 (when (file-exists-p custom-file)
   (load custom-file 'noerror 'nomessage))
 
@@ -27,6 +42,18 @@
   ;; Shanghai, Asia
   (setq calendar-latitude 31.23
         calendar-longitude 121.47))
+
+;; Delete selection if you insert
+(use-package delsel
+  :ensure nil
+  :hook (after-init . delete-selection-mode))
+
+;; Automatically reload files was modified by external program
+(use-package autorevert
+  :ensure nil
+  :diminish
+  :hook (after-init . global-auto-revert-mode)
+  :init (setq global-auto-revert-non-file-buffers t))
 
 ;; Cross-referencing commands
 (use-package xref
@@ -204,6 +231,14 @@
 
 (use-package so-long
   :hook (after-init . global-so-long-mode))
+
+(use-package display-fill-column-indicator
+  :ensure nil
+  :hook
+  (prog-mode . display-fill-column-indicator-mode)
+  :init
+  (setq-default fill-column  80)
+  (setq display-fill-column-indicator-character "|"))
 
 ;; Misc
 (if (boundp 'use-short-answers)

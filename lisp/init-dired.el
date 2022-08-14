@@ -22,16 +22,14 @@
 	    (sort-regexp-fields t "^.*$" "[ ]*." (point) (point-max)))
       (set-buffer-modified-p nil)))
   :init
-  (setq dired-kill-when-opening-new-dired-buffer t)
+  (setq dired-kill-when-opening-new-dired-buffer t
+        ;; Always delete and copy recursively
+        dired-recursive-deletes 'always
+        dired-recursive-copies 'always
+        dired-dwim-target t)
   (put 'dired-find-alternate-file 'disabled nil)
   (define-key evil-normal-state-map (kbd "-") 'dired-jump)
   :config
-  ;; Always delete and copy recursively
-  (setq ;; dired-recursive-deletes 'top  ;; “top” means ask once
-   dired-recursive-deletes 'always
-   dired-recursive-copies 'always
-   dired-dwim-target t)
-
   (when sys/macp
     ;; Suppress the warning: `ls does not support --dired'.
     (setq dired-use-ls-dired nil)
@@ -55,26 +53,19 @@
       "Sort dired listings with directories first before adding marks."
       (petmacs//dired-sort)))
 
-  ;; was dired-advertised-find-file
-  ;; (evil-define-key 'normal dired-mode-map (kbd "RET") 'dired-find-alternate-file)
-  ;; (evil-define-key 'normal dired-mode-map (kbd "f") 'dired-find-alternate-file)
-  ;; was dired-up-director
-  ;; (evil-define-key 'normal dired-mode-map (kbd "^") 'petmacs/dired-goto-parent-directory)
-  (evil-define-key 'normal dired-mode-map (kbd "-") 'petmacs/dired-goto-parent-directory)
-  (evil-define-key 'normal dired-mode-map (kbd "F") 'dired-create-empty-file)
-  ;; kill current buffer when leaving dired mode
-  ;; (evil-define-key 'normal dired-mode-map (kbd "q") 'kill-this-buffer)
-  )
+  (evil-define-key 'normal dired-mode-map (kbd "-") 'petmacs/dired-goto-parent-directory))
+
+;; Allow rsync from dired buffers
+(use-package dired-rsync)
 
 (use-package dired-x
   :ensure nil
   :demand t
   :config
-  (let ((cmd (cond
-              ((and (display-graphic-p) sys/macp) "open")
-              ((and (display-graphic-p) sys/linuxp) "xdg-open")
-              (sys/win32p "start")
-              (t ""))))
+  (let ((cmd (cond (sys/mac-x-p "open")
+                   (sys/linux-x-p "xdg-open")
+                   (sys/win32p "start")
+                   (t ""))))
     (setq dired-guess-shell-alist-user
           `(("\\.pdf\\'" ,cmd)
             ("\\.docx\\'" ,cmd)
@@ -83,40 +74,61 @@
             ("\\.\\(?:xcf\\)\\'" ,cmd)
             ("\\.csv\\'" ,cmd)
             ("\\.tex\\'" ,cmd)
-	        ("\\.\\(?:mp4\\|mkv\\|avi\\|flv\\|rm\\|rmvb\\|ogv\\)\\(?:\\.part\\)?\\'" ,cmd)
+            ("\\.\\(?:mp4\\|mkv\\|avi\\|flv\\|rm\\|rmvb\\|ogv\\)\\(?:\\.part\\)?\\'" ,cmd)
             ("\\.\\(?:mp3\\|flac\\)\\'" ,cmd)
             ("\\.html?\\'" ,cmd)
             ("\\.md\\'" ,cmd))))
+
   (setq dired-omit-files
         (concat dired-omit-files
-                "\\|^.DS_Store$\\|^.svn$\\|\\.js\\.meta$\\|\\.meta$\\|\\.elc$\\|^.emacs.*")))
+                "\\|^.DS_Store$\\|^.projectile$\\|^.git*\\|^.svn$\\|^.vscode$\\|\\.js\\.meta$\\|\\.meta$\\|\\.elc$\\|^.emacs.*")))
 
 ;; `find-dired' alternative using `fd'
 (when (executable-find "fd")
   (use-package fd-dired))
 
 (use-package diredfl
-  :init
-  (diredfl-global-mode 1))
+  :init (diredfl-global-mode 1))
 
 (use-package all-the-icons-dired
   :diminish
   :hook (dired-mode . (lambda ()
                         (when (icons-displayable-p)
-                          (all-the-icons-dired-mode)))))
+                          (all-the-icons-dired-mode))))
+  :config
+  (with-no-warnings
+    (defun my-all-the-icons-dired--refresh ()
+      "Display the icons of files in a dired buffer."
+      (all-the-icons-dired--remove-all-overlays)
+      ;; NOTE: don't display icons it too many items
+      (if (<= (count-lines (point-min) (point-max)) 1000)
+          (save-excursion
+            (goto-char (point-min))
+            (while (not (eobp))
+              (when (dired-move-to-filename nil)
+                (let ((case-fold-search t))
+                  (when-let* ((file (dired-get-filename 'relative 'noerror))
+                              (icon (if (file-directory-p file)
+                                        (all-the-icons-icon-for-dir
+                                         file
+                                         :face 'all-the-icons-dired-dir-face
+                                         :height 0.9
+                                         :v-adjust all-the-icons-dired-v-adjust)
+                                      (apply #'all-the-icons-icon-for-file
+                                             file
+                                             (append
+                                              '(:height 0.9)
+                                              `(:v-adjust ,all-the-icons-dired-v-adjust)
+                                              (when all-the-icons-dired-monochrome
+                                                `(:face ,(face-at-point))))))))
+                    (if (member file '("." ".."))
+                        (all-the-icons-dired--add-overlay (dired-move-to-filename) "   \t")
+                      (all-the-icons-dired--add-overlay (dired-move-to-filename) (concat " " icon "\t"))))))
+              (forward-line 1)))
+        (message "Not display icons because of too many items.")))
+    (advice-add #'all-the-icons-dired--refresh :override #'my-all-the-icons-dired--refresh)))
 
-(use-package ranger
-  :diminish
-  :commands (ranger deer deer-jump-other-window ranger-override-dired-mode)
-  :init
-  (setq ranger-deer-show-details t
-	    ranger-cleanup-on-disable t
-	    ranger-show-hidden t
-	    ranger-parent-depth 1
-	    ranger-width-parents 0.12
-	    ;; ranger-override-dired-mode t  ;; use ranger as default directory handler
-	    ranger-ignored-extensions '("mkv" "iso" "mp4")
-        ;; set the max files size (in MB) to preview
-	    ranger-max-preview-size 5))
+;; Extra Dired functionality
+(use-package dired-aux :ensure nil)
 
 (provide 'init-dired)

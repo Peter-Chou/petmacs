@@ -7,9 +7,9 @@
   (setq projectile-mode-line-prefix ""
 	    projectile-sort-order 'recentf
 	    projectile-use-git-grep t
-	    projectile-enable-caching t
-	    projectile-indexing-method 'native
-	    )
+	    ;; projectile-enable-caching t
+	    ;; projectile-indexing-method 'native
+        )
   :config
   ;; (projectile-update-mode-line)         ; Update mode-line at the first time
 

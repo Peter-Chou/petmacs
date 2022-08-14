@@ -46,17 +46,17 @@
 (require 'init-highlight)
 (require 'init-dashboard)
 (require 'init-ibuffer)
+(require 'init-window)
 (require 'init-treemacs)
 
 (require 'init-flycheck)
-(require 'init-edit)
 (require 'init-tools)
 (require 'init-vcs)
 
 (require 'init-projectile)
 (require 'init-dired)
 (require 'init-shell)
-(require 'init-snippets)
+(require 'init-yasnippet)
 
 (require 'init-consult)
 

@@ -115,4 +115,6 @@
     (visual-fill-column-mode 1))
   :hook (org-mode . petmacs/org-mode-visual-fill))
 
+(use-package org-super-agenda)
+
 (provide 'init-org)
