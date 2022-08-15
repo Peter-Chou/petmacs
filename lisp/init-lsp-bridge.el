@@ -10,9 +10,8 @@
 ;;; pip install epc
 (use-package lsp-bridge
   :quelpa (lsp-bridge :fetcher github
-		              :repo "manateelazycat/lsp-bridge"
-		              :files ("*"))
-  ;; :load-path (lambda () (expand-file-name "site-lisp/lsp-bridge" user-emacs-directory))
+    	              :repo "manateelazycat/lsp-bridge"
+    	              :files ("*"))
   :preface
   ;; 融合 `lsp-bridge' `find-function' 以及 `dumb-jump' 的智能跳转
   (defun petmacs/lsp-bridge-jump ()
@@ -50,10 +49,8 @@
   (setq mode-line-misc-info (delete '(lsp-bridge-mode (" [" lsp-bridge--mode-line-format "] "))
                                     mode-line-misc-info))
 
-  (defun petmacs/start-lsp-bridge-service ()
-    (lsp-bridge-restart-process))
   (with-eval-after-load 'pyvenv
-    (add-hook 'pyvenv-post-activate-hooks #'petmacs/start-lsp-bridge-service))
+    (add-hook 'pyvenv-post-activate-hooks #'lsp-bridge-restart-process))
 
   ;; (setq-local evil-goto-definition-functions '(lsp-bridge-jump))
 
