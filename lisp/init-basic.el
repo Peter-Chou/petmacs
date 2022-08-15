@@ -18,6 +18,9 @@
     (add-to-list 'recentf-exclude no-littering-var-directory)
     (add-to-list 'recentf-exclude no-littering-etc-directory)))
 
+(when (file-exists-p custom-file)
+  (load custom-file 'noerror 'nomessage))
+
 ;; Treat undo history as a tree
 (use-package undo-tree
   :diminish
@@ -31,10 +34,6 @@
   (with-no-warnings
     (make-variable-buffer-local 'undo-tree-visualizer-diff)
     (setq-default undo-tree-visualizer-diff t)))
-
-
-(when (file-exists-p custom-file)
-  (load custom-file 'noerror 'nomessage))
 
 (use-package solar
   :ensure nil
@@ -265,6 +264,19 @@
       sentence-end "\\([。！？]\\|……\\|[.?!][]\"')}]*\\($\\|[ \t]\\)\\)[ \t\n]*"
       sentence-end-double-space nil
       word-wrap-by-category t)
+
+(use-package super-save
+  :hook (after-init . super-save-mode)
+  :init
+  (setq super-save-auto-save-when-idle t
+        super-save-remote-files nil
+        super-save-exclude '(".gpg"))
+  :config
+  (add-to-list 'super-save-triggers 'ace-window)
+  ;; save on find-file
+  (add-to-list 'super-save-hook-triggers 'find-file-hook)
+  ;; (super-save-mode 1)
+  )
 
 ;; Frame
 (when (display-graphic-p)
