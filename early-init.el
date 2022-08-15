@@ -13,13 +13,13 @@
 
 ;; use mirror
 (setq package-archives '(
-                         ("gnu" . "https://mirrors.163.com/elpa/gnu/")
-                         ("melpa" . "https://mirrors.163.com/elpa/melpa/")
-                         ("nongnu" . "https://mirrors.163.com/elpa/nongnu/")
+                         ;; ("gnu" . "https://mirrors.163.com/elpa/gnu/")
+                         ;; ("melpa" . "https://mirrors.163.com/elpa/melpa/")
+                         ;; ("nongnu" . "https://mirrors.163.com/elpa/nongnu/")
 
-                         ;; ("gnu"          . "https://elpa.gnu.org/packages/")
-                         ;; ("melpa"        . "https://melpa.org/packages/")
-                         ;; ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+                         ("gnu"          . "https://elpa.gnu.org/packages/")
+                         ("melpa"        . "https://melpa.org/packages/")
+                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")
 
                          ("org" . "https://orgmode.org/elpa/")
                          ))
