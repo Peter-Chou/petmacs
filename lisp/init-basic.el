@@ -265,19 +265,6 @@
       sentence-end-double-space nil
       word-wrap-by-category t)
 
-(use-package super-save
-  :hook (after-init . super-save-mode)
-  :init
-  (setq super-save-auto-save-when-idle t
-        super-save-remote-files nil
-        super-save-exclude '(".gpg"))
-  :config
-  (add-to-list 'super-save-triggers 'ace-window)
-  ;; save on find-file
-  (add-to-list 'super-save-hook-triggers 'find-file-hook)
-  ;; (super-save-mode 1)
-  )
-
 ;; Frame
 (when (display-graphic-p)
   (add-hook 'window-setup-hook #'fix-fullscreen-cocoa))
