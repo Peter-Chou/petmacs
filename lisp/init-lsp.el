@@ -89,7 +89,13 @@
     (defun my-lsp-icons-get-symbol-kind (fn &rest args)
       (when (and petmacs-icon (display-graphic-p))
 	    (apply fn args)))
-    (advice-add #'lsp-icons-get-by-symbol-kind :around #'my-lsp-icons-get-symbol-kind)))
+    (advice-add #'lsp-icons-get-by-symbol-kind :around #'my-lsp-icons-get-symbol-kind)
+
+    (defun petmacs/start-lsp-service ()
+      (lsp-deferred))
+    (with-eval-after-load 'pyvenv
+      (add-hook 'pyvenv-post-activate-hooks #'petmacs/start-lsp-service))))
+
 
 (use-package lsp-ui
   :custom-face

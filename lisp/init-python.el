@@ -47,10 +47,11 @@
         ;; to compare whether pyvenv-workon and pyvenv-virtual-env-name is equal
         (setq-local pyvenv-workon (gethash "venv" (json-read-file pfile)))
         (pyvenv-workon pyvenv-workon)
-        (cond ((equal petmacs-lsp-client-mode 'lsp-mode)
-               (lsp-deferred))
-              ((equal petmacs-lsp-client-mode 'lsp-bridge-mode)
-               (lsp-bridge-restart-process))))))
+        ;; (cond ((equal petmacs-lsp-client-mode 'lsp-mode)
+        ;;        (lsp-deferred))
+        ;;       ((equal petmacs-lsp-client-mode 'lsp-bridge-mode)
+        ;;        (lsp-bridge-restart-process)))
+        )))
   :hook (python-mode . petmacs/pyvenv-pyright-autoload)
   :config
   (pyvenv-mode 1)

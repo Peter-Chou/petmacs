@@ -50,6 +50,11 @@
   (setq mode-line-misc-info (delete '(lsp-bridge-mode (" [" lsp-bridge--mode-line-format "] "))
                                     mode-line-misc-info))
 
+  (defun petmacs/start-lsp-bridge-service ()
+    (lsp-bridge-restart-process))
+  (with-eval-after-load 'pyvenv
+    (add-hook 'pyvenv-post-activate-hooks #'petmacs/start-lsp-bridge-service))
+
   ;; (setq-local evil-goto-definition-functions '(lsp-bridge-jump))
 
   (define-key evil-motion-state-map (kbd "C-o") #'petmacs/lsp-bridge-jump-back)
