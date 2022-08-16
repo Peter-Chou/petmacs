@@ -15,7 +15,8 @@
   :defines dap-python-executable
   :diminish
   :hook ((after-init . dap-auto-configure-mode)
-	 ;;; dap-lldb needs lldb-vscode which is in LLVM prebuilt package
+         (dap-stopped . (lambda (arg) (call-interactively #'dap-hydra)))
+;;; dap-lldb needs lldb-vscode which is in LLVM prebuilt package
 	     ((c-mode c++-mode)      . (lambda () (require 'dap-lldb)))
          ((objc-mode swift-mode) . (lambda () (require 'dap-lldb)))
          (python-mode . (lambda () (require 'dap-python)))
