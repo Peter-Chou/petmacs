@@ -1,5 +1,7 @@
 ;; -*- lexical-binding: t no-byte-compile: t -*-
 
+(require 'init-custom)
+
 (use-package vertico
   :bind (:map minibuffer-mode-map
          ("M-n" . vertico-next)
@@ -9,7 +11,7 @@
   (setq read-file-name-completion-ignore-case t
         read-buffer-completion-ignore-case t
         completion-ignore-case t
-        vertico-resize t
+        vertico-resize petmacs-enable-mini-frame
         vertico-count 15
         vertico-cycle t)
   :init
