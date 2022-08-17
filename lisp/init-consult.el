@@ -14,7 +14,16 @@
         vertico-resize petmacs-enable-mini-frame
         vertico-count 15
         vertico-cycle t)
-  :init
+
+  ;; Use `consult-completion-in-region' if Vertico is enabled.
+  ;; Otherwise use the default `completion--in-region' function.
+  (setq completion-in-region-function
+        (lambda (&rest args)
+          (apply (if vertico-mode
+                     #'consult-completion-in-region
+                   #'completion--in-region)
+                 args)))
+
   ;; Add prompt indicator to `completing-read-multiple'.
   ;; We display [CRM<separator>], e.g., [CRM,] if the separator is a comma
   (defun crm-indicator (args)
@@ -30,6 +39,7 @@
   (setq minibuffer-prompt-properties
         '(read-only t cursor-intangible t face minibuffer-prompt))
   (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+
   :config
   ;; Cleans up path when moving directories with shadowed paths syntax, e.g.
   ;; cleans ~/foo/bar/// to /, and ~/foo/bar/~/ to ~/.
@@ -75,8 +85,8 @@
     (orderless-matching-styles '(orderless-initialism orderless-literal orderless-regexp)))
 
   (setq
-   ;; completion-styles '(orderless partial-completion)
-   completion-styles '(orderless partial-completion basic)
+   completion-styles '(basic substring partial-completion orderless flex)
+   ;; completion-styles '(orderless partial-completion basic)
    completion-category-defaults nil
    completion-category-overrides '((file (styles orderless partial-completion)) ;; partial-completion is tried first
                                    (command (styles +orderless-with-initialism))
