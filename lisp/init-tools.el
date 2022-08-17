@@ -260,7 +260,7 @@
   :hook (protobuf-mode . disable-curly-bracket-electric-pair))
 
 (use-package writeroom-mode
-  :hook ((prog-mode yaml-mode markdown-mode org-mode) . writeroom-mode)
+  ;; :hook ((prog-mode yaml-mode markdown-mode org-mode) . writeroom-mode)
   :init (setq writeroom-mode-line t
               writeroom-maximize-window nil
               writeroom-fullscreen-effect 'maximized

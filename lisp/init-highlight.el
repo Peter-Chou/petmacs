@@ -141,6 +141,7 @@ FACE defaults to inheriting from default and highlight."
          (dired-mode . diff-hl-dired-mode)
          ((after-init after-load-theme server-after-make-frame) . my-set-diff-hl-faces))
   :init (setq diff-hl-draw-borders nil
+              ;; diff-hl-side 'right
               ;; diff-hl-margin-symbols-alist
               ;; '((insert . "+") (delete . "-") (change . "=")
               ;;   (unknown . "?") (ignored . "i"))
@@ -153,7 +154,7 @@ FACE defaults to inheriting from default and highlight."
   (diff-hl-margin-mode 1)
 
   ;; Set fringe style
-  (setq-default fringes-outside-margins t)
+  ;; (setq-default fringes-outside-margins t)
 
   (defun my-set-diff-hl-faces ()
     "Set `diff-hl' faces."
