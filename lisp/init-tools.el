@@ -110,11 +110,14 @@
 ;; Drag stuff (lines, words, region, etc...) around
 (use-package drag-stuff
   :diminish
-  :commands drag-stuff-define-keys
   :hook (after-init . drag-stuff-global-mode)
   :config
-  (add-to-list 'drag-stuff-except-modes 'org-mode)
-  (drag-stuff-define-keys))
+  (evil-define-key nil evil-motion-state-map (kbd "M-n") 'drag-stuff-down)
+  (evil-define-key nil evil-motion-state-map (kbd "M-p") 'drag-stuff-up)
+  (evil-define-key nil evil-motion-state-map (kbd "M-h") 'drag-stuff-left)
+  (evil-define-key nil evil-motion-state-map (kbd "M-l") 'drag-stuff-right)
+
+  (add-to-list 'drag-stuff-except-modes 'org-mode))
 
 ;; Move to the beginning/end of line or code
 (use-package mwim
