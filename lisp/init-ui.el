@@ -544,6 +544,10 @@
           mini-frame-color-shift-step 6
           mini-frame-resize-max-height 25)))
 
+(use-package emojify
+  :hook (after-init . global-emojify-mode)
+  :init (setq emojify-download-emojis-p t))
+
 ;;; load theme
 ;; (petmacs--load-theme petmacs-default-theme)
 

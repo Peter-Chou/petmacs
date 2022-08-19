@@ -4,4 +4,7 @@
   :mode (("\\.ya?ml\\'" . yaml-mode)
          ("Procfile\\'" . yaml-mode)))
 
-(provide 'init-yaml)
+(use-package json-mode)
+(use-package toml-mode)
+
+(provide 'init-markup)

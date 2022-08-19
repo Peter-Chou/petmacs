@@ -76,7 +76,7 @@
 (require 'init-scala)
 
 (require 'init-markdown)
-(require 'init-yaml)
+(require 'init-markup)
 
 (require 'init-org)
 
