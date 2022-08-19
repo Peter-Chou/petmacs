@@ -158,6 +158,8 @@
           (3 . (rainbow bold 1.2))
           (t . (semilight 1.1)))))
 
+(use-package ef-themes)
+
 (use-package doom-themes
   :config
   ;; Enable flashing mode-line on errors
