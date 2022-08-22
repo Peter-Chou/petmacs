@@ -28,11 +28,8 @@
   (require 'cl-lib)
   (setq dap-enable-mouse-support t
         dap-python-debugger 'debugpy
-
-	    ;; dap-auto-configure-features '(sessions locals controls tooltip repl)
-        dap-auto-configure-features '(sessions locals breakpoints expressions controls)
-	    dap-lldb-debug-program '("/opt/llvm/bin/lldb-vscode")
-	    )
+        ;; dap-auto-configure-features '(sessions locals breakpoints expressions controls)
+	    dap-lldb-debug-program '("/opt/llvm/bin/lldb-vscode"))
   :config
   (with-eval-after-load 'dap-ui
     (setq dap-ui-buffer-configurations

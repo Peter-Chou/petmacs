@@ -55,28 +55,31 @@
                          (add-hook 'before-save-hook #'lsp-format-buffer t t)
                          (add-hook 'before-save-hook #'lsp-organize-imports t t)))))
   :init
-  (setq ;; lsp-keymap-prefix "C-c l"
-        lsp-auto-guess-root nil
+  (setq lsp-auto-guess-root nil
+        ;; lsp-keymap-prefix "C-c l"
         lsp-signature-auto-activate t
         lsp-signature-render-documentation nil
         lsp-modeline-code-actions-enable t
         lsp-modeline-diagnostics-enable t
         lsp-modeline-diagnostics-scope :workspace
-	    lsp-modeline-workspace-status-enable nil
-	    lsp-headerline-breadcrumb-enable t
+        lsp-modeline-workspace-status-enable nil
+        lsp-headerline-breadcrumb-enable t
         lsp-headerline-breadcrumb-segments '(symbols)
+
+        lsp-semantic-tokens-enable t
+        lsp-progress-spinner-type 'horizontal-breathing
 
         ;; how often lsp-mode will refresh the highlights, lenses, links, etc while you type
         lsp-idle-delay 0.5
 
         lsp-keep-workspace-alive nil
         lsp-enable-indentation nil
-	    lsp-enable-on-type-formatting nil
+        lsp-enable-on-type-formatting nil
         lsp-enable-folding t
         lsp-enable-file-watchers nil
         lsp-enable-symbol-highlighting nil
         lsp-enable-text-document-color nil
-	    lsp-enable-on-type-formatting nil)
+        lsp-enable-on-type-formatting nil)
   :config
   (with-no-warnings
     ;; Enable `lsp-mode' in sh/bash/zsh
