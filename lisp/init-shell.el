@@ -84,8 +84,7 @@
     :init (setq vterm-always-compile-module t))
 
   (use-package multi-vterm
-    :init (setq multi-vterm-buffer-name "vterm"
-                vterm-keymap-exceptions nil)
+    :init (setq multi-vterm-buffer-name "vterm")
     :config
     (with-no-warnings
       (defun my-multi-vterm ()
@@ -100,6 +99,7 @@
       (advice-add #'multi-vterm :override #'my-multi-vterm))
 
     (define-key vterm-mode-map [return]                      #'vterm-send-return)
+    (setq vterm-keymap-exceptions nil)
     (evil-define-key 'insert vterm-mode-map (kbd "C-e")      #'vterm--self-insert)
     (evil-define-key 'insert vterm-mode-map (kbd "C-f")      #'vterm--self-insert)
     (evil-define-key 'insert vterm-mode-map (kbd "C-a")      #'vterm--self-insert)
