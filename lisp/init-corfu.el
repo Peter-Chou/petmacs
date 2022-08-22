@@ -12,8 +12,8 @@
         corfu-quit-at-boundary 'separator
         corfu-quit-no-match 'separator
         corfu-preview-current nil
-        ;; corfu-preselect-first nil
-        corfu-auto-delay 0
+        corfu-preselect-first t
+        corfu-auto-delay 0.1
         corfu-auto-prefix 1
         )
   (when (> (frame-pixel-width) 3000) (custom-set-faces '(corfu-default ((t (:height 1.3))))))

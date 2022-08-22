@@ -52,8 +52,6 @@
   (with-eval-after-load 'pyvenv
     (add-hook 'pyvenv-post-activate-hooks #'lsp-bridge-restart-process))
 
-  ;; (setq-local evil-goto-definition-functions '(lsp-bridge-jump))
-
   (define-key evil-motion-state-map (kbd "C-o") #'petmacs/lsp-bridge-jump-back)
   (define-key evil-motion-state-map "gR" #'lsp-bridge-rename)
   (define-key evil-motion-state-map "gr" #'lsp-bridge-find-references)
