@@ -12,7 +12,7 @@
         read-buffer-completion-ignore-case t
         completion-ignore-case t
         vertico-resize petmacs-enable-mini-frame
-        vertico-count 15
+        vertico-count 17
         vertico-cycle t)
 
   ;; Use `consult-completion-in-region' if Vertico is enabled.
@@ -117,13 +117,15 @@
    consult-async-input-debounce 0.1)
 
   (consult-customize
-   consult-theme
    consult-ripgrep consult-git-grep consult-grep
-   :preview-key '(:debounce 0.5 any)
    consult-bookmark consult-recent-file consult-xref
-   consult--source-bookmark consult--source-recent-file
-   consult--source-project-recent-file
-   :preview-key (kbd "M-.")))
+   :preview-key (kbd "M-."))
+
+  (consult-customize
+   consult-theme
+   :preview-key (list :debounce 0.5 'any))
+
+  (advice-add #'multi-occur :override #'consult-multi-occur))
 
 (use-package consult-dir
   :bind (([remap list-directory] . consult-dir)))
@@ -145,15 +147,13 @@
   :init
   (setq which-key-use-C-h-commands nil
         ;; press C-h after a prefix key, it shows all the possible key bindings and let you choose what you want
-        prefix-help-command #'embark-prefix-help-command)
+        prefix-help-command #'embark-prefix-help-command
+        embark-verbose-indicator-display-action
+        '((display-buffer-at-bottom)
+          (window-parameters (mode-line-format . none))
+          (window-height . fit-window-to-buffer)))
 
-  (define-key evil-normal-state-map (kbd "C-.") 'embark-act)
-  (define-key evil-normal-state-map (kbd "M-.") 'embark-dwim)
-  (setq
-   embark-verbose-indicator-display-action
-   '((display-buffer-at-bottom)
-     (window-parameters (mode-line-format . none))
-     (window-height . fit-window-to-buffer)))
+  :config
   (defun embark-which-key-indicator ()
     "An embark indicator that displays keymaps using which-key.
 The which-key help message will show the type and value of the
@@ -176,21 +176,25 @@ targets."
            keymap)
          nil nil t (lambda (binding)
                      (not (string-suffix-p "-argument" (cdr binding))))))))
-
   (setq embark-indicators
         '(embark-which-key-indicator
           embark-highlight-indicator
           embark-isearch-highlight-indicator))
-
   (defun embark-hide-which-key-indicator (fn &rest args)
     "Hide the which-key indicator immediately when using the completing-read prompter."
     (which-key--hide-popup-ignore-command)
     (let ((embark-indicators
            (remq #'embark-which-key-indicator embark-indicators)))
       (apply fn args)))
-
   (advice-add #'embark-completing-read-prompter
-              :around #'embark-hide-which-key-indicator))
+              :around #'embark-hide-which-key-indicator)
+
+  (define-key evil-normal-state-map (kbd "C-.") 'embark-act)
+  (define-key evil-normal-state-map (kbd "M-.") 'embark-dwim)
+  ;; list all the keybindings in this buffer
+  (global-set-key (kbd "C-h B") 'embark-bindings)
+  (define-key embark-file-map (kbd "E") #'consult-directory-externally)
+  (define-key embark-file-map (kbd "U") #'consult-snv-unlock))
 
 (use-package marginalia
   :hook (after-init . marginalia-mode))

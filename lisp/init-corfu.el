@@ -70,11 +70,14 @@
                   (cape-company-to-capf #'company-yasnippet)))))
   :bind (("C-M-o" . cape-file))
   :hook ((lsp-completion-mode . petmacs/lsp-capf))
+  :init (setq cape-dabbrev-min-length 3
+              cape-dabbrev-check-other-buffers nil)
   :config
   ;; 默认用这三个补全后端
   (add-to-list 'completion-at-point-functions #'cape-symbol)
   (add-to-list 'completion-at-point-functions #'cape-file)
-  (add-to-list 'completion-at-point-functions #'cape-dabbrev))
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-keyword))
 
 (unless (display-graphic-p)
   (use-package corfu-terminal
