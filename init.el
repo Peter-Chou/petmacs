@@ -3,6 +3,8 @@
 ;; Speed up startup
 (setq auto-mode-case-fold nil)
 
+(push (expand-file-name "lisp" user-emacs-directory) load-path)
+
 (unless (or (daemonp) noninteractive init-file-debug)
   (let ((old-file-name-handler-alist file-name-handler-alist))
     (setq file-name-handler-alist nil)
@@ -12,16 +14,6 @@
                 (setq file-name-handler-alist
                       (delete-dups (append file-name-handler-alist
                                            old-file-name-handler-alist)))))))
-
-
-;; Load path
-;; Optimize: Force "lisp"" and "site-lisp" at the head to reduce the startup time.
-(defun update-load-path (&rest _)
-  "Update `load-path'."
-  (dolist (dir '("site-lisp" "lisp"))
-    (push (expand-file-name dir user-emacs-directory) load-path)))
-
-(update-load-path)
 
 (require 'init-custom)
 
