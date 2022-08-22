@@ -38,7 +38,6 @@
             (,dap-ui--sessions-buffer . ((side . right) (slot . 3) (window-width . 0.20)))
             (,dap-ui--breakpoints-buffer . ((side . left) (slot . 2) (window-width . ,treemacs-width)))
             (,dap-ui--debug-window-buffer . ((side . bottom) (slot . 3) (window-width . 0.20)))
-            (,dap-ui--repl-buffer . ((side . bottom) (slot . 1) (window-width . 0.35))))))
-  )
+            (,dap-ui--repl-buffer . ((side . bottom) (slot . 1) (window-width . 0.35)))))))
 
 (provide 'init-dap)
