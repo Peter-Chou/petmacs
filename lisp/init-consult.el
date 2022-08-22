@@ -85,7 +85,8 @@
     (orderless-matching-styles '(orderless-initialism orderless-literal orderless-regexp)))
 
   (setq
-   completion-styles '(orderless partial-completion basic)
+   completion-styles '(basic substring partial-completion orderless flex)
+   ;; completion-styles '(orderless partial-completion basic)
    completion-category-defaults nil
    completion-category-overrides '((file (styles orderless partial-completion)) ;; partial-completion is tried first
                                    (command (styles +orderless-with-initialism))
