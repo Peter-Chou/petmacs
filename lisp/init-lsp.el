@@ -55,7 +55,7 @@
                          (add-hook 'before-save-hook #'lsp-format-buffer t t)
                          (add-hook 'before-save-hook #'lsp-organize-imports t t)))))
   :init
-  (setq lsp-keymap-prefix "C-c l"
+  (setq ;; lsp-keymap-prefix "C-c l"
         lsp-auto-guess-root nil
         lsp-signature-auto-activate t
         lsp-signature-render-documentation nil

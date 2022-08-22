@@ -151,8 +151,8 @@
          (minibuffer-setup . subword-mode)))
 
 ;; Open files as another user
-(unless sys/win32p
-  (use-package sudo-edit))
+(use-package sudo-edit
+  :init (setq sudo-edit-user "root"))
 
 ;; Flexible text folding
 (use-package hideshow
@@ -260,7 +260,9 @@
   :commands (vr/select-replace vr/select-query-replace))
 
 (use-package protobuf-mode
-  :hook (protobuf-mode . disable-curly-bracket-electric-pair))
+  :hook (protobuf-mode . disable-curly-bracket-electric-pair)
+  :config
+  (define-key protobuf-mode-map (kbd "RET") 'av/auto-indent-method-maybe))
 
 (use-package writeroom-mode
   ;; :hook ((prog-mode yaml-mode markdown-mode org-mode) . writeroom-mode)
@@ -492,6 +494,9 @@
                              `(,val face font-lock-string-face)))))
               process-environment))
     (advice-add #'list-environment-entries :override #'my-list-environment-entries)))
+
+(use-package uuidgen
+  :commands (uuidgen))
 
 (use-package centered-cursor-mode)
 (use-package restart-emacs)
