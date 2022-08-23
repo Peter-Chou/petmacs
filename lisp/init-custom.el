@@ -9,11 +9,12 @@
 (defvar petmacs-font
   ;; "Monego"
   "Monego Ligatures"
-  ;; "MonegoLigatures Nerd Font"
+  ;; "Maple Mono"
   "font")
 
 (defvar  petmacs-chinese-font
-  "等距更纱黑体 SC"
+  "Maple Mono SC NF"
+  ;; "等距更纱黑体 SC"
   "chinese font")
 
 (defvar  petmacs-font-size 14.0

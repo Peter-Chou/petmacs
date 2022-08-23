@@ -8,7 +8,7 @@
 
   - [Monego Ligatures](https://github.com/cseelus/monego)
 
-  - [等距更纱黑体 SC](https://github.com/be5invis/Sarasa-Gothic)
+  - [Maple Mono SC NF](https://gitee.com/subframe7536/Maple/releases)
 
   - [all-the-icons](https://github.com/domtronn/all-the-icons.el)
 
