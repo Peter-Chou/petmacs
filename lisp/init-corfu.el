@@ -69,7 +69,7 @@
                   ;; #'cape-symbol
                   (cape-company-to-capf #'company-yasnippet)))))
   :bind (("C-M-o" . cape-file))
-  :hook ((lsp-completion-mode . petmacs/lsp-capf))
+  ;; :hook (lsp-completion-mode . petmacs/lsp-capf)
   :init (setq cape-dabbrev-min-length 3
               cape-dabbrev-check-other-buffers nil)
   :config
