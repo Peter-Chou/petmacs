@@ -88,6 +88,7 @@ session*
 *.db
 
 eln-cache/
+librime/
 pyim/
 eaf/
 etc/
