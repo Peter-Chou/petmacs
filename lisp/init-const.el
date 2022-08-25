@@ -8,6 +8,11 @@
   (eq system-type 'gnu/linux)
   "Are we running on a GNU/Linux system?")
 
+(defconst sys/wslp
+  (and (eq system-type 'gnu/linux)
+       (string-match "-[Mm]icrosoft" operating-system-release))
+  "Are we running on a wsl/wsl2 system?")
+
 (defconst sys/macp
   (eq system-type 'darwin)
   "Are we running on a Mac system?")
