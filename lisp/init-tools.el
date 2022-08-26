@@ -407,9 +407,6 @@
 ;;      )))
 
 (use-package rime
-  :quelpa (rime :fetcher github
-                :repo "DogLooksGood/emacs-rime"
-                :files ("*.el" "Makefile" "lib.c"))
   :init
   (setq default-input-method "rime"
         rime-title (char-to-string 20013) ;; "中"
