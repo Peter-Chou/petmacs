@@ -420,11 +420,16 @@
         ;; rime-librime-root (expand-file-name "librime/build" user-emacs-directory)
         ;; rime-emacs-module-header-root "/home/peter/emacs-28.1-native-comp/src"
 
-        ;; rime-disable-predicates
-        ;; '(rime-predicate-evil-mode-p
-        ;;   rime-predicate-after-alphabet-char-p
-        ;;   rime-predicate-punctuation-line-begin-p
-        ;;   rime-predicate-prog-in-code-p)
+        rime-disable-predicates
+        '(rime-predicate-evil-mode-p ;; 在 evil-mode 的非编辑状态下
+          rime-predicate-after-alphabet-char-p ;; 在英文字符串之后（必须为以字母开头的英文字符串）
+          ;; rime-predicate-punctuation-line-begin-p ;; 在行首要输入符号时
+          rime-predicate-prog-in-code-p ;; 在 prog-mode 和 conf-mode 中除了注释和引号内字符串之外的区域
+          rime-predicate-ace-window-p ;; 激活 ace-window-mode
+          rime-predicate-hydra-p ;; 激活了一个 hydra keymap
+          rime-predicate-current-uppercase-letter-p ;; 将要输入的为大写字母时
+          rime-predicate-tex-math-or-command-p ;; 在 (La)TeX 数学环境中或者输入 (La)TeX 命令时
+          )
 
         rime-posframe-properties (list :internal-border-width 1))
   :config
