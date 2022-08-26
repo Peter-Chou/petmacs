@@ -412,6 +412,8 @@
                 :files ("*.el" "Makefile" "lib.c"))
   :init
   (setq default-input-method "rime"
+        rime-title (char-to-string 20013) ;; "中"
+        rime-cursor "˰"
         rime-user-data-dir (expand-file-name "data/rime" user-emacs-directory)
         rime-show-candidate (petmacs/candidate-show-framework)
 
@@ -427,7 +429,9 @@
         rime-posframe-properties (list :internal-border-width 1))
   :config
   (set-face-attribute 'rime-highlight-candidate-face nil :foreground petmacs-favor-color :bold t)
-  (set-face-attribute 'rime-code-face nil :foreground petmacs-favor-color :bold t))
+  (set-face-attribute 'rime-code-face nil :foreground petmacs-favor-color :bold t)
+
+  (define-key rime-mode-map (kbd "M-j") 'rime-force-enable))
 
 (defconst tree-sitter--fold-supported-major-mode-hooks
   '(
