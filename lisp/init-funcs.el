@@ -36,6 +36,11 @@
        (or (featurep 'all-the-icons)
            (require 'all-the-icons nil t))))
 
+(defun petmacs/candidate-show-framework ()
+  (if (display-graphic-p)
+      'posframe
+    'popup))
+
 ;; Dos2Unix/Unix2Dos
 (defun dos2unix ()
   "Convert the current buffer to UNIX file format."

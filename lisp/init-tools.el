@@ -413,24 +413,21 @@
   :init
   (setq default-input-method "rime"
         rime-user-data-dir (expand-file-name "data/rime" user-emacs-directory)
+        rime-show-candidate (petmacs/candidate-show-framework)
 
         ;; rime-librime-root (expand-file-name "librime/build" user-emacs-directory)
         ;; rime-emacs-module-header-root "/home/peter/emacs-28.1-native-comp/src"
-        rime-show-candidate 'posframe
+
         ;; rime-disable-predicates
         ;; '(rime-predicate-evil-mode-p
         ;;   rime-predicate-after-alphabet-char-p
         ;;   rime-predicate-punctuation-line-begin-p
         ;;   rime-predicate-prog-in-code-p)
-        rime-posframe-properties
-        (list ;; :foreground-color "#dcdccc"
-         ;; :background-color "#333333"
-         :internal-border-width 1))
+
+        rime-posframe-properties (list :internal-border-width 1))
   :config
   (set-face-attribute 'rime-highlight-candidate-face nil :foreground petmacs-favor-color :bold t)
-  (set-face-attribute 'rime-code-face nil :foreground petmacs-favor-color :bold t)
-  ;; (set-face-attribute 'rime-default-face nil :foreground "#dcdccc" :background "#333333")
-  )
+  (set-face-attribute 'rime-code-face nil :foreground petmacs-favor-color :bold t))
 
 (defconst tree-sitter--fold-supported-major-mode-hooks
   '(
