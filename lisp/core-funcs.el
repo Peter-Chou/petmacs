@@ -40,7 +40,7 @@ current window."
 If the executable is a system executable and not in the same path
 as the pyenv version then also return nil. This works around https://github.com/pyenv/pyenv-which-ext
 "
-  (if (executable-find "pyenv")
+  (if (and (not (and (boundp 'pyvenv-virtual-env) pyvenv-virtual-env)) (executable-find "pyenv"))
       (progn
         (let ((pyenv-string (shell-command-to-string (concat "pyenv which " command)))
               (pyenv-version-names (split-string (string-trim (shell-command-to-string "pyenv version-name")) ":"))
@@ -72,7 +72,16 @@ as the pyenv version then also return nil. This works around https://github.com/
       (with-current-buffer (get-buffer "*compilation*")
         (inferior-python-mode)))))
 
-(defun petmacs/python-remove-unused-imports()
+(defun petmacs/python-execute-file-focus (arg)
+  "Execute a python script in a shell and switch to the shell buffer in
+ `insert state'."
+  (interactive "P")
+  (petmacs/python-execute-file arg)
+  (switch-to-buffer-other-window "*compilation*")
+  (end-of-buffer)
+  (evil-insert-state))
+
+(defun petmacs/python-remove-unused-imports ()
   "Use Autoflake to remove unused function"
   "autoflake --remove-all-unused-imports -i unused_imports.py"
   (interactive)
@@ -82,7 +91,6 @@ as the pyenv version then also return nil. This works around https://github.com/
                                (shell-quote-argument (buffer-file-name))))
         (revert-buffer t t t))
     (message "Error: Cannot find autoflake executable.")))
-
 
 (defun petmacs/quit-subjob ()
   "quit runing job in python buffer"
