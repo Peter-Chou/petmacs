@@ -67,7 +67,7 @@
         lsp-headerline-breadcrumb-segments '(symbols)
 
         lsp-semantic-tokens-enable t
-        lsp-progress-spinner-type 'horizontal-breathing
+        lsp-progress-spinner-type 'progress-bar-filled
 
         ;; how often lsp-mode will refresh the highlights, lenses, links, etc while you type
         lsp-idle-delay 0.5
