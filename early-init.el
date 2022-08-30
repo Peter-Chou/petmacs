@@ -9,8 +9,6 @@
 ;; Prefer loading newest compiled .el file
 (customize-set-variable 'load-prefer-newer noninteractive)
 
-(setq byte-compile-warnings '(cl-functions))
-
 ;; use mirror
 (setq package-archives '(
                          ;; ("gnu" . "https://mirrors.163.com/elpa/gnu/")
@@ -39,6 +37,8 @@
             ;; Make native compilation happens asynchronously
             native-comp-deferred-compilation nil))
   (message "Native complation is *not* available"))
+
+(setq byte-compile-warnings nil)
 
 (setq package-enable-at-startup nil)
 
