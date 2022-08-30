@@ -536,6 +536,19 @@
   (define-key evil-motion-state-map (kbd "M-j") #'watch-other-window-up)
   (define-key evil-motion-state-map (kbd "M-k") #'watch-other-window-down))
 
+(use-package quickrun
+  :commands (quickrun)
+  :init
+  (quickrun-add-command "c++/c1z"
+                        '((:command . "g++")
+                          (:exec . ("%c -std=c++1z %o -o %e %s"
+                                    "%e %a"))
+                          (:remove . ("%e")))
+                        :default "c++")
+  (quickrun-add-command "python"
+                        '((:command . "python3"))
+                        :default "python"))
+
 (use-package uuidgen
   :commands (uuidgen))
 
