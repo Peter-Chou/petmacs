@@ -435,6 +435,17 @@
 
   (define-key rime-mode-map (kbd "M-j") 'rime-force-enable))
 
+;; add space between Chinese and English character
+;; these white-space characters are not really added to the contents, it just like to do.
+(use-package pangu-spacing
+  :init
+  (global-pangu-spacing-mode 1)
+  :config
+  ;; Always insert `real' space in org-mode.
+  (add-hook 'org-mode-hook
+            (lambda ()
+              (setq-local pangu-spacing-real-insert-separtor t))))
+
 (defconst tree-sitter--fold-supported-major-mode-hooks
   '(
     sh-mode-hook

@@ -5,6 +5,7 @@
 (require'org-tempo) ;; start easy template
 
 (use-package org
+  ;; :pin gnu
   :preface
   (defun petmacs/org-mode-setup ()
     (org-indent-mode)
@@ -74,7 +75,8 @@
 (use-package org-superstar
   :if (and (display-graphic-p) (char-displayable-p ?◉))
   :hook (org-mode . org-superstar-mode)
-  :init (setq org-superstar-headline-bullets-list '("◉""○""◈""◇""⁕")))
+  :init (setq org-superstar-headline-bullets-list '("◉""○""◈""◇""⁕")
+              org-superstar-special-todo-items t))
 
 (use-package org-fancy-priorities
   :diminish
@@ -116,5 +118,25 @@
   :hook (org-mode . petmacs/org-mode-visual-fill))
 
 (use-package org-super-agenda)
+
+(use-package evil-org
+  :hook (org-mode . evil-org-mode)
+  :after org
+  :config
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys))
+
+
+(use-package org-appear
+  :preface
+  (defun org-apperance-evil-hack ()
+    (add-hook 'evil-insert-state-entry-hook #'org-appear-manual-start nil t)
+    (add-hook 'evil-insert-state-exit-hook #'org-appear-manual-stop nil t))
+  :after org
+  :hook (org-mode . org-appear-mode)
+  :init
+  (setq org-appear-trigger 'manual)
+  (add-hook 'org-mode-hook 'org-apperance-evil-hack))
+
 
 (provide 'init-org)

@@ -56,7 +56,15 @@
   (define-key corfu-map (kbd "C-M-p") #'corfu-doc-scroll-down)
   (define-key corfu-map (kbd "C-M-n") #'corfu-doc-scroll-up))
 
-(use-package company)
+(use-package company
+  :init
+  (setq company-minimum-prefix-length 1
+        company-idle-delay 0))
+
+;; (use-package company-flx
+;;   :after (company)
+;;   :init
+;;   (company-flx-mode 1))
 
 (use-package cape
   :preface
