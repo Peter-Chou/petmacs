@@ -3,8 +3,6 @@
 ;; Speed up startup
 (setq auto-mode-case-fold nil)
 
-(push (expand-file-name "lisp" user-emacs-directory) load-path)
-
 (unless (or (daemonp) noninteractive init-file-debug)
   (let ((old-file-name-handler-alist file-name-handler-alist))
     (setq file-name-handler-alist nil)
@@ -14,6 +12,8 @@
                 (setq file-name-handler-alist
                       (delete-dups (append file-name-handler-alist
                                            old-file-name-handler-alist)))))))
+
+(push (expand-file-name "lisp" user-emacs-directory) load-path)
 
 (require 'init-custom)
 
