@@ -88,7 +88,7 @@
   (use-package fd-dired))
 
 (use-package diredfl
-  :init (diredfl-global-mode 1))
+  :hook (dired-mode . diredfl-mode))
 
 (use-package all-the-icons-dired
   :diminish
