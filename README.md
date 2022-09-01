@@ -23,8 +23,8 @@
 - rime
 
 ``` bash
+# use terra-pinyin for chinese input
 sudo apt-get install librime-dev
-sudo apt-get install librime-data-terra-pinyin  # 地球拼音
 ```
 
 ---
@@ -32,6 +32,8 @@ sudo apt-get install librime-data-terra-pinyin  # 地球拼音
 ## Install
 
 ### clone repository
+
+install [rime](https://github.com/rime/librime)
 
 ```bash
 git clone --depth=1 https://github.com/Peter-Chou/petmacs.git ~/.emacs.d
