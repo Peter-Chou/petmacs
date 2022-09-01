@@ -212,8 +212,14 @@ targets."
   (setq wgrep-auto-save-buffer t
         wgrep-change-readonly-file t))
 
+;; Affe requires the rg (“ripgrep”) command line program
 (use-package affe
   :config
+  (defun affe-orderless-regexp-compiler (input _type _ignorecase)
+    (setq input (orderless-pattern-compiler input))
+    (cons input (lambda (str) (orderless--highlight input str))))
+  (setq affe-regexp-compiler #'affe-orderless-regexp-compiler)
+
   ;; Manual preview key for `affe-grep'
   (consult-customize affe-grep :preview-key (kbd "M-.")))
 
