@@ -297,7 +297,8 @@
     "b"  #'consult-projectile-switch-to-buffer
     "d"  #'consult-projectile-find-dir
     "p"  #'consult-projectile-switch-project
-    "f"  #'consult-projectile-find-file
+    ;; "f"  #'consult-projectile-find-file
+    "f"  #'affe-find
     "r"  #'consult-projectile-recentf
     "o"  #'org-projectile/goto-project-todos
     "v"  #'projectile-vc

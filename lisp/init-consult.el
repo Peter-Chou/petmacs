@@ -212,6 +212,11 @@ targets."
   (setq wgrep-auto-save-buffer t
         wgrep-change-readonly-file t))
 
+(use-package affe
+  :config
+  ;; Manual preview key for `affe-grep'
+  (consult-customize affe-grep :preview-key (kbd "M-.")))
+
 (use-package consult-project-extra)
 
 (provide 'init-consult)
