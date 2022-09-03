@@ -149,20 +149,33 @@ Same as `replace-string C-q C-m RET RET'."
   (interactive)
   (save-buffer-as-utf8 'gbk))
 
-(defun recompile-elpa ()
-  "Recompile packages in elpa directory. Useful if you switch Emacs versions."
+(defun byte-compile-elpa ()
+  "Compile packages in elpa directory. Useful if you switch Emacs versions."
   (interactive)
   (if (fboundp 'async-byte-recompile-directory)
       (async-byte-recompile-directory package-user-dir)
     (byte-recompile-directory package-user-dir 0 t)))
 
-(defun recompile-site-lisp ()
-  "Recompile packages in site-lisp directory."
+(defun byte-compile-site-lisp ()
+  "Compile packages in site-lisp directory."
   (interactive)
-  (let ((temp-dir (locate-user-emacs-file "site-lisp")))
+  (let ((dir (locate-user-emacs-file "site-lisp")))
     (if (fboundp 'async-byte-recompile-directory)
-        (async-byte-recompile-directory temp-dir)
-      (byte-recompile-directory temp-dir 0 t))))
+        (async-byte-recompile-directory dir)
+      (byte-recompile-directory dir 0 t))))
+
+(defun native-compile-elpa ()
+  "Native-compile packages in elpa directory."
+  (interactive)
+  (if (fboundp 'native-compile-async)
+      (native-compile-async package-user-dir t)))
+
+(defun native-compile-site-lisp ()
+  "Native compile packages in site-lisp directory."
+  (interactive)
+  (let ((dir (locate-user-emacs-file "site-lisp")))
+    (if (fboundp 'native-compile-async)
+        (native-compile-async dir t))))
 
 (defun icons-displayable-p ()
   "Return non-nil if `all-the-icons' is displayable."
