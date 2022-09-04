@@ -48,7 +48,7 @@ git clone --depth=1 https://github.com/Peter-Chou/petmacs.git ~/.emacs.d
 # in .emacs.d folder
 git submodule update --init --recursive
 
-# udpate submodules to latest version
+# update submodules to latest version
 # git submodule update --remote --merge
 ```
 
