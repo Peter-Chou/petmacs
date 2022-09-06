@@ -156,6 +156,32 @@
     ))
 
 (leader-declare-prefix
+  "l" "layout")
+(leader-with-prefix "l"
+  (leader-set-keys
+    "n" #'persp-next
+    "p" #'persp-prev
+    "s" #'persp-frame-switch
+    "S" #'persp-window-switch
+    "r" #'persp-rename
+    "c" #'persp-copy
+    "C" #'persp-kill
+    "z" #'persp-save-and-kill
+    "a" #'persp-add-buffer
+    "b" #'persp-switch-to-buffer
+    "t" #'persp-temporarily-display-buffer
+    "i" #'persp-import-buffers
+    "I" #'persp-import-win-conf
+    "k" #'persp-remove-buffer
+    "K" #'persp-kill-buffer
+    "w" #'persp-save-state-to-file
+    "W" #'persp-save-to-file-by-names
+    "l" #'persp-load-state-from-file
+    "L" #'persp-load-from-file-by-names
+    "o" #'petmacs/disable-persp-mode
+    ))
+
+(leader-declare-prefix
   "w" "window")
 (leader-with-prefix "w"
   (leader-set-keys
