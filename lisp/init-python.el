@@ -35,6 +35,7 @@
   :preface
   ;; autoload virtual environment if project_root/pyrightconfig.json file exists,
   (defun petmacs/pyvenv-pyright-autoload ()
+    (interactive)
     (require 'projectile)
     (require 'json)
     (let* ((pdir (projectile-project-root))

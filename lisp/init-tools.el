@@ -265,7 +265,7 @@
   (define-key protobuf-mode-map (kbd "RET") 'av/auto-indent-method-maybe))
 
 (use-package writeroom-mode
-  :hook ((prog-mode yaml-mode markdown-mode org-mode) . writeroom-mode)
+  ;; :hook ((prog-mode yaml-mode markdown-mode org-mode) . writeroom-mode)
   :init (setq writeroom-mode-line t
               writeroom-maximize-window nil
               writeroom-fullscreen-effect 'maximized
