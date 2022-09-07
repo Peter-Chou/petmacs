@@ -35,7 +35,7 @@
     (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
     (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch))
   :pin melpa
-  :custom-face (org-ellipsis ((t (:foreground nil))))
+  :custom-face (org-ellipsis ((t (:foreground unspecified))))
   :hook ((org-mode . petmacs/org-mode-setup)
          ((org-babel-after-execute org-mode) . org-redisplay-inline-images)) ; display image
   :init
