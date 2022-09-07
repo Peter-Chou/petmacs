@@ -98,7 +98,7 @@
           "\\*docker-containers\\*" "\\*docker-images\\*" "\\*docker-networks\\*" "\\*docker-volumes\\*"
           "\\*prolog\\*" inferior-python-mode inf-ruby-mode swift-repl-mode
           "\\*rustfmt\\*$" rustic-compilation-mode rustic-cargo-clippy-mode
-          rustic-cargo-outdated-mode rustic-cargo-test-moed))
+          rustic-cargo-outdated-mode rustic-cargo-run-mode rustic-cargo-test-mode))
   (with-eval-after-load 'projectile
     (setq popper-group-function #'popper-group-by-projectile))
 
