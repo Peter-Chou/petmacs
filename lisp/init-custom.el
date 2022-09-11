@@ -25,7 +25,8 @@
 
 (defvar  petmacs-default-theme
   ;; 'modus-operandi ;; light theme
-  'modus-vivendi  ;; dark theme
+  ;; 'modus-vivendi  ;; dark theme
+  'ef-deuteranopia-light
   ;; 'doom-ayu-dark
   "default theme")
 

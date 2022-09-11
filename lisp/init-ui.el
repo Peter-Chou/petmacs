@@ -553,13 +553,13 @@
 ;;; load theme
 ;; (petmacs--load-theme petmacs-default-theme)
 
-(use-package circadian
-  ;; native Compilation don't perform correct
-  :load-path (lambda () (expand-file-name "site-lisp/local/circadian" user-emacs-directory))
-  :commands (circadian-setup)
-  :init
-  (setq circadian-themes '(("8:00" . modus-operandi)
-                           ("19:00"  . modus-vivendi)))
-  (circadian-setup))
+;; (use-package circadian
+;;   ;; native Compilation don't perform correct
+;;   :load-path (lambda () (expand-file-name "site-lisp/local/circadian" user-emacs-directory))
+;;   :commands (circadian-setup)
+;;   :init
+;;   (setq circadian-themes '(("8:00" . modus-operandi)
+;;                            ("19:00"  . modus-vivendi)))
+;;   (circadian-setup))
 
 (provide 'init-ui)
