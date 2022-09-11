@@ -11,7 +11,7 @@
         display-time-24hr-format t
         display-time-day-and-date t
         display-time-default-load-average nil
-        display-time-format "%m-%d %H:%M %a"))
+        display-time-format "%m-%d %H:%M:%S %a"))
 
 (when (and sys/mac-ns-p sys/mac-x-p)
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
