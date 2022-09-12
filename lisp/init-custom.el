@@ -23,12 +23,10 @@
 (defvar petmacs-enable-ligatures t
   "enable ligatures")
 
-(defvar  petmacs-default-theme
-  ;; 'modus-operandi ;; light theme
-  ;; 'modus-vivendi  ;; dark theme
-  'ef-deuteranopia-light
-  ;; 'doom-ayu-dark
-  "default theme")
+(defvar  petmacs-day-night-themes
+  '(("8:00" . ef-deuteranopia-light)
+    ("19:00"  . ef-deuteranopia-dark))
+  "day night theme")
 
 (defvar petmacs-modeline-style
   ;; 'awesome-tray
