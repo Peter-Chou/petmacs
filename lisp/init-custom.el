@@ -24,7 +24,7 @@
   "enable ligatures")
 
 (defvar  petmacs-day-night-themes
-  '(("8:00" . ef-deuteranopia-light)
+  '(("8:00" . doom-one-light)
     ("19:00"  . ef-deuteranopia-dark))
   "day night theme")
 

@@ -12,7 +12,7 @@
         read-buffer-completion-ignore-case t
         completion-ignore-case t
         vertico-resize petmacs-enable-mini-frame
-        vertico-count 17
+        vertico-count 15
         vertico-cycle t)
 
   ;; Use `consult-completion-in-region' if Vertico is enabled.

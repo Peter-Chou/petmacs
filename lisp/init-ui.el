@@ -262,6 +262,7 @@
     (setq doom-modeline-icon petmacs-icon
           doom-modeline-support-imenu t
           doom-modeline-minor-modes nil
+          doom-modeline-indent-info nil
           doom-modeline-height 1
           doom-modeline-window-width-limit 110
           doom-modeline-buffer-file-name-style 'relative-to-project)

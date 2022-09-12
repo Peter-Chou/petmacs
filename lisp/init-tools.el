@@ -371,42 +371,42 @@
     typescript-mode-hook))
 
 ;; Tree-sitter: need dynamic module feature
-(when (functionp 'module-load)
-  (use-package tree-sitter
-    :diminish
-    :hook ((after-init . global-tree-sitter-mode)
-           (tree-sitter-after-on . tree-sitter-hl-mode))))
+;; (when (functionp 'module-load)
+;;   (use-package tree-sitter
+;;     :diminish
+;;     :hook ((after-init . global-tree-sitter-mode)
+;;            (tree-sitter-after-on . tree-sitter-hl-mode))))
 
-(use-package tree-sitter-langs)
+;; (use-package tree-sitter-langs)
 
-(use-package tree-sitter-indent
-  :hook (rust-mode . tree-sitter-indent-mode))
+;; (use-package tree-sitter-indent
+;;   :hook (rust-mode . tree-sitter-indent-mode))
 
-(use-package ts-fold
-  :quelpa (ts-fold :fetcher github
-  		           :repo "jcs090218/ts-fold"
-  		           :files ("*.el"))
-  :pretty-hydra
-  ((:foreign-keys warn :quit-key "q")
-   ("Toggle"
-    (("t" ts-fold-toggle "toggle at point" :exit t))
-    "Open"
-    (
-     ("o" ts-fold-open "open at point" :exit t)
-     ("r" ts-fold-open-all "open all" :exit t)
-     ("O" ts-fold-open-recursively "recursive open at point" :exit t))
-    "Close"
-    (("c" ts-fold-close "close at point" :exit t)
-     ("m" ts-fold-close-all "close all" :exit t))))
-  :init
-  (setq ts-fold-indicators-fringe 'right-fringe
-        ;; don't obscure lint and breakpoint indicators
-        ts-fold-indicators-priority 0
-        )
-  (dolist (mode-hook tree-sitter--fold-supported-major-mode-hooks)
-    (when (boundp mode-hook)
-      (add-hook mode-hook #'ts-fold-mode)
-      (add-hook mode-hook #'ts-fold-indicators-mode))))
+;; (use-package ts-fold
+;;   :quelpa (ts-fold :fetcher github
+;;   		           :repo "jcs090218/ts-fold"
+;;   		           :files ("*.el"))
+;;   :pretty-hydra
+;;   ((:foreign-keys warn :quit-key "q")
+;;    ("Toggle"
+;;     (("t" ts-fold-toggle "toggle at point" :exit t))
+;;     "Open"
+;;     (
+;;      ("o" ts-fold-open "open at point" :exit t)
+;;      ("r" ts-fold-open-all "open all" :exit t)
+;;      ("O" ts-fold-open-recursively "recursive open at point" :exit t))
+;;     "Close"
+;;     (("c" ts-fold-close "close at point" :exit t)
+;;      ("m" ts-fold-close-all "close all" :exit t))))
+;;   :init
+;;   (setq ts-fold-indicators-fringe 'right-fringe
+;;         ;; don't obscure lint and breakpoint indicators
+;;         ts-fold-indicators-priority 0
+;;         )
+;;   (dolist (mode-hook tree-sitter--fold-supported-major-mode-hooks)
+;;     (when (boundp mode-hook)
+;;       (add-hook mode-hook #'ts-fold-mode)
+;;       (add-hook mode-hook #'ts-fold-indicators-mode))))
 
 (use-package list-environment
   :hook (list-environment-mode . (lambda ()
