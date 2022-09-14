@@ -1,5 +1,7 @@
 ;; -*- lexical-binding: t no-byte-compile: t -*-
 
+(require 'init-funcs)
+
 ;; (use-package beacon
 ;;   :custom
 ;;   (beacon-color "yellow")
@@ -78,8 +80,10 @@ FACE defaults to inheriting from default and highlight."
 ;; Highlight indentions
 (use-package highlight-indent-guides
   :diminish
-  ;; :hook ((prog-mode yaml-mode) . highlight-indent-guides-mode)
-  :hook ((python-mode yaml-mode) . highlight-indent-guides-mode)
+  :hook ((prog-mode yaml-mode) . (lambda ()
+                                   "Highlight indentations in small files for better performance."
+                                   (unless (too-long-file-p)
+                                     (highlight-indent-guides-mode 1))))
   :init
   (setq highlight-indent-guides-auto-enabled nil
         highlight-indent-guides-method 'character

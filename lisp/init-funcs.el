@@ -350,4 +350,17 @@ This issue has been addressed in 28."
     (error
      (make-frame-invisible nil 1))))
 
+(defun too-long-file-p ()
+  "Check whether the file is too long."
+  (if (fboundp 'buffer-line-statistics)
+      (> (car (buffer-line-statistics)) 3000)
+    (> (buffer-size) 100000)))
+
+(defun childframe-workable-p ()
+  "Whether childframe is workable."
+  (or (not (or noninteractive
+               emacs-basic-display
+               (not (display-graphic-p))))
+      (daemonp)))
+
 (provide 'init-funcs)

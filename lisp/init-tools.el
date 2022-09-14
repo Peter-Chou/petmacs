@@ -2,6 +2,7 @@
 
 (require 'init-custom)
 (require 'init-const)
+(require 'init-funcs)
 
 (use-package which-key
   :diminish
@@ -45,11 +46,11 @@
 (use-package aggressive-indent
   :diminish
   :hook ((after-init . global-aggressive-indent-mode)
-         ;; WORKAROUND: Disable in big files due to the performance issues
+         ;; NOTE: Disable in large files due to the performance issues
          ;; https://github.com/Malabarba/aggressive-indent-mode/issues/73
          (find-file . (lambda ()
-                        (if (> (buffer-size) (* 3000 80))
-                            (aggressive-indent-mode -1)))))
+                        (when (too-long-file-p)
+                          (aggressive-indent-mode -1)))))
   :config
   ;; Disable in some modes
   (dolist (mode '(gitconfig-mode asm-mode web-mode html-mode css-mode go-mode scala-mode prolog-inferior-mode))
@@ -471,5 +472,8 @@
 (unless sys/win32p
   (use-package daemons)                 ; system services/daemons
   (use-package tldr))
+
+;; Visual `align-regexp'
+(use-package ialign)
 
 (provide 'init-tools)
