@@ -25,7 +25,7 @@
 
 (defvar  petmacs-day-night-themes
   '(("8:00" . doom-one-light)
-    ("19:00"  . ef-deuteranopia-dark))
+    ("20:00"  . doom-snazzy))
   "day night theme")
 
 (defvar petmacs-modeline-style
