@@ -556,6 +556,9 @@
   :load-path (lambda () (expand-file-name "site-lisp/local/circadian" user-emacs-directory))
   :commands (circadian-setup)
   :custom (circadian-themes petmacs-day-night-themes)
-  :init (circadian-setup))
+  :init (circadian-setup)
+  :config
+  (when (bound-and-true-p awesome-tray-mode)
+    (add-hook circadian-after-load-theme-hook #'awesome-tray-enable)))
 
 (provide 'init-ui)
