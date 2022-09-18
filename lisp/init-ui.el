@@ -11,7 +11,7 @@
         display-time-24hr-format t
         display-time-day-and-date t
         display-time-default-load-average nil
-        display-time-format "%m-%d %H:%M:%S %a"))
+        display-time-format "%m-%d %H:%M %a"))
 
 (when (and sys/mac-ns-p sys/mac-x-p)
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
@@ -171,8 +171,6 @@
     (doom-themes-treemacs-config)))
 
 (if (and (equal petmacs-modeline-style 'awesome-tray)
-         ;; acm popup in lsp-bridge somehow conflict with awesome-tray
-         (not (equal petmacs-lsp-client-mode 'lsp-bridge-mode))
          (display-graphic-p))
     (use-package awesome-tray
       :quelpa (awesome-tray :fetcher github
@@ -272,27 +270,27 @@
       (setq-default mode-line-format nil))
     :config
     (doom-modeline-def-segment pomodoro
-      "pomodoro"
-      (propertize
-       (concat
-        doom-modeline-spc (format "%s" pomodoro-mode-line-string) doom-modeline-spc)
-       'face (doom-modeline-face 'doom-modeline-urgent)))
+                               "pomodoro"
+                               (propertize
+                                (concat
+                                 doom-modeline-spc (format "%s" pomodoro-mode-line-string) doom-modeline-spc)
+                                'face (doom-modeline-face 'doom-modeline-urgent)))
 
     (doom-modeline-def-segment python-venv
-      "python venv"
-      (when (and (doom-modeline--active)
-                 (equal major-mode 'python-mode)
-                 (bound-and-true-p python-shell-virtualenv-root))
-        (propertize
-         (concat
-          doom-modeline-spc
-          (doom-modeline-icon 'material  "check_circle" "☑" "✔"
-                              :face 'doom-modeline-python-venv
-                              :height 1.3 :v-adjust -0.15)
-          doom-modeline-spc
-          (file-name-nondirectory python-shell-virtualenv-root)
-          doom-modeline-spc)
-         'face (doom-modeline-face 'doom-modeline-python-venv))))
+                               "python venv"
+                               (when (and (doom-modeline--active)
+                                          (equal major-mode 'python-mode)
+                                          (bound-and-true-p python-shell-virtualenv-root))
+                                 (propertize
+                                  (concat
+                                   doom-modeline-spc
+                                   (doom-modeline-icon 'material  "check_circle" "☑" "✔"
+                                                       :face 'doom-modeline-python-venv
+                                                       :height 1.3 :v-adjust -0.15)
+                                   doom-modeline-spc
+                                   (file-name-nondirectory python-shell-virtualenv-root)
+                                   doom-modeline-spc)
+                                  'face (doom-modeline-face 'doom-modeline-python-venv))))
 
     (defun doom-modeline--check-python-venv-in-modeline ()
       (member '(pyvenv-mode pyvenv-mode-line-indicator) mode-line-misc-info))
@@ -310,9 +308,9 @@
     (add-hook 'doom-modeline-mode-hook #'doom-modeline-override-python-venv-modeline)
 
     (doom-modeline-def-modeline 'petmacs--default-modeline
-      ;; checker is moved from left side of modeline
-      '(bar window-number matches buffer-info remote-host buffer-position parrot selection-info)
-      '(misc-info persp-name github debug repl input-method pomodoro indent-info buffer-encoding process python-venv vcs time))
+                                ;; checker is moved from left side of modeline
+                                '(bar window-number matches buffer-info remote-host buffer-position parrot selection-info)
+                                '(misc-info persp-name github debug repl input-method pomodoro indent-info buffer-encoding process python-venv vcs time))
 
     ;; Add to `doom-modeline-mode-hook` or other hooks
     (defun petmacs/setup-custom-default-doom-modeline ()
