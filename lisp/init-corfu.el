@@ -56,30 +56,24 @@
   (define-key corfu-map (kbd "C-M-p") #'corfu-doc-scroll-down)
   (define-key corfu-map (kbd "C-M-n") #'corfu-doc-scroll-up))
 
-(use-package company
-  :init
-  (setq company-minimum-prefix-length 1
-        company-idle-delay 0))
-
-;; (use-package company-flx
-;;   :after (company)
-;;   :init
-;;   (company-flx-mode 1))
+(use-package cape-yasnippet
+  :quelpa (cape-yasnippet :fetcher github
+    	                  :repo "elken/cape-yasnippet"
+    	                  :files ("*.el")))
 
 (use-package cape
   :preface
   (defun petmacs/lsp-capf ()
-    (setq-local completion-at-point-functions
-                (list
-                 #'cape-file
-                 (cape-super-capf
-                  #'lsp-completion-at-point
-                  ;; #'cape-symbol
-                  (cape-company-to-capf #'company-yasnippet)))))
+	(setq-local completion-at-point-functions
+				(list (cape-super-capf
+					   #'cape-yasnippet
+					   #'cape-dabbrev
+					   #'cape-file
+					   #'lsp-completion-at-point))))
   :bind (("C-M-o" . cape-file))
-  ;; :hook (lsp-completion-mode . petmacs/lsp-capf)
-  :init (setq cape-dabbrev-min-length 3
-              cape-dabbrev-check-other-buffers nil)
+  :hook (lsp-completion-mode . petmacs/lsp-capf)
+  :init (setq cape-dabbrev-min-length 2
+              cape-dabbrev-check-other-buffers t)
   :config
   ;; 默认用这三个补全后端
   (add-to-list 'completion-at-point-functions #'cape-symbol)
