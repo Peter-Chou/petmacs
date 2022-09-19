@@ -29,8 +29,8 @@
   "day night theme")
 
 (defvar petmacs-modeline-style
-  'awesome-tray
-  ;; 'doom-modeline
+  ;; 'awesome-tray
+  'doom-modeline
   "awesome-tray or doom-modeline. doom-modeline is default in TUI.")
 
 (defvar petmacs-enable-mini-frame nil
@@ -40,8 +40,8 @@
   "enable display-line-numbers mode")
 
 (defvar petmacs-lsp-client-mode
-  ;; 'lsp-mode
-  'lsp-bridge-mode
+  'lsp-mode
+  ;; 'lsp-bridge-mode
   "lsp-mode or lsp-bridge-mode")
 
 (defvar petmacs-lsp-active-modes '(
