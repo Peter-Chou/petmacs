@@ -422,7 +422,7 @@
     "F" "folders"
     "x" "text/code")
 
-  (cond ((equal petmacs-lsp-client-mode 'lsp-mode)
+  (cond ((equal petmacs-lsp-client 'lsp-mode)
          (leader-set-keys-for-major-mode mode
            ;; format
            "==" #'lsp-format-buffer

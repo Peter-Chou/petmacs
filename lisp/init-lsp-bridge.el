@@ -68,4 +68,16 @@
 
   (global-lsp-bridge-mode))
 
+;; (unless (display-graphic-p)
+;; ;; acm-0.1 is unavailable
+;;   (use-package acm-terminal
+;;     :quelpa (acm-terminal :fetcher github
+;;     	                  :repo "twlz0ne/acm-terminal"
+;;                           :files ("*.el"))
+;;     :config
+;;     (require 'acm)
+;;     (with-eval-after-load 'acm
+;;       (require 'acm-terminal))))
+
+
 (provide 'init-lsp-bridge)

@@ -2,7 +2,7 @@
 
 (require 'init-custom)
 
-(when (not (equal petmacs-lsp-client-mode 'lsp-mode))
+(when (not (equal petmacs-lsp-client 'lsp-mode))
   (use-package lsp-mode)
   (use-package lsp-ui))
 

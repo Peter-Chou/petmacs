@@ -39,7 +39,7 @@
 (defvar petmacs-enable-display-line-numbers nil
   "enable display-line-numbers mode")
 
-(defvar petmacs-lsp-client-mode
+(defvar petmacs-lsp-client
   'lsp-mode
   ;; 'lsp-bridge-mode
   "lsp-mode or lsp-bridge-mode")

@@ -22,7 +22,7 @@
 (add-hook 'emacs-startup-hook
           (lambda ()
             "Recover GC values after startup."
-            (if (equal petmacs-lsp-client-mode 'lsp-mode)
+            (if (equal petmacs-lsp-client 'lsp-mode)
                 (setq gc-cons-threshold 100000000)
               (setq gc-cons-threshold 800000))))
 
@@ -53,11 +53,11 @@
 
 (require 'init-consult)
 
-(if (and (equal petmacs-lsp-client-mode 'lsp-bridge-mode) (display-graphic-p))
-    (require 'init-lsp-bridge)
-  (progn
-    (require 'init-corfu)
-    (require 'init-lsp)))
+(cond ((equal petmacs-lsp-client 'lsp-bridge-mode)
+       (require 'init-lsp-bridge))
+      (t
+       (require 'init-corfu)
+       (require 'init-lsp)))
 
 (require 'init-dap)
 
