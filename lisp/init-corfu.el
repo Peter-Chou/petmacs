@@ -67,13 +67,13 @@
 	(setq-local completion-at-point-functions
 				(list (cape-super-capf
 					   #'cape-yasnippet
-					   #'cape-dabbrev
+					   ;; #'cape-dabbrev
 					   #'cape-file
 					   #'lsp-completion-at-point))))
   :bind (("C-M-o" . cape-file))
-  :hook (lsp-completion-mode . petmacs/lsp-capf)
+  ;; :hook (lsp-completion-mode . petmacs/lsp-capf)
   :init (setq cape-dabbrev-min-length 2
-              cape-dabbrev-check-other-buffers t)
+              cape-dabbrev-check-other-buffers nil)
   :config
   ;; 默认用这三个补全后端
   (add-to-list 'completion-at-point-functions #'cape-symbol)

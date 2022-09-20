@@ -151,8 +151,7 @@
 	"a" #'persp-add-buffer
     "r" #'persp-remove-buffer
     "j" #'ace-window
-    "t" #'imenu-list-smart-toggle
-    "i" #'imenu-list
+    "i" #'imenu-list-smart-toggle
     ))
 
 (leader-declare-prefix
