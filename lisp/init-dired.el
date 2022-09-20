@@ -44,7 +44,8 @@
     ;; Using `insert-directory-program'
     (setq ls-lisp-use-insert-directory-program t)
     ;; Show directory first
-    (setq dired-listing-switches "-alh --group-directories-first"))
+    (unless sys/win32p
+      (setq dired-listing-switches "-alh --group-directories-first")))
 
   (when sys/win32p
     (setq dired-listing-switches "-alh")  ;; show human readable file size

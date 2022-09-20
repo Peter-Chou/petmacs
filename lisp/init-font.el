@@ -18,12 +18,12 @@
 			            (font-spec :family petmacs-chinese-font))))
 
 ;; Specify font for all unicode characters
-(cl-loop for font in '("Segoe UI Symbol" "Symbola" "Symbol")
+(cl-loop for font in '("Symbola" "Symbol" "Segoe UI Symbol")
          when (font-installed-p font)
          return (set-fontset-font t 'unicode font nil 'prepend))
 
 ;; Emoji
-(cl-loop for font in '("Noto Color Emoji" "Apple Color Emoji")
+(cl-loop for font in '("Noto Color Emoji" "Apple Color Emoji" "Segoe UI Emoji")
          when (font-installed-p font)
          return (cond
                  ((< emacs-major-version 27)
