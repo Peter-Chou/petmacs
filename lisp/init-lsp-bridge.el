@@ -58,7 +58,8 @@
   (define-key evil-normal-state-map "gi" #'lsp-bridge-find-impl)
   (define-key evil-motion-state-map "gd" #'petmacs/lsp-bridge-jump)
   (define-key evil-motion-state-map "gs" #'lsp-bridge-restart-process)
-  (define-key evil-normal-state-map "gh" #'lsp-bridge-lookup-documentation)
+  (define-key evil-normal-state-map "gh" #'lsp-bridge-signature-help-fetch)
+  (define-key evil-normal-state-map "gH" #'lsp-bridge-lookup-documentation)
 
   (evil-add-command-properties #'petmacs/lsp-bridge-jump :jump t)
 

@@ -407,21 +407,63 @@
 ;;; major mode keybinidngs ;;;;;;;;;;;;;;;;;;
 
 ;;; lsp for major mode
-(dolist (mode petmacs-lsp-active-modes)
-  (leader-declare-prefix-for-major-mode mode
-    "=" "format"
-    "a" "code actions"
-    "g" "goto"
-    "G" "goto (other window)"
-    "p" "peek"
-    "w" "workspace"
-    "t" "toggle module"
-    "r" "refactor"
-    "h" "help"
-    "F" "folders"
-    "x" "text/code")
 
-  (cond ((equal petmacs-lsp-client 'lsp-mode)
+(cond ((equal petmacs-lsp-client 'lsp-bridge-mode)
+       (dolist (mode '(c-mode c++-mode cmake-mode java-mode python-mode ruby-mode lua-mode rust-mode rustic-mode erlang-mode elixir-mode go-mode haskell-mode haskell-literate-mode dart-mode scala-mode typescript-mode typescript-tsx-mode js2-mode js-mode rjsx-mode tuareg-mode latex-mode Tex-latex-mode texmode context-mode texinfo-mode bibtex-mode clojure-mode clojurec-mode clojurescript-mode clojurex-mode sh-mode web-mode css-mode elm-mode emacs-lisp-mode ielm-mode lisp-interaction-mode org-mode php-mode yaml-mode zig-mode groovy-mode dockerfile-mode d-mode f90-mode fortran-mode nix-mode ess-r-mode verilog-mode))
+         (leader-declare-prefix-for-major-mode mode
+           "=" "format"
+           "a" "code actions"
+           "g" "goto"
+           "G" "goto (other window)"
+           "p" "peek"
+           "w" "workspace"
+           "r" "refactor"
+           "h" "help")
+         (leader-set-keys-for-major-mode mode
+           ;; format
+           "==" #'lsp-bridge-code-format
+
+           ;; code actions
+           "aa" #'lsp-bridge-code-action
+
+           ;; format
+           "rr" #'lsp-bridge-rename
+
+           ;; goto
+           "gd" #'petmacs/lsp-bridge-jump
+           "ga" #'consult-apropos
+           "ge" #'lsp-bridge-list-diagnostics
+           "gr" #'lsp-bridge-find-references
+           "gi" #'lsp-bridge-find-impl
+           "gt" #'lsp-bridge-find-define
+
+           "gb" #'petmacs/lsp-bridge-jump-back
+           "gf" #'xref-find-definitions-other-frame
+
+           ;; goto other window
+           "Gd" #'lsp-bridge-find-def-other-window
+           "Gi" #'lsp-bridge-find-impl-other-window
+
+           ;; workspace
+           "wr" #'lsp-bridge-restart-process
+
+           ;; help
+           "hh" #'lsp-bridge-lookup-documentation
+           "hs" #'lsp-bridge-signature-help-fetch)))
+      (t
+       (dolist (mode petmacs-lsp-active-modes)
+         (leader-declare-prefix-for-major-mode mode
+           "=" "format"
+           "a" "code actions"
+           "g" "goto"
+           "G" "goto (other window)"
+           "p" "peek"
+           "w" "workspace"
+           "t" "toggle module"
+           "r" "refactor"
+           "h" "help"
+           "F" "folders"
+           "x" "text/code")
          (leader-set-keys-for-major-mode mode
            ;; format
            "==" #'lsp-format-buffer
@@ -507,9 +549,8 @@
            "th" #'lsp-toggle-symbol-highlight
            "tl" #'lsp-lens-mode
            "ts" #'lsp-toggle-signature-auto-activate
-           ))
-        )
-  )
+           )))
+      )
 
 ;;; python mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (leader-declare-prefix-for-major-mode 'python-mode
