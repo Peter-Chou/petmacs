@@ -6,6 +6,7 @@
 (use-package corfu
   :bind (:map corfu-map
          ("C-M-m" . corfu-move-to-minibuffer))
+  ;; :hook (corfu-mode . corfu-indexed-mode)
   :init
   (setq corfu-cycle t
         corfu-auto t
