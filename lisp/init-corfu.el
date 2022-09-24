@@ -65,8 +65,9 @@
   :preface
   (defun petmacs/set-lsp-capfs ()
 	(setq-local completion-at-point-functions
-				(list #'lsp-completion-at-point
-					  #'cape-yasnippet
+				(list (cape-super-capf
+					   #'cape-yasnippet
+					   #'lsp-completion-at-point)
 					  #'cape-file
 					  #'cape-dabbrev)))
   ;; :bind (("C-M-o" . cape-file))
@@ -75,10 +76,9 @@
               cape-dabbrev-check-other-buffers nil)
   :config
   ;; 默认用这三个补全后端
-  ;; (add-to-list 'completion-at-point-functions #'cape-symbol)
   (add-to-list 'completion-at-point-functions #'cape-file)
-  (add-to-list 'completion-at-point-functions #'cape-keyword)
-  (add-to-list 'completion-at-point-functions #'cape-dabbrev))
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-keyword))
 
 (unless (display-graphic-p)
   (use-package corfu-terminal
