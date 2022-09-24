@@ -57,7 +57,6 @@
        (require 'init-lsp-bridge))
       (t
        (require 'init-corfu)
-       ;; (require 'init-company)
        (require 'init-lsp)))
 
 (require 'init-dap)
