@@ -48,7 +48,6 @@
 
 (use-package orderless
   :demand t
-  ;;       orderless-component-separator "[ &]")
   ;; ...otherwise find-file gets different highlighting than other commands
   ;; (set-face-attribute 'completions-first-difference nil :inherit nil)
   :config
@@ -85,6 +84,8 @@
     (orderless-matching-styles '(orderless-initialism orderless-literal orderless-regexp)))
 
   (setq
+   ;; use & to segment parts of candicate
+   orderless-component-separator "[ &]"
    ;; completion-styles '(basic substring partial-completion orderless flex)
    completion-styles '(orderless partial-completion basic)
    completion-category-defaults nil
@@ -92,7 +93,7 @@
                                    (command (styles +orderless-with-initialism))
                                    (variable (styles +orderless-with-initialism))
                                    (symbol (styles +orderless-with-initialism)))
-   orderless-component-separator #'orderless-escapable-split-on-space ;; allow escaping space with backslash!
+   ;; orderless-component-separator #'orderless-escapable-split-on-space ;; allow escaping space with backslash!
    orderless-style-dispatchers '(+orderless-dispatch))
   )
 
