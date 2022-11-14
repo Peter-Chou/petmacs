@@ -28,7 +28,7 @@
 
 (use-package ace-window
   :custom-face
-  (aw-leading-char-face ((t (:inherit font-lock-keyword-face :bold t :height 4.0))))
+  (aw-leading-char-face ((t (:inherit font-lock-keyword-face :foreground unspecified :bold t :height 3.0))))
   (aw-minibuffer-leading-char-face ((t (:inherit font-lock-keyword-face :bold t :height 1.0))))
   (aw-mode-line-face ((t (:inherit mode-line-emphasis :bold t))))
   :bind ([remap other-window] . ace-window)
@@ -103,14 +103,20 @@
   (with-eval-after-load 'projectile
     (setq popper-group-function #'popper-group-by-projectile))
 
-  (when (display-grayscale-p)
+  (with-eval-after-load 'doom-modeline
     (setq popper-mode-line
-          '(:eval (format " %s "
-                          (all-the-icons-octicon
-                           "pin"
-                           :height 0.9
-                           :v-adjust 0.0
-                           :face 'mode-line-emphasis)))))
+          '(:eval (let ((face (if (doom-modeline--active)
+                                  'mode-line-emphasis
+                                'mode-line-inactive)))
+                    (if (and (icon-displayable-p)
+                             (bound-and-true-p doom-modeline-mode))
+                        (format " %s "
+                                (all-the-icons-octicon
+                                 "pin"
+                                 :height 0.9
+                                 :v-adjust 0.0
+                                 :face face))
+                      (propertize " POP" 'face face))))))
 
   (setq popper-echo-dispatch-actions t)
   :config
