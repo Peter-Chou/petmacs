@@ -68,7 +68,16 @@ FACE defaults to inheriting from default and highlight."
     (advice-add #'show-paren-function :after #'show-paren-off-screen)))
 
 (use-package symbol-overlay
-  :custom-face (symbol-overlay-default-face ((t (:inherit (region bold)))))
+  :custom-face
+  (symbol-overlay-default-face ((t (:inherit region :background unspecified :foreground unspecified))))
+  (symbol-overlay-face-1 ((t (:inherit all-the-icons-blue :background unspecified :foreground unspecified :inverse-video t))))
+  (symbol-overlay-face-2 ((t (:inherit all-the-icons-pink :background unspecified :foreground unspecified :inverse-video t))))
+  (symbol-overlay-face-3 ((t (:inherit all-the-icons-yellow :background unspecified :foreground unspecified :inverse-video t))))
+  (symbol-overlay-face-4 ((t (:inherit all-the-icons-orange :background unspecified :foreground unspecified :inverse-video t))))
+  (symbol-overlay-face-5 ((t (:inherit all-the-icons-red :background unspecified :foreground unspecified :inverse-video t))))
+  (symbol-overlay-face-6 ((t (:inherit all-the-icons-maroon :background unspecified :foreground unspecified :inverse-video t))))
+  (symbol-overlay-face-7 ((t (:inherit all-the-icons-green :background unspecified :foreground unspecified :inverse-video t))))
+  (symbol-overlay-face-8 ((t (:inherit all-the-icons-cyan :background unspecified :foreground unspecified :inverse-video t))))
   :bind (("M-i" . symbol-overlay-put)
          ("M-n" . symbol-overlay-jump-next)
          ("M-p" . symbol-overlay-jump-prev)
@@ -152,9 +161,12 @@ FACE defaults to inheriting from default and highlight."
 
 ;; Highlight uncommitted changes using VC
 (use-package diff-hl
+  :custom-face
+  (diff-hl-change ((t (:inherit custom-changed :foreground unspecified :background unspecified))))
+  (diff-hl-insert ((t (:inherit diff-added :background unspecified))))
+  (diff-hl-delete ((t (:inherit diff-removed :background unspecified))))
   :hook ((after-init . global-diff-hl-mode)
-         (dired-mode . diff-hl-dired-mode)
-         ((after-init after-load-theme server-after-make-frame) . my-set-diff-hl-faces))
+         (dired-mode . diff-hl-dired-mode))
   :init (setq diff-hl-draw-borders nil
               ;; diff-hl-side 'right
               ;; diff-hl-margin-symbols-alist
@@ -170,13 +182,6 @@ FACE defaults to inheriting from default and highlight."
 
   ;; Set fringe style
   ;; (setq-default fringes-outside-margins t)
-
-  (defun my-set-diff-hl-faces ()
-    "Set `diff-hl' faces."
-    (custom-set-faces
-     `(diff-hl-change ((t (:foreground ,(face-foreground 'custom-changed) :background unspecified))))
-     '(diff-hl-insert ((t (:inherit diff-added :background unspecified))))
-     '(diff-hl-delete ((t (:inherit diff-removed :background unspecified))))))
 
   (with-no-warnings
     (defun my-diff-hl-fringe-bmp-function (_type _pos)
