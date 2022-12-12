@@ -67,7 +67,7 @@
   (defun petmacs/set-lsp-capfs ()
 	(setq-local completion-at-point-functions
 				(list (cape-super-capf
-					   #'cape-yasnippet
+					   ;; #'cape-yasnippet
 					   #'lsp-completion-at-point)
 					  #'cape-file
 					  #'cape-dabbrev)))
