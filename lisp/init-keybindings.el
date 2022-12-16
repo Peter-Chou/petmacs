@@ -67,7 +67,7 @@
     "oa" #'org-agenda-list
     "oc" #'org-capture
     "oe" #'org-store-agenda-views
-    "op" #'org-projectile/capture
+    "op" #'org-projectile-capture-for-current-project
     "oo" #'org-agenda
     "ol" #'org-store-link
     "om" #'org-tags-view
