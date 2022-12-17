@@ -36,7 +36,7 @@
 
 (require 'init-ui)
 (require 'init-highlight)
-(require 'init-dashboard)
+;; (require 'init-dashboard)
 (require 'init-ibuffer)
 (require 'init-window)
 (require 'init-treemacs)
