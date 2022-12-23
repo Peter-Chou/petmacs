@@ -151,6 +151,7 @@
 (use-package lsp-java
   :hook (java-mode . (lambda ()
 		               (require 'lsp-java)
+                       (require 'lsp-java-boot)
 		               (lsp-deferred)))
   :init
   (setq lsp-java-import-maven-enabled t
@@ -165,7 +166,9 @@
 	    ;; 				  (:name "JavaSE-11"
 	    ;; 				   :path "/opt/jdk11/"
 	    ;; :default t)]
-	    lsp-java-folding-range-enabled t))
+	    lsp-java-folding-range-enabled t)
+
+  (add-hook 'conf-javaprop-mode-hook #'lsp))
 
 ;;; scala
 (use-package lsp-metals)
