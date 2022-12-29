@@ -320,12 +320,10 @@
 (use-package hide-mode-line
   :hook (((
            completion-list-mode
-           eshell-mode
-           shell-mode
-           term-mode
-           vterm-mode
-           pdf-annot-list-mode
-           flycheck-error-list-mode) . hide-mode-line-mode)))
+           eshell-mode shell-mode
+           term-mode vterm-mode
+           lsp-ui-imenu-mode
+           pdf-annot-list-mode) . hide-mode-line-mode)))
 
 ;; Show native line numbers if possible, otherwise use `linum'
 (when petmacs-enable-display-line-numbers
