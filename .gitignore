@@ -93,3 +93,4 @@ pyim/
 eaf/
 etc/
 forge-database.sqlite
+lombok-*.jar

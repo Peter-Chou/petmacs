@@ -155,21 +155,36 @@
                        (require 'lsp-java-boot)
 		               (lsp-deferred)))
   :init
-  (setq lsp-java-import-maven-enabled t
-	    lsp-java-implementations-code-lens-enabled t
-	    lsp-java-save-actions-organize-imports t
-	    ;; latest jdtls requires java >= 11 to work
-	    lsp-java-java-path "/opt/jdk11/bin/java"
-	    lsp-java-vmargs '("-XX:+UseParallelGC" "-XX:GCTimeRatio=4" "-XX:AdaptiveSizePolicyWeight=90" "-Dsun.zip.disableMemoryMapping=true" "-Xmx6G" "-Xms100m")
-	    ;; Runtime name must be one of: “J2SE-1.5”, “JavaSE-1.6”, “JavaSE-1.7”, “JavaSE-1.8” etc
-	    ;; lsp-java-configuration-runtimes '[(:name "JavaSE-1.8"
-	    ;; 				   :path "/opt/jdk/")
-	    ;; 				  (:name "JavaSE-11"
-	    ;; 				   :path "/opt/jdk11/"
-	    ;; :default t)]
-	    lsp-java-folding-range-enabled t)
+  (setq
+   ;; Use Google style formatting by default
+   lsp-java-format-settings-url
+   "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml"
+   lsp-java-format-settings-profile "GoogleStyle"
+
+   lsp-java-import-maven-enabled t
+   lsp-java-implementations-code-lens-enabled t
+   lsp-java-save-actions-organize-imports t
+   ;; latest jdtls requires java >= 11 to work
+   lsp-java-java-path "/opt/jdk11/bin/java"
+   lsp-java-vmargs '("-XX:+UseParallelGC" "-XX:GCTimeRatio=4" "-XX:AdaptiveSizePolicyWeight=90" "-Dsun.zip.disableMemoryMapping=true" "-Xmx6G" "-Xms100m")
+   ;; Runtime name must be one of: “J2SE-1.5”, “JavaSE-1.6”, “JavaSE-1.7”, “JavaSE-1.8” etc
+   ;; lsp-java-configuration-runtimes '[(:name "JavaSE-1.8"
+   ;; 				   :path "/opt/jdk/")
+   ;; 				  (:name "JavaSE-11"
+   ;; 				   :path "/opt/jdk11/"
+   ;; :default t)]
+   lsp-java-folding-range-enabled t)
 
   (add-hook 'conf-javaprop-mode-hook #'lsp))
+
+(use-package lsp-java-lombok
+  :load-path (lambda () (expand-file-name "site-lisp/local/lsp-java-lombok" user-emacs-directory))
+  :after lsp-java
+  :init
+  (setq lsp-java-lombok/enabled t
+        lsp-java-lombok/version "1.18.24")
+  (require 'lsp-java-lombok)
+  (lsp-java-lombok/init))
 
 ;;; scala
 (use-package lsp-metals)

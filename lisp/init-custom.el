@@ -24,8 +24,10 @@
   "enable ligatures")
 
 (defvar  petmacs-day-night-themes
-  '(("8:00" . doom-one-light)
-    ("20:00"  . ef-autumn))
+  ;; '(("8:00" . doom-one-light)
+  ;;   ("20:00"  . ef-autumn))
+  '(("8:00" . doom-dracula)
+    ("20:00"  . doom-dracula))
   "day night theme")
 
 (defvar petmacs-modeline-style
