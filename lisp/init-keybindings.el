@@ -327,6 +327,7 @@
     "f"  #'affe-find
     "r"  #'consult-projectile-recentf
     "o"  #'org-projectile/goto-project-todos
+    "c"  #'org-projectile-project-todo-completing-read
     "v"  #'projectile-vc
     ))
 
