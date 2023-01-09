@@ -93,7 +93,7 @@
   (defun org-projectile/goto-project-todos ()
     (interactive)
     (org-projectile-goto-location-for-project (projectile-project-name))
-    (revert-buffer))
+    (revert-buffer t t))
   :init
 
   (setq org-projectile-projects-file (expand-file-name "todos.org" (concat user-emacs-directory "data/gtd"))
