@@ -39,6 +39,12 @@ install [rime](https://github.com/rime/librime)
 git clone --depth=1 https://github.com/Peter-Chou/petmacs.git ~/.emacs.d
 ```
 
+if you are facing some certification verification problems while cloning repository by git,
+try use the following command and rerun emacs:
+
+``` bash
+export GIT_SSL_NO_VERIFY=1
+```
 
 ### install tools
 

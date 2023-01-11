@@ -95,16 +95,14 @@
     (org-projectile-goto-location-for-project (projectile-project-name))
     (revert-buffer t t))
   :init
-
   (setq org-projectile-projects-file (expand-file-name "todos.org" (concat user-emacs-directory "data/gtd"))
         org-agenda-files (append org-agenda-files (org-projectile-todo-files))
         org-projectile-per-project-filepath "todos.org")
-
-  (unless (file-exists-p org-projectile-projects-file)
-    (write-region "" "" org-projectile-projects-file))
-
+  :config
   (with-eval-after-load 'org-capture
-    (require 'org-projectile)))
+    (require 'org-projectile)
+    (org-projectile-per-project))
+  (push (org-projectile-project-todo-entry) org-capture-templates))
 
 (use-package org-contrib
   :pin nongnu)
