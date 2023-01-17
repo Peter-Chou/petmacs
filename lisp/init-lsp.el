@@ -177,14 +177,14 @@
 
   (add-hook 'conf-javaprop-mode-hook #'lsp))
 
-(use-package lsp-java-lombok
-  :load-path (lambda () (expand-file-name "site-lisp/local/lsp-java-lombok" user-emacs-directory))
-  :after lsp-java
-  :init
-  (setq lsp-java-lombok/enabled t
-        lsp-java-lombok/version "1.18.24")
-  (require 'lsp-java-lombok)
-  (lsp-java-lombok/init))
+;; (use-package lsp-java-lombok
+;;   :load-path (lambda () (expand-file-name "site-lisp/local/lsp-java-lombok" user-emacs-directory))
+;;   :after lsp-java
+;;   :init
+;;   (setq lsp-java-lombok/enabled t
+;;         lsp-java-lombok/version "1.18.24")
+;;   (require 'lsp-java-lombok)
+;;   (lsp-java-lombok/init))
 
 ;;; scala
 (use-package lsp-metals)
