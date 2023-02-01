@@ -22,7 +22,7 @@
 
 - rime
 
-install [rime](https://github.com/rime/librime)
+  install [rime](https://github.com/rime/librime)
 
 ``` bash
 # use terra-pinyin for chinese input
