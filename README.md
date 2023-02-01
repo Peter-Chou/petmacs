@@ -22,9 +22,11 @@
 
 - rime
 
+install [rime](https://github.com/rime/librime)
+
 ``` bash
 # use terra-pinyin for chinese input
-sudo apt-get install librime-dev
+sudo apt-get install librime-dev fcitx-rime
 ```
 
 ---
@@ -32,8 +34,6 @@ sudo apt-get install librime-dev
 ## Install
 
 ### clone repository
-
-install [rime](https://github.com/rime/librime)
 
 ```bash
 git clone --depth=1 https://github.com/Peter-Chou/petmacs.git ~/.emacs.d
