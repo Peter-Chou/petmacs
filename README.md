@@ -29,6 +29,14 @@ install [rime](https://github.com/rime/librime)
 sudo apt-get install librime-dev fcitx-rime
 ```
 
+- vterm build tools
+
+``` bash
+sudo apt-get install cmake libtool-bin make
+```
+
+if your cmake is too old, download the suitable version from [cmake.org](https://cmake.org/download/)
+
 ---
 
 ## Install
