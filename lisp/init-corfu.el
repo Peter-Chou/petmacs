@@ -49,12 +49,12 @@
   :bind (("M-/" . dabbrev-completion)
          ("C-M-/" . dabbrev-expand)))
 
-(use-package corfu-doc
-  ;; :hook (corfu-mode . corfu-doc-mode)
-  :config
-  (define-key corfu-map (kbd "M-d") #'corfu-doc-toggle)
-  (define-key corfu-map (kbd "C-M-p") #'corfu-doc-scroll-down)
-  (define-key corfu-map (kbd "C-M-n") #'corfu-doc-scroll-up))
+;; (use-package corfu-doc
+;;   ;; :hook (corfu-mode . corfu-doc-mode)
+;;   :config
+;;   (define-key corfu-map (kbd "M-d") #'corfu-doc-toggle)
+;;   (define-key corfu-map (kbd "C-M-p") #'corfu-doc-scroll-down)
+;;   (define-key corfu-map (kbd "C-M-n") #'corfu-doc-scroll-up))
 
 (use-package cape-yasnippet
   :quelpa (cape-yasnippet :fetcher github

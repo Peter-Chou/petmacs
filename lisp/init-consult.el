@@ -120,7 +120,7 @@
   (consult-customize
    consult-ripgrep consult-git-grep consult-grep
    consult-bookmark consult-recent-file consult-xref
-   :preview-key (kbd "M-."))
+   :preview-key "M-.")
 
   (consult-customize
    consult-theme
@@ -222,7 +222,7 @@ targets."
   (setq affe-regexp-compiler #'affe-orderless-regexp-compiler)
 
   ;; Manual preview key for `affe-grep'
-  (consult-customize affe-grep :preview-key (kbd "M-.")))
+  (consult-customize affe-grep :preview-key "M-."))
 
 (use-package consult-project-extra)
 
