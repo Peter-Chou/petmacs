@@ -116,6 +116,12 @@ go install github.com/go-delve/delve/cmd/dlv@latest
 
 ---
 
+### other tools
+
+``` bash
+npm install -g readability-cli eslint_d prettier
+```
+
 
 ## Screenshots
 
