@@ -465,6 +465,7 @@
 (use-package centered-cursor-mode)
 (use-package restart-emacs)
 (use-package focus)                     ; Focus on the current region
+(use-package disk-usage)                     ; Focus on the current region
 (use-package imenu-list)
 (use-package iedit)
 (use-package dotenv-mode)
