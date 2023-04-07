@@ -46,6 +46,8 @@
          ;; ((markdown-mode yaml-mode) . lsp-deferred)
          (go-mode . lsp-deferred)
          (java-mode . lsp-deferred)
+         (javascript-mode . lsp-deferred)
+         (typescript-mode . lsp-deferred)
          (lsp-mode . (lambda ()
                        ;; Integrate `which-key'
                        (lsp-enable-which-key-integration)
