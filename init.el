@@ -77,5 +77,7 @@
          (file-directory-p (petmacs/get-eaf-app-directory)))
     (require 'init-eaf))
 
+(require 'init-web)
+
 (require 'core-funcs)
 (require 'init-keybindings)
