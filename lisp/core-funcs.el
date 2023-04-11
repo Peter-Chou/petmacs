@@ -308,4 +308,16 @@ If the error list is visible, hide it.  Otherwise, show it."
             (replace-match " "))))
     (print "This function operates on a region")))
 
+(defun petmacs/run-ts-file ()
+  "Compile and run the current TypeScript file."
+  (interactive)
+  (let* ((file-name (buffer-file-name))
+         (base-name (file-name-sans-extension file-name))
+         (js-file-name (concat base-name ".js")))
+    (progn
+      (message "Compiling %s to %s..." file-name js-file-name)
+      (call-process "tsc" nil nil nil file-name))
+    (message "Running %s..." js-file-name)
+    (async-shell-command (concat "node " js-file-name))))
+
 (provide 'core-funcs)
