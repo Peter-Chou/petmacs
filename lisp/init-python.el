@@ -1,14 +1,23 @@
 ;; -*- lexical-binding: t no-byte-compile: t -*-
 
+
+(use-package flycheck-ruff
+  :load-path (lambda () (expand-file-name "site-lisp/local/flycheck-ruff" user-emacs-directory))
+  :init
+  (require 'flycheck-ruff))
+
 ;; Install:
 ;;   pip install yapf
 ;;   pip install isort
-;;   pip install autoflake
+;;   pip install ruff
 (use-package python
   :ensure nil
   :hook
   ((python-mode . (lambda ()
-		            (setq-local flycheck-checkers '(python-pylint))
+		            (setq-local flycheck-checkers '(python-ruff)
+                                lsp-diagnostics-provider :none)
+                    ;; (flycheck-mode 1)
+		            ;; (setq-local flycheck-checkers '(python-pylint))
                     ))
    (inferior-python-mode . (lambda ()
 			                 (process-query-on-exit-flag
