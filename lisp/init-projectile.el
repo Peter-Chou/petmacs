@@ -11,6 +11,9 @@
 	    ;; projectile-indexing-method 'native
         )
   :config
+  ;; workaround of issue https://github.com/bbatsov/projectile/issues/1788
+  (setq projectile-git-fd-args "-H -0 -E .git -tf")
+
   ;; (projectile-update-mode-line)         ; Update mode-line at the first time
 
   ;; Use the faster searcher to handle project files: ripgrep `rg'.
