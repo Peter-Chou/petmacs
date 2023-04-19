@@ -22,6 +22,8 @@
                                    "data/pics/petmacs_banner.txt")
                                  user-emacs-directory) 'official)
    dashboard-page-separator "\n\f\n"
+   dashboard-path-style 'truncate-middle
+   dashboard-path-max-length 60
    dashboard-center-content t
    dashboard-show-shortcuts nil
    dashboard-items '((recents  . 7)
