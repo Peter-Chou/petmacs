@@ -56,3 +56,6 @@
 (push '(vertical-scroll-bars) default-frame-alist)
 (when (featurep 'ns)
   (push '(ns-transparent-titlebar . t) default-frame-alist))
+
+;; workaround image-type: Invalid image type svg
+(add-to-list 'image-types 'svg)
