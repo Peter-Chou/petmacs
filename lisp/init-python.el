@@ -14,10 +14,10 @@
   :ensure nil
   :hook
   ((python-mode . (lambda ()
-		            (setq-local flycheck-checkers '(python-ruff)
-                                lsp-diagnostics-provider :none)
+		            (setq-local flycheck-checkers '(python-pylint))
+		            ;; (setq-local flycheck-checkers '(python-ruff)
+                    ;;             lsp-diagnostics-provider :none)
                     ;; (flycheck-mode 1)
-		            ;; (setq-local flycheck-checkers '(python-pylint))
                     ))
    (inferior-python-mode . (lambda ()
 			                 (process-query-on-exit-flag
