@@ -160,6 +160,12 @@
 
 (use-package ef-themes)
 
+
+(use-package everforest
+  :quelpa (everforest :fetcher github
+  		              :repo "Theory-of-Everything/everforest-emacs"
+  		              :files ("*.el")))
+
 (use-package doom-themes
   :config
   ;; Enable flashing mode-line on errors
