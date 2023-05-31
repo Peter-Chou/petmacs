@@ -33,6 +33,7 @@
 (require 'init-font)
 
 (require 'init-evil)
+(require 'init-tools)
 
 (require 'init-ui)
 (require 'init-highlight)
@@ -42,7 +43,6 @@
 (require 'init-treemacs)
 
 (require 'init-flycheck)
-(require 'init-tools)
 (require 'init-vcs)
 
 (require 'init-projectile)
