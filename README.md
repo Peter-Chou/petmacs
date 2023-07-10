@@ -85,6 +85,7 @@ npm install -g pyright
 ```
 
 set WORKON_HOME environment variable that has virtual environment directories.
+Please make sure [yapf](https://github.com/google/yapf) is installed in your environment to format buffer properly.
 
 - C/C++
 
