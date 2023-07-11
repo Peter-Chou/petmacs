@@ -42,6 +42,8 @@
 
 (setq package-enable-at-startup nil)
 
+(setq use-package-enable-imenu-support t)
+
 (setq load-prefer-newer noninteractive)
 
 (when (fboundp 'startup-redirect-eln-cache)
@@ -59,3 +61,5 @@
 
 ;; workaround image-type: Invalid image type svg
 (add-to-list 'image-types 'svg)
+
+(setq-default mode-line-format nil)
