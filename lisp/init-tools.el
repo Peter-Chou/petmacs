@@ -113,10 +113,10 @@
   :diminish
   :hook (after-init . drag-stuff-global-mode)
   :config
-  (evil-define-key nil evil-motion-state-map (kbd "M-n") 'drag-stuff-down)
-  (evil-define-key nil evil-motion-state-map (kbd "M-p") 'drag-stuff-up)
-  (evil-define-key nil evil-motion-state-map (kbd "M-h") 'drag-stuff-left)
-  (evil-define-key nil evil-motion-state-map (kbd "M-l") 'drag-stuff-right)
+  ;; (evil-define-key nil evil-motion-state-map (kbd "M-n") 'drag-stuff-down)
+  ;; (evil-define-key nil evil-motion-state-map (kbd "M-p") 'drag-stuff-up)
+  ;; (evil-define-key nil evil-motion-state-map (kbd "M-h") 'drag-stuff-left)
+  ;; (evil-define-key nil evil-motion-state-map (kbd "M-l") 'drag-stuff-right)
 
   (add-to-list 'drag-stuff-except-modes 'org-mode))
 

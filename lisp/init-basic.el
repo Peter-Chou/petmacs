@@ -101,12 +101,19 @@
   )
 
 ;; Set UTF-8 as the default coding system
-(set-language-environment "utf-8")
+;; (set-language-environment "utf-8")
+;; (when (fboundp 'set-charset-priority)
+;;   (set-charset-priority 'unicode))
+;; (setq system-time-locale "C")
 
+;; Set UTF-8 as the default coding system
 (when (fboundp 'set-charset-priority)
   (set-charset-priority 'unicode))
-
+(prefer-coding-system 'utf-8)
+(setq locale-coding-system 'utf-8)
 (setq system-time-locale "C")
+(unless sys/win32p
+  (set-selection-coding-system 'utf-8))
 
 ;; Environment
 (when (or sys/mac-x-p sys/linux-x-p (daemonp))
@@ -124,16 +131,17 @@
     :init
     (exec-path-from-shell-initialize)))
 
-  ;; Start server
-  (use-package server
-    :ensure nil
-    :hook (after-init . server-mode))
+;; Start server
+(use-package server
+  :ensure nil
+  :hook (after-init . server-mode))
 
 
 (use-package recentf
   :ensure nil
+  :bind (("C-x C-r" . recentf-open-files))
   :hook (after-init . recentf-mode)
-  :init (setq recentf-max-saved-items 500
+  :init (setq recentf-max-saved-items 300
               recentf-exclude
               '("\\.?cache" ".cask" "url" "COMMIT_EDITMSG\\'" "bookmarks"
                 "\\.\\(?:gz\\|gif\\|svg\\|png\\|jpe?g\\|bmp\\|xpm\\)$"
@@ -142,8 +150,7 @@
                 (lambda (file) (file-in-directory-p file package-user-dir))))
   :config
   (push (expand-file-name recentf-save-file) recentf-exclude)
-  (add-to-list 'recentf-filename-handlers #'abbreviate-file-name)
-  (add-hook 'buffer-list-update-hook 'recentf-track-opened-file))
+  (add-to-list 'recentf-filename-handlers #'abbreviate-file-name))
 
 (use-package savehist
   :ensure nil
@@ -266,7 +273,19 @@
 
 ;; Frame
 (when (display-graphic-p)
-  (add-hook 'window-setup-hook #'fix-fullscreen-cocoa))
+  (add-hook 'window-setup-hook #'fix-fullscreen-cocoa)
+  ;; Resize and re-position frames conveniently
+  ;; Same keybindings as Rectangle on macOS
+  (bind-keys ("C-M-<return>"    . centaur-frame-maximize)
+             ("C-M-<backspace>" . centaur-frame-restore)
+             ("C-M-<left>"      . centaur-frame-left-half)
+             ("C-M-<right>"     . centaur-frame-right-half)
+             ("C-M-<up>"        . centaur-frame-top-half)
+             ("C-M-<down>"      . centaur-frame-bottom-half)))
+
+;; Sqlite
+(when (fboundp 'sqlite-open)
+  (use-package emacsql-sqlite-builtin))
 
 (setq confirm-kill-processes nil)
 

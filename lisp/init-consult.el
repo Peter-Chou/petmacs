@@ -98,7 +98,19 @@
   )
 
 (use-package consult
-  :bind (("C-s"   . consult-line))
+  :bind (("C-s"   . consult-line)
+         ("C-c h" . consult-history)
+         ("C-c k" . consult-kmacro)
+         ("C-c m" . consult-man)
+         ("C-c i" . consult-info)
+         ("C-c r" . consult-ripgrep)
+
+         ([remap Info-search] . consult-info)
+         ([remap isearch-forward] . consult-line)
+         ([remap recentf-open-files] . consult-recent-file)
+         )
+  ;; Enable automatic preview at point in the *Completions* buffer. This is
+  ;; relevant when you use the default completion UI.
   ;; :hook (completion-list-mode . consult-preview-at-point-mode)
   :init
   (if sys/win32p
@@ -106,6 +118,11 @@
         (add-to-list 'process-coding-system-alist '("es" gbk . gbk))
         (add-to-list 'process-coding-system-alist '("explorer" gbk . gbk))
         (setq consult-locate-args (encode-coding-string "es.exe -i -p -r" 'gbk))))
+
+  ;; Use Consult to select xref locations with preview
+  (with-eval-after-load 'xref
+    (setq xref-show-xrefs-function #'consult-xref
+          xref-show-definitions-function #'consult-xref))
 
   :config
   (setq ;; consult-project-root-function #'doom-project-root
@@ -144,7 +161,10 @@
   :bind
   (("C-." . embark-act)         ;; pick some comfortable binding
    ("M-." . embark-dwim)        ;; good alternative: M-.
-   ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
+   ("C-h B" . embark-bindings)  ;; alternative for `describe-bindings'
+   ([remap xref-find-definitions] . embark-dwim)
+   ([remap describe-bindings] . embark-bindings)
+   )
   :init
   (setq which-key-use-C-h-commands nil
         ;; press C-h after a prefix key, it shows all the possible key bindings and let you choose what you want
@@ -189,6 +209,12 @@ targets."
       (apply fn args)))
   (advice-add #'embark-completing-read-prompter
               :around #'embark-hide-which-key-indicator)
+
+  ;; Hide the mode line of the Embark live/completions buffers
+  (add-to-list 'display-buffer-alist
+               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                 nil
+                 (window-parameters (mode-line-format . none))))
 
   (define-key evil-normal-state-map (kbd "C-.") 'embark-act)
   (define-key evil-normal-state-map (kbd "M-.") 'embark-dwim)

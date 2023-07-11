@@ -19,12 +19,12 @@
 
 ;; Defer garbage collection further back in the startup process
 (setq gc-cons-threshold most-positive-fixnum)
-(add-hook 'emacs-startup-hook
-          (lambda ()
-            "Recover GC values after startup."
-            (if (equal petmacs-lsp-client 'lsp-mode)
-                (setq gc-cons-threshold 100000000)
-              (setq gc-cons-threshold 800000))))
+;; (add-hook 'emacs-startup-hook
+;;           (lambda ()
+;;             "Recover GC values after startup."
+;;             (if (equal petmacs-lsp-client 'lsp-mode)
+;;                 (setq gc-cons-threshold 100000000)
+;;               (setq gc-cons-threshold 800000))))
 
 (require 'init-funcs)
 
