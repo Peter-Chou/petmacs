@@ -167,16 +167,17 @@
    lsp-java-import-maven-enabled t
    lsp-java-implementations-code-lens-enabled t
    lsp-java-save-actions-organize-imports t
-   ;; latest jdtls requires java >= 11 to work
-   lsp-java-java-path "/opt/jdk11/bin/java"
    lsp-java-vmargs '("-XX:+UseParallelGC" "-XX:GCTimeRatio=4" "-XX:AdaptiveSizePolicyWeight=90" "-Dsun.zip.disableMemoryMapping=true" "-Xmx6G" "-Xms100m")
-   ;; Runtime name must be one of: “J2SE-1.5”, “JavaSE-1.6”, “JavaSE-1.7”, “JavaSE-1.8” etc
-   ;; lsp-java-configuration-runtimes '[(:name "JavaSE-1.8"
-   ;; 				   :path "/opt/jdk/")
-   ;; 				  (:name "JavaSE-11"
-   ;; 				   :path "/opt/jdk11/"
-   ;; :default t)]
    lsp-java-folding-range-enabled t)
+
+  ;; (setenv "JAVA_HOME" "/opt/jdk17")
+  ;; latest jdtls requires java >= 17 to work
+  (setq lsp-java-java-path "/opt/jdk17/bin/java")
+  ;; (setq lsp-java-java-path "/opt/jdk11/bin/java")
+
+
+  ;; use jdtls 1.23 released at 2023.4.27
+  ;; (setq lsp-java-jdt-download-url "https://www.eclipse.org/downloads/download.php?file=/jdtls/milestones/1.25.0/jdt-language-server-1.25.0-202306291518.tar.gz")
 
   (add-hook 'conf-javaprop-mode-hook #'lsp))
 
