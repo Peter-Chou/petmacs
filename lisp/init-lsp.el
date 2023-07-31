@@ -167,7 +167,13 @@
    lsp-java-import-maven-enabled t
    lsp-java-implementations-code-lens-enabled t
    lsp-java-save-actions-organize-imports t
-   lsp-java-vmargs '("-XX:+UseParallelGC" "-XX:GCTimeRatio=4" "-XX:AdaptiveSizePolicyWeight=90" "-Dsun.zip.disableMemoryMapping=true" "-Xmx6G" "-Xms100m")
+   lsp-java-vmargs '("-XX:+UseParallelGC"
+                     "-XX:GCTimeRatio=4"
+                     "-XX:AdaptiveSizePolicyWeight=90"
+                     "-Dsun.zip.disableMemoryMapping=true"
+                     "-Xmx6G"
+                     "-Xms100m"
+                     "-javaagent:/home/peter/.m2/repository/org/projectlombok/lombok/1.18.28/lombok-1.18.28.jar")
    lsp-java-folding-range-enabled t)
 
   ;; (setenv "JAVA_HOME" "/opt/jdk17")
