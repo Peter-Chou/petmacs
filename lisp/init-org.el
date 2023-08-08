@@ -63,14 +63,14 @@
         org-pretty-entities nil
         org-hide-emphasis-markers t))
 
-(use-package org-modern
-  :hook ((org-mode . org-modern-mode)
-         (org-agenda-finalize . org-modern-agenda)
-         (org-modern-mode . (lambda ()
-                              "Adapt `org-modern-mode'."
-                              ;; Disable Prettify Symbols mode
-                              (setq prettify-symbols-alist nil)
-                              (prettify-symbols-mode -1)))))
+;; (use-package org-modern
+;;   :hook ((org-mode . org-modern-mode)
+;;          (org-agenda-finalize . org-modern-agenda)
+;;          (org-modern-mode . (lambda ()
+;;                               "Adapt `org-modern-mode'."
+;;                               ;; Disable Prettify Symbols mode
+;;                               (setq prettify-symbols-alist nil)
+;;                               (prettify-symbols-mode -1)))))
 
 (use-package org-superstar
   :if (and (display-graphic-p) (char-displayable-p ?◉))
