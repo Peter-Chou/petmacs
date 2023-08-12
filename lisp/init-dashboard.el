@@ -33,11 +33,6 @@
    dashboard-set-init-info t
    dashboard-set-file-icons t
    dashboard-set-heading-icons t
-   dashboard-heading-icons '((recents   . "history")
-                             (bookmarks . "bookmark")
-                             (agenda    . "calendar")
-                             (projects  . "briefcase")
-                             (registers . "database"))
 
    dashboard-set-footer t
    dashboard-footer-messages '("Enjoy Emacs, Enjoy Petmacs!")
