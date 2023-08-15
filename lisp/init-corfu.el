@@ -10,11 +10,12 @@
   :init
   (setq corfu-cycle t
         corfu-auto t
+        corfu-auto-prefix 2
         corfu-quit-at-boundary 'separator
         corfu-quit-no-match 'separator
         corfu-preview-current nil
         corfu-auto-delay 0.1
-        corfu-auto-prefix 1
+        corfu-popupinfo-delay '(0.2 . 0.1)
         )
   (when (> (frame-pixel-width) 3000) (custom-set-faces '(corfu-default ((t (:height 1.3))))))
   (global-corfu-mode)
