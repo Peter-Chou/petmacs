@@ -45,6 +45,15 @@
   (setq org-modules nil                 ; Faster loading
         org-directory (expand-file-name "data/gtd" user-emacs-directory)
 
+        org-todo-keywords
+        '((sequence "TODO(t)" "DOING(i)" "HANGUP(h)" "|" "DONE(d)" "CANCEL(c)")
+          (sequence "⚑(T)" "🏴(I)" "❓(H)" "|" "✔(D)" "✘(C)"))
+        org-todo-keyword-faces '(("HANGUP" . warning)
+                                 ("❓" . warning))
+        org-priority-faces '((?A . error)
+                             (?B . warning)
+                             (?C . success))
+
         ;; Agenda styling
         org-agenda-files (list (expand-file-name "data/gtd" user-emacs-directory))
         org-agenda-block-separator ?─
