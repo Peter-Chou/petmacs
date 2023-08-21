@@ -57,15 +57,9 @@
 ;;   (define-key corfu-map (kbd "C-M-p") #'corfu-doc-scroll-down)
 ;;   (define-key corfu-map (kbd "C-M-n") #'corfu-doc-scroll-up))
 
-;; (use-package cape-yasnippet
-;;   :quelpa (cape-yasnippet :fetcher github
-;;    	                  :repo "elken/cape-yasnippet"
-;;    	                  :files ("*.el")))
-
 (use-package yasnippet-capf
-  :quelpa (yasnippet-capf :fetcher github
-    	                  :repo "elken/yasnippet-capf"
-    	                  :files ("*.el")))
+  :init
+  (add-to-list 'completion-at-point-functions #'yasnippet-capf))
 
 (use-package cape
   :preface
