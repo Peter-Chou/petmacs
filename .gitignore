@@ -93,5 +93,6 @@ tree-sitter/
 pyim/
 eaf/
 etc/
+TODO.org
 forge-database.sqlite
 lombok-*.jar

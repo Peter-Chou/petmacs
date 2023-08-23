@@ -42,15 +42,6 @@
 (unless (fboundp 'less-css-mode)
   (use-package less-css-mode))
 
-;; JSON
-(unless (fboundp 'js-json-mode)
-  (use-package json-mode))
-
-
-(use-package json-ts-mode
-  :ensure nil
-  :mode (("\\.jsonl?\\'" . json-ts-mode)))
-
 ;; JavaScript
 (use-package js-mode
   :ensure nil
