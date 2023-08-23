@@ -1,5 +1,7 @@
 # Petmacs
 
+before you use Petmacs, make sure your emacs version >= 29.1, which tree-sitter is enabled.
+
 ---
 
 ## Prerequisites
@@ -123,6 +125,12 @@ go install github.com/go-delve/delve/cmd/dlv@latest
 npm install -g readability-cli eslint_d prettier
 ```
 
+
+### install dynamic libs for tree-sitter
+
+``` emacs-lisp
+M-x treesit-auto-install-all
+```
 
 ## Screenshots
 
