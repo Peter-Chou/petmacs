@@ -62,13 +62,15 @@
         lsp-signature-auto-activate t
         lsp-signature-render-documentation nil
         lsp-modeline-code-actions-enable t
-        lsp-modeline-diagnostics-enable t
+        ;; lsp-modeline-diagnostics-enable t
+        lsp-modeline-diagnostics-enable nil
         lsp-modeline-diagnostics-scope :workspace
         lsp-modeline-workspace-status-enable nil
         lsp-headerline-breadcrumb-enable t
         lsp-headerline-breadcrumb-segments '(symbols)
 
-        lsp-semantic-tokens-enable t
+        ;; lsp-semantic-tokens-enable t
+        lsp-semantic-tokens-enable nil  ;; do not color token by lsp
         lsp-progress-spinner-type 'progress-bar-filled
 
         ;; how often lsp-mode will refresh the highlights, lenses, links, etc while you type
@@ -76,8 +78,7 @@
 
         lsp-keep-workspace-alive nil
         lsp-enable-indentation nil
-        lsp-enable-on-type-formatting nil
-        lsp-enable-folding t
+        lsp-enable-folding nil
         lsp-enable-file-watchers nil
         lsp-enable-symbol-highlighting nil
         lsp-enable-text-document-color nil
