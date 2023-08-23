@@ -1,6 +1,6 @@
 # Petmacs
 
-before you use Petmacs, make sure your emacs version >= 29.1, which tree-sitter is enabled.
+before you use Petmacs, make sure your emacs version >= 29.1 and tree-sitter is enabled.
 
 ---
 
