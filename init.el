@@ -52,6 +52,7 @@
 (require 'init-yasnippet)
 
 (require 'init-consult)
+(require 'init-tree-sitter)
 
 (cond ((equal petmacs-lsp-client 'lsp-bridge-mode)
        (require 'init-lsp-bridge))

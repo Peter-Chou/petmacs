@@ -48,12 +48,19 @@
 
 (defvar petmacs-lsp-active-modes '(
 				                   c-mode
+				                   c-ts-mode
 			                       c++-mode
+			                       c++-ts-mode
 				                   python-mode
+				                   python-ts-mode
 				                   java-mode
+				                   java-ts-mode
 				                   scala-mode
+				                   scala-ts-mode
 				                   go-mode
+				                   go-ts-mode
 				                   sh-mode
+				                   sh-ts-mode
 				                   )
   "Primary major modes of the lsp activated layer.")
 

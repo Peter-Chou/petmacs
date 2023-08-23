@@ -13,12 +13,13 @@
 (use-package python
   :ensure nil
   :hook
-  ((python-mode . (lambda ()
-		            (setq-local flycheck-checkers '(python-pylint))
-		            ;; (setq-local flycheck-checkers '(python-ruff)
-                    ;;             lsp-diagnostics-provider :none)
-                    ;; (flycheck-mode 1)
-                    ))
+  (
+   ;; (python-mode . (lambda ()
+   ;;  	            (setq-local flycheck-checkers '(python-pylint))
+   ;;  	            ;; (setq-local flycheck-checkers '(python-ruff)
+   ;;                  ;;             lsp-diagnostics-provider :none)
+   ;;                  ;; (flycheck-mode 1)
+   ;;                  ))
    (inferior-python-mode . (lambda ()
 			                 (process-query-on-exit-flag
 			                  (get-process "Python")))))
@@ -61,7 +62,7 @@
                (lsp-deferred))
               ((equal petmacs-lsp-client 'lsp-bridge-mode)
                (lsp-bridge-restart-process))))))
-  :hook (python-mode . petmacs/pyvenv-pyright-autoload)
+  :hook ((python-mode python-ts-mode) . petmacs/pyvenv-pyright-autoload)
   :config
   (pyvenv-mode 1)
   (pyvenv-tracking-mode 1))
@@ -70,7 +71,7 @@
 
 (use-package yapfify
   :diminish yapf-mode
-  :hook (python-mode . yapf-mode))
+  :hook ((python-mode python-ts-mode) . yapf-mode))
 
 (use-package pip-requirements)
 

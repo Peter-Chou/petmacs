@@ -89,6 +89,7 @@ session*
 
 eln-cache/
 librime/
+tree-sitter/
 pyim/
 eaf/
 etc/

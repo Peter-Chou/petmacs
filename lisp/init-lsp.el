@@ -38,16 +38,15 @@
     (switch-to-buffer-other-window (buffer-name))
     (lsp-find-references))
 
-  :hook (((c-mode c++-mode cuda-mode) . (lambda ()
-					                      (lsp-deferred)))
-         (scala-mode . (lambda ()
-			             (require 'lsp-metals)
-			             (lsp-deferred)))
+  :hook (((c-mode c-ts-mode c++-ts-mode c++-mode cuda-mode) . (lambda ()
+					                                            (lsp-deferred)))
+         ((scala-mode scala-ts-mode) . (lambda ()
+			                             (require 'lsp-metals)
+			                             (lsp-deferred)))
          ;; ((markdown-mode yaml-mode) . lsp-deferred)
-         (go-mode . lsp-deferred)
-         (java-mode . lsp-deferred)
-         (javascript-mode . lsp-deferred)
-         (typescript-mode . lsp-deferred)
+         ((go-mode go-ts-mode) . lsp-deferred)
+         ((javascript-mode javascript-ts-mode) . lsp-deferred)
+         ((typescript-mode typescript-ts-mode) . lsp-deferred)
          (lsp-mode . (lambda ()
                        ;; Integrate `which-key'
                        (lsp-enable-which-key-integration)
@@ -142,21 +141,21 @@
 	(interactive)
 	(when (and (executable-find "yapf") buffer-file-name)
       (call-process "yapf" nil nil nil "-i" buffer-file-name)))
-  :hook ((python-mode . (lambda ()
-				          (require 'lsp-pyright)
-				          (add-hook 'after-save-hook #'lsp-pyright-format-buffer t t))))
+  :hook (((python-mode python-ts-mode) . (lambda ()
+				                           (require 'lsp-pyright)
+				                           (add-hook 'after-save-hook #'lsp-pyright-format-buffer t t))))
   :init
   ;; too much noise in "real" projects
   (setq ;; lsp-pyright-typechecking-mode "basic"
-	    lsp-pyright-venv-path (getenv "WORKON_HOME")))
+   lsp-pyright-venv-path (getenv "WORKON_HOME")))
 
 ;;; java
 
 (use-package lsp-java
-  :hook (java-mode . (lambda ()
-		               (require 'lsp-java)
-                       (require 'lsp-java-boot)
-		               (lsp-deferred)))
+  :hook ((java-mode java-ts-mode) . (lambda ()
+		                              (require 'lsp-java)
+                                      (require 'lsp-java-boot)
+		                              (lsp-deferred)))
   :init
   (setq
    ;; Use Google style formatting by default
