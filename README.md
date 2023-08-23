@@ -128,6 +128,8 @@ npm install -g readability-cli eslint_d prettier
 
 ### install dynamic libs for tree-sitter
 
+run the following command in emacs.
+
 ``` emacs-lisp
 M-x treesit-auto-install-all
 ```
