@@ -69,8 +69,8 @@
         lsp-headerline-breadcrumb-enable nil
         lsp-headerline-breadcrumb-segments '(symbols)
 
-        lsp-semantic-tokens-enable t
-        ;; lsp-semantic-tokens-enable nil  ;; do not color token by lsp
+        ;; lsp-semantic-tokens-enable t
+        lsp-semantic-tokens-enable nil  ;; do not color token by lsp
         lsp-progress-spinner-type 'progress-bar-filled
 
         ;; how often lsp-mode will refresh the highlights, lenses, links, etc while you type
