@@ -58,10 +58,10 @@
   :init
   (setq lsp-auto-guess-root nil
         ;; lsp-keymap-prefix "C-c l"
-        lsp-diagnostics-provider :flycheck ;; flymake or ;; :none
+        lsp-diagnostics-provider :none ;; flymake or ;; :none
         lsp-signature-auto-activate t
         lsp-signature-render-documentation nil
-        lsp-modeline-code-actions-enable t
+        lsp-modeline-code-actions-enable nil
         ;; lsp-modeline-diagnostics-enable t
         lsp-modeline-diagnostics-enable nil
         lsp-modeline-diagnostics-scope :workspace
