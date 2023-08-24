@@ -66,7 +66,7 @@
         lsp-modeline-diagnostics-enable nil
         lsp-modeline-diagnostics-scope :workspace
         lsp-modeline-workspace-status-enable nil
-        lsp-headerline-breadcrumb-enable t
+        lsp-headerline-breadcrumb-enable nil
         lsp-headerline-breadcrumb-segments '(symbols)
 
         lsp-semantic-tokens-enable t
