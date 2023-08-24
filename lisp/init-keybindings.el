@@ -554,23 +554,25 @@
       )
 
 ;;; python mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(leader-declare-prefix-for-major-mode 'python-mode
-  "c" "compile"
-  "v" "virtual environment"
-  "t" "test")
 
-(leader-set-keys-for-major-mode 'python-mode
-  "cc" #'petmacs/python-execute-file
-  "ck" #'petmacs/quit-subjob
+(dolist (mode '(python-mode python-ts-mode))
+  (leader-declare-prefix-for-major-mode mode
+    "c" "compile"
+    "v" "virtual environment"
+    "t" "test")
 
-  "=i" #'py-isort-buffer
-  "=I" #'petmacs/python-remove-unused-imports
-  "rb" #'yapfify-buffer
+  (leader-set-keys-for-major-mode mode
+    "cc" #'petmacs/python-execute-file
+    "ck" #'petmacs/quit-subjob
 
-  "va" #'pyvenv-activate
-  "vd" #'pyvenv-deactivate
-  "vw" #'pyvenv-workon
-  )
+    "=i" #'py-isort-buffer
+    "=I" #'petmacs/python-remove-unused-imports
+    "rb" #'yapfify-buffer
+
+    "va" #'pyvenv-activate
+    "vd" #'pyvenv-deactivate
+    "vw" #'pyvenv-workon
+    ))
 
 ;;; emacs lisp mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (dolist (mode '(emacs-lisp-mode lisp-interaction-mode))

@@ -43,28 +43,35 @@
                 avy-style 'pre))
 
 ;; Minor mode to aggressively keep your code always indented
-;; (use-package aggressive-indent
-;;   :diminish
-;;   :hook ((after-init . global-aggressive-indent-mode)
-;;          ;; NOTE: Disable in large files due to the performance issues
-;;          ;; https://github.com/Malabarba/aggressive-indent-mode/issues/73
-;;          (find-file . (lambda ()
-;;                         (when (too-long-file-p)
-;;                           (aggressive-indent-mode -1)))))
-;;   :config
-;;   ;; Disable in some modes
-;;   (dolist (mode '(gitconfig-mode asm-mode web-mode html-mode css-mode go-mode scala-mode prolog-inferior-mode))
-;;     (push mode aggressive-indent-excluded-modes))
+(use-package aggressive-indent
+  :diminish
+  :hook ((after-init . global-aggressive-indent-mode)
+         ;; NOTE: Disable in large files due to the performance issues
+         ;; https://github.com/Malabarba/aggressive-indent-mode/issues/73
+         (find-file . (lambda ()
+                        (when (too-long-file-p)
+                          (aggressive-indent-mode -1)))))
+  :config
+  ;; Disable in some modes
+  (dolist (mode '(gitconfig-mode
+                  asm-mode
+                  web-mode
+                  python-mode
+                  python-ts-mode
+                  html-mode
+                  css-mode
+                  go-mode scala-mode prolog-inferior-mode))
+    (push mode aggressive-indent-excluded-modes))
 
-;;   ;; Disable in some commands
-;;   (add-to-list 'aggressive-indent-protected-commands #'delete-trailing-whitespace t)
+  ;; Disable in some commands
+  (add-to-list 'aggressive-indent-protected-commands #'delete-trailing-whitespace t)
 
-;;   ;; Be slightly less aggressive in C/C++/C#/Java/Go/Swift
-;;   (add-to-list 'aggressive-indent-dont-indent-if
-;;                '(and (derived-mode-p 'c-mode 'c++-mode 'csharp-mode
-;;                                      'java-mode 'go-mode 'swift-mode)
-;;                      (null (string-match "\\([;{}]\\|\\b\\(if\\|for\\|while\\)\\b\\)"
-;;                                          (thing-at-point 'line))))))
+  ;; Be slightly less aggressive in C/C++/C#/Java/Go/Swift
+  (add-to-list 'aggressive-indent-dont-indent-if
+               '(and (derived-mode-p 'c-mode 'c++-mode 'csharp-mode
+                                     'java-mode 'go-mode 'swift-mode)
+                     (null (string-match "\\([;{}]\\|\\b\\(if\\|for\\|while\\)\\b\\)"
+                                         (thing-at-point 'line))))))
 
 ;; Show number of matches in mode-line while searching
 (use-package anzu
@@ -342,72 +349,6 @@
   (add-hook 'org-mode-hook
             (lambda ()
               (setq-local pangu-spacing-real-insert-separtor t))))
-
-(defconst tree-sitter--fold-supported-major-mode-hooks
-  '(
-    sh-mode-hook
-    c-mode-hook
-    c++-mode-hook
-    csharp-mode-hook
-    css-mode-hook
-    ess-r-mode-hook
-    go-mode-hook
-    html-mode-hook
-    java-mode-hook
-    javascript-mode-hook
-    js-mode-hook
-    js2-mode-hook
-    js3-mode-hook
-    json-mode-hook
-    jsonc-mode-hook
-    nix-mode-hook
-    php-mode-hook
-    python-mode-hook
-    rjsx-mode-hook
-    ruby-mode-hook
-    rust-mode-hook
-    rustic-mode-hook
-    scala-mode-hook
-    swift-mode-hook
-    typescript-mode-hook))
-
-;; Tree-sitter: need dynamic module feature
-;; (when (functionp 'module-load)
-;;   (use-package tree-sitter
-;;     :diminish
-;;     :hook ((after-init . global-tree-sitter-mode)
-;;            (tree-sitter-after-on . tree-sitter-hl-mode))))
-
-;; (use-package tree-sitter-langs)
-
-;; (use-package tree-sitter-indent
-;;   :hook (rust-mode . tree-sitter-indent-mode))
-
-;; (use-package ts-fold
-;;   :quelpa (ts-fold :fetcher github
-;;   		           :repo "jcs090218/ts-fold"
-;;   		           :files ("*.el"))
-;;   :pretty-hydra
-;;   ((:foreign-keys warn :quit-key "q")
-;;    ("Toggle"
-;;     (("t" ts-fold-toggle "toggle at point" :exit t))
-;;     "Open"
-;;     (
-;;      ("o" ts-fold-open "open at point" :exit t)
-;;      ("r" ts-fold-open-all "open all" :exit t)
-;;      ("O" ts-fold-open-recursively "recursive open at point" :exit t))
-;;     "Close"
-;;     (("c" ts-fold-close "close at point" :exit t)
-;;      ("m" ts-fold-close-all "close all" :exit t))))
-;;   :init
-;;   (setq ts-fold-indicators-fringe 'right-fringe
-;;         ;; don't obscure lint and breakpoint indicators
-;;         ts-fold-indicators-priority 0
-;;         )
-;;   (dolist (mode-hook tree-sitter--fold-supported-major-mode-hooks)
-;;     (when (boundp mode-hook)
-;;       (add-hook mode-hook #'ts-fold-mode)
-;;       (add-hook mode-hook #'ts-fold-indicators-mode))))
 
 (use-package list-environment
   :hook (list-environment-mode . (lambda ()
