@@ -13,6 +13,11 @@
   :mode (("\\.ya?ml\\'" . yaml-ts-mode)
          ("Procfile\\'" . yaml-ts-mode)))
 
+(use-package nxml-mode
+  :ensure nil
+  :config
+  (define-key nxml-mode-map (kbd "gc") #'evilnc-comment-or-uncomment-lines))
+
 ;; (use-package json-mode)
 (use-package toml-mode)
 
