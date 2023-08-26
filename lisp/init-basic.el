@@ -56,7 +56,6 @@
 
 ;; Cross-referencing commands
 (use-package xref
-  :ensure nil
   :init
   (with-no-warnings
     (when (executable-find "rg")
