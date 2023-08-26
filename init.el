@@ -53,7 +53,8 @@
 
 (require 'init-consult)
 
-(require 'init-tree-sitter)
+(when emacs/>=29p
+  (require 'init-tree-sitter))
 
 (cond ((equal petmacs-lsp-client 'lsp-bridge-mode)
        (require 'init-lsp-bridge))
