@@ -107,9 +107,9 @@
     (org-projectile-goto-location-for-project (projectile-project-name))
     (revert-buffer t t))
   :init
-  (setq org-project-capture-projects-file (expand-file-name "todos.org" (concat user-emacs-directory "data/gtd"))
+  (setq org-project-capture-projects-file (expand-file-name "TODO.org" (concat user-emacs-directory "data/gtd"))
         org-agenda-files (append org-agenda-files (org-projectile-todo-files))
-        org-projectile-per-project-filepath "todos.org")
+        org-projectile-per-project-filepath "TODO.org")
   :config
   (with-eval-after-load 'org-capture
     (require 'org-projectile)
