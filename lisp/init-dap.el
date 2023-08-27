@@ -13,17 +13,20 @@
 (use-package dap-mode
   :diminish
   :defines dap-python-executable
-  :diminish
+  :functions dap-hydra/nil
+  :bind (:map lsp-mode-map
+         ("<f5>" . dap-debug)
+         ("M-<f5>" . dap-hydra))
   :hook ((after-init . dap-auto-configure-mode)
-         ;; (dap-stopped . (lambda (arg) (call-interactively #'dap-hydra)))
-;;; dap-lldb needs lldb-vscode which is in LLVM prebuilt package
-	     ((c-mode c++-mode)      . (lambda () (require 'dap-lldb)))
+         (dap-stopped    . (lambda (_) (dap-hydra)))
+         (dap-terminated . (lambda (_) (dap-hydra/nil)))
+         ((python-mode python-ts-mode) . (lambda () (require 'dap-python)))
+         ((java-mode java-ts-mode) . (lambda () (require 'dap-java)))
+         ;; dap-lldb needs lldb-vscode which is in LLVM prebuilt package
+	     ((c-mode c-ts-mode c++-mode c++-ts-mode) . (lambda () (require 'dap-lldb)))
+         ((go-mode go-ts-mode) . (lambda () (require 'dap-dlv-go)))
          ((objc-mode swift-mode) . (lambda () (require 'dap-lldb)))
-         (python-mode . (lambda () (require 'dap-python)))
-         (go-mode . (lambda () (require 'dap-dlv-go)))
-         (java-mode . (lambda () (require 'dap-java)))
-         ((js-mode js2-mode) . (lambda () (require 'dap-chrome)))
-	     )
+         ((js-mode js2-mode js-ts-mode) . (lambda () (require 'dap-chrome))))
   :init
   (require 'cl-lib)
   (setq dap-enable-mouse-support t
