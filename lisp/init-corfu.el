@@ -57,16 +57,12 @@
 ;;   (define-key corfu-map (kbd "C-M-p") #'corfu-doc-scroll-down)
 ;;   (define-key corfu-map (kbd "C-M-n") #'corfu-doc-scroll-up))
 
-(use-package yasnippet-capf
-  :init
-  (add-to-list 'completion-at-point-functions #'yasnippet-capf))
-
 (use-package cape
   :preface
   (defun petmacs/set-lsp-capfs ()
 	(setq-local completion-at-point-functions
 				(list (cape-super-capf
-					   ;; #'cape-yasnippet
+					   #'yasnippet-capf
 					   #'lsp-completion-at-point)
 					  #'cape-file
 					  #'cape-dabbrev)))

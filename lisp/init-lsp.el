@@ -67,7 +67,6 @@
         lsp-modeline-diagnostics-scope :workspace
         lsp-modeline-workspace-status-enable nil
         lsp-headerline-breadcrumb-enable nil
-        lsp-headerline-breadcrumb-segments '(symbols)
 
         ;; lsp-semantic-tokens-enable t
         lsp-semantic-tokens-enable nil  ;; do not color token by lsp
@@ -179,8 +178,6 @@
   ;; (setenv "JAVA_HOME" "/opt/jdk17")
   ;; latest jdtls requires java >= 17 to work
   (setq lsp-java-java-path "/opt/jdk17/bin/java")
-  ;; (setq lsp-java-java-path "/opt/jdk11/bin/java")
-
 
   ;; use jdtls 1.23 released at 2023.4.27
   ;; (setq lsp-java-jdt-download-url "https://www.eclipse.org/downloads/download.php?file=/jdtls/milestones/1.25.0/jdt-language-server-1.25.0-202306291518.tar.gz")
