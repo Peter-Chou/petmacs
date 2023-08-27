@@ -183,6 +183,12 @@ Same as `replace-string C-q C-m RET RET'."
        (display-graphic-p)
        (require 'all-the-icons nil t)))
 
+(defun petmacs-treesit-available-p ()
+  "Check whether tree-sitter is available.
+Native tree-sitter is introduced since 29."
+  (and (fboundp 'treesit-available-p)
+       (treesit-available-p)))
+
 ;; Frame
 (defvar petmacs-frame--geometry nil)
 (defun petmacs-frame--save-geometry ()
