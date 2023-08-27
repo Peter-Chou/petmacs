@@ -162,7 +162,7 @@
   (("C-." . embark-act)         ;; pick some comfortable binding
    ("M-." . embark-dwim)        ;; good alternative: M-.
    ("C-h B" . embark-bindings)  ;; alternative for `describe-bindings'
-   ([remap xref-find-definitions] . embark-dwim)
+   ;; ([remap xref-find-definitions] . embark-dwim)
    ([remap describe-bindings] . embark-bindings)
    )
   :init
@@ -228,9 +228,9 @@ targets."
 
 (use-package embark-consult
   :after (embark consult)
-  :demand
-  :config
-  (add-hook 'embark-collect-mode-hook #'consult-preview-at-point-mode))
+  :bind (:map minibuffer-mode-map
+         ("C-c C-o" . embark-export))
+  :hook (embark-collect-mode . consult-preview-at-point-mode))
 
 ;; edit the text in the grep buffer after typing C-c C-p
 (use-package wgrep
