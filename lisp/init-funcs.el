@@ -29,12 +29,11 @@
   "Check if font with FONT-NAME is available."
   (find-font (font-spec :name font-name)))
 
-(defun icon-displayable-p ()
+(defun icons-displayable-p ()
   "Return non-nil if icons are displayable."
   (and petmacs-icon
-       (or (display-graphic-p) (daemonp))
-       (or (featurep 'all-the-icons)
-           (require 'all-the-icons nil t))))
+       (or (featurep 'nerd-icons)
+           (require 'nerd-icons nil t))))
 
 (defun petmacs/candidate-show-framework ()
   (if (display-graphic-p)
@@ -176,12 +175,6 @@ Same as `replace-string C-q C-m RET RET'."
   (let ((dir (locate-user-emacs-file "site-lisp")))
     (if (fboundp 'native-compile-async)
         (native-compile-async dir t))))
-
-(defun icons-displayable-p ()
-  "Return non-nil if `all-the-icons' is displayable."
-  (and petmacs-icon
-       (display-graphic-p)
-       (require 'all-the-icons nil t)))
 
 (defun petmacs-treesit-available-p ()
   "Check whether tree-sitter is available.

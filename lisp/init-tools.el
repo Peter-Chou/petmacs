@@ -235,7 +235,6 @@
                     " "))))
   (setq hs-set-up-overlay #'hs-display-code-line-counts))
 
-(use-package posframe)
 (use-package general)
 (use-package bind-map)
 (use-package bind-key)
@@ -250,12 +249,12 @@
   (cl-defun pretty-hydra-title (title &optional icon-type icon-name
                                       &key face height v-adjust)
     "Add an icon in the hydra title."
-    (let ((face (or face `(:foreground ,(face-background 'highlight))))
-          (height (or height 1.0))
+    (let ((face (or face `(:inherit highlight :reverse-video t)))
+          (height (or height 1.2))
           (v-adjust (or v-adjust 0.0)))
       (concat
-       (when (and (icon-displayable-p) icon-type icon-name)
-         (let ((f (intern (format "all-the-icons-%s" icon-type))))
+       (when (and (icons-displayable-p) icon-type icon-name)
+         (let ((f (intern (format "nerd-icons-%s" icon-type))))
            (when (fboundp f)
              (concat
               (apply f (list icon-name :face face :height height :v-adjust v-adjust))
@@ -367,9 +366,10 @@
               (setq-local pangu-spacing-real-insert-separtor t))))
 
 (use-package list-environment
+  :functions nerd-icons-octicon
   :hook (list-environment-mode . (lambda ()
                                    (setq tabulated-list-format
-                                         (vconcat `(("" ,(if (icon-displayable-p) 2 0)))
+                                         (vconcat `(("" ,(if (icons-displayable-p) 2 0)))
                                                   tabulated-list-format))
                                    (tabulated-list-init-header)))
   :init
@@ -381,8 +381,8 @@
                        (key (car kv))
                        (val (mapconcat #'identity (cdr kv) "=")))
                   (list key (vector
-                             (if (icon-displayable-p)
-                                 (all-the-icons-octicon "key" :height 0.8 :v-adjust -0.05)
+                             (if (icons-displayable-p)
+                                 (nerd-icons-octicon "nf-oct-key" :height 0.8 :v-adjust -0.05)
                                "")
                              `(,key face font-lock-keyword-face)
                              `(,val face font-lock-string-face)))))

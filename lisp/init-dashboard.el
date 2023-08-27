@@ -1,12 +1,15 @@
 ;; -*- lexical-binding: t no-byte-compile: t -*-
 
 (use-package dashboard
+  :after nerd-icons
   :diminish dashboard-mode
-  :functions (all-the-icons-faicon
-              all-the-icons-material
+  :functions (nerd-icons-octicon
               winner-undo
               widget-forward)
-  :custom-face (dashboard-heading ((t (:inherit (font-lock-string-face bold)))))
+  :custom-face
+  (dashboard-heading ((t (:inherit (font-lock-string-face bold)))))
+  (dashboard-items-face ((t (:weight normal))))
+  (dashboard-no-items-face ((t (:weight normal))))
   :hook (dashboard-mode . (lambda ()
                             ;; No title
                             (setq-local frame-title-format nil)
@@ -36,13 +39,11 @@
 
    dashboard-set-footer t
    dashboard-footer-messages '("Enjoy Emacs, Enjoy Petmacs!")
-   dashboard-footer-icon (cond ((icon-displayable-p)
-                                (all-the-icons-faicon "heart"
-                                                      :height 1.1
-                                                      :v-adjust -0.05
-                                                      :face 'error))
-                               ((char-displayable-p ?🧡) "🧡 ")
-                               (t (propertize ">" 'face 'dashboard-footer))))
+   dashboard-footer-icon
+   (if (icons-displayable-p)
+       (nerd-icons-octicon "nf-oct-heart" :height 1.2 :face 'nerd-icons-lred)
+     (propertize ">" 'face 'dashboard-footer))
+   )
   (dashboard-setup-startup-hook))
 
 (provide 'init-dashboard)

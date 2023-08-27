@@ -62,10 +62,6 @@
     (ibuffer-visit-buffer)
     (kill-buffer "*Ibuffer*"))
 
-  :functions (all-the-icons-icon-for-file
-              all-the-icons-icon-for-mode
-              all-the-icons-auto-mode-match?
-              all-the-icons-faicon)
   :commands (ibuffer-find-file
              ibuffer-current-buffer)
   :bind ("C-x C-b" . ibuffer)
@@ -77,14 +73,13 @@
   (define-key ibuffer-mode-map (kbd "K") 'petmacs/ibuffer-previous-group)
   (define-key ibuffer-mode-map (kbd "RET") 'petmacs/ibuffer-visit-buffer))
 
-;; Display icons for buffers
-(use-package all-the-icons-ibuffer
-  :hook (ibuffer-mode . all-the-icons-ibuffer-mode)
-  :init (setq all-the-icons-ibuffer-icon t))
+(use-package nerd-icons-ibuffer
+  :hook (ibuffer-mode . nerd-icons-ibuffer-mode)
+  :init (setq nerd-icons-ibuffer-icon petmacs-icon))
 
 ;; Group ibuffer's list by project root
 (use-package ibuffer-projectile
-  :functions all-the-icons-octicon ibuffer-do-sort-by-alphabetic
+  :functions nerd-icons-octicon
   :hook ((ibuffer . (lambda ()
                       (ibuffer-projectile-set-filter-groups)
                       (unless (eq ibuffer-sorting-mode 'alphabetic)
@@ -93,10 +88,10 @@
   (setq ibuffer-projectile-prefix
         (if (display-graphic-p)
             (concat
-             (all-the-icons-octicon "file-directory"
-                                    :face ibuffer-filter-group-name-face
-                                    :v-adjust -0.05
-                                    :height 1.25)
+             (nerd-icons-octicon "nf-oct-file_directory_fill"
+                                 :face ibuffer-filter-group-name-face
+                                 :v-adjust -0.05
+                                 :height 1.25)
              " ")
           "Project: ")))
 

@@ -55,82 +55,10 @@
   (define-key winum-keymap (kbd "M-8") 'winum-select-window-8)
   (define-key winum-keymap (kbd "M-0") 'winum-select-window-0-or-10))
 
-(use-package all-the-icons
-  :if (and petmacs-icon (display-graphic-p))
-  :init
-  ;; fonts will be installed in ~/.local/share/fonts
-  (unless (or sys/win32p
-              (daemonp)
-              (font-installed-p "all-the-icons"))
-    (all-the-icons-install-fonts t))
-  :config
-  ;; Support more icons
-  (let ((extension-icon-alist
-         '(("bat"  all-the-icons-alltheicon "terminal" :face all-the-icons-lsilver)
-           ("cmd"  all-the-icons-alltheicon "terminal" :face all-the-icons-lsilver)
-           ("conf" all-the-icons-octicon "settings"    :v-adjust 0.0 :face all-the-icons-yellow)
-           ("eln"  all-the-icons-octicon "file-binary" :v-adjust 0.0 :face all-the-icons-dsilver)
-           ("epub" all-the-icons-faicon "book"         :height 1.0 :v-adjust -0.1 :face all-the-icons-green)
-           ("exe"  all-the-icons-octicon "file-binary" :v-adjust 0.0 :face all-the-icons-dsilver)
-           ("make" all-the-icons-fileicon "gnu"        :face all-the-icons-dorange)
-           ("rss"  all-the-icons-octicon "rss"         :height 1.1 :v-adjust 0.0 :face all-the-icons-lorange)
-           ("toml" all-the-icons-octicon "settings"    :v-adjust 0.0 :face all-the-icons-yellow)
-           ("tsx"  all-the-icons-fileicon "tsx"        :height 1.0 :v-adjust -0.1 :face all-the-icons-cyan-alt)
-           ("xpm"  all-the-icons-octicon "file-media"  :v-adjust 0.0 :face all-the-icons-dgreen))))
-    (dolist (icon extension-icon-alist)
-      (add-to-list 'all-the-icons-extension-icon-alist icon)))
 
-  (let ((regexp-icon-alist
-         '(("\\.[bB][iI][nN]$"               all-the-icons-octicon "file-binary" :v-adjust 0.0 :face all-the-icons-yellow)
-           ("^config$"                       all-the-icons-octicon "settings"    :v-adjust 0.0 :face all-the-icons-dorange)
-           ("\\.\\(ba\\|z\\)shrc$"           all-the-icons-alltheicon "script"   :height 0.9 :face all-the-icons-dpink)
-           ("\\.\\(bash\\|zsh\\)*_?profile$" all-the-icons-alltheicon "script"   :height 0.9 :face all-the-icons-dred)
-           ("\\.\\(ba\\|z\\)sh_history$"     all-the-icons-alltheicon "script"   :height 0.9 :face all-the-icons-dsilver)
-           ("\\.zshenv$"                     all-the-icons-alltheicon "script"   :height 0.9 :face all-the-icons-dred)
-           ("Cask\\'"                        all-the-icons-fileicon "elisp"      :height 1.0 :v-adjust -0.2 :face all-the-icons-blue)
-           ("NEWS$"                          all-the-icons-faicon "newspaper-o"  :height 0.9 :v-adjust -0.2)
-           ("^Rakefile$"                     all-the-icons-alltheicon "ruby-alt" :face all-the-icons-red))))
-    (dolist (icon regexp-icon-alist)
-      (add-to-list 'all-the-icons-regexp-icon-alist icon)))
-
-  (let ((mode-icon-alist
-         '((xwidget-webkit-mode           all-the-icons-faicon "chrome"          :v-adjust -0.1 :face all-the-icons-blue)
-           (bongo-playlist-mode           all-the-icons-material "queue_music"   :height 1.2 :face all-the-icons-green)
-           (bongo-library-mode            all-the-icons-material "library_music" :height 1.1 :face all-the-icons-green)
-           (simple-mpc-mode               all-the-icons-faicon "music"           :v-adjust -0.1 :face all-the-icons-green)
-           (gnus-group-mode               all-the-icons-fileicon "gnu"           :face all-the-icons-silver)
-           (gnus-summary-mode             all-the-icons-octicon "inbox"          :height 1.0 :v-adjust 0.0 :face all-the-icons-orange)
-           (gnus-article-mode             all-the-icons-octicon "mail"           :height 1.1 :v-adjust 0.0 :face all-the-icons-lblue)
-           (message-mode                  all-the-icons-octicon "mail"           :height 1.1 :v-adjust 0.0 :face all-the-icons-lblue)
-           (diff-mode                     all-the-icons-octicon "git-compare"    :v-adjust 0.0 :face all-the-icons-lred)
-           (flycheck-error-list-mode      all-the-icons-octicon "checklist"      :height 1.1 :v-adjust 0.0 :face all-the-icons-lred)
-           (newsticker-mode               all-the-icons-faicon "rss-square"      :v-adjust -0.1 :face all-the-icons-orange)
-           (newsticker-treeview-mode      all-the-icons-faicon "rss-square"      :v-adjust -0.1 :face all-the-icons-orange)
-           (newsticker-treeview-list-mode all-the-icons-octicon "rss"            :height 1.1 :v-adjust 0.0 :face all-the-icons-orange)
-           (newsticker-treeview-item-mode all-the-icons-octicon "rss"            :height 1.1 :v-adjust 0.0 :face all-the-icons-lorange)
-           (conf-mode                     all-the-icons-octicon "settings"       :v-adjust 0.0 :face all-the-icons-yellow)
-           (conf-space-mode               all-the-icons-octicon "settings"       :v-adjust 0.0 :face all-the-icons-yellow)
-           (gitconfig-mode                all-the-icons-octicon "settings"       :v-adjust 0.0 :face all-the-icons-dorange)
-           (forge-topic-mode              all-the-icons-alltheicon "git"         :face all-the-icons-blue)
-           (help-mode                     all-the-icons-faicon "info-circle"     :height 1.1 :v-adjust -0.1 :face all-the-icons-purple)
-           (helpful-mode                  all-the-icons-faicon "info-circle"     :height 1.1 :v-adjust -0.1 :face all-the-icons-purple)
-           (Info-mode                     all-the-icons-faicon "info-circle"     :height 1.1 :v-adjust -0.1)
-           (cask-mode                     all-the-icons-fileicon "elisp"         :height 1.0 :v-adjust -0.2 :face all-the-icons-blue)
-           (ein:notebooklist-mode         all-the-icons-faicon "book"            :face all-the-icons-lorange)
-           (ein:notebook-mode             all-the-icons-fileicon "jupyter"       :height 1.2 :face all-the-icons-orange)
-           (ein:notebook-multilang-mode   all-the-icons-fileicon "jupyter"       :height 1.2 :face all-the-icons-dorange)
-           (nov-mode                      all-the-icons-faicon "book"            :height 1.0 :v-adjust -0.1 :face all-the-icons-green)
-           (gfm-mode                      all-the-icons-octicon "markdown"       :face all-the-icons-lblue)
-           (osx-dictionary-mode           all-the-icons-material "library_books" :face all-the-icons-lblue)
-           (youdao-dictionary-mode        all-the-icons-material "library_books" :face all-the-icons-lblue)
-           (fanyi-mode                    all-the-icons-material "library_books" :face all-the-icons-lblue))))
-    (dolist (icon mode-icon-alist)
-      (add-to-list 'all-the-icons-mode-icon-alist icon))))
-
-(use-package all-the-icons-completion
-  :after marginalia
-  :hook ((after-init . all-the-icons-completion-mode)
-         (marginalia-mode . all-the-icons-completion-marginalia-setup)))
+(use-package nerd-icons-completion
+  :when (icons-displayable-p)
+  :hook (vertico-mode . nerd-icons-completion-mode))
 
 ;; ;; make "unreal" buffers (like popups, sidebars, log buffers,
 ;; ;; terminals by giving the latter a slightly different (often darker) background
@@ -443,6 +371,32 @@
 (when (boundp 'x-gtk-use-system-tooltips)
   (setq x-gtk-use-system-tooltips nil))
 
+;; Child frame
+(when (childframe-workable-p)
+  (use-package posframe
+    :hook (after-load-theme . posframe-delete-all)
+    :init
+    (defface posframe-border
+      `((t (:inherit region)))
+      "Face used by the `posframe' border."
+      :group 'posframe)
+    (defvar posframe-border-width 2
+      "Default posframe border width.")
+    :config
+    (with-no-warnings
+      (defun my-posframe--prettify-frame (&rest _)
+        (set-face-background 'fringe nil posframe--frame))
+      (advice-add #'posframe--create-posframe :after #'my-posframe--prettify-frame)
+
+      (defun posframe-poshandler-frame-center-near-bottom (info)
+        (cons (/ (- (plist-get info :parent-frame-width)
+                    (plist-get info :posframe-width))
+                 2)
+              (/ (+ (plist-get info :parent-frame-height)
+                    (* 2 (plist-get info :font-height)))
+                 2))))))
+
+
 ;; use font supported ligatures
 (when (and emacs/>=28p petmacs-enable-ligatures)
   (use-package composite
@@ -517,25 +471,57 @@
 						                        (:lambda "lambda"))))
 
 (if (display-graphic-p)
-    (use-package kind-all-the-icons
-      :load-path (lambda () (expand-file-name "site-lisp/local/kind-all-the-icons" user-emacs-directory))
+    ;; M-x kind-icon-preview-all to reset and preview all icons after installation
+    (use-package kind-icon
+      :quelpa (kind-icon :fetcher github
+  		                 :repo "jdtsmith/kind-icon"
+  		                 :files ("*.el"))
       :after corfu
       :init
-      (when (icon-displayable-p)
-        (require 'kind-all-the-icons)
-        (add-to-list 'corfu-margin-formatters #'kind-all-the-icons-margin-formatter)))
-  ;; M-x kind-icon-preview-all to reset and preview all icons after installation
-  (use-package kind-icon
-    :quelpa (kind-icon :fetcher github
-  		               :repo "jdtsmith/kind-icon"
-  		               :files ("*.el"))
-    :after corfu
-    :init
-    (require 'kind-icon)
-    ;; to compute blended backgrounds correctly
-    (setq kind-icon-default-face 'corfu-default)
-    :config
-    (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter)))
+      (require 'kind-icon)
+      ;; to compute blended backgrounds correctly
+      (setq ;; kind-icon-default-face 'corfu-default
+       kind-icon-use-icons nil
+       kind-icon-mapping
+       `(
+         (array ,(nerd-icons-codicon "nf-cod-symbol_array") :face font-lock-type-face)
+         (boolean ,(nerd-icons-codicon "nf-cod-symbol_boolean") :face font-lock-builtin-face)
+         (class ,(nerd-icons-codicon "nf-cod-symbol_class") :face font-lock-type-face)
+         (color ,(nerd-icons-codicon "nf-cod-symbol_color") :face success)
+         (command ,(nerd-icons-codicon "nf-cod-terminal") :face default)
+         (constant ,(nerd-icons-codicon "nf-cod-symbol_constant") :face font-lock-constant-face)
+         (constructor ,(nerd-icons-codicon "nf-cod-triangle_right") :face font-lock-function-name-face)
+         (enummember ,(nerd-icons-codicon "nf-cod-symbol_enum_member") :face font-lock-builtin-face)
+         (enum-member ,(nerd-icons-codicon "nf-cod-symbol_enum_member") :face font-lock-builtin-face)
+         (enum ,(nerd-icons-codicon "nf-cod-symbol_enum") :face font-lock-builtin-face)
+         (event ,(nerd-icons-codicon "nf-cod-symbol_event") :face font-lock-warning-face)
+         (field ,(nerd-icons-codicon "nf-cod-symbol_field") :face font-lock-variable-name-face)
+         (file ,(nerd-icons-codicon "nf-cod-symbol_file") :face font-lock-string-face)
+         (folder ,(nerd-icons-codicon "nf-cod-folder") :face font-lock-doc-face)
+         (interface ,(nerd-icons-codicon "nf-cod-symbol_interface") :face font-lock-type-face)
+         (keyword ,(nerd-icons-codicon "nf-cod-symbol_keyword") :face font-lock-keyword-face)
+         (macro ,(nerd-icons-codicon "nf-cod-symbol_misc") :face font-lock-keyword-face)
+         (magic ,(nerd-icons-codicon "nf-cod-wand") :face font-lock-builtin-face)
+         (method ,(nerd-icons-codicon "nf-cod-symbol_method") :face font-lock-function-name-face)
+         (function ,(nerd-icons-codicon "nf-cod-symbol_method") :face font-lock-function-name-face)
+         (module ,(nerd-icons-codicon "nf-cod-file_submodule") :face font-lock-preprocessor-face)
+         (numeric ,(nerd-icons-codicon "nf-cod-symbol_numeric") :face font-lock-builtin-face)
+         (operator ,(nerd-icons-codicon "nf-cod-symbol_operator") :face font-lock-comment-delimiter-face)
+         (param ,(nerd-icons-codicon "nf-cod-symbol_parameter") :face default)
+         (property ,(nerd-icons-codicon "nf-cod-symbol_property") :face font-lock-variable-name-face)
+         (reference ,(nerd-icons-codicon "nf-cod-references") :face font-lock-variable-name-face)
+         (snippet ,(nerd-icons-codicon "nf-cod-symbol_snippet") :face font-lock-string-face)
+         (string ,(nerd-icons-codicon "nf-cod-symbol_string") :face font-lock-string-face)
+         (struct ,(nerd-icons-codicon "nf-cod-symbol_structure") :face font-lock-variable-name-face)
+         (text ,(nerd-icons-codicon "nf-cod-text_size") :face font-lock-doc-face)
+         (typeparameter ,(nerd-icons-codicon "nf-cod-list_unordered") :face font-lock-type-face)
+         (type-parameter ,(nerd-icons-codicon "nf-cod-list_unordered") :face font-lock-type-face)
+         (unit ,(nerd-icons-codicon "nf-cod-symbol_ruler") :face font-lock-constant-face)
+         (value ,(nerd-icons-codicon "nf-cod-symbol_field") :face font-lock-builtin-face)
+         (variable ,(nerd-icons-codicon "nf-cod-symbol_variable") :face font-lock-variable-name-face)
+         (t ,(nerd-icons-codicon "nf-cod-code") :face font-lock-warning-face)))
+      :config
+      (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter)))
 
 (when petmacs-enable-mini-frame
   (use-package mini-frame

@@ -12,8 +12,6 @@ before you use Petmacs, make sure your emacs version >= 29.1 and tree-sitter is 
 
   - [Maple Mono SC NF](https://gitee.com/subframe7536/Maple/releases)
 
-  - [all-the-icons](https://github.com/domtronn/all-the-icons.el)
-
 - ripgrep
 
   put [ripgrep](https://github.com/BurntSushi/ripgrep) binary into your `PATH`

@@ -34,7 +34,7 @@
   (require 'eaf-pdf-viewer)
   (require 'eaf-git)
 
-  (require 'eaf-all-the-icons)
+  ;; (require 'eaf-all-the-icons)
   (require 'eaf-evil)
 
   (setq eaf-python-command (expand-file-name "eaf/bin/python" (getenv "WORKON_HOME")))

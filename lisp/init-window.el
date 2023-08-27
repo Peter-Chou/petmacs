@@ -142,14 +142,10 @@
           '(:eval (let ((face (if (doom-modeline--active)
                                   'mode-line-emphasis
                                 'mode-line-inactive)))
-                    (if (and (icon-displayable-p)
+                    (if (and (icons-displayable-p)
                              (bound-and-true-p doom-modeline-mode))
                         (format " %s "
-                                (all-the-icons-octicon
-                                 "pin"
-                                 :height 0.9
-                                 :v-adjust 0.0
-                                 :face face))
+                                (nerd-icons-octicon "nf-oct-pin" :face face))
                       (propertize " POP" 'face face))))))
 
   (setq popper-echo-dispatch-actions t)
