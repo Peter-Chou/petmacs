@@ -381,12 +381,11 @@
    lsp-pyright-venv-path (getenv "WORKON_HOME")))
 
 ;;; java
-
 (use-package lsp-java
-  :hook ((java-mode java-ts-mode) . (lambda ()
-		                              (require 'lsp-java)
-                                      (require 'lsp-java-boot)
-		                              (lsp-deferred)))
+  :hook ((java-mode java-ts-mode jdee-mode) . (lambda ()
+		                                        (require 'lsp-java)
+                                                (require 'lsp-java-boot)
+		                                        (lsp-deferred)))
   :init
   (setq
    ;; Use Google style formatting by default
