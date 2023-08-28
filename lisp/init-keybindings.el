@@ -286,8 +286,8 @@
     "D" #'dired-jump-other-window
     "c" #'goto-last-change
     "d" #'deer
-    "j" #'avy-goto-char-2
-    "J" #'avy-goto-char-timer
+    "j" #'avy-goto-char
+    "J" #'avy-goto-char-2
     "l" #'avy-goto-line
     "t" #'magit-todos-list
     "y" #'consult-yank-pop

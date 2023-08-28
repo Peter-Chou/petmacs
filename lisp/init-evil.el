@@ -46,7 +46,8 @@
   (evil-set-initial-state 'dashboard-mode 'normal)
   (evil-set-initial-state 'vterm-mode 'insert)
 
-  (evil-set-undo-system 'undo-tree)
+  ;; (evil-set-undo-system 'undo-tree)
+  (evil-set-undo-system 'undo-fu)
 
   ;; treat _ as word like vim
   (with-eval-after-load 'evil
@@ -156,7 +157,6 @@
     (evil-define-key 'normal dired-mode-map (kbd "RET") 'dired-find-alternate-file)
     (evil-define-key 'normal dired-mode-map (kbd "F") 'find-file))
   (advice-add #'evil-collection-dired-setup :after #'petmacs/evil-collection-dired-setup))
-
 
 (use-package evil-textobj-line
   :init (require 'evil-textobj-line))
