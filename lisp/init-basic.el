@@ -21,19 +21,8 @@
 (when (file-exists-p custom-file)
   (load custom-file 'noerror 'nomessage))
 
-;; Treat undo history as a tree
-(use-package undo-tree
-  :diminish
-  :hook (after-init . global-undo-tree-mode)
-  :init
-  (setq undo-tree-visualizer-timestamps t
-        undo-tree-enable-undo-in-region nil
-        undo-tree-auto-save-history nil)
-
-  ;; HACK: keep the diff window
-  (with-no-warnings
-    (make-variable-buffer-local 'undo-tree-visualizer-diff)
-    (setq-default undo-tree-visualizer-diff t)))
+;; alternative to undo-tree
+(use-package undo-fu)
 
 (use-package solar
   :ensure nil
@@ -51,8 +40,7 @@
 (use-package autorevert
   :ensure nil
   :diminish
-  :hook (after-init . global-auto-revert-mode)
-  :init (setq global-auto-revert-non-file-buffers t))
+  :hook (after-init . global-auto-revert-mode))
 
 ;; Cross-referencing commands
 (use-package xref
