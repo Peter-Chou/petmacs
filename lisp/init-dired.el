@@ -56,8 +56,32 @@
 
   (evil-define-key 'normal dired-mode-map (kbd "-") 'petmacs/dired-goto-parent-directory))
 
+;; Quick sort dired buffers via hydra
+(use-package dired-quick-sort
+  :bind (:map dired-mode-map
+         ("S" . hydra-dired-quick-sort/body)))
+
+;; Show git info in dired
+(use-package dired-git-info
+  :bind (:map dired-mode-map
+         (")" . dired-git-info-mode)))
+
 ;; Allow rsync from dired buffers
-(use-package dired-rsync)
+(use-package dired-rsync
+  :bind (:map dired-mode-map
+         ("C-c C-r" . dired-rsync)))
+
+;; Colorful dired
+(use-package diredfl
+  :hook (dired-mode . diredfl-mode))
+
+;; Shows icons
+(use-package nerd-icons-dired
+  :diminish
+  :when (icons-displayable-p)
+  :custom-face
+  (nerd-icons-dired-dir-face ((t (:inherit nerd-icons-dsilver :foreground unspecified))))
+  :hook (dired-mode . nerd-icons-dired-mode))
 
 (use-package dired-x
   :ensure nil
@@ -87,17 +111,6 @@
 ;; `find-dired' alternative using `fd'
 (when (executable-find "fd")
   (use-package fd-dired))
-
-(use-package diredfl
-  :hook (dired-mode . diredfl-mode))
-
-;; Shows icons
-(use-package nerd-icons-dired
-  :diminish
-  :when (icons-displayable-p)
-  :custom-face
-  (nerd-icons-dired-dir-face ((t (:inherit nerd-icons-dsilver :foreground unspecified))))
-  :hook (dired-mode . nerd-icons-dired-mode))
 
 ;; Extra Dired functionality
 (use-package dired-aux :ensure nil)
