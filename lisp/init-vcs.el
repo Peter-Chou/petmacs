@@ -71,6 +71,29 @@
           ("State" 6 t nil state nil)
           ("Updated" 10 t nil updated nil))))
 
+;; Display transient in child frame
+(when (childframe-completion-workable-p)
+  (use-package transient-posframe
+    :diminish
+    :defines posframe-border-width
+    :custom-face
+    (transient-posframe ((t (:inherit tooltip))))
+    (transient-posframe-border ((t (:inherit posframe-border :background unspecified))))
+    :hook (after-init . transient-posframe-mode)
+    :init
+    (setq transient-posframe-border-width posframe-border-width
+          transient-posframe-min-height nil
+          transient-posframe-min-width 80
+          transient-posframe-poshandler 'posframe-poshandler-frame-center
+          transient-posframe-parameters '((left-fringe . 8)
+                                          (right-fringe . 8)))
+    :config
+    (with-no-warnings
+      (defun my-transient-posframe--hide ()
+        "Hide transient posframe."
+        (posframe-hide transient--buffer-name))
+      (advice-add #'transient-posframe--delete :override #'my-transient-posframe--hide))))
+
 ;; Show TODOs in magit
 (use-package magit-todos
   :defines magit-todos-nice
@@ -88,8 +111,8 @@
 ;; Walk through git revisions of a file
 (use-package git-timemachine
   :custom-face
-  (git-timemachine-minibuffer-author-face ((t (:inherit success))))
-  (git-timemachine-minibuffer-detail-face ((t (:inherit warning))))
+  (git-timemachine-minibuffer-author-face ((t (:inherit success :foreground unspecified))))
+  (git-timemachine-minibuffer-detail-face ((t (:inherit warning :foreground unspecified))))
   :bind (:map vc-prefix-map
          ("t" . git-timemachine))
   :hook ((git-timemachine-mode . (lambda ()
@@ -111,6 +134,15 @@
          (before-revert . (lambda ()
                             (when (bound-and-true-p git-timemachine-mode)
                               (user-error "Cannot revert the timemachine buffer"))))))
+
+;; Pop up last commit information of current line
+(use-package git-messenger
+  :bind (:map vc-prefix-map
+         ("p" . git-messenger:popup-message)
+         :map git-messenger-map
+         ("m" . git-messenger:copy-message))
+  :init (setq git-messenger:show-detail t
+              git-messenger:use-magit-popup t))
 
 ;; Resolve diff3 conflicts
 (use-package smerge-mode

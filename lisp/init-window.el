@@ -1,4 +1,3 @@
-
 ;; -*- lexical-binding: t no-byte-compile: t -*-
 
 (require 'init-const)
@@ -68,7 +67,35 @@
         aw-minibuffer-flag t)
   :config
   (when (childframe-workable-p)
-    (ace-window-posframe-mode 1)))
+    (ace-window-posframe-mode 1))
+
+  (defun toggle-window-split ()
+    (interactive)
+    (if (= (count-windows) 2)
+        (let* ((this-win-buffer (window-buffer))
+               (next-win-buffer (window-buffer (next-window)))
+               (this-win-edges (window-edges (selected-window)))
+               (next-win-edges (window-edges (next-window)))
+               (this-win-2nd (not (and (<= (car this-win-edges)
+                                           (car next-win-edges))
+                                       (<= (cadr this-win-edges)
+                                           (cadr next-win-edges)))))
+               (splitter
+                (if (= (car this-win-edges)
+                       (car (window-edges (next-window))))
+                    'split-window-horizontally
+                  'split-window-vertically)))
+          (delete-other-windows)
+          (let ((first-win (selected-window)))
+            (funcall splitter)
+            (if this-win-2nd (other-window 1))
+            (set-window-buffer (selected-window) this-win-buffer)
+            (set-window-buffer (next-window) next-win-buffer)
+            (select-window first-win)
+            (if this-win-2nd (other-window 1))))
+      (user-error "`toggle-window-split' only supports two windows")))
+  ;; Bind hydra to dispatch list
+  (add-to-list 'aw-dispatch-alist '(?w ace-window-hydra/body) t))
 
 ;; Enforce rules for popups
 (use-package popper
@@ -76,9 +103,11 @@
   :commands popper-group-by-projectile
   :hook (emacs-startup . popper-mode)
   :init
+  (setq popper-group-function #'popper-group-by-directory)
   (setq popper-reference-buffers
         '("\\*Messages\\*"
           "Output\\*$" "\\*Pp Eval Output\\*$"
+          "^\\*eldoc.*\\*$"
           "\\*Compile-Log\\*"
           "\\*Completions\\*"
           "\\*Warnings\\*"
@@ -86,10 +115,10 @@
           "\\*Apropos\\*"
           "\\*Backtrace\\*"
           "\\*Calendar\\*"
-          "\\*Embark Actions\\*"
           "\\*Finder\\*"
           "\\*Kill Ring\\*"
           "\\*Go-Translate\\*"
+          "\\*Embark \\(Collect\\|Live\\):.*\\*"
 
           bookmark-bmenu-mode
           comint-mode
@@ -103,7 +132,6 @@
 
           gnus-article-mode devdocs-mode
           grep-mode occur-mode rg-mode deadgrep-mode ag-mode pt-mode
-          ivy-occur-mode ivy-occur-grep-mode
           youdao-dictionary-mode osx-dictionary-mode fanyi-mode
 
           "^\\*Process List\\*" process-menu-mode
@@ -124,7 +152,6 @@
           "\\*quickrun\\*$"
           "\\*tldr\\*$"
           "\\*vc-.*\\*$"
-          "^\\*elfeed-entry\\*$"
           "^\\*macro expansion\\**"
 
           "\\*Agenda Commands\\*" "\\*Org Select\\*" "\\*Capture\\*" "^CAPTURE-.*\\.org*"
@@ -134,8 +161,8 @@
           "\\*rustfmt\\*$" rustic-compilation-mode rustic-cargo-clippy-mode
           rustic-cargo-outdated-mode rustic-cargo-run-mode rustic-cargo-test-mode))
 
-  (with-eval-after-load 'projectile
-    (setq popper-group-function #'popper-group-by-projectile))
+  ;; (with-eval-after-load 'projectile
+  ;;   (setq popper-group-function #'popper-group-by-projectile))
 
   (with-eval-after-load 'doom-modeline
     (setq popper-mode-line
