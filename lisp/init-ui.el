@@ -180,6 +180,7 @@
       (add-to-list 'awesome-tray-module-alist '("pyvenv" . (awesome-tray-module-pyvenv-info awesome-tray-module-pyvenv-face)))
       (add-to-list 'awesome-tray-module-alist '("pomodoro" . (awesome-tray-module-pomodoro-info awesome-tray-module-pomodoro-face)))
       (add-hook 'buffer-list-update-hook #'awesome-tray-update))
+
   (use-package doom-modeline
     :preface
     (defface doom-modeline-python-venv
@@ -192,65 +193,28 @@
     :hook (after-init . doom-modeline-mode)
     :init
     (setq doom-modeline-icon petmacs-icon
+          doom-modeline-buffer-file-name-style 'file-name
           doom-modeline-support-imenu t
+          doom-modeline-time-icon nil
           doom-modeline-minor-modes nil
           doom-modeline-indent-info nil
           doom-modeline-height 1
           doom-modeline-window-width-limit 110
-          doom-modeline-buffer-file-name-style 'relative-to-project)
+          doom-modeline-env-version nil
+          )
 
     ;; Prevent flash of unstyled modeline at startup
     (unless after-init-time
       (setq-default mode-line-format nil))
     :config
-    ;; (doom-modeline-def-segment pomodoro
-    ;;                            "pomodoro"
-    ;;                            (propertize
-    ;;                             (concat
-    ;;                              doom-modeline-spc (format "%s" pomodoro-mode-line-string) doom-modeline-spc)
-    ;;                             'face (doom-modeline-face 'doom-modeline-urgent)))
+    (doom-modeline-def-modeline 'my-simple-line
+      '(eldoc bar workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
+      '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl lsp input-method indent-info buffer-encoding process vcs checker time))
 
-    ;; (doom-modeline-def-segment python-venv
-    ;;   "python venv"
-    ;;   (when (and (doom-modeline--active)
-    ;;              (equal major-mode 'python-mode)
-    ;;              (bound-and-true-p python-shell-virtualenv-root))
-    ;;     (propertize
-    ;;      (concat
-    ;;       doom-modeline-spc
-    ;;       (doom-modeline-icon 'material  "check_circle" "☑" "✔"
-    ;;                           :face 'doom-modeline-python-venv
-    ;;                           :height 1.3 :v-adjust -0.15)
-    ;;       doom-modeline-spc
-    ;;       (file-name-nondirectory python-shell-virtualenv-root)
-    ;;       doom-modeline-spc)
-    ;;      'face (doom-modeline-face 'doom-modeline-python-venv))))
-
-    ;; (defun doom-modeline--check-python-venv-in-modeline ()
-    ;;   (member '(pyvenv-mode pyvenv-mode-line-indicator) mode-line-misc-info))
-
-    ;; (defun doom-modeline-override-python-venv-modeline ()
-    ;;   "Override default display-time mode-line."
-    ;;   (if (and (bound-and-true-p doom-modeline-mode)
-    ;;            (bound-and-true-p pyvenv-mode)
-    ;;            (doom-modeline--check-python-venv-in-modeline))
-    ;;       (setq mode-line-misc-info (delete '(pyvenv-mode pyvenv-mode-line-indicator) mode-line-misc-info))
-    ;;     (when (and (bound-and-true-p pyvenv-mode)
-    ;;                (not (doom-modeline--check-python-venv-in-modeline)))
-    ;;       (add-to-list 'mode-line-misc-info '(pyvenv-mode pyvenv-mode-line-indicator)))))
-    ;; (add-hook 'pyvenv-mode-hook #'doom-modeline-override-python-venv-modeline)
-    ;; (add-hook 'doom-modeline-mode-hook #'doom-modeline-override-python-venv-modeline)
-
-    ;; (doom-modeline-def-modeline 'petmacs--default-modeline
-    ;;   ;; checker is moved from left side of modeline
-    ;;   '(bar window-number matches buffer-info remote-host buffer-position parrot selection-info)
-    ;;   '(misc-info persp-name github debug repl input-method pomodoro indent-info buffer-encoding process python-venv vcs time))
-
-    ;; Add to `doom-modeline-mode-hook` or other hooks
-    ;; (defun petmacs/setup-custom-default-doom-modeline ()
-    ;;   (doom-modeline-set-modeline 'petmacs--default-modeline 'default))
-    ;; (add-hook 'doom-modeline-mode-hook 'petmacs/setup-custom-default-doom-modeline)
-    ))
+    ;; Set default mode-line
+    (add-hook 'doom-modeline-mode-hook
+              (lambda ()
+                (doom-modeline-set-modeline 'my-simple-line 'default)))))
 
 (use-package hide-mode-line
   :hook (((
