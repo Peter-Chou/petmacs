@@ -83,7 +83,25 @@ FACE defaults to inheriting from default and highlight."
          ("M-N" . symbol-overlay-switch-forward)
          ("M-P" . symbol-overlay-switch-backward)
          ("M-C" . symbol-overlay-remove-all))
-  :hook ((prog-mode yaml-mode) . symbol-overlay-mode))
+  :hook ((prog-mode yaml-mode) . symbol-overlay-mode)
+  (iedit-mode . turn-off-symbol-overlay)
+  (iedit-mode-end . turn-on-symbol-overlay)
+  :init (setq symbol-overlay-idle-time 0.1)
+  :config
+  (with-no-warnings
+    ;; Disable symbol highlighting while selecting
+    (defun turn-off-symbol-overlay (&rest _)
+      "Turn off symbol highlighting."
+      (interactive)
+      (symbol-overlay-mode -1))
+    (advice-add #'set-mark :after #'turn-off-symbol-overlay)
+
+    (defun turn-on-symbol-overlay (&rest _)
+      "Turn on symbol highlighting."
+      (interactive)
+      (when (derived-mode-p 'prog-mode 'yaml-mode)
+        (symbol-overlay-mode 1)))
+    (advice-add #'deactivate-mark :after #'turn-on-symbol-overlay)))
 
 (use-package indent-bars
   :quelpa (indent-bars :fetcher github
@@ -93,11 +111,43 @@ FACE defaults to inheriting from default and highlight."
   (defface indent-bars-current-depth-line-face '((t nil))
     "Face for indent bars current line"
     :group 'basic-faces)
-  :hook ((python-mode python-ts-mode yaml-mode yaml-ts-mode) . indent-bars-mode)
+  ;; :hook ((python-mode python-ts-mode yaml-mode yaml-ts-mode) . indent-bars-mode)
+  :hook ((prog-mode yaml-mode) . (lambda ()
+                                   "Highlight indentations in small files for better performance."
+                                   (unless (too-long-file-p)
+                                     (indent-bars-mode 1))))
   :init
   (set-face-attribute 'indent-bars-current-depth-line-face nil :foreground petmacs-favor-color :bold t)
   (setq indent-bars-display-on-blank-lines nil
+        indent-bars-width-frac 0.25
         indent-bars-highlight-current-depth '(:face indent-bars-current-depth-line-face :pattern ".")))
+
+;; Colorize color names in buffers
+(use-package rainbow-mode
+  :diminish
+  :defines helpful-mode-map
+  :bind (:map help-mode-map
+         ("w" . rainbow-mode))
+  :hook ((html-mode php-mode helpful-mode) . rainbow-mode)
+  :init (with-eval-after-load 'helpful
+          (bind-key "w" #'rainbow-mode helpful-mode-map))
+  :config
+  (with-no-warnings
+    ;; HACK: Use overlay instead of text properties to override `hl-line' faces.
+    ;; @see https://emacs.stackexchange.com/questions/36420
+    (defun my-rainbow-colorize-match (color &optional match)
+      (let* ((match (or match 0))
+             (ov (make-overlay (match-beginning match) (match-end match))))
+        (overlay-put ov 'ovrainbow t)
+        (overlay-put ov 'face `((:foreground ,(if (> 0.5 (rainbow-x-color-luminance color))
+                                                  "white" "black"))
+                                (:background ,color)))))
+    (advice-add #'rainbow-colorize-match :override #'my-rainbow-colorize-match)
+
+    (defun my-rainbow-clear-overlays ()
+      "Clear all rainbow overlays."
+      (remove-overlays (point-min) (point-max) 'ovrainbow t))
+    (advice-add #'rainbow-turn-off :after #'my-rainbow-clear-overlays)))
 
 ;; Highlight brackets according to their depth
 (use-package rainbow-delimiters
@@ -107,21 +157,25 @@ FACE defaults to inheriting from default and highlight."
 (use-package hl-todo
   :custom-face
   (hl-todo ((t (:inherit default :height 0.9 :width condensed :weight bold :underline nil :inverse-video t))))
-  :hook (after-init . global-hl-todo-mode)
+  :bind (:map hl-todo-mode-map
+         ([C-f3]    . hl-todo-occur)
+         ("C-c t p" . hl-todo-previous)
+         ("C-c t n" . hl-todo-next)
+         ("C-c t o" . hl-todo-occur)
+         ("C-c t i" . hl-todo-insert))
+  :hook ((after-init . global-hl-todo-mode)
+         (hl-todo-mode . (lambda ()
+                           (add-hook 'flymake-diagnostic-functions
+                                     #'hl-todo-flymake nil t))))
+  :init (setq hl-todo-require-punctuation t
+              hl-todo-highlight-punctuation ":")
   :config
   (dolist (keyword '("BUG" "DEFECT" "ISSUE"))
-    (cl-pushnew `(,keyword . ,(face-foreground 'error)) hl-todo-keyword-faces))
-  (dolist (keyword '("WORKAROUND" "HACK" "TRICK"))
-    (cl-pushnew `(,keyword . ,(face-foreground 'warning)) hl-todo-keyword-faces)))
-
-;; Pulse modified region
-(if emacs/>=27p
-    (use-package goggles
-      :diminish
-      :hook ((prog-mode text-mode) . goggles-mode))
-  (use-package volatile-highlights
-    :diminish
-    :hook (after-init . volatile-highlights-mode)))
+    (add-to-list 'hl-todo-keyword-faces `(,keyword . "#e45649")))
+  (dolist (keyword '("TRICK" "WORKAROUND"))
+    (add-to-list 'hl-todo-keyword-faces `(,keyword . "#d0bf8f")))
+  (dolist (keyword '("DEBUG" "STUB"))
+    (add-to-list 'hl-todo-keyword-faces `(,keyword . "#7cb8bb"))))
 
 ;; Highlight uncommitted changes using VC
 (use-package diff-hl
@@ -130,6 +184,7 @@ FACE defaults to inheriting from default and highlight."
   (diff-hl-insert ((t (:inherit diff-added :background unspecified))))
   (diff-hl-delete ((t (:inherit diff-removed :background unspecified))))
   :hook ((after-init . global-diff-hl-mode)
+         (after-init . global-diff-hl-show-hunk-mouse-mode)
          (dired-mode . diff-hl-dired-mode))
   :init (setq diff-hl-draw-borders nil
               ;; diff-hl-side 'right
@@ -212,5 +267,14 @@ FACE defaults to inheriting from default and highlight."
                    pop-global-mark
                    goto-last-change))
       (advice-add cmd :after #'my-recenter-and-pulse))))
+
+;; Pulse modified region
+(if emacs/>=27p
+    (use-package goggles
+      :diminish
+      :hook ((prog-mode text-mode) . goggles-mode))
+  (use-package volatile-highlights
+    :diminish
+    :hook (after-init . volatile-highlights-mode)))
 
 (provide 'init-highlight)
