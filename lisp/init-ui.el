@@ -193,7 +193,7 @@
     :hook (after-init . doom-modeline-mode)
     :init
     (setq doom-modeline-icon petmacs-icon
-          doom-modeline-buffer-file-name-style 'file-name
+          doom-modeline-buffer-file-name-style 'auto
           doom-modeline-support-imenu t
           doom-modeline-time-icon nil
           doom-modeline-minor-modes nil
