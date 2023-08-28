@@ -57,12 +57,15 @@
 ;; Cross-referencing commands
 (use-package xref
   :init
-  (with-no-warnings
-    (when (executable-find "rg")
-      (setq xref-search-program 'ripgrep))
-    (if emacs/>=28p
-        (setq xref-show-definitions-function #'xref-show-definitions-completing-read
-              xref-show-xrefs-function #'xref-show-definitions-completing-read))))
+  ;; Use faster search tool
+  (setq xref-search-program (cond
+                             ((executable-find "ugrep") 'ugrep)
+                             ((executable-find "rg") 'ripgrep)
+                             (t 'grep)))
+
+  ;; Select from xref candidates in minibuffer
+  (setq xref-show-definitions-function #'xref-show-definitions-completing-read
+        xref-show-xrefs-function #'xref-show-definitions-completing-read))
 
 ;; Process
 (use-package proced

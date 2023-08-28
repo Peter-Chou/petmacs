@@ -4,7 +4,6 @@
 (use-package treemacs
   :commands (treemacs-follow-mode
              treemacs-filewatch-mode
-             treemacs-fringe-indicator-mode
              treemacs-git-mode)
   :custom-face
   (cfrs-border-color ((t (:background ,(face-foreground 'font-lock-comment-face nil t)))))
@@ -16,6 +15,7 @@
         treemacs-missing-project-action  'remove
         treemacs-sorting                 'alphabetic-asc
         treemacs-follow-after-init       t
+        treemacs-no-png-images           (not petmacs-icon)
         treemacs-width                   25)
   :config
   (treemacs-follow-mode t)
@@ -27,10 +27,18 @@
     (`(t . _)
      (treemacs-git-mode 'simple))))
 
+(use-package treemacs-nerd-icons
+  :demand t
+  :when (icons-displayable-p)
+  :custom-face
+  (treemacs-nerd-icons-root-face ((t (:inherit nerd-icons-green :height 1.3))))
+  (treemacs-nerd-icons-file-face ((t (:inherit nerd-icons-dsilver))))
+  :config (treemacs-load-theme "nerd-icons"))
+
 (use-package treemacs-projectile
   :after projectile
   :bind (:map projectile-command-map
-	          ("h" . treemacs-projectile)))
+	     ("h" . treemacs-projectile)))
 
 (use-package treemacs-magit
   :after magit
@@ -41,10 +49,8 @@
           magit-post-unstage)
          . treemacs-magit--schedule-update))
 
-;; (use-package treemacs-persp
-;;   :after persp-mode
-;;   :demand t
-;;   :functions treemacs-set-scope-type
-;;   :config (treemacs-set-scope-type 'Perspectives))
+(use-package treemacs-tab-bar
+  :demand t
+  :config (treemacs-set-scope-type 'Tabs))
 
 (provide 'init-treemacs)
