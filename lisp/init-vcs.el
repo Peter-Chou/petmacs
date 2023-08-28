@@ -53,6 +53,24 @@
   (define-key magit-mode-map (kbd "M-7") 'winum-select-window-7)
   (define-key magit-mode-map (kbd "M-8") 'winum-select-window-8))
 
+;; Access Git forges from Magit
+(use-package forge
+  :demand t
+  :defines (forge-database-connector forge-topic-list-columns)
+  :custom-face
+  (forge-topic-label ((t (:inherit variable-pitch :height 0.9 :width condensed :weight regular :underline nil))))
+  :init
+  (setq forge-database-connector (if (and (require 'emacsql-sqlite-builtin nil t)
+                                          (functionp 'emacsql-sqlite-builtin)
+                                          (functionp 'sqlite-open))
+                                     'sqlite-builtin
+                                   'sqlite)
+        forge-topic-list-columns
+        '(("#" 5 forge-topic-list-sort-by-number (:right-align t) number nil)
+          ("Title" 60 t nil title  nil)
+          ("State" 6 t nil state nil)
+          ("Updated" 10 t nil updated nil))))
+
 ;; Show TODOs in magit
 (use-package magit-todos
   :defines magit-todos-nice
