@@ -12,9 +12,9 @@ before you use Petmacs, make sure your emacs version >= 29.1 and tree-sitter is 
 
   - [Maple Mono SC NF](https://gitee.com/subframe7536/Maple/releases)
 
-- ripgrep
+- ugrep / ripgrep
 
-  put [ripgrep](https://github.com/BurntSushi/ripgrep) binary into your `PATH`
+  put [ugrep](https://github.com/Genivia/ugrep) /  [ripgrep](https://github.com/BurntSushi/ripgrep) binary into your `PATH`
 
 - nodejs
 

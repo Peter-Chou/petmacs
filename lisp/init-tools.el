@@ -313,9 +313,19 @@
 ;; Search tool
 (use-package grep
   :ensure nil
-  :commands grep-apply-setting
-  :config
-  (when (executable-find "rg")
+  :autoload grep-apply-setting
+  :init
+  (cond
+   ((executable-find "ugrep")
+    (grep-apply-setting
+     'grep-command "ugrep --color=auto -0In -e ")
+    (grep-apply-setting
+     'grep-template "ugrep --color=auto -0In -e <R> <D>")
+    (grep-apply-setting
+     'grep-find-command '("ugrep --color=auto -0Inr -e ''" . 30))
+    (grep-apply-setting
+     'grep-find-template "ugrep <C> -0Inr -e <R> <D>"))
+   ((executable-find "rg")
     (grep-apply-setting
      'grep-command "rg --color=auto --null -nH --no-heading -e ")
     (grep-apply-setting
@@ -323,8 +333,7 @@
     (grep-apply-setting
      'grep-find-command '("rg --color=auto --null -nH --no-heading -e ''" . 38))
     (grep-apply-setting
-     'grep-find-template "rg --color=auto --null -nH --no-heading -e <R> <D>")))
-
+     'grep-find-template "rg --color=auto --null -nH --no-heading -e <R> <D>"))))
 (use-package rime
   :init
   (setq default-input-method "rime"
