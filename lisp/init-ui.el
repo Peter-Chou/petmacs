@@ -396,7 +396,6 @@
                     (* 2 (plist-get info :font-height)))
                  2))))))
 
-
 ;; use font supported ligatures
 (when (and emacs/>=28p petmacs-enable-ligatures)
   (use-package composite

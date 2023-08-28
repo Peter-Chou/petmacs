@@ -1,4 +1,4 @@
-;; -*- lexical-binding: t no-byte-compile: t -*-
+;r; -*- lexical-binding: t no-byte-compile: t -*-
 
 (require 'init-custom)
 (require 'init-const)
@@ -8,9 +8,13 @@
   :diminish
   :hook (after-init . which-key-mode)
   :init
-  (setq which-key-idle-delay 0.2)
-  (setq which-key-separator " ")
-  (setq which-key-prefix-prefix " ")
+  (setq which-key-idle-delay 0.2
+        which-key-separator " "
+        which-key-prefix-prefix " "
+        which-key-lighter nil
+        which-key-show-remaining-keys t
+        which-key-max-description-length 30
+        )
 
   ;; Needed to avoid nil variable error before update to recent which-key
   (defvar which-key-replacement-alist nil)
@@ -33,6 +37,20 @@
       ;; ensure the target matches the whole string
       (push (cons (cons nil (concat "\\`" (car nd) "\\'")) (cons nil (cdr nd)))
             which-key-replacement-alist))))
+
+(when (childframe-completion-workable-p)
+  (use-package which-key-posframe
+    :diminish
+    :functions posframe-poshandler-frame-center-near-bottom
+    :custom-face
+    (which-key-posframe ((t (:inherit tooltip))))
+    (which-key-posframe-border ((t (:inherit posframe-border :background unspecified))))
+    :init
+    (setq which-key-posframe-border-width posframe-border-width
+          which-key-posframe-poshandler #'posframe-poshandler-frame-center-near-bottom
+          which-key-posframe-parameters '((left-fringe . 8)
+                                          (right-fringe . 8)))
+    (which-key-posframe-mode 1)))
 
 ;; Jump to things in Emacs tree-style
 (use-package avy
