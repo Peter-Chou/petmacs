@@ -100,6 +100,18 @@ Lisp function does not specify a special indentation."
   :ensure nil
   :diminish)
 
+(when (childframe-workable-p)
+  (use-package eldoc-box
+    :diminish (eldoc-box-hover-mode eldoc-box-hover-at-point-mode)
+    :custom-face
+    (eldoc-box-border ((t (:inherit posframe-border :background unspecified))))
+    (eldoc-box-body ((t (:inherit tooltip))))
+    :hook ((eglot-managed-mode . eldoc-box-hover-at-point-mode))
+    :config
+    ;; Prettify `eldoc-box' frame
+    (setf (alist-get 'left-fringe eldoc-box-frame-parameters) 8
+          (alist-get 'right-fringe eldoc-box-frame-parameters) 8)))
+
 ;; Interactive macro expander
 (use-package macrostep
   :custom-face

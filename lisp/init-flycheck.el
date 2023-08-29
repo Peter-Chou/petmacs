@@ -24,6 +24,6 @@
   (flycheck-redefine-standard-error-levels "⏴" 'flycheck-fringe-bitmap-arrow))
 
 (use-package flycheck-popup-tip
-:hook (flycheck-mode . flycheck-popup-tip-mode))
+  :hook (flycheck-mode . flycheck-popup-tip-mode))
 
 (provide 'init-flycheck)

@@ -6,7 +6,7 @@
              treemacs-filewatch-mode
              treemacs-git-mode)
   :custom-face
-  (cfrs-border-color ((t (:background ,(face-foreground 'font-lock-comment-face nil t)))))
+  (cfrs-border-color ((t (:inherit posframe-border))))
   :bind (("M-9"       . treemacs-select-window)
          :map treemacs-mode-map
          ([mouse-1]   . treemacs-single-click-expand-action))

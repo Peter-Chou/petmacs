@@ -46,6 +46,15 @@
   (add-hook 'rfn-eshadow-update-overlay-hook #'vertico-directory-tidy)
   (add-hook 'minibuffer-setup-hook #'vertico-repeat-save))
 
+(when (childframe-completion-workable-p)
+  (use-package vertico-posframe
+    :hook (vertico-mode . vertico-posframe-mode)
+    :init (setq vertico-posframe-poshandler
+                #'posframe-poshandler-frame-center-near-bottom
+                vertico-posframe-parameters
+                '((left-fringe  . 8)
+                  (right-fringe . 8)))))
+
 (use-package orderless
   :demand t
   ;; ...otherwise find-file gets different highlighting than other commands

@@ -74,7 +74,7 @@
         ;; how often lsp-mode will refresh the highlights, lenses, links, etc while you type
         lsp-idle-delay 0.5
 
-        lsp-keep-workspace-alive nil
+        lsp-keep-workspace-alive t
         lsp-enable-indentation nil
         lsp-enable-folding nil
         lsp-enable-file-watchers nil
