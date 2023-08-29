@@ -55,6 +55,8 @@
   (define-key winum-keymap (kbd "M-8") 'winum-select-window-8)
   (define-key winum-keymap (kbd "M-0") 'winum-select-window-0-or-10))
 
+(use-package all-the-icons
+  :if (display-graphic-p))
 
 (use-package nerd-icons-completion
   :when (icons-displayable-p)
