@@ -27,8 +27,7 @@
 (eval-and-compile
   (setq use-package-always-ensure t)
   (setq use-package-always-defer t)
-  (setq use-package-expand-minimally t)
-  (setq use-package-enable-imenu-support t))
+  (setq use-package-expand-minimally t))
 
 (eval-when-compile
   (require 'use-package))
