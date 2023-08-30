@@ -137,6 +137,8 @@
 
   (use-package corfu-terminal
     :load-path (lambda () (expand-file-name "site-lisp/corfu-terminal" user-emacs-directory))
+    ;; :quelpa (corfu-terminal :fetcher git
+  	;; 	                    :url "https://codeberg.org/akib/emacs-corfu-terminal.git")
     :init
     (require 'corfu-terminal)
     (corfu-terminal-mode +1))
