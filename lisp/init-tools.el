@@ -486,6 +486,7 @@
 (use-package disk-usage)                     ; Focus on the current region
 (use-package imenu-list)
 (use-package iedit)
+(use-package rg)
 (use-package dotenv-mode)
 
 (unless sys/win32p
