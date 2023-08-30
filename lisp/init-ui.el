@@ -67,6 +67,8 @@
 (use-package solaire-mode
   :hook (after-load-theme . solaire-global-mode))
 
+(use-package srcery-theme)
+
 (use-package modus-themes
   :init
   (setq modus-themes-bold-constructs t
