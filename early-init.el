@@ -35,7 +35,8 @@
       (setq package-native-compile t
 	        native-comp-async-report-warnings-errors nil
             ;; Make native compilation happens asynchronously
-            native-comp-deferred-compilation nil))
+            native-comp-deferred-compilation nil ;; obsolete since 29.1
+            native-comp-jit-compilation nil))
   (message "Native complation is *not* available"))
 
 (setq byte-compile-warnings nil)
