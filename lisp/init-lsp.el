@@ -66,7 +66,8 @@
         lsp-modeline-diagnostics-scope :workspace
         lsp-modeline-workspace-status-enable nil
         lsp-headerline-breadcrumb-enable t
-        lsp-headerline-breadcrumb-segments '(path-up-to-project symbols)
+        ;; lsp-headerline-breadcrumb-segments '(path-up-to-project symbols)
+        lsp-headerline-breadcrumb-segments '(symbols)
 
         ;; lsp-semantic-tokens-enable t
         lsp-semantic-tokens-enable nil  ;; do not color token by lsp

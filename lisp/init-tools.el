@@ -474,7 +474,8 @@
 
 (use-package symbols-outline
   :init
-  (setq symbols-outline-window-position 'right)
+  (setq symbols-outline-window-position 'right
+        symbols-outline-collapse-functions-on-startup t)
   (when (member petmacs-lsp-client '(lsp-mode eglot-mode))
     (setq symbols-outline-fetch-fn #'symbols-outline-lsp-fetch))
   :config (symbols-outline-follow-mode))
