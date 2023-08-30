@@ -416,7 +416,7 @@
   (add-hook 'conf-javaprop-mode-hook #'lsp))
 
 ;; (use-package lsp-java-lombok
-;;   :load-path (lambda () (expand-file-name "site-lisp/local/lsp-java-lombok" user-emacs-directory))
+;;   :load-path (lambda () (expand-file-name "site-lisp/lsp-java-lombok" user-emacs-directory))
 ;;   :after lsp-java
 ;;   :init
 ;;   (setq lsp-java-lombok/enabled t

@@ -2,7 +2,7 @@
 
 
 (use-package flycheck-ruff
-  :load-path (lambda () (expand-file-name "site-lisp/local/flycheck-ruff" user-emacs-directory))
+  :load-path (lambda () (expand-file-name "site-lisp/flycheck-ruff" user-emacs-directory))
   :init
   (require 'flycheck-ruff))
 
