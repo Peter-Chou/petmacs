@@ -472,6 +472,13 @@
 (use-package uuidgen
   :commands (uuidgen))
 
+(use-package symbols-outline
+  :init
+  (setq symbols-outline-window-position 'right)
+  (when (member petmacs-lsp-client '(lsp-mode eglot-mode))
+    (setq symbols-outline-fetch-fn #'symbols-outline-lsp-fetch))
+  :config (symbols-outline-follow-mode))
+
 (use-package centered-cursor-mode)
 (use-package restart-emacs)
 (use-package focus)                     ; Focus on the current region

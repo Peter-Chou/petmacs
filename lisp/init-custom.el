@@ -47,7 +47,7 @@
 (defvar petmacs-lsp-client
   'lsp-mode
   ;; 'lsp-bridge-mode
-  "lsp-mode or lsp-bridge-mode")
+  "lsp-mode / eglot-mode / lsp-bridge-mode")
 
 (defvar petmacs-lsp-active-modes '(
 				                   c-mode

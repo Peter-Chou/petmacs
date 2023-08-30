@@ -483,7 +483,6 @@
            ;; goto
            "gd" #'lsp-find-definition
            "gD" #'lsp-find-declaration
-           "ga" #'consult-apropos
            "ge" #'lsp-treemacs-errors-list
            "gh" #'lsp-treemacs-call-hierarchy
            "gr" #'lsp-find-references
@@ -491,7 +490,7 @@
            "gt" #'lsp-find-type-definition
            "gs" #'consult-lsp-file-symbols
            "gS" #'consult-lsp-symbols
-           "gM" #'lsp-ui-imenu
+           "gm" #'symbols-outline-show
 
            "gb" #'xref-pop-marker-stack
            "gf" #'xref-find-definitions-other-frame
