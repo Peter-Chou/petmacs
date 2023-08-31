@@ -57,6 +57,7 @@
   :init
   (setq lsp-auto-guess-root nil
         ;; lsp-keymap-prefix "C-c l"
+        ;; lsp-diagnostics-provider :none ;; flymake or ;; :none
         lsp-diagnostics-provider :none ;; flymake or ;; :none
         lsp-signature-auto-activate t
         lsp-signature-render-documentation nil
