@@ -16,4 +16,7 @@
   :init (setq sideline-flymake-display-mode 'point
               sideline-backends-right '(sideline-flymake)))
 
+(use-package flymake-ruff
+  :hook (python-mode . flymake-ruff-load))
+
 (provide 'init-flymake)
