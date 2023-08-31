@@ -36,7 +36,8 @@
 (require 'init-window)
 (require 'init-treemacs)
 
-(require 'init-flycheck)
+;; (require 'init-flycheck)
+(require 'init-flymake)
 (require 'init-vcs)
 
 (require 'init-projectile)
@@ -78,3 +79,6 @@
 
 (require 'core-funcs)
 (require 'init-keybindings)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init.el ends here
