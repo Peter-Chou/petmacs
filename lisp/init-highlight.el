@@ -155,8 +155,8 @@ FACE defaults to inheriting from default and highlight."
 
 ;; Highlight TODO and similar keywords in comments and strings
 (use-package hl-todo
-  :custom-face
-  (hl-todo ((t (:inherit default :height 0.9 :width condensed :weight bold :underline nil :inverse-video t))))
+  ;; :custom-face
+  ;; (hl-todo ((t (:inherit default :height 0.9 :width condensed :weight bold :underline nil :inverse-video t))))
   :bind (:map hl-todo-mode-map
          ([C-f3]    . hl-todo-occur)
          ("C-c t p" . hl-todo-previous)
@@ -167,8 +167,6 @@ FACE defaults to inheriting from default and highlight."
          (hl-todo-mode . (lambda ()
                            (add-hook 'flymake-diagnostic-functions
                                      #'hl-todo-flymake nil t))))
-  :init (setq hl-todo-require-punctuation t
-              hl-todo-highlight-punctuation ":")
   :config
   (dolist (keyword '("BUG" "DEFECT" "ISSUE"))
     (add-to-list 'hl-todo-keyword-faces `(,keyword . "#e45649")))

@@ -297,11 +297,11 @@
   "e" "error")
 (leader-with-prefix "e"
   (leader-set-keys
-    "l" #'consult-flymake
+    ;; "l" #'consult-flymake
+    "l" #'flycheck-list-errors
     ;; "b" #'flymake-diagnostic-buffer
     ;; "c" #'flycheck-clear
     ;; "h" #'flycheck-describe-checker
-    ;; "l" #'flycheck-list-errors
     ;; "n" #'petmacs/next-error
     ;; "N" #'petmacs/previous-error
     ;; "p" #'petmacs/previous-error
