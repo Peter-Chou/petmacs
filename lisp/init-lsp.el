@@ -4,8 +4,8 @@
 
 ;; optimize lsp-mode
 (setenv "LSP_USE_PLISTS" "true")
-(setq gc-cons-threshold 100000000
-      read-process-output-max (* 1024 1024)
+(setq gc-cons-threshold 200000000 ;; 200mb
+      read-process-output-max (* 3 1024 1024) ;; 3mb
       lsp-use-plists t
       lsp-log-io nil)
 
@@ -58,7 +58,7 @@
   (setq lsp-auto-guess-root nil
         ;; lsp-keymap-prefix "C-c l"
         ;; lsp-diagnostics-provider :none ;; flymake or ;; :none
-        lsp-diagnostics-provider :none ;; flymake or ;; :none
+        lsp-diagnostics-provider :flycheck ;; flymake or ;; :none
         lsp-signature-auto-activate t
         lsp-signature-render-documentation nil
         lsp-modeline-code-actions-enable nil
