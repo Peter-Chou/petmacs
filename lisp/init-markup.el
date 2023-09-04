@@ -16,7 +16,8 @@
 (use-package nxml-mode
   :ensure nil
   :config
-  (define-key nxml-mode-map (kbd "gc") #'evilnc-comment-or-uncomment-lines))
+  (evil-define-key 'normal nxml-mode-map (kbd "gc") #'evilnc-comment-or-uncomment-lines))
+
 
 ;; (use-package json-mode)
 (use-package toml-mode)
