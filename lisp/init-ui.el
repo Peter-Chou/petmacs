@@ -10,8 +10,8 @@
   (setq display-time-interval 1
         display-time-24hr-format t
         display-time-day-and-date t
-        display-time-default-load-average nil
-        display-time-format "%m-%d %H:%M %a"))
+        display-time-format "%m-%d %H:%M %a"
+        display-time-default-load-average nil))
 
 (when (and sys/mac-ns-p sys/mac-x-p)
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
