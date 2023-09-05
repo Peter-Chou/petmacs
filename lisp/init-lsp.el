@@ -63,7 +63,7 @@
         lsp-signature-render-documentation nil
         lsp-modeline-code-actions-enable nil
         ;; lsp-modeline-diagnostics-enable t
-        lsp-modeline-diagnostics-enable t
+        lsp-modeline-diagnostics-enable nil
         lsp-modeline-diagnostics-scope :workspace
         lsp-modeline-workspace-status-enable nil
         lsp-headerline-breadcrumb-enable t
