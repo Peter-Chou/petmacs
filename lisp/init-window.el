@@ -63,7 +63,8 @@
   (aw-mode-line-face ((t (:inherit mode-line-emphasis :bold t))))
   :bind ([remap other-window] . ace-window)
   :init
-  (setq aw-scope 'visible
+  (setq aw-scope 'frame
+        ;; aw-scope 'visible
         aw-minibuffer-flag t)
   :config
   (when (childframe-workable-p)
