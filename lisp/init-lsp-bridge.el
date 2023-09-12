@@ -9,9 +9,11 @@
 
 ;;; pip install epc
 (use-package lsp-bridge
-  :quelpa (lsp-bridge :fetcher github
-    	              :repo "manateelazycat/lsp-bridge"
-    	              :files ("*"))
+  ;; :quelpa (lsp-bridge :fetcher github
+  ;;   	              :repo "manateelazycat/lsp-bridge"
+  ;;                     :files ("*.el" "*.py" "acm" "core" "langserver"
+  ;;                             "multiserver" "resources"))
+  ;; :load-path (lambda () (expand-file-name "site-lisp/lsp-bridge" user-emacs-directory))
   :preface
   ;; 融合 `lsp-bridge' `find-function' 以及 `dumb-jump' 的智能跳转
   (defun petmacs/lsp-bridge-jump ()
@@ -38,9 +40,15 @@
 
   :init
   (require 'lsp-bridge)
+  (require 'lsp-bridge-jdtls)
   (setq lsp-bridge-python-command (expand-file-name "lsp-bridge/bin/python" (getenv "WORKON_HOME"))
-        lsp-bridge-enable-candidate-doc-preview nil
+        lsp-bridge-enable-completion-in-minibuffer t
+        lsp-bridge-signature-show-function 'lsp-bridge-signature-show-with-frame
         lsp-bridge-enable-signature-help t
+        acm-enable-quick-access t
+        acm-backend-yas-match-by-trigger-keyword t
+        acm-enable-codeium nil
+        acm-enable-tabnine nil
         acm-enable-doc nil
         acm-candidate-match-function 'orderless-flex
         )
@@ -49,36 +57,38 @@
   (setq mode-line-misc-info (delete '(lsp-bridge-mode (" [" lsp-bridge--mode-line-format "] "))
                                     mode-line-misc-info))
 
-  (with-eval-after-load 'pyvenv
-    (add-hook 'pyvenv-post-activate-hooks #'lsp-bridge-restart-process))
+  ;; (with-eval-after-load 'pyvenv
+  ;;   (add-hook 'pyvenv-post-activate-hooks #'lsp-bridge-restart-process))
 
-  (define-key evil-motion-state-map (kbd "C-o") #'petmacs/lsp-bridge-jump-back)
-  (define-key evil-motion-state-map "gR" #'lsp-bridge-rename)
-  (define-key evil-motion-state-map "gr" #'lsp-bridge-find-references)
-  (define-key evil-normal-state-map "gi" #'lsp-bridge-find-impl)
-  (define-key evil-motion-state-map "gd" #'petmacs/lsp-bridge-jump)
-  (define-key evil-motion-state-map "gs" #'lsp-bridge-restart-process)
-  (define-key evil-normal-state-map "gh" #'lsp-bridge-signature-help-fetch)
-  (define-key evil-normal-state-map "gH" #'lsp-bridge-lookup-documentation)
+  ;; (define-key evil-motion-state-map (kbd "C-o") #'petmacs/lsp-bridge-jump-back)
+  ;; (define-key evil-motion-state-map "gR" #'lsp-bridge-rename)
+  ;; (define-key evil-motion-state-map "gr" #'lsp-bridge-find-references)
+  ;; (define-key evil-normal-state-map "gi" #'lsp-bridge-find-impl)
+  ;; (define-key evil-motion-state-map "gd" #'petmacs/lsp-bridge-jump)
+  ;; (define-key evil-motion-state-map "gs" #'lsp-bridge-restart-process)
+  ;; (define-key evil-normal-state-map "gh" #'lsp-bridge-signature-help-fetch)
+  ;; (define-key evil-normal-state-map "gH" #'lsp-bridge-lookup-documentation)
 
-  (evil-add-command-properties #'petmacs/lsp-bridge-jump :jump t)
+  ;; (evil-add-command-properties #'petmacs/lsp-bridge-jump :jump t)
 
-  (evil-define-key 'normal lsp-bridge-ref-mode-map
-    (kbd "RET") 'lsp-bridge-ref-open-file-and-stay
-    "q" 'lsp-bridge-ref-quit)
+  ;; (evil-define-key 'normal lsp-bridge-ref-mode-map
+  ;;   (kbd "RET") 'lsp-bridge-ref-open-file-and-stay
+  ;;   "q" 'lsp-bridge-ref-quit)
 
   (global-lsp-bridge-mode))
 
-;; (unless (display-graphic-p)
-;; ;; acm-0.1 is unavailable
-;;   (use-package acm-terminal
-;;     :quelpa (acm-terminal :fetcher github
-;;     	                  :repo "twlz0ne/acm-terminal"
-;;                           :files ("*.el"))
-;;     :config
-;;     (require 'acm)
-;;     (with-eval-after-load 'acm
-;;       (require 'acm-terminal))))
+(unless (display-graphic-p)
+  (use-package popon
+    :quelpa (popon :fetcher git
+  		           :url "https://codeberg.org/akib/emacs-popon.git"
+  		           :files ("*.el")))
+
+  (use-package acm-terminal
+    :quelpa (acm-terminal :fetcher github
+    	                  :repo "twlz0ne/acm-terminal")
+    :config
+    (with-eval-after-load 'acm
+      (require 'acm-terminal))))
 
 
 (provide 'init-lsp-bridge)
