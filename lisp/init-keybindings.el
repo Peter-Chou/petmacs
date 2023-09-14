@@ -298,8 +298,12 @@
 (leader-with-prefix "e"
   (leader-set-keys
     "l" #'consult-flymake
+    "n" #'flymake-goto-next-error
+    "p" #'flymake-goto-prev-error
+    "b" #'flymake-show-buffer-diagnostics
+    "a" #'flymake-show-project-diagnostics
+
     ;; "l" #'flycheck-list-errors
-    ;; "b" #'flymake-diagnostic-buffer
     ;; "c" #'flycheck-clear
     ;; "h" #'flycheck-describe-checker
     ;; "n" #'petmacs/next-error
