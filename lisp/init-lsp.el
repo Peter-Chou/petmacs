@@ -404,8 +404,9 @@
                      "-XX:AdaptiveSizePolicyWeight=90"
                      "-Dsun.zip.disableMemoryMapping=true"
                      "-Xmx6G"
+                     ;; "-javaagent:/home/peter/.m2/repository/org/projectlombok/lombok/1.18.28/lombok-1.18.28.jar"
                      "-Xms100m"
-                     "-javaagent:/home/peter/.m2/repository/org/projectlombok/lombok/1.18.28/lombok-1.18.28.jar")
+                     )
    lsp-java-folding-range-enabled t)
 
   ;; (setenv "JAVA_HOME" "/opt/jdk17")
@@ -417,14 +418,17 @@
 
   (add-hook 'conf-javaprop-mode-hook #'lsp))
 
-;; (use-package lsp-java-lombok
-;;   :load-path (lambda () (expand-file-name "site-lisp/lsp-java-lombok" user-emacs-directory))
-;;   :after lsp-java
-;;   :init
-;;   (setq lsp-java-lombok/enabled t
-;;         lsp-java-lombok/version "1.18.24")
-;;   (require 'lsp-java-lombok)
-;;   (lsp-java-lombok/init))
+(use-package lsp-java-lombok
+  :load-path (lambda () (expand-file-name "site-lisp/lsp-java-lombok" user-emacs-directory))
+  :after lsp-java
+  :init
+  (require 'lsp-java-lombok)
+  (setq lsp-java-lombok/enabled t
+        lsp-java-lombok/version "1.18.28"
+        lsp-java-lombok/dir (expand-file-name "data/" user-emacs-directory)
+        )
+  :config
+  (lsp-java-lombok/init))
 
 ;;; scala
 (use-package lsp-metals)

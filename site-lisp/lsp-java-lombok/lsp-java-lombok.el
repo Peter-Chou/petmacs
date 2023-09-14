@@ -39,7 +39,7 @@
 
 (defun lsp-java-lombok/jar-path ()
   "Generate the path on disk for the Lombok jar."
-  (concat user-emacs-directory (lsp-java-lombok/jar-file)))
+  (concat lsp-java-lombok/dir (lsp-java-lombok/jar-file)))
 
 (defun lsp-java-lombok/download-jar ()
   "Download the latest lombok jar for use with LSP."
@@ -62,6 +62,7 @@
     (message "Could not find lombok for lsp-java.  Downloading...")
     (lsp-java-lombok/download-jar)))
 
+;;;###autoload
 (defun lsp-java-lombok/init ()
   (interactive)
   "Initialize lsp-java-lombok."
