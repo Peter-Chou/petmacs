@@ -3,25 +3,6 @@
 (require 'init-custom)
 (require 'init-funcs)
 
-(use-package display-time
-  :ensure nil
-  :hook (after-init . display-time-mode)
-  :init
-  (setq display-time-interval 1
-        display-time-24hr-format t
-        display-time-day-and-date t
-        display-time-format "%m-%d %H:%M %a"
-        display-time-default-load-average nil))
-
-(when (and sys/mac-ns-p sys/mac-x-p)
-  (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
-  (add-to-list 'default-frame-alist '(ns-appearance . dark))
-  (add-hook 'after-load-theme-hook
-            (lambda ()
-              (let ((bg (frame-parameter nil 'background-mode)))
-                (set-frame-parameter nil 'ns-appearance bg)
-                (setcdr (assq 'ns-appearance default-frame-alist) bg)))))
-
 ;; Optimization
 (setq idle-update-delay 1.0)
 
@@ -102,117 +83,140 @@
   (with-eval-after-load 'lsp-treemacs
     (doom-themes-treemacs-config)))
 
-(if (and (equal petmacs-modeline-style 'awesome-tray)
-         (display-graphic-p))
-    (use-package awesome-tray
-      :quelpa (awesome-tray :fetcher github
-  		                    :repo "manateelazycat/awesome-tray"
-  		                    :files ("*.el"))
-      :preface
-      (defun awesome-tray-module-winum-info ()
-        (format "%s" (winum-get-number-string)))
 
-      (defface awesome-tray-module-winum-face
-        '((((background light))
-           :foreground "#0673d7" :bold t)
-          (t
-           :foreground "#369bf8" :bold t))
-        "winum face."
-        :group 'awesome-tray)
+(use-package display-time
+  :ensure nil
+  ;; :hook (after-init . display-time-mode)
+  :init
+  (setq display-time-interval 1
+        display-time-24hr-format t
+        display-time-day-and-date t
+        display-time-format "%m-%d %H:%M %a"
+        display-time-default-load-average nil))
 
-      (defun awesome-tray-module-pyvenv-info ()
-        (if (and (equal major-mode 'python-mode) (bound-and-true-p pyvenv-workon))
-            (format "[%s]" pyvenv-workon)
-          ""))
+(when (and sys/mac-ns-p sys/mac-x-p)
+  (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+  (add-to-list 'default-frame-alist '(ns-appearance . dark))
+  (add-hook 'after-load-theme-hook
+            (lambda ()
+              (let ((bg (frame-parameter nil 'background-mode)))
+                (set-frame-parameter nil 'ns-appearance bg)
+                (setcdr (assq 'ns-appearance default-frame-alist) bg)))))
 
-      (defface awesome-tray-module-pyvenv-face
-        '((((background light))
-           :foreground "#0673d8" :bold t)
-          (t
-           :foreground "#369bf7" :bold t))
-        "pyvenv face."
-        :group 'awesome-tray)
 
-      (defun awesome-tray-module-pomodoro-info () (format "%s" pomodoro-mode-line-string))
+;; (when (display-graphic-p)
+(use-package awesome-tray
+  :quelpa (awesome-tray :fetcher github
+  		                :repo "manateelazycat/awesome-tray"
+  		                :files ("*.el"))
+  :commands (awesome-tray-update)
+  :hook (after-init . awesome-tray-mode)
+  :init
+  (setq awesome-tray-hide-mode-line nil
+        awesome-tray-update-interval 0.5
+        awesome-tray-date-format "%m-%d %H:%M %a"
+        awesome-tray-active-modules   '("pomodoro" "flymake" "pyvenv" "date")
+        awesome-tray-essential-modules '("pomodoro" "date"))
 
-      (defface awesome-tray-module-pomodoro-face
-        '((((background light))
-           :foreground "#008080" :bold t)
-          (t
-           :foreground "#00ced1" :bold t))
-        "pomodoro face."
-        :group 'awesome-tray)
+  :config
+  (defun petmacs/awesome-tray-set-text (text)
+    "将右侧显示内容向左移稍许，使得内容不会换行, 由right-fringe-offset控制"
+    ;; Only set tray information when minibuffer not in `input' state.
+    ;; Don't fill tray information if user is typing in minibuffer.
+    (unless (or (active-minibuffer-window) (awesome-tray-is-rime-display-in-minibuffer))
+      (let* ((wid (+ (string-width text) awesome-tray-info-padding-right))
+             (right-fringe-offset 1)  ;; 控制右侧内容缩进多少
+             (spc (pcase awesome-tray-position
+                    ('center (propertize "  " 'cursor 1 'display
+                                         `(space :align-to (- center ,(/ wid 2)))))
+                    ('left (propertize "  " 'cursor 1 'display
+                                       `(space :align-to (- left-fringe ,wid))))
+                    ('right (propertize "  " 'cursor 1 'display
+                                        `(space :align-to (- right-fringe ,right-fringe-offset ,wid)))))))
 
-      :commands (awesome-tray-update)
-      :hook (after-init . awesome-tray-mode)
-      :init
-      (setq
-       awesome-tray-update-interval 0.6
-       awesome-tray-buffer-name-max-length 30
-       ;; awesome-tray-mode-line-height 0.15
-       awesome-tray-file-path-show-filename t
-       awesome-tray-buffer-name-buffer-changed t
-       awesome-tray-git-format "·%s·"
-       awesome-tray-active-modules   '("anzu" "winum" "location" "pyvenv" "buffer-read-only" "buffer-name" "git" "pomodoro" "date")
-       awesome-tray-essential-modules '("winum" "location" "buffer-read-only" "buffer-name"))
-      :config
-      (setq awesome-tray-module-alist (delq (assoc "buffer-name"  awesome-tray-module-alist) awesome-tray-module-alist))
-      ;; use file-path face to show buffer-name info
-      (add-to-list 'awesome-tray-module-alist '("buffer-name" . (awesome-tray-module-buffer-name-info awesome-tray-module-file-path-face)))
+        (setq awesome-tray-text (concat (if awesome-tray-second-line "\n") spc text))
 
-      (defun petmacs/awesome-tray-module-buffer-name-info ()
-        (let (bufname)
-          (setq bufname (if awesome-tray-buffer-name-buffer-changed
-                            (if (and (buffer-modified-p)
-                                     (not (eq buffer-file-name nil)))
-                                (concat  awesome-tray-buffer-name-buffer-changed-style (buffer-name))
-                              (buffer-name))
-                          (format "%s" (buffer-name))))
-          (awesome-tray-truncate-string bufname awesome-tray-buffer-name-max-length t)))
-      (advice-add #'awesome-tray-module-buffer-name-info :override #'petmacs/awesome-tray-module-buffer-name-info)
+        ;; Remove any dead overlays from the minibuffer from the beginning of the list
+        (while (null (overlay-buffer (car awesome-tray-overlays)))
+          (pop awesome-tray-overlays))
 
-      (with-eval-after-load 'modus-themes
-        (advice-add #'modus-themes-toggle :after #'awesome-tray-enable))
+        ;; Add the correct text to each awesome-tray overlay
+        (dolist (o awesome-tray-overlays)
+          (when (overlay-buffer o)
+            (overlay-put o 'after-string awesome-tray-text)))
 
-      (add-to-list 'awesome-tray-module-alist '("winum" . (awesome-tray-module-winum-info awesome-tray-module-winum-face)))
-      (add-to-list 'awesome-tray-module-alist '("pyvenv" . (awesome-tray-module-pyvenv-info awesome-tray-module-pyvenv-face)))
-      (add-to-list 'awesome-tray-module-alist '("pomodoro" . (awesome-tray-module-pomodoro-info awesome-tray-module-pomodoro-face)))
-      (add-hook 'buffer-list-update-hook #'awesome-tray-update))
+        ;; Display the text in Minibuf-0
+        (with-current-buffer " *Minibuf-0*"
+          (delete-region (point-min) (point-max))
+          (insert awesome-tray-text)))))
+  (advice-add #'awesome-tray-set-text :override #'petmacs/awesome-tray-set-text)
 
-  (use-package doom-modeline
-    :preface
-    (defface doom-modeline-python-venv
-      '((((background light))
-         :foreground "#136207" :bold t)
-        (t
-         :foreground  "#F37022" :bold t))
-      "Face to use for the mode-line python venv."
-      :group 'doom-modeline-faces)
-    :hook (after-init . doom-modeline-mode)
-    :init
-    (setq doom-modeline-icon petmacs-icon
-          doom-modeline-buffer-file-name-style 'auto
-          doom-modeline-support-imenu t
-          doom-modeline-time-icon nil
-          doom-modeline-minor-modes nil
-          doom-modeline-indent-info nil
-          doom-modeline-height 1
-          doom-modeline-window-width-limit 110
-          doom-modeline-env-version nil
-          )
+  (defun awesome-tray-module-pomodoro-info () (format "%s" pomodoro-mode-line-string))
+  (defface awesome-tray-module-pomodoro-face
+    '((((background light))
+       :foreground "#008080" :bold t)
+      (t
+       :foreground "#00ced1" :bold t))
+    "pomodoro face."
+    :group 'awesome-tray)
 
-    ;; Prevent flash of unstyled modeline at startup
-    (unless after-init-time
-      (setq-default mode-line-format nil))
-    :config
-    (doom-modeline-def-modeline 'my-simple-line
-      '(eldoc bar workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
-      '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl lsp input-method indent-info buffer-encoding process vcs checker time))
+  (defun awesome-tray-module-pyvenv-info ()
+    (if (and (member major-mode '(python-mode python-ts-mode)) (bound-and-true-p pyvenv-workon))
+        (format "[%s]" pyvenv-workon)
+      ""))
+  (defface awesome-tray-module-pyvenv-face
+    '((((background light))
+       :foreground "#0673d8" :bold t)
+      (t
+       :foreground "#369bf7" :bold t))
+    "pyvenv face."
+    :group 'awesome-tray)
 
-    ;; Set default mode-line
-    (add-hook 'doom-modeline-mode-hook
-              (lambda ()
-                (doom-modeline-set-modeline 'my-simple-line 'default)))))
+  (add-to-list 'awesome-tray-module-alist '("pomodoro" . (awesome-tray-module-pomodoro-info awesome-tray-module-pomodoro-face)))
+  (add-to-list 'awesome-tray-module-alist '("pyvenv" . (awesome-tray-module-pyvenv-info awesome-tray-module-pyvenv-face)))
+
+  ;; (add-hook 'buffer-list-update-hook #'awesome-tray-update)
+  (add-hook 'after-save-hook 'awesome-tray-update)
+  )
+
+(use-package doom-modeline
+  :preface
+  (defface doom-modeline-python-venv
+    '((((background light))
+       :foreground "#136207" :bold t)
+      (t
+       :foreground  "#F37022" :bold t))
+    "Face to use for the mode-line python venv."
+    :group 'doom-modeline-faces)
+  ;; :hook (after-init . doom-modeline-mode)
+  :hook (awesome-tray-mode . doom-modeline-mode)
+  :init
+  (setq doom-modeline-icon petmacs-icon
+        doom-modeline-buffer-file-name-style 'auto
+        doom-modeline-support-imenu t
+        doom-modeline-time-icon nil
+        doom-modeline-minor-modes nil
+        doom-modeline-indent-info nil
+        doom-modeline-height 1
+        doom-modeline-mode-alist nil
+
+        doom-modeline-window-width-limit 110
+        doom-modeline-env-version nil)
+
+
+  ;; Prevent flash of unstyled modeline at startup
+  (unless after-init-time
+    (setq-default mode-line-format nil))
+  :config
+  (doom-modeline-def-modeline 'my-simple-line
+    '(eldoc bar workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
+    '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl lsp input-method indent-info buffer-encoding process vcs))
+
+  ;; Set default mode-line
+  (add-hook 'doom-modeline-mode-hook
+            (lambda ()
+              (doom-modeline-set-modeline 'my-simple-line 'default))))
+;; )
 
 (use-package hide-mode-line
   :hook (((

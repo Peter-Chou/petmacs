@@ -56,7 +56,7 @@
 (leader-with-prefix "a"
   (leader-set-keys
     "d"  #'deer
-    "p"  #'list-processes
+    "P"  #'list-processes
     "e" #'list-environment
     "P"  #'proced
     "k"  #'paradox-list-packages
@@ -75,10 +75,10 @@
     "ot" #'org-todo-list
     "o/" #'org-occur-in-agenda-files
 
-    ;; "at" prefix
-    "tt" #'petmacs/pomodoro-toggle
-    "tp" #'pomodoro-pause
-    "tr" #'pomodoro-resume
+    ;; "ap" prefix
+    "pt" #'petmacs/pomodoro-toggle
+    "pp" #'pomodoro-pause
+    "pr" #'pomodoro-resume
     ))
 
 (leader-declare-prefix
@@ -297,8 +297,8 @@
   "e" "error")
 (leader-with-prefix "e"
   (leader-set-keys
-    ;; "l" #'consult-flymake
-    "l" #'flycheck-list-errors
+    "l" #'consult-flymake
+    ;; "l" #'flycheck-list-errors
     ;; "b" #'flymake-diagnostic-buffer
     ;; "c" #'flycheck-clear
     ;; "h" #'flycheck-describe-checker

@@ -43,6 +43,9 @@
 
 (use-package pyvenv
   :preface
+  (defun petmacs/disable-modeline-env-info ()
+    (setq mode-line-misc-info (delete '(pyvenv-mode pyvenv-mode-line-indicator) mode-line-misc-info)))
+
   ;; autoload virtual environment if project_root/pyrightconfig.json file exists,
   (defun petmacs/pyvenv-pyright-autoload ()
     (interactive)
@@ -62,10 +65,12 @@
                (lsp-deferred))
               ((equal petmacs-lsp-client 'lsp-bridge-mode)
                (lsp-bridge-restart-process))))))
-  :hook ((python-mode python-ts-mode) . petmacs/pyvenv-pyright-autoload)
+  :hook (((python-mode python-ts-mode) . petmacs/pyvenv-pyright-autoload)
+         (pyvenv-mode . petmacs/disable-modeline-env-info))
   :config
   (pyvenv-mode 1)
-  (pyvenv-tracking-mode 1))
+  (pyvenv-tracking-mode 1)
+  )
 
 (use-package virtualenvwrapper)
 
