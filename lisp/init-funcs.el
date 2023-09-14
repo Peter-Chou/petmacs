@@ -15,9 +15,6 @@
 (declare-function flymake-start 'flymake)
 (declare-function upgrade-packages 'init-package)
 
-(defun petmacs/get-eaf-app-directory ()
-  (expand-file-name "site-lisp/emacs-application-framework/app/" user-emacs-directory))
-
 (defun petmacs/open-gnome-terminal ()
   (interactive)
   (shell-command "gnome-terminal"))

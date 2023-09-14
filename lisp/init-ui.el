@@ -387,11 +387,11 @@
 (use-package fontify-face)
 
 (use-package pretty-code
-  :load-path (lambda () (expand-file-name "site-lisp/local/pretty-code" user-emacs-directory))
+  :ensure nil
   :commands (pretty-code-add-hook)
   :init
   (use-package prettify-utils
-    :load-path (lambda () (expand-file-name "site-lisp/local/prettify-utils" user-emacs-directory)))
+    :ensure nil)
 
   (pretty-code-add-hook 'python-mode-hook     '(;; (:class "class")
                                                 (:lambda "lambda")
@@ -441,7 +441,7 @@
 ;; (petmacs--load-theme petmacs-default-theme)
                                         ;
 (use-package circadian
-  :load-path (lambda () (expand-file-name "site-lisp/local/circadian" user-emacs-directory))
+  :ensure nil
   :commands (circadian-setup)
   :custom (circadian-themes petmacs-day-night-themes)
   :init (circadian-setup)

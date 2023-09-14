@@ -14,6 +14,7 @@
                                            old-file-name-handler-alist)))))))
 
 (push (expand-file-name "lisp" user-emacs-directory) load-path)
+(push (expand-file-name "site-lisp" user-emacs-directory) load-path)
 
 (require 'init-custom)
 
@@ -70,10 +71,6 @@
 (require 'init-markup)
 
 (require 'init-org)
-
-(if (and (display-graphic-p)
-         (file-directory-p (petmacs/get-eaf-app-directory)))
-    (require 'init-eaf))
 
 (require 'init-web)
 
