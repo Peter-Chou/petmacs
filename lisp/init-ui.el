@@ -114,45 +114,13 @@
   :init
   (setq awesome-tray-separator " ⁞ "
         awesome-tray-hide-mode-line nil
+        awesome-tray-info-padding-right 1
         awesome-tray-update-interval 0.5
         awesome-tray-belong-update-duration 2.5
         awesome-tray-date-format "%m-%d %H:%M %a"
         awesome-tray-active-modules   '("pomodoro" "flymake" "pyvenv" "date")
         awesome-tray-essential-modules '("pomodoro" "date"))
-
   :config
-  (defun petmacs/awesome-tray-set-text (text)
-    "将右侧显示内容向左移稍许，使得内容不会换行, 由right-fringe-offset控制"
-    ;; Only set tray information when minibuffer not in `input' state.
-    ;; Don't fill tray information if user is typing in minibuffer.
-    (unless (or (active-minibuffer-window) (awesome-tray-is-rime-display-in-minibuffer))
-      (let* ((wid (+ (string-width text) awesome-tray-info-padding-right))
-             (right-fringe-offset 1)  ;; 控制右侧内容缩进多少
-             (spc (pcase awesome-tray-position
-                    ('center (propertize "  " 'cursor 1 'display
-                                         `(space :align-to (- center ,(/ wid 2)))))
-                    ('left (propertize "  " 'cursor 1 'display
-                                       `(space :align-to (- left-fringe ,wid))))
-                    ('right (propertize "  " 'cursor 1 'display
-                                        `(space :align-to (- right-fringe ,right-fringe-offset ,wid)))))))
-
-        (setq awesome-tray-text (concat (if awesome-tray-second-line "\n") spc text))
-
-        ;; Remove any dead overlays from the minibuffer from the beginning of the list
-        (while (null (overlay-buffer (car awesome-tray-overlays)))
-          (pop awesome-tray-overlays))
-
-        ;; Add the correct text to each awesome-tray overlay
-        (dolist (o awesome-tray-overlays)
-          (when (overlay-buffer o)
-            (overlay-put o 'after-string awesome-tray-text)))
-
-        ;; Display the text in Minibuf-0
-        (with-current-buffer " *Minibuf-0*"
-          (delete-region (point-min) (point-max))
-          (insert awesome-tray-text)))))
-  (advice-add #'awesome-tray-set-text :override #'petmacs/awesome-tray-set-text)
-
   (defun awesome-tray-module-pomodoro-info () (format "%s" pomodoro-mode-line-string))
   (defface awesome-tray-module-pomodoro-face
     '((((background light))
