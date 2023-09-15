@@ -401,6 +401,9 @@
    "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml"
    lsp-java-format-settings-profile "GoogleStyle"
 
+   ;; workaround make lsp-java pass java-ts-mode launching issue
+   ;; see https://github.com/emacs-lsp/lsp-java/issues/447
+   lsp-java-format-tab-size 4
    lsp-java-import-maven-enabled t
    lsp-java-implementations-code-lens-enabled t
    lsp-java-save-actions-organize-imports t
