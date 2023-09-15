@@ -74,6 +74,7 @@
         ;; lsp-headerline-breadcrumb-segments '(path-up-to-project symbols)
         lsp-headerline-breadcrumb-segments '(symbols)
 
+        lsp-eslint-validate '(svelte typescript js javascript)
         ;; lsp-semantic-tokens-enable t
         lsp-semantic-tokens-enable nil  ;; do not color token by lsp
         lsp-progress-spinner-type 'progress-bar-filled

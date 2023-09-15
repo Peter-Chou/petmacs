@@ -61,7 +61,7 @@
 (require 'init-consult)
 
 (when (petmacs-treesit-available-p)
-  (require 'init-tree-sitter))
+  (require 'init-treesit))
 
 (cond ((equal petmacs-lsp-client 'lsp-bridge-mode)
        (require 'init-lsp-bridge))
