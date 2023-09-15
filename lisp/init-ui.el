@@ -112,7 +112,7 @@
   :commands (awesome-tray-update)
   :hook (after-init . awesome-tray-mode)
   :init
-  (setq awesome-tray-separator " ⁞ "
+  (setq awesome-tray-separator "⁞ "
         awesome-tray-hide-mode-line nil
         awesome-tray-info-padding-right 1
         awesome-tray-update-interval 0.5
