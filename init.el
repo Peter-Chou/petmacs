@@ -1,25 +1,36 @@
 ;;; init.el --- Petmacs configurations  -*- lexical-binding: t no-byte-compile: t -*-
 
-;; Speed up startup
+;; Defer garbage collection further back in the startup process
+(setq gc-cons-threshold most-positive-fixnum)
+
+;; Don't pass case-insensitive to `auto-mode-alist'
 (setq auto-mode-case-fold nil)
 
 (unless (or (daemonp) noninteractive init-file-debug)
-  (let ((old-file-name-handler-alist file-name-handler-alist))
+  ;; Suppress file handlers operations at startup
+  ;; `file-name-handler-alist' is consulted on each call to `require' and `load'
+  (let ((old-value file-name-handler-alist))
     (setq file-name-handler-alist nil)
+    (set-default-toplevel-value 'file-name-handler-alist file-name-handler-alist)
     (add-hook 'emacs-startup-hook
               (lambda ()
                 "Recover file name handlers."
                 (setq file-name-handler-alist
-                      (delete-dups (append file-name-handler-alist
-                                           old-file-name-handler-alist)))))))
+                      (delete-dups (append file-name-handler-alist old-value))))
+              101)))
 
-(push (expand-file-name "lisp" user-emacs-directory) load-path)
-(push (expand-file-name "site-lisp" user-emacs-directory) load-path)
+;; Load path
+;; Optimize: Force "lisp"" and "site-lisp" at the head to reduce the startup time.
+(defun update-load-path (&rest _)
+  "Update `load-path'."
+  (dolist (dir '("site-lisp" "lisp"))
+    (push (expand-file-name dir user-emacs-directory) load-path)))
+
+(advice-add #'package-initialize :after #'update-load-path)
+
+(update-load-path)
 
 (require 'init-custom)
-
-;; Defer garbage collection further back in the startup process
-(setq gc-cons-threshold most-positive-fixnum)
 
 (require 'init-funcs)
 

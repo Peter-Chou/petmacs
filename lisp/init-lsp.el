@@ -4,14 +4,17 @@
 
 ;; optimize lsp-mode
 (setenv "LSP_USE_PLISTS" "true")
-(setq gc-cons-threshold 200000000 ;; 200mb
-      read-process-output-max (* 3 1024 1024) ;; 3mb
+(setq read-process-output-max (* 5 1024 1024) ;; 5mb
       lsp-use-plists t
       lsp-log-io nil)
 
 ;; sudo apt-get install libjansson-dev
 (use-package lsp-mode
   :preface
+  (defun petmacs/lsp-double-gc-threshold nil
+    (setq-local gcmh-high-cons-threshold
+                (* 2 (default-value 'gcmh-high-cons-threshold))))
+
   (defun petmacs/lsp-find-definition-other-window ()
     (interactive)
     (switch-to-buffer-other-window (buffer-name))
@@ -53,7 +56,8 @@
                        ;; Format and organize imports
                        (unless (apply #'derived-mode-p petmacs-lsp-format-on-save-ignore-modes)
                          (add-hook 'before-save-hook #'lsp-format-buffer t t)
-                         (add-hook 'before-save-hook #'lsp-organize-imports t t)))))
+                         (add-hook 'before-save-hook #'lsp-organize-imports t t))))
+         (lsp-mode . petmacs/lsp-double-gc-threshold))
   :init
   (setq lsp-auto-guess-root nil
         ;; lsp-keymap-prefix "C-c l"

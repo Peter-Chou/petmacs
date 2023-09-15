@@ -81,13 +81,15 @@
   (setq ffap-machine-p-known 'reject)
 
   ;; Garbage Collector Magic Hack
-  ;; (use-package gcmh
-  ;;   :diminish
-  ;;   :hook (emacs-startup . gcmh-mode)
-  ;;   :init
-  ;;   (setq gcmh-idle-delay 'auto
-  ;;         gcmh-auto-idle-delay-factor 10
-  ;;         gcmh-high-cons-threshold #x1000000)) ; 16MB
+  (use-package gcmh
+    :diminish
+    :hook (emacs-startup . gcmh-mode)
+    :init
+    (setq gcmh-idle-delay 3
+          gcmh-high-cons-threshold (* 1 1024 1024 1024) ;; 1gb
+          gcmh-verbose nil
+          gc-cons-percentage 0.6
+          )) ; 16MB
   )
 
 ;; Set UTF-8 as the default coding system
