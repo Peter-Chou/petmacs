@@ -50,12 +50,11 @@
 ;; to skip the mtime checks on every *.elc file.
 (setq load-prefer-newer noninteractive)
 
-(when (fboundp 'startup-redirect-eln-cache)
-  (startup-redirect-eln-cache
-   (convert-standard-filename
-	(expand-file-name  "data/eln-cache" user-emacs-directory)))
-  (add-to-list 'native-comp-eln-load-path (expand-file-name "data/eln-cache" user-emacs-directory))
-  )
+;; (when (fboundp 'startup-redirect-eln-cache)
+;;   (startup-redirect-eln-cache
+;;    (convert-standard-filename
+;; 	(expand-file-name  "data/eln-cache" user-emacs-directory)))
+;;   (add-to-list 'native-comp-eln-load-path (expand-file-name "data/eln-cache" user-emacs-directory)))
 
 ;; Faster to disable these here (before they've been initialized)
 (push '(menu-bar-lines . 0) default-frame-alist)
