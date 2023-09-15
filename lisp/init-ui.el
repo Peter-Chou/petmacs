@@ -112,8 +112,10 @@
   :commands (awesome-tray-update)
   :hook (after-init . awesome-tray-mode)
   :init
-  (setq awesome-tray-hide-mode-line nil
+  (setq awesome-tray-separator " ⁞ "
+        awesome-tray-hide-mode-line nil
         awesome-tray-update-interval 0.5
+        awesome-tray-belong-update-duration 2.5
         awesome-tray-date-format "%m-%d %H:%M %a"
         awesome-tray-active-modules   '("pomodoro" "flymake" "pyvenv" "date")
         awesome-tray-essential-modules '("pomodoro" "date"))
@@ -162,7 +164,7 @@
 
   (defun awesome-tray-module-pyvenv-info ()
     (if (and (member major-mode '(python-mode python-ts-mode)) (bound-and-true-p pyvenv-workon))
-        (format "[%s]" pyvenv-workon)
+        (format "<%s>" pyvenv-workon)
       ""))
   (defface awesome-tray-module-pyvenv-face
     '((((background light))
