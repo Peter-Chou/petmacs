@@ -112,7 +112,7 @@
   :commands (awesome-tray-update)
   :hook (after-init . awesome-tray-mode)
   :init
-  (setq awesome-tray-separator "⁞ "
+  (setq awesome-tray-separator " ▍ "
         awesome-tray-hide-mode-line nil
         awesome-tray-info-padding-right 1
         awesome-tray-update-interval 0.5
@@ -183,9 +183,9 @@
                                (string-join
                                 (list
                                  (when (> .note 0)
-                                   (propertize (concat "📓:" (number-to-string .note)) 'face 'awesome-tray-module-flymake-note))
+                                   (propertize (concat "📖:" (number-to-string .note)) 'face 'awesome-tray-module-flymake-note))
                                  (when (> .warning 0)
-                                   (propertize (concat "⚠:" (number-to-string .warning)) 'face 'awesome-tray-module-flymake-warning))
+                                   (propertize (concat "❗:" (number-to-string .warning)) 'face 'awesome-tray-module-flymake-warning))
                                  (when (> .error 0)
                                    (propertize (concat "❌:" (number-to-string .error)) 'face 'awesome-tray-module-flymake-error)))
                                 " "))
