@@ -129,6 +129,7 @@
        :foreground "#00ced1" :bold t))
     "pomodoro face."
     :group 'awesome-tray)
+  (add-to-list 'awesome-tray-module-alist '("pomodoro" . (awesome-tray-module-pomodoro-info awesome-tray-module-pomodoro-face)))
 
   (defun awesome-tray-module-pyvenv-info ()
     (if (and (member major-mode '(python-mode python-ts-mode)) (bound-and-true-p pyvenv-workon))
@@ -141,13 +142,58 @@
        :foreground "#369bf7" :bold t))
     "pyvenv face."
     :group 'awesome-tray)
-
-  (add-to-list 'awesome-tray-module-alist '("pomodoro" . (awesome-tray-module-pomodoro-info awesome-tray-module-pomodoro-face)))
   (add-to-list 'awesome-tray-module-alist '("pyvenv" . (awesome-tray-module-pyvenv-info awesome-tray-module-pyvenv-face)))
 
-  ;; (add-hook 'buffer-list-update-hook #'awesome-tray-update)
-  (add-hook 'after-save-hook 'awesome-tray-update)
-  )
+  (defun petmacs/awesome-tray-module-flymake-info ()
+    "A module for showing Flymake state.(use custom unicode)"
+    ;; Parts of the code are from doom-modeline package
+    (with-demoted-errors
+        ""
+      (if (and (featurep 'flymake) flymake--state)
+          (let* ((known (hash-table-keys flymake--state))
+                 (running (flymake-running-backends))
+                 (disabled (flymake-disabled-backends))
+                 (reported (flymake-reporting-backends))
+                 (disabledp (and disabled (null running)))
+                 (waiting (cl-set-difference running reported)))
+            (when-let
+                ((flymake-state
+                  (cond
+                   (waiting "⏳")
+                   ((null known) "❔")
+                   (disabledp "❕")
+                   (t (let ((.error 0)
+                            (.warning 0)
+                            (.note 0))
+                        (cl-loop
+                         with warning-level = (warning-numeric-level :warning)
+                         with note-level = (warning-numeric-level :debug)
+                         for state being the hash-values of flymake--state
+                         do (cl-loop
+                             with diags = (flymake--state-diags state)
+                             for diag in diags do
+                             (let ((severity (flymake--lookup-type-property (flymake--diag-type diag) 'severity
+                                                                            (warning-numeric-level :error))))
+                               (cond ((> severity warning-level) (cl-incf .error))
+                                     ((> severity note-level)    (cl-incf .warning))
+                                     (t                          (cl-incf .note))))))
+                        (let ((num (+ .error .warning .note)))
+                          (if (> num 0)
+                              (string-clean-whitespace
+                               (string-join
+                                (list
+                                 (when (> .note 0)
+                                   (propertize (concat "📓:" (number-to-string .note)) 'face 'awesome-tray-module-flymake-note))
+                                 (when (> .warning 0)
+                                   (propertize (concat "⚠:" (number-to-string .warning)) 'face 'awesome-tray-module-flymake-warning))
+                                 (when (> .error 0)
+                                   (propertize (concat "❌:" (number-to-string .error)) 'face 'awesome-tray-module-flymake-error)))
+                                " "))
+                            (propertize "✅" 'face 'awesome-tray-green-face))))))))
+              flymake-state)))))
+  (advice-add #'awesome-tray-module-flymake-info :override #'petmacs/awesome-tray-module-flymake-info)
+
+  (add-hook 'after-save-hook 'awesome-tray-update))
 
 (use-package doom-modeline
   :preface
