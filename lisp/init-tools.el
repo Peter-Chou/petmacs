@@ -480,12 +480,18 @@
     (setq symbols-outline-fetch-fn #'symbols-outline-lsp-fetch))
   :config (symbols-outline-follow-mode))
 
+(use-package iedit
+  :init
+  (setq iedit-toggle-key-default nil)
+  :config
+  (define-key iedit-mode-keymap (kbd "M-h") 'iedit-restrict-function)
+  (define-key iedit-mode-keymap (kbd "M-i") 'iedit-restrict-current-line))
+
 (use-package centered-cursor-mode)
 (use-package restart-emacs)
 (use-package focus)                     ; Focus on the current region
 (use-package disk-usage)                     ; Focus on the current region
 (use-package imenu-list)
-(use-package iedit)
 (use-package rg)
 (use-package dotenv-mode)
 

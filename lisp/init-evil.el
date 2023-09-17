@@ -159,6 +159,11 @@
     (evil-define-key 'normal dired-mode-map (kbd "C-+") 'find-file))
   (advice-add #'evil-collection-dired-setup :after #'petmacs/evil-collection-dired-setup))
 
+(use-package evil-multiedit
+  :commands (evil-multiedit-default-keybinds)
+  :init
+  (evil-multiedit-default-keybinds))
+
 (use-package evil-textobj-line
   :init (require 'evil-textobj-line))
 (use-package evil-iedit-state
