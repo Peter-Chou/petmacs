@@ -202,15 +202,6 @@
   (add-hook 'after-save-hook 'awesome-tray-update))
 
 (use-package doom-modeline
-  :preface
-  (defface doom-modeline-python-venv
-    '((((background light))
-       :foreground "#136207" :bold t)
-      (t
-       :foreground  "#F37022" :bold t))
-    "Face to use for the mode-line python venv."
-    :group 'doom-modeline-faces)
-  ;; :hook (after-init . doom-modeline-mode)
   :hook (awesome-tray-mode . doom-modeline-mode)
   :init
   (setq doom-modeline-icon petmacs-icon
