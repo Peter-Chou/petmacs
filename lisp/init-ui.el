@@ -39,6 +39,11 @@
 (use-package all-the-icons
   :if (display-graphic-p))
 
+(use-package nerd-icons
+  :config
+  (unless (font-installed-p nerd-icons-font-family)
+    (nerd-icons-install-fonts t)))
+
 (use-package nerd-icons-completion
   :when (icons-displayable-p)
   :hook (vertico-mode . nerd-icons-completion-mode))
@@ -112,7 +117,7 @@
   :commands (awesome-tray-update)
   :hook (after-init . awesome-tray-mode)
   :init
-  (setq awesome-tray-separator " ▍ "
+  (setq awesome-tray-separator "┃"
         awesome-tray-hide-mode-line nil
         awesome-tray-info-padding-right 1
         awesome-tray-update-interval 0.5

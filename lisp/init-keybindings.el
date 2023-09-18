@@ -31,8 +31,7 @@
 
 (leader-set-keys
   "'"   #'multi-vterm
-  ;; "/"   #'consult-ripgrep
-  "/"   #'affe-grep
+  "/"   #'consult-ripgrep
 
   "v"   #'er/expand-region
   "u"   #'universal-argument
