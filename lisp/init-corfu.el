@@ -131,9 +131,7 @@
 
 (unless (display-graphic-p)
   (use-package popon
-    :quelpa (popon :fetcher git
-  		           :url "https://codeberg.org/akib/emacs-popon.git"
-  		           :files ("*.el")))
+    :ensure nil)
 
   (use-package corfu-terminal
     :ensure nil

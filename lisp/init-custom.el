@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t no-byte-compile: t -*-
 
-(defvar petmacs-icon (or (display-graphic-p) (daemonp))
+(defvar petmacs-icon t
   "Display icons or not.")
 
 (defvar petmacs-completion-style 'minibuffer
