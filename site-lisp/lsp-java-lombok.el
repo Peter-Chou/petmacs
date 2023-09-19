@@ -3,10 +3,10 @@
 ;; Copyright (C) 2021 Kevin Ziegler
 ;;
 ;; Author: Kevin Ziegler <https://github.com/kevinziegler>
-;; Maintainer: Kevin Ziegler
+;; Maintainer: Peter Chou <https://github.com/Peter-Chou>
 ;; Created: February 12, 2021
-;; Modified: February 12, 2021
-;; Version: 0.0.1
+;; Modified: Tuesday 09, 2023
+;; Version: 0.1.0
 ;; Homepage: https://github.com/kevinziegler/lsp-java-lombok
 ;; Package-Requires: ((emacs "24.3"))
 ;;

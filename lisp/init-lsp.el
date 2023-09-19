@@ -395,6 +395,7 @@
 		                                        (lsp-deferred)))
   :init
   (setq
+   lsp-java-boot-enabled nil  ;; disable boot-ls
    ;; Use Google style formatting by default
    lsp-java-format-settings-url
    "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml"

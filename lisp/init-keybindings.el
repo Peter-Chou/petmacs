@@ -150,7 +150,7 @@
 	"a" #'persp-add-buffer
     "r" #'persp-remove-buffer
     "j" #'ace-window
-    "i" #'imenu-list-smart-toggle
+    "i" #'petmacs/imenu-list-smart-toggle
     ))
 
 (leader-declare-prefix

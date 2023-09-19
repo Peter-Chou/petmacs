@@ -9,11 +9,19 @@
 (defvar socks-noproxy)
 (defvar socks-server)
 
-(declare-function async-inject-variables 'async)
 (declare-function chart-bar-quickie 'chart)
-(declare-function flycheck-buffer 'flycheck)
 (declare-function flymake-start 'flymake)
+(declare-function flycheck-buffer 'flycheck)
+(declare-function async-inject-variables 'async)
+(declare-function imenu-list-smart-toggle 'imenu-list)
+(declare-function symbols-outline-show 'symbols-outline)
 (declare-function upgrade-packages 'init-package)
+
+(defun petmacs/imenu-list-smart-toggle ()
+  (interactive)
+  (if (bound-and-true-p lsp-mode)
+      (symbols-outline-show)
+    (imenu-list-smart-toggle)))
 
 (defun petmacs/open-gnome-terminal ()
   (interactive)
