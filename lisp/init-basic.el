@@ -47,7 +47,6 @@
   :init
   ;; Use faster search tool
   (setq xref-search-program (cond
-                             ((executable-find "ugrep") 'ugrep)
                              ((executable-find "rg") 'ripgrep)
                              (t 'grep)))
 
