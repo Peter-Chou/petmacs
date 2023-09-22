@@ -107,20 +107,14 @@ FACE defaults to inheriting from default and highlight."
   :quelpa (indent-bars :fetcher github
     	               :repo "jdtsmith/indent-bars"
     	               :files ("*"))
-  :preface
-  (defface indent-bars-current-depth-line-face '((t nil))
-    "Face for indent bars current line"
-    :group 'basic-faces)
-  ;; :hook ((python-mode python-ts-mode yaml-mode yaml-ts-mode) . indent-bars-mode)
   :hook ((prog-mode yaml-mode) . (lambda ()
                                    "Highlight indentations in small files for better performance."
                                    (unless (too-long-file-p)
                                      (indent-bars-mode 1))))
   :init
-  (set-face-attribute 'indent-bars-current-depth-line-face nil :foreground petmacs-favor-color :bold t)
   (setq indent-bars-display-on-blank-lines nil
         indent-bars-width-frac 0.25
-        indent-bars-highlight-current-depth '(:face indent-bars-current-depth-line-face :pattern ".")))
+        indent-bars-highlight-current-depth '(:face petmacs-favor-color-face :pattern ".")))
 
 ;; Colorize color names in buffers
 (use-package rainbow-mode

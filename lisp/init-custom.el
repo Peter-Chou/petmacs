@@ -78,4 +78,10 @@
 (defvar petmacs-socks-proxy "127.0.0.1:1086"
   "Set SOCKS proxy.")
 
+(defface petmacs-favor-color-face
+  `((((background light)) :foreground ,petmacs-favor-color :bold t)
+    (t :foreground ,petmacs-favor-color :bold t))
+  "petmacs favorite color face"
+  :group 'basic-faces)
+
 (provide 'init-custom)
