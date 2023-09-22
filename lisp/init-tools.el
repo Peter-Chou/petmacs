@@ -464,7 +464,18 @@
   :commands (uuidgen))
 
 (use-package symbols-outline
+  :preface
+  (defun petmacs/symbols-outline-smart-toggle ()
+    "Toggle `symbols-outline-mode' by showing or quitting the `*Outline*' buffer."
+    (interactive)
+    (if (get-buffer-window symbols-outline-buffer-name t)
+        (progn
+          (ignore-errors (quit-windows-on symbols-outline-buffer-name))
+          (when (get-buffer symbols-outline-buffer-name)
+            (bury-buffer (get-buffer symbols-outline-buffer-name))))
+      (symbols-outline-show)))
   :init
+  (require 'symbols-outline)
   (setq symbols-outline-window-position 'right
         symbols-outline-collapse-functions-on-startup t)
   (when (member petmacs-lsp-client '(lsp-mode eglot-mode))
@@ -493,11 +504,13 @@
   (define-key iedit-mode-keymap (kbd "M-h") 'iedit-restrict-function)
   (define-key iedit-mode-keymap (kbd "M-i") 'iedit-restrict-current-line))
 
+(use-package imenu-list
+  :init (setq imenu-list-size 35))
+
 (use-package centered-cursor-mode)
 (use-package restart-emacs)
 (use-package focus)                     ; Focus on the current region
 (use-package disk-usage)                     ; Focus on the current region
-(use-package imenu-list)
 (use-package rg)
 (use-package dotenv-mode)
 

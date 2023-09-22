@@ -16,6 +16,7 @@
 (declare-function imenu-list-smart-toggle 'imenu-list)
 (declare-function symbols-outline-show 'symbols-outline)
 (declare-function upgrade-packages 'init-package)
+(declare-function petmacs/symbols-outline-smart-toggle 'init-tools)
 
 (defun petmacs/consult-lsp-file-symbols ()
   (interactive)
@@ -23,8 +24,9 @@
 
 (defun petmacs/imenu-list-smart-toggle ()
   (interactive)
-  (if (bound-and-true-p lsp-mode)
-      (symbols-outline-show)
+  (if (or (bound-and-true-p lsp-mode)
+          (get-buffer-window symbols-outline-buffer-name t))
+      (petmacs/symbols-outline-smart-toggle)
     (imenu-list-smart-toggle)))
 
 (defun petmacs/open-gnome-terminal ()
