@@ -419,10 +419,17 @@
   ;; latest jdtls requires java >= 17 to work
   (setq lsp-java-java-path "/opt/jdk17/bin/java")
 
-  ;; use jdtls 1.23 released at 2023.4.27
-  ;; (setq lsp-java-jdt-download-url "https://www.eclipse.org/downloads/download.php?file=/jdtls/milestones/1.25.0/jdt-language-server-1.25.0-202306291518.tar.gz")
+  (add-hook 'conf-javaprop-mode-hook #'lsp-deferred)
+  :config
+  (defun petmacs/lsp-java-super-type ()
+    "Show super type hierarchy."
+    (interactive)
+    (lsp-java-type-hierarchy 1))
 
-  (add-hook 'conf-javaprop-mode-hook #'lsp))
+  (defun petmacs/lsp-java-sub-type ()
+    "Show sub type hierarchy."
+    (interactive)
+    (lsp-java-type-hierarchy 0)))
 
 (use-package lsp-java-lombok
   :ensure nil

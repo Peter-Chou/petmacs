@@ -463,16 +463,17 @@
            "g" "goto"
            "G" "goto (other window)"
            "p" "peek"
-           "w" "workspace"
-           "t" "toggle module"
+           "b" "backends"
+           "T" "toggle module"
            "r" "refactor"
            "h" "help"
            "F" "folders"
            "x" "text/code")
          (leader-set-keys-for-major-mode mode
            ;; format
-           "==" #'lsp-format-buffer
+           "=b" #'lsp-format-buffer
            "=r" #'lsp-format-region
+           "=o" #'lsp-organize-imports
 
            ;; code actions
            "aa" #'lsp-execute-code-action
@@ -480,8 +481,6 @@
            "al" #'lsp-avy-lens
 
            ;; format
-           "ri" #'lsp-organize-imports
-           "rb" #'lsp-format-buffer
            "rr" #'lsp-rename
 
            ;; goto
@@ -489,16 +488,17 @@
            "gD" #'lsp-find-declaration
            "ge" #'lsp-treemacs-errors-list
            "gh" #'lsp-treemacs-call-hierarchy
+           "gT" #'lsp-treemacs-type-hierarchy
            "gr" #'lsp-find-references
            "gi" #'lsp-find-implementation
            "gt" #'lsp-find-type-definition
-           ;; "gs" #'consult-lsp-file-symbols
+
            "gs" #'petmacs/consult-lsp-file-symbols
            "gS" #'consult-lsp-symbols
            "gm" #'symbols-outline-show
 
            "gb" #'xref-pop-marker-stack
-           "gf" #'xref-find-definitions-other-frame
+           "gF" #'xref-find-definitions-other-frame
 
            ;; goto other window
            "Gd" #'petmacs/lsp-find-definition-other-window
@@ -518,13 +518,11 @@
            "pRn" #'lsp-ui-find-next-reference
            "pRp" #'lsp-ui-find-prev-reference
 
-           ;; workspace
-           "wd" #'lsp-describe-session
-           "wD" #'lsp-disconnect
-           "wq" #'lsp-workspace-shutdown
-           "wr" #'lsp-restart-workspace
-           "wv" #'lsp-version
-           "ws" #'lsp
+           ;; backends
+           "bd" #'lsp-describe-session
+           "br" #'lsp-workspace-restart
+           "bs" #'lsp-workspace-shutdown
+           "bv" #'lsp-version
 
            ;; help
            "hh" #'lsp-describe-thing-at-point
@@ -538,23 +536,66 @@
 
            ;; folders
            "Fs" #'lsp-workspace-folders-switch
-           "Fr" #'lsp-workspace-folders-remove
+           "FR" #'lsp-workspace-folders-remove
            "Fb" #'lsp-workspace-blacklist-remove
-           "Fa" #'lsp-workspace-folders-add
+
 
            ;; toggles
-           "tD" #'lsp-modeline-diagnostics-mode
-           "tL" #'lsp-toggle-trace-io
-           "tS" #'lsp-ui-sideline-mode
-           "tT" #'lsp-treemacs-sync-mode
-           "ta" #'lsp-modeline-code-actions-mode
-           "tb" #'lsp-headerline-breadcrumb-mode
-           "td" #'lsp-ui-doc-mode
-           "tf" #'lsp-toggle-on-type-formatting
-           "th" #'lsp-toggle-symbol-highlight
-           "tl" #'lsp-lens-mode
-           "ts" #'lsp-toggle-signature-auto-activate
-           )))
+           "TD" #'lsp-modeline-diagnostics-mode
+           "Tl" #'lsp-lens-mode
+           "Td" #'lsp-ui-doc-mode
+           "Ts" #'lsp-toggle-signature-auto-activate
+           "TS" #'lsp-ui-sideline-mode)))
+
+      (dolist (mode '(java-mode java-ts-mode))
+        (leader-declare-prefix-for-major-mode mode
+          "c" "compile / create"
+          "gk" "type hierarchy"
+          "ra" "add / assign"
+          "rc" "create / convert"
+          "rg" "generate"
+          "re" "extract"
+          "t" "test")
+
+        (leader-set-keys-for-major-mode mode
+          "wu"  'lsp-java-update-project-configuration
+
+          ;; refactoring
+          "ro"  #'lsp-java-organize-imports
+          "rcp" #'lsp-java-create-parameter
+          "rcf" #'lsp-java-create-field
+          "rci" #'lsp-java-conver-to-static-import
+          "rec" #'lsp-java-extract-to-constant
+          "rel" #'lsp-java-extract-to-local-variable
+          "rem" #'lsp-java-extract-method
+
+          ;; assign/add
+          "rai" #'lsp-java-add-import
+          "ram" #'lsp-java-add-unimplemented-methods
+          "rat" #'lsp-java-add-throws
+          "raa" #'lsp-java-assign-all
+          "raf" #'lsp-java-assign-to-field
+          "raF" #'lsp-java-assign-statement-to-field
+          "ral" #'lsp-java-assign-statement-to-local
+
+          ;; generate
+          "rgt" #'lsp-java-generate-to-string
+          "rge" #'lsp-java-generate-equals-and-hash-code
+          "rgo" #'lsp-java-generate-overrides
+          "rgg" #'lsp-java-generate-getters-and-setters
+
+          ;; create/compile
+          "cc"  #'lsp-java-build-project
+          "cp"  #'lsp-java-spring-initializr
+
+          "gkk" #'lsp-java-type-hierarchy
+          "gku" #'petmacs/lsp-java-super-type
+          "gks" #'petmacs/lsp-java-sub-type
+
+          ;; test
+          "tb" 'lsp-jt-browser
+
+          "cr" 'petmacs/mvn-clean-compile))
       )
 
 ;;; python mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
