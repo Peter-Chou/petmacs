@@ -17,6 +17,10 @@
 (declare-function symbols-outline-show 'symbols-outline)
 (declare-function upgrade-packages 'init-package)
 
+(defun petmacs/consult-lsp-file-symbols ()
+  (interactive)
+  (consult-lsp-file-symbols t))
+
 (defun petmacs/imenu-list-smart-toggle ()
   (interactive)
   (if (bound-and-true-p lsp-mode)

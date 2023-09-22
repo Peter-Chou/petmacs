@@ -492,7 +492,8 @@
            "gr" #'lsp-find-references
            "gi" #'lsp-find-implementation
            "gt" #'lsp-find-type-definition
-           "gs" #'consult-lsp-file-symbols
+           ;; "gs" #'consult-lsp-file-symbols
+           "gs" #'petmacs/consult-lsp-file-symbols
            "gS" #'consult-lsp-symbols
            "gm" #'symbols-outline-show
 

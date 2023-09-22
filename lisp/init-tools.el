@@ -469,7 +469,22 @@
         symbols-outline-collapse-functions-on-startup t)
   (when (member petmacs-lsp-client '(lsp-mode eglot-mode))
     (setq symbols-outline-fetch-fn #'symbols-outline-lsp-fetch))
-  :config (symbols-outline-follow-mode))
+  :config
+  (evil-define-key 'normal symbols-outline-mode-map
+    (kbd "g") 'symbols-outline-refresh
+    (kbd "n") 'symbols-outline-next
+    (kbd "p") 'symbols-outline-prev
+    (kbd "f") 'symbols-outline-next-same-level
+    (kbd "b") 'symbols-outline-prev-same-level
+    (kbd "u") 'symbols-outline-move-depth-up
+    (kbd "d") 'symbols-outline-move-depth-down
+    (kbd "TAB") 'symbols-outline-toggle-node
+    [tab] 'symbols-outline-toggle-node
+    (kbd "S-TAB") 'symbols-outline-cycle-visibility-globally
+    [backtab] 'symbols-outline-cycle-visibility-globally
+    (kbd "RET") 'symbols-outline-visit
+    (kbd "M-RET") 'symbols-outline-visit-and-quit)
+  (symbols-outline-follow-mode))
 
 (use-package iedit
   :init
