@@ -120,9 +120,9 @@
   :custom-face (awesome-tray-module-belong-face ((((background light)) :inherit petmacs-favor-color-face)
                                                  (t (:inherit petmacs-favor-color-face))))
   :init
-  (setq awesome-tray-separator "┃"
+  (setq awesome-tray-separator " ┃ "
         awesome-tray-hide-mode-line nil
-        awesome-tray-info-padding-right 2
+        awesome-tray-info-padding-right 1
         awesome-tray-update-interval 0.5
         awesome-tray-belong-update-duration 2.5
         awesome-tray-date-format "%m-%d %H:%M %a"
