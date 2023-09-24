@@ -475,9 +475,10 @@
             (bury-buffer (get-buffer symbols-outline-buffer-name))))
       (symbols-outline-show)))
   :init
-  (require 'symbols-outline)
   (setq symbols-outline-window-position 'right
+        symbols-outline-buffer-name "*Symbols-Outline*"
         symbols-outline-collapse-functions-on-startup t)
+
   (when (member petmacs-lsp-client '(lsp-mode eglot-mode))
     (setq symbols-outline-fetch-fn #'symbols-outline-lsp-fetch))
   :config
@@ -495,6 +496,7 @@
     [backtab] 'symbols-outline-cycle-visibility-globally
     (kbd "RET") 'symbols-outline-visit
     (kbd "M-RET") 'symbols-outline-visit-and-quit)
+
   (symbols-outline-follow-mode))
 
 (use-package iedit
