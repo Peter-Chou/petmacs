@@ -61,7 +61,7 @@ Otherwise the startup will be very slow."
 (require 'init-vcs)
 
 (require 'init-projectile)
-(require 'init-persp)
+;; (require 'init-persp)
 (require 'init-dired)
 (require 'init-shell)
 (require 'init-yasnippet)
