@@ -347,13 +347,6 @@
   :diminish
   :hook (after-init . editorconfig-mode))
 
-(use-package toggle-one-window
-  :quelpa
-  (toggle-one-window :fetcher github
-  		             :repo "manateelazycat/toggle-one-window"
-  		             :files ("*.el"))
-  :commands (toggle-one-window))
-
 ;; Search tool
 (use-package grep
   :ensure nil
@@ -410,12 +403,6 @@
               (setq-local pangu-spacing-real-insert-separtor t))))
 
 (use-package list-environment
-  :functions nerd-icons-octicon
-  :hook (list-environment-mode . (lambda ()
-                                   (setq tabulated-list-format
-                                         (vconcat `(("" ,(if (icons-displayable-p) 2 0)))
-                                                  tabulated-list-format))
-                                   (tabulated-list-init-header)))
   :init
   (with-no-warnings
     (defun my-list-environment-entries ()
@@ -425,14 +412,10 @@
                        (key (car kv))
                        (val (mapconcat #'identity (cdr kv) "=")))
                   (list key (vector
-                             (if (icons-displayable-p)
-                                 (nerd-icons-octicon "nf-oct-key" :height 0.8 :v-adjust -0.05)
-                               "")
                              `(,key face font-lock-keyword-face)
                              `(,val face font-lock-string-face)))))
               process-environment))
     (advice-add #'list-environment-entries :override #'my-list-environment-entries)))
-
 
 (use-package watch-other-window
   :quelpa (watch-other-window :fetcher github

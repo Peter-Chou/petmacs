@@ -100,11 +100,13 @@
 
 ;; Enforce rules for popups
 (use-package popper
-  :defines popper-echo-dispatch-actions
-  :commands popper-group-by-projectile
-  :hook (emacs-startup . popper-mode)
+  :diminish (popper-mode popper-echo-mode)
+  :hook ((emacs-startup . popper-mode)
+         (popper-mode   . popper-echo-mode))
+  :custom
+  (popper-group-function #'popper-group-by-directory)
+  (popper-echo-dispatch-actions t)
   :init
-  (setq popper-group-function #'popper-group-by-directory)
   (setq popper-reference-buffers
         '("\\*Messages\\*"
           "Output\\*$" "\\*Pp Eval Output\\*$"
@@ -114,7 +116,7 @@
           "\\*Warnings\\*"
           "\\*Async Shell Command\\*"
           "\\*Apropos\\*"
-          "\\*Backtrace\\*"
+
           "\\*Calendar\\*"
           "\\*Finder\\*"
           "\\*Kill Ring\\*"
@@ -162,9 +164,6 @@
           "\\*rustfmt\\*$" rustic-compilation-mode rustic-cargo-clippy-mode
           rustic-cargo-outdated-mode rustic-cargo-run-mode rustic-cargo-test-mode))
 
-  ;; (with-eval-after-load 'projectile
-  ;;   (setq popper-group-function #'popper-group-by-projectile))
-
   (with-eval-after-load 'doom-modeline
     (setq popper-mode-line
           '(:eval (let ((face (if (doom-modeline--active)
@@ -174,12 +173,8 @@
                              (bound-and-true-p doom-modeline-mode))
                         (format " %s "
                                 (nerd-icons-octicon "nf-oct-pin" :face face))
-                      (propertize " POP" 'face face))))))
-
-  (setq popper-echo-dispatch-actions t)
+                      (propertize " POP " 'face face))))))
   :config
-  (popper-echo-mode 1)
-
   (with-no-warnings
     (defun my-popper-fit-window-height (win)
       "Determine the height of popup window WIN by fitting it to the buffer's content."

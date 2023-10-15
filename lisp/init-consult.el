@@ -3,10 +3,15 @@
 (require 'init-custom)
 
 (use-package vertico
-  :bind (:map minibuffer-mode-map
+  :bind (:map vertico-map
+         ("RET" . vertico-directory-enter)
+         ("DEL" . vertico-directory-delete-char)
+         ("M-DEL" . vertico-directory-delete-word)
+         :map minibuffer-mode-map
          ("M-n" . vertico-next)
          ("M-p" . vertico-previous))
-  :hook (after-init . vertico-mode)
+  :hook ((after-init . vertico-mode)
+         (rfn-eshadow-update-overlay . vertico-directory-tidy))
   :init
   (setq read-file-name-completion-ignore-case t
         read-buffer-completion-ignore-case t
@@ -114,8 +119,9 @@
          ("C-c i" . consult-info)
          ("C-c r" . consult-ripgrep)
 
-         ([remap Info-search] . consult-info)
-         ([remap isearch-forward] . consult-line)
+         ([remap Info-search]        . consult-info)
+         ([remap imenu]              . consult-imenu)
+         ([remap isearch-forward]    . consult-line)
          ([remap recentf-open-files] . consult-recent-file)
          )
   ;; Enable automatic preview at point in the *Completions* buffer. This is
