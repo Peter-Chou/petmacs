@@ -17,6 +17,7 @@
         corfu-quit-no-match 'separator
         corfu-preselect 'first
         corfu-preview-current nil
+        corfu-on-exact-match nil
         ;; corfu-auto-delay 0.1
         ;; corfu-popupinfo-delay '(0.2 . 0.1)
         )
