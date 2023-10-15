@@ -288,7 +288,8 @@
     "j" #'avy-goto-char
     "J" #'avy-goto-char-2
     "l" #'avy-goto-line
-    "t" #'magit-todos-list
+    ;; "t" #'magit-todos-list
+    "t" #'hl-todo-rg-project
     "y" #'consult-yank-pop
     ))
 

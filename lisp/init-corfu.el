@@ -4,6 +4,8 @@
 (require 'init-funcs)
 
 (use-package corfu
+  :custom-face
+  (corfu-border ((t (:inherit region :background unspecified))))
   :bind (:map corfu-map
          ("C-M-m" . corfu-move-to-minibuffer))
   ;; :hook (corfu-mode . corfu-indexed-mode)
@@ -110,10 +112,8 @@
   :preface
   (defun petmacs/set-lsp-capfs ()
 	(setq-local completion-at-point-functions
-				(list (cape-super-capf
-					   #'yasnippet-capf
-					   #'lsp-completion-at-point)
-					  #'cape-file
+				(list (cape-super-capf #'yasnippet-capf #'lsp-completion-at-point)
+                      #'cape-file
 					  #'cape-dabbrev)))
   ;; :bind (("C-M-o" . cape-file))
   :hook (lsp-completion-mode . petmacs/set-lsp-capfs)
