@@ -56,26 +56,6 @@ try use the following command and rerun emacs:
 export GIT_SSL_NO_VERIFY=1
 ```
 
-### install tools
-
-- eaf [Optional]
-
-``` bash
-# in .emacs.d folder
-git submodule update --init --recursive
-
-# update submodules to latest version
-# git submodule update --remote --merge
-```
-
-``` bash
-conda create -n eaf python=3.8
-conda activate eaf
-
-# install browser image-viewer jupyter markdown-previewer org-previewer pdf-viewer git
-python site-lisp/emacs-application-framework/install-eaf.py
-```
-
 ### install LSP servers
 
 install the language servers needed by LSP service
