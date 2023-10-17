@@ -126,7 +126,8 @@
         awesome-tray-update-interval 0.5
         awesome-tray-belong-update-duration 2.5
         awesome-tray-date-format "%m-%d %H:%M %a"
-        awesome-tray-active-modules   '("belong" "pomodoro" "flymake" "pyvenv" "date")
+        ;; awesome-tray-active-modules   '("belong" "pomodoro" "flymake" "pyvenv" "date")
+        awesome-tray-active-modules   '("pomodoro" "flymake" "pyvenv" "date")
         awesome-tray-essential-modules '("pomodoro" "date"))
   :config
   (defun awesome-tray-module-pomodoro-info () (format "%s" pomodoro-mode-line-string))
