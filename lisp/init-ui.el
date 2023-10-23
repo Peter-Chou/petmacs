@@ -122,12 +122,14 @@
   :init
   (setq awesome-tray-separator " ┃ "
         awesome-tray-hide-mode-line nil
-        awesome-tray-info-padding-right 1
+        awesome-tray-info-padding-right 0
         awesome-tray-update-interval 0.5
         awesome-tray-belong-update-duration 2.5
         awesome-tray-date-format "%m-%d %H:%M %a"
-        ;; awesome-tray-active-modules   '("belong" "pomodoro" "flymake" "pyvenv" "date")
-        awesome-tray-active-modules   '("pomodoro" "flymake" "pyvenv" "date")
+        awesome-tray-git-format "%s"
+        awesome-tray-git-show-status nil
+        ;; awesome-tray-active-modules   '("pomodoro" "flymake" "pyvenv" "git" "date")
+        awesome-tray-active-modules   '("belong" "pomodoro" "flymake" "pyvenv" "git" "date")
         awesome-tray-essential-modules '("pomodoro" "date"))
   :config
   (defun awesome-tray-module-pomodoro-info () (format "%s" pomodoro-mode-line-string))
@@ -226,7 +228,7 @@
   :config
   (doom-modeline-def-modeline 'my-simple-line
     '(eldoc bar workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
-    '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl lsp input-method indent-info buffer-encoding process vcs))
+    '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl lsp input-method indent-info buffer-encoding process))
 
   ;; Set default mode-line
   (add-hook 'doom-modeline-mode-hook
