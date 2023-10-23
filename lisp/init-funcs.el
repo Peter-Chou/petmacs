@@ -190,7 +190,8 @@ Same as `replace-string C-q C-m RET RET'."
 (defun petmacs-treesit-available-p ()
   "Check whether tree-sitter is available.
 Native tree-sitter is introduced since 29."
-  (and (fboundp 'treesit-available-p)
+  (and petmacs-treesit
+       (fboundp 'treesit-available-p)
        (treesit-available-p)))
 
 ;; Frame

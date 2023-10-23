@@ -3,6 +3,9 @@
 (defvar petmacs-icon t
   "Display icons or not.")
 
+(defvar petmacs-treesit t
+  "Enable tree-sitter or not. Native tree-sitter is introduced in 29.")
+
 (defvar petmacs-completion-style 'minibuffer
   "minibuffer / childframe")
 
