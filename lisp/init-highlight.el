@@ -107,10 +107,13 @@ FACE defaults to inheriting from default and highlight."
   :quelpa (indent-bars :fetcher github
     	               :repo "jdtsmith/indent-bars"
     	               :files ("*"))
-  :hook ((prog-mode yaml-mode) . (lambda ()
-                                   "Highlight indentations in small files for better performance."
-                                   (unless (too-long-file-p)
-                                     (indent-bars-mode 1))))
+  :hook ((
+          python-mode python-ts-mode
+          json-mode json-ts-mode
+          yaml-mode yaml-ts-mode) . (lambda ()
+          "Highlight indentations in small files for better performance."
+          (unless (too-long-file-p)
+            (indent-bars-mode 1))))
   :init
   (setq indent-bars-display-on-blank-lines nil
         indent-bars-width-frac 0.25
