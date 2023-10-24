@@ -128,8 +128,7 @@
         awesome-tray-date-format "%m-%d %H:%M %a"
         awesome-tray-git-format "%s"
         awesome-tray-git-show-status nil
-        ;; awesome-tray-active-modules   '("pomodoro" "flymake" "pyvenv" "git" "date")
-        awesome-tray-active-modules   '("belong" "pomodoro" "flymake" "pyvenv" "git" "date")
+        awesome-tray-active-modules   '("pomodoro" "flymake" "pyvenv" "git" "date")
         awesome-tray-essential-modules '("pomodoro" "date"))
   :config
   (defun awesome-tray-module-pomodoro-info () (format "%s" pomodoro-mode-line-string))
