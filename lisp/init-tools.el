@@ -474,6 +474,7 @@
       (symbols-outline-show)))
   :init
   (setq symbols-outline-window-position 'right
+        symbols-outline-use-nerd-icon-in-gui t
         symbols-outline-window-width 45
         symbols-outline-buffer-name "*Symbols-Outline*"
         symbols-outline-collapse-functions-on-startup t)
