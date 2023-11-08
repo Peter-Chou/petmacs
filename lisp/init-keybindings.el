@@ -593,6 +593,8 @@
           "gku" #'petmacs/lsp-java-super-type
           "gks" #'petmacs/lsp-java-sub-type
 
+          "gI" #'lsp-java-open-super-implementation
+
           ;; test
           "tb" 'lsp-jt-browser
 
