@@ -262,15 +262,7 @@
 
 ;; Frame
 (when (display-graphic-p)
-  (add-hook 'window-setup-hook #'fix-fullscreen-cocoa)
-  ;; Resize and re-position frames conveniently
-  ;; Same keybindings as Rectangle on macOS
-  (bind-keys ("C-M-<return>"    . centaur-frame-maximize)
-             ("C-M-<backspace>" . centaur-frame-restore)
-             ("C-M-<left>"      . centaur-frame-left-half)
-             ("C-M-<right>"     . centaur-frame-right-half)
-             ("C-M-<up>"        . centaur-frame-top-half)
-             ("C-M-<down>"      . centaur-frame-bottom-half)))
+  (add-hook 'window-setup-hook #'fix-fullscreen-cocoa))
 
 ;; Sqlite
 (when (fboundp 'sqlite-open)
