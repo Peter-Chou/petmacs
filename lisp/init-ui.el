@@ -110,11 +110,10 @@
                 (setcdr (assq 'ns-appearance default-frame-alist) bg)))))
 
 
-;; (when (display-graphic-p)
 (use-package awesome-tray
-  :quelpa (awesome-tray :fetcher git
-  		                :url "https://gitee.com/Peter-Chou/awesome-tray.git"
-  		                :files ("*.el"))
+  :quelpa (awesome-tray :fetcher github
+    	                :repo "manateelazycat/awesome-tray"
+    	                :files ("*.el"))
   :commands (awesome-tray-update)
   :hook (after-init . awesome-tray-mode)
   :custom-face (awesome-tray-module-belong-face ((((background light)) :inherit petmacs-favor-color-face)
