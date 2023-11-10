@@ -34,7 +34,8 @@
 
   (define-key winum-keymap (kbd "M-7") 'winum-select-window-7)
   (define-key winum-keymap (kbd "M-8") 'winum-select-window-8)
-  (define-key winum-keymap (kbd "M-0") 'winum-select-window-0-or-10))
+  ;; (define-key winum-keymap (kbd "M-0") 'winum-select-window-0-or-10)
+  (define-key winum-keymap (kbd "M-0") 'treemacs-select-window))
 
 (use-package all-the-icons
   :if (display-graphic-p))
