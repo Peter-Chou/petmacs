@@ -117,7 +117,15 @@ FACE defaults to inheriting from default and highlight."
   :init
   (setq indent-bars-display-on-blank-lines nil
         indent-bars-width-frac 0.25
-        indent-bars-highlight-current-depth '(:face petmacs-favor-color-face :pattern ".")))
+        indent-bars-highlight-current-depth '(:face petmacs-favor-color-face :pattern "."))
+  (when (petmacs-treesit-available-p)
+    (setq indent-bars-treesit-support t
+          indent-bars-no-descend-string t
+          indent-bars-treesit-ignore-blank-lines-types '("module")
+          indent-bars-treesit-wrap '((python argument_list parameters ; for python, as an example
+				                              list list_comprehension
+				                              dictionary dictionary_comprehension
+				                              parenthesized_expression subscript)))))
 
 ;; Colorize color names in buffers
 (use-package rainbow-mode

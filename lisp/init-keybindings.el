@@ -20,24 +20,22 @@
 (global-set-key (kbd "C-SPC") 'nil)
 
 (use-package spaceleader
-  :quelpa
-  (spaceleader :fetcher github
-  	           :repo "mohkale/spaceleader"
-  	           :files ("*"))
+  :ensure nil
   :init
+  (require 'spaceleader)
   (setq leader-nnorm-key "M-m"
         leader-key "<SPC>"
         leader-major-mode-key "\,"))
 
 (leader-set-keys
-  "'"   #'multi-vterm
-  "/"   #'consult-ripgrep
+ "'"   #'multi-vterm
+ "/"   #'consult-ripgrep
 
-  "v"   #'er/expand-region
-  "u"   #'universal-argument
-  ;; "d"   #'xref-pop-marker-stack
-  "TAB"  #'petmacs/alternate-buffer
-  )
+ "v"   #'er/expand-region
+ "u"   #'universal-argument
+ ;; "d"   #'xref-pop-marker-stack
+ "TAB"  #'petmacs/alternate-buffer
+ )
 
 
 (leader-declare-prefix
@@ -189,7 +187,6 @@
     "r"  #'winner-undo
     "d"  #'delete-window
     "D"  #'ace-delete-window
-    "o" #'toggle-one-window
     "t" #'popper-toggle-type
     "p" #'popper-cycle
 

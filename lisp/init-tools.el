@@ -432,17 +432,6 @@
               process-environment))
     (advice-add #'list-environment-entries :override #'my-list-environment-entries)))
 
-(use-package watch-other-window
-  :quelpa (watch-other-window :fetcher github
-  		                      :repo "manateelazycat/watch-other-window"
-  		                      :files ("*.el"))
-  :init
-  (require 'watch-other-window)
-  (define-key evil-motion-state-map (kbd "C-j") #'watch-other-window-up-line)
-  (define-key evil-motion-state-map (kbd "C-k") #'watch-other-window-down-line)
-  (define-key evil-motion-state-map (kbd "M-j") #'watch-other-window-up)
-  (define-key evil-motion-state-map (kbd "M-k") #'watch-other-window-down))
-
 (use-package quickrun
   :commands (quickrun)
   :init

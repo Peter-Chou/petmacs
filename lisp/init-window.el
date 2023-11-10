@@ -195,11 +195,4 @@
             (delete-window window)))))
     (advice-add #'keyboard-quit :before #'popper-close-window-hack)))
 
-(use-package toggle-one-window
-  :quelpa
-  (toggle-one-window :fetcher github
-  		             :repo "manateelazycat/toggle-one-window"
-  		             :files ("*.el"))
-  :commands (toggle-one-window))
-
 (provide 'init-window)

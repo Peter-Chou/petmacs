@@ -115,9 +115,7 @@
     )
 
   (use-package cache-path-from-shell
-    :quelpa (cache-path-from-shell :fetcher github
-  		                           :repo "manateelazycat/cache-path-from-shell"
-  		                           :files ("*.el"))
+    :ensure nil
     :commands (exec-path-from-shell-initialize)
     :init
     (exec-path-from-shell-initialize)))

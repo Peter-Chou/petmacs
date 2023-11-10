@@ -112,8 +112,8 @@
 
 ;; (when (display-graphic-p)
 (use-package awesome-tray
-  :quelpa (awesome-tray :fetcher github
-  		                :repo "manateelazycat/awesome-tray"
+  :quelpa (awesome-tray :fetcher git
+  		                :url "https://gitee.com/Peter-Chou/awesome-tray.git"
   		                :files ("*.el"))
   :commands (awesome-tray-update)
   :hook (after-init . awesome-tray-mode)
