@@ -83,7 +83,7 @@
   :init
   (setq quelpa-self-upgrade-p nil
         quelpa-update-melpa-p nil
-        quelpa-checkout-melpa-p t
+        quelpa-checkout-melpa-p petmacs-quelpa-checkout-melpa
         quelpa-dir (expand-file-name "data/quelpa" user-emacs-directory)))
 
 ;; Required by `use-package'

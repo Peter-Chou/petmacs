@@ -78,18 +78,6 @@
           (3 . (rainbow bold 1.2))
           (t . (semilight 1.1)))))
 
-(use-package ef-themes)
-
-(use-package doom-themes
-  :config
-  ;; Enable flashing mode-line on errors
-  (doom-themes-visual-bell-config)
-
-  ;; Enable customized theme
-  ;; FIXME: https://github.com/emacs-lsp/lsp-treemacs/issues/89
-  (with-eval-after-load 'lsp-treemacs
-    (doom-themes-treemacs-config)))
-
 
 (use-package display-time
   :ensure nil
@@ -220,7 +208,6 @@
         doom-modeline-window-width-limit 110
         doom-modeline-env-version nil)
 
-
   ;; Prevent flash of unstyled modeline at startup
   (unless after-init-time
     (setq-default mode-line-format nil))
@@ -233,7 +220,6 @@
   (add-hook 'doom-modeline-mode-hook
             (lambda ()
               (doom-modeline-set-modeline 'my-simple-line 'default))))
-;; )
 
 (use-package hide-mode-line
   :hook (((
@@ -277,6 +263,7 @@
                         treemacs-mode-hook
                         eshell-mode-hook))
           (add-hook mode (lambda () (display-line-numbers-mode 0)))))
+
     (use-package linum-off
       :demand t
       :defines linum-format
@@ -454,9 +441,6 @@
 (use-package emojify
   :hook (after-init . global-emojify-mode)
   :init (setq emojify-download-emojis-p t))
-
-;;; load theme
-;; (petmacs--load-theme petmacs-default-theme)
                                         ;
 (use-package circadian
   :ensure nil

@@ -27,8 +27,7 @@
                  2)
               (/ (+ (plist-get info :parent-frame-height)
                     (* 2 (plist-get info :font-height)))
-                 2))))
-    ))
+                 2))))))
 
 (use-package which-key
   :diminish
@@ -78,21 +77,6 @@
                                           (right-fringe . 8)))
     (which-key-posframe-mode 1)))
 
-;; Persistent the scratch buffer
-(use-package persistent-scratch
-  :diminish
-  :bind (:map persistent-scratch-mode-map
-         ([remap kill-buffer] . (lambda (&rest _)
-                                  (interactive)
-                                  (user-error "Scratch buffer cannot be killed")))
-         ([remap revert-buffer] . persistent-scratch-restore)
-         ([remap revert-this-buffer] . persistent-scratch-restore))
-  :hook ((after-init . persistent-scratch-autosave-mode)
-         (lisp-interaction-mode . persistent-scratch-mode))
-  :init (setq persistent-scratch-backup-file-name-format "%Y-%m-%d"
-              persistent-scratch-backup-directory
-              (expand-file-name "data/persistent-scratch" user-emacs-directory)))
-
 ;; Jump to things in Emacs tree-style
 (use-package avy
   :hook (after-init . avy-setup-default)
@@ -119,7 +103,13 @@
                   python-ts-mode
                   html-mode
                   css-mode
-                  go-mode scala-mode prolog-inferior-mode))
+                  css-ts-mode
+                  go-mode
+                  go-ts-mode
+                  java-mode
+                  java-ts-mode
+                  scala-mode
+                  prolog-inferior-mode))
     (push mode aggressive-indent-excluded-modes))
 
   ;; Disable in some commands
@@ -127,8 +117,9 @@
 
   ;; Be slightly less aggressive in C/C++/C#/Java/Go/Swift
   (add-to-list 'aggressive-indent-dont-indent-if
-               '(and (derived-mode-p 'c-mode 'c++-mode 'csharp-mode
-                                     'java-mode 'go-mode 'swift-mode)
+               '(and (derived-mode-p 'c-mode c-ts-mode 'c-or-c++-ts-mode 'c++-mode 'c++-ts-mode
+                                     'csharp-mode 'csharp-ts-mode 'java-mode 'java-ts-mode
+                                     'go-mode go-ts-mode 'swift-mode)
                      (null (string-match "\\([;{}]\\|\\b\\(if\\|for\\|while\\)\\b\\)"
                                          (thing-at-point 'line))))))
 
@@ -141,10 +132,6 @@
          ([remap isearch-query-replace] . anzu-isearch-query-replace)
          ([remap isearch-query-replace-regexp] . anzu-isearch-query-replace-regexp))
   :hook (after-init . global-anzu-mode))
-
-;; An all-in-one comment command to rule them all
-;; (use-package comment-dwim-2
-;;   :bind ([remap comment-dwim] . comment-dwim-2))
 
 ;; A comprehensive visual interface to diff & patch
 (use-package ediff
@@ -190,23 +177,6 @@
               hungry-delete-except-modes
               '(help-mode minibuffer-mode minibuffer-inactive-mode calc-mode)))
 
-;; Drag stuff (lines, words, region, etc...) around
-(use-package drag-stuff
-  :diminish
-  :hook (after-init . drag-stuff-global-mode)
-  :config
-  ;; (evil-define-key nil evil-motion-state-map (kbd "M-n") 'drag-stuff-down)
-  ;; (evil-define-key nil evil-motion-state-map (kbd "M-p") 'drag-stuff-up)
-  ;; (evil-define-key nil evil-motion-state-map (kbd "M-h") 'drag-stuff-left)
-  ;; (evil-define-key nil evil-motion-state-map (kbd "M-l") 'drag-stuff-right)
-
-  (add-to-list 'drag-stuff-except-modes 'org-mode))
-
-;; Move to the beginning/end of line or code
-(use-package mwim
-  :bind (([remap move-beginning-of-line] . mwim-beginning-of-code-or-line)
-         ([remap move-end-of-line] . mwim-end-of-code-or-line)))
-
 ;; Windows-scroll commands
 (use-package pager
   :bind (([remap scroll-up-command] . pager-page-down)
@@ -217,14 +187,6 @@
          ([M-kp-8] . pager-row-up)
          ([M-down] . pager-row-down)
          ([M-kp-2] . pager-row-down)))
-
-;; Preview when `goto-char'
-(use-package goto-char-preview
-  :bind ([remap goto-char] . goto-char-preview))
-
-;; Preview when `goto-line'
-(use-package goto-line-preview
-  :bind ([remap goto-line] . goto-line-preview))
 
 ;; Handling capitalized subwords in a nomenclature
 (use-package subword

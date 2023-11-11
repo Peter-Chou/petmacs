@@ -29,6 +29,9 @@
 (defvar petmacs-enable-ligatures t
   "enable ligatures")
 
+(defvar petmacs-quelpa-checkout-melpa t
+  "update melpa, disable it if the network is unstable.")
+
 (defvar  petmacs-day-night-themes
   ;; '(("8:00" . doom-one-light)
   ;;   ("20:00"  . ef-autumn))
