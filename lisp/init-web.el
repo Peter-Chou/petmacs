@@ -108,6 +108,6 @@
   :hook ((web-mode js-mode js2-mode) . add-node-modules-path))
 
 (use-package haml-mode)
-(use-package php-mode))
+(use-package php-mode)
 
 (provide 'init-web)

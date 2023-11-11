@@ -86,12 +86,11 @@
 (require 'init-java)
 (require 'init-scala)
 
+(require 'init-web)
 (require 'init-markdown)
 (require 'init-markup)
 
 (require 'init-org)
-
-(require 'init-web)
 
 (require 'core-funcs)
 (require 'init-keybindings)
