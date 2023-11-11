@@ -33,8 +33,6 @@
   (define-key inferior-python-mode-map
     (kbd "C-r") 'comint-history-isearch-backward))
 
-(use-package py-isort)
-
 (use-package pyvenv
   :preface
   (defun petmacs/disable-modeline-env-info ()
@@ -63,15 +61,14 @@
          (pyvenv-mode . petmacs/disable-modeline-env-info))
   :config
   (pyvenv-mode 1)
-  (pyvenv-tracking-mode 1)
-  )
-
-(use-package virtualenvwrapper)
+  (pyvenv-tracking-mode 1))
 
 (use-package yapfify
   :diminish yapf-mode
   :hook ((python-mode python-ts-mode) . yapf-mode))
 
+(use-package py-isort)
 (use-package pip-requirements)
+(use-package virtualenvwrapper)
 
 (provide 'init-python)

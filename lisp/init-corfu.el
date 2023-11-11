@@ -87,7 +87,6 @@
     :ensure nil
     :init
     (require 'corfu-terminal)
-    (corfu-terminal-mode +1))
-  )
+    (corfu-terminal-mode +1)))
 
 (provide 'init-corfu)

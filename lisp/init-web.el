@@ -16,16 +16,7 @@
   :if (featurep 'xwidget-internal)
   :bind (("C-c C-z w" . xwidget-webkit-browse-url)
          :map xwidget-webkit-mode-map
-         ("h"         . xwidget-hydra/body))
-  :init
-  ;; ;; Link navigation
-  ;; (use-package xwwp-follow-link-ivy
-  ;;   :after ivy
-  ;;   :bind (("C-c C-z x" . xwwp)
-  ;;          :map xwidget-webkit-mode-map
-  ;;          ("v"         . xwwp-follow-link))
-  ;;   :init (setq xwwp-follow-link-completion-system 'ivy))
-  )
+         ("h"         . xwidget-hydra/body)))
 
 ;; CSS
 (use-package css-mode
@@ -117,21 +108,6 @@
   :hook ((web-mode js-mode js2-mode) . add-node-modules-path))
 
 (use-package haml-mode)
-(use-package php-mode)
-
-;; REST
-(use-package restclient
-  :mode ("\\.http\\'" . restclient-mode)
-  :config
-  (use-package restclient-test
-    :diminish
-    :hook (restclient-mode . restclient-test-mode))
-
-  ;; (with-eval-after-load 'company
-  ;;   (use-package company-restclient
-  ;;     :defines company-backends
-  ;;     :init (add-to-list 'company-backends 'company-restclient)))
-  )
-
+(use-package php-mode))
 
 (provide 'init-web)
