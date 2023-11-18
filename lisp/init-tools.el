@@ -291,6 +291,12 @@
         (pomodoro-start pomodoro-work-time)
       (pomodoro-stop)))
   (setq
+   pomodoro-work-time 25
+   pomodoro-break-time 7
+   pomodoro-extra-time 2
+   pomodoro-play-sounds nil
+   pomodoro-work-cycle "work "
+   pomodoro-break-cycle "rest "
    pomodoro-break-start-sound (expand-file-name "data/sounds/emacs.d_sounds_three_beeps.wav" user-emacs-directory)
    pomodoro-work-start-sound (expand-file-name "data/sounds/emacs.d_sounds_jabber_message.wav" user-emacs-directory)))
 
