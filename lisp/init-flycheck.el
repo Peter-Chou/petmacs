@@ -29,6 +29,9 @@
 (use-package flycheck-python-ruff
   :quelpa (flycheck-python-ruff :fetcher github
     	                        :repo "v4n6/flycheck-python-ruff")
-  :hook ((python-mode python-ts-mode) . flycheck-python-ruff-setup))
+  ;; :hook ((python-mode python-ts-mode) . flycheck-python-ruff-setup)
+  :hook ((python-mode python-ts-mode) . (lambda ()
+    	                                  (setq-local lsp-diagnostics-provider :none)
+                                          (flycheck-python-ruff-setup))))
 
 (provide 'init-flycheck)
