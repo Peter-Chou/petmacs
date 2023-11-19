@@ -26,4 +26,9 @@
 (use-package flycheck-popup-tip
   :hook (flycheck-mode . flycheck-popup-tip-mode))
 
+(use-package flycheck-python-ruff
+  :quelpa (flycheck-python-ruff :fetcher github
+    	                        :repo "v4n6/flycheck-python-ruff")
+  :hook ((python-mode python-ts-mode) . flycheck-python-ruff-setup))
+
 (provide 'init-flycheck)
