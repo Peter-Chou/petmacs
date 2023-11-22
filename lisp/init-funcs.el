@@ -363,9 +363,9 @@ This issue has been addressed in 28."
 
 (defun too-long-file-p ()
   "Check whether the file is too long."
-  (if (fboundp 'buffer-line-statistics)
-      (> (car (buffer-line-statistics)) 3000)
-    (> (buffer-size) 100000)))
+  (or (> (buffer-size) 100000)
+      (and (fboundp 'buffer-line-statistics)
+           (> (car (buffer-line-statistics)) 10000))))
 
 (defun childframe-workable-p ()
   "Whether childframe is workable."

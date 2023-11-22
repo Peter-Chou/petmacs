@@ -150,6 +150,8 @@
                                     dired
                                     ibuffer
                                     org
+                                    org-present
+                                    org-roam
                                     ))
   :hook (after-init . evil-collection-init)
   :config

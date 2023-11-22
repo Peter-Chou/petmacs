@@ -222,12 +222,13 @@
               (doom-modeline-set-modeline 'my-simple-line 'default))))
 
 (use-package hide-mode-line
-  :hook (((
-           completion-list-mode
+  :hook (((treemacs-mode
            eshell-mode shell-mode
            term-mode vterm-mode
+           embark-collect-mode
            lsp-ui-imenu-mode
-           pdf-annot-list-mode) . hide-mode-line-mode)))
+           pdf-annot-list-mode) . turn-on-hide-mode-line-mode)
+         (dired-mode . turn-off-hide-mode-line-mode)))
 
 ;; Show native line numbers if possible, otherwise use `linum'
 (when petmacs-enable-display-line-numbers

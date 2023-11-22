@@ -94,28 +94,25 @@
 
 ;; Enforce rules for popups
 (use-package popper
-  :diminish (popper-mode popper-echo-mode)
-  :hook ((emacs-startup . popper-mode)
-         (popper-mode   . popper-echo-mode))
+  :hook (emacs-startup . popper-echo-mode)
   :custom
   (popper-group-function #'popper-group-by-directory)
   (popper-echo-dispatch-actions t)
   :init
   (setq popper-reference-buffers
-        '("\\*Messages\\*"
+        '("\\*Messages\\*$"
           "Output\\*$" "\\*Pp Eval Output\\*$"
           "^\\*eldoc.*\\*$"
-          "\\*Compile-Log\\*"
-          "\\*Completions\\*"
-          "\\*Warnings\\*"
-          "\\*Async Shell Command\\*"
-          "\\*Apropos\\*"
-
-          "\\*Calendar\\*"
-          "\\*Finder\\*"
-          "\\*Kill Ring\\*"
-          "\\*Go-Translate\\*"
-          "\\*Embark \\(Collect\\|Live\\):.*\\*"
+          "\\*Compile-Log\\*$"
+          "\\*Completions\\*$"
+          "\\*Warnings\\*$"
+          "\\*Async Shell Command\\*$"
+          "\\*Apropos\\*$"
+          "\\*Backtrace\\*$"
+          "\\*Calendar\\*$"
+          "\\*Fd\\*$" "\\*Find\\*$" "\\*Finder\\*$"
+          "\\*Kill Ring\\*$"
+          "\\*Embark \\(Collect\\|Live\\):.*\\*$"
 
           bookmark-bmenu-mode
           comint-mode
@@ -131,13 +128,13 @@
           grep-mode occur-mode rg-mode deadgrep-mode ag-mode pt-mode
           youdao-dictionary-mode osx-dictionary-mode fanyi-mode
 
-          "^\\*Process List\\*" process-menu-mode
+          "^\\*Process List\\*$" process-menu-mode
           list-environment-mode cargo-process-mode
 
-          "^\\*eshell.*\\*.*$"       eshell-mode
-          "^\\*shell.*\\*.*$"        shell-mode
-          "^\\*terminal.*\\*.*$"     term-mode
-          "^\\*vterm[inal]*.*\\*.*$" vterm-mode
+          "^\\*.*eshell.*\\*.*$"
+          "^\\*.*shell.*\\*.*$"
+          "^\\*.*terminal.*\\*.*$"
+          "^\\*.*vterm[inal]*.*\\*.*$"
 
           "\\*DAP Templates\\*$" dap-server-log-mode
           "\\*ELP Profiling Restuls\\*" profiler-report-mode
