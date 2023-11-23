@@ -49,8 +49,7 @@
      ("-" text-scale-decrease "out")
      ("0" (text-scale-increase 0) "reset"))
     "Appearance"
-    (("F" set-frame-font "font")
-     ("T" centaur-load-theme "theme"))))
+    (("F" set-frame-font "font"))))
   :custom-face
   (aw-leading-char-face ((t (:inherit font-lock-keyword-face :foreground unspecified :bold t :height 3.0))))
   (aw-minibuffer-leading-char-face ((t (:inherit font-lock-keyword-face :bold t :height 1.0))))
