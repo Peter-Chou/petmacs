@@ -108,8 +108,10 @@ FACE defaults to inheriting from default and highlight."
     	               :repo "jdtsmith/indent-bars"
     	               :files ("*"))
   :hook ((
-          python-mode python-ts-mode
+          go-mode go-ts-mode
           json-mode json-ts-mode
+          java-mode java-ts-mode
+          python-mode python-ts-mode
           yaml-mode yaml-ts-mode) . (lambda ()
           "Highlight indentations in small files for better performance."
           (unless (too-long-file-p)
@@ -117,15 +119,17 @@ FACE defaults to inheriting from default and highlight."
   :init
   (setq indent-bars-display-on-blank-lines nil
         indent-bars-width-frac 0.25
+        indent-bars-color
+        '(highlight :face-bg t :blend 0.85)
         indent-bars-highlight-current-depth '(:face petmacs-favor-color-face :pattern "."))
   (when (petmacs-treesit-available-p)
     (setq indent-bars-treesit-support t
           indent-bars-no-descend-string t
           indent-bars-treesit-ignore-blank-lines-types '("module")
           indent-bars-treesit-wrap '((python argument_list parameters ; for python, as an example
-				                              list list_comprehension
-				                              dictionary dictionary_comprehension
-				                              parenthesized_expression subscript)))))
+				                             list list_comprehension
+				                             dictionary dictionary_comprehension
+				                             parenthesized_expression subscript)))))
 
 ;; Colorize color names in buffers
 (use-package rainbow-mode

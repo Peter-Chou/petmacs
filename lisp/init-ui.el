@@ -57,6 +57,13 @@
 
 (use-package srcery-theme)
 
+
+(use-package nasy-theme
+  :quelpa (nasy-theme :fetcher github
+    	              :repo "nasyxx/emacs-nasy-theme")
+  :init
+  (require 'nasy-theme))
+
 (use-package modus-themes
   :init
   (setq modus-themes-bold-constructs t
@@ -77,7 +84,6 @@
           (2 . (rainbow background 1.3))
           (3 . (rainbow bold 1.2))
           (t . (semilight 1.1)))))
-
 
 (use-package display-time
   :ensure nil
@@ -440,7 +446,13 @@
 (use-package emojify
   :hook (after-init . global-emojify-mode)
   :init (setq emojify-download-emojis-p t))
-                                        ;
+
+(use-package nyan-mode
+  :hook (doom-modeline-mode . nyan-mode)
+  :init
+  (setq nyan-animate-nyancat t
+        nyan-wavy-trail t))
+
 (use-package circadian
   :ensure nil
   :commands (circadian-setup)
@@ -449,5 +461,6 @@
   :config
   (when (bound-and-true-p awesome-tray-mode)
     (add-hook circadian-after-load-theme-hook #'awesome-tray-enable)))
+
 
 (provide 'init-ui)
