@@ -100,9 +100,7 @@
 
 
 (use-package awesome-tray
-  :quelpa (awesome-tray :fetcher github
-    	                :repo "manateelazycat/awesome-tray"
-    	                :files ("*.el"))
+  :ensure nil
   :commands (awesome-tray-update)
   :hook (after-init . awesome-tray-mode)
   :custom-face (awesome-tray-module-belong-face ((((background light)) :inherit petmacs-favor-color-face)
