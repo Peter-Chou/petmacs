@@ -232,7 +232,9 @@
            embark-collect-mode
            lsp-ui-imenu-mode
            pdf-annot-list-mode) . turn-on-hide-mode-line-mode)
-         (dired-mode . turn-off-hide-mode-line-mode)))
+         (dired-mode . (lambda()
+                         (and (bound-and-true-p hide-mode-line-mode)
+                              (turn-off-hide-mode-line-mode))))))
 
 ;; Show native line numbers if possible, otherwise use `linum'
 (when petmacs-enable-display-line-numbers
