@@ -64,6 +64,8 @@
   :init
   (require 'nasy-theme))
 
+(use-package standard-themes)
+
 (use-package modus-themes
   :init
   (setq modus-themes-bold-constructs t
