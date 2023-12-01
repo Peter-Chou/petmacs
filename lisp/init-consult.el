@@ -265,8 +265,4 @@ targets."
     (orderless-regexp (pinyinlib-build-regexp-string str)))
   (add-to-list 'orderless-matching-styles 'completion--regex-pinyin))
 
-(use-package consult-todo
-  :ensure nil
-  :init (require 'consult-todo))
-
 (provide 'init-consult)
