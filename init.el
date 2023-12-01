@@ -28,9 +28,9 @@
 
 (defun add-subdirs-to-load-path (&rest _)
   "Add subdirectories to `load-path'.
-  Don't put large files in `site-lisp/local' directory,
+  Don't put large files in `site-lisp' directory,
    Otherwise the startup will be very slow."
-  (let ((default-directory (expand-file-name "site-lisp/local" user-emacs-directory)))
+  (let ((default-directory (expand-file-name "site-lisp" user-emacs-directory)))
     (normal-top-level-add-subdirs-to-load-path)))
 
 (advice-add #'package-initialize :after #'update-load-path)

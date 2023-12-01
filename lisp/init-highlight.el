@@ -118,6 +118,7 @@ FACE defaults to inheriting from default and highlight."
             (indent-bars-mode 1))))
   :init
   (setq indent-bars-display-on-blank-lines nil
+        indent-bars-no-stipple-char "┋"
         indent-bars-width-frac 0.25
         indent-bars-color
         '(highlight :face-bg t :blend 0.85)
