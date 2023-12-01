@@ -56,14 +56,6 @@
   :hook (after-load-theme . solaire-global-mode))
 
 (use-package srcery-theme)
-
-
-(use-package nasy-theme
-  :quelpa (nasy-theme :fetcher github
-    	              :repo "nasyxx/emacs-nasy-theme")
-  :init
-  (require 'nasy-theme))
-
 (use-package standard-themes)
 
 (use-package modus-themes
