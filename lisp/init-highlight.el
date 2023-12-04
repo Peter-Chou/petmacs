@@ -105,7 +105,7 @@ FACE defaults to inheriting from default and highlight."
 
 (use-package indent-bars
   :quelpa (indent-bars :fetcher github :repo "jdtsmith/indent-bars" :files ("*.el"))
-  ;; :quelpa (indent-bars :fetcher git :url "https://gitee.com/Peter-Chou/indent-bars.git" :files ("*.el")))
+  ;; :quelpa (indent-bars :fetcher git :url "https://gitee.com/Peter-Chou/indent-bars.git" :files ("*.el"))
   :hook ((
           go-mode go-ts-mode
           json-mode json-ts-mode
@@ -117,7 +117,7 @@ FACE defaults to inheriting from default and highlight."
             (indent-bars-mode 1))))
   :init
   (setq indent-bars-display-on-blank-lines nil
-        indent-bars-no-stipple-char "┋"
+        indent-bars-no-stipple-char ?\┋
         indent-bars-width-frac 0.25
         indent-bars-color
         '(highlight :face-bg t :blend 0.85)
