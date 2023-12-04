@@ -29,6 +29,10 @@
                     (* 2 (plist-get info :font-height)))
                  2))))))
 
+(use-package posframe-plus
+  :ensure nil
+  :init (require 'posframe-plus))
+
 (use-package which-key
   :diminish
   :hook (after-init . which-key-mode)
@@ -294,7 +298,7 @@
    pomodoro-work-time 25
    pomodoro-break-time 7
    pomodoro-extra-time 2
-   pomodoro-play-sounds nil
+   pomodoro-play-sounds t
    pomodoro-work-cycle "work "
    pomodoro-break-cycle "rest "
    pomodoro-break-start-sound (expand-file-name "data/sounds/emacs.d_sounds_three_beeps.wav" user-emacs-directory)
