@@ -59,7 +59,7 @@
 
 (use-package treesitter-context
   :quelpa (treesitter-context :fetcher github :repo "zbelial/treesitter-context.el" :files ("*.el"))
-  ;; :quelpa (treesitter-context :fetcher git :url "https://gitee.com/Peter-Chou/treesitter-context.el.git" :files ("*.el")))
+  ;; :quelpa (treesitter-context :fetcher git :url "https://gitee.com/Peter-Chou/treesitter-context.el.git" :files ("*.el"))
   :hook ((python-ts-mode java-ts-mode) . treesitter-context-mode
          ;; (treesitter-context-mode . treesitter-context-focus-mode)
          )
