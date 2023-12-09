@@ -15,7 +15,7 @@
         treemacs-sorting                 'alphabetic-asc
         treemacs-follow-after-init       t
         treemacs-no-png-images           (not petmacs-icon)
-        treemacs-width                   30)
+        treemacs-width                   25)
   :config
   (treemacs-follow-mode t)
   (treemacs-filewatch-mode t)

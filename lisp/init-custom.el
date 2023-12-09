@@ -51,7 +51,7 @@
 (defvar petmacs-enable-mini-frame nil
   "enable mini frame feature")
 
-(defvar petmacs-enable-display-line-numbers nil
+(defvar petmacs-enable-display-line-numbers t
   "enable display-line-numbers mode")
 
 (defvar petmacs-lsp-client

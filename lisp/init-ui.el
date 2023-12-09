@@ -239,7 +239,7 @@
         :init
         (setq-default display-line-numbers 'visual
                       display-line-numbers-widen t
-                      display-line-numbers-type 'relative
+                      ;; display-line-numbers-type 'relative
                       display-line-numbers-current-absolute t)
 
         (defun petmacs/display-line-numbers-relative ()
@@ -250,8 +250,9 @@
           "Show absolute line numbers."
           (setq-local display-line-numbers t))
 
-        (add-hook 'evil-insert-state-entry-hook #'petmacs/display-line-numbers-absolute)
-        (add-hook 'evil-insert-state-exit-hook #'petmacs/display-line-numbers-relative)
+        ;; (add-hook 'evil-insert-state-entry-hook #'petmacs/display-line-numbers-absolute)
+        ;; (add-hook 'evil-insert-state-exit-hook #'petmacs/display-line-numbers-relative)
+
         ;; Disable line numbers for some modes
         (dolist (mode '(org-mode-hook
                         term-mode-hook

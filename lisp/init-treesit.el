@@ -56,17 +56,16 @@
   :config
   (install-ts-grammars))
 
-
-(use-package treesitter-context
-  :quelpa (treesitter-context :fetcher github :repo "zbelial/treesitter-context.el" :files ("*.el"))
-  ;; :quelpa (treesitter-context :fetcher git :url "https://gitee.com/Peter-Chou/treesitter-context.el.git" :files ("*.el"))
-  :hook ((python-ts-mode java-ts-mode) . treesitter-context-mode
-         ;; (treesitter-context-mode . treesitter-context-focus-mode)
-         )
-  :init
-  (setq treesitter-context-show-context-always nil
-        treesitter-context-frame-min-width 40
-        treesitter-context-idle-time 1.0)
-  (require 'treesitter-context))
+;; (use-package treesitter-context
+;;   :quelpa (treesitter-context :fetcher github :repo "zbelial/treesitter-context.el" :files ("*.el"))
+;;   ;; :quelpa (treesitter-context :fetcher git :url "https://gitee.com/Peter-Chou/treesitter-context.el.git" :files ("*.el"))
+;;   :hook ((python-ts-mode java-ts-mode) . treesitter-context-mode
+;;          ;; (treesitter-context-mode . treesitter-context-focus-mode)
+;;          )
+;;   :init
+;;   (setq treesitter-context-show-context-always nil
+;;         treesitter-context-frame-min-width 40
+;;         treesitter-context-idle-time 1.0)
+;;   (require 'treesitter-context))
 
 (provide 'init-treesit)

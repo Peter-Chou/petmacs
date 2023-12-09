@@ -194,11 +194,11 @@
    lsp-treemacs-deps-position-params
    `((side . right)
      (slot . 1)
-     (window-width . 32))
+     (window-width . 30))
    lsp-treemacs-symbols-position-params
    `((side . right)
      (slot . 2)
-     (window-width . 32)))
+     (window-width . 30)))
   (lsp-treemacs-sync-mode 1)
   :config
   (define-key winum-keymap (kbd "M-9") 'lsp-treemacs-symbols)
