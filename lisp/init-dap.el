@@ -18,8 +18,8 @@
          ("<f5>" . dap-debug)
          ("M-<f5>" . dap-hydra))
   :hook ((after-init . dap-auto-configure-mode)
-         (dap-stopped . (lambda (arg) (call-interactively #'dap-hydra)))
-         (dap-terminated . (lambda (_) (dap-hydra/nil)))
+         ;; (dap-stopped . (lambda (arg) (call-interactively #'dap-hydra)))
+         ;; (dap-terminated . (lambda (_) (dap-hydra/nil)))
          ((python-mode python-ts-mode) . (lambda () (require 'dap-python)))
          ((java-mode java-ts-mode) . (lambda () (require 'dap-java)))
          ;; dap-lldb needs lldb-vscode which is in LLVM prebuilt package
@@ -31,9 +31,12 @@
   (require 'cl-lib)
   (setq dap-enable-mouse-support t
         dap-python-debugger 'debugpy
-        ;; dap-auto-configure-features '(sessions locals breakpoints expressions controls)
+        ;; minimun debug ui, when spcific buffer when needed
+        lsp-enable-dap-auto-configure nil
+        ;; dap-auto-configure-features '(sessions locals tooltip)
 	    dap-lldb-debug-program '("/opt/llvm/bin/lldb-vscode"))
   :config
+  (dap-ui-mode 1)
   (with-eval-after-load 'dap-ui
     (setq dap-ui-buffer-configurations
           `((,dap-ui--locals-buffer . ((side . right) (slot . 1) (window-width . 0.20)))
