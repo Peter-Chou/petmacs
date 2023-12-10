@@ -95,5 +95,7 @@
 (require 'core-funcs)
 (require 'init-keybindings)
 
+(petmacs-frame-maximize)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init.el ends here
