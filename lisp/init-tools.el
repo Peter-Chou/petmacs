@@ -101,19 +101,13 @@
   :config
   ;; Disable in some modes
   (dolist (mode '(gitconfig-mode
-                  asm-mode
-                  web-mode
-                  python-mode
-                  python-ts-mode
-                  html-mode
-                  css-mode
-                  css-ts-mode
-                  go-mode
-                  go-ts-mode
-                  java-mode
-                  java-ts-mode
-                  scala-mode
-                  prolog-inferior-mode))
+                  asm-mode web-mode html-mode
+                  css-mode css-ts-mode
+                  python-mode python-ts-mode
+                  go-mode go-ts-mode
+                  java-mode java-ts-mode
+                  shell-mode term-mode vterm-mode
+                  scala-mode prolog-inferior-mode))
     (push mode aggressive-indent-excluded-modes))
 
   ;; Disable in some commands
