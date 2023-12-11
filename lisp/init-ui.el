@@ -58,6 +58,14 @@
 (use-package srcery-theme)
 (use-package standard-themes)
 
+(use-package doom-themes
+  :config
+  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+        doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  (doom-themes-treemacs-config)
+  ;; Corrects (and improves) org-mode's native fontification.
+  (doom-themes-org-config))
+
 (use-package modus-themes
   :init
   (setq modus-themes-bold-constructs t
