@@ -351,61 +351,108 @@
     "R" #'restart-emacs
     ))
 
-(leader-declare-prefix
-  "d" "debug"
-  "db"  "breakpoints"
-  "dd"  "debugging"
-  "de"  "eval"
-  "dI"  "inspect"
-  "dS"  "switch"
-  "dw"  "debug windows")
-(leader-with-prefix "d"
-  (leader-set-keys
-    "." #'dap-hydra
-    ;; repl
-    "'"  #'dap-ui-repl
-    ;; abandon
-    "a"  #'dap-disconnect
-    "A"  #'dap-delete-all-sessions
-    ;; breakpoints
-    "bb" #'dap-breakpoint-toggle
-    "bc" #'dap-breakpoint-condition
-    "bl" #'dap-breakpoint-log-message
-    "bh" #'dap-breakpoint-hit-condition
-    "ba" #'dap-breakpoint-add
-    "bd" #'dap-breakpoint-delete
-    "bD" #'dap-breakpoint-delete-all
-    ;; debuging/running
-    "dd" #'dap-debug
-    "de" #'dap-debug-edit-template
-    "dl" #'dap-debug-last
-    "dr" #'dap-debug-recent
-    ;; eval
-    "ee" #'dap-eval
-    "er" #'dap-eval-region
-    "et" #'dap-eval-thing-at-point
-    "et" #'dap-ui-expressions-add
-    ;; inspect
-    "Ii" #'dap-ui-inspect
-    "Ir" #'dap-ui-inspect-region
-    "It" #'dap-ui-inspect-thing-at-point
-    ;; stepping
-    "c"  #'dap-continue
-    "i"  #'dap-step-in
-    "o"  #'dap-step-out
-    "r"  #'dap-restart-frame
-    "s"  #'dap-next
-    "v"  #'dap-ui-inspect-thing-at-point
-    ;; switching
-    "Ss" #'dap-switch-session
-    "St" #'dap-switch-thread
-    "Sf" #'dap-switch-frame
-    ;; windows
-    "wo" #'dap-go-to-output-buffer
-    "wl" #'dap-ui-locals
-    "ws" #'dap-ui-sessions
-    "wb" #'dap-ui-breakpoints
-    ))
+(cond ((and (equal petmacs-dap-mode-impl 'dape) emacs/>=29p)
+       (leader-declare-prefix
+         "d" "debug"
+         "db"  "breakpoints"
+         "dd"  "debugging"
+         "de"  "eval"
+         "dI"  "inspect"
+         "dS"  "switch"
+         "dw"  "debug windows")
+       )
+      (leader-with-prefix "d"
+        (leader-set-keys
+          "." #'dape-hydra/body
+
+          "q"  #'dape-quit
+          "D"  #'dape-disconnect-quit
+
+          ;; breakpoints
+          "bb" #'dape-breakpoint-toggle
+          "bc" #'dape-breakpoint-expression
+          "bl" #'dape-breakpoint-log
+          "bD" #'dape-breakpoint-remove-all
+          ;; debuging/running
+          "dd" #'dape
+
+          ;; switching
+          "sw" #'dape-watch-dwim
+          "sm" #'dape-read-memory
+          "st" #'dape-select-thread
+          "ss" #'dape-select-stack
+          "ss" #'dape-info
+          "sr"  #'dape-repl
+
+          ;; stepping
+          "n"  #'dape-next
+          "s"  #'dape-next
+          "o"  #'dape-step-out
+          "c"  #'dape-continue
+          "i"  #'dape-step-in
+          "r"  #'dape-restart
+          "p"  #'dape-pause
+          "k"  #'dape-kill
+          "r"  #'dape-restart
+          ))
+      (t
+       (leader-declare-prefix
+         "d" "debug"
+         "db"  "breakpoints"
+         "dd"  "debugging"
+         "de"  "eval"
+         "dI"  "inspect"
+         "dS"  "switch"
+         "dw"  "debug windows")
+       (leader-with-prefix "d"
+         (leader-set-keys
+           "." #'dap-hydra
+           ;; repl
+           "'"  #'dap-ui-repl
+           ;; abandon
+           "a"  #'dap-disconnect
+           "A"  #'dap-delete-all-sessions
+           ;; breakpoints
+           "bb" #'dap-breakpoint-toggle
+           "bc" #'dap-breakpoint-condition
+           "bl" #'dap-breakpoint-log-message
+           "bh" #'dap-breakpoint-hit-condition
+           "ba" #'dap-breakpoint-add
+           "bd" #'dap-breakpoint-delete
+           "bD" #'dap-breakpoint-delete-all
+           ;; debuging/running
+           "dd" #'dap-debug
+           "de" #'dap-debug-edit-template
+           "dl" #'dap-debug-last
+           "dr" #'dap-debug-recent
+           ;; eval
+           "ee" #'dap-eval
+           "er" #'dap-eval-region
+           "et" #'dap-eval-thing-at-point
+           "et" #'dap-ui-expressions-add
+           ;; inspect
+           "Ii" #'dap-ui-inspect
+           "Ir" #'dap-ui-inspect-region
+           "It" #'dap-ui-inspect-thing-at-point
+           ;; stepping
+           "c"  #'dap-continue
+           "i"  #'dap-step-in
+           "o"  #'dap-step-out
+           "r"  #'dap-restart-frame
+           "s"  #'dap-next
+           "v"  #'dap-ui-inspect-thing-at-point
+           ;; switching
+           "Ss" #'dap-switch-session
+           "St" #'dap-switch-thread
+           "Sf" #'dap-switch-frame
+           ;; windows
+           "wo" #'dap-go-to-output-buffer
+           "wl" #'dap-ui-locals
+           "ws" #'dap-ui-sessions
+           "wb" #'dap-ui-breakpoints
+           ))
+       ))
+
 
 ;;; major mode keybinidngs ;;;;;;;;;;;;;;;;;;
 
