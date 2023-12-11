@@ -71,7 +71,7 @@
 (when (petmacs-treesit-available-p)
   (require 'init-treesit))
 
-(cond ((equal petmacs-lsp-client 'lsp-bridge-mode)
+(cond ((equal petmacs-lsp-mode-impl 'lsp-bridge-mode)
        (require 'init-lsp-bridge))
       (t
        (require 'init-corfu)

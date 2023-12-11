@@ -29,7 +29,7 @@
 (defvar petmacs-enable-ligatures t
   "enable ligatures")
 
-(defvar petmacs-quelpa-checkout-melpa t
+(defvar petmacs-quelpa-checkout-melpa nil
   "update melpa, disable it if the network is unstable.")
 
 (defvar  petmacs-day-night-themes
@@ -54,10 +54,16 @@
 (defvar petmacs-enable-display-line-numbers t
   "enable display-line-numbers mode")
 
-(defvar petmacs-lsp-client
+(defvar petmacs-lsp-mode-impl
   'lsp-mode
   ;; 'lsp-bridge-mode
   "lsp-mode / eglot-mode / lsp-bridge-mode")
+
+
+(defvar petmacs-dap-mode-impl
+  ;; 'dap-mode
+  'dape
+  "dap-mode / dape ")
 
 (defvar petmacs-lsp-active-modes '(
 				                   c-mode

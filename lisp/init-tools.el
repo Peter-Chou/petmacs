@@ -434,7 +434,7 @@
         symbols-outline-buffer-name "*Symbols-Outline*"
         symbols-outline-collapse-functions-on-startup t)
 
-  (when (member petmacs-lsp-client '(lsp-mode eglot-mode))
+  (when (member petmacs-lsp-mode-impl '(lsp-mode eglot-mode))
     (setq symbols-outline-fetch-fn #'symbols-outline-lsp-fetch))
   :config
   (evil-define-key 'normal symbols-outline-mode-map

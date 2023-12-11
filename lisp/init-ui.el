@@ -62,6 +62,22 @@
   :config
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
         doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
+  (with-no-warnings
+    (defun my-doom-themes-visual-bell-fn ()
+      "Blink the mode-line red briefly. Set `ring-bell-function' to this to use it."
+      (let ((buf (current-buffer))
+            (cookies (mapcar (lambda (face)
+                               (face-remap-add-relative face 'doom-themes-visual-bell))
+                             '(mode-line mode-line-active))))
+        (force-mode-line-update)
+        (run-with-timer 0.15 nil
+                        (lambda ()
+                          (with-current-buffer buf
+                            (mapc #'face-remap-remove-relative cookies)
+                            (force-mode-line-update))))))
+    (advice-add #'doom-themes-visual-bell-fn :override #'my-doom-themes-visual-bell-fn))
   (doom-themes-treemacs-config)
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config))
