@@ -116,7 +116,7 @@
     'evil-indent-plus-a-indent-up-down))
 
 (use-package evil-terminal-cursor-changer
-  :if (not (display-graphic-p))
+  ;; :if (not (display-graphic-p))
   :init (setq evil-visual-state-cursor 'box
               evil-insert-state-cursor 'bar
               evil-emacs-state-cursor 'hbar))
