@@ -68,6 +68,12 @@
   (define-key evil-visual-state-map (kbd "<") 'petmacs//evil-visual-shift-left)
   (define-key evil-visual-state-map (kbd ">") 'petmacs//evil-visual-shift-right))
 
+(use-package evil-args
+  :init
+  ;; bind evil-args text objects
+  (define-key evil-inner-text-objects-map "a" 'evil-inner-arg)
+  (define-key evil-outer-text-objects-map "a" 'evil-outer-arg))
+
 (use-package evil-anzu
   :after anzu)
 
@@ -96,13 +102,15 @@
     'evil-visualstar/begin-search-backward))
 
 (use-package evil-goggles
+  :init
+  (setq evil-goggles-pulse nil
+        evil-goggles-async-duration 0.1
+        evil-goggles-blocking-duration 0.05)
   :config
-  (evil-goggles-mode)
-  ;; optionally use diff-mode's faces; as a result, deleted text
-  ;; will be highlighed with `diff-removed` face which is typically
-  ;; some red color (as defined by the color theme)
-  ;; other faces such as `diff-added` will be used for other actions
-  (evil-goggles-use-diff-faces))
+  (if (or vim-style-visual-feedback
+          hybrid-style-visual-feedback)
+      (evil-goggles-mode)
+    (evil-goggles-mode -1)))
 
 (use-package evil-indent-plus
   :init
@@ -124,9 +132,21 @@
 (use-package evil-matchit
   :hook (after-init . global-evil-matchit-mode))
 
+(use-package evil-exchange
+  :init
+  (let ((evil-exchange-key (kbd "gx"))
+        (evil-exchange-cancel-key (kbd "gX")))
+    (define-key evil-normal-state-map evil-exchange-key 'evil-exchange)
+    (define-key evil-visual-state-map evil-exchange-key 'evil-exchange)
+    (define-key evil-normal-state-map evil-exchange-cancel-key
+      'evil-exchange-cancel)
+    (define-key evil-visual-state-map evil-exchange-cancel-key
+      'evil-exchange-cancel)))
+
 (use-package evil-collection
   :init
   (setq evil-collection-outline-bind-tab-p nil
+        evil-collection-want-unimpaired-p nil
         evil-collection-mode-list '(replace
                                     proced
                                     simple
@@ -157,7 +177,7 @@
   :config
   (defun petmacs/evil-collection-dired-setup ()
     (evil-define-key 'normal dired-mode-map (kbd "RET") 'dired-find-alternate-file)
-    (evil-define-key 'normal dired-mode-map (kbd "F") 'find-file)
+    (evil-define-key 'normal dired-mode-map (kbd "J") 'find-file)
     (evil-define-key 'normal dired-mode-map (kbd "C-+") 'find-file))
   (advice-add #'evil-collection-dired-setup :after #'petmacs/evil-collection-dired-setup))
 
@@ -168,7 +188,12 @@
 
 (use-package evil-textobj-line
   :init (require 'evil-textobj-line))
+
 (use-package evil-iedit-state
-  :init (require 'evil-iedit-state))
+  :init
+  (setq iedit-current-symbol-default t
+        iedit-only-at-symbol-boundaries t
+        iedit-toggle-key-default nil)
+  (require 'evil-iedit-state))
 
 (provide 'init-evil)
