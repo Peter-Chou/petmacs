@@ -173,6 +173,20 @@
                                     (when smerge-mode
                                       (smerge-mode-hydra/body))))))
 
+;; Show TODOs in magit
+(use-package magit-todos
+  :defines magit-todos-nice
+  :commands magit-todos--scan-with-git-grep
+  :init
+  (setq magit-todos-nice (if (executable-find "nice") t nil))
+  (setq magit-todos-scanner #'magit-todos--scan-with-git-grep)
+  (let ((inhibit-message t))
+    (magit-todos-mode 1))
+  :config
+  (with-eval-after-load 'magit-status
+    (transient-append-suffix 'magit-status-jump '(0 0 -1)
+      '("t " "Todos" magit-todos-jump-to-todos))))
+
 ;; Git related modes
 (use-package git-modes)
 

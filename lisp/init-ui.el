@@ -236,7 +236,7 @@
   :config
   (doom-modeline-def-modeline 'my-simple-line
     '(eldoc bar workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
-    '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl lsp input-method indent-info buffer-encoding process))
+    '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl lsp input-method indent-info buffer-encoding process checker))
 
   ;; Set default mode-line
   (add-hook 'doom-modeline-mode-hook
@@ -261,11 +261,11 @@
         :ensure nil
         :hook ((prog-mode yaml-mode conf-mode) . display-line-numbers-mode)
         :init
-        (setq-default display-line-numbers 'visual
-                      display-line-numbers-widen t
+        (setq-default display-line-numbers-widen t
+                      ;; display-line-numbers 'visual
                       ;; display-line-numbers-type 'relative
-                      display-line-numbers-current-absolute t)
-
+                      ;; display-line-numbers-current-absolute t
+                      )
         (defun petmacs/display-line-numbers-relative ()
           "Show relative line numbers."
           (setq-local display-line-numbers 'visual))

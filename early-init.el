@@ -11,15 +11,15 @@
 
 ;; use mirror
 (setq package-archives '(
-                         ("gnu"    . "https://elpa.gnu.org/packages/")
-                         ("melpa"  . "https://melpa.org/packages/")
-                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")
-                         ("org"    . "https://orgmode.org/elpa/")
+                         ;; ("gnu"    . "https://elpa.gnu.org/packages/")
+                         ;; ("melpa"  . "https://melpa.org/packages/")
+                         ;; ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+                         ;; ("org"    . "https://orgmode.org/elpa/")
 
-                         ;; ("gnu"    . "http://1.15.88.122/gnu/")
-                         ;; ("melpa"  . "http://1.15.88.122/melpa/")
-                         ;; ("nongnu" . "http://1.15.88.122/nongnu/")
-                         ;; ("org"    . "http://1.15.88.122/org/")
+                         ("gnu"    . "http://1.15.88.122/gnu/")
+                         ("melpa"  . "http://1.15.88.122/melpa/")
+                         ("nongnu" . "http://1.15.88.122/nongnu/")
+                         ("org"    . "http://1.15.88.122/org/")
                          ))
 
 (if (functionp 'json-serialize)
