@@ -100,8 +100,11 @@
   :hook (org-mode . evil-org-mode)
   :after org
   :config
-  (require 'evil-org-agenda)
-  (evil-org-agenda-set-keys))
+  (setq evil-org-use-additional-insert t
+        evil-org-key-theme `(textobjects
+                             navigation
+                             additional
+                             ,@(when org-want-todo-bindings '(todo)))))
 
 (use-package org-appear
   :preface
