@@ -135,7 +135,8 @@
   (leader-set-keys
     "b" #'consult-buffer
     "B" #'consult-buffer-other-window
-    "I" #'ibuffer
+    "i" #'ibuffer
+    "I" #'petmacs/imenu-list-smart-toggle
 	"d" #'kill-this-buffer
     "n" #'next-buffer
     "p" #'previous-buffer
@@ -148,7 +149,6 @@
 	"a" #'persp-add-buffer
     "r" #'persp-remove-buffer
     "j" #'ace-window
-    "i" #'petmacs/imenu-list-smart-toggle
     ))
 
 (leader-declare-prefix
