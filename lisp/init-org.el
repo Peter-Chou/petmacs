@@ -101,10 +101,10 @@
   :after org
   :config
   (setq evil-org-use-additional-insert t
-        evil-org-key-theme `(textobjects
+        evil-org-key-theme '(textobjects
                              navigation
                              additional
-                             ,@(when org-want-todo-bindings '(todo)))))
+                             todo)))
 
 (use-package org-appear
   :preface

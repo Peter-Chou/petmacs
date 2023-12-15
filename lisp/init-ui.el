@@ -58,6 +58,12 @@
 (use-package srcery-theme)
 (use-package standard-themes)
 
+(use-package spacemacs-theme
+  :init
+  (setq spacemacs-theme-comment-bg nil
+        ;; spacemacs-theme-underline-parens nil
+        spacemacs-theme-custom-colors `((mat . ,petmacs-favor-color))))
+
 (use-package doom-themes
   :config
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
@@ -132,7 +138,7 @@
   :init
   (setq awesome-tray-separator " ┃ "
         awesome-tray-hide-mode-line nil
-        awesome-tray-info-padding-right 2
+        ;; awesome-tray-info-padding-right 1
         awesome-tray-update-interval 0.5
         awesome-tray-belong-update-duration 2.5
         awesome-tray-date-format "%m-%d %H:%M %a"
