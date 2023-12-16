@@ -117,5 +117,4 @@
   (setq org-appear-trigger 'manual)
   (add-hook 'org-mode-hook 'org-apperance-evil-hack))
 
-
 (provide 'init-org)

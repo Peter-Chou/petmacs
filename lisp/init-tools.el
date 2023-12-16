@@ -33,11 +33,21 @@
   :ensure nil
   :init (require 'posframe-plus))
 
+;; F5 for paging which-key
 (use-package which-key
   :diminish
   :hook (after-init . which-key-mode)
   :init
   (setq which-key-idle-delay 0.2
+        which-key-add-column-padding 1
+        which-key-allow-multiple-replacements t
+        which-key-echo-keystrokes 0.02
+        which-key-idle-secondary-delay 0.01
+        which-key-max-display-columns nil
+        which-key-sort-order 'which-key-prefix-then-key-order
+        which-key-sort-uppercase-first nil
+        which-key-special-keys nil
+        which-key-allow-evil-operators t
         which-key-separator " "
         which-key-prefix-prefix " "
         which-key-lighter nil
@@ -313,20 +323,30 @@
   (define-key protobuf-mode-map (kbd "RET") 'av/auto-indent-method-maybe))
 
 (use-package writeroom-mode
+  :pretty-hydra
+  ((:title (pretty-hydra-title "writeroom Management")
+    :foreign-keys warn :quit-key ("q" "C-g"))
+   ("Actions"
+    (("m" writeroom-toggle-mode-line "modeline")
+     ("[" writeroom-decrease-width   "shrink")
+     ("]" writeroom-increase-width   "enlarge")
+     ("=" writeroom-adjust-width     "adjust width" :exit t))))
   ;; :hook ((prog-mode yaml-mode markdown-mode org-mode) . writeroom-mode)
   :init (setq writeroom-mode-line t
               writeroom-maximize-window nil
               writeroom-fullscreen-effect 'maximized
               writeroom-width 90)
-  :config
-  (with-eval-after-load 'writeroom-mode
-    (define-key writeroom-mode-map (kbd "C-M-<") #'writeroom-decrease-width)
-    (define-key writeroom-mode-map (kbd "C-M->") #'writeroom-increase-width)
-    (define-key writeroom-mode-map (kbd "C-M-=") #'writeroom-adjust-width)))
+  (require 'writeroom-mode)
+  ;; :config
+  ;; (with-eval-after-load 'writeroom-mode
+  ;;   (define-key writeroom-mode-map (kbd "C-M-<") #'writeroom-decrease-width)
+  ;;   (define-key writeroom-mode-map (kbd "C-M->") #'writeroom-increase-width)
+  ;;   (define-key writeroom-mode-map (kbd "C-M-=") #'writeroom-adjust-width))
+  )
 
-(use-package editorconfig
-  :diminish
-  :hook (after-init . editorconfig-mode))
+   (use-package editorconfig
+     :diminish
+     :hook (after-init . editorconfig-mode))
 
 ;; Search tool
 (use-package grep

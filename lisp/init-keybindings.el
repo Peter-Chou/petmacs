@@ -45,6 +45,14 @@
     "."  #'ts-fold-hydra/body
     ))
 
+
+(leader-declare-prefix
+  "s" "symbol")
+(leader-with-prefix "s"
+  (leader-set-keys
+    "o"  #'symbol-overlay-hydra/body
+    "O"  #'symbol-overlay-remove-all))
+
 (leader-declare-prefix
   "a" "apps"
   "ao" "org"
@@ -120,7 +128,10 @@
     "yy" #'petmacs/copy-file-path
     "yY" #'petmacs/projectile-copy-file-path
 	"yd" #'petmacs/copy-directory-path
+    "yD" #'petmacs/projectile-copy-directory-path
     "yn" #'petmacs/copy-file-name
+    "yN" #'petmacs/copy-file-name-base
+    "yb" #'petmacs/copy-buffer-name
 
     ;; "fv" prefix
     "vd" #'add-dir-local-variable
@@ -188,18 +199,21 @@
     ))
 
 (leader-declare-prefix
-  "w" "window")
+  "w" "window"
+  "wc" "writeroom")
 (leader-with-prefix "w"
   (leader-set-keys
     "."  #'ace-window-hydra/body
     "j" #'ace-window
-    "c"  #'writeroom-mode
     "r"  #'winner-undo
     "d"  #'delete-window
     "D"  #'ace-delete-window
     "t" #'popper-toggle-type
     "p" #'popper-cycle
 
+    ;; "wc"
+    "cc"  #'writeroom-mode
+    "c." #'writeroom-mode-hydra/body
     ;; "wp" prefix
     ))
 
@@ -288,13 +302,12 @@
 (leader-with-prefix "j"
   (leader-set-keys
     "i" #'consult-imenu
-    "w" #'avy-goto-word-or-subword-1
+    "w" 'evil-avy-goto-word-or-subword-1
     "D" #'dired-jump-other-window
     "c" #'goto-last-change
-    "d" #'deer
-    "j" #'avy-goto-char
-    "J" #'avy-goto-char-2
-    "l" #'avy-goto-line
+    "j" #'evil-avy-goto-char-timer
+    "J" #'evil-avy-goto-char-2
+    "l" 'evil-avy-goto-line
     ;; "t" #'magit-todos-list
     "t" #'hl-todo-rg-project
     "y" #'consult-yank-pop
@@ -327,9 +340,26 @@
   "p" "project")
 (leader-with-prefix "p"
   (leader-set-keys
-    ;; "'"  #'petmacs/projectile-pop-eshell
+    "!" 'projectile-run-shell-command-in-root
     "."  #'consult-project-extra-find
     ;; "'"  #'petmacs/projectile-shell-pop
+    "&" 'projectile-run-async-shell-command-in-root
+    "%" 'projectile-replace-regexp
+    "a" 'projectile-toggle-between-implementation-and-test
+    "u" 'projectile-run-project
+    "D" 'projectile-dired
+    "e" 'projectile-edit-dir-locals
+    "F" 'projectile-find-file-dwim
+    "E" 'projectile-find-references
+    "g" 'projectile-find-tag
+    "G" 'projectile-regenerate-tags
+    "i" 'projectile-install-project
+    "I" 'projectile-invalidate-cache
+    "k" 'projectile-kill-buffers
+    "R" 'projectile-replace
+    "T" 'projectile-test-project
+    "v" 'projectile-vc
+
     "'"  #'multi-vterm-project
     "t"  #'petmacs/treemacs-project-toggle
     "b"  #'consult-projectile-switch-to-buffer
@@ -340,7 +370,6 @@
     "r"  #'consult-projectile-recentf
     "o"  #'org-projectile/goto-project-todos
     "c"  #'org-projectile-project-todo-completing-read
-    "v"  #'projectile-vc
     ))
 
 (leader-declare-prefix

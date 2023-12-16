@@ -172,67 +172,6 @@ initialized with the current filename."
   (interactive)
   (call-interactively 'write-file))
 
-(defun petmacs--projectile-file-path ()
-  "Retrieve the file path relative to project root.
-Returns:
-  - A string containing the file path in case of success.
-  - `nil' in case the current buffer does not visit a file."
-  (when-let (file-name (buffer-file-name))
-    (file-relative-name (file-truename file-name) (projectile-project-root))))
-
-
-(defun petmacs--directory-path ()
-  "Retrieve the directory path of the current buffer.
-If the buffer is not visiting a file, use the `list-buffers-directory' variable
-as a fallback to display the directory, useful in buffers like the ones created
-by `magit' and `dired'.
-Returns:
-  - A string containing the directory path in case of success.
-  - `nil' in case the current buffer does not have a directory."
-  (when-let (directory-name (if-let (file-name (buffer-file-name))
-                                (file-name-directory file-name)
-                              list-buffers-directory))
-    (file-truename directory-name)))
-
-(defun petmacs--file-path ()
-  "Retrieve the file path of the current buffer.
-Returns:
-  - A string containing the file path in case of success.
-  - `nil' in case the current buffer does not have a directory."
-  (when-let (file-path (buffer-file-name))
-    (file-truename file-path)))
-
-(defun petmacs/copy-file-path ()
-  "Copy and show the file path of the current buffer."
-  (interactive)
-  (if-let (file-path (petmacs--file-path))
-      (message "%s" (kill-new file-path))
-    (message "WARNING: Current buffer is not attached to a file!")))
-
-(defun petmacs/projectile-copy-file-path ()
-  "Copy and show the file path relative to project root."
-  (interactive)
-  (if-let (file-path (petmacs--projectile-file-path))
-      (message "%s" (kill-new file-path))
-    (message "WARNING: Current buffer is not visiting a file!")))
-
-(defun petmacs/copy-directory-path ()
-  "Copy and show the directory path of the current buffer.
-If the buffer is not visiting a file, use the `list-buffers-directory'
-variable as a fallback to display the directory, useful in buffers like the
-ones created by `magit' and `dired'."
-  (interactive)
-  (if-let (directory-path (petmacs--directory-path))
-      (message "%s" (kill-new directory-path))
-    (message "WARNING: Current buffer does not have a directory!")))
-
-(defun petmacs/copy-file-name ()
-  "Copy and show the file name of the current buffer."
-  (interactive)
-  (if-let (file-name (file-name-nondirectory (petmacs--file-path)))
-      (message "%s" (kill-new file-name))
-    (message "WARNING: Current buffer is not attached to a file!")))
-
 (defun petmacs//vterm-other-window ()
   "Open a `shell' in a new window."
   (interactive)
@@ -319,5 +258,159 @@ If the error list is visible, hide it.  Otherwise, show it."
       (call-process "tsc" nil nil nil file-name))
     (message "Running %s..." js-file-name)
     (async-shell-command (concat "node " js-file-name))))
+
+(defun petmacs--projectile-file-path ()
+  "Retrieve the file path relative to project root.
+
+Returns:
+  - A string containing the file path in case of success.
+  - `nil' in case the current buffer does not visit a file."
+  (when-let (file-name (buffer-file-name))
+    (file-relative-name (file-truename file-name) (projectile-project-root))))
+
+(defun petmacs--projectile-file-path-with-line ()
+  "Retrieve the file path relative to project root, including line number.
+
+Returns:
+  - A string containing the file path in case of success.
+  - `nil' in case the current buffer does not visit a file."
+  (when-let (file-path (petmacs--projectile-file-path))
+    (concat file-path ":" (number-to-string (line-number-at-pos)))))
+
+
+(defun petmacs--projectile-file-path-with-line-column ()
+  "Retrieve the file path relative to project root, including line and column number.
+
+This function respects the the `column-number-indicator-zero-based' value.
+
+Returns:
+  - A string containing the file path in case of success.
+  - `nil' in case the current buffer does not visit a file."
+  (when-let (file-path (petmacs--projectile-file-path-with-line))
+    (format "%s:%s" file-path
+            (+ (current-column) (if column-number-indicator-zero-based 0 1)))))
+
+(defun petmacs/projectile-copy-file-path-with-line-column ()
+  "Copy and show the file path relative to project root, including line and column number.
+
+This function respects the value of the `column-number-indicator-zero-based'
+variable."
+  (interactive)
+  (if-let (file-path (petmacs--projectile-file-path-with-line-column))
+      (progn
+        (kill-new file-path)
+        (message "%s" file-path))
+    (message "WARNING: Current buffer is not visiting a file!")))
+
+(defun petmacs--projectile-directory-path ()
+  "Retrieve the directory path relative to project root.
+
+If the buffer is not visiting a file, use the `list-buffers-directory'
+variable as a fallback to display the directory, useful in buffers like the
+ones created by `magit' and `dired'.
+
+Returns:
+  - A string containing the directory path in case of success.
+  - `nil' in case the current buffer does not have a directory."
+  (when-let (directory-name (if-let (file-name (buffer-file-name))
+                                (file-name-directory file-name)
+                              list-buffers-directory))
+    (file-relative-name
+     (file-truename directory-name)
+     (projectile-project-root))))
+
+(defun petmacs/projectile-copy-directory-path ()
+  "Copy and show the directory path relative to project root.
+
+If the buffer is not visiting a file, use the `list-buffers-directory'
+variable as a fallback to display the directory, useful in buffers like the
+ones created by `magit' and `dired'."
+  (interactive)
+  (if-let (directory-path (petmacs--projectile-directory-path))
+      (progn
+        (kill-new directory-path)
+        (message "%s" directory-path))
+    (message "WARNING: Current buffer does not have a directory!")))
+
+(defun petmacs/projectile-copy-file-path ()
+  "Copy and show the file path relative to project root."
+  (interactive)
+  (if-let (file-path (petmacs--projectile-file-path))
+      (progn
+        (kill-new file-path)
+        (message "%s" file-path))
+    (message "WARNING: Current buffer is not visiting a file!")))
+
+(defun petmacs--file-path ()
+  "Retrieve the file path of the current buffer.
+
+Returns:
+  - A string containing the file path in case of success.
+  - `nil' in case the current buffer does not have a directory."
+  (when-let (file-path (buffer-file-name))
+    (file-truename file-path)))
+
+(defun petmacs/copy-file-path ()
+  "Copy and show the file path of the current buffer."
+  (interactive)
+  (if-let (file-path (petmacs--file-path))
+      (progn
+        (kill-new file-path)
+        (message "%s" file-path))
+    (message "WARNING: Current buffer is not attached to a file!")))
+
+(defun petmacs--directory-path ()
+  "Retrieve the directory path of the current buffer.
+
+If the buffer is not visiting a file, use the `list-buffers-directory' variable
+as a fallback to display the directory, useful in buffers like the ones created
+by `magit' and `dired'.
+
+Returns:
+  - A string containing the directory path in case of success.
+  - `nil' in case the current buffer does not have a directory."
+  (when-let (directory-name (if-let (file-name (buffer-file-name))
+                                (file-name-directory file-name)
+                              list-buffers-directory))
+    (file-truename directory-name)))
+
+(defun petmacs/copy-directory-path ()
+  "Copy and show the directory path of the current buffer.
+
+If the buffer is not visiting a file, use the `list-buffers-directory'
+variable as a fallback to display the directory, useful in buffers like the
+ones created by `magit' and `dired'."
+  (interactive)
+  (if-let (directory-path (petmacs--directory-path))
+      (progn
+        (kill-new directory-path)
+        (message "%s" directory-path))
+    (message "WARNING: Current buffer does not have a directory!")))
+
+(defun petmacs/copy-file-name ()
+  "Copy and show the file name of the current buffer."
+  (interactive)
+  (if-let* ((file-path (petmacs--file-path))
+            (file-name (file-name-nondirectory file-path)))
+      (progn
+        (kill-new file-name)
+        (message "%s" file-name))
+    (message "WARNING: Current buffer is not attached to a file!")))
+
+(defun petmacs/copy-file-name-base ()
+  "Copy and show the file name without its final extension of the current
+buffer."
+  (interactive)
+  (if-let (file-name (file-name-base (petmacs--file-path)))
+      (progn
+        (kill-new file-name)
+        (message "%s" file-name))
+    (message "WARNING: Current buffer is not attached to a file!")))
+
+(defun petmacs/copy-buffer-name ()
+  "Copy and show the name of the current buffer."
+  (interactive)
+  (kill-new (buffer-name))
+  (message "%s" (buffer-name)))
 
 (provide 'core-funcs)
