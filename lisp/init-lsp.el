@@ -60,6 +60,7 @@
          (lsp-mode . petmacs/lsp-double-gc-threshold))
   :init
   (setq lsp-auto-guess-root nil
+        lsp-imenu-index-function #'lsp-imenu-create-categorized-index
         ;; lsp-keymap-prefix "C-c l"
         ;; lsp-diagnostics-provider :none ;; flymake or ;; :none
         ;; lsp-diagnostics-provider :flymake ;; flymake or ;; :none

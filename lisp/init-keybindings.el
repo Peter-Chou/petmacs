@@ -134,6 +134,7 @@
     "t"  #'treemacs
     "T"  #'treemacs-find-file
     "B"  #'treemacs-bookmark
+    "M-t" #'treemacs-find-tag  ;; Focus tag in file tree
     "L"  #'consult-locate
     "r"  #'consult-recent-file
     "R"  #'petmacs/rename-current-buffer-file
@@ -641,7 +642,7 @@
        (dolist (mode '(c-mode c++-mode cmake-mode java-mode python-mode ruby-mode lua-mode rust-mode rustic-mode erlang-mode elixir-mode go-mode haskell-mode haskell-literate-mode dart-mode scala-mode typescript-mode typescript-tsx-mode js2-mode js-mode rjsx-mode tuareg-mode latex-mode Tex-latex-mode texmode context-mode texinfo-mode bibtex-mode clojure-mode clojurec-mode clojurescript-mode clojurex-mode sh-mode web-mode css-mode elm-mode emacs-lisp-mode ielm-mode lisp-interaction-mode org-mode php-mode yaml-mode zig-mode groovy-mode dockerfile-mode d-mode f90-mode fortran-mode nix-mode ess-r-mode verilog-mode))
          (leader-declare-prefix-for-major-mode mode
            "=" "format"
-           "a" "code actions"
+           "a" "actions"
            "g" "goto"
            "G" "goto (other window)"
            "p" "peek"
@@ -683,10 +684,11 @@
        (dolist (mode petmacs-lsp-active-modes)
          (leader-declare-prefix-for-major-mode mode
            "=" "format"
-           "a" "code actions"
+           "a" "actions"
            "g" "goto"
            "G" "goto (other window)"
            "p" "peek"
+           "pR" "peek reference"
            "b" "backends"
            "T" "toggle module"
            "r" "refactor"

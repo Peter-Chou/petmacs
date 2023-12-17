@@ -2,7 +2,12 @@
 
 ;; A tree layout file explorer
 (use-package treemacs
-  :commands (treemacs-follow-mode
+  :commands (
+             treemacs-select-window
+             treemacs-select-scope-type
+             treemacs--window-number-ten
+             treemacs-current-visibility
+             treemacs-follow-mode
              treemacs-filewatch-mode
              treemacs-git-mode)
   :custom-face
@@ -17,6 +22,10 @@
         treemacs-no-png-images           (not petmacs-icon)
         treemacs-width                   25)
   :config
+  (with-eval-after-load 'golden-ratio
+    (add-to-list 'golden-ratio-exclude-buffer-regexp
+                 (rx "*Treemacs" (0+ any))))
+
   (treemacs-follow-mode t)
   (treemacs-filewatch-mode t)
   (pcase (cons (not (null (executable-find "git")))

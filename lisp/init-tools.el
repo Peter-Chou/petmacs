@@ -498,6 +498,11 @@
 ;; Visual `align-regexp'
 (use-package ialign)
 
+(use-package golden-ratio)
+
+;; elastic search
+(use-package es-mode
+  :mode ("\\.es\\'" . es-mode))
 
 (use-package smart-semicolon
   :hook (((c-mode-common java-ts-mode) . smart-semicolon-mode)))
