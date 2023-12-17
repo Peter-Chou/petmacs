@@ -13,7 +13,7 @@
   (make-directory (expand-file-name "data/gtd" user-emacs-directory) t)
   :config
   (setq org-modules nil                 ; Faster loading
-        org-directory (expand-file-name "data/gtd" user-emacs-directory)
+
 
         org-todo-keywords
         '((sequence "TODO(t)" "DOING(i)" "HANGUP(h)" "|" "DONE(d)" "CANCEL(c)")
@@ -42,15 +42,20 @@
         org-pretty-entities nil
         org-hide-emphasis-markers t))
 
-(use-package org-modern
-  :hook ((org-mode . org-modern-mode)
-         (org-agenda-finalize . org-modern-agenda)
-         (org-modern-mode . (lambda ()
-                              "Adapt `org-modern-mode'."
-                              ;; Disable Prettify Symbols mode
-                              (setq prettify-symbols-alist nil)
-                              (prettify-symbols-mode -1))))
-  :init (setq org-modern-star t))
+;; Add md/gfm backends
+(add-to-list 'org-export-backends 'md)
+(use-package ox-gfm
+  :init (add-to-list 'org-export-backends 'gfm))
+
+;; (use-package org-modern
+;;   :hook ((org-mode . org-modern-mode)
+;;          (org-agenda-finalize . org-modern-agenda)
+;;          (org-modern-mode . (lambda ()
+;;                               "Adapt `org-modern-mode'."
+;;                               ;; Disable Prettify Symbols mode
+;;                               (setq prettify-symbols-alist nil)
+;;                               (prettify-symbols-mode -1))))
+;;   :init (setq org-modern-star t))
 
 (use-package org-superstar
   :if (and (display-graphic-p) (char-displayable-p ?◉))
@@ -116,5 +121,41 @@
   :init
   (setq org-appear-trigger 'manual)
   (add-hook 'org-mode-hook 'org-apperance-evil-hack))
+
+;; Babel
+(setq org-confirm-babel-evaluate nil
+      org-src-fontify-natively t
+      org-src-tab-acts-natively t)
+
+(defconst load-language-alist
+  '((emacs-lisp . t)
+    (perl       . t)
+    (python     . t)
+    (ruby       . t)
+    (js         . t)
+    (css        . t)
+    (sass       . t)
+    (C          . t)
+    (java       . t)
+    (shell      . t)
+    (elasticsearch . t)
+    (plantuml   . t))
+  "Alist of org ob languages.")
+
+(use-package ob-go
+  :init (cl-pushnew '(go . t) load-language-alist))
+
+(use-package ob-powershell
+  :init (cl-pushnew '(powershell . t) load-language-alist))
+
+(use-package ob-rust
+  :init (cl-pushnew '(rust . t) load-language-alist))
+
+;; Install: npm install -g @mermaid-js/mermaid-cli
+(use-package ob-mermaid
+  :init (cl-pushnew '(mermaid . t) load-language-alist))
+
+(org-babel-do-load-languages 'org-babel-load-languages
+                             load-language-alist)
 
 (provide 'init-org)

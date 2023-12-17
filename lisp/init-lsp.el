@@ -450,4 +450,46 @@
   :after focus
   :hook (focus-mode . lsp-focus-mode))
 
+(when petmacs-lsp-mode-impl
+  ;; Enable LSP in org babel
+  ;; https://github.com/emacs-lsp/lsp-mode/issues/377
+  (cl-defmacro lsp-org-babel-enable (lang)
+    "Support LANG in org source code block."
+    (cl-check-type lang string)
+    (let* ((edit-pre (intern (format "org-babel-edit-prep:%s" lang)))
+           (intern-pre (intern (format "lsp--%s" (symbol-name edit-pre)))))
+      `(progn
+         (defun ,intern-pre (info)
+           (setq buffer-file-name (or (->> info caddr (alist-get :file))
+                                      "org-src-babel.tmp"))
+           (pcase petmacs-lsp-mode-impl
+             ('eglot
+              (when (fboundp 'eglot-ensure)
+                (eglot-ensure)))
+             ('lsp-mode
+              (when (fboundp 'lsp-deferred)
+                ;; Avoid headerline conflicts
+                (setq-local lsp-headerline-breadcrumb-enable nil)
+                (lsp-deferred)))
+             (_
+              (user-error "LSP:: invalid `petmacs-lsp-mode-impl' type"))))
+         (put ',intern-pre 'function-documentation
+              (format "Enable `%s' in the buffer of org source block (%s)."
+                      petmacs-lsp-mode-impl (upcase ,lang)))
+
+         (if (fboundp ',edit-pre)
+             (advice-add ',edit-pre :after ',intern-pre)
+           (progn
+             (defun ,edit-pre (info)
+               (,intern-pre info))
+             (put ',edit-pre 'function-documentation
+                  (format "Prepare local buffer environment for org source block (%s)."
+                          (upcase ,lang))))))))
+
+  (defconst org-babel-lang-list
+    '("go" "python" "ipython" "ruby" "js" "css" "sass" "c" "rust" "java" "cpp" "c++" "shell")
+    "The supported programming languages for interactive Babel.")
+  (dolist (lang org-babel-lang-list)
+    (eval `(lsp-org-babel-enable ,lang))))
+
 (provide 'init-lsp)
