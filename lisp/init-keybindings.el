@@ -4,6 +4,21 @@
 (require 'init-funcs)
 (require 'core-funcs)
 
+;; Make <escape> quit as much as possible
+(define-key minibuffer-local-map (kbd "<escape>") 'keyboard-escape-quit)
+(define-key minibuffer-local-ns-map (kbd "<escape>") 'keyboard-escape-quit)
+(define-key minibuffer-local-completion-map (kbd "<escape>") 'keyboard-escape-quit)
+(define-key minibuffer-local-must-match-map (kbd "<escape>") 'keyboard-escape-quit)
+(define-key minibuffer-local-isearch-map (kbd "<escape>") 'keyboard-escape-quit)
+
+(define-key minibuffer-local-map (kbd "C-n") 'next-line-or-history-element)
+(define-key minibuffer-local-map (kbd "C-p") 'previous-line-or-history-element)
+(define-key minibuffer-local-map (kbd "M-n") 'next-line-or-history-element)
+(define-key minibuffer-local-map (kbd "M-p") 'previous-line-or-history-element)
+
+(define-key evil-normal-state-map (kbd "C-w o") #'petmacs/toggle-maximize-buffer)
+(define-key evil-motion-state-map (kbd "C-w o") #'petmacs/toggle-maximize-buffer)
+
 (when sys/wslp
   ;; windows端将left windows 键 -> Application 键
   (global-set-key (kbd "<menu>") nil)
@@ -47,7 +62,7 @@
 
 
 (leader-declare-prefix
-  "s" "symbol")
+  "s" "search/symbol")
 (leader-with-prefix "s"
   (leader-set-keys
     "o"  #'symbol-overlay-hydra/body
@@ -98,13 +113,21 @@
 
 (leader-declare-prefix
   "f" "files"
-  "fy" "copy"
+  "fy" "Yank/copy"
   "fv" "variable"
   "fe" "emacs conf"
   "fC" "unix <-> dos")
 (leader-with-prefix "f"
   (leader-set-keys
+    "A" #'find-alternate-file
     "f" #'find-file
+    "c" #'petmacs/save-as
+    ;; "c"  #'petmacs/copy-file
+    "d"  #'petmacs/delete-this-file
+    "D"  #'petmacs/delete-current-buffer-file
+    "E"  #'petmacs/sudo-edit
+    "i"  #'insert-file
+    "l"  #'find-file-literally
 	"w"  #'find-file-other-window
     "F"  #'find-file-other-frame
     "j"  #'dired-jump
@@ -116,8 +139,6 @@
     "R"  #'petmacs/rename-current-buffer-file
 	"s"  #'save-buffer
     "S"  #'evil-write-all
-    "d"  #'petmacs/delete-this-file
-    "c"  #'petmacs/copy-file
     "b"  #'consult-bookmark
     "B"  #'treemacs-bookmark
 
@@ -139,26 +160,64 @@
     "vp" #'add-file-local-variable-prop-line
 
 	;; "fC" prefix
-    "Cu" #'dos2unix
-    "Cd" #'unix2dos
+
+    "Cd" #'petmacs/unix2dos
     "Cr" #'save-buffer-gbk-as-utf8
 
 	;; "fe" prefix
     "es" #'petmacs/goto-org-global-schedules
     "et" #'petmacs/goto-org-global-todos
     "ed" #'petmacs/find-dotfile
+    "eD" #'petmacs/find-user-early-init-file
     "er" #'petmacs/reload-init-file
     ))
 
+
 (leader-declare-prefix
-  "b" "buffer")
+  "h" "help")
+(leader-with-prefix "h"
+  (leader-set-keys
+    "b" #'describe-bindings
+    "c" #'describe-char
+    "f" #'describe-function
+    "k" #'describe-key
+    "K" #'describe-keymap
+    "p" #'describe-package
+    "t" #'describe-text-properties
+    "T" #'describe-theme
+    "v" #'describe-variable))
+
+(leader-declare-prefix
+  "b" "buffer"
+  "bN" "new buffer")
 (leader-with-prefix "b"
   (leader-set-keys
+    "1" #'buffer-to-window-1
+    "2" #'buffer-to-window-2
+    "3" #'buffer-to-window-3
+    "4" #'buffer-to-window-4
+    "5" #'buffer-to-window-5
+    "6" #'buffer-to-window-6
+    "7" #'buffer-to-window-7
+    "8" #'buffer-to-window-8
+    "9" #'buffer-to-window-9
+    "C-d" #'petmacs/kill-other-buffers
+    "d" #'petmacs/kill-this-buffer
+	;; "d" #'kill-this-buffer
+
+    ;; new buffer
+    "Nf" #'petmacs/new-empty-buffer-new-frame
+    "Nh" #'petmacs/new-empty-buffer-left
+    "Nj" #'petmacs/new-empty-buffer-below
+    "Nk" #'petmacs/new-empty-buffer-above
+    "Nl" #'petmacs/new-empty-buffer-right
+    "Nn" #'petmacs/new-empty-buffer
+
     "b" #'consult-buffer
     "B" #'consult-buffer-other-window
     "i" #'ibuffer
     "I" #'petmacs/imenu-list-smart-toggle
-	"d" #'kill-this-buffer
+    "w" #'read-only-mode
     "n" #'next-buffer
     "p" #'previous-buffer
     "R" #'petmacs/revert-this-buffer
@@ -204,12 +263,37 @@
 (leader-with-prefix "w"
   (leader-set-keys
     "."  #'ace-window-hydra/body
-    "j" #'ace-window
+    "j"  #'ace-window
     "r"  #'winner-undo
-    "d"  #'delete-window
+    "b"  #'petmacs/switch-to-minibuffer-window
+    "d"  #'petmacs/delete-window
     "D"  #'ace-delete-window
-    "t" #'popper-toggle-type
-    "p" #'popper-cycle
+    "t"  #'popper-toggle-type
+    "p"  #'popper-cycle
+    "F"  #'make-frame
+
+    "o"  #'other-frame
+    "h"  #'evil-window-left
+    "H"  #'evil-window-move-far-left
+    "j"  #'evil-window-down
+    "J"  #'evil-window-move-very-bottom
+    "k"  #'evil-window-up
+    "l"  #'evil-window-right
+    "K"  #'evil-window-move-very-top
+    "l"  #'evil-window-right
+    "L"  #'evil-window-move-far-right
+    "m"  #'petmacs/toggle-maximize-buffer
+
+    "v"  #'split-window-right
+    "V"  #'split-window-right-and-focus
+    "w"  #'other-window
+    "x"  #'kill-buffer-and-window
+    "/"  #'split-window-right
+    "U"  #'winner-redo
+    "u"  #'winner-undo
+    "-"  #'split-window-below
+    "s"  #'split-window-below
+    "S"  #'split-window-below-and-focus
 
     ;; "wc"
     "cc"  #'writeroom-mode
@@ -229,21 +313,25 @@
     ))
 
 (leader-declare-prefix
-  "t" "toggle"
-  "tt" "theme")
+  "t" "toggles"
+  "tt" "theme"
+  "tp" "proxy"
+  )
 (leader-with-prefix "t"
   (leader-set-keys
     "-" #'centered-cursor-mode
     "'" #'petmacs/open-gnome-terminal
-    "s" #'flymake-mode
+    ;; "s" #'flymake-mode
+    "s" #'flycheck-mode
     "l" #'display-fill-column-indicator-mode
     "n" #'display-line-numbers-mode
     "f" #'focus-mode
     "F" #'toggle-frame-fullscreen
     "x" #'read-only-mode
-    "m" #'minimap-mode
     "M" #'maximize-window
     "c" #'prettify-symbols-mode
+
+    "h" #'global-hl-line-mode
 
     "z" #'writeroom-mode
 
@@ -251,7 +339,7 @@
     "ts" #'petmacs/consult-theme
 
     ;; "tp" prefix
-    "p" #'proxy-http-toggle
+    "pp" #'proxy-http-toggle
     ))
 
 (leader-declare-prefix
@@ -334,6 +422,58 @@
     "v" #'flycheck-verify-setup
     "y" #'flycheck-copy-errors-as-kill
     "x" #'flycheck-explain-error-at-point
+    ))
+
+
+(leader-declare-prefix
+  "D" "Diff/Compare"
+  "Db" "Buffers"
+  "Dd" "Directories"
+  "Df" "files"
+  "Dm" "merge"
+  "Dr" "region"
+  "Dw" "window"
+  "Dmb" "merge buffers"
+  "Dmd" "merge directories"
+  "Dmf" "merge files"
+  "Dmr" "merge revisions"
+  )
+(leader-with-prefix "D"
+  (leader-set-keys
+    "s" #'ediff-show-registry ;; "Show registry"
+    "h" #'ediff-documentation ;; "Documentation"
+    ;; "b"  "Buffers"
+    "b3" #'ediff-buffers3   ;; "Between 3 buffers..."
+    "bb" #'ediff-buffers    ;; "Between 2 buffers..."
+    "bB" #'ediff-backup     ;; With backup file...
+    "bp" #'ediff-patch-buffer ;; "With a patch..."
+    ;; "d" "Directories"
+    "d3" #'ediff-directories3 ;;  "Between 3 directories..."
+    "dd" #'ediff-directories ;; "Between 2 directories..."
+    "dr" #'ediff-directory-revisions ;; "Using SCM revisions..."
+    ;; "f" "Files"
+    "f3" #'ediff-files3 ;; "Between 3 files..."
+    "ff" #'ediff-files  ;; "Between 2 files..."
+    "fp" #'ediff-patch-file ;; "With a patch..."
+    "fv" #'ediff-revision ;; "Between file revisions..."
+    ;; "mb" "Merge Buffers"
+    "mb3" #'ediff-merge-buffers-with-ancestor ;; "3-way merge..."
+    "mbb" #'ediff-merge-buffers ;; "2-way merge..."
+    ;; "md" "merge Directories"
+    "md3" #'ediff-merge-directories-with-ancestor ;; "3-way merge..."
+    "mdd" #'ediff-merge-directories ;; "2-way merge..."
+    ;; "mf" "merge Files"
+    "mf3" #'ediff-merge-files-with-ancestor ;;"3-way merge..."
+    "mff" #'ediff-merge-files ;; "2-way merge..."
+    ;; "mr" "merge Revisions"
+    "mr3" #'ediff-merge-revisions-with-ancestor ;; "3-way merge..."
+    "mrr" #'ediff-merge-revisions ;; "2-way merge..."
+    ;; "r" "Regions"
+    "rl" #'ediff-regions-linewise ;; "Between 2 regions (linewise)..."
+    "rw" #'ediff-regions-wordwise ;; "Between 2 regions (wordwise)..."
+    ;; "w" "Windows"
+    "wl" #'ediff-windows-linewise ;;"Linewise between visible text..."
+    "ww" #'ediff-windows-wordwise ;; "Wordwise between visible text..."
     ))
 
 (leader-declare-prefix

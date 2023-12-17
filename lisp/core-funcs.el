@@ -3,6 +3,237 @@
 (require 'init-const)
 (require 'init-custom)
 
+(defun petmacs/toggle-maximize-buffer ()
+  "Maximize buffer"
+  (interactive)
+  (save-excursion
+    (if (and (= 1 (length (window-list)))
+             (assoc ?_ register-alist))
+        (jump-to-register ?_)
+      (progn
+        (window-configuration-to-register ?_)
+        (delete-other-windows)))))
+
+(defun petmacs/split-window-vertically-and-switch ()
+  (interactive)
+  (split-window-vertically)
+  (other-window 1))
+
+(defun petmacs/split-window-horizontally-and-switch ()
+  (interactive)
+  (split-window-horizontally)
+  (other-window 1))
+
+(defun petmacs//confirm-kill-buffer ()
+  "Prompt the user to save a buffer to a file before killing it.
+This skips the following buffers:
+- A buffer with non-nil value of variable `buffer-file-name'.
+  Or in other words, a buffer who has a file associated with.
+  Emacs by default prompts the user to save it if it's modified.
+- A buffer derived from `special-mode'."
+  (when (and (not buffer-file-name)
+             (buffer-modified-p)
+             (not (derived-mode-p 'special-mode))
+             (not (yes-or-no-p (format "Buffer %S modified; kill anyway? " (buffer-name)))))
+    (save-buffer)))
+
+(defun petmacs/new-empty-buffer (&optional split)
+  "Create a new buffer called: \"untitled\".
+
+SPLIT decides where the buffer opens:
+- nil, open in current window.
+- `left', `below', `above' or `right', split the window in the given direction.
+- `frame', open in new frame.
+
+If the variable `petmacs-new-empty-buffer-major-mode' has been set,
+then apply that major mode to the new buffer."
+  (interactive)
+  (let ((newbuf (generate-new-buffer "untitled")))
+    (cl-case split
+      (left  (split-window-horizontally))
+      (below (petmacs/split-window-vertically-and-switch))
+      (above (split-window-vertically))
+      (right (petmacs/split-window-horizontally-and-switch))
+      (frame (select-frame (make-frame))))
+    ;; Prompt to save on `save-some-buffers' with positive PRED
+    (with-current-buffer newbuf
+      (setq-local buffer-offer-save t)
+      (add-hook 'kill-buffer-hook
+                #'petmacs//confirm-kill-buffer
+                nil t)
+      (when petmacs-new-empty-buffer-major-mode
+        (funcall petmacs-new-empty-buffer-major-mode)))
+    ;; pass non-nil force-same-window to prevent `switch-to-buffer' from
+    ;; displaying buffer in another window
+    (switch-to-buffer newbuf nil 'force-same-window)))
+
+(defun petmacs/new-empty-buffer-new-frame ()
+  "Create a new buffer called untitled(<n>),
+in a new frame."
+  (interactive)
+  (petmacs/new-empty-buffer 'frame))
+
+(defun petmacs/new-empty-buffer-left ()
+  "Create a new buffer called untitled(<n>),
+in a split window to the left."
+  (interactive)
+  (petmacs/new-empty-buffer 'left))
+
+(defun petmacs/new-empty-buffer-below ()
+  "Create a new buffer called untitled(<n>),
+in a split window below."
+  (interactive)
+  (petmacs/new-empty-buffer 'below))
+
+(defun petmacs/new-empty-buffer-above ()
+  "Create a new buffer called untitled(<n>),
+in a split window above."
+  (interactive)
+  (petmacs/new-empty-buffer 'above))
+
+(defun petmacs/new-empty-buffer-right ()
+  "Create a new buffer called untitled(<n>),
+in a split window to the right."
+  (interactive)
+  (petmacs/new-empty-buffer 'right))
+
+(defun petmacs/kill-other-buffers (&optional arg)
+  "Kill all other buffers.
+If the universal prefix argument is used then kill the windows too."
+  (interactive "P")
+  (when (yes-or-no-p (format "Killing all buffers except \"%s\"? "
+                             (buffer-name)))
+    (let* ((buffers-to-kill (if (bound-and-true-p persp-mode)
+                                (persp-buffer-list)
+                              (buffer-list))))
+      (mapc 'kill-buffer (delq (current-buffer) buffers-to-kill)))
+    (when (equal '(4) arg) (delete-other-windows))
+    (message "Buffers deleted!")))
+
+(defun petmacs/kill-this-buffer (&optional arg)
+  "Kill the current buffer.
+If the universal prefix argument is used then kill also the window."
+  (interactive "P")
+  (if (window-minibuffer-p)
+      (abort-recursive-edit)
+    (if (equal '(4) arg)
+        (kill-buffer-and-window)
+      (kill-buffer))))
+
+(defun petmacs/save-as (filename &optional visit)
+  "Save current buffer or active region as specified file.
+When called interactively, it first prompts for FILENAME, and then asks
+whether to VISIT it, and if so, whether to show it in current window or
+another window. When prefixed with a universal-argument \\[universal-argument], include
+filename in prompt.
+
+FILENAME  a non-empty string as the name of the saved file.
+VISIT     When it's `:current', open FILENAME in current window. When it's
+          `:other', open FILENAME in another window. When it's nil, only
+          save to FILENAME but does not visit it. (Default to `:current'
+          when called from a LISP program.)
+
+When FILENAME already exists, it also asks the user whether to
+overwrite it."
+  (interactive (let* ((filename (expand-file-name (read-file-name "Save buffer as: " nil nil nil
+                                                                  (when current-prefix-arg (buffer-name)))))
+                      (choices  '("Current window"
+                                  "Other window"
+                                  "Don't open"))
+                      (actions  '(:current :other nil))
+                      (visit    (let ((completion-ignore-case t))
+                                  (nth (cl-position
+                                        (completing-read "Do you want to open the file? "
+                                                         choices nil t)
+                                        choices
+                                        :test #'equal)
+                                       actions))))
+                 (list filename visit)))
+  (unless (called-interactively-p 'any)
+    (cl-assert (and (stringp filename)
+                    (not (string-empty-p filename))
+                    (not (directory-name-p filename)))
+               t "Expect a non-empty filepath, found: %s")
+    (setq filename (expand-file-name filename)
+          visit (or visit :other))
+    (let ((choices '(:current :other nil)))
+      (cl-assert (memq visit choices)
+                 t "Found %s, expect one of %s")))
+  (let ((dir (file-name-directory filename)))
+    (unless (file-directory-p dir)
+      (make-directory dir t)))
+  (if (use-region-p)
+      (write-region (region-beginning) (region-end) filename nil nil nil t)
+    (write-region nil nil filename nil nil nil t))
+  (pcase visit
+    (:current (find-file filename))
+    (:other   (funcall-interactively 'find-file-other-window filename))))
+
+(defun petmacs/delete-current-buffer-file ()
+  "Removes file connected to current buffer and kills buffer."
+  (interactive)
+  (let ((filename (buffer-file-name))
+        (buffer (current-buffer))
+        (name (buffer-name)))
+    (if (not (and filename (file-exists-p filename)))
+        (ido-kill-buffer)
+      (if (yes-or-no-p
+           (format "Are you sure you want to delete this file: '%s'?" name))
+          (progn
+            (delete-file filename t)
+            (kill-buffer buffer)
+            (when (and (configuration-layer/package-used-p 'projectile)
+                       (projectile-project-p))
+              (call-interactively #'projectile-invalidate-cache))
+            (message "File deleted: '%s'" filename))
+        (message "Canceled: File deletion")))))
+
+(defun petmacs/sudo-edit (&optional arg)
+  (interactive "P")
+  (require 'tramp)
+  (let ((fname (if (or arg (not buffer-file-name))
+                   (read-file-name "File: ")
+                 buffer-file-name)))
+    (find-file
+     (if (not (tramp-tramp-file-p fname))
+         (concat "/sudo:root@localhost:" fname)
+       (with-parsed-tramp-file-name fname parsed
+                                    (when (equal parsed-user "root")
+                                      (error "Already root!"))
+                                    (let* ((new-hop (tramp-make-tramp-file-name
+                                                     ;; Try to retrieve a tramp method suitable for
+                                                     ;; multi-hopping
+                                                     (cond ((tramp-get-method-parameter
+                                                             parsed 'tramp-login-program))
+                                                           ((tramp-get-method-parameter
+                                                             parsed 'tramp-copy-program))
+                                                           (t parsed-method))
+                                                     parsed-user
+                                                     parsed-domain
+                                                     parsed-host
+                                                     parsed-port
+                                                     nil
+                                                     parsed-hop))
+                                           (new-hop (substring new-hop 1 -1))
+                                           (new-hop (concat new-hop "|"))
+                                           (new-fname (tramp-make-tramp-file-name
+                                                       "sudo"
+                                                       parsed-user
+                                                       parsed-domain
+                                                       parsed-host
+                                                       parsed-port
+                                                       parsed-localname
+                                                       new-hop)))
+                                      new-fname))))))
+
+(defun petmacs/delete-window (&optional arg)
+  "Delete the current window.
+If the universal prefix argument is used then kill the buffer too."
+  (interactive "P")
+  (if (equal '(4) arg)
+      (kill-buffer-and-window)
+    (delete-window)))
+
 (defun petmacs/switch-to-minibuffer-window ()
   "switch to minibuffer window (if active)"
   (interactive)
@@ -29,6 +260,11 @@ current window."
                    (not (eq buffer current-buffer)))
                  (mapcar #'car (window-prev-buffers window)))
      nil t)))
+
+(defun petmacs/find-user-early-init-file ()
+  "Edit the `early-init-file', in the current window."
+  (interactive)
+  (find-file-existing early-init-file))
 
 (defun petmacs/find-dotfile ()
   "Edit the `dotfile', in the current window."
@@ -412,5 +648,34 @@ buffer."
   (interactive)
   (kill-new (buffer-name))
   (message "%s" (buffer-name)))
+
+(defun petmacs/dos2unix ()
+  "Converts the current buffer to UNIX file format."
+  (interactive)
+  (set-buffer-file-coding-system 'undecided-unix nil))
+
+(defun petmacs/unix2dos ()
+  "Converts the current buffer to DOS file format."
+  (interactive)
+  (set-buffer-file-coding-system 'undecided-dos nil))
+
+(defun split-window-below-and-focus ()
+  "Split the window vertically and focus the new window."
+  (interactive)
+  (split-window-below)
+  (windmove-down)
+  (when (and (boundp 'golden-ratio-mode)
+             (symbol-value golden-ratio-mode))
+    (golden-ratio)))
+
+(defun split-window-right-and-focus ()
+  "Split the window horizontally and focus the new window."
+  (interactive)
+  (split-window-right)
+  (windmove-right)
+  (when (and (boundp 'golden-ratio-mode)
+             (symbol-value golden-ratio-mode))
+    (golden-ratio)))
+
 
 (provide 'core-funcs)

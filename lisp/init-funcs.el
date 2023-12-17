@@ -105,12 +105,6 @@ Same as `replace-string C-q C-m RET RET'."
     (if (file-exists-p filename)
 	    (revert-buffer nil t))))
 
-(defun petmacs/switch-to-minibuffer-window ()
-  "switch to minibuffer window (if active)"
-  (interactive)
-  (when (active-minibuffer-window)
-    (select-window (active-minibuffer-window))))
-
 (defun petmacs/copy-whole-buffer-to-clipboard ()
   "Copy entire buffer to clipboard"
   (interactive)
