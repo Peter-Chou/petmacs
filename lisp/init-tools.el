@@ -111,6 +111,7 @@
   :config
   ;; Disable in some modes
   (dolist (mode '(gitconfig-mode
+                  protobuf-mode
                   asm-mode web-mode html-mode
                   css-mode css-ts-mode
                   python-mode python-ts-mode
@@ -318,9 +319,7 @@
   :commands (vr/select-replace vr/select-query-replace))
 
 (use-package protobuf-mode
-  :hook (protobuf-mode . disable-curly-bracket-electric-pair)
-  :config
-  (define-key protobuf-mode-map (kbd "RET") 'av/auto-indent-method-maybe))
+  :mode ("\\.pbtxt\\'" . protobuf-mode))
 
 (use-package writeroom-mode
   :pretty-hydra
