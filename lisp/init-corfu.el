@@ -18,8 +18,8 @@
         corfu-preselect 'first
         corfu-preview-current nil
         corfu-on-exact-match nil
-        ;; corfu-auto-delay 0.1
-        ;; corfu-popupinfo-delay '(0.2 . 0.1)
+        corfu-auto-delay 0.2
+        corfu-popupinfo-delay '(0.4 . 0.2)
         )
   (when (> (frame-pixel-width) 3000) (custom-set-faces '(corfu-default ((t (:height 1.3))))))
   (global-corfu-mode)

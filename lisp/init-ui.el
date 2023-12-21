@@ -53,7 +53,7 @@
 ;; ;; make "unreal" buffers (like popups, sidebars, log buffers,
 ;; ;; terminals by giving the latter a slightly different (often darker) background
 (use-package solaire-mode
-  :hook (after-load-theme . solaire-global-mode))
+  :hook (after-init . solaire-global-mode))
 
 (use-package srcery-theme)
 (use-package standard-themes)
@@ -70,15 +70,19 @@
         doom-themes-enable-italic t) ; if nil, italics is universally disabled
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
+  ;; WORKAROUND: Visual bell on 29+
+  ;; @see https://github.com/doomemacs/themes/issues/733
   (with-no-warnings
     (defun my-doom-themes-visual-bell-fn ()
       "Blink the mode-line red briefly. Set `ring-bell-function' to this to use it."
       (let ((buf (current-buffer))
             (cookies (mapcar (lambda (face)
                                (face-remap-add-relative face 'doom-themes-visual-bell))
-                             '(mode-line mode-line-active))))
+                             (if (facep 'mode-line-active)
+                                 '(mode-line-active solaire-mode-line-active-face)
+                               '(mode-line solaire-mode-line-face)))))
         (force-mode-line-update)
-        (run-with-timer 0.15 nil
+        (run-with-timer 0.2 nil
                         (lambda ()
                           (with-current-buffer buf
                             (mapc #'face-remap-remove-relative cookies)
@@ -477,7 +481,8 @@
 (use-package nyan-mode
   :hook (doom-modeline-mode . nyan-mode)
   :init
-  (setq nyan-animate-nyancat t
+  (setq nyan-bar-length 25
+        nyan-animate-nyancat t
         nyan-wavy-trail t))
 
 (use-package circadian
