@@ -62,7 +62,8 @@
   :init
   (setq spacemacs-theme-comment-bg nil
         ;; spacemacs-theme-underline-parens nil
-        spacemacs-theme-custom-colors `((mat . ,petmacs-favor-color))))
+        spacemacs-theme-custom-colors `((mat . ,petmacs-favor-color)
+                                        (cursor . ,petmacs-favor-color))))
 
 (use-package doom-themes
   :config
