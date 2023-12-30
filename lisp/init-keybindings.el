@@ -394,7 +394,7 @@
     "w" 'evil-avy-goto-word-or-subword-1
     "D" #'dired-jump-other-window
     "c" #'goto-last-change
-    "j" 'evil-avy-goto-word-or-subword-1
+    "j" 'evil-avy-goto-char
     "J" #'evil-avy-goto-char-2
     "l" 'evil-avy-goto-line
     ;; "t" #'magit-todos-list
