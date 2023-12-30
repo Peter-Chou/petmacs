@@ -8,21 +8,18 @@
   (corfu-border ((t (:inherit region :background unspecified))))
   :bind (:map corfu-map
          ("C-M-m" . corfu-move-to-minibuffer))
-  ;; :hook (corfu-mode . corfu-indexed-mode)
   :init
-  (setq corfu-cycle t
-        corfu-auto t
+  (setq corfu-auto t
+        corfu-cycle t
         corfu-auto-prefix 2
+        corfu-auto-delay 0.2
         corfu-quit-at-boundary 'separator
         corfu-quit-no-match 'separator
         corfu-preselect 'first
         corfu-preview-current nil
-        corfu-on-exact-match nil
-        corfu-auto-delay 0.2
-        corfu-popupinfo-delay '(0.4 . 0.2)
-        )
+        corfu-on-exact-match nil)
+  (require 'corfu)
   (when (> (frame-pixel-width) 3000) (custom-set-faces '(corfu-default ((t (:height 1.3))))))
-  (global-corfu-mode)
 
   (defun corfu-beginning-of-prompt ()
     "Move to beginning of completion input."
@@ -46,7 +43,8 @@
       (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
             '(orderless))) ;; Configure orderless
 
-    (add-hook 'lsp-completion-mode-hook #'petmacs/lsp-mode-setup-completion)))
+    (add-hook 'lsp-completion-mode-hook #'petmacs/lsp-mode-setup-completion))
+  (global-corfu-mode))
 
 (use-package nerd-icons-corfu
   :after corfu
@@ -61,11 +59,10 @@
 (use-package cape
   :preface
   (defun petmacs/set-lsp-capfs ()
-	(setq-local completion-at-point-functions
-				(list (cape-super-capf #'yasnippet-capf #'lsp-completion-at-point)
+    (setq-local completion-at-point-functions
+    			(list #'lsp-completion-at-point
                       #'cape-file
-					  #'cape-dabbrev)))
-  ;; :bind (("C-M-o" . cape-file))
+    			      #'cape-dabbrev)))
   :hook (lsp-completion-mode . petmacs/set-lsp-capfs)
   :init (setq cape-dabbrev-min-length 2
               cape-dabbrev-check-other-buffers nil)
@@ -75,9 +72,7 @@
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-elisp-block)
   (add-to-list 'completion-at-point-functions #'cape-abbrev)
-  (add-to-list 'completion-at-point-functions #'cape-keyword)
-
-  (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster))
+  (add-to-list 'completion-at-point-functions #'cape-keyword))
 
 (unless (display-graphic-p)
   (use-package popon
