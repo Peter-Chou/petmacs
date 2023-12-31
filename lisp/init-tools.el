@@ -447,10 +447,12 @@
             (bury-buffer (get-buffer symbols-outline-buffer-name))))
       (symbols-outline-show)))
   :init
+  (require 'symbols-outline)
   (setq symbols-outline-window-position 'right
         symbols-outline-use-nerd-icon-in-gui t
         symbols-outline-window-width 45
-        symbols-outline-buffer-name "*Symbols-Outline*"
+        symbols-outline-ignore-variable-symbols nil
+        symbols-outline-buffer-name "*Outline*"
         symbols-outline-collapse-functions-on-startup t)
 
   (when (member petmacs-lsp-mode-impl '(lsp-mode eglot-mode))
@@ -470,7 +472,6 @@
     [backtab] 'symbols-outline-cycle-visibility-globally
     (kbd "RET") 'symbols-outline-visit
     (kbd "M-RET") 'symbols-outline-visit-and-quit)
-
   (symbols-outline-follow-mode))
 
 (use-package iedit

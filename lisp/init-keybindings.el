@@ -216,8 +216,8 @@
 
     "b" #'consult-buffer
     "B" #'consult-buffer-other-window
-    "i" #'ibuffer
-    "I" #'petmacs/imenu-list-smart-toggle
+    "i" #'petmacs/imenu-list-smart-toggle
+    "I" #'ibuffer
     "w" #'read-only-mode
     "n" #'next-buffer
     "p" #'previous-buffer
