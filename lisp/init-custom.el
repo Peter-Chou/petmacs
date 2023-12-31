@@ -64,8 +64,8 @@
 
 
 (defvar petmacs-dap-mode-impl
-  ;; 'dap-mode
-  'dape
+  'dap-mode
+  ;; 'dape
   "dap-mode / dape ")
 
 (defvar petmacs-lsp-active-modes '(

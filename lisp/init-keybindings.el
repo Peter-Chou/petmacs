@@ -540,7 +540,6 @@
          "dI"  "inspect"
          "dS"  "switch"
          "dw"  "debug windows")
-       )
       (leader-with-prefix "d"
         (leader-set-keys
           "." #'dape-hydra/body
@@ -574,7 +573,7 @@
           "p"  #'dape-pause
           "k"  #'dape-kill
           "r"  #'dape-restart
-          ))
+          )))
       (t
        (leader-declare-prefix
          "d" "debug"

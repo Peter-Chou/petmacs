@@ -197,7 +197,7 @@
      (slot . 1)
      (window-width . 30))
    lsp-treemacs-symbols-position-params
-   `((side . right)
+   `((side . left)
      (slot . 2)
      (window-width . 30)))
   (lsp-treemacs-sync-mode 1)

@@ -77,7 +77,10 @@
        (require 'init-corfu)
        (require 'init-lsp)))
 
-(require 'init-dap)
+(cond ((and (equal petmacs-dap-mode-impl 'dape) emacs/>=29p)
+       (require 'init-dape))
+      (t
+       (require 'init-dap)))
 
 (require 'init-elisp)
 (require 'init-c-c++)
