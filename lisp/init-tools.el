@@ -450,8 +450,8 @@
   (require 'symbols-outline)
   (setq symbols-outline-window-position 'right
         symbols-outline-use-nerd-icon-in-gui t
-        symbols-outline-window-width 45
-        symbols-outline-ignore-variable-symbols nil
+        symbols-outline-window-width 25
+        ;; symbols-outline-ignore-variable-symbols nil
         symbols-outline-buffer-name "*Outline*"
         symbols-outline-collapse-functions-on-startup t)
 
@@ -482,7 +482,7 @@
   (define-key iedit-mode-keymap (kbd "M-i") 'iedit-restrict-current-line))
 
 (use-package imenu-list
-  :init (setq imenu-list-size 35))
+  :init (setq imenu-list-size 25))
 
 (use-package centered-cursor-mode)
 (use-package restart-emacs)
