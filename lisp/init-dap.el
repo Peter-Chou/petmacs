@@ -19,12 +19,13 @@
          ("<f5>" . dap-debug)
          ("M-<f5>" . dap-hydra))
   :hook ((after-init . dap-auto-configure-mode)
+         (dap-session-created . global-display-line-numbers-mode)
          ;; (dap-stopped . (lambda (arg) (call-interactively #'dap-hydra)))
          ;; (dap-terminated . (lambda (_) (dap-hydra/nil)))
          ((python-mode python-ts-mode) . (lambda () (require 'dap-python)))
          ((java-mode java-ts-mode) . (lambda () (require 'dap-java)))
          ;; dap-lldb needs lldb-vscode which is in LLVM prebuilt package
-	     ((c-mode c-ts-mode c++-mode c++-ts-mode) . (lambda () (require 'dap-lldb)))
+         ((c-mode c-ts-mode c++-mode c++-ts-mode) . (lambda () (require 'dap-lldb)))
          ((go-mode go-ts-mode) . (lambda () (require 'dap-dlv-go)))
          ((objc-mode swift-mode) . (lambda () (require 'dap-lldb)))
          ((js-mode js2-mode js-ts-mode) . (lambda () (require 'dap-chrome))))
@@ -37,6 +38,11 @@
         ;; dap-auto-configure-features '(sessions locals tooltip)
 	    dap-lldb-debug-program '("/opt/llvm/bin/lldb-vscode"))
   :config
+  (defun petmacs/dap-disconnect (session)
+    (unless petmacs-enable-display-line-numbers
+      (global-display-line-numbers-mode 0)))
+  (advice-add #'dap-disconnect :after #'petmacs/dap-disconnect)
+
   (dap-ui-mode 1)
   (with-eval-after-load 'dap-ui
     (setq dap-ui-buffer-configurations
