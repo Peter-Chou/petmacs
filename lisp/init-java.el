@@ -8,6 +8,7 @@
     (mvn-clean)
     (mvn-compile)))
 
-(use-package maven-test-mode)
+(use-package maven-test-mode
+  :init (require 'maven-test-mode))
 
 (provide 'init-java)

@@ -846,6 +846,22 @@
     "vw" #'pyvenv-workon
     ))
 
+;;; java mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(dolist (mode '(java-mode java-ts-mode))
+  (leader-declare-prefix-for-major-mode mode
+    "mm" "maven"
+    "mmg" "goto"
+    "mmt" "tests")
+
+  (leader-set-keys-for-major-mode mode
+    "mga"    #'maven-test-toggle-between-test-and-class
+    "mgA"    #'maven-test-toggle-between-test-and-class-other-window
+    "mta"    #'maven-test-all
+    "mt C-a" #'maven-test-clean-test-all
+    "mtb"    #'maven-test-file
+    "mti"    #'maven-test-install
+    "mtt"    #'maven-test-method))
+
 ;;; emacs lisp mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (dolist (mode '(emacs-lisp-mode lisp-interaction-mode))
   (leader-declare-prefix-for-major-mode mode
