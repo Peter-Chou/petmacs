@@ -747,7 +747,7 @@
            "bd" #'lsp-describe-session
            "br" #'lsp-workspace-restart
            "bs" #'lsp-workspace-shutdown
-           "bv" #'lsp-version
+
 
            ;; help
            "hh" #'lsp-describe-thing-at-point
@@ -770,60 +770,56 @@
            "Tl" #'lsp-lens-mode
            "Td" #'lsp-ui-doc-mode
            "Ts" #'lsp-toggle-signature-auto-activate
-           "TS" #'lsp-ui-sideline-mode)))
+           "TS" #'lsp-ui-sideline-mode))
 
-      (dolist (mode '(java-mode java-ts-mode))
-        (leader-declare-prefix-for-major-mode mode
-          "c" "compile / create"
-          "gk" "type hierarchy"
-          "ra" "add / assign"
-          "rc" "create / convert"
-          "rg" "generate"
-          "re" "extract"
-          "t" "test")
+       (dolist (mode '(java-mode java-ts-mode))
+         (leader-declare-prefix-for-major-mode mode
+           "mc"  "compile/create"
+           "mgk"  "type hierarchy"
+           "mra"  "add/assign"
+           "mrc"  "create/convert"
+           "mrg"  "generate"
+           "mre"  "extract"
+           "mt"  "test")
 
-        (leader-set-keys-for-major-mode mode
-          "wu"  'lsp-java-update-project-configuration
+         (leader-set-keys-for-major-mode mode
+           "wu"  'lsp-java-update-project-configuration
 
-          ;; refactoring
-          "ro"  #'lsp-java-organize-imports
-          "rcp" #'lsp-java-create-parameter
-          "rcf" #'lsp-java-create-field
-          "rci" #'lsp-java-conver-to-static-import
-          "rec" #'lsp-java-extract-to-constant
-          "rel" #'lsp-java-extract-to-local-variable
-          "rem" #'lsp-java-extract-method
+           ;; refactoring
+           "ro" 'lsp-java-organize-imports
+           "rcp" 'lsp-java-create-parameter
+           "rcf" 'lsp-java-create-field
+           "rci" 'lsp-java-convert-to-static-import
+           "rec" 'lsp-java-extract-to-constant
+           "rel" 'lsp-java-extract-to-local-variable
+           "rem" 'lsp-java-extract-method
 
-          ;; assign/add
-          "rai" #'lsp-java-add-import
-          "ram" #'lsp-java-add-unimplemented-methods
-          "rat" #'lsp-java-add-throws
-          "raa" #'lsp-java-assign-all
-          "raf" #'lsp-java-assign-to-field
-          "raF" #'lsp-java-assign-statement-to-field
-          "ral" #'lsp-java-assign-statement-to-local
+           ;; assign/add
+           "rai" 'lsp-java-add-import
+           "ram" 'lsp-java-add-unimplemented-methods
+           "rat" 'lsp-java-add-throws
+           "raa" 'lsp-java-assign-all
+           "raf" 'lsp-java-assign-to-field
+           "raF" 'lsp-java-assign-statement-to-field
+           "ral" 'lsp-java-assign-statement-to-local
 
-          ;; generate
-          "rgt" #'lsp-java-generate-to-string
-          "rge" #'lsp-java-generate-equals-and-hash-code
-          "rgo" #'lsp-java-generate-overrides
-          "rgg" #'lsp-java-generate-getters-and-setters
+           ;; generate
+           "rgt" 'lsp-java-generate-to-string
+           "rge" 'lsp-java-generate-equals-and-hash-code
+           "rgo" 'lsp-java-generate-overrides
+           "rgg" 'lsp-java-generate-getters-and-setters
 
-          ;; create/compile
-          "cc"  #'lsp-java-build-project
-          "cp"  #'lsp-java-spring-initializr
+           ;; create/compile
+           "cc"  'lsp-java-build-project
+           "cp"  'lsp-java-spring-initializr
 
-          "gkk" #'lsp-java-type-hierarchy
-          "gku" #'petmacs/lsp-java-super-type
-          "gks" #'petmacs/lsp-java-sub-type
+           "gkk" 'lsp-java-type-hierarchy
+           "gku" 'petmacs/lsp-java-super-type
+           "gks" 'petmacs/lsp-java-sub-type
 
-          "gI" #'lsp-java-open-super-implementation
-
-          ;; test
-          "tb" 'lsp-jt-browser
-
-          "cr" 'petmacs/mvn-clean-compile))
-      )
+           ;; test
+           "tb" 'lsp-jt-browser
+           ))))
 
 ;;; python mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

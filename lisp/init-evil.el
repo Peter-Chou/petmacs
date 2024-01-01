@@ -151,8 +151,8 @@
                                     proced
                                     simple
 
-                                    ;; magit
-                                    ;; magit-todos
+                                    magit
+                                    magit-todos
 
                                     vertico
                                     consult
