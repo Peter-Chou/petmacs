@@ -20,7 +20,7 @@
         treemacs-sorting                 'alphabetic-asc
         treemacs-follow-after-init       t
         treemacs-no-png-images           (not petmacs-icon)
-        treemacs-width                   25)
+        treemacs-width                   35)
   :config
   (with-eval-after-load 'golden-ratio
     (add-to-list 'golden-ratio-exclude-buffer-regexp
