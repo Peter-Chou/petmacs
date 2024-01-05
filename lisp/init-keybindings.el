@@ -68,6 +68,13 @@
     "o"  #'symbol-overlay-hydra/body
     "O"  #'symbol-overlay-remove-all))
 
+
+(leader-declare-prefix
+  "c" "change")
+(leader-with-prefix "c"
+  (leader-set-keys
+    "e"  #'remove-dos-eol))
+
 (leader-declare-prefix
   "a" "apps"
   "ao" "org"

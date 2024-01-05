@@ -685,4 +685,18 @@ buffer."
     (petmacs/imenu-list-smart-toggle)
     (switch-to-buffer buf)))
 
+(defun remove-dos-eol ()
+  "Remove  in current region or buffer."
+  (interactive)
+  (save-excursion
+    (when (region-active-p)
+      (narrow-to-region (region-beginning) (region-end)))
+    (goto-char (point-min))
+    (let ((count 0))
+      (while (search-forward "" nil t)
+        (replace-match "" nil t)
+        (setq count (1+ count)))
+      (message "Removed %d " count))
+    (widen)))
+
 (provide 'core-funcs)
