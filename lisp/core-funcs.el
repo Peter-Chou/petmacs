@@ -677,5 +677,12 @@ buffer."
              (symbol-value golden-ratio-mode))
     (golden-ratio)))
 
+(defun petmacs/toggle-treemacs-and-symbols-outline ()
+  (interactive)
+  (let* ((buf (current-buffer)))
+    (petmacs/treemacs-project-toggle)
+    (switch-to-buffer buf)
+    (petmacs/imenu-list-smart-toggle)
+    (switch-to-buffer buf)))
 
 (provide 'core-funcs)

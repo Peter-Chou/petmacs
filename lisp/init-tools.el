@@ -482,7 +482,7 @@
   (define-key iedit-mode-keymap (kbd "M-i") 'iedit-restrict-current-line))
 
 (use-package imenu-list
-  :init (setq imenu-list-size 25))
+  :init (setq imenu-list-size 35))
 
 (use-package centered-cursor-mode)
 (use-package restart-emacs)

@@ -502,7 +502,8 @@
     "v" 'projectile-vc
 
     "'"  #'multi-vterm-project
-    "t"  #'petmacs/treemacs-project-toggle
+    ;; "t"  #'petmacs/treemacs-project-toggle
+    "t" #'petmacs/toggle-treemacs-and-symbols-outline
     "b"  #'consult-projectile-switch-to-buffer
     "d"  #'consult-projectile-find-dir
     "p"  #'consult-projectile-switch-project
