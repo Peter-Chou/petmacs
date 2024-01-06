@@ -396,6 +396,7 @@
                                                 (require 'lsp-java-boot)
 		                                        (lsp-deferred)))
   :init
+  (require 'lsp-mode)
   (setq
    lsp-java-boot-enabled nil  ;; disable boot-ls
    ;; Use Google style formatting by default
