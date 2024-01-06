@@ -399,8 +399,10 @@
   (setq
    lsp-java-boot-enabled nil  ;; disable boot-ls
    ;; Use Google style formatting by default
-   lsp-java-format-settings-url
-   "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml"
+   ;; "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml"
+   lsp-java-format-settings-url (lsp--path-to-uri
+                                 (expand-file-name "eclipse-java-google-style.xml"
+                                                   (concat user-emacs-directory "data")))
    lsp-java-format-settings-profile "GoogleStyle"
 
    ;; workaround make lsp-java pass java-ts-mode launching issue
