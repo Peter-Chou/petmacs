@@ -484,6 +484,8 @@
 (use-package imenu-list
   :init (setq imenu-list-size 35))
 
+(use-package docker)
+
 (use-package centered-cursor-mode)
 (use-package restart-emacs)
 (use-package focus)                     ; Focus on the current region

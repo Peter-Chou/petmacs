@@ -232,7 +232,7 @@
     "s" #'petmacs/goto-scratch-buffer
     "x" #'kill-buffer-and-window
     "h" #'petmacs/goto-dashboard
-    "m" #'petmacs/switch-to-minibuffer-window
+    "m"  #'petmacs/toggle-maximize-buffer
     "Y" #'petmacs/copy-whole-buffer-to-clipboard
 	"a" #'persp-add-buffer
     "r" #'persp-remove-buffer
@@ -290,7 +290,7 @@
     "K"  #'evil-window-move-very-top
     "l"  #'evil-window-right
     "L"  #'evil-window-move-far-right
-    "m"  #'petmacs/toggle-maximize-buffer
+    "m" #'petmacs/switch-to-minibuffer-window
 
     "v"  #'split-window-right
     "V"  #'split-window-right-and-focus

@@ -151,6 +151,7 @@
                                     proced
                                     simple
                                     minibuffer
+                                    xref
 
                                     magit
                                     magit-section
@@ -160,6 +161,7 @@
                                     consult
                                     embark
                                     corfu
+                                    popup
 
                                     diff-hl
                                     diff-mode
@@ -176,6 +178,7 @@
                                     dashboard
                                     dired
                                     ibuffer
+                                    yaml-mode
 
                                     org
                                     org-present
@@ -187,7 +190,13 @@
     (dolist (map evil-collection-minibuffer-maps)
       (evil-collection-define-key 'normal map (kbd "C-g") 'minibuffer-keyboard-quit)
       (evil-collection-define-key 'insert map (kbd "C-g") 'minibuffer-keyboard-quit)
-      (evil-collection-define-key 'motion map (kbd "C-g") 'minibuffer-keyboard-quit)))
+      (evil-collection-define-key 'motion map (kbd "C-g") 'minibuffer-keyboard-quit)
+      (evil-collection-define-key 'normal map (kbd "C-n") 'vertico-next)
+      (evil-collection-define-key 'insert map (kbd "C-n") 'vertico-next)
+      (evil-collection-define-key 'motion map (kbd "C-n") 'vertico-next)
+      (evil-collection-define-key 'normal map (kbd "C-p") 'vertico-previous)
+      (evil-collection-define-key 'insert map (kbd "C-p") 'vertico-previous)
+      (evil-collection-define-key 'motion map (kbd "C-p") 'vertico-previous)))
   (advice-add #'evil-collection-minibuffer-setup :after #'petmacs/evil-collection-minibuffer-setup)
 
   (defun petmacs/evil-collection-dired-setup ()
