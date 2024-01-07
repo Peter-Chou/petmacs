@@ -329,8 +329,10 @@
   (leader-set-keys
     "-" #'centered-cursor-mode
     "'" #'petmacs/open-gnome-terminal
-    ;; "s" #'flymake-mode
-    "s" #'flycheck-mode
+
+    "s" #'flymake-mode
+    ;; "s" #'flycheck-mode
+
     "l" #'display-fill-column-indicator-mode
     "n" #'display-line-numbers-mode
     "f" #'focus-mode
@@ -413,23 +415,23 @@
   "e" "error")
 (leader-with-prefix "e"
   (leader-set-keys
-    ;; "l" #'consult-flymake
-    ;; "n" #'flymake-goto-next-error
-    ;; "p" #'flymake-goto-prev-error
-    ;; "b" #'flymake-show-buffer-diagnostics
-    ;; "a" #'flymake-show-project-diagnostics
+    "l" #'consult-flymake
+    "n" #'flymake-goto-next-error
+    "p" #'flymake-goto-prev-error
+    "b" #'flymake-show-buffer-diagnostics
+    "a" #'flymake-show-project-diagnostics
 
-    "l" #'flycheck-list-errors
-    "c" #'flycheck-clear
-    "h" #'flycheck-describe-checker
-    "n" #'petmacs/next-error
-    "N" #'petmacs/previous-error
-    "p" #'petmacs/previous-error
-    "s" #'flycheck-select-checker
-    "S" #'flycheck-set-checker-executable
-    "v" #'flycheck-verify-setup
-    "y" #'flycheck-copy-errors-as-kill
-    "x" #'flycheck-explain-error-at-point
+    ;; "l" #'flycheck-list-errors
+    ;; "c" #'flycheck-clear
+    ;; "h" #'flycheck-describe-checker
+    ;; "n" #'petmacs/next-error
+    ;; "N" #'petmacs/previous-error
+    ;; "p" #'petmacs/previous-error
+    ;; "s" #'flycheck-select-checker
+    ;; "S" #'flycheck-set-checker-executable
+    ;; "v" #'flycheck-verify-setup
+    ;; "y" #'flycheck-copy-errors-as-kill
+    ;; "x" #'flycheck-explain-error-at-point
     ))
 
 

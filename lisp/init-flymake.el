@@ -21,6 +21,10 @@
               sideline-backends-right '(sideline-flymake)))
 
 (use-package flymake-ruff
-  :hook (python-mode . flymake-ruff-load))
+  :preface
+  (defun petmacs/setup-flymake-ruff ()
+    (setq-local lsp-diagnostics-provider :none)
+    (flymake-ruff-load))
+  :hook ((python-mode python-ts-mode) . petmacs/setup-flymake-ruff))
 
 (provide 'init-flymake)

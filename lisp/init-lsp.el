@@ -63,8 +63,8 @@
         lsp-imenu-index-function #'lsp-imenu-create-categorized-index
         ;; lsp-keymap-prefix "C-c l"
         ;; lsp-diagnostics-provider :none ;; flymake or ;; :none
-        ;; lsp-diagnostics-provider :flymake ;; flymake or ;; :none
-        lsp-diagnostics-provider :flycheck ;; flymake or ;; :none
+        lsp-diagnostics-provider :flymake ;; flymake or ;; :none
+        ;; lsp-diagnostics-provider :flycheck ;; flymake or ;; :none
         lsp-signature-auto-activate t
         lsp-signature-render-documentation nil
         lsp-modeline-code-actions-enable nil
