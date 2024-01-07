@@ -150,6 +150,7 @@
         evil-collection-mode-list '(replace
                                     proced
                                     simple
+                                    minibuffer
 
                                     magit
                                     magit-section
@@ -167,16 +168,28 @@
                                     vterm
                                     which-key
 
+                                    flycheck
+                                    flymake
+
                                     lsp-ui-imenu
 
+                                    dashboard
                                     dired
                                     ibuffer
+
                                     org
                                     org-present
                                     org-roam
                                     ))
   :hook (after-init . evil-collection-init)
   :config
+  (defun petmacs/evil-collection-minibuffer-setup ()
+    (dolist (map evil-collection-minibuffer-maps)
+      (evil-collection-define-key 'normal map (kbd "C-g") 'minibuffer-keyboard-quit)
+      (evil-collection-define-key 'insert map (kbd "C-g") 'minibuffer-keyboard-quit)
+      (evil-collection-define-key 'motion map (kbd "C-g") 'minibuffer-keyboard-quit)))
+  (advice-add #'evil-collection-minibuffer-setup :after #'petmacs/evil-collection-minibuffer-setup)
+
   (defun petmacs/evil-collection-dired-setup ()
     (evil-define-key 'normal dired-mode-map (kbd "RET") 'dired-find-alternate-file)
     (evil-define-key 'normal dired-mode-map (kbd "J") 'find-file)
