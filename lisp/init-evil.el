@@ -158,6 +158,7 @@
                                     vertico
                                     consult
                                     embark
+                                    corfu
 
                                     diff-hl
                                     diff-mode
