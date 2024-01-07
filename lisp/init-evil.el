@@ -152,6 +152,7 @@
                                     simple
 
                                     magit
+                                    magit-section
                                     magit-todos
 
                                     vertico

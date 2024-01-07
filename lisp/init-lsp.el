@@ -405,7 +405,8 @@
                                  (expand-file-name "eclipse-java-google-style.xml"
                                                    (concat user-emacs-directory "data")))
    lsp-java-format-settings-profile "GoogleStyle"
-
+   ;; see https://www.eclipse.org/downloads/download.php?file=/jdtls/milestones
+   lsp-java-jdt-download-url "https://www.eclipse.org/downloads/download.php?file=/jdtls/milestones/1.30.1/jdt-language-server-1.30.1-202312071447.tar.gz"
    ;; workaround make lsp-java pass java-ts-mode launching issue
    ;; see https://github.com/emacs-lsp/lsp-java/issues/447
    lsp-java-format-tab-size 4
