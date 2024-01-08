@@ -458,6 +458,12 @@
   (when (member petmacs-lsp-mode-impl '(lsp-mode eglot-mode))
     (setq symbols-outline-fetch-fn #'symbols-outline-lsp-fetch))
   :config
+  (require 'nerd-icons)
+  (setq symbols-outline-nerd-icon-alist 
+        `(("tag"           . ,(format "%s" (nerd-icons-codicon "nf-cod-symbol_array"))
+           ))
+	    )
+
   (evil-define-key 'normal symbols-outline-mode-map
     (kbd "g") 'symbols-outline-refresh
     (kbd "n") 'symbols-outline-next
