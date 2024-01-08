@@ -4,6 +4,7 @@
 
 (require'org-tempo) ;; start easy template
 
+
 (use-package org
   :pin melpa
   :custom-face (org-ellipsis ((t (:foreground unspecified))))
@@ -12,9 +13,8 @@
   :init
   (make-directory (expand-file-name "data/gtd" user-emacs-directory) t)
   :config
+  (add-to-list 'org-agenda-files (expand-file-name "data/gtd" user-emacs-directory))
   (setq org-modules nil                 ; Faster loading
-
-
         org-todo-keywords
         '((sequence "TODO(t)" "DOING(i)" "HANGUP(h)" "|" "DONE(d)" "CANCEL(c)")
           (sequence "⚑(T)" "🏴(I)" "❓(H)" "|" "✔(D)" "✘(C)"))
@@ -25,7 +25,6 @@
                              (?C . success))
 
         ;; Agenda styling
-        org-agenda-files (list (expand-file-name "data/gtd" user-emacs-directory))
         org-agenda-block-separator ?─
         org-agenda-time-grid
         '((daily today require-timed)
@@ -41,6 +40,27 @@
         org-ellipsis (if (char-displayable-p ?⏷) "\t⏷" nil)
         org-pretty-entities nil
         org-hide-emphasis-markers t))
+
+(use-package org-projectile
+  :preface
+  (defun org-projectile/goto-project-todos ()
+    (interactive)
+    (org-projectile-goto-location-for-project (projectile-project-name))
+    (revert-buffer t t))
+  (defun petmacs/add-todo-files-to-org-agenda-files ()
+    (interactive)
+    (setq org-agenda-files (delete-dups (append org-agenda-files (org-projectile-todo-files)))))
+  :commands (org-projectile-location-for-project
+             org-project-capture-todo-files)
+  :hook (emacs-startup . petmacs/add-todo-files-to-org-agenda-files)
+  :init
+  (require 'org-projectile)
+  (setq org-project-capture-default-backend
+        (make-instance 'org-project-capture-projectile-backend))
+  :config
+  (with-eval-after-load 'org-capture
+    (require 'org-projectile)
+    (org-projectile-per-project)))
 
 ;; Add md/gfm backends
 (add-to-list 'org-export-backends 'md)
@@ -71,22 +91,6 @@
                   '("🅐" "🅑" "🅒" "🅓")
                 '("HIGH" "MEDIUM" "LOW" "OPTIONAL"))))
 
-(use-package org-projectile
-  :commands (org-projectile-location-for-project
-             org-projectile-todo-files)
-  :preface
-  (defun org-projectile/goto-project-todos ()
-    (interactive)
-    (org-projectile-goto-location-for-project (projectile-project-name))
-    (revert-buffer t t))
-  :init
-  (setq org-projectile-per-project-filepath "TODO.org"
-        org-agenda-files (append org-agenda-files (org-projectile-todo-files)))
-  :config
-  (with-eval-after-load 'org-capture
-    (require 'org-projectile)
-    (org-projectile-per-project))
-  (push (org-projectile-project-todo-entry) org-capture-templates))
 
 (use-package org-contrib
   :pin nongnu)
