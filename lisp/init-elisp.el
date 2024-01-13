@@ -119,7 +119,8 @@ Lisp function does not specify a special indentation."
 ;; Interactive macro expander
 (use-package macrostep
   :custom-face
-  (macrostep-expansion-highlight-face ((t (:inherit tooltip :extend t)))))
+  (macrostep-expansion-highlight-face ((t (:inherit tooltip :extend t))))
+  :custom (macrostep-expand-in-separate-buffer t))
 
 ;; Semantic code search for emacs lisp
 (use-package elisp-refs)
