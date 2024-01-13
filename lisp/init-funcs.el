@@ -62,14 +62,20 @@
   (interactive)
   (set-buffer-file-coding-system 'undecided-dos nil))
 
-(defun delete-carrage-returns ()
-  "Delete `^M' characters in the buffer.
-Same as `replace-string C-q C-m RET RET'."
+(defun delete-dos-eol ()
+  "Delete `' characters in current region or buffer.
+Same as '`replace-string' `C-q' `C-m' `RET' `RET''."
   (interactive)
   (save-excursion
-    (goto-char 0)
-    (while (search-forward "\r" nil :noerror)
-      (replace-match ""))))
+    (when (region-active-p)
+      (narrow-to-region (region-beginning) (region-end)))
+    (goto-char (point-min))
+    (let ((count 0))
+      (while (search-forward "\r" nil t)
+        (replace-match "" nil t)
+        (setq count (1+ count)))
+      (message "Removed %d " count))
+    (widen)))
 
 ;; File and buffer
 (defun petmacs/revert-this-buffer ()
