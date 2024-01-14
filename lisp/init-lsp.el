@@ -203,6 +203,12 @@
   (lsp-treemacs-sync-mode 1)
   :config
   (define-key winum-keymap (kbd "M-9") 'lsp-treemacs-symbols)
+
+  (with-eval-after-load 'ace-window
+    (when (boundp 'aw-ignored-buffers)
+      (push 'lsp-treemacs-symbols-mode aw-ignored-buffers)
+      (push 'lsp-treemacs-java-deps-mode aw-ignored-buffers)))
+
   (with-no-warnings
     (when (icons-displayable-p)
       (treemacs-create-theme "lsp-nerd-icons"
@@ -391,10 +397,13 @@
 
 ;;; java
 (use-package lsp-java
-  :hook ((java-mode java-ts-mode jdee-mode) . (lambda ()
-		                                        (require 'lsp-java)
-                                                (require 'lsp-java-boot)
-		                                        (lsp-deferred)))
+  :hook (((java-mode java-ts-mode jdee-mode) . (lambda ()
+		                                         (require 'lsp-java)
+                                                 (require 'lsp-java-boot)
+		                                         (lsp-deferred)))
+         (lsp-lens-mode . (lambda ()
+                            (lsp-java-lens-mode 1)
+                            (lsp-jt-lens-mode 1))))
   :init
   (require 'lsp-mode)
   (setq
