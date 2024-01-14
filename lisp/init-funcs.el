@@ -22,13 +22,6 @@
   (interactive)
   (consult-lsp-file-symbols t))
 
-(defun petmacs/imenu-list-smart-toggle ()
-  (interactive)
-  (if (or (bound-and-true-p lsp-mode)
-          (get-buffer-window symbols-outline-buffer-name t))
-      (petmacs/symbols-outline-smart-toggle)
-    (imenu-list-smart-toggle)))
-
 (defun petmacs/open-gnome-terminal ()
   (interactive)
   (shell-command "gnome-terminal"))
