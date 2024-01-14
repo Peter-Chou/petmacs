@@ -397,13 +397,13 @@
 
 ;;; java
 (use-package lsp-java
-  :hook (((java-mode java-ts-mode jdee-mode) . (lambda ()
-		                                         (require 'lsp-java)
-                                                 (require 'lsp-java-boot)
-		                                         (lsp-deferred)))
-         (lsp-lens-mode . (lambda ()
-                            (lsp-java-lens-mode 1)
-                            (lsp-jt-lens-mode 1))))
+  :hook ((java-mode java-ts-mode jdee-mode) . (lambda ()
+		                                        (require 'lsp-java)
+                                                (require 'lsp-java-boot)
+                                                (lsp-lens-mode 1)
+                                                (lsp-java-lens-mode 1)
+                                                (lsp-jt-lens-mode 1)
+		                                        (lsp-deferred)))
   :init
   (require 'lsp-mode)
   (setq
