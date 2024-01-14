@@ -436,6 +436,7 @@
   :commands (uuidgen))
 
 (use-package symbols-outline
+  :after nerd-icons
   :preface
   (defun petmacs/symbols-outline-smart-toggle ()
     "Toggle `symbols-outline-mode' by showing or quitting the `*Outline*' buffer."

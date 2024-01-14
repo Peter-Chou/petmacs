@@ -95,5 +95,5 @@ eaf/
 etc/
 TODO.org
 forge-database.sqlite
-dap-ui-repl-python-history
+dap-ui-repl-*-history
 lombok-*.jar
