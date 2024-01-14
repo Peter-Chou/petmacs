@@ -450,7 +450,7 @@
   :init
   (require 'symbols-outline)
   (setq symbols-outline-window-position 'left
-        symbols-outline-use-nerd-icon-in-gui t
+        symbols-outline-use-nerd-icon-in-gui (not (image-type-available-p 'svg))
         symbols-outline-window-width 35
         ;; symbols-outline-ignore-variable-symbols nil
         symbols-outline-buffer-name "*Outline*"

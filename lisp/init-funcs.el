@@ -371,4 +371,11 @@ This issue has been addressed in 28."
   (and (eq petmacs-completion-style 'childframe)
        (childframe-workable-p)))
 
+(defun petmacs/imenu-list-smart-toggle ()
+  (interactive)
+  (if (or (bound-and-true-p lsp-mode)
+          (get-buffer-window symbols-outline-buffer-name t))
+      (petmacs/symbols-outline-smart-toggle)
+    (imenu-list-smart-toggle)))
+
 (provide 'init-funcs)

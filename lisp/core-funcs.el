@@ -3,8 +3,6 @@
 (require 'init-const)
 (require 'init-custom)
 
-(declare-function petmacs/symbols-outline-smart-toggle 'init-tools)
-
 (defun petmacs/toggle-maximize-buffer ()
   "Maximize buffer"
   (interactive)
@@ -700,12 +698,5 @@ buffer."
         (setq count (1+ count)))
       (message "Removed %d " count))
     (widen)))
-
-(defun petmacs/imenu-list-smart-toggle ()
-  (interactive)
-  (if (or (bound-and-true-p lsp-mode)
-          (get-buffer-window symbols-outline-buffer-name t))
-      (petmacs/symbols-outline-smart-toggle)
-    (imenu-list-smart-toggle)))
 
 (provide 'core-funcs)
