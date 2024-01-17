@@ -177,6 +177,7 @@
    )
   :init
   (setq which-key-use-C-h-commands nil
+        embark-help-key "?"
         ;; press C-h after a prefix key, it shows all the possible key bindings and let you choose what you want
         prefix-help-command #'embark-prefix-help-command
         embark-verbose-indicator-display-action
