@@ -2,8 +2,10 @@
 
 (require 'cl-lib)
 
-(require 'init-const)
-(require 'init-custom)
+;; Suppress warnings
+(eval-when-compile
+  (require 'init-const)
+  (require 'init-custom))
 
 ;; Suppress warnings
 (defvar socks-noproxy)

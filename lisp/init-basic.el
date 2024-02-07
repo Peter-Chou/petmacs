@@ -21,6 +21,16 @@
 (when (file-exists-p custom-file)
   (load custom-file 'noerror 'nomessage))
 
+;; Frame transparence
+(use-package transwin
+  ;; :bind (("C-M-9" . transwin-inc)
+  ;;        ("C-M-8" . transwin-dec)
+  ;;        ("C-M-7" . transwin-toggle))
+  :init
+  (when sys/linux-x-p
+    (setq transwin-parameter-alpha 'alpha-background)
+    (transwin-ask '80)))
+
 ;; alternative to undo-tree
 (use-package undo-fu)
 

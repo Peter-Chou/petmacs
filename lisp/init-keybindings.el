@@ -86,8 +86,6 @@
     "P"  #'list-processes
     "e" #'list-environment
     "P"  #'proced
-    "k"  #'paradox-list-packages
-    "u"  #'paradox-upgrade-packages
     "w"  #'whitespace-cleanup
 
     ;; "ao" prefix

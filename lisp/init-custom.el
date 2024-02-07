@@ -1,5 +1,8 @@
 ;; -*- lexical-binding: t no-byte-compile: t -*-
 
+(eval-when-compile
+  (require 'package))
+
 (defvar petmacs-icon t
   "Display icons or not.")
 
