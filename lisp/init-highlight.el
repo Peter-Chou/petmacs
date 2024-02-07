@@ -2,11 +2,19 @@
 
 (require 'init-funcs)
 
-;; (use-package beacon
-;;   :custom
-;;   (beacon-color "yellow")
-;;   :init
-;;   (beacon-mode 1))
+
+(use-package beacon
+  :hook (after-init . beacon-mode)
+  :init
+  (setq beacon-color petmacs-favor-color)
+  (setq beacon-blink-when-point-moves-vertically 0)
+  ;; disable beacon for horizontal movement
+  (setq beacon-blink-when-point-moves-horizontally 0)
+  ;; remove specific symbols from the variable 'beacon-dont-blink-commands
+  (setq beacon-dont-blink-commands '(forward-char backward-char meow-right meow-left))
+
+  ;; (beacon-mode 1)
+  )
 
 ;; Highlight the current line
 (use-package hl-line
