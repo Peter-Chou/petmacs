@@ -512,4 +512,7 @@
 (use-package smart-semicolon
   :hook (((c-mode-common java-ts-mode) . smart-semicolon-mode)))
 
+(use-package logview
+  :config (add-hook 'logview-mode-hook 'auto-revert-mode))
+
 (provide 'init-tools)
