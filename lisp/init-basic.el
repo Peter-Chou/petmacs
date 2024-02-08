@@ -24,15 +24,15 @@
 ;; Frame background transparence
 
 (use-package transwin
+  :hook (emacs-startup . (lambda ()
+                           (transwin-ask '80)))
   :bind
   ("M-+" . transwin-inc)
   ("M-_" . transwin-dec)
   ("M-)" . transwin-toggle)
   :init
   (setq transwin-delta-alpha 5
-        transwin-parameter-alpha 'alpha-background)
-  :config
-  (transwin-ask 80))
+        transwin-parameter-alpha 'alpha-background))
 
 ;; alternative to undo-tree
 (use-package undo-fu)
