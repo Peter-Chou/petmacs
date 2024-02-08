@@ -176,6 +176,7 @@
                                     lsp-ui-imenu
 
                                     dashboard
+                                    log-view
                                     dired
                                     ibuffer
                                     yaml-mode
