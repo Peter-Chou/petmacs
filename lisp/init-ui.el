@@ -501,5 +501,29 @@
   (when (bound-and-true-p awesome-tray-mode)
     (add-hook circadian-after-load-theme-hook #'awesome-tray-enable)))
 
+;; Frame background transparence
+(use-package transwin
+  :pretty-hydra
+  ((:title (pretty-hydra-title "Frame Management")
+    :foreign-keys warn :quit-key ("q" "C-g"))
+   ("Actions"
+    (("f" make-frame-command "new frame")
+     ("d" delete-frame "delete frame")
+     ("m" toggle-frame-maximized "maximize" :exit t)
+     ("u" toggle-frame-fullscreen "fullscreen" :exit t))
+    "opacity"
+    (("-" transwin-dec "decrease frame opacity")
+     ("=" transwin-inc "increase frame opacity")
+     ("0" transwin-toggle "toggle frame opacity")
+     ("o" transwin-ask "set frame opacity"))))
+  :hook (emacs-startup . (lambda ()
+                           (transwin-ask '85)))
+  :bind
+  ("M-+" . transwin-inc)
+  ("M-_" . transwin-dec)
+  ("M-)" . transwin-toggle)
+  :init
+  (setq transwin-delta-alpha 5
+        transwin-parameter-alpha 'alpha-background))
 
 (provide 'init-ui)

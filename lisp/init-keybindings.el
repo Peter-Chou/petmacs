@@ -355,6 +355,7 @@
 (leader-with-prefix "F"
   (leader-set-keys
     ;; "f" #'find-file-other-frame
+    "."  #'transwin-hydra/body
     "f" #'consult-buffer-other-frame
     "d" #'delete-frame
     "D" #'delete-other-frames
