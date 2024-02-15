@@ -39,6 +39,17 @@ sudo apt-get install cmake libtool-bin make
 
 if your cmake is too old, download the suitable version from [cmake.org](https://cmake.org/download/)
 
+- google-java-format (optional)
+
+install [google-java-format](https://www.npmjs.com/package/google-java-format) if java is needed.
+
+``` bash
+# java should be >= 11
+npm install -g google-java-format
+# java 8
+npm install -g google-java-format@1.7
+```
+
 ---
 
 ## Install
