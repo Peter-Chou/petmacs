@@ -1,4 +1,4 @@
-;r; -*- lexical-binding: t no-byte-compile: t -*-
+;; -*- lexical-binding: t no-byte-compile: t -*-
 
 (require 'init-custom)
 (require 'init-const)
@@ -343,9 +343,9 @@
   ;;   (define-key writeroom-mode-map (kbd "C-M-=") #'writeroom-adjust-width))
   )
 
-   (use-package editorconfig
-     :diminish
-     :hook (after-init . editorconfig-mode))
+(use-package editorconfig
+  :diminish
+  :hook (after-init . editorconfig-mode))
 
 ;; Search tool
 (use-package grep
@@ -514,5 +514,17 @@
 
 (use-package logview
   :config (add-hook 'logview-mode-hook 'auto-revert-mode))
+
+;; (use-package reformatter
+;;   :config
+;;   (reformatter-define yapf :program "yapf" :args nil))
+
+(use-package apheleia
+  :bind ("C-c f" . apheleia-format-buffer)
+  :hook (prog-mode . apheleia-mode)
+  :config
+  (setf (alist-get 'python-ts-mode apheleia-mode-alist) '(yapf))
+  ;; (setf (alist-get 'python-ts-mode apheleia-mode-alist) '(isort yapf))
+  )
 
 (provide 'init-tools)

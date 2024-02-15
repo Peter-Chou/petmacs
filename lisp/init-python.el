@@ -65,7 +65,8 @@
 
 (use-package yapfify
   :diminish yapf-mode
-  :hook ((python-mode python-ts-mode) . yapf-mode))
+  ;; :hook ((python-mode python-ts-mode) . yapf-mode)
+  )
 
 (use-package py-isort)
 (use-package pip-requirements)

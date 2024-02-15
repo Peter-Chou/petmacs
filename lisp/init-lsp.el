@@ -55,8 +55,9 @@
 
                        ;; Format and organize imports
                        (unless (apply #'derived-mode-p petmacs-lsp-format-on-save-ignore-modes)
-                         (add-hook 'before-save-hook #'lsp-format-buffer t t)
-                         (add-hook 'before-save-hook #'lsp-organize-imports t t))))
+                         ;; (add-hook 'before-save-hook #'lsp-format-buffer t t)
+                         (add-hook 'before-save-hook #'lsp-organize-imports t t))
+                       ))
          (lsp-mode . petmacs/lsp-double-gc-threshold))
   :init
   (setq lsp-auto-guess-root nil
@@ -383,13 +384,13 @@
 (use-package lsp-pyright
   :preface
   ;; Use yapf to format
-  (defun lsp-pyright-format-buffer ()
-	(interactive)
-	(when (and (executable-find "yapf") buffer-file-name)
-      (call-process "yapf" nil nil nil "-i" buffer-file-name)))
-  :hook (((python-mode python-ts-mode) . (lambda ()
-				                           (require 'lsp-pyright)
-				                           (add-hook 'after-save-hook #'lsp-pyright-format-buffer t t))))
+  ;; (defun lsp-pyright-format-buffer ()
+  ;;   (interactive)
+  ;;   (when (and (executable-find "yapf") buffer-file-name)
+  ;;     (call-process "yapf" nil nil nil "-i" buffer-file-name)))
+  ;; :hook (((python-mode python-ts-mode) . (lambda ()
+  ;;   			                           (require 'lsp-pyright)
+  ;;   			                           (add-hook 'after-save-hook #'lsp-pyright-format-buffer t t))))
   :init
   ;; too much noise in "real" projects
   (setq ;; lsp-pyright-typechecking-mode "basic"
