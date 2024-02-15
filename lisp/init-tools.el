@@ -515,10 +515,6 @@
 (use-package logview
   :config (add-hook 'logview-mode-hook 'auto-revert-mode))
 
-;; (use-package reformatter
-;;   :config
-;;   (reformatter-define yapf :program "yapf" :args nil))
-
 (use-package apheleia
   :bind ("C-c f" . apheleia-format-buffer)
   :hook (prog-mode . apheleia-mode)
