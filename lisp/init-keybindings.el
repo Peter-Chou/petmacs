@@ -43,14 +43,14 @@
         leader-major-mode-key "\,"))
 
 (leader-set-keys
- "'"   #'multi-vterm
- "/"   #'consult-ripgrep
+  "'"   #'multi-vterm
+  "/"   #'consult-ripgrep
 
- "v"   #'er/expand-region
- "u"   #'universal-argument
- ;; "d"   #'xref-pop-marker-stack
- "TAB"  #'petmacs/alternate-buffer
- )
+  "v"   #'er/expand-region
+  "u"   #'universal-argument
+  ;; "d"   #'xref-pop-marker-stack
+  "TAB"  #'petmacs/alternate-buffer
+  )
 
 
 (leader-declare-prefix
@@ -549,40 +549,40 @@
          "dI"  "inspect"
          "dS"  "switch"
          "dw"  "debug windows")
-      (leader-with-prefix "d"
-        (leader-set-keys
-          "." #'dape-hydra/body
+       (leader-with-prefix "d"
+         (leader-set-keys
+           "." #'dape-hydra/body
 
-          "q"  #'dape-quit
-          "D"  #'dape-disconnect-quit
+           "q"  #'dape-quit
+           "D"  #'dape-disconnect-quit
 
-          ;; breakpoints
-          "bb" #'dape-breakpoint-toggle
-          "bc" #'dape-breakpoint-expression
-          "bl" #'dape-breakpoint-log
-          "bD" #'dape-breakpoint-remove-all
-          ;; debuging/running
-          "dd" #'dape
+           ;; breakpoints
+           "bb" #'dape-breakpoint-toggle
+           "bc" #'dape-breakpoint-expression
+           "bl" #'dape-breakpoint-log
+           "bD" #'dape-breakpoint-remove-all
+           ;; debuging/running
+           "dd" #'dape
 
-          ;; switching
-          "sw" #'dape-watch-dwim
-          "sm" #'dape-read-memory
-          "st" #'dape-select-thread
-          "ss" #'dape-select-stack
-          "ss" #'dape-info
-          "sr"  #'dape-repl
+           ;; switching
+           "sw" #'dape-watch-dwim
+           "sm" #'dape-read-memory
+           "st" #'dape-select-thread
+           "ss" #'dape-select-stack
+           "ss" #'dape-info
+           "sr"  #'dape-repl
 
-          ;; stepping
-          "n"  #'dape-next
-          "s"  #'dape-next
-          "o"  #'dape-step-out
-          "c"  #'dape-continue
-          "i"  #'dape-step-in
-          "r"  #'dape-restart
-          "p"  #'dape-pause
-          "k"  #'dape-kill
-          "r"  #'dape-restart
-          )))
+           ;; stepping
+           "n"  #'dape-next
+           "s"  #'dape-next
+           "o"  #'dape-step-out
+           "c"  #'dape-continue
+           "i"  #'dape-step-in
+           "r"  #'dape-restart
+           "p"  #'dape-pause
+           "k"  #'dape-kill
+           "r"  #'dape-restart
+           )))
       (t
        (leader-declare-prefix
          "d" "debug"
