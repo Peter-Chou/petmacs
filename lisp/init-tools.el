@@ -518,9 +518,9 @@
 (use-package apheleia
   :bind ("C-c f" . apheleia-format-buffer)
   :hook (prog-mode . apheleia-mode)
-  :config
-  (setf (alist-get 'python-ts-mode apheleia-mode-alist) '(yapf))
-  ;; (setf (alist-get 'python-ts-mode apheleia-mode-alist) '(isort yapf))
+  ;; :config
+  ;; (setf (alist-get 'python-ts-mode apheleia-mode-alist) '(yapf))
+  ;; (setf (alist-get 'python-ts-mode apheleia-mode-alist) '(isort black))
   )
 
 (provide 'init-tools)
