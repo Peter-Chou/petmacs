@@ -1,5 +1,7 @@
 ;; -*- lexical-binding: t no-byte-compile: t -*-
 
+(require 'init-funcs)
+
 (use-package evil
   :preface
   (defun petmacs//evil-visual-shift-left ()
@@ -41,6 +43,14 @@
   ;; Use visual line motions even outside of visual-line-mode buffers
   (evil-global-set-key 'motion "j" 'evil-next-visual-line)
   (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+
+  (define-key evil-visual-state-map (kbd "y") 'petmacs/evil-yank)
+  (define-key evil-normal-state-map (kbd "Y") 'petmacs/yank-to-end-of-line)
+
+  (define-key evil-normal-state-map (kbd "g[") (lambda () (interactive) (beginning-of-defun)))
+  (define-key evil-normal-state-map (kbd "g]") (lambda () (interactive) (end-of-defun)))
+
+  (define-key evil-normal-state-map (kbd "M-y") 'consult-yank-pop)
 
   (evil-set-initial-state 'messages-buffer-mode 'normal)
   (evil-set-initial-state 'dashboard-mode 'normal)

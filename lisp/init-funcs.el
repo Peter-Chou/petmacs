@@ -14,6 +14,7 @@
 (declare-function chart-bar-quickie 'chart)
 (declare-function flymake-start 'flymake)
 (declare-function flycheck-buffer 'flycheck)
+(declare-function evil-yank 'evil)
 (declare-function async-inject-variables 'async)
 (declare-function imenu-list-smart-toggle 'imenu-list)
 (declare-function symbols-outline-show 'symbols-outline)
@@ -379,5 +380,17 @@ This issue has been addressed in 28."
           (get-buffer-window symbols-outline-buffer-name t))
       (petmacs/symbols-outline-smart-toggle)
     (imenu-list-smart-toggle)))
+
+
+(defun petmacs/evil-yank ()
+  (interactive)
+  (save-excursion
+    (call-interactively 'evil-yank))
+  (backward-char))
+
+(defun petmacs/yank-to-end-of-line ()
+  "Yank to end of line."
+  (interactive)
+  (evil-yank (point) (point-at-eol)))
 
 (provide 'init-funcs)
