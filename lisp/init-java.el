@@ -1,5 +1,7 @@
 ;; -*- lexical-binding: t no-byte-compile: t -*-
 
+;; maven uses JAVA_HOME to find which java version to run
+;; e.g. JAVA_HOME=/opt/jdk8 mvn test
 (use-package mvn
   :preface
   (defun petmacs/mvn-clean-compile ()
