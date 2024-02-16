@@ -74,7 +74,7 @@ install the language servers needed by LSP service
 npm install -g pyright
 ```
 
-set WORKON_HOME environment variable that has virtual environment directories.
+set `WORKON_HOME` environment variable that has virtual environment directories.
 
 
 ### 3.2 eclipse jdtls (Java)
