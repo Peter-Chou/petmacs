@@ -103,6 +103,8 @@ java-debug already been installed in 3.2 section
 
 ## 5. install formatter
 
+petmacs use [apheleia](https://github.com/radian-software/apheleia) to format the buffer.
+
 ### 5.1 black (Python)
 
 install [black](https://github.com/psf/black) is installed in your environment.
