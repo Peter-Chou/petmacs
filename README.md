@@ -64,6 +64,8 @@ run the following command in emacs.
 M-x treesit-auto-install-all
 ```
 
+---
+
 ## 3. install LSP servers
 
 install the language servers needed by LSP service
@@ -85,6 +87,8 @@ M-x: `lsp-install-server` to install eclipse jdtls
 
 use `clangd` in [LLVM project](https://github.com/llvm/llvm-project). soft link llvm project to `/opt/llvm`.
 
+---
+
 ## 4. install DAP servers
 
 ### 4.1 debugpy (Python)
@@ -100,6 +104,8 @@ java-debug already been installed in 3.2 section
 ### 4.3 lldb-vscode (C/C++)
 
 `lldb-vscode` is already in [LLVM project](https://github.com/llvm/llvm-project).
+
+---
 
 ## 5. install formatter
 
@@ -153,7 +159,7 @@ formatter for `json`, `javascript`, `typescript`, `css`, `scss`, `html`, `graphq
 
 ---
 
-## Screenshots
+## 6. Screenshots
 
 ![dashboard](./data/pics/dashboard.png)
 
