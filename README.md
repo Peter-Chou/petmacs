@@ -16,7 +16,11 @@ before you use Petmacs, make sure your emacs version >= 29.1 and tree-sitter is 
 
 - ripgrep
 
-  put [ripgrep](https://github.com/BurntSushi/ripgrep) binary into your `PATH`
+  install [ripgrep](https://github.com/BurntSushi/ripgrep) and put it into your `PATH`
+
+- fd
+
+  install [fd](https://github.com/sharkdp/fd) and put it into your `PATH`
 
 - nodejs
 

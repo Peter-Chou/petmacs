@@ -5,6 +5,9 @@
 (require 'init-custom)
 (require 'init-funcs)
 
+(when (executable-find "fd")
+  (setq find-program "fd"))
+
 (use-package no-littering
   :init
   (setq no-littering-etc-directory (expand-file-name "config/" user-emacs-directory)
