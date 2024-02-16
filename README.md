@@ -165,8 +165,4 @@ formatter for `json`, `javascript`, `typescript`, `css`, `scss`, `html`, `graphq
 
 <br>
 
-![markdown](./data/pics/markdown.png)
-
-<br>
-
 ![elisp](./data/pics/elisp.png)
