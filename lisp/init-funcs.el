@@ -128,7 +128,7 @@ Same as '`replace-string' `C-q' `C-m' `RET' `RET''."
   (- (elt (window-pixel-edges) 3)
      (elt (window-inside-pixel-edges) 3)))
 
-	;; Reload configurations
+;; Reload configurations
 (defun petmacs/reload-init-file ()
   "Reload Emacs configurations."
   (interactive)
@@ -381,6 +381,10 @@ This issue has been addressed in 28."
       (petmacs/symbols-outline-smart-toggle)
     (imenu-list-smart-toggle)))
 
+(defun petmacs/merge-list-to-list (dst src)
+  "Merges content of the 2nd list with the 1st one"
+  (set dst
+       (append (eval dst) src)))
 
 (defun petmacs/evil-yank ()
   (interactive)

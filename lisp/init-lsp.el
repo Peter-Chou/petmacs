@@ -84,13 +84,18 @@
         lsp-enable-symbol-highlighting nil
         lsp-enable-text-document-color nil
         lsp-enable-on-type-formatting nil
-        lsp-enable-file-watchers t)
+        lsp-enable-file-watchers t
+        lsp-file-watch-threshold 5000)
   :config
   (with-no-warnings
-    (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]typings\\'")
-    (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]data\\'")
-    (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]outputs\\'")
-    (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.cache\\'")
+    (petmacs/merge-list-to-list 'lsp-file-watch-ignored-directories
+                                '("[/\\\\]typings\\'"
+                                  "[/\\\\]data\\'"
+                                  "[/\\\\]outputs\\'"
+                                  "[/\\\\]\\.cache\\'"))
+
+    (petmacs/merge-list-to-list 'lsp-file-watch-ignored-files
+                                '("[/\\\\]\\.onnx\\'"))
 
     ;; Disable `lsp-mode' in `git-timemachine-mode'
     (defun my-lsp--init-if-visible (fn &rest args)
