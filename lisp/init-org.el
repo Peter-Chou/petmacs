@@ -113,7 +113,9 @@
         evil-org-key-theme '(textobjects
                              navigation
                              additional
-                             todo)))
+                             todo))
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys))
 
 (use-package org-appear
   :preface
