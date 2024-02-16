@@ -39,17 +39,6 @@ sudo apt-get install cmake libtool-bin make
 
 if your cmake is too old, download the suitable version from [cmake.org](https://cmake.org/download/)
 
-- google-java-format (optional)
-
-install [google-java-format](https://www.npmjs.com/package/google-java-format) if java is needed.
-
-``` bash
-# java should be >= 11
-npm install -g google-java-format
-# java 8
-npm install -g google-java-format@1.7
-```
-
 ---
 
 ## Install
@@ -67,24 +56,32 @@ try use the following command and rerun emacs:
 export GIT_SSL_NO_VERIFY=1
 ```
 
+### install dynamic libs for tree-sitter
+
+run the following command in emacs.
+
+``` emacs-lisp
+M-x treesit-auto-install-all
+```
+
+
 ### install LSP servers
 
 install the language servers needed by LSP service
 
-- python
+#### pyright (Python)
 
 ``` sh
 npm install -g pyright
 ```
 
 set WORKON_HOME environment variable that has virtual environment directories.
-Please make sure [black](https://github.com/psf/black) is installed in your environment to format buffer properly.
 
-- C/C++
+#### clangd (C/C++)
 
 use `clangd` in [LLVM project](https://github.com/llvm/llvm-project). soft link llvm project to `/opt/llvm`.
 
-- Golang
+#### gopls (Golang)
 
 ``` bash
 go install golang.org/x/tools/gopls@latest
@@ -92,15 +89,15 @@ go install golang.org/x/tools/gopls@latest
 
 ### install DAP servers
 
-- python
+#### debugpy (Python)
 
 ``` bash
 pip install debugpy
 ```
 
-- C/C++
+#### lldb-vscode (C/C++)
 
-`lldb-vscode` is in LLVM project
+`lldb-vscode` is already in [LLVM project](https://github.com/llvm/llvm-project).
 
 - Golang
 
@@ -108,21 +105,36 @@ pip install debugpy
 go install github.com/go-delve/delve/cmd/dlv@latest
 ```
 
+
+### install formatter
+
+#### black (Python)
+
+install [black](https://github.com/psf/black) is installed in your environment.
+
+``` bash
+pip install black
+```
+
+#### google-java-format (Java)
+
+``` bash
+# for java >= 11
+npm install -g google-java-format
+# for java 8
+npm install -g google-java-format@1.7
+```
+
+#### clang-format (C/C++)
+
+`clang-format` is already in [LLVM project](https://github.com/llvm/llvm-project).
+
 ---
 
 ### other tools
 
 ``` bash
 npm install -g readability-cli eslint_d prettier
-```
-
-
-### install dynamic libs for tree-sitter
-
-run the following command in emacs.
-
-``` emacs-lisp
-M-x treesit-auto-install-all
 ```
 
 ## Screenshots
