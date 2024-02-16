@@ -76,15 +76,14 @@ npm install -g pyright
 
 set WORKON_HOME environment variable that has virtual environment directories.
 
-### 3.2 clangd (C/C++)
+
+### 3.2 eclipse jdtls (Java)
+
+M-x: `lsp-install-server` to install eclipse jdtls
+
+### 3.3 clangd (C/C++)
 
 use `clangd` in [LLVM project](https://github.com/llvm/llvm-project). soft link llvm project to `/opt/llvm`.
-
-### 3.3 gopls (Golang)
-
-``` bash
-go install golang.org/x/tools/gopls@latest
-```
 
 ## 4. install DAP servers
 
@@ -94,16 +93,13 @@ go install golang.org/x/tools/gopls@latest
 pip install debugpy
 ```
 
-### 4.2 lldb-vscode (C/C++)
+### 4.2 java-debug (Java)
+
+java-debug already been installed in 3.2 section
+
+### 4.3 lldb-vscode (C/C++)
 
 `lldb-vscode` is already in [LLVM project](https://github.com/llvm/llvm-project).
-
-### 4.3 delve (Golang)
-
-``` bash
-go install github.com/go-delve/delve/cmd/dlv@latest
-```
-
 
 ## 5. install formatter
 

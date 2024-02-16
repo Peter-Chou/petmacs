@@ -419,7 +419,7 @@
    lsp-java-jdt-download-url "https://www.eclipse.org/downloads/download.php?file=/jdtls/milestones/1.30.1/jdt-language-server-1.30.1-202312071447.tar.gz"
    lsp-java-import-maven-enabled t
    lsp-java-implementations-code-lens-enabled t
-   ;; lsp-java-save-actions-organize-imports t
+   lsp-java-save-actions-organize-imports nil
    lsp-java-vmargs '("-XX:+UseParallelGC"
                      "-XX:GCTimeRatio=4"
                      "-XX:AdaptiveSizePolicyWeight=90"
