@@ -141,17 +141,13 @@ sudo apt-get install pgformatter
 npm install -g dprint
 ```
 
-### 5.7 prettier famliy
+### 5.7 prettier
 
 ``` bash
-npm install -g prettier             # web formatter
-npm install -g prettier-javascript  # javascript formatter
-npm install -g prettier-typescript  # typescript formatter
-npm install -g prettier-json        # json formatter
-npm install -g prettier-yaml        # yaml formatter
-npm install -g prettier-css         # css formatter
-npm install -g prettier-scss        # scss formatter
+npm install -g prettier
 ```
+
+formatter for `json`, `javascript`, `typescript`, `css`, `scss`, `html`, `graphql`, `markdown`, `yaml`
 
 ---
 
