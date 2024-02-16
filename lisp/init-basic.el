@@ -85,7 +85,7 @@
     :hook (emacs-startup . gcmh-mode)
     :init
     (setq gcmh-idle-delay 3
-          gcmh-high-cons-threshold (floor (* 0.5 1024 1024 1024)) ;; 500mb
+          gcmh-high-cons-threshold (floor (* 2 1024 1024 1024)) ;; 2GB
           gcmh-verbose nil
           gc-cons-percentage 0.6
           )) ; 16MB
