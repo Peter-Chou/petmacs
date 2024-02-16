@@ -51,13 +51,7 @@
          ((typescript-mode typescript-ts-mode) . lsp-deferred)
          (lsp-mode . (lambda ()
                        ;; Integrate `which-key'
-                       (lsp-enable-which-key-integration)
-
-                       ;; Format and organize imports
-                       ;; (unless (apply #'derived-mode-p petmacs-lsp-format-on-save-ignore-modes)
-                       ;;   ;; (add-hook 'before-save-hook #'lsp-format-buffer t t)
-                       ;;   (add-hook 'before-save-hook #'lsp-organize-imports t t))
-                       ))
+                       (lsp-enable-which-key-integration)))
          (lsp-mode . petmacs/lsp-double-gc-threshold))
   :init
   (setq lsp-auto-guess-root nil
@@ -87,12 +81,17 @@
         lsp-keep-workspace-alive t
         lsp-enable-indentation nil
         lsp-enable-folding nil
-        lsp-enable-file-watchers nil
         lsp-enable-symbol-highlighting nil
         lsp-enable-text-document-color nil
-        lsp-enable-on-type-formatting nil)
+        lsp-enable-on-type-formatting nil
+        lsp-enable-file-watchers t)
   :config
   (with-no-warnings
+    (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]typings\\'")
+    (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]data\\'")
+    (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]outputs\\'")
+    (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.cache\\'")
+
     ;; Disable `lsp-mode' in `git-timemachine-mode'
     (defun my-lsp--init-if-visible (fn &rest args)
       (unless (bound-and-true-p git-timemachine-mode)
@@ -382,19 +381,7 @@
 
 ;;; python
 (use-package lsp-pyright
-  :preface
-  ;; Use yapf to format
-  ;; (defun lsp-pyright-format-buffer ()
-  ;;   (interactive)
-  ;;   (when (and (executable-find "yapf") buffer-file-name)
-  ;;     (call-process "yapf" nil nil nil "-i" buffer-file-name)))
-  ;; :hook (((python-mode python-ts-mode) . (lambda ()
-  ;;   			                           (require 'lsp-pyright)
-  ;;   			                           (add-hook 'after-save-hook #'lsp-pyright-format-buffer t t))))
-  :init
-  ;; too much noise in "real" projects
-  (setq ;; lsp-pyright-typechecking-mode "basic"
-   lsp-pyright-venv-path (getenv "WORKON_HOME")))
+  :init (setq lsp-pyright-venv-path (getenv "WORKON_HOME")))
 
 ;;; java
 (use-package lsp-java
