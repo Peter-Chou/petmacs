@@ -90,13 +90,6 @@
           gc-cons-percentage 0.6
           )) ; 16MB
   )
-
-;; Set UTF-8 as the default coding system
-;; (set-language-environment "utf-8")
-;; (when (fboundp 'set-charset-priority)
-;;   (set-charset-priority 'unicode))
-;; (setq system-time-locale "C")
-
 ;; Set UTF-8 as the default coding system
 (when (fboundp 'set-charset-priority)
   (set-charset-priority 'unicode))
@@ -105,6 +98,9 @@
 (setq system-time-locale "C")
 (unless sys/win32p
   (set-selection-coding-system 'utf-8))
+
+(when sys/wslp
+  (set-clipboard-coding-system 'gbk-dos))
 
 ;; Environment
 (when (or sys/mac-x-p sys/linux-x-p (daemonp))
