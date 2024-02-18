@@ -99,6 +99,7 @@
 (unless sys/win32p
   (set-selection-coding-system 'utf-8))
 
+;; when emacs is opened by wslg
 (when (and sys/wslp
            pgtk-initialized)
   (set-clipboard-coding-system 'gbk-dos))
