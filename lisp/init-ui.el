@@ -55,15 +55,35 @@
 (use-package solaire-mode
   :hook (after-init . solaire-global-mode))
 
-(use-package srcery-theme)
-(use-package standard-themes)
+;; (use-package srcery-theme)
+;; (use-package standard-themes)
+;; (use-package spacemacs-theme
+;;   :init
+;;   (setq spacemacs-theme-comment-bg nil
+;;         ;; spacemacs-theme-underline-parens nil
+;;         spacemacs-theme-custom-colors `((mat . ,petmacs-favor-color)
+;;                                         (cursor . ,petmacs-favor-color))))
 
-(use-package spacemacs-theme
-  :init
-  (setq spacemacs-theme-comment-bg nil
-        ;; spacemacs-theme-underline-parens nil
-        spacemacs-theme-custom-colors `((mat . ,petmacs-favor-color)
-                                        (cursor . ,petmacs-favor-color))))
+;; (use-package modus-themes
+;;   :init
+;;   (setq modus-themes-bold-constructs t
+;;         ;; modus-themes-italic-constructs t
+;;         modus-themes-org-blocks 'tinted-background
+;;         ;; modus-themes-syntax '(yellow-comments green-strings)
+;;         modus-themes-hl-line '(intense)
+
+;;         modus-themes-paren-match '(bold intense)
+;;         ;; modus-themes-mode-line '(accented borderless (height . 0.9))
+;;         modus-themes-mode-line '(accented borderless 3d)
+;;         modus-themes-region '(accented bg-only no-extend)
+;;         modus-themes-completions '((matches . (extrabold))
+;;                                    (selection . (semibold accented))
+;;                                    (popup . (accented intense)))
+;;         modus-themes-headings ; this is an alist: read the manual or its doc string
+;;         '((1 . (rainbow overline background 1.4))
+;;           (2 . (rainbow background 1.3))
+;;           (3 . (rainbow bold 1.2))
+;;           (t . (semilight 1.1)))))
 
 (use-package doom-themes
   :config
@@ -92,27 +112,6 @@
   (doom-themes-treemacs-config)
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config))
-
-(use-package modus-themes
-  :init
-  (setq modus-themes-bold-constructs t
-        ;; modus-themes-italic-constructs t
-        modus-themes-org-blocks 'tinted-background
-        ;; modus-themes-syntax '(yellow-comments green-strings)
-        modus-themes-hl-line '(intense)
-
-        modus-themes-paren-match '(bold intense)
-        ;; modus-themes-mode-line '(accented borderless (height . 0.9))
-        modus-themes-mode-line '(accented borderless 3d)
-        modus-themes-region '(accented bg-only no-extend)
-        modus-themes-completions '((matches . (extrabold))
-                                   (selection . (semibold accented))
-                                   (popup . (accented intense)))
-        modus-themes-headings ; this is an alist: read the manual or its doc string
-        '((1 . (rainbow overline background 1.4))
-          (2 . (rainbow background 1.3))
-          (3 . (rainbow bold 1.2))
-          (t . (semilight 1.1)))))
 
 (use-package display-time
   :ensure nil

@@ -108,8 +108,7 @@
     :custom (exec-path-from-shell-arguments '("-l"))
     :config
     (dolist (var '("LSP_USE_PLISTS"))
-      (add-to-list 'exec-path-from-shell-variables var))
-    )
+      (add-to-list 'exec-path-from-shell-variables var)))
 
   (use-package cache-path-from-shell
     :ensure nil
