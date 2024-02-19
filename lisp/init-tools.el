@@ -437,6 +437,7 @@
 
 (use-package symbols-outline
   :after nerd-icons
+  :demand t
   :preface
   (defun petmacs/symbols-outline-smart-toggle ()
     "Toggle `symbols-outline-mode' by showing or quitting the `*Outline*' buffer."
@@ -448,11 +449,10 @@
             (bury-buffer (get-buffer symbols-outline-buffer-name))))
       (symbols-outline-show)))
   :init
-  (require 'symbols-outline)
   (setq symbols-outline-window-position 'left
         symbols-outline-use-nerd-icon-in-gui (not (image-type-available-p 'svg))
         symbols-outline-window-width 35
-        ;; symbols-outline-ignore-variable-symbols nil
+        symbols-outline-ignore-variable-symbols t
         symbols-outline-buffer-name "*Outline*"
         symbols-outline-collapse-functions-on-startup t)
 
@@ -518,8 +518,7 @@
 (use-package apheleia
   :bind ("C-c f" . apheleia-format-buffer)
   :hook (emacs-startup . apheleia-global-mode)
-  ;; :config
-  ;; (setf (alist-get 'python-ts-mode apheleia-mode-alist) '(isort black))
-  )
+  :config
+  (setf (alist-get 'python-ts-mode apheleia-mode-alist) '(isort black)))
 
 (provide 'init-tools)
