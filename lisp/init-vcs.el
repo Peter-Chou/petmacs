@@ -76,7 +76,7 @@
     :init
     (setq transient-posframe-border-width posframe-border-width
           transient-posframe-min-height nil
-          transient-posframe-min-width 80
+          transient-posframe-min-width 90
           transient-posframe-poshandler 'posframe-poshandler-frame-center
           transient-posframe-parameters '((left-fringe . 8)
                                           (right-fringe . 8)))
