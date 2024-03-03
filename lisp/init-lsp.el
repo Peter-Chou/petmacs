@@ -49,66 +49,65 @@
          ((go-mode go-ts-mode) . lsp-deferred)
          ((javascript-mode javascript-ts-mode) . lsp-deferred)
          ((typescript-mode typescript-ts-mode) . lsp-deferred)
-         (lsp-mode . (lambda ()
-                       ;; Integrate `which-key'
-                       (lsp-enable-which-key-integration)))
+         ;; (lsp-mode . (lambda ()
+         ;;               ;; Integrate `which-key'
+         ;;               (lsp-enable-which-key-integration)))
          (lsp-mode . petmacs/lsp-double-gc-threshold))
   :init
   (setq lsp-auto-guess-root nil
-        lsp-imenu-index-function #'lsp-imenu-create-categorized-index
+        ;; lsp-imenu-index-function #'lsp-imenu-create-categorized-index
+
+        lsp-signature-auto-activate t
         ;; lsp-keymap-prefix "C-c l"
         ;; lsp-diagnostics-provider :none ;; flymake or ;; :none
         lsp-diagnostics-provider :flymake ;; flymake or ;; :none
         ;; lsp-diagnostics-provider :flycheck ;; flymake or ;; :none
-        lsp-signature-auto-activate t
         lsp-signature-render-documentation nil
         lsp-modeline-code-actions-enable nil
-        ;; lsp-modeline-diagnostics-enable t
         lsp-modeline-diagnostics-enable nil
         lsp-modeline-diagnostics-scope :workspace
         lsp-modeline-workspace-status-enable nil
         lsp-headerline-breadcrumb-enable nil
         lsp-headerline-breadcrumb-segments '(symbols)
 
-        lsp-eslint-validate '(svelte typescript js javascript)
-        ;; lsp-semantic-tokens-enable t
+        ;; lsp-eslint-validate '(svelte typescript js javascript)
         lsp-semantic-tokens-enable nil  ;; do not color token by lsp
         lsp-progress-spinner-type 'progress-bar-filled
 
         ;; how often lsp-mode will refresh the highlights, lenses, links, etc while you type
-        lsp-idle-delay 0.5
+        ;; lsp-idle-delay 0.5
 
-        lsp-keep-workspace-alive t
+        lsp-keep-workspace-alive nil
         lsp-enable-indentation nil
         lsp-enable-folding nil
         lsp-enable-symbol-highlighting nil
         lsp-enable-text-document-color nil
         lsp-enable-on-type-formatting nil
-        lsp-enable-file-watchers t
+        lsp-enable-file-watchers nil
         lsp-file-watch-threshold 5000)
   :config
   (with-no-warnings
-    (petmacs/merge-list-to-list 'lsp-file-watch-ignored-directories
-                                '("[/\\\\]typings\\'"
-                                  "[/\\\\]data\\'"
-                                  "[/\\\\]outputs\\'"
-                                  "[/\\\\]\\.cache\\'"))
+    ;; (petmacs/merge-list-to-list 'lsp-file-watch-ignored-directories
+    ;;                             '("[/\\\\]typings\\'"
+    ;;                               "[/\\\\]data\\'"
+    ;;                               "[/\\\\]outputs\\'"
+    ;;                               "[/\\\\]\\.cache\\'"))
 
-    (petmacs/merge-list-to-list 'lsp-file-watch-ignored-files
-                                '("[/\\\\]\\.onnx\\'"))
+    ;; (petmacs/merge-list-to-list 'lsp-file-watch-ignored-files
+    ;;                             '("[/\\\\]\\.onnx\\'"))
 
     ;; Disable `lsp-mode' in `git-timemachine-mode'
-    (defun my-lsp--init-if-visible (fn &rest args)
-      (unless (bound-and-true-p git-timemachine-mode)
-        (apply fn args)))
-    (advice-add #'lsp--init-if-visible :around #'my-lsp--init-if-visible)
+    ;; (defun my-lsp--init-if-visible (fn &rest args)
+    ;;   (unless (bound-and-true-p git-timemachine-mode)
+    ;;     (apply fn args)))
+    ;; (advice-add #'lsp--init-if-visible :around #'my-lsp--init-if-visible)
 
     ;; Enable `lsp-mode' in sh/bash/zsh
-    (defun my-lsp-bash-check-sh-shell (&rest _)
-      (and (memq major-mode '(sh-mode bash-ts-mode))
-           (memq sh-shell '(sh bash zsh))))
-    (advice-add #'lsp-bash-check-sh-shell :override #'my-lsp-bash-check-sh-shell)
-    (add-to-list 'lsp-language-id-configuration '(bash-ts-mode . "shellscript"))
+    ;; (defun my-lsp-bash-check-sh-shell (&rest _)
+    ;;   (and (memq major-mode '(sh-mode bash-ts-mode))
+    ;;        (memq sh-shell '(sh bash zsh))))
+    ;; (advice-add #'lsp-bash-check-sh-shell :override #'my-lsp-bash-check-sh-shell)
+    ;; (add-to-list 'lsp-language-id-configuration '(bash-ts-mode . "shellscript"))
 
     ;; Display icons
     (when (icons-displayable-p)
