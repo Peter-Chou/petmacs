@@ -7,14 +7,7 @@
 (use-package python
   :ensure nil
   :hook
-  (
-   ;; ((python-mode python-ts-mode) . (lambda ()
-   ;;  	            ;; (setq-local flycheck-checkers '(python-pylint))
-   ;;  	            (setq-local flycheck-checkers '(python-ruff)
-   ;;                              lsp-diagnostics-provider :none)
-   ;;                  (flycheck-mode 1)
-   ;;                  ))
-   (inferior-python-mode . (lambda ()
+  ((inferior-python-mode . (lambda ()
 			                 (process-query-on-exit-flag
 			                  (get-process "Python")))))
   :init
@@ -56,7 +49,9 @@
         (cond ((equal petmacs-lsp-mode-impl 'lsp-mode)
                (lsp-deferred))
               ((equal petmacs-lsp-mode-impl 'lsp-bridge-mode)
-               (lsp-bridge-restart-process))))))
+               (lsp-bridge-restart-process))
+              ((equal petmacs-lsp-mode-impl 'eglot-mode)
+               (eglot-ensure))))))
   :hook (((python-mode python-ts-mode) . petmacs/pyvenv-pyright-autoload)
          (pyvenv-mode . petmacs/disable-modeline-env-info))
   :config

@@ -40,19 +40,19 @@
     (switch-to-buffer-other-window (buffer-name))
     (lsp-find-references))
   :functions nerd-icons-octicon
-  :hook (((c-mode c-ts-mode c++-ts-mode c++-mode cuda-mode) . (lambda ()
-					                                            (lsp-deferred)))
-         ((scala-mode scala-ts-mode) . (lambda ()
-			                             (require 'lsp-metals)
-			                             (lsp-deferred)))
-         ;; ((markdown-mode yaml-mode) . lsp-deferred)
-         ((go-mode go-ts-mode) . lsp-deferred)
-         ((javascript-mode javascript-ts-mode) . lsp-deferred)
-         ((typescript-mode typescript-ts-mode) . lsp-deferred)
-         ;; (lsp-mode . (lambda ()
-         ;;               ;; Integrate `which-key'
-         ;;               (lsp-enable-which-key-integration)))
-         (lsp-mode . petmacs/lsp-double-gc-threshold))
+  ;; :hook (((c-mode c-ts-mode c++-ts-mode c++-mode cuda-mode) . (lambda ()
+  ;;   				                                            (lsp-deferred)))
+  ;;        ((scala-mode scala-ts-mode) . (lambda ()
+  ;;   		                             (require 'lsp-metals)
+  ;;   		                             (lsp-deferred)))
+  ;;        ;; ((markdown-mode yaml-mode) . lsp-deferred)
+  ;;        ((go-mode go-ts-mode) . lsp-deferred)
+  ;;        ((javascript-mode javascript-ts-mode) . lsp-deferred)
+  ;;        ((typescript-mode typescript-ts-mode) . lsp-deferred)
+  ;;        ;; (lsp-mode . (lambda ()
+  ;;        ;;               ;; Integrate `which-key'
+  ;;        ;;               (lsp-enable-which-key-integration)))
+  ;;        (lsp-mode . petmacs/lsp-double-gc-threshold))
   :init
   (setq lsp-auto-guess-root nil
         ;; lsp-imenu-index-function #'lsp-imenu-create-categorized-index
@@ -158,14 +158,15 @@
 
         (setq lsp-headerline-arrow (nerd-icons-octicon "nf-oct-chevron_right"
                                                        :face 'lsp-headerline-breadcrumb-separator-face))))
-    (with-eval-after-load 'pyvenv
-      (add-hook 'pyvenv-post-activate-hooks #'lsp-deferred))))
+    ;; (with-eval-after-load 'pyvenv
+    ;;   (add-hook 'pyvenv-post-activate-hooks #'lsp-deferred))
+    ))
 
 
 (use-package lsp-ui
   :custom-face
   (lsp-ui-sideline-code-action ((t (:inherit warning))))
-  :hook (lsp-mode . lsp-ui-mode)
+  ;; :hook (lsp-mode . lsp-ui-mode)
   :bind (:map lsp-ui-mode-map
          ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
          ([remap xref-find-references] . lsp-ui-peek-find-references))
@@ -204,7 +205,7 @@
    `((side . left)
      (slot . 2)
      (window-width . 30)))
-  (lsp-treemacs-sync-mode 1)
+  ;; (lsp-treemacs-sync-mode 1)
   :config
   (define-key winum-keymap (kbd "M-9") 'lsp-treemacs-symbols)
 
@@ -389,13 +390,13 @@
 
 ;;; java
 (use-package lsp-java
-  :hook ((java-mode java-ts-mode jdee-mode) . (lambda ()
-		                                        (require 'lsp-java)
-                                                (require 'lsp-java-boot)
-                                                (lsp-lens-mode 1)
-                                                (lsp-java-lens-mode 1)
-                                                (lsp-jt-lens-mode 1)
-		                                        (lsp-deferred)))
+  ;; :hook ((java-mode java-ts-mode jdee-mode) . (lambda ()
+  ;;   	                                        (require 'lsp-java)
+  ;;                                               (require 'lsp-java-boot)
+  ;;                                               (lsp-lens-mode 1)
+  ;;                                               (lsp-java-lens-mode 1)
+  ;;                                               (lsp-jt-lens-mode 1)
+  ;;   	                                        (lsp-deferred)))
   :init
   (require 'lsp-mode)
   (setq
@@ -448,50 +449,50 @@
 (use-package lsp-metals)
 (use-package consult-lsp)
 
-(use-package lsp-focus
-  :after focus
-  :hook (focus-mode . lsp-focus-mode))
+;; (use-package lsp-focus
+;;   :after focus
+;;   :hook (focus-mode . lsp-focus-mode))
 
-(when petmacs-lsp-mode-impl
-  ;; Enable LSP in org babel
-  ;; https://github.com/emacs-lsp/lsp-mode/issues/377
-  (cl-defmacro lsp-org-babel-enable (lang)
-    "Support LANG in org source code block."
-    (cl-check-type lang string)
-    (let* ((edit-pre (intern (format "org-babel-edit-prep:%s" lang)))
-           (intern-pre (intern (format "lsp--%s" (symbol-name edit-pre)))))
-      `(progn
-         (defun ,intern-pre (info)
-           (setq buffer-file-name (or (->> info caddr (alist-get :file))
-                                      "org-src-babel.tmp"))
-           (pcase petmacs-lsp-mode-impl
-             ('eglot
-              (when (fboundp 'eglot-ensure)
-                (eglot-ensure)))
-             ('lsp-mode
-              (when (fboundp 'lsp-deferred)
-                ;; Avoid headerline conflicts
-                (setq-local lsp-headerline-breadcrumb-enable nil)
-                (lsp-deferred)))
-             (_
-              (user-error "LSP:: invalid `petmacs-lsp-mode-impl' type"))))
-         (put ',intern-pre 'function-documentation
-              (format "Enable `%s' in the buffer of org source block (%s)."
-                      petmacs-lsp-mode-impl (upcase ,lang)))
+;; (when petmacs-lsp-mode-impl
+;;   ;; Enable LSP in org babel
+;;   ;; https://github.com/emacs-lsp/lsp-mode/issues/377
+;;   (cl-defmacro lsp-org-babel-enable (lang)
+;;     "Support LANG in org source code block."
+;;     (cl-check-type lang string)
+;;     (let* ((edit-pre (intern (format "org-babel-edit-prep:%s" lang)))
+;;            (intern-pre (intern (format "lsp--%s" (symbol-name edit-pre)))))
+;;       `(progn
+;;          (defun ,intern-pre (info)
+;;            (setq buffer-file-name (or (->> info caddr (alist-get :file))
+;;                                       "org-src-babel.tmp"))
+;;            (pcase petmacs-lsp-mode-impl
+;;              ('eglot
+;;               (when (fboundp 'eglot-ensure)
+;;                 (eglot-ensure)))
+;;              ('lsp-mode
+;;               (when (fboundp 'lsp-deferred)
+;;                 ;; Avoid headerline conflicts
+;;                 (setq-local lsp-headerline-breadcrumb-enable nil)
+;;                 (lsp-deferred)))
+;;              (_
+;;               (user-error "LSP:: invalid `petmacs-lsp-mode-impl' type"))))
+;;          (put ',intern-pre 'function-documentation
+;;               (format "Enable `%s' in the buffer of org source block (%s)."
+;;                       petmacs-lsp-mode-impl (upcase ,lang)))
 
-         (if (fboundp ',edit-pre)
-             (advice-add ',edit-pre :after ',intern-pre)
-           (progn
-             (defun ,edit-pre (info)
-               (,intern-pre info))
-             (put ',edit-pre 'function-documentation
-                  (format "Prepare local buffer environment for org source block (%s)."
-                          (upcase ,lang))))))))
+;;          (if (fboundp ',edit-pre)
+;;              (advice-add ',edit-pre :after ',intern-pre)
+;;            (progn
+;;              (defun ,edit-pre (info)
+;;                (,intern-pre info))
+;;              (put ',edit-pre 'function-documentation
+;;                   (format "Prepare local buffer environment for org source block (%s)."
+;;                           (upcase ,lang))))))))
 
-  (defconst org-babel-lang-list
-    '("go" "python" "ipython" "ruby" "js" "css" "sass" "c" "rust" "java" "cpp" "c++" "shell")
-    "The supported programming languages for interactive Babel.")
-  (dolist (lang org-babel-lang-list)
-    (eval `(lsp-org-babel-enable ,lang))))
+;;   (defconst org-babel-lang-list
+;;     '("go" "python" "ipython" "ruby" "js" "css" "sass" "c" "rust" "java" "cpp" "c++" "shell")
+;;     "The supported programming languages for interactive Babel.")
+;;   (dolist (lang org-babel-lang-list)
+;;     (eval `(lsp-org-babel-enable ,lang))))
 
 (provide 'init-lsp)

@@ -36,14 +36,25 @@
   (define-key corfu-map [remap move-beginning-of-line] #'corfu-beginning-of-prompt)
   (define-key corfu-map [remap move-end-of-line] #'corfu-end-of-prompt)
 
-  (with-eval-after-load 'lsp-mode
-    (setq lsp-completion-provider :none) ;; we use Corfu!
+  ;; (with-eval-after-load 'lsp-mode
+  ;;   (setq lsp-completion-provider :none) ;; we use Corfu!
 
-    (defun petmacs/lsp-mode-setup-completion ()
-      (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
-            '(orderless))) ;; Configure orderless
+  ;;   (defun petmacs/lsp-mode-setup-completion ()
+  ;;     (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
+  ;;           '(orderless))) ;; Configure orderless
 
-    (add-hook 'lsp-completion-mode-hook #'petmacs/lsp-mode-setup-completion))
+  ;;   (add-hook 'lsp-completion-mode-hook #'petmacs/lsp-mode-setup-completion))
+
+  (defun petmacs/eglot-capf-setup ()
+    (setq-local completion-at-point-functions
+    		    (list
+                 #'eglot-completion-at-point
+                 #'cape-file
+                 #'yasnippet-capf
+    		     ;; #'cape-dabbrev
+                 )))
+  (add-hook 'eglot-managed-mode-hook #'petmacs/eglot-capf-setup)
+
   (global-corfu-mode))
 
 (use-package nerd-icons-corfu
@@ -57,13 +68,13 @@
          ("C-M-/" . dabbrev-expand)))
 
 (use-package cape
-  :preface
-  (defun petmacs/set-lsp-capfs ()
-    (setq-local completion-at-point-functions
-    			(list #'lsp-completion-at-point
-                      #'cape-file
-    			      #'cape-dabbrev)))
-  :hook (lsp-completion-mode . petmacs/set-lsp-capfs)
+  ;; :preface
+  ;; (defun petmacs/set-lsp-capfs ()
+  ;;   (setq-local completion-at-point-functions
+  ;;   			(list #'lsp-completion-at-point
+  ;;                     #'cape-file
+  ;;   			      #'cape-dabbrev)))
+  ;; :hook (lsp-completion-mode . petmacs/set-lsp-capfs)
   :init (setq cape-dabbrev-min-length 2
               cape-dabbrev-check-other-buffers nil)
   :config
@@ -72,7 +83,8 @@
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-elisp-block)
   (add-to-list 'completion-at-point-functions #'cape-abbrev)
-  (add-to-list 'completion-at-point-functions #'cape-keyword))
+  (add-to-list 'completion-at-point-functions #'cape-keyword)
+  (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster))
 
 (unless (display-graphic-p)
   (use-package popon
