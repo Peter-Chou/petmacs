@@ -46,12 +46,16 @@
   ;;   (add-hook 'lsp-completion-mode-hook #'petmacs/lsp-mode-setup-completion))
 
   (defun petmacs/eglot-capf-setup ()
+
+    (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
+          '(orderless)) ;; Configure orderless
+
     (setq-local completion-at-point-functions
     		    (list
                  #'eglot-completion-at-point
                  #'cape-file
                  #'yasnippet-capf
-    		     ;; #'cape-dabbrev
+    		     #'cape-dabbrev
                  )))
   (add-hook 'eglot-managed-mode-hook #'petmacs/eglot-capf-setup)
 
