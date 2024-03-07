@@ -18,10 +18,15 @@
         eldoc-echo-area-use-multiline-p nil)
   (advice-add 'eglot-ensure :after 'petmacs/eglot-keybindgs)
   :config
-  (push :documentHighlightProvider eglot-ignored-server-capabilities)
-  )
+  (push :documentHighlightProvider eglot-ignored-server-capabilities))
+
+;; (use-package eglot-x
+;;   :quelpa (eglot-x :fetcher git :url "https://gitee.com/Peter-Chou/eglot-x.git" :files ("*.el"))
+;;   :config
+;;   (with-eval-after-load 'eglot
+;;     (require 'eglot-x)
+;;     (eglot-x-setup)))
 
 (use-package consult-eglot)
-
 
 (provide 'init-eglot)
