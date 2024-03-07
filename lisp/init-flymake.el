@@ -29,10 +29,25 @@
               sideline-backends-right '(sideline-flymake)))
 
 (use-package flymake-ruff
+  :demand t
   :preface
   (defun petmacs/setup-flymake-ruff ()
     (setq-local lsp-diagnostics-provider :none)
     (flymake-ruff-load))
-  :hook ((python-mode python-ts-mode) . petmacs/setup-flymake-ruff))
+  :config
+  (pcase petmacs-lsp-mode-impl
+    ('lsp-mode
+     (add-hook 'python-mode-hook #'petmacs/setup-flymake-ruff)
+     (add-hook 'python-ts-mode-hook #'petmacs/setup-flymake-ruff))
+    ('eglot-mode
+     (defun my-filter-eglot-diagnostics (diags)
+       "Drop Pyright 'variable not accessed' notes from DIAGS."
+       (list (seq-remove (lambda (d)
+                           (and (eq (flymake-diagnostic-type d) 'eglot-note)
+                                (s-starts-with? "Pyright:" (flymake-diagnostic-text d))
+                                (s-ends-with? "is not accessed" (flymake-diagnostic-text d))))
+                         (car diags))))
+     (advice-add 'eglot--report-to-flymake :filter-args #'my-filter-eglot-diagnostics)
+     (add-hook 'eglot-managed-mode-hook 'flymake-ruff-load))))
 
 (provide 'init-flymake)
