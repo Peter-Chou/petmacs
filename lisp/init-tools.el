@@ -446,7 +446,6 @@
           (when (get-buffer symbols-outline-buffer-name)
             (bury-buffer (get-buffer symbols-outline-buffer-name))))
       (symbols-outline-show)))
-  :quelpa (symbols-outline :fetcher git :url "https://gitee.com/Peter-Chou/symbols-outline.el.git" :files ("*"))
   :after nerd-icons
   :init
   (setq symbols-outline-window-position 'left

@@ -207,7 +207,13 @@
      (window-width . 30)))
   ;; (lsp-treemacs-sync-mode 1)
   :config
-  (define-key winum-keymap (kbd "M-9") 'lsp-treemacs-symbols)
+
+  (pcase petmacs-lsp-mode-impl
+    ('lsp-mode
+     (define-key winum-keymap (kbd "M-9") 'lsp-treemacs-symbols)
+     )
+    ('eglot-mode
+     (define-key winum-keymap (kbd "M-9") 'petmacs/symbols-outline-smart-toggle)))
 
   (with-eval-after-load 'ace-window
     (when (boundp 'aw-ignored-buffers)
