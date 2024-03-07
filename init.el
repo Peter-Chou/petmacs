@@ -61,6 +61,7 @@
 (require 'init-vcs)
 
 (require 'init-projectile)
+(require 'init-project)
 ;; (require 'init-persp)
 (require 'init-dired)
 (require 'init-shell)
