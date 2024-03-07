@@ -436,8 +436,6 @@
   :commands (uuidgen))
 
 (use-package symbols-outline
-  :after nerd-icons
-  :demand t
   :preface
   (defun petmacs/symbols-outline-smart-toggle ()
     "Toggle `symbols-outline-mode' by showing or quitting the `*Outline*' buffer."
@@ -448,6 +446,8 @@
           (when (get-buffer symbols-outline-buffer-name)
             (bury-buffer (get-buffer symbols-outline-buffer-name))))
       (symbols-outline-show)))
+  :quelpa (symbols-outline :fetcher git :url "https://gitee.com/Peter-Chou/symbols-outline.el.git" :files ("*"))
+  :after nerd-icons
   :init
   (setq symbols-outline-window-position 'left
         symbols-outline-use-nerd-icon-in-gui (not (image-type-available-p 'svg))
