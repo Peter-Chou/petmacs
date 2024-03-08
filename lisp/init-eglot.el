@@ -19,7 +19,11 @@
           eldoc-echo-area-use-multiline-p nil)
     (advice-add 'eglot-ensure :after 'petmacs/eglot-keybindgs)
     :config
-    (push :documentHighlightProvider eglot-ignored-server-capabilities)))
+    (push :documentHighlightProvider eglot-ignored-server-capabilities)
+    (with-eval-after-load 'eglot
+      (add-to-list 'eglot-server-programs '( python-ts-mode . ("pyright-langserver" "--stdio")))
+      (add-to-list 'eglot-server-programs '( python-mode . ("pyright-langserver" "--stdio")))
+      (add-to-list 'eglot-server-programs '((c++-mode c-mode c++-ts-mode c-ts-mode) "clangd")))))
 
 (use-package consult-eglot)
 
