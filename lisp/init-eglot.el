@@ -16,14 +16,20 @@
           eglot-autoshutdown t
           eglot-connect-timeout 120
           eglot-ignored-server-capabilities '(:inlayHintProvider)
-          eldoc-echo-area-use-multiline-p nil)
+          eldoc-echo-area-use-multiline-p nil
+          eglot-server-programs '(
+                                  ((python-mode python-ts-mode) . ("pyright-langserver" "--stdio"))
+                                  ((c++-mode c-mode c++-ts-mode c-ts-mode objc-mode) ("clangd"))
+                                  ((cmake-mode cmake-ts-mode) . ("cmake-language-server"))
+                                  ((java-mode java-ts-mode) . ("jdtls"))
+                                  ((bash-ts-mode sh-mode) . ("bash-language-server" "start"))
+                                  ((go-mode go-dot-mod-mode go-dot-work-mode go-ts-mode go-mod-ts-mode)
+                                   . ("gopls"))
+                                  ((yaml-ts-mode yaml-mode) . ("yaml-language-server" "--stdio"))
+                                  ((dockerfile-mode dockerfile-ts-mode) . ("docker-langserver" "--stdio"))))
     (advice-add 'eglot-ensure :after 'petmacs/eglot-keybindgs)
     :config
-    (push :documentHighlightProvider eglot-ignored-server-capabilities)
-    (with-eval-after-load 'eglot
-      (add-to-list 'eglot-server-programs '( python-ts-mode . ("pyright-langserver" "--stdio")))
-      (add-to-list 'eglot-server-programs '( python-mode . ("pyright-langserver" "--stdio")))
-      (add-to-list 'eglot-server-programs '((c++-mode c-mode c++-ts-mode c-ts-mode) "clangd")))))
+    (push :documentHighlightProvider eglot-ignored-server-capabilities)))
 
 (use-package consult-eglot)
 
