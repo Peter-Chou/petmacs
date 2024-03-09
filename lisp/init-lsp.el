@@ -4,13 +4,13 @@
 (require 'init-funcs)
 
 ;; optimize lsp-mode
-(setenv "LSP_USE_PLISTS" "true")
-(setq read-process-output-max (* 5 1024 1024) ;; 5mb
-      lsp-use-plists t
-      lsp-log-io nil)
+(when (equal petmacs-lsp-mode-impl 'lsp-mode)
+  (setenv "LSP_USE_PLISTS" "true")
+  (setq read-process-output-max (* 5 1024 1024) ;; 5mb
+        lsp-use-plists t
+        lsp-log-io nil))
 
 ;; sudo apt-get install libjansson-dev
-
 (use-package lsp-mode
   :demand t
   :functions nerd-icons-octicon
