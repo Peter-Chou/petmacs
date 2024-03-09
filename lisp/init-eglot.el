@@ -72,11 +72,22 @@
 
     ;; (push '((java-mode java-ts-mode) . (jdtls-command-contact)) eglot-server-programs)
 
-    (add-to-list 'eglot-server-programs
-	             '(java-ts-mode . (lambda (&optional interactive)
-                                    ("jdtls"))))
 
+    (defun jdtls-command-contact (&optional interactive)
+      (let* ((jvm-args `(,(concat "-javaagent:" (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.20/lombok-1.18.20.jar"))
+                         "-Xmx8G"
+                         ;; "-XX:+UseG1GC"
+                         "-XX:+UseZGC"
+                         "-XX:+UseStringDeduplication"
+                         ;; "-XX:FreqInlineSize=325"
+                         ;; "-XX:MaxInlineLevel=9"
+                         "-XX:+UseCompressedOops"))
+             (jvm-args (mapcar (lambda (arg) (concat "--jvm-arg=" arg)) jvm-args))
+             ;; tell jdtls the data directory and jvm args
+             (contact (append '("jdtls") jvm-args)))
+        contact))
 
+    (push '((java-mode java-ts-mode) . jdtls-command-contact) eglot-server-programs)
 
 
     ;; (defvar +eglot/initialization-options-map (make-hash-table :size 5))
@@ -127,47 +138,44 @@
     ;;          )
 
     (advice-add 'eglot-ensure :after 'petmacs/eglot-keybindgs)
-    :config
     ))
 
 (setenv "PATH" (concat (getenv "PATH") ":" (expand-file-name ".emacs.d/share/eclipse.jdt.ls/bin")))
 (setq exec-path (append exec-path (list (expand-file-name ".emacs.d/share/eclipse.jdt.ls/bin"))))
 
-(use-package eglot-java
-  :init
-  (require 'eglot-java)
-  (setq eglot-java-java-home "/opt/jdk17"
-        ;; eglot-java-eglot-server-programs-manual-updates t
-        ;; eglot-java-eclipse-jdt-args
-        ;; `("-Xmx8G"
-        ;;   "-XX:+UseZGC"
-        ;;   "-XX:+UseStringDeduplication"
-        ;;   "-XX:+UseCompressedOops"
-        ;;   "--add-modules=ALL-SYSTEM"
-        ;;   ,(concat "-javaagent:" (expand-file-name "data/lombok-1.18.28.jar" user-emacs-directory))
-        ;;   "--add-opens"
-        ;;   "java.base/java.util=ALL-UNNAMED"
-        ;;   "--add-opens"
-        ;;   "java.base/java.lang=ALL-UNNAMED")
-        )
+;; (use-package eglot-java
+;;   :init
+;;   (require 'eglot-java)
+;;   (setq eglot-java-java-home "/opt/jdk17"
+;;         ;; eglot-java-eglot-server-programs-manual-updates t
+;;         ;; eglot-java-eclipse-jdt-args
+;;         ;; `("-Xmx8G"
+;;         ;;   "-XX:+UseZGC"
+;;         ;;   "-XX:+UseStringDeduplication"
+;;         ;;   "-XX:+UseCompressedOops"
+;;         ;;   "--add-modules=ALL-SYSTEM"
+;;         ;;   ,(concat "-javaagent:" (expand-file-name "data/lombok-1.18.28.jar" user-emacs-directory))
+;;         ;;   "--add-opens"
+;;         ;;   "java.base/java.util=ALL-UNNAMED"
+;;         ;;   "--add-opens"
+;;         ;;   "java.base/java.lang=ALL-UNNAMED")
+;;         )
 
-  ;; (setq eglot-java-user-init-opts-fn 'custom-eglot-java-init-opts)
-  ;; (defun custom-eglot-java-init-opts (server eglot-java-eclipse-jdt)
-  ;;   "Custom options that will be merged with any default settings."
-  ;;   `(:settings
-  ;;     (:java
-  ;;      (:format (:settings (:url ,(expand-file-name "eclipse-java-google-style.xml" (concat user-emacs-directory "data"))
-  ;;                           :profile "GoogleStyle")
-  ;;                ;; :enabled t
-  ;;                ))
-  ;;      (:import (:maven (:enabled t)))
-  ;;      (:exclusions '("**/node_modules/**" "**/.metadata/**" "**/archetype-resources/**" "**/META-INF/maven/**"))
-  ;;      )))
-  :config
-  ;; (add-hook 'java-mode-hook 'eglot-java-mode)
-  ;; (add-hook 'java-ts-mode-hook 'eglot-java-mode)
-  (require 'eglot-java)
-  )
+;;   ;; (setq eglot-java-user-init-opts-fn 'custom-eglot-java-init-opts)
+;;   ;; (defun custom-eglot-java-init-opts (server eglot-java-eclipse-jdt)
+;;   ;;   "Custom options that will be merged with any default settings."
+;;   ;;   `(:settings
+;;   ;;     (:java
+;;   ;;      (:format (:settings (:url ,(expand-file-name "eclipse-java-google-style.xml" (concat user-emacs-directory "data"))
+;;   ;;                           :profile "GoogleStyle")
+;;   ;;                ;; :enabled t
+;;   ;;                ))
+;;   ;;      (:import (:maven (:enabled t)))
+;;   ;;      (:exclusions '("**/node_modules/**" "**/.metadata/**" "**/archetype-resources/**" "**/META-INF/maven/**"))
+;;   ;;      )))
+;;   :config
+;;   (require 'eglot-java)
+;;   )
 
 (use-package consult-eglot)
 
@@ -181,6 +189,7 @@
 (use-package eglot-booster
   :quelpa (eglot-booster :fetcher github :repo "jdtsmith/eglot-booster" :files ("*.el"))
   ;; :quelpa (eglot-booster :fetcher git :url "https://gitee.com/Peter-Chou/eglot-booster.git" :files ("*.el"))
+  :init (setq eglot-booster-no-remote-boost t)
   :config	(eglot-booster-mode))
 
 (provide 'init-eglot)
