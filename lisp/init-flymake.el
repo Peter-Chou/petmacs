@@ -48,6 +48,7 @@
                                 (s-ends-with? "is not accessed" (flymake-diagnostic-text d))))
                          (car diags))))
      (advice-add 'eglot--report-to-flymake :filter-args #'petmacs/filter-eglot-diagnostics)
-     (add-hook 'eglot-managed-mode-hook 'flymake-ruff-load))))
+     (add-hook 'python-mode-hook 'flymake-ruff-load)
+     (add-hook 'python-ts-mode-hook 'flymake-ruff-load))))
 
 (provide 'init-flymake)
