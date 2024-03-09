@@ -693,7 +693,7 @@
            ;; help
            "hh" #'lsp-bridge-lookup-documentation
            "hs" #'lsp-bridge-signature-help-fetch)))
-      ((equal petmacs-lsp-mode-impl 'eglot-mode)
+      ((equal petmacs-lsp-mode-impl 'eglot)
 
        (dolist (mode petmacs-lsp-active-modes)
          (leader-declare-prefix-for-major-mode mode

@@ -39,7 +39,7 @@
     ('lsp-mode
      (add-hook 'python-mode-hook #'petmacs/setup-flymake-ruff)
      (add-hook 'python-ts-mode-hook #'petmacs/setup-flymake-ruff))
-    ('eglot-mode
+    ('eglot
      (defun petmacs/filter-eglot-diagnostics (diags)
        "Drop Pyright 'variable not accessed' notes from DIAGS."
        (list (seq-remove (lambda (d)

@@ -455,7 +455,7 @@
         symbols-outline-buffer-name "*Outline*"
         symbols-outline-collapse-functions-on-startup t)
 
-  (when (member petmacs-lsp-mode-impl '(lsp-mode eglot-mode))
+  (when (member petmacs-lsp-mode-impl '(lsp-mode eglot))
     (setq symbols-outline-fetch-fn #'symbols-outline-lsp-fetch))
   :config
   (require 'nerd-icons)

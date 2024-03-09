@@ -59,7 +59,7 @@
                            #'cape-file
       			           #'cape-dabbrev)))
        (add-hook 'lsp-completion-mode-hook #'petmacs/set-lsp-capfs)))
-    ('eglot-mode
+    ('eglot
      (defun petmacs/eglot-capf-setup ()
 
        (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))

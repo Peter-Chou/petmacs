@@ -50,7 +50,7 @@
                (lsp-deferred))
               ((equal petmacs-lsp-mode-impl 'lsp-bridge-mode)
                (lsp-bridge-restart-process))
-              ((equal petmacs-lsp-mode-impl 'eglot-mode)
+              ((equal petmacs-lsp-mode-impl 'eglot)
                (eglot-ensure))))))
   :hook (((python-mode python-ts-mode) . petmacs/pyvenv-pyright-autoload)
          (pyvenv-mode . petmacs/disable-modeline-env-info))
