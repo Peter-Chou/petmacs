@@ -105,6 +105,10 @@ java-debug already been installed in 3.2 section
 
 `lldb-vscode` is already in [LLVM project](https://github.com/llvm/llvm-project).
 
+### [optional] install emacs-lsp-booster
+
+download [emacs-lsp-booster](https://github.com/blahgeek/emacs-lsp-booster) to speed up the message parsing performance. Put the binary in the `PATH`
+
 ---
 
 ## 5. install formatter

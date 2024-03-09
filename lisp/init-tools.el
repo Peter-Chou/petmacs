@@ -435,47 +435,46 @@
 (use-package uuidgen
   :commands (uuidgen))
 
-;; (use-package symbols-outline
-;;   :after nerd-icons
-;;   :demand t
-;;   :preface
-;;   (defun petmacs/symbols-outline-smart-toggle ()
-;;     "Toggle `symbols-outline-mode' by showing or quitting the `*Outline*' buffer."
-;;     (interactive)
-;;     (if (get-buffer-window symbols-outline-buffer-name t)
-;;         (progn
-;;           (ignore-errors (quit-windows-on symbols-outline-buffer-name))
-;;           (when (get-buffer symbols-outline-buffer-name)
-;;             (bury-buffer (get-buffer symbols-outline-buffer-name))))
-;;       (symbols-outline-show)))
-;;   :init
-;;   (setq symbols-outline-window-position 'left
-;;         symbols-outline-use-nerd-icon-in-gui (not (image-type-available-p 'svg))
-;;         symbols-outline-window-width 35
-;;         symbols-outline-ignore-variable-symbols t
-;;         symbols-outline-buffer-name "*Outline*"
-;;         symbols-outline-collapse-functions-on-startup t)
+(use-package symbols-outline
+  :preface
+  (defun petmacs/symbols-outline-smart-toggle ()
+    "Toggle `symbols-outline-mode' by showing or quitting the `*Outline*' buffer."
+    (interactive)
+    (if (get-buffer-window symbols-outline-buffer-name t)
+        (progn
+          (ignore-errors (quit-windows-on symbols-outline-buffer-name))
+          (when (get-buffer symbols-outline-buffer-name)
+            (bury-buffer (get-buffer symbols-outline-buffer-name))))
+      (symbols-outline-show)))
+  :after nerd-icons
+  :init
+  (setq symbols-outline-window-position 'left
+        symbols-outline-use-nerd-icon-in-gui (not (image-type-available-p 'svg))
+        symbols-outline-window-width 35
+        symbols-outline-ignore-variable-symbols t
+        symbols-outline-buffer-name "*Outline*"
+        symbols-outline-collapse-functions-on-startup t)
 
-;;   (when (member petmacs-lsp-mode-impl '(lsp-mode eglot-mode))
-;;     (setq symbols-outline-fetch-fn #'symbols-outline-lsp-fetch))
-;;   :config
-;;   (require 'nerd-icons)
+  (when (member petmacs-lsp-mode-impl '(lsp-mode eglot))
+    (setq symbols-outline-fetch-fn #'symbols-outline-lsp-fetch))
+  :config
+  (require 'nerd-icons)
 
-;;   (evil-define-key 'normal symbols-outline-mode-map
-;;     (kbd "g") 'symbols-outline-refresh
-;;     (kbd "n") 'symbols-outline-next
-;;     (kbd "p") 'symbols-outline-prev
-;;     (kbd "f") 'symbols-outline-next-same-level
-;;     (kbd "b") 'symbols-outline-prev-same-level
-;;     (kbd "u") 'symbols-outline-move-depth-up
-;;     (kbd "d") 'symbols-outline-move-depth-down
-;;     (kbd "TAB") 'symbols-outline-toggle-node
-;;     [tab] 'symbols-outline-toggle-node
-;;     (kbd "S-TAB") 'symbols-outline-cycle-visibility-globally
-;;     [backtab] 'symbols-outline-cycle-visibility-globally
-;;     (kbd "RET") 'symbols-outline-visit
-;;     (kbd "M-RET") 'symbols-outline-visit-and-quit)
-;;   (symbols-outline-follow-mode))
+  (evil-define-key 'normal symbols-outline-mode-map
+    (kbd "g") 'symbols-outline-refresh
+    (kbd "n") 'symbols-outline-next
+    (kbd "p") 'symbols-outline-prev
+    (kbd "f") 'symbols-outline-next-same-level
+    (kbd "b") 'symbols-outline-prev-same-level
+    (kbd "u") 'symbols-outline-move-depth-up
+    (kbd "d") 'symbols-outline-move-depth-down
+    (kbd "TAB") 'symbols-outline-toggle-node
+    [tab] 'symbols-outline-toggle-node
+    (kbd "S-TAB") 'symbols-outline-cycle-visibility-globally
+    [backtab] 'symbols-outline-cycle-visibility-globally
+    (kbd "RET") 'symbols-outline-visit
+    (kbd "M-RET") 'symbols-outline-visit-and-quit)
+  (symbols-outline-follow-mode))
 
 (use-package iedit
   :init

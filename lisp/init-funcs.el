@@ -21,9 +21,55 @@
 (declare-function upgrade-packages 'init-package)
 (declare-function petmacs/symbols-outline-smart-toggle 'init-tools)
 
+(declare-function lsp-find-definition 'lsp-mode)
+(declare-function lsp-find-declaration 'lsp-mode)
+(declare-function lsp-find-implementation 'lsp-mode)
+(declare-function lsp-find-type-definition 'lsp-mode)
+(declare-function lsp-find-references 'lsp-mode)
+(declare-function consult-lsp-file-symbols 'consult-lsp)
+(declare-function lsp-java-type-hierarchy 'lsp-java)
+
+
+(defun petmacs/lsp-find-definition-other-window ()
+  (interactive)
+  (switch-to-buffer-other-window (buffer-name))
+  (lsp-find-definition))
+
+(defun petmacs/lsp-find-declaration-other-window ()
+  (interactive)
+  (switch-to-buffer-other-window (buffer-name))
+  (lsp-find-declaration))
+
+(defun petmacs/lsp-find-implementation-other-window ()
+  (interactive)
+  (switch-to-buffer-other-window (buffer-name))
+  (lsp-find-implementation))
+
+(defun petmacs/lsp-find-type-definition-other-window ()
+  (interactive)
+  (switch-to-buffer-other-window (buffer-name))
+  (lsp-find-type-definition))
+
+(defun petmacs/lsp-find-references-other-window ()
+  (interactive)
+  (switch-to-buffer-other-window (buffer-name))
+  (lsp-find-references))
+
 (defun petmacs/consult-lsp-file-symbols ()
   (interactive)
   (consult-lsp-file-symbols t))
+
+
+(defun petmacs/lsp-java-super-type ()
+  "Show super type hierarchy."
+  (interactive)
+  (lsp-java-type-hierarchy 1))
+
+(defun petmacs/lsp-java-sub-type ()
+  "Show sub type hierarchy."
+  (interactive)
+  (lsp-java-type-hierarchy 0))
+
 
 (defun petmacs/open-gnome-terminal ()
   (interactive)

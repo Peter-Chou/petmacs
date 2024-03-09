@@ -54,14 +54,15 @@
   "enable display-line-numbers mode")
 
 (defvar petmacs-lsp-mode-impl
-  'lsp-mode
-  ;; 'lsp-bridge-mode
-  "lsp-mode / eglot-mode / lsp-bridge-mode")
+  ;; 'lsp-mode
+  'eglot
+
+  "lsp-mode / eglot")
 
 
 (defvar petmacs-dap-mode-impl
-  'dap-mode
-  ;; 'dape
+  ;; 'dap-mode
+  'dape
   "dap-mode / dape ")
 
 (defvar petmacs-lsp-active-modes '(

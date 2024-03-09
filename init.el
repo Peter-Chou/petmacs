@@ -61,6 +61,7 @@
 (require 'init-vcs)
 
 (require 'init-projectile)
+(require 'init-project)
 ;; (require 'init-persp)
 (require 'init-dired)
 (require 'init-shell)
@@ -71,11 +72,9 @@
 (when (petmacs-treesit-available-p)
   (require 'init-treesit))
 
-(cond ((equal petmacs-lsp-mode-impl 'lsp-bridge-mode)
-       (require 'init-lsp-bridge))
-      (t
-       (require 'init-corfu)
-       (require 'init-lsp)))
+(require 'init-corfu)
+(require 'init-lsp)
+(require 'init-eglot)
 
 (cond ((and (equal petmacs-dap-mode-impl 'dape) emacs/>=29p)
        (require 'init-dape))

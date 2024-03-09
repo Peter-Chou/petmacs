@@ -19,6 +19,8 @@
 (define-key evil-normal-state-map (kbd "C-w o") #'petmacs/toggle-maximize-buffer)
 (define-key evil-motion-state-map (kbd "C-w o") #'petmacs/toggle-maximize-buffer)
 
+(define-key winum-keymap (kbd "M-9") 'petmacs/symbols-outline-smart-toggle)
+
 (when sys/wslp
   ;; windows端将left windows 键 -> Application 键
   (global-set-key (kbd "<menu>") nil)
@@ -331,13 +333,15 @@
     "s" #'flymake-mode
     ;; "s" #'flycheck-mode
 
+    "cp" #'corfu-popupinfo-toggle
+    "cs" #'prettify-symbols-mode
+
     "l" #'display-fill-column-indicator-mode
     "n" #'display-line-numbers-mode
     "f" #'focus-mode
     "F" #'toggle-frame-fullscreen
     "x" #'read-only-mode
     "M" #'maximize-window
-    "c" #'prettify-symbols-mode
 
     "h" #'global-hl-line-mode
 
@@ -400,6 +404,7 @@
   (leader-set-keys
     "i" #'consult-imenu
     "w" 'evil-avy-goto-word-or-subword-1
+    "d" #'consult-dir
     "D" #'dired-jump-other-window
     "c" #'goto-last-change
     "j" 'evil-avy-goto-char
@@ -662,7 +667,7 @@
            "==" #'lsp-bridge-code-format
 
            ;; code actions
-           "aa" #'lsp-bridge-code-action
+
 
            ;; format
            "rr" #'lsp-bridge-rename
@@ -688,6 +693,52 @@
            ;; help
            "hh" #'lsp-bridge-lookup-documentation
            "hs" #'lsp-bridge-signature-help-fetch)))
+      ((equal petmacs-lsp-mode-impl 'eglot)
+
+       (dolist (mode petmacs-lsp-active-modes)
+         (leader-declare-prefix-for-major-mode mode
+           "=" "format"
+           "a" "actions"
+           "g" "goto"
+           ;; "G" "goto (other window)"
+           ;; "p" "peek"
+           ;; "pR" "peek reference"
+           ;; "b" "backends"
+           ;; "T" "toggle module"
+           "r" "refactor"
+           "h" "help"
+           ;; "F" "folders"
+           ;; "x" "text/code"
+           )
+
+         (leader-set-keys-for-major-mode mode
+           ;; format
+           "=o" #'eglot-code-action-organize-imports
+
+           ;; help
+           "hh" #'eldoc-doc-buffer
+
+           ;; actions
+           "aa" #'eglot-code-actions
+
+           ;; rename
+           "rr" #'eglot-rename
+
+           ;; goto
+           "gd" #'xref-goto-xref
+           "gr" #'xref-find-references
+           "gD" #'eglot-find-declaration
+           "gi" #'eglot-find-implementation
+           "gt" #'eglot-find-typeDefinition
+           "gb" #'xref-pop-marker-stack
+           "gF" #'xref-find-definitions-other-frame
+           "gs" #'consult-eglot-symbols
+
+           "gT" #'eglot-hierarchy-type-hierarchy
+           "gC" #'eglot-hierarchy-call-hierarchy
+           )
+
+         ))
       (t
        (dolist (mode petmacs-lsp-active-modes)
          (leader-declare-prefix-for-major-mode mode
@@ -721,7 +772,7 @@
            "gd" #'lsp-find-definition
            "gD" #'lsp-find-declaration
            "ge" #'lsp-treemacs-errors-list
-           "gh" #'lsp-treemacs-call-hierarchy
+           "gC" #'lsp-treemacs-call-hierarchy
            "gT" #'lsp-treemacs-type-hierarchy
            "gr" #'lsp-find-references
            "gi" #'lsp-find-implementation

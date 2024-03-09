@@ -139,6 +139,7 @@
    consult-narrow-key "<"
    consult-project-function (lambda (_) (projectile-project-root))
    consult-line-numbers-widen t
+   consult-line-start-from-top t
    consult-async-min-input 2
    consult-async-refresh-delay  0.15
    consult-async-input-throttle 0.2

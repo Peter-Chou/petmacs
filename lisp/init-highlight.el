@@ -137,7 +137,7 @@ FACE defaults to inheriting from default and highlight."
         indent-bars-highlight-current-depth '(:face petmacs-favor-color-face :pattern "."))
   (when (petmacs-treesit-available-p)
     (setq indent-bars-treesit-support t
-          indent-bars-no-descend-string t
+          indent-bars-no-descend-string nil
           indent-bars-treesit-ignore-blank-lines-types '("module")
           indent-bars-treesit-wrap '((python argument_list parameters ; for python, as an example
 				                             list list_comprehension

@@ -526,7 +526,6 @@
         transwin-parameter-alpha 'alpha-background))
 
 (use-package valign
-  :ensure t
   :hook ((markdown-mode org-mode) . valign-mode))
 
 (provide 'init-ui)
