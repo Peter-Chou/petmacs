@@ -28,7 +28,7 @@
 
 (use-package pyvenv
   :preface
-  (defun petmacs/disable-modeline-env-info ()
+  (defun petmacs/remove-pyvenv-modeline-env-info ()
     (setq mode-line-misc-info (delete '(pyvenv-mode pyvenv-mode-line-indicator) mode-line-misc-info)))
 
   ;; autoload virtual environment if project_root/pyrightconfig.json file exists,
@@ -45,23 +45,24 @@
         ;; set pyvenv-workon buffer local variable for pyvenv-tracking-mode
         ;; to compare whether pyvenv-workon and pyvenv-virtual-env-name is equal
         (setq-local pyvenv-workon (gethash "venv" (json-read-file pfile)))
-        (pyvenv-workon pyvenv-workon)
-        (cond ((equal petmacs-lsp-mode-impl 'lsp-mode)
-               (lsp-deferred))
-              ((equal petmacs-lsp-mode-impl 'lsp-bridge-mode)
-               (lsp-bridge-restart-process))
-              ((equal petmacs-lsp-mode-impl 'eglot)
-               (eglot-ensure))))))
+        (pyvenv-workon pyvenv-workon))
+      ;; (cond ((equal petmacs-lsp-mode-impl 'lsp-mode)
+      ;;        (lsp-deferred))
+      ;;       ((equal petmacs-lsp-mode-impl 'eglot)
+      ;;        (eglot-booster-mode t)
+      ;;        (eglot-ensure)))
+
+      (pcase petmacs-lsp-mode-impl
+        ('lsp-mode
+         (lsp-deferred))
+        ('eglot
+         (eglot-booster-mode t)
+         (eglot-ensure)))))
   :hook (((python-mode python-ts-mode) . petmacs/pyvenv-pyright-autoload)
-         (pyvenv-mode . petmacs/disable-modeline-env-info))
+         (pyvenv-mode . petmacs/remove-pyvenv-modeline-env-info))
   :config
   (pyvenv-mode 1)
   (pyvenv-tracking-mode 1))
-
-(use-package yapfify
-  :diminish yapf-mode
-  ;; :hook ((python-mode python-ts-mode) . yapf-mode)
-  )
 
 (use-package py-isort)
 (use-package pip-requirements)
