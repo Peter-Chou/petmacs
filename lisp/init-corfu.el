@@ -51,7 +51,7 @@
 
        (defun petmacs/lsp-mode-setup-completion ()
          (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
-               '(orderless))) ;; Configure orderless
+               '(orderless flex))) ;; Configure orderless
        (add-hook 'lsp-completion-mode-hook #'petmacs/lsp-mode-setup-completion)
        (defun petmacs/set-lsp-capfs ()
          (setq-local completion-at-point-functions

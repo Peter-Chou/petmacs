@@ -19,6 +19,8 @@
 (define-key evil-normal-state-map (kbd "C-w o") #'petmacs/toggle-maximize-buffer)
 (define-key evil-motion-state-map (kbd "C-w o") #'petmacs/toggle-maximize-buffer)
 
+(define-key winum-keymap (kbd "M-9") 'petmacs/symbols-outline-smart-toggle)
+
 (when sys/wslp
   ;; windows端将left windows 键 -> Application 键
   (global-set-key (kbd "<menu>") nil)
