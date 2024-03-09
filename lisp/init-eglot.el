@@ -105,7 +105,8 @@
           ;; "-XX:MaxInlineLevel=9"
           "-XX:+UseCompressedOops")))
 
-(use-package consult-eglot)
+(use-package consult-eglot
+  :init (setq consult-eglot-show-kind-name t))
 
 (use-package eglot-orderless
   :ensure nil

@@ -732,6 +732,7 @@
            "gt" #'eglot-find-typeDefinition
            "gb" #'xref-pop-marker-stack
            "gF" #'xref-find-definitions-other-frame
+           "gs" #'consult-eglot-symbols
            )
 
          ))
