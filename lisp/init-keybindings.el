@@ -733,6 +733,9 @@
            "gb" #'xref-pop-marker-stack
            "gF" #'xref-find-definitions-other-frame
            "gs" #'consult-eglot-symbols
+
+           "gT" #'eglot-hierarchy-type-hierarchy
+           "gC" #'eglot-hierarchy-call-hierarchy
            )
 
          ))
@@ -769,7 +772,7 @@
            "gd" #'lsp-find-definition
            "gD" #'lsp-find-declaration
            "ge" #'lsp-treemacs-errors-list
-           "gh" #'lsp-treemacs-call-hierarchy
+           "gC" #'lsp-treemacs-call-hierarchy
            "gT" #'lsp-treemacs-type-hierarchy
            "gr" #'lsp-find-references
            "gi" #'lsp-find-implementation

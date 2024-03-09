@@ -108,6 +108,11 @@
 (use-package consult-eglot
   :init (setq consult-eglot-show-kind-name t))
 
+(use-package eglot-hierarchy
+  :quelpa (eglot-hierarchy :fetcher github :repo "dolmens/eglot-hierarchy" :files ("*.el"))
+  ;; :quelpa (eglot-booster :fetcher git :url "https://gitee.com/Peter-Chou/eglot-hierarchy.git" :files ("*.el"))
+  )
+
 (use-package eglot-orderless
   :ensure nil
   :after (eglot orderless)
