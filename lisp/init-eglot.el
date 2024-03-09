@@ -10,7 +10,8 @@
       (define-key evil-motion-state-map "gR" #'eglot-rename)
       (define-key evil-motion-state-map "gr" #'xref-find-references)
       (define-key evil-normal-state-map "gi" #'eglot-find-implementation)
-      (define-key evil-motion-state-map "gh" #'eldoc)
+      ;; (define-key evil-motion-state-map "gh" #'eldoc)
+      (define-key evil-motion-state-map "gh" #'eldoc-box-help-at-point)
       (define-key evil-normal-state-map "ga" #'eglot-code-actions))
     :init
     (setq eglot-send-changes-idle-time 0.2
@@ -28,9 +29,7 @@
 
                                   ((java-mode java-ts-mode) . ("jdtls"))
                                   ((yaml-ts-mode yaml-mode) . ("yaml-language-server" "--stdio"))
-                                  ((dockerfile-mode dockerfile-ts-mode) . ("docker-langserver" "--stdio")))
-          )
-
+                                  ((dockerfile-mode dockerfile-ts-mode) . ("docker-langserver" "--stdio"))))
     :config
     (push :documentHighlightProvider eglot-ignored-server-capabilities)
 
@@ -79,14 +78,14 @@
   ;; :init (setq eglot-booster-no-remote-boost t)
   :config (eglot-booster-mode))
 
-(setenv "PATH" (concat (getenv "PATH") ":" (expand-file-name ".emacs.d/share/eclipse.jdt.ls/bin")))
-(setq exec-path (append exec-path (list (expand-file-name ".emacs.d/share/eclipse.jdt.ls/bin"))))
-
 (use-package eglot-java
   :hook ((java-mode java-ts-mode) . (lambda ()
                                       (eglot-booster-mode t)
                                       (eglot-java-mode t)))
   :init
+  (setenv "PATH" (concat (getenv "PATH") ":" (expand-file-name ".emacs.d/share/eclipse.jdt.ls/bin")))
+  (setq exec-path (append exec-path (list (expand-file-name ".emacs.d/share/eclipse.jdt.ls/bin"))))
+
   ;; workaround
   (defalias 'eglot-path-to-uri 'eglot--path-to-uri)
   (require 'eglot-java)
@@ -105,7 +104,6 @@
           ;; "-XX:FreqInlineSize=325"
           ;; "-XX:MaxInlineLevel=9"
           "-XX:+UseCompressedOops")))
-
 
 (use-package consult-eglot)
 
