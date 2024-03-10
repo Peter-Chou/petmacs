@@ -5,7 +5,6 @@
 (use-package dape
   :bind (("<f5>" . dape)
          ("M-<f5>" . dape-hydra/body))
-  :custom (dape-buffer-window-arrangment 'right)
   :pretty-hydra
   ((:title (pretty-hydra-title "Debug" 'codicon "nf-cod-debug")
     :color pink :quit-key ("q" "C-g"))
@@ -34,7 +33,9 @@
     (("d" dape "dape")
      ("Q" dape-quit "quit" :exit t))))
   :init
-  (setq dape-cwd-fn 'projectile-project-root)
+  (setq dape-cwd-fn 'projectile-project-root
+        dape-buffer-window-arrangment 'right
+        )
   :config
   (plist-put (alist-get 'debugpy dape-configs) 'command "python")
 
