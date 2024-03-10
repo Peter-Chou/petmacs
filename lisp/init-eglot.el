@@ -22,7 +22,29 @@
           ;; eglot-events-buffer-size 1
           eglot-server-programs '(
                                   ((python-mode python-ts-mode) . ("pyright-langserver" "--stdio"))
-                                  ((c++-mode c-mode c++-ts-mode c-ts-mode objc-mode) . ("clangd"))
+                                  ((c++-mode c-mode c++-ts-mode c-ts-mode objc-mode) . ("clangd"
+                                                                                        ;; 在后台自动分析文件（基于complie_commands)
+                                                                                        "--background-index"
+                                                                                        ;; 标记compelie_commands.json文件的目录位置
+                                                                                        "--compile-commands-dir=build"
+                                                                                        ;; 全局补全（会自动补充头文件）
+                                                                                        "--all-scopes-completion"
+                                                                                        ;; 更详细的补全内容
+                                                                                        "--completion-style=detailed"
+                                                                                        ;; 同时开启的任务数量
+                                                                                        "-j=12"
+                                                                                        "-cross-file-rename"
+                                                                                        ;;clang-tidy功能
+                                                                                        "--clang-tidy"
+                                                                                        "--clang-tidy-checks=performance-*,bugprone-*"
+                                                                                        ;; 告诉clangd用那个clang进行编译，路径参考which clang++的路径
+                                                                                        ;; "--query-driver=/opt/llvm/bin/clang++"
+                                                                                        ;; 同时开启的任务数量
+                                                                                        ;; 补充头文件的形式
+                                                                                        ;; "--header-insertion=iwyu"
+                                                                                        ;; pch优化的位置
+                                                                                        ;; "--pch-storage=disk"
+                                                                                        ))
                                   ((cmake-mode cmake-ts-mode) . ("cmake-language-server"))
                                   ((bash-ts-mode sh-mode) . ("bash-language-server" "start"))
                                   ((go-mode go-dot-mod-mode go-dot-work-mode go-ts-mode go-mod-ts-mode) . ("gopls"))
@@ -32,41 +54,6 @@
                                   ((dockerfile-mode dockerfile-ts-mode) . ("docker-langserver" "--stdio"))))
     :config
     (push :documentHighlightProvider eglot-ignored-server-capabilities)
-
-    ;; jdtls download see https://www.eclipse.org/downloads/download.php?file=/jdtls/milestones
-
-    ;; (defun petmacs/jdtls-command-contact (interactive)
-    ;;   (let* ((jdtls-cache-dir (file-name-concat user-emacs-directory "data" "eglot-cache"))
-    ;;          (project-dir (file-name-nondirectory (directory-file-name (project-root p))))
-    ;;          (data-dir (expand-file-name (file-name-concat jdtls-cache-dir project-dir)))
-    ;;          (jvm-args `(,(concat "-javaagent:" (expand-file-name "data/lombok-1.18.28.jar" user-emacs-directory))
-    ;;                      "-Xmx8G"
-    ;;                      ;; "-XX:+UseG1GC"
-    ;;                      "-XX:+UseZGC"
-    ;;                      "-XX:+UseStringDeduplication"
-    ;;                      ;; "-XX:FreqInlineSize=325"
-    ;;                      ;; "-XX:MaxInlineLevel=9"
-    ;;                      "-XX:+UseCompressedOops"))
-    ;;          (jvm-args (mapcar (lambda (arg) (concat "--jvm-arg=" arg)) jvm-args))
-    ;;          ;; tell jdtls the data directory and jvm args
-    ;;          (contact (append '("jdtls") jvm-args `("-data" ,data-dir))))
-    ;;     contact))
-
-    ;; (defun jdtls-command-contact (&optional interactive)
-    ;;   (let* ((jvm-args `(,(concat "-javaagent:" (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.20/lombok-1.18.20.jar"))
-    ;;                      "-Xmx8G"
-    ;;                      ;; "-XX:+UseG1GC"
-    ;;                      "-XX:+UseZGC"
-    ;;                      "-XX:+UseStringDeduplication"
-    ;;                      ;; "-XX:FreqInlineSize=325"
-    ;;                      ;; "-XX:MaxInlineLevel=9"
-    ;;                      "-XX:+UseCompressedOops"))
-    ;;          (jvm-args (mapcar (lambda (arg) (concat "--jvm-arg=" arg)) jvm-args))
-    ;;          ;; tell jdtls the data directory and jvm args
-    ;;          (contact (append '("jdtls") jvm-args)))
-    ;;     contact))
-
-    ;; (push '((java-mode java-ts-mode) . jdtls-command-contact) eglot-server-programs)
 
     (advice-add 'eglot-ensure :after 'petmacs/eglot-keybindgs)
     ))
