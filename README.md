@@ -83,6 +83,8 @@ set `WORKON_HOME` environment variable that has virtual environment directories.
 
 M-x: `lsp-install-server` to install eclipse jdtls
 
+Please make sure  java 17 is installed in `/opt/jdk17` folder
+
 ### 3.3 clangd (C/C++)
 
 use `clangd` in [LLVM project](https://github.com/llvm/llvm-project). soft link llvm project to `/opt/llvm`.
