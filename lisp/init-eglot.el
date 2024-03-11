@@ -98,7 +98,7 @@
     `(:bundles [,(expand-file-name (file-name-concat
                                     user-emacs-directory "data"
                                     "lsp-java-jars"
-                                    "com.microsoft.java.debug.plugin-0.46.0.jar"))]))
+                                    "com.microsoft.java.debug.plugin-0.51.1.jar"))]))
   (setq eglot-java-user-init-opts-fn 'petmacs/custom-eglot-java-init-opts)
   )
 
