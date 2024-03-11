@@ -89,6 +89,17 @@ Please make sure  java 17 is installed in `/opt/jdk17` folder
 
 use `clangd` in [LLVM project](https://github.com/llvm/llvm-project). soft link llvm project to `/opt/llvm`.
 
+or you can build it from source
+
+``` bash
+llvm_version=llvmorg-18.1.1
+git clone -b $llvm_version --depth=1 https://gitee.com/mirrors/LLVM.git
+cd LLVM
+cmake -S llvm -B build -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_LINKER=lld -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra" -DCMAKE_INSTALL_PREFIX=/opt/llvm
+cmake --build build -j10
+sudo $(which cmake) --install build
+```
+
 ---
 
 ## 4. install DAP servers

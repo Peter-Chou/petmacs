@@ -62,7 +62,7 @@
   :after eglot
   :quelpa (eglot-booster :fetcher github :repo "jdtsmith/eglot-booster" :files ("*.el"))
   ;; :quelpa (eglot-booster :fetcher git :url "https://gitee.com/Peter-Chou/eglot-booster.git" :files ("*.el"))
-  ;; :init (setq eglot-booster-no-remote-boost t)
+  :init (setq eglot-booster-no-remote-boost t)
   :config (eglot-booster-mode))
 
 (use-package eglot-java
