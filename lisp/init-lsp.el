@@ -88,7 +88,7 @@
                                                    (concat user-emacs-directory "data")))
    lsp-java-format-settings-profile "GoogleStyle"
    ;; see https://www.eclipse.org/downloads/download.php?file=/jdtls/milestones
-   lsp-java-jdt-download-url "https://www.eclipse.org/downloads/download.php?file=/jdtls/milestones/1.30.1/jdt-language-server-1.30.1-202312071447.tar.gz"
+   lsp-java-jdt-download-url "https://www.eclipse.org/downloads/download.php?file=/jdtls/milestones/1.33.0/jdt-language-server-1.33.0-202402151717.tar.gz"
    lsp-java-import-maven-enabled t
    lsp-java-implementations-code-lens-enabled t
    lsp-java-save-actions-organize-imports nil
@@ -110,7 +110,7 @@
   (require 'lsp-java-lombok)
   (setq lsp-java-lombok/enabled t
         lsp-java-lombok/version "1.18.28"
-        lsp-java-lombok/dir (expand-file-name "data/" user-emacs-directory))
+        lsp-java-lombok/dir (expand-file-name "data/lsp-java-jars" user-emacs-directory))
   (lsp-java-lombok/init))
 
 

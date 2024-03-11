@@ -80,7 +80,7 @@
         eglot-java-eclipse-jdt-cache-directory (expand-file-name (file-name-concat user-emacs-directory "data" "eglot-java-cache"))
         eglot-java-eclipse-jdt-args
         `("-Xmx8G"
-          ,(concat "-javaagent:" (expand-file-name "~/.emacs.d/data/lombok-1.18.28.jar"))
+          ,(concat "-javaagent:" (expand-file-name "~/.emacs.d/data/lsp-java-jars/lombok-1.18.28.jar"))
           "--add-modules=ALL-SYSTEM"
           "--add-opens"
           "java.base/java.util=ALL-UNNAMED"
@@ -90,7 +90,17 @@
           "-XX:+UseStringDeduplication"
           ;; "-XX:FreqInlineSize=325"
           ;; "-XX:MaxInlineLevel=9"
-          "-XX:+UseCompressedOops")))
+          "-XX:+UseCompressedOops"))
+
+  (defun petmacs/custom-eglot-java-init-opts
+      (server eglot-java-eclipse-jdt)
+    "Custom options that will be merged with default settings."
+    `(:bundles [,(expand-file-name (file-name-concat
+                                    user-emacs-directory "data"
+                                    "lsp-java-jars"
+                                    "com.microsoft.java.debug.plugin-0.46.0.jar"))]))
+  (setq eglot-java-user-init-opts-fn 'petmacs/custom-eglot-java-init-opts)
+  )
 
 (use-package consult-eglot
   :init (setq consult-eglot-show-kind-name t))
