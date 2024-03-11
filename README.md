@@ -92,6 +92,8 @@ use `clangd` in [LLVM project](https://github.com/llvm/llvm-project). soft link 
 or you can build it from source
 
 ``` bash
+sudo apt-get install build-essential lld
+
 llvm_version=llvmorg-18.1.1
 git clone -b $llvm_version --depth=1 https://gitee.com/mirrors/LLVM.git
 cd LLVM
