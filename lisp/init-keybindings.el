@@ -550,10 +550,7 @@
          "d" "debug"
          "db"  "breakpoints"
          "dd"  "debugging"
-         "de"  "eval"
-         "dI"  "inspect"
-         "dS"  "switch"
-         "dw"  "debug windows")
+         "dS"  "switch")
        (leader-with-prefix "d"
          (leader-set-keys
            "." #'dape-hydra/body
@@ -570,12 +567,12 @@
            "dd" #'dape
 
            ;; switching
-           "sw" #'dape-watch-dwim
-           "sm" #'dape-read-memory
-           "st" #'dape-select-thread
-           "ss" #'dape-select-stack
-           "ss" #'dape-info
-           "sr"  #'dape-repl
+           "Sw" #'dape-watch-dwim
+           "Sm" #'dape-read-memory
+           "St" #'dape-select-thread
+           "Ss" #'dape-select-stack
+           "Ss" #'dape-info
+           "Sr"  #'dape-repl
 
            ;; stepping
            "n"  #'dape-next
