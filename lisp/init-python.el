@@ -26,6 +26,7 @@
   (define-key inferior-python-mode-map
     (kbd "C-r") 'comint-history-isearch-backward))
 
+
 (use-package pyvenv
   :preface
   (defun petmacs/remove-pyvenv-modeline-env-info ()
@@ -46,17 +47,11 @@
         ;; to compare whether pyvenv-workon and pyvenv-virtual-env-name is equal
         (setq-local pyvenv-workon (gethash "venv" (json-read-file pfile)))
         (pyvenv-workon pyvenv-workon))
-      ;; (cond ((equal petmacs-lsp-mode-impl 'lsp-mode)
-      ;;        (lsp-deferred))
-      ;;       ((equal petmacs-lsp-mode-impl 'eglot)
-      ;;        (eglot-booster-mode t)
-      ;;        (eglot-ensure)))
-
       (pcase petmacs-lsp-mode-impl
         ('lsp-mode
          (lsp-deferred))
         ('eglot
-         (eglot-booster-mode t)
+         ;; (eglot-booster-mode t) ;; will case flymake-ruff malfunction
          (eglot-ensure)))))
   :hook (((python-mode python-ts-mode) . petmacs/pyvenv-pyright-autoload)
          (pyvenv-mode . petmacs/remove-pyvenv-modeline-env-info))

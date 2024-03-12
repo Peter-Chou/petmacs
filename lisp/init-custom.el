@@ -56,7 +56,6 @@
 (defvar petmacs-lsp-mode-impl
   ;; 'lsp-mode
   'eglot
-
   "lsp-mode / eglot")
 
 
