@@ -110,7 +110,7 @@
   (require 'lsp-java-lombok)
   (setq lsp-java-lombok/enabled t
         lsp-java-lombok/version "1.18.28"
-        lsp-java-lombok/dir (expand-file-name "data/lsp-java-jars" user-emacs-directory))
+        lsp-java-lombok/dir (expand-file-name "data/lsp-java-jars/" user-emacs-directory))
   (lsp-java-lombok/init))
 
 
