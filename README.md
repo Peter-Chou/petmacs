@@ -130,12 +130,13 @@ download [emacs-lsp-booster](https://github.com/blahgeek/emacs-lsp-booster) to s
 
 petmacs use [apheleia](https://github.com/radian-software/apheleia) to format the buffer.
 
-### 5.1 black (Python)
+### 5.1 ruff (Python)
 
-install [black](https://github.com/psf/black) is installed in your environment.
+install [ruff](https://github.com/astral-sh/ruff) in your environment.
 
 ``` bash
-pip install black
+# for python linter and formatter
+pip install ruff
 ```
 
 ### 5.2 google-java-format (Java)

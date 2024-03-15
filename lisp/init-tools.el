@@ -518,6 +518,7 @@
   :bind ("C-c f" . apheleia-format-buffer)
   :hook (emacs-startup . apheleia-global-mode)
   :config
-  (setf (alist-get 'python-ts-mode apheleia-mode-alist) '(isort black)))
+  (setf (alist-get 'python-mode apheleia-mode-alist) '(isort ruff))
+  (setf (alist-get 'python-ts-mode apheleia-mode-alist) '(isort ruff)))
 
 (provide 'init-tools)
