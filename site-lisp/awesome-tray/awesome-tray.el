@@ -733,9 +733,9 @@ Requires `anzu', also `evil-anzu' if using `evil-mode' for compatibility with
         (pcase status
           ('up-to-date (setq status ""))
           ('edited (setq status "!"))
-          ('needs-update (setq status "⇣"))
-          ('needs-merge (setq status "⇡"))
-          ('unlocked-changes (setq status ""))
+          ('needs-update (setq status "?"))
+          ('needs-merge (setq status "?"))
+          ('unlocked-changes (setq status "?"))
           ('added (setq status "+"))
           ('removed (setq status "-"))
           ('conflict (setq status "="))
@@ -750,7 +750,8 @@ Requires `anzu', also `evil-anzu' if using `evil-mode' for compatibility with
         (setq awesome-tray-git-command-cache (if awesome-tray-git-show-status
                                                  (format awesome-tray-git-format (string-trim (concat branch " " status)))
                                                (format awesome-tray-git-format branch))))
-    (setq awesome-tray-git-command-cache "")))
+    (setq awesome-tray-git-buffer-filename nil
+          awesome-tray-git-command-cache "")))
 
 (defun awesome-tray-module-circe-info ()
   "Display circe tracking buffers"
@@ -1077,9 +1078,9 @@ Requires `anzu', also `evil-anzu' if using `evil-mode' for compatibility with
           (when-let
               ((flymake-state
                 (cond
-                 (waiting "⏳")
-                 ((null known) "❔")
-                 (disabledp "❕")
+                 (waiting "?")
+                 ((null known) "?")
+                 (disabledp "?")
                  (t (let ((.error 0)
                           (.warning 0)
                           (.note 0))
@@ -1101,13 +1102,13 @@ Requires `anzu', also `evil-anzu' if using `evil-mode' for compatibility with
                              (string-join
                               (list
                                (when (> .note 0)
-                                 (concat "🔵:" (propertize (number-to-string .note) 'face 'awesome-tray-module-flymake-note)))
+                                 (concat "??:" (propertize (number-to-string .note) 'face 'awesome-tray-module-flymake-note)))
                                (when (> .warning 0)
-                                 (concat "🟠:" (propertize (number-to-string .warning) 'face 'awesome-tray-module-flymake-warning)))
+                                 (concat "??:" (propertize (number-to-string .warning) 'face 'awesome-tray-module-flymake-warning)))
                                (when (> .error 0)
-                                 (concat "🔴:" (propertize (number-to-string .error) 'face 'awesome-tray-module-flymake-error))))
+                                 (concat "??:" (propertize (number-to-string .error) 'face 'awesome-tray-module-flymake-error))))
                               " "))
-                          "🟢")))))))
+                          "??")))))))
             flymake-state)))))
 
 (defun awesome-tray-get-match-nodes (query)
@@ -1276,7 +1277,23 @@ If right is non nil, replace to the right"
                   ('left (propertize "  " 'cursor 1 'display
                                      `(space :align-to (- left-fringe ,wid))))
                   ('right (propertize "  " 'cursor 1 'display
-                                      `(space :align-to (- right-fringe ,wid)))))))
+                                      `(space :align-to (- right-fringe
+                                                           ,(if (display-graphic-p)
+                                                                (if (= (nth 1 (window-fringes)) 0)
+                                                                    ;; no right fringe, need 1 char padding to avoid
+                                                                    ;; line wrap
+                                                                    1
+                                                                  (if (and (not overflow-newline-into-fringe)
+                                                                           (= awesome-tray-info-padding-right 0))
+                                                                      ;; need 1 pixel padding to avoid line wrap when
+                                                                      ;; overflow-newline-into-fringe is nil
+                                                                      '(1)
+                                                                    '(0)))
+                                                              (if (= awesome-tray-info-padding-right 0)
+                                                                  ;; need 1 char in TUI to avoid line wrap
+                                                                  1
+                                                                0))
+                                                           ,wid)))))))
 
       (setq awesome-tray-text (concat (if awesome-tray-second-line "\n") spc text))
 
