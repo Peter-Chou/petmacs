@@ -97,8 +97,8 @@ sudo apt-get install build-essential lld
 llvm_version=llvmorg-18.1.1
 git clone -b $llvm_version --depth=1 https://gitee.com/mirrors/LLVM.git
 cd LLVM
-cmake -S llvm -B build -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_LINKER=lld -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra" -DCMAKE_INSTALL_PREFIX=/opt/llvm
-cmake --build build -j10
+cmake -S llvm -B build -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_LINKER=lld -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;lldb" -DCMAKE_INSTALL_PREFIX=/opt/llvm
+cmake --build build -j $(nproc)
 sudo $(which cmake) --install build
 ```
 
