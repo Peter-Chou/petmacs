@@ -38,6 +38,7 @@
         )
   :config
   (plist-put (alist-get 'debugpy dape-configs) 'command "python")
+  (plist-put (alist-get 'lldb-vscode dape-configs) 'command "lldb-dap")
 
   ;; ;; Save buffers on startup, useful for interpreted languages
   ;; (add-hook 'dape-on-start-hooks
