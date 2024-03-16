@@ -237,6 +237,9 @@
         doom-modeline-height 1
         doom-modeline-mode-alist nil
 
+        doom-modeline-height 30
+        doom-modeline-enable-word-count nil
+        doom-modeline-buffer-modification-icon t
         doom-modeline-window-width-limit 110
         doom-modeline-env-version nil)
 
@@ -527,5 +530,9 @@
 
 (use-package valign
   :hook ((markdown-mode org-mode) . valign-mode))
+
+
+(use-package spacious-padding
+  :hook (after-init . spacious-padding-mode))
 
 (provide 'init-ui)
