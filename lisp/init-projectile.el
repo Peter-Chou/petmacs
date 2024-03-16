@@ -38,4 +38,9 @@
   (let ((val (or (getenv "P4CONFIG") ".p4config")))
     (add-to-list 'projectile-project-root-files-bottom-up val)))
 
+(use-package consult-projectile
+  :after consult
+  :init (setq consult-projectile-use-projectile-switch-project t))
+
+
 (provide 'init-projectile)

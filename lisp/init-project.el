@@ -51,4 +51,6 @@
     (mapcan #'my/project-files-in-directory
             (or dirs (list (project-root project))))))
 
+(use-package consult-project-extra)
+
 (provide 'init-project)
