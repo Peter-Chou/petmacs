@@ -117,8 +117,8 @@ FACE defaults to inheriting from default and highlight."
     (advice-add #'deactivate-mark :after #'turn-on-symbol-overlay)))
 
 (use-package indent-bars
-  :quelpa (indent-bars :fetcher github :repo "jdtsmith/indent-bars" :files ("*.el"))
-  ;; :quelpa (indent-bars :fetcher git :url "https://gitee.com/Peter-Chou/indent-bars.git" :files ("*.el"))
+  :quelpa (indent-bars :fetcher github :repo "jdtsmith/indent-bars" :upgrade t :files ("*.el"))
+  ;; :quelpa (indent-bars :fetcher git :url "https://gitee.com/Peter-Chou/indent-bars.git" :upgrade t :files ("*.el"))
   :hook ((
           go-mode go-ts-mode
           json-mode json-ts-mode

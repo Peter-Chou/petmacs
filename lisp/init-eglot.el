@@ -4,6 +4,7 @@
   (setq read-process-output-max (* 5 1024 1024)))
 
 (use-package eglot
+  :pin gnu
   :preface
   (defun petmacs/eglot-keybindgs ()
     (define-key evil-motion-state-map "gR" #'eglot-rename)
@@ -57,8 +58,8 @@
 
 (use-package eglot-booster
   :after eglot
-  :quelpa (eglot-booster :fetcher github :repo "jdtsmith/eglot-booster" :files ("*.el"))
-  ;; :quelpa (eglot-booster :fetcher git :url "https://gitee.com/Peter-Chou/eglot-booster.git" :files ("*.el"))
+  :quelpa (eglot-booster :fetcher github :repo "jdtsmith/eglot-booster" :upgrade t :files ("*.el"))
+  ;; :quelpa (eglot-booster :fetcher git :url "https://gitee.com/Peter-Chou/eglot-booster.git" :upgrade t :files ("*.el"))
   :init (setq eglot-booster-no-remote-boost t)
   :config (eglot-booster-mode))
 
@@ -104,8 +105,8 @@
   :init (setq consult-eglot-show-kind-name t))
 
 (use-package eglot-hierarchy
-  :quelpa (eglot-hierarchy :fetcher github :repo "dolmens/eglot-hierarchy" :files ("*.el"))
-  ;; :quelpa (eglot-booster :fetcher git :url "https://gitee.com/Peter-Chou/eglot-hierarchy.git" :files ("*.el"))
+  :quelpa (eglot-hierarchy :fetcher github :repo "dolmens/eglot-hierarchy" :upgrade t :files ("*.el"))
+  ;; :quelpa (eglot-booster :fetcher git :url "https://gitee.com/Peter-Chou/eglot-hierarchy.git" :upgrade t :files ("*.el"))
   )
 
 (use-package eglot-orderless
