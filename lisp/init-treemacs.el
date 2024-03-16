@@ -18,6 +18,7 @@
   (setq treemacs-collapse-dirs           (if treemacs-python-executable 3 0)
         treemacs-missing-project-action  'remove
         treemacs-sorting                 'alphabetic-asc
+        treemacs-is-never-other-window   t
         treemacs-follow-after-init       t
         treemacs-no-png-images           (not petmacs-icon)
         treemacs-width                   35)
