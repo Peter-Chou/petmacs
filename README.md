@@ -114,15 +114,49 @@ pip install debugpy
 
 ### 4.2 java-debug (Java)
 
-java-debug already been installed in 3.2 section
+java-debug already been carried in `./data/lsp-java-jars/com.microsoft.java.debug.plugin-0.51.1.jar`
 
-### 4.3 lldb-vscode (C/C++)
+### 4.3 gdb (C/C++)
 
-`lldb-vscode` is already in [LLVM project](https://github.com/llvm/llvm-project).
+gdb >=14.1
 
-### [optional] install emacs-lsp-booster
+#### build gmp for gdb
 
-download [emacs-lsp-booster](https://github.com/blahgeek/emacs-lsp-booster) to speed up the message parsing performance. Put the binary in the `PATH`
+``` bash
+wget https://ftp.gnu.org/gnu/gmp/gmp-6.3.0.tar.gz
+tar -vxf gmp-6.3.0.tar.gz
+cd gmp-6.3.0
+./configure --prefix=/opt/softwares/gmp-6.3.0
+make  -j $(nproc)
+sudo make install
+```
+
+#### build mpfr for gdb
+
+``` bash
+wget https://ftp.gnu.org/gnu/mpfr/mpfr-4.2.1.tar.gz
+tar -vxf mpfr-4.2.1.tar.gz
+cd mpfr-4.2.1
+./configure --prefix=/opt/softwares/mpfr-4.2.1
+make  -j $(nproc)
+sudo make install
+```
+
+#### build gdb
+
+``` bash
+sudo apt install python-dev-is-python3
+
+wget https://ftp.gnu.org/gnu/gdb/gdb-14.2.tar.gz
+tar -vxf gdb-14.2.tar.gz
+cd gdb-14.2
+mkdir build && cd build
+../configure --prefix=/opt/softwares/gdb-14.2 --with-python=/usr/bin/python3  --with-gmp=/opt/softwares/gmp-6.3.0 --with-mpfr=/opt/softwares/mpfr-4.2.1
+#--enable-checking=release --enable-languages=c,c++ --disable-multilib
+make  -j $(nproc)
+sudo make install
+sudo ln -sf /opt/softwares/gdb-14.2 /opt/gdb
+```
 
 ---
 
