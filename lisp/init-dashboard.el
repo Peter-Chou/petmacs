@@ -10,15 +10,18 @@
   (dashboard-heading ((t (:inherit (font-lock-string-face bold)))))
   (dashboard-items-face ((t (:weight normal))))
   (dashboard-no-items-face ((t (:weight normal))))
-  :hook (dashboard-mode . (lambda ()
-                            ;; No title
-                            (setq-local frame-title-format nil)
-                            ;; Enable `page-break-lines-mode'
-                            (when (fboundp 'page-break-lines-mode)
-                              (page-break-lines-mode 1))))
+  :hook ((dashboard-mode . (lambda ()
+                             ;; No title
+                             (setq-local frame-title-format nil)
+                             ;; Enable `page-break-lines-mode'
+                             (when (fboundp 'page-break-lines-mode)
+                               (page-break-lines-mode 1))))
+         (dashboard-after-initialize . solaire-mode))
   :init
   (setq
    dashboard-banner-logo-title "Petmacs --- Adorable just like A PET"
+   dashboard-projects-switch-function 'counsel-projectile-switch-project-by-name
+   dashboard-projects-backend 'projectile
    dashboard-startup-banner (or (expand-file-name
                                  (if (display-graphic-p)
                                      "data/pics/petmacs_banner.png"
@@ -29,9 +32,12 @@
    dashboard-path-max-length 60
    dashboard-center-content t
    dashboard-show-shortcuts nil
-   dashboard-items '((recents  . 10)
+   dashboard-items '((recents  . 8)
                      (projects . 5)
                      (bookmarks . 5))
+
+   dashboard-icon-type 'nerd-icons
+   dashboard-display-icons-p t
 
    dashboard-set-init-info t
    dashboard-set-file-icons t
