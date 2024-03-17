@@ -55,36 +55,6 @@
 (use-package solaire-mode
   :hook (after-init . solaire-global-mode))
 
-;; (use-package srcery-theme)
-;; (use-package standard-themes)
-;; (use-package spacemacs-theme
-;;   :init
-;;   (setq spacemacs-theme-comment-bg nil
-;;         ;; spacemacs-theme-underline-parens nil
-;;         spacemacs-theme-custom-colors `((mat . ,petmacs-favor-color)
-;;                                         (cursor . ,petmacs-favor-color))))
-
-;; (use-package modus-themes
-;;   :init
-;;   (setq modus-themes-bold-constructs t
-;;         ;; modus-themes-italic-constructs t
-;;         modus-themes-org-blocks 'tinted-background
-;;         ;; modus-themes-syntax '(yellow-comments green-strings)
-;;         modus-themes-hl-line '(intense)
-
-;;         modus-themes-paren-match '(bold intense)
-;;         ;; modus-themes-mode-line '(accented borderless (height . 0.9))
-;;         modus-themes-mode-line '(accented borderless 3d)
-;;         modus-themes-region '(accented bg-only no-extend)
-;;         modus-themes-completions '((matches . (extrabold))
-;;                                    (selection . (semibold accented))
-;;                                    (popup . (accented intense)))
-;;         modus-themes-headings ; this is an alist: read the manual or its doc string
-;;         '((1 . (rainbow overline background 1.4))
-;;           (2 . (rainbow background 1.3))
-;;           (3 . (rainbow bold 1.2))
-;;           (t . (semilight 1.1)))))
-
 (use-package doom-themes
   :config
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
@@ -231,13 +201,13 @@
   (setq doom-modeline-icon petmacs-icon
         doom-modeline-buffer-file-name-style 'auto
         doom-modeline-support-imenu t
-        doom-modeline-time-icon nil
         doom-modeline-minor-modes nil
         doom-modeline-indent-info nil
-        doom-modeline-height 1
         doom-modeline-mode-alist nil
+        doom-modeline-vcs-max-length 20
 
-        doom-modeline-height 30
+        doom-modeline-total-line-number t
+
         doom-modeline-enable-word-count nil
         doom-modeline-buffer-modification-icon t
         doom-modeline-window-width-limit 110
@@ -247,18 +217,17 @@
   (unless after-init-time
     (setq-default mode-line-format nil))
   :config
-  (doom-modeline-def-modeline 'my-simple-line
+  (doom-modeline-def-modeline 'petmacs/simple-mode-line
     ;;;; main
-                              ;; '(eldoc bar workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
-                              ;; '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl lsp minor-modes input-method indent-info buffer-encoding major-mode process vcs checker time)
+    ;; '(eldoc bar workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
+    ;; '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl lsp minor-modes input-method indent-info buffer-encoding major-mode process vcs checker time)
 
-                              '(eldoc bar workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
-                              '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl lsp input-method indent-info buffer-encoding process))
+    '(eldoc bar workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
+    '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl lsp input-method indent-info buffer-encoding process))
 
   ;; Set default mode-line
-  (add-hook 'doom-modeline-mode-hook
-            (lambda ()
-              (doom-modeline-set-modeline 'my-simple-line 'default))))
+  (add-hook 'doom-modeline-mode-hook (lambda ()
+                                       (doom-modeline-set-modeline 'petmacs/simple-mode-line 'default))))
 
 (use-package hide-mode-line
   :hook (((treemacs-mode
@@ -537,8 +506,7 @@
   (setq
    spacious-padding-subtle-mode-line
    `(:mode-line-active ,petmacs-favor-color
-     :mode-line-inactive shadow
-     )
+     :mode-line-inactive shadow)
    spacious-padding-widths
    '( :internal-border-width 8
       :mode-line-width 6
