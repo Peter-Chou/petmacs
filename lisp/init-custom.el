@@ -3,6 +3,9 @@
 (eval-when-compile
   (require 'package))
 
+(defvar petmacs-quelpa-use-gitee-mirror nil
+  "use gitee mirror instead of github")
+
 (defvar petmacs-icon t
   "Display icons or not.")
 

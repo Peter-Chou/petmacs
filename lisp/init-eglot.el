@@ -56,10 +56,17 @@
   (push :documentHighlightProvider eglot-ignored-server-capabilities)
   (advice-add 'eglot-ensure :after 'petmacs/eglot-keybindgs))
 
+
+
+(if petmacs-quelpa-use-gitee-mirror
+    (use-package eglot-booster
+      :quelpa (eglot-booster :fetcher git :url "https://gitee.com/Peter-Chou/eglot-booster.git" :upgrade t :files ("*.el")))
+  (use-package eglot-booster
+    :quelpa (eglot-booster :fetcher github :repo "jdtsmith/eglot-booster" :upgrade t :files ("*.el"))))
+
 (use-package eglot-booster
   :after eglot
-  :quelpa (eglot-booster :fetcher github :repo "jdtsmith/eglot-booster" :upgrade t :files ("*.el"))
-  ;; :quelpa (eglot-booster :fetcher git :url "https://gitee.com/Peter-Chou/eglot-booster.git" :upgrade t :files ("*.el"))
+  :ensure nil
   :init (setq eglot-booster-no-remote-boost t)
   :config (eglot-booster-mode))
 
@@ -104,10 +111,12 @@
 (use-package consult-eglot
   :init (setq consult-eglot-show-kind-name t))
 
-(use-package eglot-hierarchy
-  :quelpa (eglot-hierarchy :fetcher github :repo "dolmens/eglot-hierarchy" :upgrade t :files ("*.el"))
-  ;; :quelpa (eglot-booster :fetcher git :url "https://gitee.com/Peter-Chou/eglot-hierarchy.git" :upgrade t :files ("*.el"))
-  )
+
+(if petmacs-quelpa-use-gitee-mirror
+    (use-package eglot-hierarchy
+      :quelpa (eglot-hierarchy :fetcher git :url "https://gitee.com/Peter-Chou/eglot-hierarchy.git" :upgrade t :files ("*.el")))
+  (use-package eglot-hierarchy
+    :quelpa (eglot-hierarchy :fetcher github :repo "dolmens/eglot-hierarchy" :upgrade t :files ("*.el"))))
 
 (use-package eglot-orderless
   :ensure nil

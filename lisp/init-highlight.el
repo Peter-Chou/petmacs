@@ -116,9 +116,14 @@ FACE defaults to inheriting from default and highlight."
         (symbol-overlay-mode 1)))
     (advice-add #'deactivate-mark :after #'turn-on-symbol-overlay)))
 
+(if petmacs-quelpa-use-gitee-mirror
+    (use-package indent-bars
+      :quelpa (indent-bars :fetcher git :url "https://gitee.com/Peter-Chou/indent-bars.git" :upgrade t :files ("*.el")))
+  (use-package indent-bars
+    :quelpa (indent-bars :fetcher github :repo "jdtsmith/indent-bars" :upgrade t :files ("*.el"))))
+
 (use-package indent-bars
-  :quelpa (indent-bars :fetcher github :repo "jdtsmith/indent-bars" :upgrade t :files ("*.el"))
-  ;; :quelpa (indent-bars :fetcher git :url "https://gitee.com/Peter-Chou/indent-bars.git" :upgrade t :files ("*.el"))
+  :ensure nil
   :hook ((
           go-mode go-ts-mode
           json-mode json-ts-mode
