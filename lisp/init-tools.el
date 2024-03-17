@@ -33,6 +33,9 @@
   :ensure nil
   :init (require 'posframe-plus))
 
+(use-package transpose-frame
+  :after transient)
+
 ;; F5 for paging which-key
 (use-package which-key
   :diminish
@@ -483,10 +486,14 @@
   (define-key iedit-mode-keymap (kbd "M-h") 'iedit-restrict-function)
   (define-key iedit-mode-keymap (kbd "M-i") 'iedit-restrict-current-line))
 
+(use-package compact-docstrings
+  :hook (prog-mode . compact-docstrings-mode))
+
 (use-package imenu-list
   :init (setq imenu-list-size 35))
 
 (use-package docker)
+(use-package dockerfile-mode)
 
 (use-package centered-cursor-mode)
 (use-package restart-emacs)
