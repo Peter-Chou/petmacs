@@ -38,7 +38,9 @@
         )
   :config
   (plist-put (alist-get 'debugpy dape-configs) 'command "python")
-  (plist-put (alist-get 'lldb-vscode dape-configs) 'command "lldb-dap")
+  ;; lldb-vscode renamed as lldb-dap after llvm 16
+  (when (executable-find "lldb-dap")
+    (plist-put (alist-get 'lldb-vscode dape-configs) 'command "lldb-dap"))
 
   ;; To not display info and/or buffers on startup
   ;; (remove-hook 'dape-on-start-hooks 'dape-info)
