@@ -46,7 +46,7 @@ if your cmake is too old, download the suitable version from [cmake.org](https:/
 ### 2.1 clone repository
 
 ```bash
-git clone --depth=1 https://github.com/Peter-Chou/petmacs.git ~/.emacs.d
+git clone https://github.com/Peter-Chou/petmacs.git ~/.emacs.d
 ```
 
 if you are facing some certification verification problems while cloning repository by git,
