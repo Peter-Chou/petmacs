@@ -63,6 +63,8 @@
   :init
   (setq-default proced-format 'verbose)
   (setq proced-auto-update-flag t
+        proced-enable-color-flag t
+        proced-tree-flag t
         proced-auto-update-interval 3))
 
 (with-no-warnings
