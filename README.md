@@ -81,9 +81,13 @@ set `WORKON_HOME` environment variable that has virtual environment directories.
 
 ### 3.2 eclipse jdtls (Java)
 
-M-x: `lsp-install-server` to install eclipse jdtls
+Please make sure  java 17 is installed in `/opt/jdk17` folder and run following commands in emacs.
 
-Please make sure  java 17 is installed in `/opt/jdk17` folder
+``` bash
+M-x: eglot-java-upgrade-lsp-server
+M-x: eglot-java-upgrade-junit-jar
+```
+
 
 ### 3.3 clangd (C/C++)
 
