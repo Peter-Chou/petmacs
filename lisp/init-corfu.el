@@ -85,18 +85,25 @@
 (use-package dabbrev
   ;; Swap M-/ and C-M-/
   :bind (("M-/" . dabbrev-completion)
-         ("C-M-/" . dabbrev-expand)))
+         ("C-M-/" . dabbrev-expand))
+  :init
+  (setq dabbrev-upcase-means-case-search t
+        dabbrev-check-all-buffers nil
+        dabbrev-check-other-buffers t
+        dabbrev-friend-buffer-function 'dabbrev--same-major-mode-p
+        dabbrev-ignored-buffer-regexps '("\\.\\(?:pdf\\|jpe?g\\|png\\)\\'")))
 
 (use-package cape
-  :init (setq cape-dabbrev-min-length 2
-              cape-dabbrev-check-other-buffers nil)
+  :init (setq cape-dabbrev-check-other-buffers 'some
+              ;; cape-dabbrev-check-other-buffers nil
+              cape-dabbrev-min-length 2)
   :config
   ;; 默认用这三个补全后端
-  (add-to-list 'completion-at-point-functions #'cape-file)
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-  (add-to-list 'completion-at-point-functions #'cape-elisp-block)
-  (add-to-list 'completion-at-point-functions #'cape-abbrev)
-  (add-to-list 'completion-at-point-functions #'cape-keyword)
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  ;; (add-to-list 'completion-at-point-functions #'cape-elisp-block)
+  ;; (add-to-list 'completion-at-point-functions #'cape-abbrev)
+  ;; (add-to-list 'completion-at-point-functions #'cape-keyword)
   (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster))
 
 (unless (display-graphic-p)
