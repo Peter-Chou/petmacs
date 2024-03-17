@@ -241,27 +241,27 @@ FACE defaults to inheriting from default and highlight."
   :config
   ;; Highlight on-the-fly
   (diff-hl-flydiff-mode 1)
-  (diff-hl-margin-mode 1)
+  ;; (diff-hl-margin-mode 1)
 
   ;; Set fringe style
   ;; (setq-default fringes-outside-margins t)
 
   (with-no-warnings
-    (defun my-diff-hl-fringe-bmp-function (_type _pos)
-      "Fringe bitmap function for use as `diff-hl-fringe-bmp-function'."
-      (define-fringe-bitmap 'my-diff-hl-bmp
-        (vector (if sys/macp #b11100000 #b11111100))
-        1 8
-        '(center t)))
-    (setq diff-hl-fringe-bmp-function #'my-diff-hl-fringe-bmp-function)
+    ;; (defun my-diff-hl-fringe-bmp-function (_type _pos)
+    ;;   "Fringe bitmap function for use as `diff-hl-fringe-bmp-function'."
+    ;;   (define-fringe-bitmap 'my-diff-hl-bmp
+    ;;     (vector (if sys/macp #b11100000 #b11111100))
+    ;;     1 8
+    ;;     '(center t)))
+    ;; (setq diff-hl-fringe-bmp-function #'my-diff-hl-fringe-bmp-function)
 
-    (unless (display-graphic-p)
-      ;; Fall back to the display margin since the fringe is unavailable in tty
-      (diff-hl-margin-mode 1)
-      ;; Avoid restoring `diff-hl-margin-mode'
-      (with-eval-after-load 'desktop
-        (add-to-list 'desktop-minor-mode-table
-                     '(diff-hl-margin-mode nil))))
+    ;; (unless (display-graphic-p)
+    ;;   ;; Fall back to the display margin since the fringe is unavailable in tty
+    ;;   (diff-hl-margin-mode 1)
+    ;;   ;; Avoid restoring `diff-hl-margin-mode'
+    ;;   (with-eval-after-load 'desktop
+    ;;     (add-to-list 'desktop-minor-mode-table
+    ;;                  '(diff-hl-margin-mode nil))))
 
     ;; Integration with magit
     (with-eval-after-load 'magit
