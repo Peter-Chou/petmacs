@@ -2,7 +2,6 @@
 
 (require 'init-custom)
 (require 'init-funcs)
-(require 'core-funcs)
 
 ;; Make <escape> quit as much as possible
 (define-key minibuffer-local-map (kbd "<escape>") 'keyboard-escape-quit)

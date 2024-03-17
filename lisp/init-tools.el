@@ -521,4 +521,16 @@
   (setf (alist-get 'python-mode apheleia-mode-alist) '(isort ruff))
   (setf (alist-get 'python-ts-mode apheleia-mode-alist) '(isort ruff)))
 
+(use-package yaml-mode
+  :mode (("\\.ya?ml\\'" . yaml-mode)
+         ("Procfile\\'" . yaml-mode)))
+
+(use-package nxml-mode
+  :ensure nil
+  :config
+  (evil-define-key 'normal nxml-mode-map (kbd "gc") #'evilnc-comment-or-uncomment-lines))
+
+(use-package json-mode)
+(use-package toml-mode)
+
 (provide 'init-tools)

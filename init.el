@@ -62,7 +62,6 @@
 
 (require 'init-projectile)
 (require 'init-project)
-;; (require 'init-persp)
 (require 'init-dired)
 (require 'init-shell)
 (require 'init-yasnippet)
@@ -90,11 +89,9 @@
 
 (require 'init-web)
 (require 'init-markdown)
-(require 'init-markup)
 
 (require 'init-org)
 
-(require 'core-funcs)
 (require 'init-keybindings)
 
 (toggle-frame-fullscreen)
