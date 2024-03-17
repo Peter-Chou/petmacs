@@ -249,11 +249,11 @@
   :config
   (doom-modeline-def-modeline 'my-simple-line
     ;;;; main
-    ;; '(eldoc bar workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
-    ;; '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl lsp minor-modes input-method indent-info buffer-encoding major-mode process vcs checker time)
+                              ;; '(eldoc bar workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
+                              ;; '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl lsp minor-modes input-method indent-info buffer-encoding major-mode process vcs checker time)
 
-    '(eldoc bar workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
-    '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl lsp input-method indent-info buffer-encoding process))
+                              '(eldoc bar workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
+                              '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl lsp input-method indent-info buffer-encoding process))
 
   ;; Set default mode-line
   (add-hook 'doom-modeline-mode-hook
@@ -531,8 +531,24 @@
 (use-package valign
   :hook ((markdown-mode org-mode) . valign-mode))
 
-
 (use-package spacious-padding
-  :hook (after-init . spacious-padding-mode))
+  :hook (after-init . spacious-padding-mode)
+  :init
+  (setq
+   spacious-padding-subtle-mode-line
+   `(:mode-line-active ,petmacs-favor-color
+     :mode-line-inactive shadow
+     )
+   spacious-padding-widths
+   '( :internal-border-width 8
+      :mode-line-width 6
+      :right-divider-width 1
+      ;; :fringe-width 6
+      :tab-width 6
+      :tab-bar-width 6
+      :tab-line-width 6
+      :header-line-width 4
+      :scroll-bar-width 8
+      )))
 
 (provide 'init-ui)
