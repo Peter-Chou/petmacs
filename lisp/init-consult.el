@@ -171,9 +171,6 @@
 (use-package consult-dir
   :bind (([remap list-directory] . consult-dir)))
 
-(use-package consult-flycheck
-  :after (consult flycheck))
-
 (use-package consult-yasnippet
   :after (consult yasnippet))
 

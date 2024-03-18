@@ -23,6 +23,9 @@
       [16 48 112 240 112 48 16] nil nil 'center))
   (flycheck-redefine-standard-error-levels "⏴" 'flycheck-fringe-bitmap-arrow))
 
+(use-package consult-flycheck
+  :after (consult flycheck))
+
 (use-package flycheck-popup-tip
   :hook (flycheck-mode . flycheck-popup-tip-mode))
 

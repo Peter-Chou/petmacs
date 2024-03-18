@@ -13,7 +13,6 @@
 
 (declare-function chart-bar-quickie 'chart)
 (declare-function flymake-start 'flymake)
-(declare-function flycheck-buffer 'flycheck)
 (declare-function evil-yank 'evil)
 (declare-function async-inject-variables 'async)
 (declare-function imenu-list-smart-toggle 'imenu-list)
@@ -855,14 +854,6 @@ initialized with the current filename."
   (toggle-frame-maximized)
   (vterm)
   (evil-insert-state))
-
-(defun petmacs/toggle-flycheck-error-list ()
-  "Toggle flycheck's error list window.
-If the error list is visible, hide it.  Otherwise, show it."
-  (interactive)
-  (-if-let (window (flycheck-get-error-list-window))
-      (quit-window nil window)
-    (flycheck-list-errors)))
 
 (defun petmacs/next-error (&optional n reset)
   "Dispatch to flycheck or standard emacs error."

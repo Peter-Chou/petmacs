@@ -3,11 +3,11 @@
 ;; Emacs lisp mode
 (use-package elisp-mode
   :ensure nil
-  :defines flycheck-disabled-checkers
-  :hook (emacs-lisp-mode . (lambda ()
-                             "Disable the checkdoc checker."
-                             (setq-local flycheck-disabled-checkers
-                                         '(emacs-lisp-checkdoc))))
+  ;; :defines flycheck-disabled-checkers
+  ;; :hook (emacs-lisp-mode . (lambda ()
+  ;;                            "Disable the checkdoc checker."
+  ;;                            (setq-local flycheck-disabled-checkers
+  ;;                                        '(emacs-lisp-checkdoc))))
   :config
   (when (boundp 'elisp-flymake-byte-compile-load-path)
     (add-to-list 'elisp-flymake-byte-compile-load-path load-path))
