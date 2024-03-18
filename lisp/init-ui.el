@@ -18,6 +18,15 @@
   (push '(tool-bar-lines . 0) default-frame-alist)
   (push '(vertical-scroll-bars) default-frame-alist))
 
+(use-package nerd-icons
+  ;; :config
+  ;; (when (and (display-graphic-p)
+  ;;            (not (font-installed-p nerd-icons-font-family)))
+  ;;   (nerd-icons-install-fonts t))
+  )
+
+(use-package all-the-icons :if (display-graphic-p))
+
 (use-package winum
   :init
   (setq winum-scope 'visible
@@ -36,16 +45,6 @@
   (define-key winum-keymap (kbd "M-8") 'winum-select-window-8)
   ;; (define-key winum-keymap (kbd "M-0") 'winum-select-window-0-or-10)
   (define-key winum-keymap (kbd "M-0") 'treemacs-select-window))
-
-(use-package all-the-icons
-  :if (display-graphic-p))
-
-(use-package nerd-icons
-  ;; :config
-  ;; (when (and (display-graphic-p)
-  ;;            (not (font-installed-p nerd-icons-font-family)))
-  ;;   (nerd-icons-install-fonts t))
-  )
 
 (use-package nerd-icons-completion
   :when (icons-displayable-p)
