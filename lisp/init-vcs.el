@@ -55,17 +55,6 @@
   (define-key magit-mode-map (kbd "M-7") 'winum-select-window-7)
   (define-key magit-mode-map (kbd "M-8") 'winum-select-window-8))
 
-;; Access Git forges from Magit
-(use-package forge
-  :demand t
-  :custom-face
-  (forge-topic-label ((t (:inherit variable-pitch :height 0.9 :width condensed :weight regular :underline nil))))
-  :init (setq forge-topic-list-columns
-              '(("#" 5 forge-topic-list-sort-by-number (:right-align t) number nil)
-                ("Title" 60 t nil title  nil)
-                ("State" 6 t nil state nil)
-                ("Updated" 10 t nil updated nil))))
-
 ;; Display transient in child frame
 (when (childframe-completion-workable-p)
   (use-package transient-posframe
@@ -88,6 +77,17 @@
         "Hide transient posframe."
         (posframe-hide transient--buffer-name))
       (advice-add #'transient-posframe--delete :override #'my-transient-posframe--hide))))
+
+;; Access Git forges from Magit
+;; (use-package forge
+;;   :demand t
+;;   :custom-face
+;;   (forge-topic-label ((t (:inherit variable-pitch :height 0.9 :width condensed :weight regular :underline nil))))
+;;   :init (setq forge-topic-list-columns
+;;               '(("#" 5 forge-topic-list-sort-by-number (:right-align t) number nil)
+;;                 ("Title" 60 t nil title  nil)
+;;                 ("State" 6 t nil state nil)
+;;                 ("Updated" 10 t nil updated nil))))
 
 ;; Walk through git revisions of a file
 (use-package git-timemachine
