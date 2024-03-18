@@ -84,18 +84,15 @@
 (require 'init-c-c++)
 (require 'init-python)
 (require 'init-java)
+(require 'init-markdown)
 
 ;; (require 'init-golang)
 ;; (require 'init-scala)
 ;; (require 'init-web)
 
-(require 'init-markdown)
-
 (require 'init-org)
 
 (require 'init-keybindings)
-
-(toggle-frame-fullscreen)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init.el ends here

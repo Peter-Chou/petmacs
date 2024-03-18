@@ -13,6 +13,7 @@
   :hook ((dashboard-mode . (lambda ()
                              ;; No title
                              (setq-local frame-title-format nil)
+                             (toggle-frame-fullscreen)
                              ;; Enable `page-break-lines-mode'
                              (when (fboundp 'page-break-lines-mode)
                                (page-break-lines-mode 1))))
