@@ -1,7 +1,6 @@
 ;; -*- lexical-binding: t no-byte-compile: t -*-
 
 ;; Install:
-;;   pip install yapf
 ;;   pip install isort
 ;;   pip install ruff
 (use-package python

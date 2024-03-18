@@ -83,11 +83,12 @@
 (require 'init-elisp)
 (require 'init-c-c++)
 (require 'init-python)
-(require 'init-golang)
 (require 'init-java)
-(require 'init-scala)
 
-(require 'init-web)
+;; (require 'init-golang)
+;; (require 'init-scala)
+;; (require 'init-web)
+
 (require 'init-markdown)
 
 (require 'init-org)
