@@ -231,4 +231,17 @@
         iedit-toggle-key-default nil)
   (require 'evil-iedit-state))
 
+(use-package evil-org
+  :after org
+  :hook (org-mode . evil-org-mode)
+  :config
+  (setq evil-org-use-additional-insert t
+        evil-org-key-theme '(textobjects
+                             navigation
+                             additional
+                             todo))
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys))
+
+
 (provide 'init-evil)

@@ -4,7 +4,6 @@
 
 (require'org-tempo) ;; start easy template
 
-
 (use-package org
   :pin melpa
   :custom-face (org-ellipsis ((t (:foreground unspecified))))
@@ -91,7 +90,6 @@
                   '("🅐" "🅑" "🅒" "🅓")
                 '("HIGH" "MEDIUM" "LOW" "OPTIONAL"))))
 
-
 (use-package org-contrib
   :pin nongnu)
 
@@ -104,18 +102,6 @@
   :hook (org-mode . petmacs/org-mode-visual-fill))
 
 (use-package org-super-agenda)
-
-(use-package evil-org
-  :hook (org-mode . evil-org-mode)
-  :after org
-  :config
-  (setq evil-org-use-additional-insert t
-        evil-org-key-theme '(textobjects
-                             navigation
-                             additional
-                             todo))
-  (require 'evil-org-agenda)
-  (evil-org-agenda-set-keys))
 
 (use-package org-appear
   :preface
@@ -148,14 +134,14 @@
     (plantuml   . t))
   "Alist of org ob languages.")
 
-(use-package ob-go
-  :init (cl-pushnew '(go . t) load-language-alist))
+;; (use-package ob-go
+;;   :init (cl-pushnew '(go . t) load-language-alist))
 
-(use-package ob-powershell
-  :init (cl-pushnew '(powershell . t) load-language-alist))
+;; (use-package ob-powershell
+;;   :init (cl-pushnew '(powershell . t) load-language-alist))
 
-(use-package ob-rust
-  :init (cl-pushnew '(rust . t) load-language-alist))
+;; (use-package ob-rust
+;;   :init (cl-pushnew '(rust . t) load-language-alist))
 
 ;; Install: npm install -g @mermaid-js/mermaid-cli
 (use-package ob-mermaid
