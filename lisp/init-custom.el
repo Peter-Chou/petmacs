@@ -93,7 +93,7 @@
 (defvar  petmacs-proxy "winhost:1080"
   "Set network proxy.")
 
-(defvar petmacs-socks-proxy "127.0.0.1:1086"
+(defvar petmacs-socks-proxy "127.0.0.1:1080"
   "Set SOCKS proxy.")
 
 (defface petmacs-favor-color-face
