@@ -1,7 +1,7 @@
 ;; -*- lexical-binding: t no-byte-compile: t -*-
 
 (use-package magit
-  :hook (magit-mode . magit-wip-mode)
+  ;; :hook (magit-mode . magit-wip-mode)
   :init
   (setq magit-diff-refine-hunk t
         magit-process-finish-apply-ansi-colors t
@@ -188,7 +188,7 @@
 (use-package git-gutter
   ;; :hook (prog-mode . git-gutter-mode)
   :hook (after-init . global-git-gutter-mode)
-  :init (setq git-gutter:update-interval 0.1
+  :init (setq git-gutter:update-interval 0.5
               ;; git-gutter:window-width 2
               git-gutter:modified-sign (nerd-icons-octicon "nf-oct-diff_modified" :height 0.6 :v-adjust 0.0 :face 'nerd-icons-purple)
               git-gutter:added-sign (nerd-icons-octicon "nf-oct-diff_added" :height 0.6 :v-adjust 0.0 :face 'nerd-icons-green)
