@@ -335,8 +335,8 @@
      ("=" writeroom-adjust-width     "adjust width" :exit t))))
   ;; :hook ((prog-mode yaml-mode markdown-mode org-mode) . writeroom-mode)
   :init (setq writeroom-mode-line t
-              writeroom-maximize-window nil
-              writeroom-fullscreen-effect 'maximized
+              ;; writeroom-maximize-window nil
+              ;; writeroom-fullscreen-effect 'maximized
               writeroom-width 90)
   (require 'writeroom-mode)
   ;; :config
