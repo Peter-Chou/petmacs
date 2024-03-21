@@ -68,6 +68,8 @@ M-x treesit-auto-install-all
 
 ## 3. install LSP servers
 
+please install [emacs-lsp-booster](https://github.com/blahgeek/emacs-lsp-booster) installed and in you `PATH`
+
 install the language servers needed by LSP service
 
 ### 3.1 pyright (Python)
