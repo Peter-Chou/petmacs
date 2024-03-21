@@ -16,7 +16,8 @@
   :init
   (setq eglot-send-changes-idle-time 0.2
         eglot-autoshutdown t
-        eglot-connect-timeout 120
+        ;; eglot-connect-timeout 120
+        eglot-connect-timeout 1200 ;; 10 minutes
         eglot-ignored-server-capabilities '(:inlayHintProvider)
         eldoc-echo-area-use-multiline-p nil
         ;; eglot-events-buffer-size 1
@@ -83,6 +84,7 @@
 
   (require 'eglot-java)
   (setq eglot-java-java-home "/opt/jdk17"
+        eglot-java-java-program "/opt/jdk17/bin/java"
         eglot-java-eclipse-jdt-cache-directory (expand-file-name (file-name-concat user-emacs-directory "data" "eglot-java-cache"))
         eglot-java-eclipse-jdt-args
         `("-Xmx8G"
