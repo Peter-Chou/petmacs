@@ -36,8 +36,25 @@
                      (projects . 5)
                      (bookmarks . 5))
 
+   dashboard-startupify-list '(dashboard-insert-banner
+                               dashboard-insert-newline
+                               dashboard-insert-banner-title
+                               dashboard-insert-newline
+                               dashboard-insert-navigator
+                               dashboard-insert-newline
+                               dashboard-insert-init-info
+                               dashboard-insert-items
+                               dashboard-insert-newline
+                               dashboard-insert-footer)
+
    dashboard-icon-type 'nerd-icons
    dashboard-display-icons-p t
+
+   dashboard-heading-icons '((recents   . "nf-oct-history")
+                             (bookmarks . "nf-oct-bookmark")
+                             (agenda    . "nf-oct-calendar")
+                             (projects  . "nf-oct-briefcase")
+                             (registers . "nf-oct-database"))
 
    dashboard-set-init-info t
    dashboard-set-file-icons t
@@ -48,8 +65,7 @@
    dashboard-footer-icon
    (if (icons-displayable-p)
        (nerd-icons-octicon "nf-oct-heart" :height 1.2 :face 'nerd-icons-lred)
-     (propertize ">" 'face 'dashboard-footer))
-   )
+     (propertize ">" 'face 'dashboard-footer)))
   (dashboard-setup-startup-hook))
 
 (provide 'init-dashboard)
