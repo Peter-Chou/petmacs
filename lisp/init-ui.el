@@ -58,6 +58,8 @@
 (use-package doom-themes
   :config
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+        ;; fix ugly faces when using themes without doom-themes
+        doom-themes-treemacs-enable-variable-pitch nil
         doom-themes-enable-italic t) ; if nil, italics is universally disabled
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
