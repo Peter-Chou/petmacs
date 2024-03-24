@@ -183,13 +183,14 @@
                                (string-join
                                 (list
                                  (when (> .note 0)
-                                   (propertize (concat "📖:" (number-to-string .note)) 'face 'awesome-tray-module-flymake-note))
+                                   (propertize (concat (format "%s:" (nerd-icons-faicon "nf-fa-info_circle")) (number-to-string .note)) 'face 'awesome-tray-module-flymake-note))
                                  (when (> .warning 0)
-                                   (propertize (concat "❗:" (number-to-string .warning)) 'face 'awesome-tray-module-flymake-warning))
+                                   (propertize (concat (format "%s:" (nerd-icons-faicon "nf-fa-warning")) (number-to-string .warning)) 'face 'awesome-tray-module-flymake-warning))
                                  (when (> .error 0)
-                                   (propertize (concat "❌:" (number-to-string .error)) 'face 'awesome-tray-module-flymake-error)))
+                                   (propertize (concat (format "%s:" (nerd-icons-faicon "nf-fa-times_circle")) (number-to-string .error)) 'face 'awesome-tray-module-flymake-error)))
                                 " "))
-                            (propertize "✅" 'face 'awesome-tray-green-face))))))))
+                            (propertize (format "%s" (nerd-icons-faicon "nf-fa-check_circle")) 'face 'awesome-tray-green-face)
+                            )))))))
               flymake-state)))))
   (advice-add #'awesome-tray-module-flymake-info :override #'petmacs/awesome-tray-module-flymake-info)
 
