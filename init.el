@@ -55,6 +55,7 @@
 (require 'init-ibuffer)
 (require 'init-window)
 (require 'init-treemacs)
+(require 'init-workspace)
 
 (require 'init-flymake)
 ;; (require 'init-flycheck)

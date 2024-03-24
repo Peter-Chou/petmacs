@@ -5,7 +5,9 @@
   (defun my/project-try-local (dir)
     "Determine if DIR is a non-Git project."
     (catch 'ret
-      (let ((pr-flags '((".project")
+      (let ((pr-flags '(
+                        ;; (".project")
+                        (".prj" ".project" ".projectile")
                         ("go.mod" "Cargo.toml" "project.clj" "pom.xml" "package.json") ;; higher priority
                         ("Makefile" "README.org" "README.md"))))
         (dolist (current-level pr-flags)
