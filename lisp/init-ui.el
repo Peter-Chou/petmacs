@@ -159,9 +159,12 @@
             (when-let
                 ((flymake-state
                   (cond
-                   (waiting "⏳")
-                   ((null known) "❔")
-                   (disabledp "❕")
+                   ;; (waiting "⏳")
+                   (waiting (format "%s" (nerd-icons-mdicon "nf-md-timer_sand")))
+                   ;; ((null known) "❔")
+                   ((null known) (format "%s" (nerd-icons-faicon "nf-fa-question")))
+                   ;; (disabledp "❕")
+                   (disabledp (format "%s" (nerd-icons-faicon "nf-fa-exclamation")))
                    (t (let ((.error 0)
                             (.warning 0)
                             (.note 0))
