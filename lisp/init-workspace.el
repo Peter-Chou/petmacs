@@ -4,7 +4,7 @@
   :hook (after-init . tabspaces-mode)
   :init
   (setq
-   ;; tab-bar-show nil
+   tab-bar-show petmacs-disable-modeline
    tabspaces-use-filtered-buffers-as-default t
    tabspaces-default-tab "Default"
    tabspaces-remove-to-default t
