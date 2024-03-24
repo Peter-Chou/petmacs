@@ -494,8 +494,8 @@
      ("=" transwin-inc "increase frame opacity")
      ("0" transwin-toggle "toggle frame opacity")
      ("o" transwin-ask "set frame opacity"))))
-  ;; :hook (emacs-startup . (lambda ()
-  ;;                          (transwin-ask '90)))
+  :hook (emacs-startup . (lambda ()
+                           (transwin-ask '95)))
   :bind
   ("M-+" . transwin-inc)
   ("M-_" . transwin-dec)
