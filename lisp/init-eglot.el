@@ -127,15 +127,16 @@
   (add-to-list 'completion-category-overrides
                '(eglot (orderless flex))))
 
-;; (if petmacs-quelpa-use-gitee-mirror
-;;     (use-package sideline-eglot
-;;       :quelpa (sideline-eglot :fetcher git :url "https://gitee.com/Peter-Chou/sideline-eglot.git" :upgrade t :files ("*.el")))
-;;   (use-package sideline-eglot
-;;     :quelpa (sideline-eglot :fetcher github :repo "emacs-sideline/sideline-eglot" :upgrade t :files ("*.el"))))
+(if petmacs-quelpa-use-gitee-mirror
+    (use-package sideline-eglot
+      :quelpa (sideline-eglot :fetcher git :url "https://gitee.com/Peter-Chou/sideline-eglot.git" :upgrade t :files ("*.el")))
+  (use-package sideline-eglot
+    :quelpa (sideline-eglot :fetcher github :repo "emacs-sideline/sideline-eglot" :upgrade t :files ("*.el"))))
 
-;; (use-package sideline-eglot
-;;   :ensure nil
-;;   :hook (eglot-mode . sideline-mode)
-;;   :init (setq sideline-backends-right '(sideline-eglot)))
+(use-package sideline-eglot
+  :ensure nil
+  :hook (eglot-mode . sideline-mode)
+  :init
+  (add-to-list 'sideline-backends-right #'sideline-eglot))
 
 (provide 'init-eglot)
