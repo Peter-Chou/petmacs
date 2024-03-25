@@ -1,17 +1,16 @@
 ;; -*- lexical-binding: t no-byte-compile: t -*-
 
 (use-package tabspaces
-  :hook (after-init . tabspaces-mode)
+  ;; :hook (after-init . tabspaces-mode)
   :init
-  (setq
-   tab-bar-show petmacs-disable-modeline
-   tabspaces-use-filtered-buffers-as-default t
-   tabspaces-default-tab "Default"
-   tabspaces-remove-to-default t
-   tabspaces-include-buffers '("*scratch*" "*Messages*")
-   ;; sessions
-   tabspaces-session t
-   tabspaces-session-auto-restore t)
+  (setq tab-bar-show petmacs-disable-modeline
+        tabspaces-use-filtered-buffers-as-default t
+        tabspaces-default-tab "Default"
+        tabspaces-remove-to-default t
+        tabspaces-include-buffers '("*scratch*" "*Messages*")
+        ;; sessions
+        tabspaces-session t
+        tabspaces-session-auto-restore t)
 
   ;; Filter Buffers for Consult-Buffer
   (with-eval-after-load 'consult
