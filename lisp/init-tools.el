@@ -540,4 +540,8 @@
 (use-package json-mode)
 (use-package toml-mode)
 
+(use-package smart-semicolon
+  :hook ((c-mode c-ts-mode c++-mode
+                 c++-ts-mode java-mode java-ts-mode) . smart-semicolon-mode))
+
 (provide 'init-tools)
