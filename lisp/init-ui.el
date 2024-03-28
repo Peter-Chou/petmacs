@@ -115,11 +115,11 @@
   (setq awesome-tray-separator " ┃ "
         awesome-tray-hide-mode-line petmacs-disable-modeline
         awesome-tray-mode-line-active-color petmacs-favor-color
-        awesome-tray-info-padding-right 2
+        awesome-tray-info-padding-right 2.5
         awesome-tray-update-interval 0.5
         awesome-tray-belong-update-duration 2.5
-        awesome-tray-date-format "%m-%d %H:%M %a"
-        awesome-tray-git-format (concat (format "%s" (nerd-icons-faicon "nf-fa-git_square")) " %s")
+        awesome-tray-date-format (concat (format "%s " (nerd-icons-octicon "nf-oct-clock")) "%m-%d %H:%M %a")
+        awesome-tray-git-format (concat (format "%s " (nerd-icons-faicon "nf-fa-git_square")) "%s")
         awesome-tray-git-show-status nil
         awesome-tray-active-modules   '("pomodoro" "flymake" "pyvenv" "git" "date")
         awesome-tray-essential-modules '("pomodoro" "date"))
@@ -137,7 +137,7 @@
   (defun awesome-tray-module-pyvenv-info ()
     (if (and (member major-mode '(python-mode python-ts-mode)) (bound-and-true-p pyvenv-workon))
         ;; (format "<%s>" pyvenv-workon)
-        (concat (format "%s" (nerd-icons-faicon "nf-fae-python")) (format " %s" pyvenv-workon))
+        (concat (format "%s " (nerd-icons-faicon "nf-fae-python")) (format "%s" pyvenv-workon))
       ""))
   (defface awesome-tray-module-pyvenv-face
     '((((background light))
