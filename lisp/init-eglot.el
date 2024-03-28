@@ -139,10 +139,4 @@
   (use-package sideline-eglot
     :quelpa (sideline-eglot :fetcher github :repo "emacs-sideline/sideline-eglot" :upgrade t :files ("*.el"))))
 
-(use-package sideline-eglot
-  :ensure nil
-  :hook (eglot-mode . sideline-mode)
-  :init
-  (add-to-list 'sideline-backends-right #'sideline-eglot))
-
 (provide 'init-eglot)

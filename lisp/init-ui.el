@@ -18,12 +18,7 @@
   (push '(tool-bar-lines . 0) default-frame-alist)
   (push '(vertical-scroll-bars) default-frame-alist))
 
-(use-package nerd-icons
-  ;; :config
-  ;; (when (and (display-graphic-p)
-  ;;            (not (font-installed-p nerd-icons-font-family)))
-  ;;   (nerd-icons-install-fonts t))
-  )
+(use-package nerd-icons)
 
 (use-package all-the-icons :if (display-graphic-p))
 

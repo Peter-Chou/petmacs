@@ -548,4 +548,14 @@
   :ensure nil
   :commands (toggle-one-window))
 
+(use-package sideline
+  :ensure nil
+  :hook (
+         (flymake-mode . sideline-mode)
+         (eglot . sideline-mode))
+  :init (setq
+         sideline-display-backend-name t
+         sideline-backends-right '((sideline-eglot . up)
+                                   (sideline-flymake . down))))
+
 (provide 'init-tools)

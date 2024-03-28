@@ -21,12 +21,10 @@
       (apply fn args)))
   (advice-add 'elisp-flymake-byte-compile :around #'my-elisp-flymake-byte-compile))
 
-
 (use-package sideline-flymake
-  :diminish sideline-mode
-  :hook (flymake-mode . sideline-mode)
-  :init (setq sideline-flymake-display-mode 'point
-              sideline-backends-right '(sideline-flymake)))
+  :init (setq
+         ;; sideline-flymake-display-mode 'point
+         sideline-flymake-display-mode 'line))
 
 (use-package flymake-ruff
   :demand t
