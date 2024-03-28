@@ -113,6 +113,12 @@
 (use-package consult-eglot
   :init (setq consult-eglot-show-kind-name t))
 
+(use-package consult-eglot-embark
+  :demand t
+  :after (embark consult-eglot)
+  :config
+  (consult-eglot-embark-mode))
+
 
 (if petmacs-quelpa-use-gitee-mirror
     (use-package eglot-hierarchy
