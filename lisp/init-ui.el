@@ -207,7 +207,8 @@
     :hook (awesome-tray-mode . doom-modeline-mode)
     :init
     (setq doom-modeline-icon petmacs-icon
-          doom-modeline-buffer-file-name-style 'auto
+          ;; doom-modeline-buffer-file-name-style 'auto
+          doom-modeline-buffer-file-name-style 'relative-to-project
           doom-modeline-support-imenu t
           doom-modeline-minor-modes nil
           doom-modeline-indent-info nil

@@ -332,6 +332,7 @@
 
     "s" #'flymake-mode
     ;; "s" #'flycheck-mode
+    "o" #'toggle-one-window
 
     "cp" #'corfu-popupinfo-toggle
     "cs" #'prettify-symbols-mode

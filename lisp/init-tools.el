@@ -544,4 +544,8 @@
   :hook ((c-mode c-ts-mode c++-mode
                  c++-ts-mode java-mode java-ts-mode) . smart-semicolon-mode))
 
+(use-package toggle-one-window
+  :ensure nil
+  :commands (toggle-one-window))
+
 (provide 'init-tools)
