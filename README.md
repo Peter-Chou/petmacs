@@ -12,9 +12,9 @@ before you use Petmacs, make sure your emacs version >= 29.1 and tree-sitter is 
 
 - [Maple Mono SC NF](https://gitee.com/subframe7536/Maple/releases) for Chinese
 
-- [Symbola](https://www.wfonts.com/font/symbola) for unicode characters
+- [Symbola](https://www.wfonts.com/font/symbola) for unicode
 
-- [Nerd Icons](https://github.com/rainstormstudio/nerd-icons.el/blob/main/fonts/NFM.ttf)
+- [Nerd Icons](https://github.com/rainstormstudio/nerd-icons.el/blob/main/fonts/NFM.ttf) for icons
 
 if you want use nerd icons in terminal, make sure [nerd fonts](https://github.com/ryanoasis/nerd-fonts) is used in your terminal.
 
