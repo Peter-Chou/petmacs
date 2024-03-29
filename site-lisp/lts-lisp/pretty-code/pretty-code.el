@@ -37,7 +37,10 @@
 
     ;; Misc
     (:return ,(format "%s" (nerd-icons-faicon "nf-fa-arrow_circle_left"))) ;; 
-    (:yield "⇦") (:some "∃") (:composition "∘") (:tuple "⨂"))
+    (:yield ,(format "%s" (nerd-icons-faicon "nf-fa-toggle_left"))) ;; 
+    (:raise ,(format "%s" (nerd-icons-faicon "nf-fa-arrow_circle_up"))) ;; 
+    (:throw ,(format "%s" (nerd-icons-faicon "nf-fa-arrow_circle_up"))) ;; 
+    (:some "∃") (:composition "∘") (:tuple "⨂"))
   "kwd and composition-str alist.")
 
 ;;;; Core
