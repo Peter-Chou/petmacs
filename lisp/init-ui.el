@@ -407,49 +407,6 @@
 ;; Fontify symbols representing faces with that face
 (use-package fontify-face)
 
-(use-package pretty-code
-  :ensure nil
-  :commands (pretty-code-add-hook)
-  :init
-  (use-package prettify-utils
-    :ensure nil)
-
-  (pretty-code-add-hook 'python-mode-hook     '(;; (:class "class")
-                                                (:return "return")
-                                                (:lambda "lambda")
-    					                        (:def "def")))
-  (pretty-code-add-hook 'python-ts-mode-hook     '(;; (:class "class")
-                                                   (:return "return")
-                                                   (:lambda "lambda")
-    					                           (:def "def")))
-  ;; (pretty-code-add-hook 'c-mode-hook     '((:class "class")
-  ;;                                          (:struct "struct")))
-  ;; (pretty-code-add-hook 'c++-mode-hook     '((:class "class")
-  ;;                                            (:struct "struct")))
-  (pretty-code-add-hook 'java-mode-hook     '(;; (:class "class")
-                                              (:return "return")
-    					                      (:lambda "lambda")))
-  (pretty-code-add-hook 'java-ts-mode-hook     '(;; (:class "class")
-                                                 (:return "return")
-    					                         (:lambda "lambda")))
-  (pretty-code-add-hook 'scala-mode-hook     '((:def "def")
-                                               (:return "return")
-                                               ;; (:class "class")
-                                               ;; (:struct "object")
-    					                       (:lambda "lambda")))
-  (pretty-code-add-hook 'scala-ts-mode-hook     '((:def "def")
-                                                  (:return "return")
-                                                  ;; (:class "class")
-                                                  ;; (:struct "object")
-    					                          (:lambda "lambda")))
-  (pretty-code-add-hook 'go-mode-hook     '((:def "func")
-                                            (:return "return")))
-  (pretty-code-add-hook 'go-ts-mode-hook     '((:def "func")
-                                               (:return "return")))
-  (pretty-code-add-hook 'emacs-lisp-mode-hook '((:def "defun")
-						                        (:lambda "lambda")
-                                                (:return "return"))))
-
 (when petmacs-enable-mini-frame
   (use-package mini-frame
     :hook (after-init . mini-frame-mode)
@@ -552,5 +509,29 @@
           tab-bar-format '(tab-bar-format-tabs tab-bar-separator))
     :config
     (set-face-attribute 'tab-bar-tab nil :background petmacs-favor-color :bold t)))
+
+(use-package prettify-utils
+  :ensure nil)
+
+(use-package pretty-code
+  :after nerd-icons
+  :ensure nil
+  :commands (pretty-code-add-hook)
+  :init
+  (pretty-code-add-hook 'python-mode-hook '((:return "return")
+                                            (:lambda "lambda")
+                                            (:def "def")))
+  (pretty-code-add-hook 'python-ts-mode-hook '((:return "return")
+                                               (:lambda "lambda")
+                                               (:def "def")))
+  (pretty-code-add-hook 'c-mode-hook     '((:return "return")))
+  (pretty-code-add-hook 'c-ts-mode-hook     '((:return "return")))
+  (pretty-code-add-hook 'c++-mode-hook     '((:return "return")))
+  (pretty-code-add-hook 'c++-ts-mode-hook     '((:return "return")))
+  (pretty-code-add-hook 'java-mode-hook     '((:return "return")))
+  (pretty-code-add-hook 'java-ts-mode-hook     '((:return "return")))
+  (pretty-code-add-hook 'emacs-lisp-mode-hook '((:def "defun")
+    					                        (:lambda "lambda"))))
+
 
 (provide 'init-ui)

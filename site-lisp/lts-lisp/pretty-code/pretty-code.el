@@ -14,13 +14,17 @@
 
 (require 'dash)
 (require 'prettify-utils)
+(require 'nerd-icons)
 
 ;;;; Configuration
 
 (defvar pretty-code-options-alist
   ;; Functions
-  '((:lambda "λ") (:def "ƒ") (:class "♜") (:struct "♖")
-    ;; (:class "Ċ")
+  `(
+    (:lambda ,(format "%s" (nerd-icons-sucicon "nf-custom-scheme"))) ;; 
+    (:def ,(format "%s" (nerd-icons-mdicon "nf-md-music_note"))) ;; 󰎈
+    (:class ,(format "%s" (nerd-icons-mdicon "nf-md-music_clef_treble"))) ;; 󰽰
+    (:struct ,(format "%s" (nerd-icons-mdicon "nf-md-music_clef_bass"))) ;; 󰽯
 
     ;; Types
     (:true "𝕋") (:false "𝔽") (:int "ℤ") (:float "ℝ") (:str "𝕊") (:bool "𝔹")
@@ -32,7 +36,8 @@
     (:not "￢") (:and "∧") (:or "∨")
 
     ;; Misc
-    (:return "⬅") (:yield "⇦") (:some "∃") (:composition "∘") (:tuple "⨂"))
+    (:return ,(format "%s" (nerd-icons-faicon "nf-fa-arrow_circle_left"))) ;; 
+    (:yield "⇦") (:some "∃") (:composition "∘") (:tuple "⨂"))
   "kwd and composition-str alist.")
 
 ;;;; Core
@@ -44,10 +49,10 @@
             (lambda ()
               (setq prettify-symbols-alist
                     (->> kwd-name-alist
-                       (-map (-lambda ((kwd name))
-                               (cons name
-                                     (alist-get kwd pretty-code-options-alist))))
-                       (apply #'prettify-utils-generate-f)))
+                         (-map (-lambda ((kwd name))
+                                 (cons name
+                                       (alist-get kwd pretty-code-options-alist))))
+                         (apply #'prettify-utils-generate-f)))
               (prettify-symbols-mode 1))))
 
 (provide 'pretty-code)
