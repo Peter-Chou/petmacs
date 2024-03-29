@@ -50,8 +50,8 @@
         ('lsp-mode
          (lsp-deferred))
         ('eglot
-         ;; (when (fboundp 'eglot-booster-mode)
-         ;;   (eglot-booster-mode t)) ;; will case flymake-ruff malfunction
+         (when (fboundp 'eglot-booster-mode)
+           (eglot-booster-mode t)) ;; will case flymake-ruff malfunction
          (eglot-ensure)))))
   :hook (((python-mode python-ts-mode) . petmacs/pyvenv-pyright-autoload)
          (pyvenv-mode . petmacs/remove-pyvenv-modeline-env-info))

@@ -10,9 +10,13 @@
     (define-key evil-motion-state-map "gR" #'eglot-rename)
     (define-key evil-motion-state-map "gr" #'xref-find-references)
     (define-key evil-normal-state-map "gi" #'eglot-find-implementation)
-    ;; (define-key evil-motion-state-map "gh" #'eldoc)
     (define-key evil-motion-state-map "gh" #'eldoc-box-help-at-point)
     (define-key evil-normal-state-map "ga" #'eglot-code-actions))
+  (defun petmacs/eglot-ensure-with-lsp-booster ()
+    (when (fboundp 'eglot-booster-mode)
+      (eglot-booster-mode t))
+    (eglot-ensure))
+  :hook (((c-mode c-ts-mode c++-mode c++-ts-mode) . petmacs/eglot-ensure-with-lsp-booster))
   :init
   (setq eglot-send-changes-idle-time 0.2
         eglot-autoshutdown t
