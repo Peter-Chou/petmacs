@@ -503,10 +503,40 @@
     :init
     (setq tab-bar-close-button-show nil
           tab-bar-new-tab-choice "*dashboard*";; buffer to show in new tabs
-          tab-bar-tab-hints t                 ;; show tab numbers
-          tab-bar-show petmacs-disable-modeline
+          ;; tab-bar-show petmacs-disable-modeline
+          tab-bar-show 1
           ;; elements to include in bar
           tab-bar-format '(tab-bar-format-tabs tab-bar-separator))
+    (defvar petmacs--circle-numbers-alist
+      '((1 . (nerd-icons-mdicon "nf-md-numeric_1_circle"))
+        (2 . (nerd-icons-mdicon "nf-md-numeric_2_circle"))
+        (3 . (nerd-icons-mdicon "nf-md-numeric_3_circle"))
+        (4 . (nerd-icons-mdicon "nf-md-numeric_4_circle"))
+        (5 . (nerd-icons-mdicon "nf-md-numeric_5_circle"))
+        (6 . (nerd-icons-mdicon "nf-md-numeric_6_circle"))
+        (7 . (nerd-icons-mdicon "nf-md-numeric_7_circle"))
+        (8 . (nerd-icons-mdicon "nf-md-numeric_8_circle"))
+        (9 . (nerd-icons-mdicon "nf-md-numeric_9_circle"))
+        (10 . (nerd-icons-mdicon "nf-md-numeric_10_circle")))
+      "Alist of integers to strings of circled unicode numbers.")
+
+    (defun petmacs/tab-bar-tab-name-format-default (tab i)
+      (let ((current-p (eq (car tab) 'current-tab))
+            (tab-num (if (and tab-bar-tab-hints (< i 10))
+                         (alist-get i petmacs--circle-numbers-alist) "")))
+        (propertize
+         (concat tab-num
+                 " "
+                 (alist-get 'name tab)
+                 (or (and tab-bar-close-button-show
+                          (not (eq tab-bar-close-button-show
+                                   (if current-p 'non-selected 'selected)))
+                          tab-bar-close-button)
+                     "")
+                 " ")
+         'face (funcall tab-bar-tab-face-function tab))))
+    (setq tab-bar-tab-name-format-function #'petmacs/tab-bar-tab-name-format-default)
+    (setq tab-bar-tab-hints t)
     :config
     (set-face-attribute 'tab-bar-tab nil :background petmacs-favor-color :bold t)))
 
