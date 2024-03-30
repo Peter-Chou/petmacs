@@ -139,7 +139,7 @@ Same as '`replace-string' `C-q' `C-m' `RET' `RET''."
 (defun petmacs/goto-org-global-schedules ()
   "Edit the `dotfile', in the current window."
   (interactive)
-  (let ((filename (expand-file-name "schedules.org" (concat user-emacs-directory "data/gtd"))))
+  (let ((filename (expand-file-name "schedules.org" (concat (file-name-as-directory (getenv "HOME")) "gtds"))))
     (find-file filename)
     (if (file-exists-p filename)
 	    (revert-buffer nil t))))
@@ -147,7 +147,7 @@ Same as '`replace-string' `C-q' `C-m' `RET' `RET''."
 (defun petmacs/goto-org-global-todos ()
   "Edit the `dotfile', in the current window."
   (interactive)
-  (let ((filename (expand-file-name "TODO.org" (concat user-emacs-directory "data/gtd"))))
+  (let ((filename (expand-file-name "TODO.org" (concat (file-name-as-directory (getenv "HOME")) "gtds"))))
     (find-file filename)
     (if (file-exists-p filename)
 	    (revert-buffer nil t))))
@@ -637,33 +637,33 @@ overwrite it."
      (if (not (tramp-tramp-file-p fname))
          (concat "/sudo:root@localhost:" fname)
        (with-parsed-tramp-file-name fname parsed
-                                    (when (equal parsed-user "root")
-                                      (error "Already root!"))
-                                    (let* ((new-hop (tramp-make-tramp-file-name
-                                                     ;; Try to retrieve a tramp method suitable for
-                                                     ;; multi-hopping
-                                                     (cond ((tramp-get-method-parameter
-                                                             parsed 'tramp-login-program))
-                                                           ((tramp-get-method-parameter
-                                                             parsed 'tramp-copy-program))
-                                                           (t parsed-method))
-                                                     parsed-user
-                                                     parsed-domain
-                                                     parsed-host
-                                                     parsed-port
-                                                     nil
-                                                     parsed-hop))
-                                           (new-hop (substring new-hop 1 -1))
-                                           (new-hop (concat new-hop "|"))
-                                           (new-fname (tramp-make-tramp-file-name
-                                                       "sudo"
-                                                       parsed-user
-                                                       parsed-domain
-                                                       parsed-host
-                                                       parsed-port
-                                                       parsed-localname
-                                                       new-hop)))
-                                      new-fname))))))
+         (when (equal parsed-user "root")
+           (error "Already root!"))
+         (let* ((new-hop (tramp-make-tramp-file-name
+                          ;; Try to retrieve a tramp method suitable for
+                          ;; multi-hopping
+                          (cond ((tramp-get-method-parameter
+                                  parsed 'tramp-login-program))
+                                ((tramp-get-method-parameter
+                                  parsed 'tramp-copy-program))
+                                (t parsed-method))
+                          parsed-user
+                          parsed-domain
+                          parsed-host
+                          parsed-port
+                          nil
+                          parsed-hop))
+                (new-hop (substring new-hop 1 -1))
+                (new-hop (concat new-hop "|"))
+                (new-fname (tramp-make-tramp-file-name
+                            "sudo"
+                            parsed-user
+                            parsed-domain
+                            parsed-host
+                            parsed-port
+                            parsed-localname
+                            new-hop)))
+           new-fname))))))
 
 (defun petmacs/delete-window (&optional arg)
   "Delete the current window.

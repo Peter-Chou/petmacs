@@ -9,10 +9,8 @@
   :custom-face (org-ellipsis ((t (:foreground unspecified))))
   :hook (
          ((org-babel-after-execute org-mode) . org-redisplay-inline-images)) ; display image
-  :init
-  (make-directory (expand-file-name "data/gtd" user-emacs-directory) t)
   :config
-  (add-to-list 'org-agenda-files (expand-file-name "data/gtd" user-emacs-directory))
+  (add-to-list 'org-agenda-files (expand-file-name "gtds"  (getenv "HOME")))
   (setq org-modules nil                 ; Faster loading
         org-todo-keywords
         '((sequence "TODO(t)" "DOING(i)" "HANGUP(h)" "|" "DONE(d)" "CANCEL(c)")
