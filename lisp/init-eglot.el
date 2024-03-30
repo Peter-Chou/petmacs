@@ -25,43 +25,41 @@
         eglot-ignored-server-capabilities '(:inlayHintProvider)
         eldoc-echo-area-use-multiline-p nil
         ;; eglot-events-buffer-size 1
-        eglot-server-programs '(
-                                ((python-mode python-ts-mode) . ("pyright-langserver" "--stdio"))
-                                ((c++-mode c-mode c++-ts-mode c-ts-mode objc-mode) . ("clangd"
-                                                                                      ;; 在后台自动分析文件（基于complie_commands)
-                                                                                      "--background-index"
-                                                                                      ;; 标记compelie_commands.json文件的目录位置
-                                                                                      "--compile-commands-dir=build"
-                                                                                      ;; 全局补全（会自动补充头文件）
-                                                                                      "--all-scopes-completion"
-                                                                                      ;; 更详细的补全内容
-                                                                                      "--completion-style=detailed"
-                                                                                      ;; 同时开启的任务数量
-                                                                                      "-j=12"
-                                                                                      "-cross-file-rename"
-                                                                                      ;;clang-tidy功能
-                                                                                      "--clang-tidy"
-                                                                                      "--clang-tidy-checks=performance-*,bugprone-*"
-                                                                                      ;; 告诉clangd用那个clang进行编译，路径参考which clang++的路径
-                                                                                      ;; "--query-driver=/opt/llvm/bin/clang++"
-                                                                                      ;; 同时开启的任务数量
-                                                                                      ;; 补充头文件的形式
-                                                                                      ;; "--header-insertion=iwyu"
-                                                                                      ;; pch优化的位置
-                                                                                      ;; "--pch-storage=disk"
-                                                                                      ))
-                                ((cmake-mode cmake-ts-mode) . ("cmake-language-server"))
-                                ((bash-ts-mode sh-mode) . ("bash-language-server" "start"))
-                                ((go-mode go-dot-mod-mode go-dot-work-mode go-ts-mode go-mod-ts-mode) . ("gopls"))
+        eglot-server-programs
+        '(((python-mode python-ts-mode) . ("pyright-langserver" "--stdio"))
+          ((c++-mode c-mode c++-ts-mode c-ts-mode objc-mode) . ("clangd"
+                                                                ;; 在后台自动分析文件（基于complie_commands)
+                                                                "--background-index"
+                                                                ;; 标记compelie_commands.json文件的目录位置
+                                                                "--compile-commands-dir=build"
+                                                                ;; 全局补全（会自动补充头文件）
+                                                                "--all-scopes-completion"
+                                                                ;; 更详细的补全内容
+                                                                "--completion-style=detailed"
+                                                                ;; 同时开启的任务数量
+                                                                "-j=12"
+                                                                "-cross-file-rename"
+                                                                ;;clang-tidy功能
+                                                                "--clang-tidy"
+                                                                "--clang-tidy-checks=performance-*,bugprone-*"
+                                                                ;; 告诉clangd用那个clang进行编译，路径参考which clang++的路径
+                                                                ;; "--query-driver=/opt/llvm/bin/clang++"
+                                                                ;; 同时开启的任务数量
+                                                                ;; 补充头文件的形式
+                                                                ;; "--header-insertion=iwyu"
+                                                                ;; pch优化的位置
+                                                                ;; "--pch-storage=disk"
+                                                                ))
+          ((cmake-mode cmake-ts-mode) . ("cmake-language-server"))
+          ((bash-ts-mode sh-mode) . ("bash-language-server" "start"))
+          ((go-mode go-dot-mod-mode go-dot-work-mode go-ts-mode go-mod-ts-mode) . ("gopls"))
 
-                                ((java-mode java-ts-mode) . ("jdtls"))
-                                ((yaml-ts-mode yaml-mode) . ("yaml-language-server" "--stdio"))
-                                ((dockerfile-mode dockerfile-ts-mode) . ("docker-langserver" "--stdio"))))
+          ((java-mode java-ts-mode) . ("jdtls"))
+          ((yaml-ts-mode yaml-mode) . ("yaml-language-server" "--stdio"))
+          ((dockerfile-mode dockerfile-ts-mode) . ("docker-langserver" "--stdio"))))
   :config
   (push :documentHighlightProvider eglot-ignored-server-capabilities)
   (advice-add 'eglot-ensure :after 'petmacs/eglot-keybindgs))
-
-
 
 (if petmacs-quelpa-use-gitee-mirror
     (use-package eglot-booster
@@ -75,8 +73,6 @@
   :init (setq eglot-booster-no-remote-boost t)
   :config (eglot-booster-mode))
 
-;; workaround
-;; (defalias 'eglot-path-to-uri 'eglot--path-to-uri)
 (use-package eglot-java
   :hook ((java-mode java-ts-mode) . (lambda ()
                                       (when (fboundp 'eglot-booster-mode)
@@ -111,8 +107,7 @@
                                     user-emacs-directory "data"
                                     "lsp-java-jars"
                                     "com.microsoft.java.debug.plugin-0.51.1.jar"))]))
-  (setq eglot-java-user-init-opts-fn 'petmacs/custom-eglot-java-init-opts)
-  )
+  (setq eglot-java-user-init-opts-fn 'petmacs/custom-eglot-java-init-opts))
 
 (use-package consult-eglot
   :init (setq consult-eglot-show-kind-name t))
@@ -123,13 +118,6 @@
   :config
   (consult-eglot-embark-mode))
 
-
-(if petmacs-quelpa-use-gitee-mirror
-    (use-package eglot-hierarchy
-      :quelpa (eglot-hierarchy :fetcher git :url "https://gitee.com/Peter-Chou/eglot-hierarchy.git" :upgrade t :files ("*.el")))
-  (use-package eglot-hierarchy
-    :quelpa (eglot-hierarchy :fetcher github :repo "dolmens/eglot-hierarchy" :upgrade t :files ("*.el"))))
-
 (use-package eglot-orderless
   :ensure nil
   :after (eglot orderless)
@@ -138,9 +126,44 @@
                '(eglot (orderless flex))))
 
 (if petmacs-quelpa-use-gitee-mirror
+    (use-package eglot-hierarchy
+      :quelpa (eglot-hierarchy :fetcher git :url "https://gitee.com/Peter-Chou/eglot-hierarchy.git" :upgrade t :files ("*.el")))
+  (use-package eglot-hierarchy
+    :quelpa (eglot-hierarchy :fetcher github :repo "dolmens/eglot-hierarchy" :upgrade t :files ("*.el"))))
+
+(if petmacs-quelpa-use-gitee-mirror
     (use-package sideline-eglot
       :quelpa (sideline-eglot :fetcher git :url "https://gitee.com/Peter-Chou/sideline-eglot.git" :upgrade t :files ("*.el")))
   (use-package sideline-eglot
     :quelpa (sideline-eglot :fetcher github :repo "emacs-sideline/sideline-eglot" :upgrade t :files ("*.el"))))
+
+(cl-defmacro eglot-org-babel-enable (lang)
+  "Support LANG in org source code block."
+  (cl-check-type lang string)
+  (let* ((edit-pre (intern (format "org-babel-edit-prep:%s" lang)))
+         (intern-pre (intern (format "eglot--%s" (symbol-name edit-pre)))))
+    `(progn
+       (defun ,intern-pre (info)
+         (let ((file-name (->> info caddr (alist-get :file))))
+           (unless file-name
+             (setq file-name (concat default-directory (if (string= ,lang "C") "org-src-babel.c" "org-src-babel.cpp")))
+             (write-region (point-min) (point-max) file-name))
+           (setq buffer-file-name file-name)
+           (eglot-ensure)))
+       (put ',intern-pre 'function-documentation
+            (format "Enable eglot mode in the buffer of org source block (%s)."
+                    (upcase ,lang)))
+       (if (fboundp ',edit-pre)
+           (advice-add ',edit-pre :after ',intern-pre)
+         (progn
+           (defun ,edit-pre (info)
+             (,intern-pre info))
+           (put ',edit-pre 'function-documentation
+                (format "Prepare local buffer environment for org source block (%s)."
+                        (upcase ,lang))))))))
+
+(with-eval-after-load 'org
+  (dolist (lang '("C" "C++"))
+    (eval `(eglot-org-babel-enable ,lang))))
 
 (provide 'init-eglot)
