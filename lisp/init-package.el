@@ -46,7 +46,7 @@
 (use-package bind-key)
 
 ;; Update GPG keyring for GNU ELPA
-;; (use-package gnu-elpa-keyring-update)
+(use-package gnu-elpa-keyring-update)
 
 ;; Auto update packages
 (use-package auto-package-update
@@ -64,8 +64,10 @@
 
 ;; Required by `use-package'
 (use-package quelpa-use-package
+  :demand t
   :init
-  (require 'quelpa-use-package)
-  (quelpa-use-package-activate-advice))
+  (setq quelpa-use-package-inhibit-loading-quelpa t)
+  ;; (quelpa-use-package-activate-advice)
+  )
 
 (provide 'init-package)
