@@ -452,7 +452,8 @@
   :after nerd-icons
   :init
   (setq symbols-outline-window-position 'left
-        symbols-outline-use-nerd-icon-in-gui (not (image-type-available-p 'svg))
+        ;; symbols-outline-use-nerd-icon-in-gui (not (image-type-available-p 'svg))
+        symbols-outline-use-nerd-icon-in-gui t
         symbols-outline-window-width 35
         symbols-outline-ignore-variable-symbols t
         symbols-outline-buffer-name "*Outline*"
@@ -460,9 +461,22 @@
 
   (when (member petmacs-lsp-mode-impl '(lsp-mode eglot))
     (setq symbols-outline-fetch-fn #'symbols-outline-lsp-fetch))
+
+  (defun petmacs/symbols-outline-nerd-icon-str (icon-name &rest args)
+    "Return the nerd font icon for ICON-NAME.
+
+ARGS are additional plist arguments where properties FACE and
+SCALE are supported."
+    (propertize (or (cdr (assoc icon-name symbols-outline-nerd-icon-alist))
+                    (cdr (assoc "tag" symbols-outline-nerd-icon-alist)))
+                'face `(:foreground
+                        ,(face-attribute
+                          (or (plist-get args :face) 'default)
+                          :foreground)
+                        :height 1.15)))
+  (advice-add #'symbols-outline-nerd-icon-str :override #'petmacs/symbols-outline-nerd-icon-str)
   :config
   (require 'nerd-icons)
-
   (evil-define-key 'normal symbols-outline-mode-map
     (kbd "g") 'symbols-outline-refresh
     (kbd "n") 'symbols-outline-next
