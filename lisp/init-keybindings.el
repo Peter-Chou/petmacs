@@ -18,6 +18,9 @@
 (define-key evil-normal-state-map (kbd "C-w o") #'petmacs/toggle-maximize-buffer)
 (define-key evil-motion-state-map (kbd "C-w o") #'petmacs/toggle-maximize-buffer)
 
+(define-key org-mode-map (kbd "C-j") #'org-priority-down)
+(define-key org-mode-map (kbd "C-k") #'org-priority-up)
+
 ;; (define-key winum-keymap (kbd "M-9") 'petmacs/symbols-outline-smart-toggle)
 (define-key winum-keymap (kbd "M-9") 'symbols-outline-show)
 
@@ -174,7 +177,7 @@
 
 	;; "fe" prefix
     "es" #'petmacs/goto-org-global-schedules
-    "et" #'petmacs/goto-org-global-todos
+    "et" #'petmacs/goto-org-global-job-gtds
     "ed" #'petmacs/find-dotfile
     "eD" #'petmacs/find-user-early-init-file
     "er" #'petmacs/reload-init-file
