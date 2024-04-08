@@ -28,7 +28,8 @@
           (800 1000 1200 1400 1600 1800 2000)
           " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
         org-agenda-current-time-string
-        "⭠ now ─────────────────────────────────────────────────"
+        (concat (format "%s " (nerd-icons-mdicon "nf-md-arrow_left_bold"))
+                "now ─────────────────────────────────────────")
 
         org-tags-column -80
         org-log-done 'time
@@ -64,15 +65,16 @@
 (use-package ox-gfm
   :init (add-to-list 'org-export-backends 'gfm))
 
-;; (use-package org-modern
-;;   :hook ((org-mode . org-modern-mode)
-;;          (org-agenda-finalize . org-modern-agenda)
-;;          (org-modern-mode . (lambda ()
-;;                               "Adapt `org-modern-mode'."
-;;                               ;; Disable Prettify Symbols mode
-;;                               (setq prettify-symbols-alist nil)
-;;                               (prettify-symbols-mode -1))))
-;;   :init (setq org-modern-star t))
+(use-package org-modern
+  :hook ((org-mode . org-modern-mode)
+         (org-agenda-finalize . org-modern-agenda)
+         (org-modern-mode . (lambda ()
+                              "Adapt `org-modern-mode'."
+                              ;; Disable Prettify Symbols mode
+                              (setq prettify-symbols-alist nil)
+                              (prettify-symbols-mode -1))))
+  :init (setq org-modern-star nil
+              org-modern-priority nil))
 
 (use-package org-superstar
   :if (and (display-graphic-p) (char-displayable-p ?◉))
