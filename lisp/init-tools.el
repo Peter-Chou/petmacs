@@ -474,7 +474,8 @@ SCALE are supported."
                           (or (plist-get args :face) 'default)
                           :foreground)
                         :height 1.15)))
-  (advice-add #'symbols-outline-nerd-icon-str :override #'petmacs/symbols-outline-nerd-icon-str)
+  (when (not (image-type-available-p 'svg))
+    (advice-add #'symbols-outline-nerd-icon-str :override #'petmacs/symbols-outline-nerd-icon-str))
   :config
   (require 'nerd-icons)
   (evil-define-key 'normal symbols-outline-mode-map
