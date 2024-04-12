@@ -192,8 +192,8 @@ FACE defaults to inheriting from default and highlight."
          (hl-todo-mode . (lambda ()
                            (add-hook 'flymake-diagnostic-functions
                                      #'hl-todo-flymake nil t))))
-  ;; :init (setq hl-todo-require-punctuation t
-  ;;             hl-todo-highlight-punctuation ":")
+  :init (setq hl-todo-require-punctuation t
+              hl-todo-highlight-punctuation ":")
   :config
   (dolist (keyword '("BUG" "DEFECT" "ISSUE"))
     (add-to-list 'hl-todo-keyword-faces `(,keyword . "#e45649")))
