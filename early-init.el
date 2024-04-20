@@ -16,10 +16,17 @@
                          ("nongnu" . "https://elpa.nongnu.org/nongnu/")
                          ("org"    . "https://orgmode.org/elpa/")
 
+                         ;;; emacs-china mirror
                          ;; ("gnu"    . "http://1.15.88.122/gnu/")
                          ;; ("melpa"  . "http://1.15.88.122/melpa/")
                          ;; ("nongnu" . "http://1.15.88.122/nongnu/")
                          ;; ("org"    . "http://1.15.88.122/org/")
+
+                         ;;; tsinghua mirror
+                         ;; ("gnu"    . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+                         ;; ("melpa"  . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+                         ;; ("nongnu" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/nongnu/")
+                         ;; ("org"    . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
                          ))
 
 (if (functionp 'json-serialize)
