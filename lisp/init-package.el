@@ -46,7 +46,7 @@
 (use-package bind-key)
 
 ;; Update GPG keyring for GNU ELPA
-(use-package gnu-elpa-keyring-update)
+;; (use-package gnu-elpa-keyring-update)
 
 ;; Auto update packages
 (use-package auto-package-update

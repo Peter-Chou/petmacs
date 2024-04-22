@@ -21,7 +21,7 @@
         treemacs-is-never-other-window   t
         treemacs-follow-after-init       t
         treemacs-no-png-images           (not petmacs-icon)
-        treemacs-width                   30)
+        treemacs-width                   25)
   :config
   (with-eval-after-load 'golden-ratio
     (add-to-list 'golden-ratio-exclude-buffer-regexp
