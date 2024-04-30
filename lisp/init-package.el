@@ -58,15 +58,15 @@
 (use-package quelpa
   :init
   (setq quelpa-self-upgrade-p nil
+        quelpa-checkout-melpa-p nil
         quelpa-update-melpa-p nil
-        quelpa-checkout-melpa-p petmacs-quelpa-checkout-melpa
         quelpa-dir (expand-file-name "data/quelpa" user-emacs-directory)))
 
 ;; Required by `use-package'
 (use-package quelpa-use-package
   :demand t
   :init
-  (setq quelpa-use-package-inhibit-loading-quelpa t)
+  ;; (setq quelpa-use-package-inhibit-loading-quelpa t)
   ;; (quelpa-use-package-activate-advice)
   )
 

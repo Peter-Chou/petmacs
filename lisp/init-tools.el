@@ -452,9 +452,9 @@
   :after nerd-icons
   :init
   (setq
-   ;; symbols-outline-window-position 'left
+   symbols-outline-window-position 'left
    symbols-outline-use-nerd-icon-in-gui (not (image-type-available-p 'svg))
-   symbols-outline-window-width 25
+   symbols-outline-window-width 30
    symbols-outline-ignore-variable-symbols t
    symbols-outline-buffer-name "*Outline*"
    symbols-outline-current-symbol-indicator (format "%s" (nerd-icons-mdicon "nf-md-arrow_right_thick"))
@@ -573,5 +573,21 @@ SCALE are supported."
          sideline-display-backend-name t
          sideline-backends-right '((sideline-eglot . up)
                                    (sideline-flymake . down))))
+
+(use-package docstr
+  :hook ((python-mode python-ts-mode) . (lambda ()
+                                          ;; (setq-local docstr-desc-summary "")
+                                          (docstr-mode 1)))
+  :init
+  (setq docstr-python-modes '(python-mode python-ts-mode)
+        ;; docstr-python-style 'google
+        docstr-python-style 'numpy
+        docstr-key-support t)
+  :config
+  ;; config python-ts-mode
+  (add-to-list 'docstr-writers-alist '(python-ts-mode . docstr-writers-python))
+  (add-to-list 'docstr-prefix-alist '(python-ts-mode . docstr-python-prefix))
+  (add-to-list 'docstr-key-sharp-doc-modes 'python-ts-mode)
+  (global-docstr-mode))
 
 (provide 'init-tools)

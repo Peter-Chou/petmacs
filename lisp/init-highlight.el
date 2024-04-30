@@ -118,9 +118,9 @@ FACE defaults to inheriting from default and highlight."
 
 (if petmacs-quelpa-use-gitee-mirror
     (use-package indent-bars
-      :quelpa (indent-bars :fetcher git :url "https://gitee.com/Peter-Chou/indent-bars.git" :upgrade t :files ("*.el")))
+      :quelpa (indent-bars :fetcher git :url "https://gitee.com/Peter-Chou/indent-bars.git" :files ("*.el")))
   (use-package indent-bars
-    :quelpa (indent-bars :fetcher github :repo "jdtsmith/indent-bars" :upgrade t :files ("*.el"))))
+    :quelpa (indent-bars :fetcher github :repo "jdtsmith/indent-bars" :files ("*.el"))))
 
 (use-package indent-bars
   :ensure nil

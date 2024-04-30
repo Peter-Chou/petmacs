@@ -63,9 +63,9 @@
 
 (if petmacs-quelpa-use-gitee-mirror
     (use-package eglot-booster
-      :quelpa (eglot-booster :fetcher git :url "https://gitee.com/Peter-Chou/eglot-booster.git" :upgrade t :files ("*.el")))
+      :quelpa (eglot-booster :fetcher git :url "https://gitee.com/Peter-Chou/eglot-booster.git" :files ("*.el")))
   (use-package eglot-booster
-    :quelpa (eglot-booster :fetcher github :repo "jdtsmith/eglot-booster" :upgrade t :files ("*.el"))))
+    :quelpa (eglot-booster :fetcher github :repo "jdtsmith/eglot-booster" :files ("*.el"))))
 
 (use-package eglot-booster
   :after eglot
@@ -127,15 +127,15 @@
 
 (if petmacs-quelpa-use-gitee-mirror
     (use-package eglot-hierarchy
-      :quelpa (eglot-hierarchy :fetcher git :url "https://gitee.com/Peter-Chou/eglot-hierarchy.git" :upgrade t :files ("*.el")))
+      :quelpa (eglot-hierarchy :fetcher git :url "https://gitee.com/Peter-Chou/eglot-hierarchy.git" :files ("*.el")))
   (use-package eglot-hierarchy
-    :quelpa (eglot-hierarchy :fetcher github :repo "dolmens/eglot-hierarchy" :upgrade t :files ("*.el"))))
+    :quelpa (eglot-hierarchy :fetcher github :repo "dolmens/eglot-hierarchy" :files ("*.el"))))
 
 (if petmacs-quelpa-use-gitee-mirror
     (use-package sideline-eglot
-      :quelpa (sideline-eglot :fetcher git :url "https://gitee.com/Peter-Chou/sideline-eglot.git" :upgrade t :files ("*.el")))
+      :quelpa (sideline-eglot :fetcher git :url "https://gitee.com/Peter-Chou/sideline-eglot.git" :files ("*.el")))
   (use-package sideline-eglot
-    :quelpa (sideline-eglot :fetcher github :repo "emacs-sideline/sideline-eglot" :upgrade t :files ("*.el"))))
+    :quelpa (sideline-eglot :fetcher github :repo "emacs-sideline/sideline-eglot" :files ("*.el"))))
 
 (cl-defmacro eglot-org-babel-enable (lang)
   "Support LANG in org source code block."
