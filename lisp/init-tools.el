@@ -568,10 +568,10 @@ SCALE are supported."
   :hook (
          (flymake-mode . sideline-mode)
          (eglot . sideline-mode))
-  :init (setq
-         sideline-display-backend-name t
-         sideline-backends-right '((sideline-eglot . up)
-                                   (sideline-flymake . down))))
+  :init (setq sideline-display-backend-name t
+              sideline-backends-right '((sideline-eglot . up)
+                                        (sideline-flymake . down)))
+  (require 'sideline))
 
 (use-package docstr
   :hook ((python-mode python-ts-mode) . (lambda ()
