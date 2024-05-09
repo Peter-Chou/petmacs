@@ -565,7 +565,6 @@ SCALE are supported."
   :commands (toggle-one-window))
 
 (use-package sideline
-  :ensure nil
   :hook (
          (flymake-mode . sideline-mode)
          (eglot . sideline-mode))
