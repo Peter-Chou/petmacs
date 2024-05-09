@@ -22,6 +22,10 @@
   (advice-add 'elisp-flymake-byte-compile :around #'my-elisp-flymake-byte-compile))
 
 (use-package sideline-flymake
+  :custom-face
+  (sideline-flymake-error ((t (:height 0.85 :italic t))))
+  (sideline-flymake-warning ((t (:height 0.85 :italic t))))
+  (sideline-flymake-success ((t (:height 0.85 :italic t))))
   :init (setq
          ;; sideline-flymake-display-mode 'point
          sideline-flymake-display-mode 'line))
