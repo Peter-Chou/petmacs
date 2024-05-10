@@ -537,6 +537,7 @@ SCALE are supported."
 (use-package logview
   :config (add-hook 'logview-mode-hook 'auto-revert-mode))
 
+;; code format tool
 (use-package apheleia
   :bind ("C-c f" . apheleia-format-buffer)
   :hook (emacs-startup . apheleia-global-mode)
