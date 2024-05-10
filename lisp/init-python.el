@@ -28,6 +28,10 @@
 
 (use-package pyvenv
   :preface
+  (defun petmacs/set-pythonpath-project ()
+    "set project root path as PYTHONPATH"
+    (setenv "PYTHONPATH" (projectile-project-root)))
+
   (defun petmacs/remove-pyvenv-modeline-env-info ()
     (setq mode-line-misc-info (delete '(pyvenv-mode pyvenv-mode-line-indicator) mode-line-misc-info)))
 
@@ -46,6 +50,9 @@
         ;; to compare whether pyvenv-workon and pyvenv-virtual-env-name is equal
         (setq-local pyvenv-workon (gethash "venv" (json-read-file pfile)))
         (pyvenv-workon pyvenv-workon))
+
+      (petmacs/set-pythonpath-project)
+
       (pcase petmacs-lsp-mode-impl
         ('lsp-mode
          (lsp-deferred))
