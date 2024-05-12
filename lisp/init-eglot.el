@@ -137,6 +137,13 @@
   (use-package sideline-eglot
     :quelpa (sideline-eglot :fetcher github :repo "emacs-sideline/sideline-eglot" :files ("*.el"))))
 
+(use-package sideline-eglot
+  :ensure nil
+  :custom-face
+  (sideline-eglot-error ((t (:height 0.85 :italic t))))
+  (sideline-eglot-warning ((t (:height 0.85 :italic t))))
+  (sideline-eglot-success ((t (:height 0.85 :italic t)))))
+
 (cl-defmacro eglot-org-babel-enable (lang)
   "Support LANG in org source code block."
   (cl-check-type lang string)
