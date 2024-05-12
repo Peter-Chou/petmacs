@@ -701,10 +701,10 @@
            "=" "format"
            "a" "actions"
            "g" "goto"
-           ;; "G" "goto (other window)"
+           "G" "goto (other window)"
+           ;; "b" "backends"
            ;; "p" "peek"
            ;; "pR" "peek reference"
-           ;; "b" "backends"
            ;; "T" "toggle module"
            "r" "refactor"
            "h" "help"
@@ -734,6 +734,9 @@
            "gb" #'xref-pop-marker-stack
            "gF" #'xref-find-definitions-other-frame
            "gs" #'consult-eglot-symbols
+
+           ;; goto other window
+           "Gd" #'xref-find-definitions-other-window
 
            "gT" #'eglot-hierarchy-type-hierarchy
            "gC" #'eglot-hierarchy-call-hierarchy
