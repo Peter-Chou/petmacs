@@ -75,8 +75,8 @@
 
 (use-package eglot-java
   :hook ((java-mode java-ts-mode) . (lambda ()
-                                      ;; (when (fboundp 'eglot-booster-mode)
-                                      ;;   (eglot-booster-mode t))
+                                      (when (fboundp 'eglot-booster-mode)
+                                        (eglot-booster-mode t))
                                       (eglot-java-mode t)))
   :init
   (setenv "PATH" (concat (getenv "PATH") ":" (expand-file-name ".emacs.d/share/eclipse.jdt.ls/bin")))
