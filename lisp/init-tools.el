@@ -570,7 +570,8 @@ SCALE are supported."
          (flymake-mode . sideline-mode)
          (eglot . sideline-mode))
   :init (setq sideline-display-backend-name t
-              sideline-backends-right '((sideline-eglot . up)
+              sideline-backends-right '(
+                                        ;; (sideline-eglot . up)
                                         (sideline-flymake . down)))
   (require 'sideline))
 
