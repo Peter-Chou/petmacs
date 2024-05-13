@@ -3,6 +3,6 @@
 !/pics/
 !/sounds/
 !/svg-lib/
-!/lsp-java-jars/
+!/lsp-java-jars
 !/.gitignore
 !/eclipse-java-google-style.xml
