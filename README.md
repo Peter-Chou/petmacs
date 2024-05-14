@@ -128,7 +128,7 @@ pip install debugpy
 
 ### 4.2 java-debug (Java)
 
-java-debug already been carried in `./data/lsp-java-jars/com.microsoft.java.debug.plugin-0.51.1.jar`
+java-debug already been carried in `./data/lsp-java-jars/com.microsoft.java.debug.plugin-0.52.0.jar`
 
 ### 4.3 lldb-dap (C/C++)
 

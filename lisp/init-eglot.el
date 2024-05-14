@@ -106,7 +106,8 @@
     `(:bundles [,(expand-file-name (file-name-concat
                                     user-emacs-directory "data"
                                     "lsp-java-jars"
-                                    "com.microsoft.java.debug.plugin-0.51.1.jar"))]))
+                                    "com.microsoft.java.debug.plugin-0.52.0.jar"))]
+      :extendedClientCapabilities (:classFileContentsSupport t)))
   (setq eglot-java-user-init-opts-fn 'petmacs/custom-eglot-java-init-opts))
 
 (use-package consult-eglot
