@@ -2,6 +2,17 @@
 
 ;; maven uses JAVA_HOME to find which java version to run
 ;; e.g. JAVA_HOME=/opt/jdk8 mvn test
+
+
+(setenv "CLASSPATH" "/home/peter/.emacs.d/share/junit-platform-console-standalone/junit-platform-console-standalone.jar")
+
+(use-package java
+  :ensure nil
+  :config
+  ;; Env vars
+  (with-eval-after-load 'exec-path-from-shell
+    (exec-path-from-shell-copy-env "CLASSPATH")))
+
 (use-package mvn
   :preface
   (defun petmacs/mvn-clean-compile ()

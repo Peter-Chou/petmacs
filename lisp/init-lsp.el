@@ -77,7 +77,13 @@
 
 ;;; java
 (use-package lsp-java
+  :preface
+  (defun petmacs/lsp-with-lsp-booster ()
+    (when (fboundp 'eglot-booster-mode)
+      (eglot-booster-mode t))
+    (lsp-deferred))
   :demand t
+  :hook ((java-mode java-ts-mode) . petmacs/lsp-with-lsp-booster)
   :init
   (setq
    lsp-java-boot-enabled nil  ;; disable boot-ls
@@ -88,7 +94,7 @@
                                                    (concat user-emacs-directory "data")))
    lsp-java-format-settings-profile "GoogleStyle"
    ;; see https://www.eclipse.org/downloads/download.php?file=/jdtls/milestones
-   lsp-java-jdt-download-url "https://www.eclipse.org/downloads/download.php?file=/jdtls/milestones/1.33.0/jdt-language-server-1.33.0-202402151717.tar.gz"
+   lsp-java-jdt-download-url "https://www.eclipse.org/downloads/download.php?file=/jdtls/milestones/1.35.0/jdt-language-server-1.35.0-202404251256.tar.gz"
    lsp-java-import-maven-enabled t
    lsp-java-implementations-code-lens-enabled t
    lsp-java-save-actions-organize-imports nil

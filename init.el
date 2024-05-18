@@ -73,8 +73,11 @@
   (require 'init-treesit))
 
 (require 'init-corfu)
-;; (require 'init-lsp)
-(require 'init-eglot)
+
+(cond ((equal petmacs-lsp-mode-impl 'eglot)
+       (require 'init-eglot))
+      (t
+       (require 'init-lsp)))
 
 (cond ((and (equal petmacs-dap-mode-impl 'dape) emacs/>=29p)
        (require 'init-dape))
