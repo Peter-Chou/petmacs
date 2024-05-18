@@ -4,10 +4,6 @@
   :init
   (add-to-list 'auto-mode-alist
 	           `("\\.h\\'" . c++-mode))
-  ;; (setq lsp-clients-clangd-args
-  ;;       '("-j=6" "-log=verbose" "-background-index"
-  ;;         ;; "-cross-file-rename"
-  ;;         ))
   :config
   (require 'compile)
   (add-to-list 'auto-mode-alist '("\.cu$" . c++-mode)))

@@ -56,6 +56,7 @@
                 'json-read)
               :around
               #'lsp-booster--advice-json-parse)
+
   (defun lsp-booster--advice-final-command (old-fn cmd &optional test?)
     "Prepend emacs-lsp-booster command to lsp CMD."
     (let ((orig-result (funcall old-fn cmd test?)))
@@ -68,22 +69,55 @@
             (message "Using emacs-lsp-booster for %s!" orig-result)
             (cons "emacs-lsp-booster" orig-result))
         orig-result)))
-  (advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command)
-  )
+  (advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command))
 
 ;;; python
 (use-package lsp-pyright
   :init (setq lsp-pyright-venv-path (getenv "WORKON_HOME")))
 
+;;; c/c++
+
+(use-package lsp-c/c++
+  :ensure nil
+  :hook ((c-mode c-ts-mode c++-mode
+                 c++-ts-mode cuda-mode) . (lambda () (lsp-deferred)))
+  :init
+  (setq lsp-clients-clangd-args
+        '(
+          ;; 在后台自动分析文件（基于complie_commands)
+          "--background-index"
+          ;; 标记compelie_commands.json文件的目录位置
+          "--compile-commands-dir=build"
+          ;; 全局补全（会自动补充头文件）
+          "--all-scopes-completion"
+          ;; 更详细的补全内容
+          "--completion-style=detailed"
+          ;; 同时开启的任务数量
+          "-j=12"
+          "-cross-file-rename"
+          ;;clang-tidy功能
+          "--clang-tidy"
+          "--clang-tidy-checks=performance-*,bugprone-*"
+          ;; 告诉clangd用那个clang进行编译，路径参考which clang++的路径
+          ;; "--query-driver=/opt/llvm/bin/clang++"
+          ;; 同时开启的任务数量
+          ;; 补充头文件的形式
+          ;; "--header-insertion=iwyu"
+          ;; pch优化的位置
+          ;; "--pch-storage=disk"
+          )))
+
 ;;; java
 (use-package lsp-java
-  :preface
-  (defun petmacs/lsp-with-lsp-booster ()
-    (when (fboundp 'eglot-booster-mode)
-      (eglot-booster-mode t))
-    (lsp-deferred))
   :demand t
-  :hook ((java-mode java-ts-mode) . petmacs/lsp-with-lsp-booster)
+  :hook ((java-mode java-ts-mode jdee-mode) . (lambda ()
+                                                (require 'lsp-jt)
+                                                (require 'lsp-java)
+                                                (require 'dap-java)
+                                                (lsp-deferred)
+                                                (lsp-lens-mode 1)
+                                                (lsp-java-lens-mode 1)
+                                                (lsp-jt-lens-mode 1)))
   :init
   (setq
    lsp-java-boot-enabled nil  ;; disable boot-ls
@@ -107,8 +141,7 @@
    lsp-java-folding-range-enabled t)
   ;; latest jdtls requires java >= 17 to work
   (setq lsp-java-java-path "/opt/jdk17/bin/java")
-  (require 'lsp-java-boot)
-  )
+  (require 'lsp-java-boot))
 
 (use-package lsp-java-lombok
   :ensure nil
@@ -123,18 +156,18 @@
 (use-package lsp-metals :demand t)  ;; scala
 (use-package consult-lsp)
 
-(when (equal petmacs-lsp-mode-impl 'lsp-mode)
-  (dolist (mode '(c-mode c-ts-mode c++-ts-mode
-                         c++-mode cuda-mode
-                         scala-mode scala-ts-mode
-                         go-mode go-ts-mode))
-    (add-hook 'mode #'lsp-deferred))
-  ;;
-  (dolist (mode '(java-mode java-ts-mode jdee-mode))
-    (add-hook 'mode (lambda ()
-                      (lsp-lens-mode 1)
-                      (lsp-java-lens-mode 1)
-                      (lsp-jt-lens-mode 1)
-                      (lsp-deferred)))))
+;; (when (equal petmacs-lsp-mode-impl 'lsp-mode)
+;;   (dolist (mode '(c-mode c-ts-mode c++-ts-mode
+;;                          c++-mode cuda-mode
+;;                          scala-mode scala-ts-mode
+;;                          go-mode go-ts-mode))
+;;     (add-hook mode #'lsp-deferred))
+;;   ;;
+;;   (dolist (mode '(java-mode java-ts-mode jdee-mode))
+;;     (add-hook mode (lambda ()
+;;                      (lsp-lens-mode 1)
+;;                      (lsp-java-lens-mode 1)
+;;                      (lsp-jt-lens-mode 1)
+;;                      (lsp-deferred)))))
 
 (provide 'init-lsp)

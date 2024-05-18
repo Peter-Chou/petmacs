@@ -3,9 +3,6 @@
 ;; maven uses JAVA_HOME to find which java version to run
 ;; e.g. JAVA_HOME=/opt/jdk8 mvn test
 
-
-(setenv "CLASSPATH" "/home/peter/.emacs.d/share/junit-platform-console-standalone/junit-platform-console-standalone.jar")
-
 (use-package java
   :ensure nil
   :config

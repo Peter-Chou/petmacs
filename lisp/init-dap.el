@@ -33,6 +33,8 @@
   (require 'cl-lib)
   (setq dap-enable-mouse-support t
         dap-python-debugger 'debugpy
+        dap-ui-locals-expand-depth 2
+        dap-ui-expressions-expand-depth 2
         ;; minimun debug ui, when spcific buffer when needed
         lsp-enable-dap-auto-configure nil
         ;; dap-auto-configure-features '(sessions locals tooltip)
