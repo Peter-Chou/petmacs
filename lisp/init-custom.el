@@ -6,6 +6,16 @@
 (defvar petmacs-quelpa-use-gitee-mirror nil
   "use gitee mirror instead of github")
 
+(defvar petmacs-lsp-mode-impl
+  ;; 'lsp-mode
+  'eglot
+  "lsp-mode / eglot")
+
+(defvar petmacs-dap-mode-impl
+  ;; 'dap-mode
+  'dape
+  "dap-mode / dape ")
+
 (defvar petmacs-icon t
   "Display icons or not.")
 
@@ -61,16 +71,17 @@
 (defvar petmacs-enable-display-line-numbers nil
   "enable display-line-numbers mode")
 
-(defvar petmacs-lsp-mode-impl
-  'lsp-mode
-  ;; 'eglot
-  "lsp-mode / eglot")
+(defvar  petmacs-proxy "winhost:1080"
+  "Set network proxy.")
 
+(defvar petmacs-socks-proxy "127.0.0.1:1080"
+  "Set SOCKS proxy.")
 
-(defvar petmacs-dap-mode-impl
-  'dap-mode
-  ;; 'dape
-  "dap-mode / dape ")
+(defface petmacs-favor-color-face
+  `((((background light)) :foreground ,petmacs-favor-color :bold t)
+    (t :foreground ,petmacs-favor-color :bold t))
+  "petmacs favorite color face"
+  :group 'basic-faces)
 
 (defvar petmacs-lsp-active-modes '(
 				                   c-mode
@@ -89,20 +100,5 @@
 				                   sh-ts-mode
 				                   )
   "Primary major modes of the lsp activated layer.")
-
-(defvar petmacs-lsp-format-on-save-ignore-modes
-  '(c-mode c++-mode python-mode markdown-mode))
-
-(defvar  petmacs-proxy "winhost:1080"
-  "Set network proxy.")
-
-(defvar petmacs-socks-proxy "127.0.0.1:1080"
-  "Set SOCKS proxy.")
-
-(defface petmacs-favor-color-face
-  `((((background light)) :foreground ,petmacs-favor-color :bold t)
-    (t :foreground ,petmacs-favor-color :bold t))
-  "petmacs favorite color face"
-  :group 'basic-faces)
 
 (provide 'init-custom)
