@@ -604,8 +604,8 @@
            ;; repl
            "'"  #'dap-ui-repl
            ;; abandon
-           "a"  #'dap-disconnect
-           "A"  #'dap-delete-all-sessions
+           "q"  #'dap-disconnect
+           "Q"  #'dap-delete-all-sessions
            ;; breakpoints
            "bb" #'dap-breakpoint-toggle
            "bc" #'dap-breakpoint-condition
@@ -628,12 +628,14 @@
            "Ii" #'dap-ui-inspect
            "Ir" #'dap-ui-inspect-region
            "It" #'dap-ui-inspect-thing-at-point
+
            ;; stepping
            "c"  #'dap-continue
            "i"  #'dap-step-in
            "o"  #'dap-step-out
            "r"  #'dap-restart-frame
            "s"  #'dap-next
+           "n"  #'dap-next
            "v"  #'dap-ui-inspect-thing-at-point
            ;; switching
            "Ss" #'dap-switch-session
@@ -643,9 +645,7 @@
            "wo" #'dap-go-to-output-buffer
            "wl" #'dap-ui-locals
            "ws" #'dap-ui-sessions
-           "wb" #'dap-ui-breakpoints
-           ))
-       ))
+           "wb" #'dap-ui-breakpoints))))
 
 
 ;;; major mode keybinidngs ;;;;;;;;;;;;;;;;;;
