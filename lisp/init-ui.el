@@ -579,5 +579,14 @@
   (pretty-code-add-hook 'emacs-lisp-mode-hook '((:def "defun")
     					                        (:lambda "lambda"))))
 
+(use-package magit-file-icons
+  :after magit
+  :hook (magit-mode . magit-file-icons-mode)
+  :init
+  (setq
+   magit-file-icons-enable-diff-file-section-icons t
+   magit-file-icons-enable-untracked-icons t
+   magit-file-icons-enable-diffstat-icons t))
+
 
 (provide 'init-ui)
