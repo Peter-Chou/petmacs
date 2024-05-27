@@ -74,6 +74,13 @@
   :config (eglot-booster-mode))
 
 (use-package eglot-java
+  :preface
+  (defun petmacs/eglot-java-run-test-in-debug ()
+    (interactive)
+    (eglot-java-run-test t))
+  (defun petmacs/eglot-java-run-main-in-debug ()
+    (interactive)
+    (eglot-java-run-main t))
   :hook ((java-mode java-ts-mode) . (lambda ()
                                       (when (fboundp 'eglot-booster-mode)
                                         (eglot-booster-mode t))
@@ -108,7 +115,26 @@
                                     "lsp-java-jars"
                                     "com.microsoft.java.debug.plugin-0.52.0.jar"))]
       :extendedClientCapabilities (:classFileContentsSupport t)))
-  (setq eglot-java-user-init-opts-fn 'petmacs/custom-eglot-java-init-opts))
+  (setq eglot-java-user-init-opts-fn 'petmacs/custom-eglot-java-init-opts)
+  :config
+  (with-eval-after-load 'dape
+    (add-to-list 'dape-configs
+                 `(jdtls
+                   modes (java-mode java-ts-mode)
+                   fn (lambda (config)
+                        (with-current-buffer
+                            (find-file-noselect (expand-file-name (plist-get config :program)
+                                                                  (project-root (project-current))))
+                          (thread-first
+                            config
+                            (plist-put 'hostname "localhost")
+                            (plist-put 'port (eglot-execute-command (eglot-current-server)
+                                                                    "vscode.java.startDebugSession" nil))
+                            (plist-put :projectName (project-name (project-current))))))
+                   :program dape-buffer-default
+                   :request "attach"
+                   :hostname "localhost"
+                   :port 8000))))
 
 (use-package consult-eglot
   :init (setq consult-eglot-show-kind-name t))

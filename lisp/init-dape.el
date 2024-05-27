@@ -34,8 +34,8 @@
      ("Q" dape-quit "quit" :exit t))))
   :init
   (setq dape-cwd-fn 'projectile-project-root
-        dape-buffer-window-arrangment 'right
-        )
+        dape-buffer-window-arrangment 'right)
+  (require 'dape)
   :config
   (plist-put (alist-get 'debugpy dape-configs) 'command "python")
   ;; lldb-vscode renamed as lldb-dap after llvm 16
