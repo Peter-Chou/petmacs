@@ -355,7 +355,7 @@
     "ts" #'petmacs/consult-theme
 
     ;; "tp" prefix
-    "pp" #'proxy-http-toggle
+    "pp" #'toggle-http-proxy
     ))
 
 (leader-declare-prefix
