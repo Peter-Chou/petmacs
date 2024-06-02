@@ -215,6 +215,8 @@
     (setq doom-modeline-icon petmacs-icon
           doom-modeline-buffer-file-name-style 'buffer-name
           ;; doom-modeline-buffer-file-name-style 'relative-to-project
+          ;; disable position percentile
+          doom-modeline-percent-position nil
           doom-modeline-support-imenu t
           doom-modeline-minor-modes nil
           doom-modeline-indent-info nil
@@ -234,7 +236,7 @@
     :config
     (doom-modeline-def-segment breadcrumb
       "breadcrumb mode in modeline"
-      `(" ",(propertize (format "%s %s" (nerd-icons-codicon "nf-cod-triangle_right") (nerd-icons-codicon "nf-cod-symbol_method")) 'face `(:inherit font-lock-function-name-face :bold t :height 1.2)) " ",(breadcrumb-imenu-crumbs) " "))
+      `(,(propertize (format "%s %s " (nerd-icons-codicon "nf-cod-triangle_right") (nerd-icons-codicon "nf-cod-symbol_method")) 'face `(:inherit font-lock-function-name-face :bold t :height 1.2)) ,(breadcrumb-imenu-crumbs) " "))
 
     (doom-modeline-def-modeline 'petmacs/simple-mode-line
     ;;;; main
@@ -441,9 +443,9 @@
     (setq emojify-download-emojis-p t)))
 
 (use-package nyan-mode
-  ;; :hook (doom-modeline-mode . nyan-mode)
+  :hook (doom-modeline-mode . nyan-mode)
   :init
-  (setq nyan-bar-length 25
+  (setq nyan-bar-length 8
         nyan-animate-nyancat t
         nyan-wavy-trail t))
 
