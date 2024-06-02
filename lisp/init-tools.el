@@ -591,7 +591,7 @@ SCALE are supported."
   (global-docstr-mode))
 
 (use-package breadcrumb
-  :demand t
   :after nerd-icons)
+
 
 (provide 'init-tools)
