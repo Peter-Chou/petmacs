@@ -115,9 +115,11 @@
         awesome-tray-belong-update-duration 2.5
         awesome-tray-date-format (concat (format "%s " (nerd-icons-octicon "nf-oct-clock")) "%m-%d %H:%M %a")
         awesome-tray-git-format (concat (format "%s " (nerd-icons-faicon "nf-fa-git_square")) "%s")
-        awesome-tray-git-show-status nil
-        awesome-tray-active-modules   '("pomodoro" "flymake" "pyvenv" "git" "date")
-        awesome-tray-essential-modules '("pomodoro" "date"))
+        ;; awesome-tray-active-modules   '("breadcrumbs" "pomodoro" "flymake" "pyvenv" "git" "date" )
+        ;; awesome-tray-essential-modules '("breadcrumbs" "pomodoro" "date")
+        awesome-tray-active-modules   '("pomodoro" "flymake" "pyvenv" "git" "date" )
+        awesome-tray-essential-modules '("pomodoro" "date")
+        awesome-tray-git-show-status nil)
   :config
   (defun awesome-tray-module-pomodoro-info () (format "%s" pomodoro-mode-line-string))
   (defface awesome-tray-module-pomodoro-face
@@ -143,9 +145,20 @@
     :group 'awesome-tray)
   (add-to-list 'awesome-tray-module-alist '("pyvenv" . (awesome-tray-module-pyvenv-info awesome-tray-module-pyvenv-face)))
 
+
+  (defun awesome-tray-module-breadcrumbs-info ()
+    (breadcrumb-imenu-crumbs))
+  (defface awesome-tray-module-breadcrumbs-face
+    `((((background light))
+       :foreground ,petmacs-favor-color :bold t)
+      (t
+       :foreground ,petmacs-favor-color :bold t))
+    "breadcrumbs face."
+    :group 'awesome-tray)
+  (add-to-list 'awesome-tray-module-alist '("breadcrumbs" . (awesome-tray-module-breadcrumbs-info awesome-tray-module-breadcrumbs-face)))
+
   (defun petmacs/awesome-tray-module-flymake-info ()
     "A module for showing Flymake state.(use custom unicode)"
-    ;; Parts of the code are from doom-modeline package
     (with-demoted-errors
         ""
       (if (and (featurep 'flymake) flymake--state)
@@ -200,8 +213,8 @@
     :hook (awesome-tray-mode . doom-modeline-mode)
     :init
     (setq doom-modeline-icon petmacs-icon
-          ;; doom-modeline-buffer-file-name-style 'auto
-          doom-modeline-buffer-file-name-style 'relative-to-project
+          doom-modeline-buffer-file-name-style 'buffer-name
+          ;; doom-modeline-buffer-file-name-style 'relative-to-project
           doom-modeline-support-imenu t
           doom-modeline-minor-modes nil
           doom-modeline-indent-info nil
@@ -219,12 +232,16 @@
     (unless after-init-time
       (setq-default mode-line-format nil))
     :config
+    (doom-modeline-def-segment breadcrumb
+      "breadcrumb mode in modeline"
+      `(" ",(propertize (format "| %s "(nerd-icons-codicon "nf-cod-symbol_method")) 'face `(:inherit font-lock-function-name-face :bold t :height 1.2)) " ",(breadcrumb-imenu-crumbs) " "))
+
     (doom-modeline-def-modeline 'petmacs/simple-mode-line
     ;;;; main
       ;; '(eldoc bar workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
       ;; '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl lsp minor-modes input-method indent-info buffer-encoding major-mode process vcs checker time)
 
-      '(eldoc bar workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
+      '(eldoc bar workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info breadcrumb)
       '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl lsp input-method indent-info buffer-encoding process))
 
     ;; Set default mode-line
@@ -424,7 +441,7 @@
     (setq emojify-download-emojis-p t)))
 
 (use-package nyan-mode
-  :hook (doom-modeline-mode . nyan-mode)
+  ;; :hook (doom-modeline-mode . nyan-mode)
   :init
   (setq nyan-bar-length 25
         nyan-animate-nyancat t

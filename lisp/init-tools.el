@@ -590,4 +590,8 @@ SCALE are supported."
   (add-to-list 'docstr-key-sharp-doc-modes 'python-ts-mode)
   (global-docstr-mode))
 
+(use-package breadcrumb
+  :demand t
+  :after nerd-icons)
+
 (provide 'init-tools)
