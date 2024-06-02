@@ -236,7 +236,9 @@
     :config
     (doom-modeline-def-segment breadcrumb
       "breadcrumb mode in modeline"
-      `(,(propertize (format "%s %s " (nerd-icons-codicon "nf-cod-triangle_right") (nerd-icons-codicon "nf-cod-symbol_method")) 'face `(:inherit font-lock-function-name-face :bold t :height 1.2)) ,(breadcrumb-imenu-crumbs) " "))
+      (if (> (length (breadcrumb-imenu-crumbs)) 0)
+          `(,(propertize (format "%s %s " (nerd-icons-codicon "nf-cod-triangle_right") (nerd-icons-codicon "nf-cod-symbol_method")) 'face `(:inherit font-lock-function-name-face :bold t :height 1.2)) ,(breadcrumb-imenu-crumbs) " ")
+        '("")))
 
     (doom-modeline-def-modeline 'petmacs/simple-mode-line
     ;;;; main
