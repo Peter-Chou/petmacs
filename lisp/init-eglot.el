@@ -158,18 +158,18 @@
   (use-package eglot-hierarchy
     :quelpa (eglot-hierarchy :fetcher github :repo "dolmens/eglot-hierarchy" :files ("*.el"))))
 
-;; (if petmacs-quelpa-use-gitee-mirror
-;;     (use-package sideline-eglot
-;;       :quelpa (sideline-eglot :fetcher git :url "https://gitee.com/Peter-Chou/sideline-eglot.git" :files ("*.el")))
-;;   (use-package sideline-eglot
-;;     :quelpa (sideline-eglot :fetcher github :repo "emacs-sideline/sideline-eglot" :files ("*.el"))))
+(if petmacs-quelpa-use-gitee-mirror
+    (use-package sideline-eglot
+      :quelpa (sideline-eglot :fetcher git :url "https://gitee.com/Peter-Chou/sideline-eglot.git" :files ("*.el")))
+  (use-package sideline-eglot
+    :quelpa (sideline-eglot :fetcher github :repo "emacs-sideline/sideline-eglot" :files ("*.el"))))
 
-;; (use-package sideline-eglot
-;;   :ensure nil
-;;   :custom-face
-;;   (sideline-eglot-error ((t (:height 0.85 :italic t))))
-;;   (sideline-eglot-warning ((t (:height 0.85 :italic t))))
-;;   (sideline-eglot-success ((t (:height 0.85 :italic t)))))
+(use-package sideline-eglot
+  :ensure nil
+  :custom-face
+  (sideline-eglot-error ((t (:height 0.85 :italic t))))
+  (sideline-eglot-warning ((t (:height 0.85 :italic t))))
+  (sideline-eglot-success ((t (:height 0.85 :italic t)))))
 
 (cl-defmacro eglot-org-babel-enable (lang)
   "Support LANG in org source code block."
