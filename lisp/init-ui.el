@@ -116,7 +116,7 @@
         awesome-tray-date-format (concat (format "%s " (nerd-icons-octicon "nf-oct-clock")) "%m-%d %H:%M %a")
         awesome-tray-git-format (concat (format "%s " (nerd-icons-faicon "nf-fa-git_square")) "%s")
         ;; awesome-tray-active-modules   '("breadcrumbs" "pomodoro" "flymake" "pyvenv" "git" "date" )
-        ;; awesome-tray-essential-modules '("breadcrumbs" "pomodoro" "date")
+        ;; awesome-tray-essential-modules '("breadcrumbs" "date")
         awesome-tray-active-modules   '("pomodoro" "flymake" "pyvenv" "git" "date" )
         awesome-tray-essential-modules '("pomodoro" "date")
         awesome-tray-git-show-status nil)
@@ -216,7 +216,7 @@
           doom-modeline-buffer-file-name-style 'buffer-name
           ;; doom-modeline-buffer-file-name-style 'relative-to-project
           ;; disable position percentile
-          doom-modeline-percent-position nil
+          ;; doom-modeline-percent-position nil
           doom-modeline-support-imenu t
           doom-modeline-minor-modes nil
           doom-modeline-indent-info nil
@@ -237,7 +237,7 @@
     (doom-modeline-def-segment breadcrumb
       "breadcrumb mode in modeline"
       (if (> (length (breadcrumb-imenu-crumbs)) 0)
-          `(,(propertize (format "%s %s " (nerd-icons-codicon "nf-cod-triangle_right") (nerd-icons-codicon "nf-cod-symbol_method")) 'face `(:inherit font-lock-function-name-face :height 1.2)) ,(breadcrumb-imenu-crumbs) " ")
+          `(,(propertize (format " %s %s " (nerd-icons-codicon "nf-cod-triangle_right") (nerd-icons-codicon "nf-cod-symbol_method")) 'face `(:inherit font-lock-function-name-face :height 1.2)) ,(breadcrumb-imenu-crumbs) " ")
         '("")))
 
     (doom-modeline-def-modeline 'petmacs/simple-mode-line
@@ -445,7 +445,7 @@
     (setq emojify-download-emojis-p t)))
 
 (use-package nyan-mode
-  :hook (doom-modeline-mode . nyan-mode)
+  ;; :hook (doom-modeline-mode . nyan-mode)
   :init
   (setq nyan-bar-length 8
         nyan-animate-nyancat t
