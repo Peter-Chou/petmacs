@@ -41,7 +41,7 @@
   ;; "等距更纱黑体 SC"
   "chinese font")
 
-(defvar  petmacs-font-size 14.0
+(defvar  petmacs-font-size 13.0
   "font size")
 
 (defvar petmacs-disable-modeline nil
