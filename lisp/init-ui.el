@@ -124,10 +124,10 @@
         ;; awesome-tray-essential-modules '("pomodoro" "date")
         awesome-tray-git-show-status nil)
   (if petmacs-disable-modeline
-      (setq awesome-tray-active-modules   '("pomodoro" "buffer-name" "flymake" "git" "location" "date")
+      (setq awesome-tray-active-modules   '("pomodoro" "buffer-name" "location" "flymake" "git"  "date")
             awesome-tray-essential-modules '("buffer-name" "location"))
     (setq awesome-tray-active-modules   '("pomodoro" "flymake" "git" "date")
-          awesome-tray-essential-modules '("location")))
+          awesome-tray-essential-modules '("date")))
   :config
   (defun awesome-tray-module-pomodoro-info () (format "%s" pomodoro-mode-line-string))
   (defface awesome-tray-module-pomodoro-face
