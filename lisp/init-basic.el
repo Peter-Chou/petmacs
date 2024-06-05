@@ -234,7 +234,7 @@
   :hook
   (prog-mode . display-fill-column-indicator-mode)
   :init
-  (setq-default fill-column  90)
+  (setq-default fill-column  80)
   (setq display-fill-column-indicator-character "|"))
 
 ;; Misc
@@ -243,7 +243,7 @@
   (fset 'yes-or-no-p 'y-or-n-p))
 
 (setq-default major-mode 'text-mode
-              fill-column 90
+              fill-column 80
               tab-width 4
               indent-tabs-mode nil)     ; Permanently indent with spaces, never with TABs
 

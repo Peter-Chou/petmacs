@@ -104,22 +104,30 @@
   :ensure nil
   :commands (awesome-tray-update)
   :hook (after-init . awesome-tray-mode)
-  :custom-face (awesome-tray-module-belong-face ((((background light)) :inherit petmacs-favor-color-face)
-                                                 (t (:inherit petmacs-favor-color-face))))
+  :custom-face
+  (awesome-tray-module-belong-face ((((background light)) :inherit petmacs-favor-color-face)
+                                    (t (:inherit petmacs-favor-color-face))))
+  (awesome-tray-module-buffer-name-face ((((background light)) :inherit font-lock-warning-face :bold t)
+                                         (t (:inherit font-lock-warning-face :bold t))))
   :init
   (setq awesome-tray-separator " ┃ "
         awesome-tray-hide-mode-line petmacs-disable-modeline
         awesome-tray-mode-line-active-color petmacs-favor-color
+        awesome-tray-buffer-name-buffer-changed t
+        awesome-tray-buffer-name-max-length 30
         awesome-tray-info-padding-right 2.5
         awesome-tray-update-interval 0.5
         awesome-tray-belong-update-duration 2.5
         awesome-tray-date-format (concat (format "%s " (nerd-icons-octicon "nf-oct-clock")) "%m-%d %H:%M %a")
         awesome-tray-git-format (concat (format "%s " (nerd-icons-faicon "nf-fa-git_square")) "%s")
-        ;; awesome-tray-active-modules   '("breadcrumbs" "pomodoro" "flymake" "pyvenv" "git" "date" )
-        ;; awesome-tray-essential-modules '("breadcrumbs" "date")
-        awesome-tray-active-modules   '("pomodoro" "flymake" "pyvenv" "git" "date" )
-        awesome-tray-essential-modules '("pomodoro" "date")
+        ;; awesome-tray-active-modules   '("pomodoro" "flymake" "pyvenv" "git" "date" )
+        ;; awesome-tray-essential-modules '("pomodoro" "date")
         awesome-tray-git-show-status nil)
+  (if petmacs-disable-modeline
+      (setq awesome-tray-active-modules   '("pomodoro" "buffer-name" "flymake" "git" "location" "date")
+            awesome-tray-essential-modules '("buffer-name" "location"))
+    (setq awesome-tray-active-modules   '("pomodoro" "flymake" "git" "date")
+          awesome-tray-essential-modules '("location")))
   :config
   (defun awesome-tray-module-pomodoro-info () (format "%s" pomodoro-mode-line-string))
   (defface awesome-tray-module-pomodoro-face
@@ -144,7 +152,6 @@
     "pyvenv face."
     :group 'awesome-tray)
   (add-to-list 'awesome-tray-module-alist '("pyvenv" . (awesome-tray-module-pyvenv-info awesome-tray-module-pyvenv-face)))
-
 
   (defun awesome-tray-module-breadcrumbs-info ()
     (breadcrumb-imenu-crumbs))
@@ -234,20 +241,25 @@
     (unless after-init-time
       (setq-default mode-line-format nil))
     :config
-    (doom-modeline-def-segment breadcrumb
-      "breadcrumb mode in modeline"
+    (doom-modeline-def-segment
+     breadcrumb
+     "breadcrumb mode in modeline"
+     (if (and (doom-modeline--active) (> (length (breadcrumb-imenu-crumbs)) 0))
+         `(,(propertize
+             (format " %s %s "
+                     (nerd-icons-codicon "nf-cod-triangle_right")
+                     (nerd-icons-codicon "nf-cod-symbol_method"))
+             'face `(:inherit font-lock-function-name-face :height 1.2)) ,(breadcrumb-imenu-crumbs) " ")
+       '("")))
 
-      (if (and (doom-modeline--active) (> (length (breadcrumb-imenu-crumbs)) 0))
-          `(,(propertize (format " %s %s " (nerd-icons-codicon "nf-cod-triangle_right") (nerd-icons-codicon "nf-cod-symbol_method")) 'face `(:inherit font-lock-function-name-face :height 1.2)) ,(breadcrumb-imenu-crumbs) " ")
-        '("")))
+    (doom-modeline-def-modeline
+     'petmacs/simple-mode-line
+     ;;;; main
+     ;; '(eldoc bar workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
+     ;; '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl lsp minor-modes input-method indent-info buffer-encoding major-mode process vcs checker time)
 
-    (doom-modeline-def-modeline 'petmacs/simple-mode-line
-    ;;;; main
-      ;; '(eldoc bar workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
-      ;; '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl lsp minor-modes input-method indent-info buffer-encoding major-mode process vcs checker time)
-
-      '(eldoc bar workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info breadcrumb)
-      '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl input-method indent-info buffer-encoding process))
+     '(eldoc bar workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
+     '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl input-method indent-info buffer-encoding process))
 
     ;; Set default mode-line
     (add-hook 'doom-modeline-mode-hook (lambda ()
@@ -517,46 +529,48 @@
            ("M-{" . tab-bar-move-tab-backward)
            ("M-}" . tab-bar-move-tab)
            ("M-k" . tab-bar-close-tab))
-    :hook (emacs-startup . tab-bar-mode)
+    ;; :hook (emacs-startup . tab-bar-mode)
     :init
-    (setq tab-bar-close-button-show nil
-          tab-bar-new-tab-choice "*dashboard*";; buffer to show in new tabs
-          ;; tab-bar-show petmacs-disable-modeline
-          tab-bar-show 1
-          ;; elements to include in bar
-          tab-bar-format '(tab-bar-format-tabs tab-bar-separator))
-    (defvar petmacs--circle-numbers-alist
-      '((1 . (nerd-icons-mdicon "nf-md-numeric_1_circle"))
-        (2 . (nerd-icons-mdicon "nf-md-numeric_2_circle"))
-        (3 . (nerd-icons-mdicon "nf-md-numeric_3_circle"))
-        (4 . (nerd-icons-mdicon "nf-md-numeric_4_circle"))
-        (5 . (nerd-icons-mdicon "nf-md-numeric_5_circle"))
-        (6 . (nerd-icons-mdicon "nf-md-numeric_6_circle"))
-        (7 . (nerd-icons-mdicon "nf-md-numeric_7_circle"))
-        (8 . (nerd-icons-mdicon "nf-md-numeric_8_circle"))
-        (9 . (nerd-icons-mdicon "nf-md-numeric_9_circle"))
-        (10 . (nerd-icons-mdicon "nf-md-numeric_10_circle")))
-      "Alist of integers to strings of circled unicode numbers.")
+    (setq
+     tab-bar-close-button-show nil
+     tab-bar-new-tab-choice "*dashboard*";; buffer to show in new tabs
+     ;; tab-bar-show petmacs-disable-modeline
+     ;; tab-bar-show 1
+     tab-bar-show t
+     ;; elements to include in bar
+     tab-bar-format '(tab-bar-format-tabs tab-bar-separator))
+    ;; "Alist of integers to strings of circled unicode numbers."
+    tab-bar-tab-hints t)
 
-    (defun petmacs/tab-bar-tab-name-format-default (tab i)
-      (let ((current-p (eq (car tab) 'current-tab))
-            (tab-num (if (and tab-bar-tab-hints (< i 10))
-                         (alist-get i petmacs--circle-numbers-alist) "")))
-        (propertize
-         (concat tab-num
-                 " "
-                 (alist-get 'name tab)
-                 (or (and tab-bar-close-button-show
-                          (not (eq tab-bar-close-button-show
-                                   (if current-p 'non-selected 'selected)))
-                          tab-bar-close-button)
-                     "")
-                 " ")
-         'face (funcall tab-bar-tab-face-function tab))))
-    (setq tab-bar-tab-name-format-function #'petmacs/tab-bar-tab-name-format-default)
-    (setq tab-bar-tab-hints t)
-    :config
-    (set-face-attribute 'tab-bar-tab nil :background petmacs-favor-color :bold t)))
+  ;; (defvar petmacs--circle-numbers-alist
+  ;;   '((1 . (nerd-icons-mdicon "nf-md-numeric_1_circle"))
+  ;;     (2 . (nerd-icons-mdicon "nf-md-numeric_2_circle"))
+  ;;     (3 . (nerd-icons-mdicon "nf-md-numeric_3_circle"))
+  ;;     (4 . (nerd-icons-mdicon "nf-md-numeric_4_circle"))
+  ;;     (5 . (nerd-icons-mdicon "nf-md-numeric_5_circle"))
+  ;;     (6 . (nerd-icons-mdicon "nf-md-numeric_6_circle"))
+
+  ;;     (8 . (nerd-icons-mdicon "nf-md-numeric_8_circle"))
+  ;;     (9 . (nerd-icons-mdicon "nf-md-numeric_9_circle"))
+  ;;     (10 . (nerd-icons-mdicon "nf-md-numeric_10_circle"))))
+  ;; (defun petmacs/tab-bar-tab-name-format-default (tab i)
+  ;;   (let ((current-p (eq (car tab) 'current-tab))
+  ;;         (tab-num (if (and tab-bar-tab-hints (< i 10))
+  ;;                      (alist-get i petmacs--circle-numbers-alist) "")))
+  ;;     (propertize
+  ;;      (concat tab-num
+  ;;              " "
+  ;;              (alist-get 'name tab)
+  ;;              (or (and tab-bar-close-button-show
+  ;;                       (not (eq tab-bar-close-button-show
+  ;;                                (if current-p 'non-selected 'selected)))
+  ;;                       tab-bar-close-button)
+  ;;                  "")
+  ;;              " ")
+  ;;      'face (funcall tab-bar-tab-face-function tab))))
+  ;; (setq tab-bar-tab-name-format-function #'petmacs/tab-bar-tab-name-format-default)
+  :config
+  (set-face-attribute 'tab-bar-tab nil :background petmacs-favor-color :bold t))
 
 (use-package prettify-utils
   :ensure nil)
