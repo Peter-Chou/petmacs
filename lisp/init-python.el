@@ -30,7 +30,6 @@
   :preface
   (defun petmacs/set-pythonpath-project ()
     "set project root path as PYTHONPATH"
-
     (if (not (getenv "PYTHONPATH"))
         ;; 没有时初始化
         (setenv "PYTHONPATH" (projectile-project-root))
@@ -40,8 +39,8 @@
 
   (defun petmacs/remove-pyvenv-modeline-env-info ()
     (setq mode-line-misc-info (delete '(pyvenv-mode pyvenv-mode-line-indicator) mode-line-misc-info)))
-  ;; autoload virtual environment if project_root/pyrightconfig.json file exists,
   (defun petmacs/pyvenv-pyright-autoload ()
+    "autoload virtual environment if project_root/pyrightconfig.json file exists,"
     (interactive)
     (require 'projectile)
     (require 'json)
