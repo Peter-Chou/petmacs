@@ -124,15 +124,14 @@ FACE defaults to inheriting from default and highlight."
 
 (use-package indent-bars
   :ensure nil
-  :hook ((
-          go-mode go-ts-mode
-          json-mode json-ts-mode
-          ;; java-mode java-ts-mode
-          python-mode python-ts-mode
-          yaml-mode yaml-ts-mode) . (lambda ()
-          "Highlight indentations in small files for better performance."
-          (unless (too-long-file-p)
-            (indent-bars-mode 1))))
+  :hook (((
+           go-mode go-ts-mode
+           json-mode json-ts-mode
+           python-mode python-ts-mode
+           yaml-mode yaml-ts-mode) . (lambda () (unless (too-long-file-p)
+                                             (indent-bars-mode 1))))
+         ((java-mode java-ts-mode) . (lambda ()
+                                       (indent-bars-mode -1))))
   :init
   (setq indent-bars-display-on-blank-lines nil
         indent-bars-no-stipple-char ?\┋
