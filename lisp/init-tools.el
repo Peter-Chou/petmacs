@@ -580,9 +580,12 @@ SCALE are supported."
   (require 'sideline))
 
 (use-package docstr
-  :hook ((python-mode python-ts-mode) . (lambda ()
-                                          ;; (setq-local docstr-desc-summary "")
-                                          (docstr-mode 1)))
+  :hook (((python-mode python-ts-mode) . (lambda ()
+                                           (setq-local docstr-desc-summary "")
+                                           (docstr-mode 1)))
+         ((java-mode java-ts-mode) . (lambda ()
+                                       ;; (setq-local docstr-desc-summary "")
+                                       (docstr-mode 1))))
   :init
   (setq docstr-python-modes '(python-mode python-ts-mode)
         ;; docstr-python-style 'google
@@ -593,6 +596,7 @@ SCALE are supported."
   (add-to-list 'docstr-writers-alist '(python-ts-mode . docstr-writers-python))
   (add-to-list 'docstr-prefix-alist '(python-ts-mode . docstr-python-prefix))
   (add-to-list 'docstr-key-sharp-doc-modes 'python-ts-mode)
+  (add-to-list 'docstr-key-javadoc-like-modes 'java-ts-mode)
   (global-docstr-mode))
 
 (use-package breadcrumb
