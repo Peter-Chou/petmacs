@@ -127,7 +127,7 @@ FACE defaults to inheriting from default and highlight."
   :hook ((
           go-mode go-ts-mode
           json-mode json-ts-mode
-          java-mode java-ts-mode
+          ;; java-mode java-ts-mode
           python-mode python-ts-mode
           yaml-mode yaml-ts-mode) . (lambda ()
           "Highlight indentations in small files for better performance."
