@@ -93,6 +93,7 @@
   (setq eglot-java-java-home "/opt/jdk17"
         eglot-java-java-program "/opt/jdk17/bin/java"
         eglot-java-eclipse-jdt-cache-directory (expand-file-name (file-name-concat user-emacs-directory "data" "eglot-java-cache"))
+        eglot-java-debug-jvm-arg "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=localhost:11111"
         eglot-java-eclipse-jdt-args
         `("-Xmx8G"
           ,(concat "-javaagent:" (expand-file-name "~/.emacs.d/data/lsp-java-jars/lombok-1.18.28.jar"))
@@ -134,7 +135,7 @@
                    :program dape-buffer-default
                    :request "attach"
                    :hostname "localhost"
-                   :port 8000))))
+                   :port 11111))))
 
 (use-package consult-eglot
   :init (setq consult-eglot-show-kind-name t))
