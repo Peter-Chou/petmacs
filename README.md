@@ -189,6 +189,12 @@ npm install -g prettier
 
 formatter for `json`, `javascript`, `typescript`, `css`, `scss`, `html`, `graphql`, `markdown`, `yaml`
 
+### 5.8 xmllint (xml)
+
+``` bash
+sudo apt-get install xmllint
+```
+
 ---
 
 ## 6. Screenshots

@@ -540,6 +540,7 @@ SCALE are supported."
   :config (add-hook 'logview-mode-hook 'auto-revert-mode))
 
 ;; code format tool
+(setenv "XMLLINT_INDENT" "    ") ;; format xml with 4 spaces
 (use-package apheleia
   :bind ("C-c f" . apheleia-format-buffer)
   :hook (emacs-startup . apheleia-global-mode)
