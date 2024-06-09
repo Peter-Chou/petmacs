@@ -9,8 +9,8 @@
   :hook (prog-mode . flymake-mode)
   :init
   (setq flymake-fringe-indicator-position 'right-fringe
-        flymake-no-changes-timeout nil
-        flymake-start-on-save-buffer t
+        ;; flymake-no-changes-timeout nil
+        ;; flymake-start-on-save-buffer t
         )
   :config
   ;; Check elisp with `load-path'
