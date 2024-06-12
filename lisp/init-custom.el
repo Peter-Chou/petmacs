@@ -44,7 +44,8 @@
 (defvar  petmacs-font-size 14.5
   "font size")
 
-(defvar petmacs-disable-modeline (display-graphic-p)
+(defvar petmacs-disable-modeline nil
+  ;; (display-graphic-p)
   "disable modeline")
 
 (defvar petmacs-enable-ligatures t
