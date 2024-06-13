@@ -61,7 +61,9 @@
    dashboard-set-heading-icons t
 
    dashboard-set-footer t
-   dashboard-footer-messages '("Enjoy Emacs, Enjoy Petmacs!")
+   dashboard-footer-messages `(,(concat
+                                 "Enjoy Emacs, Enjoy Petmacs! "
+                                 (nerd-icons-octicon "nf-oct-heart" :face 'nerd-icons-lred)))
    dashboard-footer-icon
    (if (icons-displayable-p)
        (nerd-icons-octicon "nf-oct-heart" :height 1.2 :face 'nerd-icons-lred)
