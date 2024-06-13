@@ -129,7 +129,7 @@ FACE defaults to inheriting from default and highlight."
            json-mode json-ts-mode
            python-mode python-ts-mode
            yaml-mode yaml-ts-mode) . (lambda () (unless (too-long-file-p)
-                                             (indent-bars-mode 1))))
+                                                  (indent-bars-mode 1))))
          ((java-mode java-ts-mode) . (lambda ()
                                        (indent-bars-mode -1))))
   :init
@@ -191,7 +191,13 @@ FACE defaults to inheriting from default and highlight."
          (hl-todo-mode . (lambda ()
                            (add-hook 'flymake-diagnostic-functions
                                      #'hl-todo-flymake nil t))))
-  :init (setq hl-todo-require-punctuation t
+  :init (setq hl-todo-color-background t
+              hl-todo-include-modes '(prog-mode conf-mode)
+              hl-todo-exclude-modes '(org-mode
+                                      markdown-mode
+                                      yaml-mode
+                                      yaml-ts-mode)
+              ;; hl-todo-require-punctuation t
               hl-todo-highlight-punctuation ":")
   :config
   (dolist (keyword '("BUG" "DEFECT" "ISSUE"))
