@@ -43,6 +43,10 @@ sudo apt-get install cmake libtool-bin make
 
 if your cmake is too old, download the suitable version from [cmake.org](https://cmake.org/download/)
 
+### 1.6 emacs-lsp-booster (speed up lsp service)
+
+please install [emacs-lsp-booster](https://github.com/blahgeek/emacs-lsp-booster) installed and in you `PATH`
+
 ---
 
 ## 2. Install
@@ -68,16 +72,17 @@ run the following command in emacs.
 M-x treesit-auto-install-all
 ```
 
+### 2.3 update builtin eglot to latest version
+
+``` emacs-lisp
+M-x eglot-upgrade-eglot
+```
+
 ---
 
 ## 3. install LSP servers
 
-### 3.1 emacs-lsp-booster (speed up lsp service)
-
-please install [emacs-lsp-booster](https://github.com/blahgeek/emacs-lsp-booster) installed and in you `PATH`
-
-
-### 3.2 pyright (Python)
+### 3.1 pyright (Python)
 
 ``` sh
 npm install -g pyright
@@ -85,8 +90,7 @@ npm install -g pyright
 
 set `WORKON_HOME` environment variable that has virtual environment directories.
 
-
-### 3.3 eclipse jdtls (Java)
+### 3.2 eclipse jdtls (Java)
 
 Please make sure  java 17 is installed in `/opt/jdk17` folder and run following commands in emacs.
 
@@ -95,8 +99,7 @@ M-x: eglot-java-upgrade-lsp-server
 M-x: eglot-java-upgrade-junit-jar
 ```
 
-
-### 3.4 clangd (C/C++)
+### 3.3 clangd (C/C++)
 
 use `clangd` in [LLVM project](https://github.com/llvm/llvm-project). soft link llvm project to `/opt/llvm`.
 
