@@ -118,7 +118,7 @@
         awesome-tray-info-padding-right 2.5
         awesome-tray-update-interval 0.5
         awesome-tray-belong-update-duration 2.5
-        awesome-tray-date-format (concat (format "%s " (nerd-icons-octicon "nf-oct-clock")) "%m-%d %H:%M %a")
+        awesome-tray-date-format (concat (format "%s " (nerd-icons-mdicon "nf-md-clock")) "%m-%d %H:%M %a")
         awesome-tray-git-format (concat (format "%s " (nerd-icons-faicon "nf-fa-git_square")) "%s")
         ;; awesome-tray-active-modules   '("pomodoro" "flymake" "pyvenv" "git" "date" )
         ;; awesome-tray-essential-modules '("pomodoro" "date")
@@ -242,24 +242,24 @@
       (setq-default mode-line-format nil))
     :config
     (doom-modeline-def-segment
-     breadcrumb
-     "breadcrumb mode in modeline"
-     (if (and (doom-modeline--active) (> (length (breadcrumb-imenu-crumbs)) 0))
-         `(,(propertize
-             (format " %s %s "
-                     (nerd-icons-codicon "nf-cod-triangle_right")
-                     (nerd-icons-codicon "nf-cod-symbol_method"))
-             'face `(:inherit font-lock-function-name-face :height 1.2)) ,(breadcrumb-imenu-crumbs) " ")
-       '("")))
+      breadcrumb
+      "breadcrumb mode in modeline"
+      (if (and (doom-modeline--active) (> (length (breadcrumb-imenu-crumbs)) 0))
+          `(,(propertize
+              (format " %s %s "
+                      (nerd-icons-codicon "nf-cod-triangle_right")
+                      (nerd-icons-codicon "nf-cod-symbol_method"))
+              'face `(:inherit font-lock-function-name-face :height 1.2)) ,(breadcrumb-imenu-crumbs) " ")
+        '("")))
 
     (doom-modeline-def-modeline
-     'petmacs/simple-mode-line
+      'petmacs/simple-mode-line
      ;;;; main
-     ;; '(eldoc bar workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
-     ;; '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl lsp minor-modes input-method indent-info buffer-encoding major-mode process vcs checker time)
+      ;; '(eldoc bar workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
+      ;; '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl lsp minor-modes input-method indent-info buffer-encoding major-mode process vcs checker time)
 
-     '(eldoc bar workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
-     '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl input-method indent-info buffer-encoding process))
+      '(eldoc bar workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
+      '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl input-method indent-info buffer-encoding process))
 
     ;; Set default mode-line
     (add-hook 'doom-modeline-mode-hook (lambda ()
