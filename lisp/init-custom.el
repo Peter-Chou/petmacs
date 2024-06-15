@@ -33,9 +33,8 @@
   "petmacs favor color")
 
 (defvar petmacs-font
-  ;; "Monego"
-  "Monego Ligatures"
-  ;; "Maple Mono"
+  "JetBrains Mono"
+  ;; "Monego Ligatures"
   "font")
 
 (defvar  petmacs-chinese-font
