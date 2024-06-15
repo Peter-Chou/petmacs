@@ -206,4 +206,4 @@ sudo apt-get install xmllint
 
 <br>
 
-![elisp](./data/pics/elisp.png)
+![elisp](./data/pics/code.png)
