@@ -20,7 +20,7 @@
   :init
   (setq
    dashboard-banner-logo-title "Petmacs --- Adorable just like A PET"
-   dashboard-projects-switch-function 'counsel-projectile-switch-project-by-name
+   dashboard-projects-switch-function 'consult-projectile-switch-project
    dashboard-projects-backend 'projectile
    dashboard-startup-banner (or (expand-file-name
                                  (if (display-graphic-p)
@@ -39,10 +39,10 @@
    dashboard-startupify-list '(dashboard-insert-banner
                                dashboard-insert-newline
                                dashboard-insert-banner-title
-                               dashboard-insert-newline
-                               dashboard-insert-navigator
-                               dashboard-insert-newline
-                               dashboard-insert-init-info
+                               ;; dashboard-insert-newline
+                               ;; dashboard-insert-navigator
+                               ;; dashboard-insert-newline
+                               ;; dashboard-insert-init-info
                                dashboard-insert-items
                                dashboard-insert-newline
                                dashboard-insert-footer)
