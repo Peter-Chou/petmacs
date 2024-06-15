@@ -480,6 +480,13 @@ SCALE are supported."
   (when (not (image-type-available-p 'svg))
     (advice-add #'symbols-outline-nerd-icon-str :override #'petmacs/symbols-outline-nerd-icon-str))
   :config
+  ;; resize font size in treemacs when in ultra screen
+  (when sys/ultrap
+    (add-hook 'symbols-outline-mode-hook
+              (lambda ()
+                ;; (message "symbols-outline-mode-hook `%s'" (current-buffer))
+                (text-scale-decrease 1))))
+
   (require 'nerd-icons)
   (evil-define-key 'normal symbols-outline-mode-map
     (kbd "g") 'symbols-outline-refresh

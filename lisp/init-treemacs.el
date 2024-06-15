@@ -1,5 +1,7 @@
 ;; -*- lexical-binding: t no-byte-compile: t -*-
 
+(require 'init-const)
+
 ;; A tree layout file explorer
 (use-package treemacs
   :commands (
@@ -23,6 +25,13 @@
         treemacs-no-png-images           (not petmacs-icon)
         treemacs-width                   30)
   :config
+  ;; resize font size in treemacs when in ultra screen
+  (when sys/ultrap
+    (add-hook 'treemacs-mode-hook
+              (lambda ()
+                ;; (message "treemacs-mode-hook `%s'" (current-buffer))
+                (text-scale-decrease 1))))
+
   (with-eval-after-load 'golden-ratio
     (add-to-list 'golden-ratio-exclude-buffer-regexp
                  (rx "*Treemacs" (0+ any))))

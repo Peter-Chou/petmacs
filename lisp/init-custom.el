@@ -3,6 +3,8 @@
 (eval-when-compile
   (require 'package))
 
+(require 'init-const)
+
 (defvar petmacs-quelpa-use-gitee-mirror nil
   "use gitee mirror instead of github")
 
@@ -43,6 +45,9 @@
 
 (defvar  petmacs-font-size 14.5
   "font size")
+
+(defvar  petmacs-ultra-screen-font-size 20.5
+  "font size for ultra screen")
 
 (defvar petmacs-disable-modeline nil
   ;; (display-graphic-p)
