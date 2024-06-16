@@ -29,6 +29,11 @@
         ;; eglot-events-buffer-size 1
         eglot-server-programs
         '(((python-mode python-ts-mode) . ("pyright-langserver" "--stdio"))
+          ;; `(((python-mode python-ts-mode) . ("pyright-langserver" "--stdio"
+          ;;                                    :initializationOptions
+          ;;                                    (:python (:analysis
+          ;;                                              (:diagnosticMode "workspace")
+          ;;                                              (:typeCheckingMode "basic")))))
           ((c++-mode c-mode c++-ts-mode c-ts-mode objc-mode) . ("clangd"
                                                                 ;; 在后台自动分析文件（基于complie_commands)
                                                                 "--background-index"
@@ -60,6 +65,9 @@
           ((yaml-ts-mode yaml-mode) . ("yaml-language-server" "--stdio"))
           ((dockerfile-mode dockerfile-ts-mode) . ("docker-langserver" "--stdio"))))
   :config
+  ;; (setq-default eglot-workspace-configuration
+  ;;               '((:python (:analysis (:diagnosticMode "workspace"))))
+  ;;               )
   (advice-add 'eglot-ensure :after 'petmacs/eglot-keybindgs))
 
 (if petmacs-quelpa-use-gitee-mirror
