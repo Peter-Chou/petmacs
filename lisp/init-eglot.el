@@ -22,7 +22,9 @@
         eglot-autoshutdown t
         ;; eglot-connect-timeout 120
         eglot-connect-timeout 1200 ;; 10 minutes
-        eglot-ignored-server-capabilities '(:inlayHintProvider)
+        eglot-ignored-server-capabilities '(:documentHighlightProvider
+                                            :inlayHintProvider
+                                            :documentOnTypeFormattingProvider)
         eldoc-echo-area-use-multiline-p nil
         ;; eglot-events-buffer-size 1
         eglot-server-programs
@@ -58,7 +60,6 @@
           ((yaml-ts-mode yaml-mode) . ("yaml-language-server" "--stdio"))
           ((dockerfile-mode dockerfile-ts-mode) . ("docker-langserver" "--stdio"))))
   :config
-  (push :documentHighlightProvider eglot-ignored-server-capabilities)
   (advice-add 'eglot-ensure :after 'petmacs/eglot-keybindgs))
 
 (if petmacs-quelpa-use-gitee-mirror

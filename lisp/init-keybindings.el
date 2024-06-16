@@ -216,6 +216,8 @@
     "d" #'petmacs/kill-this-buffer
 	;; "d" #'kill-this-buffer
 
+    "f" #'apheleia-format-buffer
+
     ;; new buffer
     "Nf" #'petmacs/new-empty-buffer-new-frame
     "Nh" #'petmacs/new-empty-buffer-left
@@ -237,8 +239,6 @@
     "h" #'petmacs/goto-dashboard
     "m"  #'petmacs/toggle-maximize-buffer
     "Y" #'petmacs/copy-whole-buffer-to-clipboard
-	"a" #'persp-add-buffer
-    "r" #'persp-remove-buffer
     "j" #'ace-window
     ))
 
@@ -898,8 +898,9 @@
     "ck" #'petmacs/quit-subjob
 
     "=i" #'py-isort-buffer
-    "=I" #'petmacs/python-remove-unused-imports
-    "rb" #'yapfify-buffer
+
+    "ri" #'python-fix-imports
+    "rI" #'petmacs/python-remove-unused-imports
 
     "va" #'pyvenv-activate
     "vd" #'pyvenv-deactivate

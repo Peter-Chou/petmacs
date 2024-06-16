@@ -49,7 +49,6 @@
     (list (seq-remove (lambda (d)
                         (string-match "Pyright" (flymake-diagnostic-text d)))
                       (car diags))))
-
   (advice-add 'eglot--report-to-flymake :filter-args #'petmacs/filter-eglot-diagnostics))
 
 (provide 'init-flymake)
