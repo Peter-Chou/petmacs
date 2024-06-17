@@ -134,7 +134,7 @@
       (setq awesome-tray-active-modules   '("pomodoro" "buffer-name" "location" "flymake" "git"  "date")
             awesome-tray-essential-modules '("buffer-name" "location"))
     (setq awesome-tray-active-modules   '("pomodoro" "project-relative-dir" "flymake" "git" "date")
-          awesome-tray-essential-modules '("date")))
+          awesome-tray-essential-modules '("project-relative-dir" "date")))
   :config
   (defun awesome-tray-project-relative-dir-info () (format "%s" (petmacs/get-project-relateive-dir)))
   (add-to-list 'awesome-tray-module-alist '("project-relative-dir" . (awesome-tray-project-relative-dir-info awesome-tray-module-parent-dir-face)))
