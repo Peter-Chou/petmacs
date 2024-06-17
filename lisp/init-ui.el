@@ -107,7 +107,7 @@
     (let ((relative-dir (substring (petmacs--projectile-directory-path) 0 -1)))
       (if (string= relative-dir ".")
           ""
-        relative-dir)))
+        (concat (format " %s " (nerd-icons-faicon "nf-fa-folder_open")) relative-dir))))
   :ensure nil
   :commands (awesome-tray-update)
   :hook (after-init . awesome-tray-mode)
