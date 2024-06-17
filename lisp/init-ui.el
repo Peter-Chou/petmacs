@@ -101,6 +101,13 @@
 
 
 (use-package awesome-tray
+  :preface
+  (defun petmacs/get-project-relateive-dir ()
+    "get project relative directory"
+    (let ((relative-dir (substring (petmacs--projectile-directory-path) 0 -1)))
+      (if (string= relative-dir ".")
+          ""
+        relative-dir)))
   :ensure nil
   :commands (awesome-tray-update)
   :hook (after-init . awesome-tray-mode)
@@ -126,9 +133,12 @@
   (if petmacs-disable-modeline
       (setq awesome-tray-active-modules   '("pomodoro" "buffer-name" "location" "flymake" "git"  "date")
             awesome-tray-essential-modules '("buffer-name" "location"))
-    (setq awesome-tray-active-modules   '("pomodoro" "flymake" "git" "date")
+    (setq awesome-tray-active-modules   '("pomodoro" "project-relative-dir" "flymake" "git" "date")
           awesome-tray-essential-modules '("date")))
   :config
+  (defun awesome-tray-project-relative-dir-info () (format "%s" (petmacs/get-project-relateive-dir)))
+  (add-to-list 'awesome-tray-module-alist '("project-relative-dir" . (awesome-tray-project-relative-dir-info awesome-tray-module-parent-dir-face)))
+
   (defun awesome-tray-module-pomodoro-info () (format "%s" pomodoro-mode-line-string))
   (defface awesome-tray-module-pomodoro-face
     '((((background light))
