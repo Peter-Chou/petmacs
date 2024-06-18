@@ -452,8 +452,8 @@
   :after nerd-icons
   :init
   (setq
-   symbols-outline-window-position 'left
-   ;; symbols-outline-window-position 'right
+   ;; symbols-outline-window-position 'left
+   symbols-outline-window-position 'right
    symbols-outline-use-nerd-icon-in-gui (not (image-type-available-p 'svg))
    symbols-outline-window-width 27
    symbols-outline-ignore-variable-symbols t
