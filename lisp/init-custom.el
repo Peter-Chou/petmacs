@@ -45,7 +45,7 @@
 (defvar  petmacs-font-size 15.5
   "font size")
 
-(defvar  petmacs-ultra-screen-font-size 19.0
+(defvar  petmacs-ultra-screen-font-size 20.0
   "font size for ultra screen")
 
 (defvar petmacs-disable-modeline nil
