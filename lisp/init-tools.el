@@ -455,7 +455,7 @@
    symbols-outline-window-position 'left
    ;; symbols-outline-window-position 'right
    symbols-outline-use-nerd-icon-in-gui (not (image-type-available-p 'svg))
-   symbols-outline-window-width 30
+   symbols-outline-window-width 27
    symbols-outline-ignore-variable-symbols t
    symbols-outline-buffer-name "*Outline*"
    symbols-outline-current-symbol-indicator (format "%s" (nerd-icons-mdicon "nf-md-arrow_right_thick"))
