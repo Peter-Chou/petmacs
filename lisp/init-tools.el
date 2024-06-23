@@ -451,17 +451,14 @@
       (symbols-outline-show)))
   :after nerd-icons
   :init
-  (setq
-   ;; symbols-outline-window-position 'left
-   symbols-outline-window-position 'right
-   symbols-outline-use-nerd-icon-in-gui (not (image-type-available-p 'svg))
-   symbols-outline-window-width 27
-   ;; symbols-outline-ignore-variable-symbols t
-   symbols-outline-ignore-variable-symbols nil
-   symbols-outline-buffer-name "*Outline*"
-   symbols-outline-current-symbol-indicator (format "%s" (nerd-icons-mdicon "nf-md-arrow_right_thick"))
-   symbols-outline-initial-folded-node-kinds '("function" "method" "prototype" "annotation" "inline" "subst" "member")
-   symbols-outline-collapse-functions-on-startup t)
+  (setq symbols-outline-window-position 'left
+        symbols-outline-use-nerd-icon-in-gui (not (image-type-available-p 'svg))
+        symbols-outline-window-width 27
+        symbols-outline-ignore-variable-symbols t
+        symbols-outline-buffer-name "*Outline*"
+        symbols-outline-current-symbol-indicator (format "%s" (nerd-icons-mdicon "nf-md-arrow_right_thick"))
+        symbols-outline-initial-folded-node-kinds '("function" "method" "prototype" "annotation" "inline" "subst" "member")
+        symbols-outline-collapse-functions-on-startup t)
 
   (when (member petmacs-lsp-mode-impl '(lsp-mode eglot))
     (setq symbols-outline-fetch-fn #'symbols-outline-lsp-fetch))
