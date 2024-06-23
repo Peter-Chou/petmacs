@@ -23,25 +23,27 @@
   `(
     (:lambda ,(format "%s" (nerd-icons-sucicon "nf-custom-scheme"))) ;; 
     (:def ,(format "%s" (nerd-icons-mdicon "nf-md-music_note"))) ;; 󰎈
+    ;; 󰫰󱎦󰫮󰬀󰬀
     (:class ,(concat (format "%s" (nerd-icons-mdicon "nf-md-alpha_c"))
-                     "_"
+                     ;; "_"
                      (format "%s" (nerd-icons-mdicon "nf-md-alpha_l"))
-                     "_"
+                     ;; "_"
                      (format "%s" (nerd-icons-mdicon "nf-md-alpha_a"))
-                     "_"
+                     ;; "_"
                      (format "%s" (nerd-icons-mdicon "nf-md-alpha_s"))
-                     "_"
+                     ;; "_"
                      (format "%s" (nerd-icons-mdicon "nf-md-alpha_s")))) ;; 󰫰_󱎦_󰫮_󰬀_󰬀
+    ;; 󰬀󰬁󰫿󰬂󰫰󰬁
     (:struct ,(concat (format "%s" (nerd-icons-mdicon "nf-md-alpha_s"))
-                      "_"
+                      ;; "_"
                       (format "%s" (nerd-icons-mdicon "nf-md-alpha_t"))
-                      "_"
+                      ;; "_"
                       (format "%s" (nerd-icons-mdicon "nf-md-alpha_r"))
-                      "_"
+                      ;; "_"
                       (format "%s" (nerd-icons-mdicon "nf-md-alpha_u"))
-                      "_"
+                      ;; "_"
                       (format "%s" (nerd-icons-mdicon "nf-md-alpha_c"))
-                      "_"
+                      ;; "_"
                       (format "%s" (nerd-icons-mdicon "nf-md-alpha_t")))) ;; 󰬀_󰬁_󰫿_󰬂_󰫰_󰬁
 
     ;; Types
