@@ -586,7 +586,7 @@ SCALE are supported."
 
 (use-package docstr
   :hook (((python-mode python-ts-mode) . (lambda ()
-                                           (setq-local docstr-desc-summary "")
+                                           ;; (setq-local docstr-desc-summary "")
                                            (docstr-mode 1)))
          ((java-mode java-ts-mode) . (lambda ()
                                        ;; (setq-local docstr-desc-summary "")
