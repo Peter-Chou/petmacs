@@ -572,11 +572,12 @@ SCALE are supported."
   :commands (toggle-one-window))
 
 (use-package sideline
-  ;; :hook ((flymake-mode . sideline-mode)
-  ;;        (eglot . sideline-mode)
-  ;;        ((java-mode java-ts-mode) . (lambda ()
-  ;;                                      "disable sideline-eglot in java-mode / java-ts-mode"
-  ;;                                      (setq-local sideline-backends-right '((sideline-flymake . down))))))
+  :hook ((flymake-mode . sideline-mode)
+         (eglot . sideline-mode)
+         (before-revert . sideline--disable)
+         ((java-mode java-ts-mode) . (lambda ()
+                                       "disable sideline-eglot in java-mode / java-ts-mode"
+                                       (setq-local sideline-backends-right '((sideline-flymake . down))))))
   :init (setq sideline-display-backend-name t
               sideline-backends-right '(
                                         (sideline-eglot . up)
