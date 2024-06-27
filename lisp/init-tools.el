@@ -585,12 +585,12 @@ SCALE are supported."
   (require 'sideline))
 
 (use-package docstr
-  :hook (((python-mode python-ts-mode) . (lambda ()
-                                           ;; (setq-local docstr-desc-summary "")
-                                           (docstr-mode 1)))
-         ((java-mode java-ts-mode) . (lambda ()
-                                       ;; (setq-local docstr-desc-summary "")
-                                       (docstr-mode 1))))
+  :hook (((java-mode java-ts-mode) . (lambda ()
+                                       (docstr-mode 1)))
+         ;; ((python-mode python-ts-mode) . (lambda ()
+         ;;                                   ;; (setq-local docstr-desc-summary "")
+         ;;                                   (docstr-mode 1)))
+         )
   :init
   (setq docstr-python-modes '(python-mode python-ts-mode)
         docstr-python-style 'google ;; nil or 'numpy or 'pep-257
@@ -605,6 +605,5 @@ SCALE are supported."
 
 (use-package breadcrumb
   :after nerd-icons)
-
 
 (provide 'init-tools)

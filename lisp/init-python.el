@@ -70,6 +70,9 @@
   (pyvenv-mode 1)
   (pyvenv-tracking-mode 1))
 
+(use-package sphinx-doc
+  :hook ((python-mode python-ts-mode) . sphinx-doc-mode))
+
 (use-package py-isort)
 (use-package pip-requirements)
 (use-package virtualenvwrapper)

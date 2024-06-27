@@ -901,6 +901,7 @@
 
     "ri" #'python-fix-imports
     "rI" #'petmacs/python-remove-unused-imports
+    "rd" #'sphinx-doc
 
     "va" #'pyvenv-activate
     "vd" #'pyvenv-deactivate
