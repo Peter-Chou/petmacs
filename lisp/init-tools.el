@@ -593,8 +593,7 @@ SCALE are supported."
                                        (docstr-mode 1))))
   :init
   (setq docstr-python-modes '(python-mode python-ts-mode)
-        ;; docstr-python-style 'google
-        docstr-python-style 'numpy
+        docstr-python-style 'google ;; nil or 'numpy or 'pep-257
         docstr-key-support t)
   :config
   ;; config python-ts-mode
