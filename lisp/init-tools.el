@@ -571,10 +571,10 @@ SCALE are supported."
   :ensure nil
   :commands (toggle-one-window))
 
+;; please update sideline version >=20240627
 (use-package sideline
   :hook ((flymake-mode . sideline-mode)
          (eglot . sideline-mode)
-         (before-revert . sideline--disable)
          ((java-mode java-ts-mode) . (lambda ()
                                        "disable sideline-eglot in java-mode / java-ts-mode"
                                        (setq-local sideline-backends-right '((sideline-flymake . down))))))
