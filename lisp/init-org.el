@@ -74,7 +74,9 @@
                               (setq prettify-symbols-alist nil)
                               (prettify-symbols-mode -1))))
   :init (setq org-modern-star nil
-              org-modern-todo-faces '(("HANGUP":background "yellow" :foreground "black"))
+              org-modern-todo-faces '(("HANGUP" :background "yellow" :foreground "black")
+                                      ("DOING" :background "chartreuse" :foreground "black")
+                                      ("TODO" :background "cyan" :foreground "black"))
               org-modern-priority nil))
 
 (use-package org-superstar
