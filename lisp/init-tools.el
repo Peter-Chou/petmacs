@@ -376,23 +376,23 @@
         ;; rime-librime-root (expand-file-name "librime/build" user-emacs-directory)
         ;; rime-emacs-module-header-root "/home/peter/emacs-28.1-native-comp/src"
 
-        rime-disable-predicates
-        '(rime-predicate-evil-mode-p ;; 在 evil-mode 的非编辑状态下
-          ;; rime-predicate-after-alphabet-char-p ;; 在英文字符串之后（必须为以字母开头的英文字符串）
-          ;; rime-predicate-punctuation-line-begin-p ;; 在行首要输入符号时
-          ;; rime-predicate-current-uppercase-letter-p ;; 将要输入的为大写字母时
-          ;; rime-predicate-tex-math-or-command-p ;; 在 (La)TeX 数学环境中或者输入 (La)TeX 命令时
-          rime-predicate-prog-in-code-p ;; 在 prog-mode 和 conf-mode 中除了注释和引号内字符串之外的区域
-          rime-predicate-ace-window-p ;; 激活 ace-window-mode
-          rime-predicate-hydra-p ;; 激活了一个 hydra keymap
-          )
+        ;; rime-disable-predicates
+        ;; '(rime-predicate-evil-mode-p ;; 在 evil-mode 的非编辑状态下
+        ;;   ;; rime-predicate-after-alphabet-char-p ;; 在英文字符串之后（必须为以字母开头的英文字符串）
+        ;;   ;; rime-predicate-punctuation-line-begin-p ;; 在行首要输入符号时
+        ;;   ;; rime-predicate-current-uppercase-letter-p ;; 将要输入的为大写字母时
+        ;;   ;; rime-predicate-tex-math-or-command-p ;; 在 (La)TeX 数学环境中或者输入 (La)TeX 命令时
+        ;;   rime-predicate-prog-in-code-p ;; 在 prog-mode 和 conf-mode 中除了注释和引号内字符串之外的区域
+        ;;   rime-predicate-ace-window-p ;; 激活 ace-window-mode
+        ;;   rime-predicate-hydra-p ;; 激活了一个 hydra keymap
+        ;; )
 
-        rime-posframe-properties (list :internal-border-width 1))
-  :config
-  (set-face-attribute 'rime-highlight-candidate-face nil :foreground petmacs-favor-color :bold t)
-  (set-face-attribute 'rime-code-face nil :foreground petmacs-favor-color :bold t)
+  rime-posframe-properties (list :internal-border-width 1))
+:config
+(set-face-attribute 'rime-highlight-candidate-face nil :foreground petmacs-favor-color :bold t)
+(set-face-attribute 'rime-code-face nil :foreground petmacs-favor-color :bold t)
 
-  (define-key rime-mode-map (kbd "M-j") 'rime-force-enable))
+(define-key rime-mode-map (kbd "M-j") 'rime-force-enable))
 
 ;; add space between Chinese and English character
 ;; these white-space characters are not really added to the contents, it just like to do.
@@ -593,9 +593,35 @@ SCALE are supported."
          )
   :init
   (setq docstr-python-modes '(python-mode python-ts-mode)
-        docstr-python-style 'google ;; nil or 'numpy or 'pep-257
+        docstr-python-style 'google-notype ;; nil or 'numpy or 'pep-257
         docstr-key-support t)
   :config
+
+  (defun docstr-python-config-google-notype ()
+    "Configre for convention, Google."
+    (docstr--default-format
+     :fmt-type "%s" :fmt-var "%s" :param "" :ret "" :con-type nil :con-var nil
+     :show-tn t)
+    (setq-local docstr-python-prefix "    "
+                docstr-python-header-param "Args:"
+                docstr-python-header-return "Returns:"
+                docstr-format-param (format "%s: %s"
+                                            docstr-key-var
+                                            docstr-key-desc)
+                docstr-format-return (format "%s" docstr-key-desc)))
+
+  (defun my-docstr-python-config ()
+    "Automatically configure style according to variable `docstr-python-style'."
+    (cl-case docstr-python-style
+      (pep-257 (docstr-python-config-pep-257))
+      (google (docstr-python-config-google))
+      (google-notype (docstr-python-config-google-notype))
+      (numpy (docstr-python-config-numpy))
+      (t (docstr--default-format))))
+
+  ;; add google-notype
+  (advice-add #'docstr-python-config :override #'my-docstr-python-config)
+
   ;; config python-ts-mode
   (add-to-list 'docstr-writers-alist '(python-ts-mode . docstr-writers-python))
   (add-to-list 'docstr-prefix-alist '(python-ts-mode . docstr-python-prefix))
