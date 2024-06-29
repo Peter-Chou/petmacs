@@ -387,12 +387,12 @@
         ;;   rime-predicate-hydra-p ;; 激活了一个 hydra keymap
         ;; )
 
-  rime-posframe-properties (list :internal-border-width 1))
-:config
-(set-face-attribute 'rime-highlight-candidate-face nil :foreground petmacs-favor-color :bold t)
-(set-face-attribute 'rime-code-face nil :foreground petmacs-favor-color :bold t)
+        rime-posframe-properties (list :internal-border-width 1))
+  :config
+  (set-face-attribute 'rime-highlight-candidate-face nil :foreground petmacs-favor-color :bold t)
+  (set-face-attribute 'rime-code-face nil :foreground petmacs-favor-color :bold t)
 
-(define-key rime-mode-map (kbd "M-j") 'rime-force-enable))
+  (define-key rime-mode-map (kbd "M-j") 'rime-force-enable))
 
 ;; add space between Chinese and English character
 ;; these white-space characters are not really added to the contents, it just like to do.
@@ -580,7 +580,7 @@ SCALE are supported."
                                        (setq-local sideline-backends-right '((sideline-flymake . down))))))
   :init (setq sideline-display-backend-name t
               sideline-backends-right '(
-                                        (sideline-eglot . up)
+                                        ;; (sideline-eglot . up)
                                         (sideline-flymake . down)))
   (require 'sideline))
 
