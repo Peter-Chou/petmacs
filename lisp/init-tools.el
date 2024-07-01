@@ -573,7 +573,6 @@ SCALE are supported."
 
 ;; please update sideline version >=20240627
 (use-package sideline
-  :after (sideline-eglot sideline-flymake)
   :hook ((flymake-mode . sideline-mode)
          (eglot . sideline-mode)
          ((java-mode java-ts-mode) . (lambda ()
@@ -586,12 +585,12 @@ SCALE are supported."
   (require 'sideline))
 
 (use-package docstr
-  :hook (((java-mode java-ts-mode) . (lambda ()
-                                       (docstr-mode 1)))
-         ;; ((python-mode python-ts-mode) . (lambda ()
-         ;;                                   ;; (setq-local docstr-desc-summary "")
-         ;;                                   (docstr-mode 1)))
-         )
+  :hook (
+         ((python-mode python-ts-mode) . (lambda ()
+                                           ;; (setq-local docstr-desc-summary "")
+                                           (docstr-mode 1)))
+         ((java-mode java-ts-mode) . (lambda ()
+                                       (docstr-mode 1))))
   :init
   (setq docstr-python-modes '(python-mode python-ts-mode)
         docstr-python-style 'google-notype ;; nil or 'numpy or 'pep-257
