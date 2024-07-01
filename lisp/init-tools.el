@@ -573,6 +573,7 @@ SCALE are supported."
 
 ;; please update sideline version >=20240627
 (use-package sideline
+  :after (sideline-eglot sideline-flymake)
   :hook ((flymake-mode . sideline-mode)
          (eglot . sideline-mode)
          ((java-mode java-ts-mode) . (lambda ()
@@ -580,7 +581,7 @@ SCALE are supported."
                                        (setq-local sideline-backends-right '((sideline-flymake . down))))))
   :init (setq sideline-display-backend-name t
               sideline-backends-right '(
-                                        ;; (sideline-eglot . up)
+                                        (sideline-eglot . up)
                                         (sideline-flymake . down)))
   (require 'sideline))
 
