@@ -42,4 +42,7 @@
   :hook ((prog-mode . treesit-fold-mode)
          (treesit-fold-mode . treesit-fold-line-comment-mode)))
 
+;; remove file -> ts-mode mapping in auto-mode-alist
+;; (setq auto-mode-alist (delete '("\\.rs\\'" . rust-ts-mode) auto-mode-alist))
+
 (provide 'init-treesit)
