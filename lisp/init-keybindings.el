@@ -279,9 +279,11 @@
     "b"  #'petmacs/switch-to-minibuffer-window
     "d"  #'petmacs/delete-window
     "D"  #'ace-delete-window
-    "t"  #'popper-toggle-type
-    "p"  #'popper-cycle
     "F"  #'make-frame
+
+    "pt"  #'popper-toggle-type
+    "pp"  #'popper-toggle
+    "pc"  #'popper-cycle
 
     "o"  #'other-frame
     "h"  #'evil-window-left

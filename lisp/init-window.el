@@ -98,7 +98,7 @@
 
 ;; Enforce rules for popups
 (use-package popper
-  :hook (emacs-startup . popper-echo-mode)
+  ;; :hook (emacs-startup . popper-echo-mode)
   :custom
   (popper-group-function #'popper-group-by-directory)
   (popper-echo-dispatch-actions t)
@@ -168,15 +168,20 @@
                         (format " %s "
                                 (nerd-icons-octicon "nf-oct-pin" :face face))
                       (propertize " POP " 'face face))))))
+
+  (popper-mode +1)
+  ;; For echo-area hints
+  (require 'popper-echo)
+  (popper-echo-mode +1)
   :config
   (with-no-warnings
-    (defun my-popper-fit-window-height (win)
+    (defun petmacs/popper-fit-window-height (win)
       "Determine the height of popup window WIN by fitting it to the buffer's content."
       (fit-window-to-buffer
        win
-       (floor (frame-height) 3)
-       (floor (frame-height) 3)))
-    (setq popper-window-height #'my-popper-fit-window-height)
+       (floor (frame-height) 2.2)
+       (floor (frame-height) 2.2)))
+    (setq popper-window-height #'petmacs/popper-fit-window-height)
 
     (defun popper-close-window-hack (&rest _)
       "Close popper window via `C-g'."

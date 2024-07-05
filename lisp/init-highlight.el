@@ -91,12 +91,16 @@ FACE defaults to inheriting from default and highlight."
      ("d" symbol-overlay-jump-to-definition)
      ("b" symbol-overlay-switch-backward)
      ("f" symbol-overlay-switch-forward))))
-  :bind (("M-i" . symbol-overlay-put)
+  :bind (
+         ("M-i" . symbol-overlay-put)
          ("M-n" . symbol-overlay-jump-next)
          ("M-p" . symbol-overlay-jump-prev)
          ("M-N" . symbol-overlay-switch-forward)
          ("M-P" . symbol-overlay-switch-backward)
-         ("M-C" . symbol-overlay-remove-all))
+         ("M-Z" . symbol-overlay-remove-all)
+         :map symbol-overlay-map
+         ("h"   . nil)
+         ("?"   . symbol-overlay-map-help))
   :hook ((prog-mode yaml-mode) . symbol-overlay-mode)
   (iedit-mode . turn-off-symbol-overlay)
   (iedit-mode-end . turn-on-symbol-overlay)
