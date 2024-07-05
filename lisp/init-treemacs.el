@@ -23,7 +23,7 @@
         treemacs-is-never-other-window   t
         treemacs-follow-after-init       t
         treemacs-no-png-images           (not petmacs-icon)
-        treemacs-width                   25)
+        treemacs-width                   35)
   :config
   ;; resize font size in treemacs when in ultra screen
   (add-hook 'treemacs-mode-hook
