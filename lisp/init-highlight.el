@@ -97,7 +97,7 @@ FACE defaults to inheriting from default and highlight."
          ("M-p" . symbol-overlay-jump-prev)
          ("M-N" . symbol-overlay-switch-forward)
          ("M-P" . symbol-overlay-switch-backward)
-         ("M-Z" . symbol-overlay-remove-all)
+         ("M-C" . symbol-overlay-remove-all)
          :map symbol-overlay-map
          ("h"   . nil)
          ("?"   . symbol-overlay-map-help))
