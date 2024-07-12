@@ -16,7 +16,7 @@
     (when (fboundp 'eglot-booster-mode)
       (eglot-booster-mode t))
     (eglot-ensure))
-  :hook (((c-mode c-ts-mode c++-mode c++-ts-mode) . petmacs/eglot-ensure-with-lsp-booster))
+  :hook ((c-mode c-ts-mode c++-mode c++-ts-mode) . petmacs/eglot-ensure-with-lsp-booster)
   :init
   (setq eglot-send-changes-idle-time 0.2
         eglot-autoshutdown t
@@ -29,11 +29,6 @@
         ;; eglot-events-buffer-size 1
         eglot-server-programs
         '(((python-mode python-ts-mode) . ("pyright-langserver" "--stdio"))
-          ;; `(((python-mode python-ts-mode) . ("pyright-langserver" "--stdio"
-          ;;                                    :initializationOptions
-          ;;                                    (:python (:analysis
-          ;;                                              (:diagnosticMode "workspace")
-          ;;                                              (:typeCheckingMode "basic")))))
           ((c++-mode c-mode c++-ts-mode c-ts-mode objc-mode) . ("clangd"
                                                                 ;; 在后台自动分析文件（基于complie_commands)
                                                                 "--background-index"
@@ -65,9 +60,12 @@
           ((yaml-ts-mode yaml-mode) . ("yaml-language-server" "--stdio"))
           ((dockerfile-mode dockerfile-ts-mode) . ("docker-langserver" "--stdio"))))
   :config
-  ;; (setq-default eglot-workspace-configuration
-  ;;               '((:python (:analysis (:diagnosticMode "workspace"))))
-  ;;               )
+  (defun petmacs/pyright-eglot-workspace-config (server)
+    "For the current PDM project, dynamically generate a python lsp config."
+    `(:python\.analysis (:diagnosticMode "workspace"
+                         :typeCheckingMode "standard")))
+  (setq-default eglot-workspace-configuration #'petmacs/pyright-eglot-workspace-config)
+
   (advice-add 'eglot-ensure :after 'petmacs/eglot-keybindgs))
 
 (if petmacs-quelpa-use-gitee-mirror
