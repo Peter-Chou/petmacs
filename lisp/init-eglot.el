@@ -63,7 +63,8 @@
   (defun petmacs/pyright-eglot-workspace-config (server)
     "For the current PDM project, dynamically generate a python lsp config."
     `(:python\.analysis (:diagnosticMode "workspace"
-                         :typeCheckingMode "standard")))
+                         :pythonVersion "3.8"
+                         :typeCheckingMode "basic")))
   (setq-default eglot-workspace-configuration #'petmacs/pyright-eglot-workspace-config)
 
   (advice-add 'eglot-ensure :after 'petmacs/eglot-keybindgs))
