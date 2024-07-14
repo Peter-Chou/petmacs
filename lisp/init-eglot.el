@@ -66,6 +66,12 @@
     "For the current PDM project, dynamically generate a python lsp config."
     `(:python\.analysis (:diagnosticMode "workspace"
                          :pythonVersion "3.8"
+                         :autoSearchPaths t
+                         :stubPath ,(vector "src")
+                         :logLevel "Warning"
+                         :exclude ,(vector "data" "ckpts" "notebooks"
+                                           "resources" "model_repository"
+                                           "model_repositories")
                          :useLibraryCodeForTypes t
                          :typeCheckingMode "basic")))
   (setq-default eglot-workspace-configuration #'petmacs/pyright-eglot-workspace-config)
