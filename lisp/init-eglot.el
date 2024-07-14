@@ -28,8 +28,7 @@
         eldoc-echo-area-use-multiline-p nil
         ;; eglot-events-buffer-size 1
         eglot-server-programs
-        '(((python-mode python-ts-mode) . ("pyright-langserver" "--stdio"))
-          ((c++-mode c-mode c++-ts-mode c-ts-mode objc-mode) . ("clangd"
+        '(((c++-mode c-mode c++-ts-mode c-ts-mode objc-mode) . ("clangd"
                                                                 ;; 在后台自动分析文件（基于complie_commands)
                                                                 "--background-index"
                                                                 ;; 标记compelie_commands.json文件的目录位置
@@ -56,6 +55,9 @@
           ((bash-ts-mode sh-mode) . ("bash-language-server" "start"))
           ((go-mode go-dot-mod-mode go-dot-work-mode go-ts-mode go-mod-ts-mode) . ("gopls"))
 
+          ;; ((python-mode python-ts-mode) . ("basedpyright-langserver" "--stdio" "--cancellationReceive=file:%FILEHASH%"))
+          ((python-mode python-ts-mode) . ("pyright-langserver" "--stdio"))
+
           ((java-mode java-ts-mode) . ("jdtls"))
           ((yaml-ts-mode yaml-mode) . ("yaml-language-server" "--stdio"))
           ((dockerfile-mode dockerfile-ts-mode) . ("docker-langserver" "--stdio"))))
@@ -64,9 +66,9 @@
     "For the current PDM project, dynamically generate a python lsp config."
     `(:python\.analysis (:diagnosticMode "workspace"
                          :pythonVersion "3.8"
+                         :useLibraryCodeForTypes t
                          :typeCheckingMode "basic")))
   (setq-default eglot-workspace-configuration #'petmacs/pyright-eglot-workspace-config)
-
   (advice-add 'eglot-ensure :after 'petmacs/eglot-keybindgs))
 
 (if petmacs-quelpa-use-gitee-mirror
