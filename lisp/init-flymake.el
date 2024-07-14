@@ -44,11 +44,11 @@
   :config
   (add-hook 'eglot-managed-mode-hook 'petmacs/eglot-setup-flymake-ruff)
 
-  (defun petmacs/filter-eglot-diagnostics (diags)
+  (defun petmacs/filter-eglot-pyright-diagnostics (diags)
     "Drop all Pyright diagnose from langserver"
     (list (seq-remove (lambda (d)
                         (string-match "Pyright" (flymake-diagnostic-text d)))
                       (car diags))))
-  (advice-add 'eglot--report-to-flymake :filter-args #'petmacs/filter-eglot-diagnostics))
+  (advice-add 'eglot--report-to-flymake :filter-args #'petmacs/filter-eglot-pyright-diagnostics))
 
 (provide 'init-flymake)
