@@ -134,11 +134,12 @@ FACE defaults to inheriting from default and highlight."
            json-mode json-ts-mode
            python-mode python-ts-mode
            yaml-mode yaml-ts-mode) . (lambda () (unless (too-long-file-p)
-                                                  (indent-bars-mode 1))))
+                                             (indent-bars-mode 1))))
          ((java-mode java-ts-mode) . (lambda ()
                                        (indent-bars-mode -1))))
   :init
   (setq indent-bars-display-on-blank-lines nil
+        indent-bars-prefer-character t
         indent-bars-no-stipple-char ?\┋
         indent-bars-width-frac 0.25
         indent-bars-color
