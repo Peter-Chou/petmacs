@@ -42,6 +42,23 @@
   (when (executable-find "lldb-dap")
     (plist-put (alist-get 'lldb-vscode dape-configs) 'command "lldb-dap"))
 
+  (add-to-list 'dape-configs
+               `(pytest-file
+                 modes (python-ts-mode python-mode)
+                 :module "pytest"
+                 command "python"
+                 command-args ("-m" "debugpy.adapter" "--host" "0.0.0.0" "--port" :autoport)
+                 port :autoport
+                 :request "launch"
+                 :type "python"
+                 :cwd dape-cwd
+                 :justMyCode nil
+                 :console "integratedTerminal"
+                 :showReturnValue t
+                 :args [dape-buffer-default]
+                 :stopOnEntry nil
+                 :cwd dape-cwd-fn))
+
   ;; To not display info and/or buffers on startup
   ;; (remove-hook 'dape-on-start-hooks 'dape-info)
   ;; (remove-hook 'dape-on-start-hooks 'dape-repl)
