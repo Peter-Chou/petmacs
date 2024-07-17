@@ -143,7 +143,7 @@ FACE defaults to inheriting from default and highlight."
         indent-bars-no-stipple-char ?\┋
         indent-bars-width-frac 0.25
         indent-bars-color
-        '(highlight :face-bg t :blend 0.85)
+        '(highlight :face-bg t :blend 0.25)
         indent-bars-highlight-current-depth '(:face petmacs-favor-color-face :pattern "."))
   (when (petmacs-treesit-available-p)
     (setq indent-bars-treesit-support t
