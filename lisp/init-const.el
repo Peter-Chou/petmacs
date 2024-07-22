@@ -46,7 +46,9 @@
   "Are you using ROOT user?")
 
 (defconst sys/ultrap
-  (>= (/ (float (x-display-pixel-width)) (x-display-pixel-height)) 2.3)
+  (if (display-graphic-p)
+      (>= (/ (float (x-display-pixel-width)) (x-display-pixel-height)) 2.3)
+    nil)
   "for 21:9 ultra screen")
 
 (defconst emacs/>=26p
