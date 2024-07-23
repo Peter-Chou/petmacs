@@ -49,6 +49,13 @@
     (list (seq-remove (lambda (d)
                         (string-match "Pyright" (flymake-diagnostic-text d)))
                       (car diags))))
-  (advice-add 'eglot--report-to-flymake :filter-args #'petmacs/filter-eglot-pyright-diagnostics))
+  ;; (advice-add 'eglot--report-to-flymake :filter-args #'petmacs/filter-eglot-pyright-diagnostics)
+
+  (defun petmacs/filter-eglot-basedpyright-diagnostics (diags)
+    "Drop all Pyright diagnose from langserver"
+    (list (seq-remove (lambda (d)
+                        (string-match "basedpyright" (flymake-diagnostic-text d)))
+                      (car diags))))
+  (advice-add 'eglot--report-to-flymake :filter-args #'petmacs/filter-eglot-basedpyright-diagnostics))
 
 (provide 'init-flymake)
