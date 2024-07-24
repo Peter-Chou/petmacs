@@ -67,7 +67,7 @@
     `(:python\.analysis (:diagnosticMode "workspace"
                          :pythonVersion "3.8"
                          :autoSearchPaths t
-                         :stubPath ,(vector "src")
+                         :extraPaths ,(vector "src")
                          :logLevel "Warning"
                          :exclude ,(vector "data" "ckpts" "notebooks"
                                            "resources" "model_repository"
