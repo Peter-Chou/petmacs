@@ -66,6 +66,7 @@
     "For the current PDM project, dynamically generate a python lsp config."
     `(:python\.analysis (:diagnosticMode "workspace"
                          :pythonVersion "3.8"
+                         :pythonPlatform: "Linux"
                          :autoSearchPaths t
                          :extraPaths ,(vector "src")
                          :logLevel "Warning"
