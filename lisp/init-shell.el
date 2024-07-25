@@ -98,6 +98,10 @@
           (pop-to-buffer vterm-buffer)))
       (advice-add #'multi-vterm :override #'my-multi-vterm))
 
+    ;; update evil cursor bar / box in vterm
+    (with-eval-after-load 'evil
+      (advice-add #'vterm--redraw :after (lambda (&rest args) (evil-refresh-cursor evil-state))))
+
     (define-key vterm-mode-map [return]                      #'vterm-send-return)
     (setq vterm-keymap-exceptions nil)
     (evil-define-key 'insert vterm-mode-map (kbd "C-e")      #'vterm--self-insert)
