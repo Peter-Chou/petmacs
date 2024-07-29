@@ -10,13 +10,7 @@
   (dashboard-heading ((t (:inherit (font-lock-string-face bold)))))
   (dashboard-items-face ((t (:weight normal))))
   (dashboard-no-items-face ((t (:weight normal))))
-  :hook ((dashboard-mode . (lambda ()
-                             ;; No title
-                             (setq-local frame-title-format nil)
-                             ;; Enable `page-break-lines-mode'
-                             (when (fboundp 'page-break-lines-mode)
-                               (page-break-lines-mode 1))))
-         (dashboard-after-initialize . solaire-mode))
+  :hook (dashboard-mode . (lambda () (setq-local frame-title-format nil)))
   :init
   (setq
    dashboard-banner-logo-title "Petmacs --- Adorable just like A PET"

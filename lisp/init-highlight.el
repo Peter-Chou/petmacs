@@ -134,7 +134,7 @@ FACE defaults to inheriting from default and highlight."
            json-mode json-ts-mode
            python-mode python-ts-mode
            yaml-mode yaml-ts-mode) . (lambda () (unless (too-long-file-p)
-                                             (indent-bars-mode 1))))
+                                                  (indent-bars-mode 1))))
          ((java-mode java-ts-mode) . (lambda ()
                                        (indent-bars-mode -1))))
   :init
@@ -167,8 +167,8 @@ FACE defaults to inheriting from default and highlight."
       :init
       (setq colorful-use-prefix t
             colorful-prefix-string (format "%s" (nerd-icons-faicon "nf-fa-circle")))
-      (dolist (mode '(html-mode php-mode help-mode helpful-mode))
-        (add-to-list 'global-colorful-modes mode)))
+      :config (dolist (mode '(html-mode php-mode help-mode helpful-mode))
+                (add-to-list 'global-colorful-modes mode)))
   (use-package rainbow-mode
     :diminish
     :defines helpful-mode-map

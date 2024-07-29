@@ -9,6 +9,7 @@
   :hook (prog-mode . flymake-mode)
   :init
   (setq flymake-fringe-indicator-position 'right-fringe
+        flymake-margin-indicator-position 'right-margin
         ;; flymake-no-changes-timeout nil
         ;; flymake-start-on-save-buffer t
         )
