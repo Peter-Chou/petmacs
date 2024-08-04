@@ -48,17 +48,6 @@
 
 
 (when (childframe-completion-workable-p)
-  ;; fine tuning the Vertico display per command or completion
-  (use-package vertico-multiform
-    :ensure nil
-    :hook (after-init . vertico-multiform-mode)
-    :init (setq vertico-multiform-commands
-                '((consult-line (:not posframe))
-                  (consult-ripgrep (:not posframe))
-                  (consult-grep (:not posframe))
-                  (consult-imenu (:not posframe))
-                  (xref-find-definitions (:not posframe))
-                  (t posframe))))
   (use-package vertico-posframe
     :hook (vertico-mode . vertico-posframe-mode)
     :init (setq vertico-posframe-poshandler
