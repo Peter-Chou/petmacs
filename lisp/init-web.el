@@ -1,6 +1,7 @@
 ;; -*- lexical-binding: t no-byte-compile: t -*-
 
-(require 'init-custom)
+(eval-when-compile
+  (require 'init-custom))
 
 ;; eww
 (use-package eww

@@ -1,8 +1,9 @@
 ;; -*- lexical-binding: t no-byte-compile: t -*-
 
-(require 'init-custom)
-(require 'init-const)
-(require 'init-funcs)
+(eval-when-compile
+  (require 'init-custom)
+  (require 'init-const)
+  (require 'init-funcs))
 
 ;; Child frame
 (when (childframe-workable-p)

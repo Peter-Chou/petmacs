@@ -1,6 +1,9 @@
 ;; -*- lexical-binding: t no-byte-compile: t -*-
 
-(require 'init-custom)
+;; Suppress warnings
+(eval-when-compile
+  (require 'init-custom)
+  (require 'init-funcs))
 
 (use-package vertico
   :bind (:map vertico-map
@@ -147,11 +150,16 @@
    consult-async-input-debounce 0.1)
 
   (consult-customize
-   consult-ripgrep consult-git-grep consult-grep
-   consult-bookmark consult-recent-file consult-xref
-   :preview-key "M-.")
+   ;; consult-ripgrep consult-git-grep consult-grep
+   ;; consult-bookmark consult-recent-file consult-xref
+   ;; :preview-key "M-."
 
-  (consult-customize
+   consult-line consult-line-multi :preview-key 'any
+   consult-buffer consult-recent-file consult-theme :preview-key '(:debounce 1.0 any)
+   consult-goto-line :preview-key '(:debounce 0.5 any)
+   consult-ripgrep consult-git-grep consult-grep
+   :initial (selected-region-or-symbol-at-point)
+   :preview-key '(:debounce 0.5 any)
    consult-theme
    :preview-key (list :debounce 0.5 'any))
 

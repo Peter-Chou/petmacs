@@ -61,7 +61,9 @@
         ('lsp-mode
          (lsp-deferred))
         ('eglot
-         (when (fboundp 'eglot-booster-mode)
+         (when (and emacs/>=29p
+                    (fboundp 'eglot-booster-mode)
+                    (executable-find "emacs-lsp-booster"))
            (eglot-booster-mode t)) ;; will case flymake-ruff malfunction
          (eglot-ensure)))))
   :hook (((python-mode python-ts-mode) . petmacs/pyvenv-pyright-autoload)

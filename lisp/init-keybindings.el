@@ -1,7 +1,8 @@
 ;; -*- lexical-binding: t no-byte-compile: t -*-
 
-(require 'init-custom)
-(require 'init-funcs)
+(eval-when-compile
+  (require 'init-custom)
+  (require 'init-funcs))
 
 ;; Make <escape> quit as much as possible
 (define-key minibuffer-local-map (kbd "<escape>") 'keyboard-escape-quit)

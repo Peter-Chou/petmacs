@@ -1,6 +1,7 @@
 ;; -*- lexical-binding: t no-byte-compile: t -*-
 
-(require 'init-const)
+(eval-when-compile
+  (require 'init-const))
 
 ;; A tree layout file explorer
 (use-package treemacs

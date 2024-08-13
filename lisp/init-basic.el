@@ -1,9 +1,11 @@
 ;; -*- lexical-binding: t no-byte-compile: t -*-
 
 (require 'subr-x)
-(require 'init-const)
-(require 'init-custom)
-(require 'init-funcs)
+
+(eval-when-compile
+  (require 'init-const)
+  (require 'init-custom)
+  (require 'init-funcs))
 
 (when (executable-find "fd")
   (setq find-program "fd"))

@@ -1,7 +1,8 @@
 ;; -*- lexical-binding: t no-byte-compile: t -*-
 
-(require 'init-custom)
-(require 'init-funcs)
+(eval-when-compile
+  (require 'init-custom)
+  (require 'init-funcs))
 
 ;; optimize lsp-mode
 (when (equal petmacs-lsp-mode-impl 'lsp-mode)

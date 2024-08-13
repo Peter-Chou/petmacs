@@ -1,6 +1,7 @@
 ;; -*- lexical-binding: t no-byte-compile: t -*-
 
-(require 'init-funcs)
+(eval-when-compile
+  (require 'init-funcs))
 
 ;; Highlight the current line
 (use-package hl-line

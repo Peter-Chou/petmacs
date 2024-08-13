@@ -13,7 +13,9 @@
     (define-key evil-motion-state-map "gh" #'eldoc-box-help-at-point)
     (define-key evil-normal-state-map "ga" #'eglot-code-actions))
   (defun petmacs/eglot-ensure-with-lsp-booster ()
-    (when (fboundp 'eglot-booster-mode)
+    (when (and emacs/>=29p
+               (fboundp 'eglot-booster-mode)
+               (executable-find "emacs-lsp-booster"))
       (eglot-booster-mode t))
     (eglot-ensure))
   :hook ((c-mode c-ts-mode c++-mode c++-ts-mode) . petmacs/eglot-ensure-with-lsp-booster)
@@ -88,7 +90,8 @@
   :after eglot
   :ensure nil
   :init (setq eglot-booster-no-remote-boost t)
-  :config (eglot-booster-mode))
+  ;; :config (eglot-booster-mode)
+  )
 
 (use-package eglot-java
   :preface
@@ -99,7 +102,9 @@
     (interactive)
     (eglot-java-run-main t))
   :hook ((java-mode java-ts-mode) . (lambda ()
-                                      (when (fboundp 'eglot-booster-mode)
+                                      (when (and emacs/>=29p
+                                                 (fboundp 'eglot-booster-mode)
+                                                 (executable-find "emacs-lsp-booster"))
                                         (eglot-booster-mode t))
                                       (eglot-java-mode t)))
   :init

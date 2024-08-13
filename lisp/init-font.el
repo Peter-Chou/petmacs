@@ -1,8 +1,9 @@
 ;; -*- lexical-binding: t no-byte-compile: t -*-
 
-(require 'init-const)
-(require 'init-custom)
-(require 'init-funcs)
+(eval-when-compile
+  (require 'init-const)
+  (require 'init-custom)
+  (require 'init-funcs))
 
 (setq-default line-spacing 0.2) ; add 0.2 height between lines
 

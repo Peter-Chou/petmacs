@@ -1,7 +1,8 @@
 ;; -*- lexical-binding: t no-byte-compile: t -*-
 
-(require 'init-const)
-(require 'init-custom)
+(eval-when-compile
+  (require 'init-const)
+  (require 'init-custom))
 
 ;; Directory operations
 (use-package dired
