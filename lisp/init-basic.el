@@ -278,10 +278,6 @@
 (when (display-graphic-p)
   (add-hook 'window-setup-hook #'fix-fullscreen-cocoa))
 
-;; Sqlite
-(when (fboundp 'sqlite-open)
-  (use-package emacsql-sqlite-builtin))
-
 (setq confirm-kill-processes nil)
 
 (provide 'init-basic)

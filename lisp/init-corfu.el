@@ -12,14 +12,16 @@
          ("M-P" . corfu-popupinfo-scroll-down) ;; corfu-next
          ("M-N" . corfu-popupinfo-scroll-up) ;; corfu-previous
          )
+  :hook ((after-init . global-corfu-mode)
+         (global-corfu-mode . corfu-popupinfo-mode))
   :init
   (setq corfu-auto t
         corfu-cycle t
-        corfu-auto-prefix 1
+        corfu-auto-prefix 2
         corfu-auto-delay 0.2
         corfu-min-width 80
         corfu-max-width 100
-        corfu-popupinfo-delay 0.6
+        corfu-popupinfo-delay '(0.4 . 0.2)
         corfu-popupinfo-max-width 120
         corfu-popupinfo-max-height 40
         corfu-quit-at-boundary 'separator
@@ -73,10 +75,7 @@
                     #'yasnippet-capf
     		        #'cape-dabbrev
                     )))
-     (add-hook 'eglot-managed-mode-hook #'petmacs/eglot-capf-setup)))
-
-  (global-corfu-mode)
-  (corfu-popupinfo-mode))
+     (add-hook 'eglot-managed-mode-hook #'petmacs/eglot-capf-setup))))
 
 (use-package nerd-icons-corfu
   :after corfu

@@ -5,6 +5,66 @@
   (require 'init-custom)
   (require 'init-funcs))
 
+(use-package orderless
+  :demand t
+  ;; ...otherwise find-file gets different highlighting than other commands
+  ;; (set-face-attribute 'completions-first-difference nil :inherit nil)
+  :config
+  (defvar +orderless-dispatch-alist
+    '((?% . char-fold-to-regexp)
+      (?! . orderless-without-literal)
+      (?`. orderless-initialism)
+      (?= . orderless-literal)
+      (?~ . orderless-flex)))
+
+  (defun +orderless-dispatch (pattern index _total)
+    (cond
+     ;; Ensure that $ works with Consult commands, which add disambiguation suffixes
+     ((string-suffix-p "$" pattern)
+      `(orderless-regexp . ,(concat (substring pattern 0 -1) "[\x100000-\x10FFFD]*$")))
+     ;; File extensions
+     ((and
+       ;; Completing filename or eshell
+       (or minibuffer-completing-file-name
+           (derived-mode-p 'eshell-mode))
+       ;; File extension
+       (string-match-p "\\`\\.." pattern))
+      `(orderless-regexp . ,(concat "\\." (substring pattern 1) "[\x100000-\x10FFFD]*$")))
+     ;; Ignore single !
+     ((string= "!" pattern) `(orderless-literal . ""))
+     ;; Prefix and suffix
+     ((if-let (x (assq (aref pattern 0) +orderless-dispatch-alist))
+          (cons (cdr x) (substring pattern 1))
+        (when-let (x (assq (aref pattern (1- (length pattern))) +orderless-dispatch-alist))
+          (cons (cdr x) (substring pattern 0 -1)))))))
+
+  ;; Define orderless style with initialism by default
+  (orderless-define-completion-style +orderless-with-initialism
+    (orderless-matching-styles '(orderless-initialism orderless-literal orderless-regexp)))
+
+  (setq
+   ;; use & to segment parts of candicate
+   ;; orderless-component-separator "[ &]"
+   ;; completion-styles '(basic substring partial-completion orderless flex)
+   completion-styles '(orderless partial-completion basic)
+   completion-category-defaults nil
+   completion-category-overrides '((file (styles orderless partial-completion)) ;; partial-completion is tried first
+                                   (command (styles +orderless-with-initialism))
+                                   (variable (styles +orderless-with-initialism))
+                                   (symbol (styles +orderless-with-initialism)))
+   orderless-component-separator #'orderless-escapable-split-on-space ;; allow escaping space with backslash!
+   orderless-style-dispatchers '(+orderless-dispatch))
+  )
+
+;; Support
+(use-package pinyinlib
+  :after orderless
+  :autoload pinyinlib-build-regexp-string
+  :init
+  (defun completion--regex-pinyin (str)
+    (orderless-regexp (pinyinlib-build-regexp-string str)))
+  (add-to-list 'orderless-matching-styles 'completion--regex-pinyin))
+
 (use-package vertico
   :bind (:map vertico-map
          ("RET" . vertico-directory-enter)
@@ -59,56 +119,7 @@
                 '((left-fringe  . 8)
                   (right-fringe . 8)))))
 
-(use-package orderless
-  :demand t
-  ;; ...otherwise find-file gets different highlighting than other commands
-  ;; (set-face-attribute 'completions-first-difference nil :inherit nil)
-  :config
-  (defvar +orderless-dispatch-alist
-    '((?% . char-fold-to-regexp)
-      (?! . orderless-without-literal)
-      (?`. orderless-initialism)
-      (?= . orderless-literal)
-      (?~ . orderless-flex)))
 
-  (defun +orderless-dispatch (pattern index _total)
-    (cond
-     ;; Ensure that $ works with Consult commands, which add disambiguation suffixes
-     ((string-suffix-p "$" pattern)
-      `(orderless-regexp . ,(concat (substring pattern 0 -1) "[\x100000-\x10FFFD]*$")))
-     ;; File extensions
-     ((and
-       ;; Completing filename or eshell
-       (or minibuffer-completing-file-name
-           (derived-mode-p 'eshell-mode))
-       ;; File extension
-       (string-match-p "\\`\\.." pattern))
-      `(orderless-regexp . ,(concat "\\." (substring pattern 1) "[\x100000-\x10FFFD]*$")))
-     ;; Ignore single !
-     ((string= "!" pattern) `(orderless-literal . ""))
-     ;; Prefix and suffix
-     ((if-let (x (assq (aref pattern 0) +orderless-dispatch-alist))
-          (cons (cdr x) (substring pattern 1))
-        (when-let (x (assq (aref pattern (1- (length pattern))) +orderless-dispatch-alist))
-          (cons (cdr x) (substring pattern 0 -1)))))))
-
-  ;; Define orderless style with initialism by default
-  (orderless-define-completion-style +orderless-with-initialism
-    (orderless-matching-styles '(orderless-initialism orderless-literal orderless-regexp)))
-
-  (setq
-   ;; use & to segment parts of candicate
-   ;; orderless-component-separator "[ &]"
-   ;; completion-styles '(basic substring partial-completion orderless flex)
-   completion-styles '(orderless partial-completion basic)
-   completion-category-defaults nil
-   completion-category-overrides '((file (styles orderless partial-completion)) ;; partial-completion is tried first
-                                   (command (styles +orderless-with-initialism))
-                                   (variable (styles +orderless-with-initialism))
-                                   (symbol (styles +orderless-with-initialism)))
-   orderless-component-separator #'orderless-escapable-split-on-space ;; allow escaping space with backslash!
-   orderless-style-dispatchers '(+orderless-dispatch))
-  )
 
 (use-package consult
   :bind (("C-s"   . consult-line)
@@ -125,8 +136,15 @@
          )
   ;; Enable automatic preview at point in the *Completions* buffer. This is
   ;; relevant when you use the default completion UI.
-  ;; :hook (completion-list-mode . consult-preview-at-point-mode)
+  :hook (completion-list-mode . consult-preview-at-point-mode)
   :init
+  (setq register-preview-delay 0.5
+        register-preview-function #'consult-register-format)
+
+  ;; Optionally tweak the register preview window.
+  ;; This adds thin lines, sorting and hides the mode line of the window.
+  (advice-add #'register-preview :override #'consult-register-window)
+
   (if sys/win32p
       (progn
         (add-to-list 'process-coding-system-alist '("es" gbk . gbk))
@@ -154,7 +172,8 @@
    ;; consult-bookmark consult-recent-file consult-xref
    ;; :preview-key "M-."
 
-   consult-line consult-line-multi :preview-key 'any
+   consult-line consult-line-multi
+   :preview-key 'any
    consult-buffer consult-recent-file consult-theme :preview-key '(:debounce 1.0 any)
    consult-goto-line :preview-key '(:debounce 0.5 any)
    consult-ripgrep consult-git-grep consult-grep
@@ -253,14 +272,5 @@ targets."
   :init
   (setq wgrep-auto-save-buffer t
         wgrep-change-readonly-file t))
-
-;; Support
-(use-package pinyinlib
-  :after orderless
-  :autoload pinyinlib-build-regexp-string
-  :init
-  (defun completion--regex-pinyin (str)
-    (orderless-regexp (pinyinlib-build-regexp-string str)))
-  (add-to-list 'orderless-matching-styles 'completion--regex-pinyin))
 
 (provide 'init-consult)
