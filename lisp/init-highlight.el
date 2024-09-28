@@ -135,7 +135,7 @@ FACE defaults to inheriting from default and highlight."
            json-mode json-ts-mode
            python-mode python-ts-mode
            yaml-mode yaml-ts-mode) . (lambda () (unless (too-long-file-p)
-                                                  (indent-bars-mode 1))))
+                                             (indent-bars-mode 1))))
          ((java-mode java-ts-mode) . (lambda ()
                                        (indent-bars-mode -1))))
   :init
@@ -151,6 +151,9 @@ FACE defaults to inheriting from default and highlight."
     (setq indent-bars-treesit-support t
           indent-bars-no-descend-string nil
           indent-bars-treesit-ignore-blank-lines-types '("module")
+          indent-bars-treesit-scope '((python function_definition class_definition for_statement
+				                              if_statement with_statement while_statement))
+
           indent-bars-treesit-wrap '((python argument_list parameters ; for python, as an example
 				                             list list_comprehension
 				                             dictionary dictionary_comprehension
