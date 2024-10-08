@@ -294,7 +294,9 @@
   (if (fboundp 'display-line-numbers-mode)
       (use-package display-line-numbers
         :ensure nil
-        :hook ((prog-mode yaml-mode yaml-ts-mode conf-mode) . display-line-numbers-mode)
+        :hook ((prog-mode
+                conf-mode toml-ts-mode
+                yaml-mode yaml-ts-mode) . display-line-numbers-mode)
         :init
         (setq-default display-line-numbers-widen t
                       ;; display-line-numbers 'visual
