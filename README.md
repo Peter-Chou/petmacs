@@ -82,13 +82,12 @@ M-x eglot-upgrade-eglot
 
 ## 3. install LSP servers
 
-### 3.1 pyright (Python)
+### 3.1 basedpyright (Python)
 
 ``` sh
-npm install -g pyright
+# in your python environment
+pip install basedpyright
 ```
-
-set `WORKON_HOME` environment variable that has virtual environment directories.
 
 ### 3.2 eclipse jdtls (Java)
 
