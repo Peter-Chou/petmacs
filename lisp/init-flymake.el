@@ -32,6 +32,16 @@
          ;; sideline-flymake-display-mode 'point
          sideline-flymake-display-mode 'line))
 
+
+(defun petmacs/filter-eglot-basedpyright-diagnostics (diags)
+  "Drop all basedpyright diagnose from langserver"
+  (list (seq-remove (lambda (d)
+                      (string-match "basedpyright" (flymake-diagnostic-text d))
+                      ;; (s-starts-with? "basedpyright" (flymake-diagnostic-text d))
+                      )
+                    (car diags))))
+;; (advice-add 'eglot--report-to-flymake :filter-args #'petmacs/filter-eglot-basedpyright-diagnostics)
+
 (use-package flymake-ruff
   :demand t
   :preface
@@ -44,21 +54,24 @@
     (when (memq major-mode '(python-mode python-ts-mode))
       (flymake-ruff-load)))
   :config
-  (add-hook 'eglot-managed-mode-hook 'petmacs/eglot-setup-flymake-ruff)
+  (add-hook 'eglot-managed-mode-hook 'petmacs/eglot-setup-flymake-ruff))
 
-  (defun petmacs/filter-eglot-pyright-diagnostics (diags)
-    "Drop all Pyright diagnose from langserver"
-    (list (seq-remove (lambda (d)
-                        (string-match "Pyright" (flymake-diagnostic-text d)))
-                      (car diags))))
-  (advice-add 'eglot--report-to-flymake :filter-args #'petmacs/filter-eglot-pyright-diagnostics)
+;; (use-package flymake-mypy
+;;   :ensure nil
+;;   :commands (flymake-mypy-enable)
+;;   :init
+;;   (require 'flymake-mypy)
+;;   ;; :hook ((python-mode python-ts-mode) . flymake-mypy-enable)
+;;   :config
+;;   (defun my/flymake-eglot-fix ()
+;;     "Add flymake checkers after Eglot replaces the checkers."
+;;     (when (or (derived-mode-p 'python-mode)  (derived-mode-p 'python-ts-mode))
+;;       ;; re-enable the default python.el checker
+;;       (add-hook 'flymake-diagnostic-functions 'python-flymake nil t)
+;;       (add-hook 'flymake-diagnostic-functions 'python-ts-flymake nil t)
+;;       (flymake-mypy-enable)))
 
-  ;; (defun petmacs/filter-eglot-basedpyright-diagnostics (diags)
-  ;;   "Drop all Pyright diagnose from langserver"
-  ;;   (list (seq-remove (lambda (d)
-  ;;                       (string-match "basedpyright" (flymake-diagnostic-text d)))
-  ;;                     (car diags))))
-  ;; (advice-add 'eglot--report-to-flymake :filter-args #'petmacs/filter-eglot-basedpyright-diagnostics)
-  )
+;;   (add-hook 'eglot-managed-mode-hook 'my/flymake-eglot-fix)
+;;   )
 
 (provide 'init-flymake)
