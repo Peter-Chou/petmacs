@@ -32,6 +32,14 @@
          ;; sideline-flymake-display-mode 'point
          sideline-flymake-display-mode 'line))
 
+;; (use-package flymake-popon
+;;   :diminish
+;;   :custom-face
+;;   (flymake-popon-posframe-border ((t :foreground ,(face-background 'region))))
+;;   :hook (flymake-mode . flymake-popon-mode)
+;;   :init (setq flymake-popon-width 70
+;;               flymake-popon-posframe-border-width 1
+;;               flymake-popon-method (if (childframe-workable-p) 'posframe 'popon)))
 
 (defun petmacs/filter-eglot-basedpyright-diagnostics (diags)
   "Drop all basedpyright diagnose from langserver"

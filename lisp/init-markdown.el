@@ -1,4 +1,34 @@
-;; -*- lexical-binding: t no-byte-compile: t -*-
+;; init-markdown.el --- Initialize markdown configurations.	-*- lexical-binding: t -*-
+
+;; Copyright (C) 2009-2024 Vincent Zhang
+
+;; Author: Vincent Zhang <seagle0128@gmail.com>
+;; URL: https://github.com/seagle0128/.emacs.d
+
+;; This file is not part of GNU Emacs.
+;;
+;; This program is free software; you can redistribute it and/or
+;; modify it under the terms of the GNU General Public License as
+;; published by the Free Software Foundation; either version 3, or
+;; (at your option) any later version.
+;;
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+;; General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this program; see the file COPYING.  If not, write to
+;; the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+;; Floor, Boston, MA 02110-1301, USA.
+;;
+
+;;; Commentary:
+;;
+;; Markdown configurations.
+;;
+
+;;; Code:
 
 (use-package markdown-mode
   :mode (("README\\.md\\'" . gfm-mode))
@@ -24,6 +54,7 @@ body {
   padding: 0 10px;
 }
 </style>
+
 <link rel='stylesheet' href='https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/default.min.css'>
 <script src='https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/highlight.min.js'></script>
 <script>
@@ -36,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
+
 <script src='https://unpkg.com/mermaid@8.4.8/dist/mermaid.min.js'></script>
 <script>
 mermaid.initialize({
@@ -56,7 +88,15 @@ mermaid.initialize({
   (with-no-warnings
     ;; Use `which-key' instead
     (advice-add #'markdown--command-map-prompt :override #'ignore)
-    (advice-add #'markdown--style-map-prompt   :override #'ignore)))
+    (advice-add #'markdown--style-map-prompt   :override #'ignore)
+
+    ;; Preview with built-in webkit
+    (defun my-markdown-export-and-preview (fn)
+      "Preview with `xwidget' if applicable, otherwise with the default browser."
+      (if (and (featurep 'xwidget-internal) (display-graphic-p))
+          (petmacs-webkit-browse-url (concat "file://" (markdown-export)) t)
+        (funcall fn)))
+    (advice-add #'markdown-export-and-preview :around #'my-markdown-export-and-preview)))
 
 ;; Table of contents
 (use-package markdown-toc
@@ -83,4 +123,30 @@ mermaid.initialize({
        (t
         (apply fn args))))))
 
+;; Preview markdown files
+;; @see: https://github.com/seagle0128/grip-mode?tab=readme-ov-file#prerequisite
+(use-package grip-mode
+  :defines markdown-mode-command-map org-mode-map
+  :functions auth-source-user-and-password
+  :autoload grip-mode
+  :init
+  (with-eval-after-load 'markdown-mode
+    (bind-key "g" #'grip-mode markdown-mode-command-map))
+
+  (with-eval-after-load 'org
+    (bind-key "C-c C-g" #'grip-mode org-mode-map))
+
+  (setq grip-update-after-change nil)
+
+  ;; mdopen doesn't need credentials, and only support external browsers
+  (if (executable-find "mdopen")
+      (setq grip-use-mdopen t)
+    (when-let* ((credential (and (require 'auth-source nil t)
+                                 (auth-source-user-and-password "api.github.com"))))
+      (setq grip-github-user (car credential)
+            grip-github-password (cadr credential)))))
+
 (provide 'init-markdown)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init-markdown.el ends here

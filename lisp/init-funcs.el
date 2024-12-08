@@ -1153,4 +1153,20 @@ buffer."
       (message "Removed %d " count))
     (widen)))
 
+(defun petmacs-webkit-browse-url (url &optional pop-buffer new-session)
+  "Browse URL with xwidget-webkit' and switch or pop to the buffer.
+  POP-BUFFER specifies whether to pop to the buffer.
+  NEW-SESSION specifies whether to create a new xwidget-webkit session.
+  Interactively, URL defaults to the string looking like a url around point."
+  (interactive (progn
+                 (require 'browse-url)
+                 (browse-url-interactive-arg "URL: ")))
+  (xwidget-webkit-browse-url url new-session)
+  (let ((buf (xwidget-buffer (xwidget-webkit-current-session))))
+    (when (buffer-live-p buf)
+      (and (eq buf (current-buffer)) (quit-window))
+      (if pop-buffer
+          (pop-to-buffer buf)
+        (switch-to-buffer buf)))))
+
 (provide 'init-funcs)
