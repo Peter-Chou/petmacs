@@ -595,17 +595,27 @@ SCALE are supported."
 
 ;; please update sideline version >=20240627
 (use-package sideline
-  :hook ((flymake-mode . sideline-mode)
+  :hook (
+         (flycheck-mode . sideline-mode)
+         (flymake-mode . sideline-mode)
          (eglot . sideline-mode)
          ((java-mode java-ts-mode) . (lambda ()
                                        "disable sideline-eglot in java-mode / java-ts-mode"
-                                       (setq-local sideline-backends-right '((sideline-flymake . down))))))
-  :init (setq sideline-display-backend-name t
-              sideline-backends-right '(
-                                        (sideline-eglot . up)
-                                        ;; (sideline-flymake . down)
-                                        ))
-  (require 'sideline))
+                                       (if (equal petmacs-checker 'flycheck)
+                                           (setq-local sideline-backends-right '((sideline-flycheck . down)))
+                                         (setq-local sideline-backends-right '((sideline-flymake . down))))
+                                       ))
+         )
+  :init
+  (require 'sideline)
+  (setq sideline-display-backend-name t)
+  (if (equal petmacs-checker 'flycheck)
+      (setq sideline-backends-right '(
+                                      (sideline-eglot . up)
+                                      (sideline-flycheck . down)))
+    (setq sideline-backends-right '(
+                                    (sideline-eglot . up)
+                                    (sideline-flymake . down)))))
 
 (use-package docstr
   :hook (

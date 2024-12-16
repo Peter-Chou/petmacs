@@ -27,14 +27,13 @@
 (use-package consult-flycheck
   :after (consult flycheck))
 
-(use-package flycheck-popup-tip
-  :hook (flycheck-mode . flycheck-popup-tip-mode))
+(use-package sideline-flycheck
+  :custom-face
+  (sideline-flycheck-error ((t (:height 0.85 :italic t))))
+  (sideline-flycheck-warning ((t (:height 0.85 :italic t))))
+  (sideline-flycheck-success ((t (:height 0.85 :italic t))))
+  :hook (flycheck-mode . sideline-flycheck-setup))
 
-(use-package flycheck-python-ruff
-  :ensure nil
-  :commands flycheck-python-ruff-setup
-  :hook ((python-mode python-ts-mode) . (lambda ()
-    	                                  (setq-local lsp-diagnostics-provider :none)
-                                          (flycheck-python-ruff-setup))))
+(add-hook 'eglot-managed-mode-hook (lambda () (flymake-mode -1)))
 
 (provide 'init-flycheck)

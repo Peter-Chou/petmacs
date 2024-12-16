@@ -209,9 +209,7 @@ FACE defaults to inheriting from default and highlight."
          ("C-c t o" . hl-todo-occur)
          ("C-c t i" . hl-todo-insert))
   :hook ((after-init . global-hl-todo-mode)
-         (hl-todo-mode . (lambda ()
-                           (add-hook 'flymake-diagnostic-functions
-                                     #'hl-todo-flymake nil t))))
+         )
   :init (setq hl-todo-color-background t
               hl-todo-include-modes '(prog-mode conf-mode)
               hl-todo-exclude-modes '(org-mode

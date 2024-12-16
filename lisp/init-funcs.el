@@ -12,7 +12,7 @@
 (defvar socks-server)
 
 (declare-function chart-bar-quickie 'chart)
-(declare-function flymake-start 'flymake)
+;; (declare-function flymake-start 'flymake)
 (declare-function evil-yank 'evil)
 (declare-function async-inject-variables 'async)
 (declare-function imenu-list-smart-toggle 'imenu-list)

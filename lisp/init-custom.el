@@ -8,6 +8,11 @@
 (defvar petmacs-quelpa-use-gitee-mirror nil
   "use gitee mirror instead of github")
 
+(defvar petmacs-checker
+  'flycheck
+  ;; 'flymake
+  "flycheck / flymake ")
+
 (defvar petmacs-lsp-mode-impl
   ;; 'lsp-mode
   'eglot

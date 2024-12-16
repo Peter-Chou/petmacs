@@ -132,9 +132,9 @@
         ;; awesome-tray-essential-modules '("pomodoro" "date")
         awesome-tray-git-show-status nil)
   (if petmacs-disable-modeline
-      (setq awesome-tray-active-modules   '("pomodoro" "buffer-name" "location" "flymake" "git"  "date")
+      (setq awesome-tray-active-modules   '("pomodoro" "buffer-name" "location" "git"  "date")
             awesome-tray-essential-modules '("buffer-name" "location"))
-    (setq awesome-tray-active-modules   '("pomodoro" "project-relative-dir" "flymake" "git" "date")
+    (setq awesome-tray-active-modules   '("pomodoro" "project-relative-dir" "git" "date")
           awesome-tray-essential-modules '("project-relative-dir" "date")))
   :config
   (defun awesome-tray-project-relative-dir-info () (format "%s" (petmacs/get-project-relateive-dir)))
@@ -270,7 +270,7 @@
       ;; '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl lsp minor-modes input-method indent-info buffer-encoding major-mode process vcs checker time)
 
       '(eldoc bar workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
-      '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl input-method indent-info buffer-encoding process))
+      '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl input-method indent-info buffer-encoding check process))
 
     ;; Set default mode-line
     (add-hook 'doom-modeline-mode-hook (lambda ()
