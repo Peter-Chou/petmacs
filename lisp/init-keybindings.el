@@ -436,8 +436,8 @@
 (if (equal petmacs-checker 'flycheck)
     (leader-with-prefix "e"
       (leader-set-keys
-        ;; "l" #'flycheck-list-errors
         "l" #'consult-flycheck
+        "L" #'flycheck-list-errors
         "c" #'flycheck-clear
         "h" #'flycheck-describe-checker
         "n" #'petmacs/next-error
