@@ -32,14 +32,6 @@
          ;; sideline-flymake-display-mode 'point
          sideline-flymake-display-mode 'line))
 
-;; (use-package flymake-popon
-;;   :diminish
-;;   :custom-face
-;;   (flymake-popon-posframe-border ((t :foreground ,(face-background 'region))))
-;;   :hook (flymake-mode . flymake-popon-mode)
-;;   :init (setq flymake-popon-width 70
-;;               flymake-popon-posframe-border-width 1
-;;               flymake-popon-method (if (childframe-workable-p) 'posframe 'popon)))
 
 (defun petmacs/filter-eglot-basedpyright-diagnostics (diags)
   "Drop all basedpyright diagnose from langserver"
@@ -64,22 +56,22 @@
   :config
   (add-hook 'eglot-managed-mode-hook 'petmacs/eglot-setup-flymake-ruff))
 
-;; (use-package flymake-mypy
-;;   :ensure nil
-;;   :commands (flymake-mypy-enable)
-;;   :init
-;;   (require 'flymake-mypy)
-;;   ;; :hook ((python-mode python-ts-mode) . flymake-mypy-enable)
-;;   :config
-;;   (defun my/flymake-eglot-fix ()
-;;     "Add flymake checkers after Eglot replaces the checkers."
-;;     (when (or (derived-mode-p 'python-mode)  (derived-mode-p 'python-ts-mode))
-;;       ;; re-enable the default python.el checker
-;;       (add-hook 'flymake-diagnostic-functions 'python-flymake nil t)
-;;       (add-hook 'flymake-diagnostic-functions 'python-ts-flymake nil t)
-;;       (flymake-mypy-enable)))
+;; (use-package flymake-popon
+;;   :diminish
+;;   :custom-face
+;;   (flymake-popon-posframe-border ((t :foreground ,(face-background 'region))))
+;;   :hook (flymake-mode . flymake-popon-mode)
+;;   :init (setq flymake-popon-width 70
+;;               flymake-popon-posframe-border-width 1
+;;               flymake-popon-method (if (childframe-workable-p) 'posframe 'popon)))
 
-;;   (add-hook 'eglot-managed-mode-hook 'my/flymake-eglot-fix)
-;;   )
+(use-package flymake-popon
+  :diminish
+  :custom-face
+  (flymake-popon-posframe-border ((t :foreground ,(face-background 'region))))
+  :hook (flymake-mode . flymake-popon-mode)
+  :init (setq flymake-popon-width 70
+              flymake-popon-posframe-border-width 1
+              flymake-popon-method (if (childframe-workable-p) 'posframe 'popon)))
 
 (provide 'init-flymake)
