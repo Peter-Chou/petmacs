@@ -51,6 +51,8 @@
 (use-package solaire-mode
   :hook (after-init . solaire-global-mode))
 
+(use-package dracula-theme)
+
 (use-package doom-themes
   :config
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
