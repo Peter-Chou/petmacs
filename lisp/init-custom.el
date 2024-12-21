@@ -66,10 +66,8 @@
 (defvar  petmacs-day-night-themes
   ;; '(("8:00" . spacemacs-light)
   ;;   ("20:00"  . doom-dracula))
-  ;; '(("8:00" . doom-shades-of-purple)
-  ;;   ("20:00"  . doom-shades-of-purple))
-  '(("8:00" . dracula)
-    ("20:00"  . dracula))
+  '(("8:00" . doom-shades-of-purple)
+    ("20:00"  . doom-shades-of-purple))
   "day night theme")
 
 (defvar petmacs-modeline-style
