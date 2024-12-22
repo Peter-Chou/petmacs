@@ -8,7 +8,7 @@ before you use Petmacs, make sure your emacs version >= 29.1 and tree-sitter is 
 
 ### 1.1 Fonts
 
-- [JetBrains Mono](https://www.jetbrains.com/lp/mono) for default
+- [ComicMono Nerd Font](https://github.com/Peter-Chou/ComicMonoFonts) for default
 
 - [Maple Mono SC NF](https://gitee.com/subframe7536/Maple/releases) for Chinese
 
