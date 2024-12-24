@@ -4,7 +4,8 @@
   (setq read-process-output-max (* 5 1024 1024)))
 
 (use-package eglot
-  :pin gnu
+  ;; :pin gnu
+  :pin gnu-devel
   :preface
   (defun petmacs/eglot-keybindgs ()
     (define-key evil-motion-state-map "gR" #'eglot-rename)
