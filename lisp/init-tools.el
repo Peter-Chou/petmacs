@@ -669,12 +669,4 @@ SCALE are supported."
 (use-package calc
   :defer t)
 
-;; Better UI for `calc'
-(use-package casual-calc
-  :after calc
-  :bind (:map calc-mode-map
-         ("C-o" . casual-calc-tmenu)
-         :map calc-alg-map
-         ("C-o" . casual-calc-tmenu)))
-
 (provide 'init-tools)
