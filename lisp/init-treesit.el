@@ -28,7 +28,15 @@
     (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode)))
 
   ;; M-x treesit-auto-install-all
-  (use-package treesit-auto :demand t))
+  (use-package treesit-auto
+    :demand t
+    :init
+    (setq treesit-auto-langs '(
+                               bash c cmake cpp go gomod  javascript typescript
+                               scala java python rust r vue make
+                               json sql toml markdown proto dockerfile yaml
+                               ;; css latex lua
+                               ))))
 
 (if petmacs-quelpa-use-gitee-mirror
     (use-package treesit-fold
