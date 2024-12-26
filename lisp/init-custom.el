@@ -49,7 +49,7 @@
   ;; "等距更纱黑体 SC"
   "chinese font")
 
-(defvar  petmacs-font-size 16.5
+(defvar  petmacs-font-size 16.0
   "font size")
 
 (defvar  petmacs-ultra-screen-font-size 20.0
