@@ -39,7 +39,6 @@
 
 (defvar petmacs-font
   ;; "JetBrains Mono"
-  ;; "ComicMono Nerd Font"
   "ComicCodeLigatures Nerd Font"
   ;; "Monego Ligatures"
   "font")
