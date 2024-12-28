@@ -618,55 +618,52 @@ SCALE are supported."
                                     ;; (sideline-flymake . down)
                                     ))))
 
-(use-package docstr
-  :hook (
-         ((python-mode python-ts-mode) . (lambda ()
-                                           ;; (setq-local docstr-desc-summary "")
-                                           (docstr-mode 1)))
-         ((java-mode java-ts-mode) . (lambda ()
-                                       (docstr-mode 1))))
-  :init
-  (setq docstr-python-modes '(python-mode python-ts-mode)
-        docstr-python-style 'google-notype ;; nil or 'numpy or 'pep-257
-        docstr-key-support t)
-  :config
+;; (use-package docstr
+;;   :hook (
+;;          ((python-mode python-ts-mode) . (lambda ()
+;;                                            ;; (setq-local docstr-desc-summary "")
+;;                                            (docstr-mode 1)))
+;;          ((java-mode java-ts-mode) . (lambda ()
+;;                                        (docstr-mode 1))))
+;;   :init
+;;   (setq docstr-python-modes '(python-mode python-ts-mode)
+;;         docstr-python-style 'google-notype ;; nil or 'numpy or 'pep-257
+;;         docstr-key-support t)
+;;   :config
 
-  (defun docstr-python-config-google-notype ()
-    "Configre for convention, Google."
-    (docstr--default-format
-     :fmt-type "%s" :fmt-var "%s" :param "" :ret "" :con-type nil :con-var nil
-     :show-tn t)
-    (setq-local docstr-python-prefix "    "
-                docstr-python-header-param "Args:"
-                docstr-python-header-return "Returns:"
-                docstr-format-param (format "%s: %s"
-                                            docstr-key-var
-                                            docstr-key-desc)
-                docstr-format-return (format "%s" docstr-key-desc)))
+;;   (defun docstr-python-config-google-notype ()
+;;     "Configre for convention, Google."
+;;     (docstr--default-format
+;;      :fmt-type "%s" :fmt-var "%s" :param "" :ret "" :con-type nil :con-var nil
+;;      :show-tn t)
+;;     (setq-local docstr-python-prefix "    "
+;;                 docstr-python-header-param "Args:"
+;;                 docstr-python-header-return "Returns:"
+;;                 docstr-format-param (format "%s: %s"
+;;                                             docstr-key-var
+;;                                             docstr-key-desc)
+;;                 docstr-format-return (format "%s" docstr-key-desc)))
 
-  (defun my-docstr-python-config ()
-    "Automatically configure style according to variable `docstr-python-style'."
-    (cl-case docstr-python-style
-      (pep-257 (docstr-python-config-pep-257))
-      (google (docstr-python-config-google))
-      (google-notype (docstr-python-config-google-notype))
-      (numpy (docstr-python-config-numpy))
-      (t (docstr--default-format))))
+;;   (defun my-docstr-python-config ()
+;;     "Automatically configure style according to variable `docstr-python-style'."
+;;     (cl-case docstr-python-style
+;;       (pep-257 (docstr-python-config-pep-257))
+;;       (google (docstr-python-config-google))
+;;       (google-notype (docstr-python-config-google-notype))
+;;       (numpy (docstr-python-config-numpy))
+;;       (t (docstr--default-format))))
 
-  ;; add google-notype
-  (advice-add #'docstr-python-config :override #'my-docstr-python-config)
+;;   ;; add google-notype
+;;   (advice-add #'docstr-python-config :override #'my-docstr-python-config)
 
-  ;; config python-ts-mode
-  (add-to-list 'docstr-writers-alist '(python-ts-mode . docstr-writers-python))
-  (add-to-list 'docstr-prefix-alist '(python-ts-mode . docstr-python-prefix))
-  (add-to-list 'docstr-key-sharp-doc-modes 'python-ts-mode)
-  (add-to-list 'docstr-key-javadoc-like-modes 'java-ts-mode)
-  (global-docstr-mode))
+;;   ;; config python-ts-mode
+;;   (add-to-list 'docstr-writers-alist '(python-ts-mode . docstr-writers-python))
+;;   (add-to-list 'docstr-prefix-alist '(python-ts-mode . docstr-python-prefix))
+;;   (add-to-list 'docstr-key-sharp-doc-modes 'python-ts-mode)
+;;   (add-to-list 'docstr-key-javadoc-like-modes 'java-ts-mode)
+;;   (global-docstr-mode))
 
-(use-package breadcrumb
-  :after nerd-icons)
-
-(use-package calc
-  :defer t)
+(use-package numpydoc
+  :init (setq numpydoc-template-short t))
 
 (provide 'init-tools)
