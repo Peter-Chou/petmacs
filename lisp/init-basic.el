@@ -176,7 +176,9 @@
   :ensure nil
   :hook ((after-init . size-indication-mode)
          (text-mode . visual-line-mode)
-         ((prog-mode markdown-mode conf-mode) . enable-trailing-whitespace)
+         ((prog-mode
+           ;; markdown-mode
+           conf-mode) . enable-trailing-whitespace)
          (emacs-startup . (lambda ()
                             (toggle-frame-fullscreen)
                             (setq warning-minimum-level ':error))))
