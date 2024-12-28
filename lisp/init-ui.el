@@ -411,7 +411,9 @@
     :ensure nil
     :init (defvar composition-ligature-table (make-char-table nil))
     :hook (((prog-mode
-             conf-mode nxml-mode markdown-mode help-mode
+             conf-mode nxml-mode
+             ;; markdown-mode
+             help-mode
              shell-mode eshell-mode term-mode vterm-mode)
             . (lambda () (setq-local composition-function-table composition-ligature-table))))
     :config
