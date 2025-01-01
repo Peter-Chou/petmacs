@@ -582,7 +582,6 @@ SCALE are supported."
   :config
   (evil-define-key 'normal nxml-mode-map (kbd "gc") #'evilnc-comment-or-uncomment-lines))
 
-(use-package json-mode)
 (use-package toml-mode)
 
 (use-package smart-semicolon

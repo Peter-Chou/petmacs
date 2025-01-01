@@ -35,34 +35,12 @@
   (use-package less-css-mode))
 
 ;; JavaScript
-(use-package js-mode
-  :ensure nil
-  :defines (js-indent-level flycheck-javascript-eslint-executable)
-  :config
-  (setq js-indent-level 2)
+(use-package js
+  :init (setq js-indent-level 2))
 
-  (with-eval-after-load 'flycheck
-    ;; https://github.com/mantoni/eslint_d.js
-    ;; Install: npm -i -g eslint_d
-    (when (executable-find "eslint_d")
-      (setq flycheck-javascript-eslint-executable "eslint_d"))))
-
-(use-package js2-mode
-  :mode (("\\.js\\'" . js2-mode)
-         ("\\.jsx\\'" . js2-jsx-mode))
-  :interpreter (("node" . js2-mode)
-                ("node" . js2-jsx-mode))
-  :hook ((js2-mode . js2-imenu-extras-mode)
-         (js2-mode . js2-highlight-unused-variables-mode))
-  :config
-  ;; Use default keybindings for lsp
-  (unbind-key "M-." js2-mode-map)
-
-  (with-eval-after-load 'flycheck
-    (when (or (executable-find "eslint_d")
-              (executable-find "eslint")
-              (executable-find "jshint"))
-      (setq js2-mode-show-strict-warnings nil))))
+;; JSON
+(unless (fboundp 'js-json-mode)
+  (use-package json-mode))
 
 ;; Format HTML, CSS and JavaScript/JSON
 ;; Install: npm -g install prettier
@@ -75,6 +53,7 @@
 ;; Live browser JavaScript, CSS, and HTML interaction
 (use-package skewer-mode
   :diminish
+  :functions diminish
   :hook (((js-mode js2-mode)   . skewer-mode)
          (css-mode             . skewer-css-mode)
          ((html-mode web-mode) . skewer-html-mode))
@@ -110,5 +89,13 @@
 
 (use-package haml-mode)
 (use-package php-mode)
+
+;; REST
+(use-package restclient
+  :mode ("\\.http\\'" . restclient-mode)
+  :config
+  (use-package restclient-test
+    :diminish
+    :hook (restclient-mode . restclient-test-mode)))
 
 (provide 'init-web)

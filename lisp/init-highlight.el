@@ -153,21 +153,20 @@ FACE defaults to inheriting from default and highlight."
            json-mode json-ts-mode
            python-mode python-ts-mode
            yaml-mode yaml-ts-mode) . (lambda () (unless (too-long-file-p)
-                                                  (indent-bars-mode 1))))
+                                             (indent-bars-mode 1))))
          ((java-mode java-ts-mode) . (lambda ()
                                        (indent-bars-mode -1))))
   :init
   (setq indent-bars-display-on-blank-lines nil
+        indent-bars-no-descend-string t
         indent-bars-prefer-character t
         indent-bars-no-stipple-char ?\┋
         indent-bars-width-frac 0.25
         indent-bars-color
-        '(highlight :face-bg t :blend 0.25)
+        '(highlight :face-bg t :blend 0.225)
         indent-bars-highlight-current-depth '(:face petmacs-favor-color-face :pattern "."))
-  (require 'indent-bars-ts)
   (when (petmacs-treesit-available-p)
     (setq indent-bars-treesit-support t
-          indent-bars-no-descend-string nil
           indent-bars-treesit-ignore-blank-lines-types '("module")
           indent-bars-treesit-scope '((python function_definition class_definition for_statement
 				                              if_statement with_statement while_statement))
@@ -175,7 +174,9 @@ FACE defaults to inheriting from default and highlight."
           indent-bars-treesit-wrap '((python argument_list parameters ; for python, as an example
 				                             list list_comprehension
 				                             dictionary dictionary_comprehension
-				                             parenthesized_expression subscript)))))
+				                             parenthesized_expression subscript))))
+  :config
+  (require 'indent-bars-ts))
 
 ;; Highlight brackets according to their depth
 (use-package rainbow-delimiters
@@ -188,9 +189,11 @@ FACE defaults to inheriting from default and highlight."
       :hook (after-init . global-colorful-mode)
       :init
       (setq colorful-use-prefix t
-            colorful-prefix-string (format "%s" (nerd-icons-faicon "nf-fa-circle")))
+            ;; colorful-prefix-string (format "%s" (nerd-icons-faicon "nf-fa-circle"))
+            )
       :config (dolist (mode '(html-mode php-mode help-mode helpful-mode))
                 (add-to-list 'global-colorful-modes mode)))
+
   (use-package rainbow-mode
     :diminish
     :defines helpful-mode-map
