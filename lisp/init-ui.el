@@ -53,6 +53,10 @@
 
 (use-package dracula-theme)
 
+(use-package modus-themes
+  :init
+  (setq modus-themes-to-toggle '(modus-operandi-tinted modus-vivendi-tinted)))
+
 (use-package doom-themes
   :config
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
