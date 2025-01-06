@@ -140,8 +140,8 @@
   (if petmacs-disable-modeline
       (setq awesome-tray-active-modules   '("pomodoro" "buffer-name" "location" "git"  "date")
             awesome-tray-essential-modules '("buffer-name" "location"))
-    (setq awesome-tray-active-modules   '("pomodoro" "project-relative-dir" "git" "date")
-          awesome-tray-essential-modules '("project-relative-dir" "date")))
+    (setq awesome-tray-active-modules   '("location" "pomodoro" "project-relative-dir" "git" "date")
+          awesome-tray-essential-modules '("location" "project-relative-dir" "date")))
   :config
   (defun awesome-tray-project-relative-dir-info () (format "%s" (petmacs/get-project-relateive-dir)))
   (add-to-list 'awesome-tray-module-alist '("project-relative-dir" . (awesome-tray-project-relative-dir-info awesome-tray-module-parent-dir-face)))
@@ -275,7 +275,7 @@
       ;; '(eldoc bar workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
       ;; '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl lsp minor-modes input-method indent-info buffer-encoding major-mode process vcs checker time)
 
-      '(eldoc bar workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
+      '(eldoc bar workspace-name window-number modals matches follow buffer-info remote-host word-count parrot selection-info)
       '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl input-method indent-info buffer-encoding check process))
 
     ;; Set default mode-line
