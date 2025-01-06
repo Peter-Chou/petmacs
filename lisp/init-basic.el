@@ -244,8 +244,7 @@
 
 (use-package display-fill-column-indicator
   :ensure nil
-  :hook
-  (prog-mode . display-fill-column-indicator-mode)
+  ;; :hook (prog-mode . display-fill-column-indicator-mode)
   :init
   (setq-default fill-column  80)
   (setq display-fill-column-indicator-character "|"))
