@@ -153,7 +153,7 @@ FACE defaults to inheriting from default and highlight."
            json-mode json-ts-mode
            python-mode python-ts-mode
            yaml-mode yaml-ts-mode) . (lambda () (unless (too-long-file-p)
-                                             (indent-bars-mode 1))))
+                                                  (indent-bars-mode 1))))
          ((java-mode java-ts-mode) . (lambda ()
                                        (indent-bars-mode -1))))
   :init
@@ -264,53 +264,6 @@ FACE defaults to inheriting from default and highlight."
     (unless (require 'rg nil t)
       (error "`rg' is not installed"))
     (rg-project (replace-regexp-in-string "\\\\[<>]*" "" (hl-todo--regexp)) "everything")))
-
-;; Highlight uncommitted changes using VC
-(use-package diff-hl
-  :custom-face
-  (diff-hl-change ((t (:inherit custom-changed :foreground unspecified :background unspecified))))
-  (diff-hl-insert ((t (:inherit diff-added :background unspecified))))
-  (diff-hl-delete ((t (:inherit diff-removed :background unspecified))))
-  :hook ((after-init . global-diff-hl-mode)
-         (after-init . global-diff-hl-show-hunk-mouse-mode)
-         (dired-mode . diff-hl-dired-mode))
-  :init (setq diff-hl-draw-borders nil
-              ;; diff-hl-side 'right
-              ;; diff-hl-margin-symbols-alist
-              ;; '((insert . "+") (delete . "-") (change . "=")
-              ;;   (unknown . "?") (ignored . "i"))
-              diff-hl-margin-symbols-alist
-              '((insert . " ") (delete . " ") (change . " ")
-                (unknown . " ") (ignored . " ")))
-  :config
-  ;; Highlight on-the-fly
-  (diff-hl-flydiff-mode 1)
-  ;; (diff-hl-margin-mode 1)
-
-  ;; Set fringe style
-  ;; (setq-default fringes-outside-margins t)
-
-  (with-no-warnings
-    ;; (defun my-diff-hl-fringe-bmp-function (_type _pos)
-    ;;   "Fringe bitmap function for use as `diff-hl-fringe-bmp-function'."
-    ;;   (define-fringe-bitmap 'my-diff-hl-bmp
-    ;;     (vector (if sys/macp #b11100000 #b11111100))
-    ;;     1 8
-    ;;     '(center t)))
-    ;; (setq diff-hl-fringe-bmp-function #'my-diff-hl-fringe-bmp-function)
-
-    ;; (unless (display-graphic-p)
-    ;;   ;; Fall back to the display margin since the fringe is unavailable in tty
-    ;;   (diff-hl-margin-mode 1)
-    ;;   ;; Avoid restoring `diff-hl-margin-mode'
-    ;;   (with-eval-after-load 'desktop
-    ;;     (add-to-list 'desktop-minor-mode-table
-    ;;                  '(diff-hl-margin-mode nil))))
-
-    ;; Integration with magit
-    (with-eval-after-load 'magit
-      (add-hook 'magit-pre-refresh-hook #'diff-hl-magit-pre-refresh)
-      (add-hook 'magit-post-refresh-hook #'diff-hl-magit-post-refresh))))
 
 ;; Pulse current line
 (use-package pulse

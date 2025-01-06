@@ -48,7 +48,7 @@
   ;; "等距更纱黑体 SC"
   "chinese font")
 
-(defvar  petmacs-font-size 16.0
+(defvar  petmacs-font-size 15.0
   "font size")
 
 (defvar  petmacs-ultra-screen-font-size 20.0
@@ -81,7 +81,7 @@
 (defvar petmacs-enable-mini-frame nil
   "enable mini frame feature")
 
-(defvar petmacs-enable-display-line-numbers nil
+(defvar petmacs-enable-display-line-numbers t
   "enable display-line-numbers mode")
 
 (defvar  petmacs-proxy "winhost:1080"
