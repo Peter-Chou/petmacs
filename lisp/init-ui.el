@@ -53,9 +53,11 @@
 
 (use-package dracula-theme)
 
+(use-package ef-themes
+  :init (setq ef-themes-to-toggle '(ef-melissa-light ef-melissa-dark)))
+
 (use-package modus-themes
-  :init
-  (setq modus-themes-to-toggle '(modus-operandi-tinted modus-vivendi-tinted)))
+  :init (setq modus-themes-to-toggle '(modus-operandi-tinted modus-vivendi-tinted)))
 
 (use-package doom-themes
   :config
