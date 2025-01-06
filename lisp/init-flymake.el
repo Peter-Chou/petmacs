@@ -8,6 +8,11 @@
   :diminish
   :functions my-elisp-flymake-byte-compile
   :hook (prog-mode . flymake-mode)
+  :bind (:map flymake-project-diagnostics-mode-map
+         ("C-n" . evil-next-visual-line)
+         ("C-p" . evil-previous-visual-line)
+         ("M-n" . evil-next-visual-line)
+         ("M-p" . evil-previous-visual-line))
   :init
   (setq flymake-fringe-indicator-position 'right-fringe
         flymake-margin-indicator-position 'right-margin
