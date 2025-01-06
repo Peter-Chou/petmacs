@@ -235,15 +235,17 @@ FACE defaults to inheriting from default and highlight."
                                       markdown-mode
                                       yaml-mode
                                       yaml-ts-mode)
+              hl-todo-keyword-faces '(("TODO" . ((t (:foreground "#ffffff" :background "#e45649" :weight bold))))
+                                      ("FIXME" . ((t (:foreground "#ffffff" :background "#e45649" :weight bold))))
+                                      ("ISSUE" . ((t (:foreground "#ffffff" :background "#e45649" :weight bold))))
+                                      ("DEFECT" . ((t (:foreground "#ffffff" :background "#e45649" :weight bold))))
+                                      ("TRICK" . ((t (:foreground "#ffffff" :background "#d0bf8f" :weight bold))))
+                                      ("WORKAROUND" . ((t (:foreground "#ffffff" :background "#d0bf8f" :weight bold))))
+                                      ("DEBUG" . ((t (:foreground "#ffffff" :background "#7cb8bb" :weight bold))))
+                                      ("STUB" . ((t (:foreground "#ffffff" :background "#7cb8bb" :weight bold)))))
               ;; hl-todo-require-punctuation t
               hl-todo-highlight-punctuation ":")
   :config
-  ;; (dolist (keyword '("BUG" "DEFECT" "ISSUE"))
-  ;;   (add-to-list 'hl-todo-keyword-faces `(,keyword . "#e45649")))
-  ;; (dolist (keyword '("TRICK" "WORKAROUND"))
-  ;;   (add-to-list 'hl-todo-keyword-faces `(,keyword . "#d0bf8f")))
-  ;; (dolist (keyword '("DEBUG" "STUB"))
-  ;;   (add-to-list 'hl-todo-keyword-faces `(,keyword . "#7cb8bb")))
 
   (defun hl-todo-rg (regexp &optional files dir)
     "Use `rg' to find all TODO or similar keywords."
