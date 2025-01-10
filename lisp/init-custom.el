@@ -74,8 +74,12 @@
   ;; '(("8:00" . ef-melissa-light)
   ;;   ("20:00"  . ef-elea-dark))
 
-  '(("8:00" . modus-operandi-tinted)
-    ("20:00"  . modus-vivendi-tinted))
+  ;; '(("8:00" . modus-operandi-tinted)
+  ;;   ("20:00"  . modus-vivendi-tinted))
+
+  '(("8:00" . standard-light-tinted)
+    ("20:00"  . standard-dark-tinted))
+
   "day night theme")
 
 (defvar petmacs-modeline-style
