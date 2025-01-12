@@ -130,7 +130,7 @@
   :init
   (setq awesome-tray-separator " ┃ "
         awesome-tray-hide-mode-line petmacs-disable-modeline
-        awesome-tray-mode-line-active-color petmacs-favor-color
+        ;; awesome-tray-mode-line-active-color petmacs-favor-color
         awesome-tray-buffer-name-buffer-changed t
         awesome-tray-buffer-name-max-length 30
         awesome-tray-info-padding-right 2.5
@@ -262,8 +262,83 @@
     (unless after-init-time
       (setq-default mode-line-format nil))
     :config
-    (doom-modeline-def-segment
-      breadcrumb
+    (defun my/update-modeline-box (&rest _)
+      (unless (minibufferp)
+        (when (eq (window-buffer (selected-window)) (current-buffer))
+          (let* ((face (cond
+                        ((evil-normal-state-p) 'doom-modeline-evil-normal-state)
+                        ((evil-emacs-state-p) 'doom-modeline-evil-emacs-state)
+                        ((evil-insert-state-p) 'doom-modeline-evil-insert-state)
+                        ((evil-motion-state-p) 'doom-modeline-evil-motion-state)
+                        ((evil-visual-state-p) 'doom-modeline-evil-visual-state)
+                        ((evil-operator-state-p) 'doom-modeline-evil-operator-state)
+                        ((evil-replace-state-p) 'doom-modeline-evil-replace-state)
+                        (t 'doom-modeline-evil-user-state)))
+                 (color (face-foreground face nil t)))
+            (set-face-attribute 'mode-line-active nil :box `(:line-width (-1 . -4) :color ,color))))))
+    (add-hook 'post-command-hook #'my/update-modeline-box)
+
+    (doom-modeline-def-segment nyan-position
+      "The buffer position information."
+      (let ((sep (doom-modeline-spc))
+            (wsep (doom-modeline-wspc))
+            (face (doom-modeline-face))
+            (help-echo "Buffer percentage\n\
+mouse-1: Display Line and Column Mode Menu")
+            (mouse-face 'doom-modeline-highlight)
+            (local-map mode-line-column-line-number-mode-map))
+        `(,wsep
+
+          ;; Line and column
+          (:propertize
+           ((line-number-mode
+             (column-number-mode
+              (doom-modeline-column-zero-based
+               doom-modeline-position-column-line-format
+               ,(string-replace
+                 "%c" "%C" (car doom-modeline-position-column-line-format)))
+              doom-modeline-position-line-format)
+             (column-number-mode
+              (doom-modeline-column-zero-based
+               doom-modeline-position-column-format
+               ,(string-replace
+                 "%c" "%C" (car doom-modeline-position-column-format)))))
+            (doom-modeline-total-line-number
+             ,(and doom-modeline-total-line-number
+                   (format "/%d" (line-number-at-pos (point-max))))))
+           face ,face
+           help-echo ,help-echo
+           mouse-face ,mouse-face
+           local-map ,local-map)
+
+          ((or line-number-mode column-number-mode)
+           ,sep)
+
+          ;; must show nyan
+          ,(cond
+            ((bound-and-true-p nyan-mode)
+             (concat sep (nyan-create) sep))
+            ((bound-and-true-p poke-line-mode)
+             (concat sep (poke-line-create) sep))
+            ((bound-and-true-p mlscroll-mode)
+             (concat sep
+                     (let ((mlscroll-right-align nil))
+                       (format-mode-line (mlscroll-mode-line)))
+                     sep))
+            ((bound-and-true-p sml-modeline-mode)
+             (concat sep (sml-modeline-create) sep))
+            (t ""))
+
+          ;; Percent position
+          (doom-modeline-percent-position
+           ((:propertize ("" doom-modeline-percent-position)
+             face ,face
+             help-echo ,help-echo
+             mouse-face ,mouse-face
+             local-map ,local-map)
+            ,sep)))))
+
+    (doom-modeline-def-segment breadcrumb
       "breadcrumb mode in modeline"
       (if (and (doom-modeline--active) (> (length (breadcrumb-imenu-crumbs)) 0))
           `(,(propertize
@@ -279,7 +354,7 @@
       ;; '(eldoc bar workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
       ;; '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl lsp minor-modes input-method indent-info buffer-encoding major-mode process vcs checker time)
 
-      '(eldoc bar workspace-name window-number modals matches follow buffer-info remote-host word-count parrot selection-info)
+      '(eldoc bar workspace-name window-number matches follow buffer-info remote-host nyan-position word-count parrot selection-info)
       '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl input-method indent-info buffer-encoding check process))
 
     ;; Set default mode-line
@@ -485,7 +560,7 @@
     (setq emojify-download-emojis-p t)))
 
 (use-package nyan-mode
-  ;; :hook (doom-modeline-mode . nyan-mode)
+  :hook (doom-modeline-mode . nyan-mode)
   :init
   (setq nyan-bar-length 8
         nyan-animate-nyancat t
@@ -533,9 +608,6 @@
     :hook (after-init . spacious-padding-mode)
     :init
     (setq
-     spacious-padding-subtle-mode-line
-     `(:mode-line-active ,petmacs-favor-color
-       :mode-line-inactive shadow)
      spacious-padding-widths
      '( :internal-border-width 8
         :mode-line-width 6
