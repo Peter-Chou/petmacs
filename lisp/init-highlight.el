@@ -71,8 +71,11 @@ FACE defaults to inheriting from default and highlight."
             (blink-matching-open))))
       (advice-add #'show-paren-function :after #'show-paren-off-screen))))
 
+;; Highlight symbols
 (use-package symbol-overlay
+  :diminish
   :custom-face
+  (symbol-overlay-default-face ((t (:inherit region :background unspecified :foreground unspecified))))
   (symbol-overlay-face-1 ((t (:inherit nerd-icons-blue :background unspecified :foreground unspecified :inverse-video t))))
   (symbol-overlay-face-2 ((t (:inherit nerd-icons-pink :background unspecified :foreground unspecified :inverse-video t))))
   (symbol-overlay-face-3 ((t (:inherit nerd-icons-yellow :background unspecified :foreground unspecified :inverse-video t))))
@@ -81,26 +84,6 @@ FACE defaults to inheriting from default and highlight."
   (symbol-overlay-face-6 ((t (:inherit nerd-icons-orange :background unspecified :foreground unspecified :inverse-video t))))
   (symbol-overlay-face-7 ((t (:inherit nerd-icons-green :background unspecified :foreground unspecified :inverse-video t))))
   (symbol-overlay-face-8 ((t (:inherit nerd-icons-cyan :background unspecified :foreground unspecified :inverse-video t))))
-  :pretty-hydra
-  ((:title (pretty-hydra-title "symbol overlay")
-    :foreign-keys warn :quit-key ("q" "C-g"))
-   ("Actions"
-    (("c" symbol-overlay-save-symbol)
-     ("e" symbol-overlay-echo-mark)
-     ("o" symbol-overlay-put)
-     ("O" symbol-overlay-remove-all)
-     ("r" symbol-overlay-query-replace)
-     ("R" symbol-overlay-rename)
-     ("s" symbol-overlay-isearch-literally)
-     ("t" symbol-overlay-toggle-in-scope)
-     ("z" recenter-top-bottom))
-    "Jump"
-    (("n" symbol-overlay-jump-next)
-     ("N" symbol-overlay-jump-prev)
-     ("p" symbol-overlay-jump-prev)
-     ("d" symbol-overlay-jump-to-definition)
-     ("b" symbol-overlay-switch-backward)
-     ("f" symbol-overlay-switch-forward))))
   :bind (:map symbol-overlay-mode-map
          ("M-i" . symbol-overlay-put)
          ("M-n" . symbol-overlay-jump-next)
@@ -108,13 +91,11 @@ FACE defaults to inheriting from default and highlight."
          ("M-N" . symbol-overlay-switch-forward)
          ("M-P" . symbol-overlay-switch-backward)
          ("M-C" . symbol-overlay-remove-all)
-         :map symbol-overlay-map
-         ("h"   . nil)
-         ("?"   . symbol-overlay-map-help))
-  :hook ((prog-mode yaml-mode) . symbol-overlay-mode)
-  (iedit-mode . turn-off-symbol-overlay)
-  (iedit-mode-end . turn-on-symbol-overlay)
-  :init (setq symbol-overlay-idle-time 0.1)
+         ([M-f3] . symbol-overlay-remove-all))
+  :hook (((prog-mode yaml-mode) . symbol-overlay-mode)
+         (iedit-mode            . turn-off-symbol-overlay)
+         (iedit-mode-end        . turn-on-symbol-overlay))
+  :init (setq symbol-overlay-idle-time 0.3)
   :config
   (with-no-warnings
     ;; Disable symbol highlighting while selecting
