@@ -562,7 +562,7 @@ mouse-1: Display Line and Column Mode Menu")
 (use-package nyan-mode
   :hook (doom-modeline-mode . nyan-mode)
   :init
-  (setq nyan-bar-length 8
+  (setq nyan-bar-length 15
         nyan-animate-nyancat t
         nyan-wavy-trail t))
 
