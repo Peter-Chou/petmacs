@@ -53,7 +53,7 @@
 
 (use-package dracula-theme)
 
-(use-package standard-themes)
+(use-package spacemacs-theme)
 
 (use-package ef-themes
   :init (setq ef-themes-to-toggle '(ef-melissa-light ef-melissa-dark)))
