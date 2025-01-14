@@ -133,7 +133,7 @@
         ;; awesome-tray-mode-line-active-color petmacs-favor-color
         awesome-tray-buffer-name-buffer-changed t
         awesome-tray-buffer-name-max-length 30
-        awesome-tray-info-padding-right 2.5
+        awesome-tray-info-padding-right 1
         awesome-tray-update-interval 0.5
         awesome-tray-belong-update-duration 2.5
         awesome-tray-date-format (concat (format "%s " (nerd-icons-mdicon "nf-md-clock")) "%m-%d %H:%M %a")
@@ -144,8 +144,8 @@
   (if petmacs-disable-modeline
       (setq awesome-tray-active-modules   '("pomodoro" "buffer-name" "location" "git"  "date")
             awesome-tray-essential-modules '("buffer-name" "location"))
-    (setq awesome-tray-active-modules   '("pomodoro" "project-relative-dir" "git" "date")
-          awesome-tray-essential-modules '("project-relative-dir" "date")))
+    (setq awesome-tray-active-modules   '("pomodoro" "project-relative-dir" "flymake" "git" "date")
+          awesome-tray-essential-modules '("project-relative-dir" "flymake" "date")))
   :config
   (defun awesome-tray-project-relative-dir-info () (format "%s" (petmacs/get-project-relateive-dir)))
   (add-to-list 'awesome-tray-module-alist '("project-relative-dir" . (awesome-tray-project-relative-dir-info awesome-tray-module-parent-dir-face)))
@@ -223,11 +223,11 @@
                                (string-join
                                 (list
                                  (when (> .note 0)
-                                   (propertize (concat (format "%s:" (nerd-icons-faicon "nf-fa-info_circle")) (number-to-string .note)) 'face 'awesome-tray-module-flymake-note))
+                                   (propertize (concat (format "%s " (nerd-icons-faicon "nf-fa-info_circle")) (number-to-string .note)) 'face 'awesome-tray-module-flymake-note))
                                  (when (> .warning 0)
-                                   (propertize (concat (format "%s:" (nerd-icons-faicon "nf-fa-warning")) (number-to-string .warning)) 'face 'awesome-tray-module-flymake-warning))
+                                   (propertize (concat (format "%s " (nerd-icons-faicon "nf-fa-warning")) (number-to-string .warning)) 'face 'awesome-tray-module-flymake-warning))
                                  (when (> .error 0)
-                                   (propertize (concat (format "%s:" (nerd-icons-faicon "nf-fa-times_circle")) (number-to-string .error)) 'face 'awesome-tray-module-flymake-error)))
+                                   (propertize (concat (format "%s " (nerd-icons-faicon "nf-fa-times_circle")) (number-to-string .error)) 'face 'awesome-tray-module-flymake-error)))
                                 " "))
                             (propertize (format "%s" (nerd-icons-faicon "nf-fa-check_circle")) 'face 'awesome-tray-green-face)
                             )))))))
@@ -355,7 +355,7 @@ mouse-1: Display Line and Column Mode Menu")
       ;; '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl lsp minor-modes input-method indent-info buffer-encoding major-mode process vcs checker time)
 
       '(eldoc bar workspace-name window-number matches follow buffer-info remote-host nyan-position word-count parrot selection-info)
-      '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl input-method indent-info buffer-encoding check process))
+      '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl input-method indent-info buffer-encoding process))
 
     ;; Set default mode-line
     (add-hook 'doom-modeline-mode-hook (lambda ()
