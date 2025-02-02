@@ -6,8 +6,8 @@
 (use-package eldoc-box)
 
 (use-package eglot
-  ;; :pin gnu
-  :pin gnu-devel
+  :pin gnu
+  ;; :pin gnu-devel
   :preface
   (defun petmacs/eglot-keybindgs ()
     (define-key evil-motion-state-map "gR" #'eglot-rename)
