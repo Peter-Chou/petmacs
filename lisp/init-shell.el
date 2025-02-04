@@ -78,8 +78,7 @@
 ;; @see https://github.com/akermu/emacs-libvterm#installation
 (when (and module-file-suffix           ; dynamic module
            (executable-find "cmake")
-           (executable-find "libtool")
-           (executable-find "make"))
+           (executable-find "libtool"))
   (use-package vterm
     :init (setq vterm-always-compile-module t))
 
