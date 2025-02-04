@@ -53,7 +53,8 @@
 
 (use-package dracula-theme)
 
-(use-package spacemacs-theme)
+(use-package spacemacs-theme
+  :init (setq spacemacs-theme-comment-italic t))
 
 (use-package ef-themes
   :init (setq ef-themes-to-toggle '(ef-melissa-light ef-melissa-dark)))
