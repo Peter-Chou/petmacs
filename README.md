@@ -193,7 +193,7 @@ formatter for `json`, `javascript`, `typescript`, `css`, `scss`, `html`, `graphq
 ### 5.8 xmllint (xml)
 
 ``` bash
-sudo apt-get install xmllint
+sudo apt-get install libxml2-utils
 ```
 
 ---
