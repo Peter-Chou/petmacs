@@ -729,5 +729,6 @@ mouse-1: Display Line and Column Mode Menu")
    magit-file-icons-enable-untracked-icons t
    magit-file-icons-enable-diffstat-icons t))
 
+(use-package org-rainbow-tags)
 
 (provide 'init-ui)
