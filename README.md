@@ -105,17 +105,19 @@ use `clangd` in [LLVM project](https://github.com/llvm/llvm-project). soft link 
 or you can build it from source
 
 ``` bash
-sudo apt-get install build-essential lld
+sudo apt-get install build-essential ninja-build
 
-llvm_version=llvmorg-18.1.1
-git clone -b $llvm_version --depth=1 https://gitee.com/mirrors/LLVM.git
-cd LLVM
-cmake -S llvm -B build -DCMAKE_BUILD_TYPE=Release -DLLVM_USE_LINKER=lld \
-    -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;lldb" \
+llvm_version=llvmorg-19.1.7
+git clone -b $llvm_version --depth=1 https://gitee.com/mirrors/LLVM.git $llvm_version
+cd $llvm_version
+cmake -S llvm -G Ninja -B build -DCMAKE_BUILD_TYPE=Release \
+    -DLLVM_ENABLE_PROJECTS="clang;lld;clang-tools-extra;lldb" \
     -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi;libunwind" \
-    -DCMAKE_INSTALL_PREFIX=/opt/llvm
+    -DCMAKE_INSTALL_PREFIX=/opt/softwares/$llvm_version
+
 cmake --build build -j $(nproc)
 sudo $(which cmake) --install build
+sudo ln -sf /opt/softwares/$llvm_version /opt/llvm
 ```
 
 ---
