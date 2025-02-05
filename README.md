@@ -178,6 +178,7 @@ sudo apt-get install pgformatter
 ```
 
 ### 5.6 dprint (dockerfile, toml)
+
 ``` bash
 npm install -g dprint
 ```
