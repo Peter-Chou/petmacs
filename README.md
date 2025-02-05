@@ -130,15 +130,13 @@ sudo ln -sf /opt/softwares/$llvm_version /opt/llvm
 pip install debugpy
 ```
 
-### 4.2 java-debug (Java)
+### 4.2 junit-platform-console-standalone (Java)
 
-java-debug already been carried in `./data/lsp-java-jars/com.microsoft.java.debug.plugin-0.52.0.jar`
+junit-platform-console-standalone is already installed in `M-x: eglot-java-upgrade-junit-jar` command
 
 ### 4.3 lldb-dap (C/C++)
 
 lldb-dap (formerly lldb-vscode) is built and installed in section 3.3
-
-> lldb-vscode adapter in dape actually calls lldb-dap
 
 ---
 
@@ -151,7 +149,6 @@ petmacs use [apheleia](https://github.com/radian-software/apheleia) to format th
 install [ruff](https://github.com/astral-sh/ruff) in your environment.
 
 ``` bash
-# for python linter and formatter
 pip install ruff
 ```
 
