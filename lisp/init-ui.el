@@ -51,7 +51,8 @@
 (use-package solaire-mode
   :hook (after-init . solaire-global-mode))
 
-(use-package dracula-theme)
+(use-package catppuccin-theme
+  :init (setq catppuccin-flavor 'latte))
 
 (use-package spacemacs-theme
   :init (setq spacemacs-theme-comment-italic t))
