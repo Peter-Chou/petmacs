@@ -612,7 +612,7 @@ mouse-1: Display Line and Column Mode Menu")
     (setq
      spacious-padding-widths
      '( :internal-border-width 8
-        :mode-line-width 6
+        :mode-line-width 1
         :right-divider-width 1
         :fringe-width 6
         :tab-width 6
