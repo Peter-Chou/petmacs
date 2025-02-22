@@ -4,6 +4,7 @@
   ;; :hook (magit-mode . magit-wip-mode)
   :init
   (setq magit-diff-refine-hunk t
+        magit-format-file-function #'magit-format-file-nerd-icons
         magit-process-finish-apply-ansi-colors t
         magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1)
   :config
