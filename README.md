@@ -91,7 +91,7 @@ pip install basedpyright
 
 ### 3.2 eclipse jdtls (Java)
 
-Please make sure  java 17 is installed in `/opt/jdk17` folder and run following commands in emacs.
+Please make sure  java 21 is installed in `/opt/jdk21` folder and run following commands in emacs.
 
 ``` bash
 M-x: eglot-java-upgrade-lsp-server

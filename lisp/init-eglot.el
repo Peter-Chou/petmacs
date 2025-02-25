@@ -130,8 +130,8 @@
   (setq exec-path (append exec-path (list (expand-file-name ".emacs.d/share/eclipse.jdt.ls/bin"))))
 
   (require 'eglot-java)
-  (setq eglot-java-java-home "/opt/jdk17"
-        eglot-java-java-program "/opt/jdk17/bin/java"
+  (setq eglot-java-java-home "/opt/jdk21"
+        eglot-java-java-program "/opt/jdk21/bin/java"
         eglot-java-eclipse-jdt-cache-directory (expand-file-name (file-name-concat user-emacs-directory "data" "eglot-java-cache"))
         eglot-java-debug-jvm-arg "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=localhost:11111"
         eglot-java-eclipse-jdt-args
