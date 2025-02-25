@@ -555,11 +555,11 @@ mouse-1: Display Line and Column Mode Menu")
           mini-frame-resize-max-height 25)))
 
 ;; disable install emojis when github is unavailable
-(use-package emojify
-  :hook (after-init . global-emojify-mode)
-  :init
-  (unless petmacs-quelpa-use-gitee-mirror
-    (setq emojify-download-emojis-p t)))
+;; (use-package emojify
+;;   :hook (after-init . global-emojify-mode)
+;;   :init
+;;   (unless petmacs-quelpa-use-gitee-mirror
+;;     (setq emojify-download-emojis-p t)))
 
 (use-package nyan-mode
   :hook (doom-modeline-mode . nyan-mode)
