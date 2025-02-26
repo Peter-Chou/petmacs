@@ -1169,4 +1169,16 @@ buffer."
           (pop-to-buffer buf)
         (switch-to-buffer buf)))))
 
+(defun petmacs/remove-which-function-info ()
+  (setq mode-line-misc-info
+        (delq (assq 'which-function-mode mode-line-misc-info)
+              mode-line-misc-info)))
+
+(defun petmacs/get-project-relateive-dir ()
+  "get project relative directory"
+  (let ((relative-dir (substring (petmacs--projectile-directory-path) 0 -1)))
+    (if (string= relative-dir ".")
+        ""
+      (concat (format " %s " (nerd-icons-faicon "nf-fa-folder_open")) relative-dir))))
+
 (provide 'init-funcs)

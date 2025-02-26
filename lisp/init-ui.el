@@ -2,7 +2,9 @@
 
 (eval-when-compile
   (require 'init-custom)
-  (require 'init-funcs))
+  (require 'init-funcs)
+  (require 'init-doom-modeline-segments)
+  (require 'init-awesome-tray-infos))
 
 ;; Optimization
 (setq idle-update-delay 1.0)
@@ -114,13 +116,6 @@
 
 
 (use-package awesome-tray
-  :preface
-  (defun petmacs/get-project-relateive-dir ()
-    "get project relative directory"
-    (let ((relative-dir (substring (petmacs--projectile-directory-path) 0 -1)))
-      (if (string= relative-dir ".")
-          ""
-        (concat (format " %s " (nerd-icons-faicon "nf-fa-folder_open")) relative-dir))))
   :ensure nil
   :commands (awesome-tray-update)
   :hook (after-init . awesome-tray-mode)
@@ -149,92 +144,6 @@
     (setq awesome-tray-active-modules   '("pomodoro" "project-relative-dir" "flymake" "git" "date")
           awesome-tray-essential-modules '("project-relative-dir" "flymake" "date")))
   :config
-  (defun awesome-tray-project-relative-dir-info () (format "%s" (petmacs/get-project-relateive-dir)))
-  (add-to-list 'awesome-tray-module-alist '("project-relative-dir" . (awesome-tray-project-relative-dir-info awesome-tray-module-parent-dir-face)))
-
-  (defun awesome-tray-module-pomodoro-info () (format "%s" pomodoro-mode-line-string))
-  (defface awesome-tray-module-pomodoro-face
-    '((((background light))
-       :foreground "#008080" :bold t)
-      (t
-       :foreground "#00ced1" :bold t))
-    "pomodoro face."
-    :group 'awesome-tray)
-  (add-to-list 'awesome-tray-module-alist '("pomodoro" . (awesome-tray-module-pomodoro-info awesome-tray-module-pomodoro-face)))
-
-  (defun awesome-tray-module-pyvenv-info ()
-    (if (and (member major-mode '(python-mode python-ts-mode)) (bound-and-true-p pyvenv-workon))
-        ;; (format "<%s>" pyvenv-workon)
-        (concat (format "%s " (nerd-icons-faicon "nf-fae-python")) (format "%s" pyvenv-workon))
-      ""))
-  (defface awesome-tray-module-pyvenv-face
-    '((((background light))
-       :foreground "#0673d8" :bold t)
-      (t
-       :foreground "#369bf7" :bold t))
-    "pyvenv face."
-    :group 'awesome-tray)
-  (add-to-list 'awesome-tray-module-alist '("pyvenv" . (awesome-tray-module-pyvenv-info awesome-tray-module-pyvenv-face)))
-
-  (defun awesome-tray-module-breadcrumbs-info ()
-    (breadcrumb-imenu-crumbs))
-  (defface awesome-tray-module-breadcrumbs-face
-    `((((background light))
-       :foreground ,petmacs-favor-color :bold t)
-      (t
-       :foreground ,petmacs-favor-color :bold t))
-    "breadcrumbs face."
-    :group 'awesome-tray)
-  (add-to-list 'awesome-tray-module-alist '("breadcrumbs" . (awesome-tray-module-breadcrumbs-info awesome-tray-module-breadcrumbs-face)))
-
-  (defun petmacs/awesome-tray-module-flymake-info ()
-    "A module for showing Flymake state.(use custom unicode)"
-    (with-demoted-errors
-        ""
-      (if (and (featurep 'flymake) flymake--state)
-          (let* ((known (hash-table-keys flymake--state))
-                 (running (flymake-running-backends))
-                 (disabled (flymake-disabled-backends))
-                 (reported (flymake-reporting-backends))
-                 (disabledp (and disabled (null running)))
-                 (waiting (cl-set-difference running reported)))
-            (when-let
-                ((flymake-state
-                  (cond
-                   (waiting (format "%s" (nerd-icons-mdicon "nf-md-timer_sand")))
-                   ((null known) (format "%s" (nerd-icons-faicon "nf-fa-question")))
-                   (disabledp (format "%s" (nerd-icons-faicon "nf-fa-exclamation")))
-                   (t (let ((.error 0)
-                            (.warning 0)
-                            (.note 0))
-                        (cl-loop
-                         with warning-level = (warning-numeric-level :warning)
-                         with note-level = (warning-numeric-level :debug)
-                         for state being the hash-values of flymake--state
-                         do (cl-loop
-                             with diags = (flymake--state-diags state)
-                             for diag in diags do
-                             (let ((severity (flymake--lookup-type-property (flymake--diag-type diag) 'severity
-                                                                            (warning-numeric-level :error))))
-                               (cond ((> severity warning-level) (cl-incf .error))
-                                     ((> severity note-level)    (cl-incf .warning))
-                                     (t                          (cl-incf .note))))))
-                        (let ((num (+ .error .warning .note)))
-                          (if (> num 0)
-                              (string-clean-whitespace
-                               (string-join
-                                (list
-                                 (when (> .note 0)
-                                   (propertize (concat (format "%s " (nerd-icons-faicon "nf-fa-info_circle")) (number-to-string .note)) 'face 'awesome-tray-module-flymake-note))
-                                 (when (> .warning 0)
-                                   (propertize (concat (format "%s " (nerd-icons-faicon "nf-fa-warning")) (number-to-string .warning)) 'face 'awesome-tray-module-flymake-warning))
-                                 (when (> .error 0)
-                                   (propertize (concat (format "%s " (nerd-icons-faicon "nf-fa-times_circle")) (number-to-string .error)) 'face 'awesome-tray-module-flymake-error)))
-                                " "))
-                            (propertize (format "%s" (nerd-icons-faicon "nf-fa-check_circle")) 'face 'awesome-tray-green-face)
-                            )))))))
-              flymake-state)))))
-  (advice-add #'awesome-tray-module-flymake-info :override #'petmacs/awesome-tray-module-flymake-info)
 
   (add-hook 'after-save-hook 'awesome-tray-update))
 
@@ -252,14 +161,11 @@
           doom-modeline-indent-info nil
           doom-modeline-mode-alist nil
           doom-modeline-vcs-max-length 20
-
           ;; doom-modeline-total-line-number t
-
           doom-modeline-enable-word-count nil
           doom-modeline-buffer-modification-icon t
           doom-modeline-window-width-limit 110
           doom-modeline-env-version nil)
-
     ;; Prevent flash of unstyled modeline at startup
     (unless after-init-time
       (setq-default mode-line-format nil))
@@ -280,88 +186,24 @@
             (set-face-attribute 'mode-line-active nil :box `(:line-width (-1 . -4) :color ,color))))))
     (add-hook 'post-command-hook #'my/update-modeline-box)
 
-    (doom-modeline-def-segment nyan-position
-      "The buffer position information."
-      (let ((sep (doom-modeline-spc))
-            (wsep (doom-modeline-wspc))
-            (face (doom-modeline-face))
-            (help-echo "Buffer percentage\n\
-mouse-1: Display Line and Column Mode Menu")
-            (mouse-face 'doom-modeline-highlight)
-            (local-map mode-line-column-line-number-mode-map))
-        `(,wsep
-
-          ;; Line and column
-          (:propertize
-           ((line-number-mode
-             (column-number-mode
-              (doom-modeline-column-zero-based
-               doom-modeline-position-column-line-format
-               ,(string-replace
-                 "%c" "%C" (car doom-modeline-position-column-line-format)))
-              doom-modeline-position-line-format)
-             (column-number-mode
-              (doom-modeline-column-zero-based
-               doom-modeline-position-column-format
-               ,(string-replace
-                 "%c" "%C" (car doom-modeline-position-column-format)))))
-            (doom-modeline-total-line-number
-             ,(and doom-modeline-total-line-number
-                   (format "/%d" (line-number-at-pos (point-max))))))
-           face ,face
-           help-echo ,help-echo
-           mouse-face ,mouse-face
-           local-map ,local-map)
-
-          ((or line-number-mode column-number-mode)
-           ,sep)
-
-          ;; must show nyan
-          ,(cond
-            ((bound-and-true-p nyan-mode)
-             (concat sep (nyan-create) sep))
-            ((bound-and-true-p poke-line-mode)
-             (concat sep (poke-line-create) sep))
-            ((bound-and-true-p mlscroll-mode)
-             (concat sep
-                     (let ((mlscroll-right-align nil))
-                       (format-mode-line (mlscroll-mode-line)))
-                     sep))
-            ((bound-and-true-p sml-modeline-mode)
-             (concat sep (sml-modeline-create) sep))
-            (t ""))
-
-          ;; Percent position
-          (doom-modeline-percent-position
-           ((:propertize ("" doom-modeline-percent-position)
-             face ,face
-             help-echo ,help-echo
-             mouse-face ,mouse-face
-             local-map ,local-map)
-            ,sep)))))
-
-    (doom-modeline-def-segment breadcrumb
-      "breadcrumb mode in modeline"
-      (if (and (doom-modeline--active) (> (length (breadcrumb-imenu-crumbs)) 0))
-          `(,(propertize
-              (format " %s %s "
-                      (nerd-icons-codicon "nf-cod-triangle_right")
-                      (nerd-icons-codicon "nf-cod-symbol_method"))
-              'face `(:inherit font-lock-function-name-face :height 1.2)) ,(breadcrumb-imenu-crumbs) " ")
-        '("")))
-
     (doom-modeline-def-modeline
       'petmacs/simple-mode-line
      ;;;; main
       ;; '(eldoc bar workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
       ;; '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl lsp minor-modes input-method indent-info buffer-encoding major-mode process vcs checker time)
-
-      '(eldoc bar workspace-name window-number matches follow buffer-info remote-host nyan-position word-count parrot selection-info)
-      '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl input-method indent-info buffer-encoding process))
+      '(eldoc bar workspace-name window-number matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
+      '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug my-which-function-segment repl input-method indent-info buffer-encoding process))
 
     ;; Set default mode-line
     (add-hook 'doom-modeline-mode-hook (lambda ()
                                          (doom-modeline-set-modeline 'petmacs/simple-mode-line 'default)))))
+
+;; (use-package which-function-mode
+;;   :ensure nil
+;;   :hook (prog-mode . which-function-mode)
+;;   :init
+;;   (unless petmacs-disable-modeline
+;;     (add-hook 'which-function-mode-hook #'petmacs/remove-which-function-info)))
 
 (use-package hide-mode-line
   :hook (((treemacs-mode
@@ -681,44 +523,23 @@ mouse-1: Display Line and Column Mode Menu")
   :ensure nil
   :commands (pretty-code-add-hook)
   :init
-  (pretty-code-add-hook 'python-mode-hook '((:return "return")
-                                            (:yield "yield")
-                                            ;; (:class "class")
-                                            (:raise "raise")
-                                            (:lambda "lambda")
-                                            (:def "def")))
-  (pretty-code-add-hook 'python-ts-mode-hook '((:return "return")
-                                               (:yield "yield")
-                                               ;; (:class "class")
-                                               (:raise "raise")
-                                               (:lambda "lambda")
-                                               (:def "def")))
-  (pretty-code-add-hook 'c-mode-hook     '((:return "return")
-                                           ;; (:class "class")
-                                           ;; (:struct "struct")
-                                           ))
-  (pretty-code-add-hook 'c-ts-mode-hook     '((:return "return")
-                                              ;; (:class "class")
-                                              ;; (:struct "struct")
-                                              ))
-  (pretty-code-add-hook 'c++-mode-hook     '((:return "return")
-                                             ;; (:class "class")
-                                             ;; (:struct "struct")
-                                             ))
-  (pretty-code-add-hook 'c++-ts-mode-hook     '((:return "return")
-                                                ;; (:class "class")
-                                                ;; (:struct "struct")
-                                                ))
-  (pretty-code-add-hook 'java-mode-hook     '((:return "return")
-                                              ;; (:class "class")
-                                              ;; (:struct "struct")
-                                              (:throw "throw")))
-  (pretty-code-add-hook 'java-ts-mode-hook     '((:return "return")
-                                                 ;; (:class "class")
-                                                 ;; (:struct "struct")
-                                                 (:throw "throw")))
+
   (pretty-code-add-hook 'emacs-lisp-mode-hook '((:def "defun")
-    					                        (:lambda "lambda"))))
+    					                        (:lambda "lambda")))
+
+  (dolist (mode-hook '(python-mode-hook python-ts-mode-hook))
+    (pretty-code-add-hook mode-hook '((:return "return")
+                                      (:yield "yield")
+                                      ;; (:class "class")
+                                      (:raise "raise")
+                                      (:lambda "lambda")
+                                      (:def "def"))))
+
+  (dolist (mode-hook '(c-mode-hook c-ts-mode-hook c++-mode-hook c++-ts-mode-hook))
+    (pretty-code-add-hook mode-hook '((:return "return"))))
+
+  (dolist (mode-hook '(java-mode-hook java-ts-mode-hook))
+    (pretty-code-add-hook mode-hook '((:return "return") (:throw "throw")))))
 
 (use-package org-rainbow-tags)
 

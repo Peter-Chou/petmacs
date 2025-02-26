@@ -38,7 +38,11 @@
         (setenv "PYTHONPATH" (concat (getenv "PYTHONPATH") ":" (projectile-project-root))))))
 
   (defun petmacs/remove-pyvenv-modeline-env-info ()
-    (setq mode-line-misc-info (delete '(pyvenv-mode pyvenv-mode-line-indicator) mode-line-misc-info)))
+    ;; (setq mode-line-misc-info (delete '(pyvenv-mode pyvenv-mode-line-indicator) mode-line-misc-info))
+    (setq mode-line-misc-info
+          (delq (assq 'pyvenv-mode mode-line-misc-info)
+                mode-line-misc-info)))
+
   (defun petmacs/pyvenv-pyright-autoload ()
     "autoload virtual environment if project_root/pyrightconfig.json file exists,"
     (interactive)
