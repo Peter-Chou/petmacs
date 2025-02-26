@@ -199,7 +199,17 @@ sudo apt-get install libxml2-utils
 
 ---
 
-## 6. Screenshots
+## 6. Debug
+
+You can add your test config to init-mini.el and use the following command to ease your debug process.
+
+``` bash
+emacs -Q -l ~/.emacs.d/init-mini.el
+```
+
+---
+
+## 7. Screenshots
 
 ![dashboard](./data/pics/dashboard.png)
 
