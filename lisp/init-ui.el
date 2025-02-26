@@ -2,9 +2,7 @@
 
 (eval-when-compile
   (require 'init-custom)
-  (require 'init-funcs)
-  (require 'init-doom-modeline-segments)
-  (require 'init-awesome-tray-infos))
+  (require 'init-funcs))
 
 ;; Optimization
 (setq idle-update-delay 1.0)
@@ -125,6 +123,7 @@
   (awesome-tray-module-buffer-name-face ((((background light)) :inherit font-lock-warning-face :bold t)
                                          (t (:inherit font-lock-warning-face :bold t))))
   :init
+  (require 'init-awesome-tray-infos)
   (setq awesome-tray-separator " ┃ "
         awesome-tray-hide-mode-line petmacs-disable-modeline
         ;; awesome-tray-mode-line-active-color petmacs-favor-color
@@ -151,6 +150,7 @@
   (use-package doom-modeline
     :hook (awesome-tray-mode . doom-modeline-mode)
     :init
+    (require 'init-doom-modeline-segments)
     (setq doom-modeline-icon petmacs-icon
           doom-modeline-buffer-file-name-style 'buffer-name
           ;; doom-modeline-buffer-file-name-style 'relative-to-project
@@ -192,7 +192,7 @@
      ;;;; main
       ;; '(eldoc bar workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
       ;; '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl lsp minor-modes input-method indent-info buffer-encoding major-mode process vcs checker time)
-      '(eldoc bar workspace-name window-number matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
+      '(eldoc bar workspace-name matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
       '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug my-which-function-segment repl input-method indent-info buffer-encoding process))
 
     ;; Set default mode-line
