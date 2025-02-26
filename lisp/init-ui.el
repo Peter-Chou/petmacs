@@ -161,6 +161,7 @@
           doom-modeline-indent-info nil
           doom-modeline-mode-alist nil
           doom-modeline-vcs-max-length 20
+          doom-modeline-buffer-encoding nil
           ;; doom-modeline-total-line-number t
           doom-modeline-enable-word-count nil
           doom-modeline-buffer-modification-icon t
