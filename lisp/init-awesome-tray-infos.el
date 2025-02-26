@@ -29,6 +29,21 @@
   :group 'awesome-tray)
 (add-to-list 'awesome-tray-module-alist '("pyvenv" . (awesome-tray-module-pyvenv-info awesome-tray-module-pyvenv-face)))
 
+(defun awesome-tray-module-which-function-info ()
+  (if (derived-mode-p 'prog-mode)
+      ;; (format "<%s>" pyvenv-workon)
+      ;; (concat (format "%s " (nerd-icons-codicon "nf-cod-triangle_right")) (format "%s" (which-function)))
+      (format "%s %s" (nerd-icons-codicon "nf-cod-triangle_right") (which-function))
+    ""))
+(defface awesome-tray-module-which-function-face
+  '((((background light))
+     :foreground "#0673d8" :bold t)
+    (t
+     :foreground "#369bf7" :bold t))
+  "pyvenv face."
+  :group 'awesome-tray)
+(add-to-list 'awesome-tray-module-alist '("which-function" . (awesome-tray-module-which-function-info awesome-tray-module-which-function-face)))
+
 (defun awesome-tray-module-breadcrumbs-info ()
   (breadcrumb-imenu-crumbs))
 (defface awesome-tray-module-breadcrumbs-face
