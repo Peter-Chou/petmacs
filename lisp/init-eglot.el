@@ -107,9 +107,7 @@
 (use-package eglot-booster
   :after eglot
   :ensure nil
-  :init (setq eglot-booster-no-remote-boost t)
-  ;; :config (eglot-booster-mode)
-  )
+  :init (setq eglot-booster-no-remote-boost t))
 
 (use-package eglot-java
   :preface
