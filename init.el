@@ -57,7 +57,6 @@
 (require 'init-treemacs)
 ;; (require 'init-workspace)
 
-
 (if (equal petmacs-checker 'flycheck)
     (require 'init-flycheck)
   (require 'init-flymake))
