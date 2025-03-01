@@ -598,12 +598,12 @@ SCALE are supported."
          (flycheck-mode . sideline-mode)
          (flymake-mode . sideline-mode)
          (eglot . sideline-mode)
-         ;; ((java-mode java-ts-mode) . (lambda ()
-         ;;                               "disable sideline-eglot in java-mode / java-ts-mode"
-         ;;                               (if (equal petmacs-checker 'flycheck)
-         ;;                                   (setq-local sideline-backends-right '((sideline-flycheck . down)))
-         ;;                                 (setq-local sideline-backends-right '((sideline-flymake . down))))
-         ;;                               ))
+         ((java-mode java-ts-mode) . (lambda ()
+                                       "disable sideline-eglot in java-mode / java-ts-mode"
+                                       (if (equal petmacs-checker 'flycheck)
+                                           (setq-local sideline-backends-right '((sideline-flycheck . down)))
+                                         (setq-local sideline-backends-right '((sideline-flymake . down))))
+                                       ))
          )
   :init
   (require 'sideline)
@@ -614,7 +614,7 @@ SCALE are supported."
                                       (sideline-flycheck . down)))
     (setq sideline-backends-right '(
                                     (sideline-eglot . up)
-                                    ;; (sideline-flymake . down)
+                                    (sideline-flymake . down)
                                     ))))
 
 ;; (use-package docstr
