@@ -341,8 +341,8 @@
     "cp" #'corfu-popupinfo-toggle
     "cs" #'prettify-symbols-mode
 
-    "l" #'display-fill-column-indicator-mode
-    "n" #'display-line-numbers-mode
+    "l" #'global-display-fill-column-indicator-mode
+    "n" #'global-display-line-numbers-mode
     "f" #'focus-mode
     "F" #'toggle-frame-fullscreen
     "x" #'read-only-mode
