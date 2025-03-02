@@ -215,4 +215,8 @@ emacs -Q -l ~/.emacs.d/init-mini.el
 
 <br>
 
+![vcs](./data/pics/vcs.png)
+
+<br>
+
 ![elisp](./data/pics/code.png)
