@@ -24,6 +24,7 @@
       (set-buffer-modified-p nil)))
   :init
   (setq dired-kill-when-opening-new-dired-buffer t
+        dired-movement-style 'cycle
         ;; Always delete and copy recursively
         dired-recursive-deletes 'always
         dired-recursive-copies 'always
