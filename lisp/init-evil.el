@@ -3,6 +3,8 @@
 (eval-when-compile
   (require 'init-funcs))
 
+(use-package goto-chg)
+
 (use-package evil
   :preface
   (defun petmacs//evil-visual-shift-left ()
