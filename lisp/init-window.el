@@ -177,28 +177,26 @@
   (popper-echo-mode +1)
   :config
   (with-no-warnings
-    (defun petmacs/popper-fit-window-height (win)
-      "Determine the height of popup window WIN by fitting it to the buffer's content."
-      (fit-window-to-buffer
-       win
-       (floor (frame-height) 2.2)
-       (floor (frame-height) 2.2)))
-    (setq popper-window-height #'petmacs/popper-fit-window-height)
+    (defun my-popper-fit-window-height (win)
+      "Adjust the height of popup window WIN to fit the buffer's content."
+      (let ((desired-height (floor (/ (frame-height) 3))))
+        (fit-window-to-buffer win desired-height desired-height)))
+    (setq popper-window-height #'my-popper-fit-window-height)
 
-    (defun popper-close-window-hack (&rest _)
+    (defun popper-close-window-hack (&rest _args)
       "Close popper window via `C-g'."
-      ;; `C-g' can deactivate region
-      (when (and ;(called-interactively-p 'interactive)
+      (when (and ; (called-interactively-p 'interactive)
              (not (region-active-p))
              popper-open-popup-alist)
-        (when-let* ((window (caar popper-open-popup-alist))
-                    (buffer (cdar popper-open-popup-alist)))
-          (when (and (with-current-buffer buffer
-                       (not (derived-mode-p 'ehell-mode
+        (let ((window (caar popper-open-popup-alist))
+              (buffer (cdar popper-open-popup-alist)))
+          (when (and (window-live-p window)
+                     (buffer-live-p buffer)
+                     (not (with-current-buffer buffer
+                            (derived-mode-p 'eshell-mode
                                             'shell-mode
                                             'term-mode
-                                            'vterm-mode)))
-                     (window-live-p window))
+                                            'vterm-mode))))
             (delete-window window)))))
     (advice-add #'keyboard-quit :before #'popper-close-window-hack)))
 
