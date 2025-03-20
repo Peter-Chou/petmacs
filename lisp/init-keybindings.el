@@ -352,6 +352,7 @@
 
     "z" #'writeroom-mode
 
+    "T" #'display-time-mode
     "tt" #'modus-themes-toggle
     "tT" #'ef-themes-toggle
     "ts" #'petmacs/consult-theme
