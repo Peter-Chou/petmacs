@@ -245,7 +245,7 @@
   :ensure nil
   :diminish
   :pretty-hydra
-  ((:title (pretty-hydra-title "Smerge");; 'octicon "diff"
+  ((:title (pretty-hydra-title "Smerge" 'octicon "nf-oct-diff")
     :color pink :quit-key "q")
    ("Move"
     (("n" smerge-next "next")
