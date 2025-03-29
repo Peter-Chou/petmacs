@@ -474,6 +474,7 @@
   )
 (leader-with-prefix "D"
   (leader-set-keys
+    "." #'smerge-mode-hydra/body
     "s" #'ediff-show-registry ;; "Show registry"
     "h" #'ediff-documentation ;; "Documentation"
     ;; "b"  "Buffers"
