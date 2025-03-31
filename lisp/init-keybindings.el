@@ -755,8 +755,8 @@
            ;; goto other window
            "Gd" #'xref-find-definitions-other-window
 
-           "gT" #'eglot-hierarchy-type-hierarchy
-           "gC" #'eglot-hierarchy-call-hierarchy
+           ;; "gT" #'eglot-hierarchy-type-hierarchy
+           ;; "gC" #'eglot-hierarchy-call-hierarchy
            )
 
          ))
