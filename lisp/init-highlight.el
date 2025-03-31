@@ -90,7 +90,7 @@ FACE defaults to inheriting from default and highlight."
          ("M-N" . symbol-overlay-switch-forward)
          ("M-P" . symbol-overlay-switch-backward)
          ("M-C" . symbol-overlay-remove-all))
-  :hook (((prog-mode yaml-mode) . symbol-overlay-mode)
+  :hook (((prog-mode yaml-mode yaml-ts-mode) . symbol-overlay-mode)
          (iedit-mode            . turn-off-symbol-overlay)
          (iedit-mode-end        . turn-on-symbol-overlay))
   :init (setq symbol-overlay-idle-time 0.3)
@@ -105,7 +105,7 @@ FACE defaults to inheriting from default and highlight."
     (defun turn-on-symbol-overlay (&rest _)
       "Turn on symbol highlighting."
       (interactive)
-      (when (derived-mode-p 'prog-mode 'yaml-mode)
+      (when (derived-mode-p 'prog-mode 'yaml-mode 'yaml-ts-mode)
         (symbol-overlay-mode 1)))
 
     (advice-add #'activate-mark :after #'turn-off-symbol-overlay)
