@@ -47,6 +47,10 @@ if your cmake is too old, download the suitable version from [cmake.org](https:/
 
 please install [emacs-lsp-booster](https://github.com/blahgeek/emacs-lsp-booster) installed and in you `PATH`
 
+### 1.6 libvterm (Optional)
+
+build and install latest [libvterm](https://launchpad.net/libvterm) (>=0.2), otherwise it will be downloaded and compiled during installation.
+
 ---
 
 ## 2. Install
