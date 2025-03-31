@@ -37,15 +37,9 @@
                                ;; css latex lua
                                ))))
 
-(if petmacs-quelpa-use-gitee-mirror
-    (use-package treesit-fold
-      :quelpa (treesit-fold :fetcher git :url "https://gitee.com/Peter-Chou/treesit-fold.git" :files ("*.el")))
-  (use-package treesit-fold
-    :quelpa (treesit-fold :fetcher github :repo "emacs-tree-sitter/treesit-fold" :files ("*.el"))))
-
 ;; native support to evil fold feature
 (use-package treesit-fold
-  :ensure nil
+  :pin nongnu
   :hook ((prog-mode . treesit-fold-mode)
          (treesit-fold-mode . treesit-fold-line-comment-mode)))
 

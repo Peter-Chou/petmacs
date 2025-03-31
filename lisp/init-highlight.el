@@ -120,20 +120,14 @@ FACE defaults to inheriting from default and highlight."
          ("M-p" . region-occurrences-highlighter-prev))
   :hook (after-init . global-region-occurrences-highlighter-mode))
 
-(if petmacs-quelpa-use-gitee-mirror
-    (use-package indent-bars
-      :quelpa (indent-bars :fetcher git :url "https://gitee.com/Peter-Chou/indent-bars.git" :files ("*.el")))
-  (use-package indent-bars
-    :quelpa (indent-bars :fetcher github :repo "jdtsmith/indent-bars" :files ("*.el"))))
-
 (use-package indent-bars
-  :ensure nil
+  :pin gnu
   :hook (((
            go-mode go-ts-mode
            json-mode json-ts-mode
            python-mode python-ts-mode
            yaml-mode yaml-ts-mode) . (lambda () (unless (too-long-file-p)
-                                                  (indent-bars-mode 1))))
+                                             (indent-bars-mode 1))))
          ((java-mode java-ts-mode) . (lambda ()
                                        (indent-bars-mode -1))))
   :init
