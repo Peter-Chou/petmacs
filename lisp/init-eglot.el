@@ -97,15 +97,10 @@
   (setq-default eglot-workspace-configuration #'petmacs/basedpyright-eglot-workspace-config)
   (advice-add 'eglot-ensure :after 'petmacs/eglot-keybindgs))
 
-(if petmacs-quelpa-use-gitee-mirror
-    (use-package eglot-booster
-      :quelpa (eglot-booster :fetcher git :url "https://gitee.com/Peter-Chou/eglot-booster.git" :files ("*.el")))
-  (use-package eglot-booster
-    :quelpa (eglot-booster :fetcher github :repo "jdtsmith/eglot-booster" :files ("*.el"))))
-
 (use-package eglot-booster
   :after eglot
   :ensure nil
+  :demand t
   :init (setq eglot-booster-no-remote-boost t))
 
 (use-package eglot-java
