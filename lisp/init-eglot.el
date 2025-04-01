@@ -59,27 +59,12 @@
           ((bash-ts-mode sh-mode) . ("bash-language-server" "start"))
           ((go-mode go-dot-mod-mode go-dot-work-mode go-ts-mode go-mod-ts-mode) . ("gopls"))
 
-          ;; ((python-mode python-ts-mode) . ("basedpyright-langserver" "--stdio" "--cancellationReceive=file:%FILEHASH%"))
           ((python-mode python-ts-mode) . ("basedpyright-langserver" "--stdio"))
-          ;; ((python-mode python-ts-mode) . ("pyright-langserver" "--stdio"))
 
           ((java-mode java-ts-mode) . ("jdtls"))
           ((yaml-ts-mode yaml-mode) . ("yaml-language-server" "--stdio"))
           ((dockerfile-mode dockerfile-ts-mode) . ("docker-langserver" "--stdio"))))
   :config
-  (defun petmacs/pyright-eglot-workspace-config (server)
-    "For the current PDM project, dynamically generate a python lsp config."
-    `(:python\.analysis (:diagnosticMode "workspace"
-                         :pythonVersion "3.8"
-                         :pythonPlatform: "Linux"
-                         :autoSearchPaths t
-                         :extraPaths ,(vector "src")
-                         :logLevel "Warning"
-                         :exclude ,(vector "data" "ckpts" "notebooks"
-                                           "resources" "model_repository"
-                                           "model_repositories")
-                         :useLibraryCodeForTypes t
-                         :typeCheckingMode "off")))
   (defun petmacs/basedpyright-eglot-workspace-config (server)
     "For the current PDM project, dynamically generate a python lsp config."
     `(:basedpyright\.analysis (:diagnosticMode "workspace"
@@ -93,7 +78,6 @@
                                                  "model_repositories")
                                :useLibraryCodeForTypes t
                                :typeCheckingMode "off")))
-  ;; (setq-default eglot-workspace-configuration #'petmacs/pyright-eglot-workspace-config)
   (setq-default eglot-workspace-configuration #'petmacs/basedpyright-eglot-workspace-config)
   (advice-add 'eglot-ensure :after 'petmacs/eglot-keybindgs))
 
