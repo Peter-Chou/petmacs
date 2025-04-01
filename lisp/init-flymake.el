@@ -37,7 +37,6 @@
          ;; sideline-flymake-display-mode 'point
          sideline-flymake-display-mode 'line))
 
-
 (defun petmacs/filter-eglot-basedpyright-diagnostics (diags)
   "Drop all basedpyright diagnose from langserver"
   (list (seq-remove (lambda (d)
