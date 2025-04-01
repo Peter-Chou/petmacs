@@ -83,7 +83,7 @@
   (defun petmacs/basedpyright-eglot-workspace-config (server)
     "For the current PDM project, dynamically generate a python lsp config."
     `(:basedpyright\.analysis (:diagnosticMode "workspace"
-                               :pythonVersion "3.8"
+                               :pythonVersion "3.11"
                                :pythonPlatform: "Linux"
                                :autoSearchPaths t
                                :extraPaths ,(vector "src")
