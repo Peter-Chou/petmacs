@@ -5,30 +5,7 @@
   (require 'init-const)
   (require 'init-funcs))
 
-;; Child frame
-(use-package posframe
-  :hook (after-load-theme . posframe-delete-all)
-  :init
-  (defface posframe-border
-    `((t (:inherit region)))
-    "Face used by the `posframe' border."
-    :group 'posframe)
-  (defvar posframe-border-width 2
-    "Default posframe border width.")
-  :config
-  (with-no-warnings
-    (defun my-posframe--prettify-frame (&rest _)
-      (set-face-background 'fringe nil posframe--frame))
-    (advice-add #'posframe--create-posframe :after #'my-posframe--prettify-frame)
-
-    (defun posframe-poshandler-frame-center-near-bottom (info)
-      (cons (/ (- (plist-get info :parent-frame-width)
-                  (plist-get info :posframe-width))
-               2)
-            (/ (+ (plist-get info :parent-frame-height)
-                  (* 2 (plist-get info :font-height)))
-               2)))))
-
+;; Transient
 (when (childframe-completion-workable-p)
   ;; Display transient in child frame
   (use-package transient-posframe
@@ -301,8 +278,8 @@
       (setq hydra-posframe-show-params
             `(:left-fringe 8
               :right-fringe 8
-              :internal-border-width 2
-              :internal-border-color ,(face-background 'region nil t)
+              :internal-border-width ,posframe-border-width
+              :internal-border-color ,(face-background 'posframe-border nil t)
               :background-color ,(face-background 'tooltip nil t)
               :foreground-color ,(face-foreground 'tooltip nil t)
               :lines-truncate t
