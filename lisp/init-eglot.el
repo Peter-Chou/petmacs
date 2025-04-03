@@ -28,7 +28,8 @@
         ;; eglot-connect-timeout 120
         eglot-connect-timeout 1200 ;; 10 minutes
         eglot-ignored-server-capabilities '(:documentHighlightProvider
-                                            :documentOnTypeFormattingProvider) ;; :inlayHintProvider
+                                            :inlayHintProvider
+                                            :documentOnTypeFormattingProvider)
         eldoc-echo-area-use-multiline-p nil
         ;; eglot-events-buffer-size 1
         eglot-server-programs
