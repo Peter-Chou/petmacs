@@ -78,6 +78,7 @@
                                                  "resources" "model_repository"
                                                  "model_repositories")
                                :useLibraryCodeForTypes t
+                               :watch t
                                :typeCheckingMode "off")))
   (setq-default eglot-workspace-configuration #'petmacs/basedpyright-eglot-workspace-config)
   (advice-add 'eglot-ensure :after 'petmacs/eglot-keybindgs))
