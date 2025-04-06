@@ -17,6 +17,7 @@
     (define-key evil-normal-state-map "ga" #'eglot-code-actions))
   (defun petmacs/eglot-ensure-with-lsp-booster ()
     (when (and emacs/>=29p
+               petmacs-use-lsp-booster
                (fboundp 'eglot-booster-mode)
                (executable-find "emacs-lsp-booster"))
       (eglot-booster-mode t))
@@ -101,6 +102,7 @@
     (eglot-java-run-main t))
   :hook ((java-mode java-ts-mode) . (lambda ()
                                       (when (and emacs/>=29p
+                                                 petmacs-use-lsp-booster
                                                  (fboundp 'eglot-booster-mode)
                                                  (executable-find "emacs-lsp-booster"))
                                         (eglot-booster-mode t))

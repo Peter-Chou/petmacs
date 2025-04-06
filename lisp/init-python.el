@@ -66,6 +66,7 @@
          (lsp-deferred))
         ('eglot
          (when (and emacs/>=29p
+                    petmacs-use-lsp-booster
                     (fboundp 'eglot-booster-mode)
                     (executable-find "emacs-lsp-booster"))
            (eglot-booster-mode t)) ;; will case flymake-ruff malfunction

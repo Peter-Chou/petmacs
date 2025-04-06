@@ -23,6 +23,9 @@
   'dape
   "dap-mode / dape ")
 
+(defvar petmacs-use-lsp-booster t
+  "enable emacs lsp booster or not")
+
 (defvar petmacs-icon t
   "Display icons or not.")
 
