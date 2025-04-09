@@ -107,7 +107,6 @@
 (set-next-selection-coding-system 'utf-8)
 (set-selection-coding-system 'utf-8)
 (set-terminal-coding-system 'utf-8)
-(prefer-coding-system 'utf-8)
 (setq locale-coding-system 'utf-8)
 (setq system-time-locale "C")
 (if sys/win32p
@@ -120,18 +119,11 @@
            pgtk-initialized)
   (set-clipboard-coding-system 'gbk-dos))
 
-;; Environment
 (when (or sys/mac-x-p sys/linux-x-p (daemonp))
   (use-package exec-path-from-shell
-    :config
-    (dolist (var '("LSP_USE_PLISTS"))
-      (add-to-list 'exec-path-from-shell-variables var)))
-
-  (use-package cache-path-from-shell
-    :ensure nil
-    :commands (exec-path-from-shell-initialize)
-    :init
-    (exec-path-from-shell-initialize)))
+    :commands exec-path-from-shell-initialize
+    :custom (exec-path-from-shell-arguments '("-l"))
+    :init (exec-path-from-shell-initialize)))
 
 ;; Start server
 ;; (use-package server
@@ -304,5 +296,15 @@
             (/ (+ (plist-get info :parent-frame-height)
                   (* 2 (plist-get info :font-height)))
                2)))))
+
+;; Async
+(use-package async
+  :functions (async-bytecomp-package-mode dired-async-mode)
+  :init
+  (async-bytecomp-package-mode 1)
+  (dired-async-mode 1))
+
+;; Compatibility
+(use-package compat :demand t)
 
 (provide 'init-basic)
