@@ -61,7 +61,8 @@
           ((bash-ts-mode sh-mode) . ("bash-language-server" "start"))
           ((go-mode go-dot-mod-mode go-dot-work-mode go-ts-mode go-mod-ts-mode) . ("gopls"))
 
-          ((python-mode python-ts-mode) . ("basedpyright-langserver" "--watch" "--stdio"))
+          ((python-mode python-ts-mode) . ("basedpyright-langserver" "--watch" "--threads 12" "--stdio"))
+          ;; ((python-mode python-ts-mode) . ("pylyzer" "--server"))
 
           ((java-mode java-ts-mode) . ("jdtls"))
           ((yaml-ts-mode yaml-mode) . ("yaml-language-server" "--stdio"))
