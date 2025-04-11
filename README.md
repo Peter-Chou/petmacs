@@ -175,25 +175,13 @@ npm install -g google-java-format@1.7
 
 `clang-format` is already in [LLVM project](https://github.com/llvm/llvm-project).
 
-### 5.4 cmake-format (cmake)
+### 5.4 shfmt (bash/sh)
 
 ``` bash
-pip install cmakelang
+sudo apt-get install shfmt
 ```
 
-### 5.5 pg_format (SQL)
-
-``` bash
-sudo apt-get install pgformatter
-```
-
-### 5.6 dprint (dockerfile, toml)
-
-``` bash
-npm install -g dprint
-```
-
-### 5.7 prettier
+### 5.5 prettier
 
 ``` bash
 npm install -g prettier
@@ -201,7 +189,25 @@ npm install -g prettier
 
 formatter for `json`, `javascript`, `typescript`, `css`, `scss`, `html`, `graphql`, `markdown`, `yaml`
 
-### 5.8 xmllint (xml)
+### 5.6 cmake-format (cmake)
+
+``` bash
+pip install cmakelang
+```
+
+### 5.7 pg_format (SQL)
+
+``` bash
+sudo apt-get install pgformatter
+```
+
+### 5.8 dprint (dockerfile, toml)
+
+``` bash
+npm install -g dprint
+```
+
+### 5.9 xmllint (xml)
 
 ``` bash
 sudo apt-get install libxml2-utils
