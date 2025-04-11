@@ -192,7 +192,7 @@ formatter for `json`, `javascript`, `typescript`, `css`, `scss`, `html`, `graphq
 ### 5.6 cmake-format (cmake)
 
 ``` bash
-pip install cmakelang
+sudo apt-get install cmake-format
 ```
 
 ### 5.7 pg_format (SQL)
