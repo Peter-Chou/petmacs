@@ -110,6 +110,13 @@
                                         (eglot-booster-mode t))
                                       (eglot-java-mode t)))
   :init
+  (setq eglot-java-eclipse-jdt-args '("-Xmx6G" ;; 最大堆内存
+                                      "-Xms6G" ;; # 初始堆内存（与 -Xmx 一致，避免动态扩容开销）
+                                      "--add-modules=ALL-SYSTEM"
+                                      "--add-opens"
+                                      "java.base/java.util=ALL-UNNAMED"
+                                      "--add-opens"
+                                      "java.base/java.lang=ALL-UNNAMED"))
   (setenv "PATH" (concat (getenv "PATH") ":" (expand-file-name ".emacs.d/share/eclipse.jdt.ls/bin")))
   (setq exec-path (append exec-path (list (expand-file-name ".emacs.d/share/eclipse.jdt.ls/bin"))))
 
