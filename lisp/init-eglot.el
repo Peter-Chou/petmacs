@@ -22,7 +22,8 @@
                (executable-find "emacs-lsp-booster"))
       (eglot-booster-mode t))
     (eglot-ensure))
-  :hook ((c-mode c-ts-mode c++-mode c++-ts-mode) . petmacs/eglot-ensure-with-lsp-booster)
+  :hook (((c-mode c-ts-mode c++-mode c++-ts-mode) . petmacs/eglot-ensure-with-lsp-booster)
+         ((bash-ts-mode sh-mode) . petmacs/eglot-ensure-with-lsp-booster))
   :init
   (setq eglot-send-changes-idle-time 0.2
         eglot-autoshutdown t

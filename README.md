@@ -124,6 +124,12 @@ sudo $(which cmake) --install build
 sudo ln -sf /opt/softwares/$llvm_version /opt/llvm
 ```
 
+### 3.4 bash-language-server (bash/sh)
+
+``` bash
+npm install -g bash-language-server
+```
+
 ---
 
 ## 4. install DAP servers
