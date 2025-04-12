@@ -200,9 +200,7 @@ npm install -g google-java-format@1.7
 
 ### 5.4 shfmt (bash/sh)
 
-``` bash
-sudo apt-get install shfmt
-```
+install [shfmt](https://github.com/mvdan/sh/releases) and put it into your `PATH`
 
 ### 5.5 prettier
 
