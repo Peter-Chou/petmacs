@@ -37,17 +37,9 @@ install [rime](https://github.com/rime/librime)
 ``` bash
 # use terra-pinyin for chinese input
 sudo apt-get install librime-dev fcitx-rime
-# install build tools
-sudo apt-get install cmake libtool-bin make
 ```
 
-if your cmake is too old, download the suitable version from [cmake.org](https://cmake.org/download/)
-
-### 1.6 emacs-lsp-booster (speed up lsp service)
-
-please install [emacs-lsp-booster](https://github.com/blahgeek/emacs-lsp-booster) installed and in you `PATH`
-
-### 1.7 snap (ubuntu)
+### 1.6 snap (ubuntu)
 
 ``` bash
 sudo apt update
@@ -56,7 +48,21 @@ sudo apt install snapd
 
 add `/snap/bin` to `PATH`
 
-### 1.8 libvterm (Optional)
+### 1.7 build tools
+
+``` bash
+# install build tools
+sudo apt-get install build-essential ninja-build
+sudo apt-get install cmake libtool-bin make
+```
+
+if your cmake is too old, download the suitable version from [cmake.org](https://cmake.org/download/)
+
+### 1.8 emacs-lsp-booster (speed up lsp service)
+
+please install [emacs-lsp-booster](https://github.com/blahgeek/emacs-lsp-booster) installed and in you `PATH`
+
+### 1.9 libvterm (Optional)
 
 build and install latest [libvterm](https://launchpad.net/libvterm) (>=0.2), otherwise it will be downloaded and compiled during installation.
 
@@ -118,8 +124,6 @@ use `clangd` in [LLVM project](https://github.com/llvm/llvm-project). soft link 
 or you can build it from source
 
 ``` bash
-sudo apt-get install build-essential ninja-build
-
 llvm_version=llvmorg-19.1.7
 git clone -b $llvm_version --depth=1 https://gitee.com/mirrors/LLVM.git $llvm_version
 cd $llvm_version

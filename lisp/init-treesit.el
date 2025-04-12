@@ -33,7 +33,8 @@
     (setq treesit-auto-langs '(
                                bash c cmake cpp go gomod  javascript typescript
                                scala java python rust r vue make
-                               json sql toml markdown proto dockerfile yaml
+                               json sql toml proto dockerfile yaml
+                               ;; markdown
                                ;; css latex lua
                                ))))
 
