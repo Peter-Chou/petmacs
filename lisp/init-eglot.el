@@ -23,7 +23,10 @@
       (eglot-booster-mode t))
     (eglot-ensure))
   :hook (((c-mode c-ts-mode c++-mode c++-ts-mode) . petmacs/eglot-ensure-with-lsp-booster)
-         ((bash-ts-mode sh-mode) . petmacs/eglot-ensure-with-lsp-booster))
+         ((bash-ts-mode sh-mode) . petmacs/eglot-ensure-with-lsp-booster)
+         ((cmake-mode cmake-ts-mode) . petmacs/eglot-ensure-with-lsp-booster)
+         ((markdown-ts-mode markdown-mode) . petmacs/eglot-ensure-with-lsp-booster)
+         ((dockerfile-mode dockerfile-ts-mode) . petmacs/eglot-ensure-with-lsp-booster))
   :init
   (setq eglot-send-changes-idle-time 0.2
         eglot-autoshutdown t
@@ -58,15 +61,20 @@
                                                                 ;; pch优化的位置
                                                                 ;; "--pch-storage=disk"
                                                                 ))
-          ((cmake-mode cmake-ts-mode) . ("cmake-language-server"))
-          ((bash-ts-mode sh-mode) . ("bash-language-server" "start"))
-          ((go-mode go-dot-mod-mode go-dot-work-mode go-ts-mode go-mod-ts-mode) . ("gopls"))
+
+          ;; ((cmake-mode cmake-ts-mode) . ("cmake-language-server"))
+          ((cmake-mode cmake-ts-mode) . ("neocmakelsp" "--stdio"))
 
           ((python-mode python-ts-mode) . ("basedpyright-langserver" "--watch" "--threads 12" "--stdio"))
           ;; ((python-mode python-ts-mode) . ("pylyzer" "--server"))
 
           ((java-mode java-ts-mode) . ("jdtls"))
+
+          ((go-mode go-dot-mod-mode go-dot-work-mode go-ts-mode go-mod-ts-mode go-work-ts-mode) . ("gopls"))
+
+          ((bash-ts-mode sh-mode) . ("bash-language-server" "start"))
           ((yaml-ts-mode yaml-mode) . ("yaml-language-server" "--stdio"))
+          ((markdown-ts-mode markdown-mode) . ("marksman" "server"))
           ((dockerfile-mode dockerfile-ts-mode) . ("docker-langserver" "--stdio"))))
   :config
   (defun petmacs/basedpyright-eglot-workspace-config (server)

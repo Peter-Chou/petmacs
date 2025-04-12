@@ -47,7 +47,16 @@ if your cmake is too old, download the suitable version from [cmake.org](https:/
 
 please install [emacs-lsp-booster](https://github.com/blahgeek/emacs-lsp-booster) installed and in you `PATH`
 
-### 1.7 libvterm (Optional)
+### 1.7 snap (ubuntu)
+
+``` bash
+sudo apt update
+sudo apt install snapd
+```
+
+add `/snap/bin` to `PATH`
+
+### 1.8 libvterm (Optional)
 
 build and install latest [libvterm](https://launchpad.net/libvterm) (>=0.2), otherwise it will be downloaded and compiled during installation.
 
@@ -124,11 +133,25 @@ sudo $(which cmake) --install build
 sudo ln -sf /opt/softwares/$llvm_version /opt/llvm
 ```
 
-### 3.4 bash-language-server (bash/sh)
+### 3.4 neocmakelsp (cmake)
+
+download [neocmakelsp](https://github.com/neocmakelsp/neocmakelsp/releases) (musl version) and put it into your `PATH`.
+
+### 3.5 docker-langserver (dockerfile)
+
+``` sh
+npm install -g dockerfile-language-server-nodejs
+```
+
+### 3.6 bash-language-server (bash/sh)
 
 ``` bash
 npm install -g bash-language-server
 ```
+
+### 3.7 marksman (markdown)
+
+download [marksman](https://github.com/artempyanykh/marksman/releases) and put it into your `PATH`.
 
 ---
 
