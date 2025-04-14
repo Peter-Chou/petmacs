@@ -15,18 +15,31 @@
     (define-key evil-normal-state-map "gi" #'eglot-find-implementation)
     (define-key evil-motion-state-map "gh" #'eldoc-box-help-at-point)
     (define-key evil-normal-state-map "ga" #'eglot-code-actions))
-  (defun petmacs/eglot-ensure-with-lsp-booster ()
-    (when (and emacs/>=29p
-               petmacs-use-lsp-booster
-               (fboundp 'eglot-booster-mode)
-               (executable-find "emacs-lsp-booster"))
-      (eglot-booster-mode t))
-    (eglot-ensure))
-  :hook (((c-mode c-ts-mode c++-mode c++-ts-mode) . petmacs/eglot-ensure-with-lsp-booster)
-         ((bash-ts-mode sh-mode) . petmacs/eglot-ensure-with-lsp-booster)
-         ((cmake-mode cmake-ts-mode) . petmacs/eglot-ensure-with-lsp-booster)
-         ((markdown-ts-mode markdown-mode) . petmacs/eglot-ensure-with-lsp-booster)
-         ((dockerfile-mode dockerfile-ts-mode) . petmacs/eglot-ensure-with-lsp-booster))
+
+  (defun petmacs/eglot-ensure-with-lsp-booster (&optional exe)
+    "exe, binary name"
+    (let ((enable-lsp (if (and exe (stringp exe))
+                          (stringp (executable-find exe))
+                        t))
+          (enable-booster (and emacs/>=29p
+                               petmacs-use-lsp-booster
+                               (fboundp 'eglot-booster-mode)
+                               (executable-find "emacs-lsp-booster"))))
+      (when enable-lsp
+        (when enable-booster
+          (eglot-booster-mode t))
+        (eglot-ensure))))
+
+  :hook (((c-mode c-ts-mode c++-mode c++-ts-mode) . (lambda ()
+                                                      (petmacs/eglot-ensure-with-lsp-booster "clangd")))
+         ((bash-ts-mode sh-mode) . (lambda ()
+                                     (petmacs/eglot-ensure-with-lsp-booster "bash-language-server")))
+         ((cmake-mode cmake-ts-mode) . (lambda ()
+                                         (petmacs/eglot-ensure-with-lsp-booster "neocmakelsp")))
+         ((markdown-mode markdown-ts-mode) . (lambda ()
+                                               (petmacs/eglot-ensure-with-lsp-booster "marksman")))
+         ((dockerfile-mode dockerfile-ts-mode) . (lambda ()
+                                                   (petmacs/eglot-ensure-with-lsp-booster "docker-langserver"))))
   :init
   (setq eglot-send-changes-idle-time 0.2
         eglot-autoshutdown t
