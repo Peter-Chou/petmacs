@@ -954,6 +954,8 @@
     "'"  #'ielm
     "si" #'ielm
     "cc" #'emacs-lisp-byte-compile
+    "cr" #'byte-recompile-directory
+    "cR" #'byte-recompile-file
     "eb" #'eval-buffer
     "ee" #'eval-last-sexp
     "er" #'eval-region
