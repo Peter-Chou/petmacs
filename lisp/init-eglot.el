@@ -36,8 +36,8 @@
                                      (petmacs/eglot-ensure-with-lsp-booster "bash-language-server")))
          ((cmake-mode cmake-ts-mode) . (lambda ()
                                          (petmacs/eglot-ensure-with-lsp-booster "neocmakelsp")))
-         ((markdown-mode markdown-ts-mode) . (lambda ()
-                                               (petmacs/eglot-ensure-with-lsp-booster "marksman")))
+         ;; ((markdown-mode markdown-ts-mode) . (lambda ()
+         ;;                                       (petmacs/eglot-ensure-with-lsp-booster "marksman")))
          ((dockerfile-mode dockerfile-ts-mode) . (lambda ()
                                                    (petmacs/eglot-ensure-with-lsp-booster "docker-langserver"))))
   :init
