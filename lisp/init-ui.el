@@ -4,6 +4,14 @@
   (require 'init-custom)
   (require 'init-funcs))
 
+;; Initial frame
+(setq initial-frame-alist '((top . 0.5)
+                            (left . 0.5)
+                            (width . 0.63)
+                            (height . 0.8)
+                            ;; (fullscreen)
+                            ))
+
 ;; Optimization
 (setq idle-update-delay 1.0)
 
