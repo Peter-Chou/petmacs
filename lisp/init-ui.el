@@ -7,10 +7,8 @@
 ;; Initial frame
 (setq initial-frame-alist '((top . 0.5)
                             (left . 0.5)
-                            (width . 0.63)
-                            (height . 0.8)
-                            ;; (fullscreen)
-                            ))
+                            (width . 0.7)
+                            (height . 0.85)))
 
 ;; Optimization
 (setq idle-update-delay 1.0)
