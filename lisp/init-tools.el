@@ -568,6 +568,7 @@ SCALE are supported."
 
 (use-package nxml-mode
   :ensure nil
+  :mode (("\\.xaml\\'" . xml-mode))
   :config
   (evil-define-key 'normal nxml-mode-map (kbd "gc") #'evilnc-comment-or-uncomment-lines))
 
