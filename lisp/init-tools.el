@@ -534,10 +534,6 @@ SCALE are supported."
 (use-package rg)
 (use-package dotenv-mode)
 
-(unless sys/win32p
-  (use-package daemons)                 ; system services/daemons
-  (use-package tldr))
-
 ;; Visual `align-regexp'
 (use-package ialign)
 
