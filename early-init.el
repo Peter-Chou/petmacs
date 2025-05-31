@@ -11,24 +11,16 @@
 
 ;; use mirror
 (setq package-archives '(
-                         ;; ("gnu"       . "https://elpa.gnu.org/packages/")
-                         ;; ("gnu-devel" . "https://elpa.gnu.org/devel/")
-                         ;; ("melpa"     . "https://melpa.org/packages/")
-                         ;; ("nongnu"    . "https://elpa.nongnu.org/nongnu/")
-                         ;; ("org"       . "https://orgmode.org/elpa/")
+                         ("gnu"       . "https://elpa.gnu.org/packages/")
+                         ("gnu-devel" . "https://elpa.gnu.org/devel/")
+                         ("melpa"     . "https://melpa.org/packages/")
+                         ("nongnu"    . "https://elpa.nongnu.org/nongnu/")
 
                          ;;; emacs-china mirror
                          ;; ("gnu"    . "http://1.15.88.122/gnu/")
-                         ;; ("melpa"  . "http://1.15.88.122/melpa/")
                          ;; ("nongnu" . "http://1.15.88.122/nongnu/")
+                         ;; ("melpa"  . "http://1.15.88.122/melpa/")
                          ;; ("org"    . "http://1.15.88.122/org/")
-
-                         ;;; tsinghua mirror
-                         ("gnu"       . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-                         ("gnu-devel" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu-devel/")
-                         ("melpa"     . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-                         ("nongnu"    . "http://mirrors.tuna.tsinghua.edu.cn/elpa/nongnu/")
-                         ("org"       . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
                          ))
 
 (if (functionp 'json-serialize)

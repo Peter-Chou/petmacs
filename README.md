@@ -127,7 +127,7 @@ use `clangd` in [LLVM project](https://github.com/llvm/llvm-project). soft link 
 or you can build it from source
 
 ``` bash
-llvm_version=llvmorg-19.1.7
+llvm_version=llvmorg-20.1.6
 git clone -b $llvm_version --depth=1 https://gitee.com/mirrors/LLVM.git $llvm_version
 cd $llvm_version
 cmake -S llvm -G Ninja -B build -DCMAKE_BUILD_TYPE=Release \
