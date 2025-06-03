@@ -15,9 +15,9 @@
   :ensure nil
   :custom-face
   (show-paren-match ((((class color) (background light))
-                      (:box (:line-width (-1 . -1) :color "gray70")))
+                      (:box (:line-width (-1 . -1) :color "gray73")))
                      (((class color) (background dark))
-                      (:box (:line-width (-1 . -1) :color "gray50")))))
+                      (:box (:line-width (-1 . -1) :color "gray56")))))
   :hook (after-init . show-paren-mode)
   :init (setq show-paren-when-point-inside-paren t
               show-paren-when-point-in-periphery t)
@@ -127,7 +127,7 @@ FACE defaults to inheriting from default and highlight."
            json-mode json-ts-mode
            python-mode python-ts-mode
            yaml-mode yaml-ts-mode) . (lambda () (unless (too-long-file-p)
-                                             (indent-bars-mode 1))))
+                                                  (indent-bars-mode 1))))
          ((java-mode java-ts-mode) . (lambda ()
                                        (indent-bars-mode -1))))
   :init
