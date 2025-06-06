@@ -315,12 +315,6 @@
       :bind (([remap next] . good-scroll-up-full-screen)
              ([remap prior] . good-scroll-down-full-screen)))))
 
-;; Smooth scrolling over images
-(unless emacs/>=30p
-  (use-package iscroll
-    :diminish
-    :hook (image-mode . iscroll-mode)))
-
 ;; Use fixed pitch where it's sensible
 (use-package mixed-pitch
   :diminish)
