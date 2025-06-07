@@ -42,20 +42,26 @@ sudo apt-get install librime-dev fcitx-rime
 ### 1.6 snap (ubuntu)
 
 ``` bash
-sudo apt update
-sudo apt install snapd
+sudo apt-get update
+sudo apt-get install snapd
 ```
 
 add `/snap/bin` to `PATH`
 
 ### 1.7 libvterm (ubuntu)
 
-
 ``` bash
-sudo apt install libvterm-dev
+sudo apt-get install libvterm-dev
 ```
 
-### 1.8 build tools
+### 1.8 sqlite3 (ubuntu)
+
+``` bash
+# for magit
+sudo apt-get install libsqlite3-dev
+```
+
+### 1.9 build tools
 
 ``` bash
 # install build tools
@@ -65,7 +71,7 @@ sudo apt-get install cmake libtool-bin make
 
 if your cmake is too old, download the suitable version from [cmake.org](https://cmake.org/download/)
 
-### 1.8 emacs-lsp-booster (speed up lsp service)
+### 1.10 emacs-lsp-booster (speed up lsp service)
 
 please install [emacs-lsp-booster](https://github.com/blahgeek/emacs-lsp-booster) installed and in you `PATH`
 
