@@ -138,7 +138,9 @@
         awesome-tray-info-padding-right 1
         awesome-tray-update-interval 0.5
         awesome-tray-belong-update-duration 2.5
-        awesome-tray-date-format (concat (format "%s " (nerd-icons-mdicon "nf-md-clock")) "%m-%d %H:%M %a")
+        ;; awesome-tray-date-format (concat (format "%s " (nerd-icons-mdicon "nf-md-clock")) "%m-%d %H:%M %a")
+        awesome-tray-date-format "%H:%M %a %m-%d"
+
         awesome-tray-git-format (concat (format "%s " (nerd-icons-faicon "nf-fa-git_square")) "%s")
         ;; awesome-tray-active-modules   '("pomodoro" "flymake" "pyvenv" "git" "date" )
         ;; awesome-tray-essential-modules '("pomodoro" "date")
@@ -146,7 +148,9 @@
   (if petmacs-disable-modeline
       (setq awesome-tray-active-modules   '("pomodoro" "buffer-name" "location" "git"  "date")
             awesome-tray-essential-modules '("buffer-name" "location"))
-    (setq awesome-tray-active-modules   '("pomodoro" "project-relative-dir" "which-function" "flymake")
+    ;; (setq awesome-tray-active-modules   '("pomodoro" "project-relative-dir" "which-function" "flymake")
+    ;;       awesome-tray-essential-modules '("project-relative-dir"))
+    (setq awesome-tray-active-modules   '("pomodoro" "project-relative-dir" "flymake" "date")
           awesome-tray-essential-modules '("project-relative-dir"))
     )
   :config
@@ -167,6 +171,8 @@
           doom-modeline-indent-info nil
           doom-modeline-mode-alist nil
           doom-modeline-vcs-max-length 20
+          doom-modeline-lsp t
+          doom-modeline-lsp-icon t
           ;; doom-modeline-buffer-encoding nil
           ;; doom-modeline-total-line-number t
           doom-modeline-enable-word-count nil
@@ -398,7 +404,7 @@
           mini-frame-resize-max-height 25)))
 
 (use-package nyan-mode
-  :hook (doom-modeline-mode . nyan-mode)
+  ;; :hook (doom-modeline-mode . nyan-mode)
   :init
   (setq nyan-bar-length 15
         nyan-animate-nyancat t
