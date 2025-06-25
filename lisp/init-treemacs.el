@@ -18,10 +18,10 @@
         treemacs-no-png-images           (not petmacs-icon)
         treemacs-width                   30)
   :config
-  ;; resize font size in treemacs when in ultra screen
-  ;; (add-hook 'treemacs-mode-hook
-  ;;           (lambda ()
-  ;;             (text-scale-decrease 1)))
+  (add-hook 'treemacs-mode-hook
+            (lambda ()
+              (text-scale-set -0.5)
+              (redraw-display)))
 
   ;; (with-eval-after-load 'golden-ratio
   ;;   (add-to-list 'golden-ratio-exclude-buffer-regexp
