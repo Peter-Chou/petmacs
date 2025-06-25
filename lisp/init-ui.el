@@ -63,7 +63,9 @@
               catppuccin-highlight-matches t))
 
 (use-package spacemacs-theme
-  :init (setq spacemacs-theme-comment-italic t))
+  :init (setq spacemacs-theme-comment-italic nil
+              spacemacs-theme-comment-bg nil
+              ))
 
 (use-package ef-themes
   :init (setq ef-themes-to-toggle '(ef-melissa-light ef-melissa-dark)))
