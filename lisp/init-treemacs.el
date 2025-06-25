@@ -5,35 +5,27 @@
 
 ;; A tree layout file explorer
 (use-package treemacs
-  :commands (
-             treemacs-select-window
-             treemacs-select-scope-type
-             treemacs--window-number-ten
-             treemacs-current-visibility
-             treemacs-follow-mode
+  :commands (treemacs-follow-mode
              treemacs-filewatch-mode
              treemacs-git-mode)
   :custom-face
   (cfrs-border-color ((t (:inherit posframe-border))))
-  :bind (:map treemacs-mode-map
-         ([mouse-1]   . treemacs-single-click-expand-action))
   :config
   (setq treemacs-collapse-dirs           (if treemacs-python-executable 3 0)
         treemacs-missing-project-action  'remove
         treemacs-sorting                 'alphabetic-asc
-        treemacs-is-never-other-window   t
         treemacs-follow-after-init       t
         treemacs-no-png-images           (not petmacs-icon)
         treemacs-width                   30)
   :config
   ;; resize font size in treemacs when in ultra screen
-  (add-hook 'treemacs-mode-hook
-            (lambda ()
-              (text-scale-decrease 1)))
+  ;; (add-hook 'treemacs-mode-hook
+  ;;           (lambda ()
+  ;;             (text-scale-decrease 1)))
 
-  (with-eval-after-load 'golden-ratio
-    (add-to-list 'golden-ratio-exclude-buffer-regexp
-                 (rx "*Treemacs" (0+ any))))
+  ;; (with-eval-after-load 'golden-ratio
+  ;;   (add-to-list 'golden-ratio-exclude-buffer-regexp
+  ;;                (rx "*Treemacs" (0+ any))))
 
   (treemacs-follow-mode t)
   (treemacs-filewatch-mode t)
@@ -59,7 +51,6 @@
 
 (use-package treemacs-magit
   :after magit
-  :commands treemacs-magit--schedule-update
   :hook ((magit-post-commit
           git-commit-post-finish
           magit-post-stage
