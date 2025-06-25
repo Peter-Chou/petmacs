@@ -176,8 +176,9 @@
           doom-modeline-indent-info nil
           doom-modeline-mode-alist nil
           doom-modeline-vcs-max-length 20
+          doom-modeline-hud t
           doom-modeline-lsp t
-          doom-modeline-lsp-icon t
+          doom-modeline-lsp-icon nil
           ;; doom-modeline-buffer-encoding nil
           ;; doom-modeline-total-line-number t
           doom-modeline-enable-word-count nil
@@ -207,10 +208,10 @@
     (doom-modeline-def-modeline
       'petmacs/simple-mode-line
      ;;;; main
-      ;; '(eldoc bar workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
-      ;; '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl lsp minor-modes input-method indent-info buffer-encoding major-mode process vcs checker time)
-      '(eldoc bar workspace-name matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
-      '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl lsp input-method indent-info buffer-encoding process time))
+      ;; '(eldoc bar window-state workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
+      ;; '(compilation objed-state misc-info project-name persp-name battery grip irc mu4e gnus github debug repl lsp minor-modes input-method indent-info buffer-encoding major-mode process vcs check time)
+      '(eldoc bar window-state workspace-name matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
+      '(compilation objed-state misc-info project-name persp-name battery grip irc mu4e gnus github debug repl lsp input-method indent-info buffer-encoding major-mode process time))
 
     ;; Set default mode-line
     (add-hook 'doom-modeline-mode-hook (lambda ()
