@@ -51,6 +51,7 @@
 (leader-set-keys
   "'"   #'multi-vterm
   "/"   #'consult-ripgrep
+  "<SPC>" #'execute-extended-command
 
   "v"   #'er/expand-region
   "u"   #'universal-argument
