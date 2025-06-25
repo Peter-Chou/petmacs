@@ -58,7 +58,9 @@
   :hook (after-init . solaire-global-mode))
 
 (use-package catppuccin-theme
-  :init (setq catppuccin-flavor 'latte))
+  :init (setq catppuccin-flavor 'latte
+              catppuccin-italic-comments t
+              catppuccin-highlight-matches t))
 
 (use-package spacemacs-theme
   :init (setq spacemacs-theme-comment-italic t))
@@ -139,7 +141,8 @@
         awesome-tray-update-interval 0.5
         awesome-tray-belong-update-duration 2.5
         ;; awesome-tray-date-format (concat (format "%s " (nerd-icons-mdicon "nf-md-clock")) "%m-%d %H:%M %a")
-        awesome-tray-date-format "%H:%M %a %m-%d"
+        ;; awesome-tray-date-format "%H:%M %a %m-%d"
+        awesome-tray-date-format "%H:%M %a"
 
         awesome-tray-git-format (concat (format "%s " (nerd-icons-faicon "nf-fa-git_square")) "%s")
         ;; awesome-tray-active-modules   '("pomodoro" "flymake" "pyvenv" "git" "date" )
