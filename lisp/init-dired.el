@@ -74,8 +74,8 @@
          ("C-c C-r" . dired-rsync)))
 
 ;; Colorful dired
-(use-package diredfl
-  :hook (dired-mode . diredfl-mode))
+;; (use-package diredfl
+;;   :hook (dired-mode . diredfl-mode))
 
 ;; Shows icons
 (use-package nerd-icons-dired
