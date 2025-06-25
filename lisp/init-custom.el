@@ -68,8 +68,10 @@
   "update melpa, disable it if the network is unstable.")
 
 (defvar  petmacs-day-night-themes
-  '(("8:00" . catppuccin)
-    ("20:00"  . catppuccin))
+  ;; '(("8:00" . catppuccin)
+  ;;   ("20:00"  . catppuccin))
+  '(("8:00" . spacemacs-light)
+    ("20:00"  . spacemacs-light))
   "day night theme")
 
 (defvar petmacs-modeline-style
