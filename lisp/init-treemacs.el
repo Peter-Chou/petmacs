@@ -20,8 +20,7 @@
   :config
   (add-hook 'treemacs-mode-hook
             (lambda ()
-              (text-scale-set -0.5)
-              (redraw-display)))
+              (text-scale-set -0.5)))
 
   ;; (with-eval-after-load 'golden-ratio
   ;;   (add-to-list 'golden-ratio-exclude-buffer-regexp

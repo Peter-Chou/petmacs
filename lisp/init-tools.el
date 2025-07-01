@@ -493,8 +493,7 @@ SCALE are supported."
   ;; decrease font size in symbols-outline buffer
   (add-hook 'symbols-outline-mode-hook
             (lambda ()
-              (text-scale-set -0.5)
-              (redraw-display)))
+              (text-scale-set -0.5)))
 
   (require 'nerd-icons)
   (evil-define-key 'normal symbols-outline-mode-map
