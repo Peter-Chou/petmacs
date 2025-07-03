@@ -60,14 +60,4 @@
   :config
   (add-hook 'eglot-managed-mode-hook 'petmacs/eglot-setup-flymake-ruff))
 
-;; (use-package flymake-popon
-;;   :diminish
-;;   :custom-face
-;;   (flymake-popon-posframe-border ((t :foreground ,(face-background 'region))))
-;;   :hook (flymake-mode . flymake-popon-mode)
-;;   :init (setq flymake-popon-width 70
-;;               flymake-popon-delay 1
-;;               flymake-popon-posframe-border-width 1
-;;               flymake-popon-method (if (childframe-workable-p) 'posframe 'popon)))
-
 (provide 'init-flymake)
