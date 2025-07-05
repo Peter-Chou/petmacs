@@ -5,6 +5,7 @@
 ;;   pip install ruff
 (use-package python
   :ensure nil
+  :functions exec-path-from-shell-copy-env
   :hook
   ((inferior-python-mode . (lambda ()
 			                 (process-query-on-exit-flag

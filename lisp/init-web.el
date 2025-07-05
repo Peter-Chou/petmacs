@@ -47,6 +47,7 @@
 (when (executable-find "prettier")
   (use-package prettier
     :diminish
+    :defines prettier-pre-warm
     :hook ((js-mode css-mode sgml-mode web-mode) . prettier-mode)
     :init (setq prettier-pre-warm 'none)))
 

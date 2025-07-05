@@ -30,6 +30,8 @@
 ;; F5 for paging which-key
 (use-package which-key
   :diminish
+  :autoload which-key-posframe-mode
+  :functions childframe-completion-workable-p
   :hook (after-init . which-key-mode)
   :init
   (setq which-key-idle-delay 0.2
@@ -74,6 +76,7 @@
 (when (childframe-completion-workable-p)
   (use-package which-key-posframe
     :diminish
+    :defines posframe-border-width
     :functions posframe-poshandler-frame-center-near-bottom
     :custom-face
     (which-key-posframe ((t (:inherit tooltip))))
@@ -96,6 +99,8 @@
 ;; Minor mode to aggressively keep your code always indented
 (use-package aggressive-indent
   :diminish
+  :autoload aggressive-indent-mode
+  :functions too-long-file-p
   :hook ((after-init . global-aggressive-indent-mode)
          ;; NOTE: Disable in large files due to the performance issues
          ;; https://github.com/Malabarba/aggressive-indent-mode/issues/73

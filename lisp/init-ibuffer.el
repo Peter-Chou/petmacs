@@ -79,14 +79,14 @@
 
 ;; Group ibuffer's list by project root
 (use-package ibuffer-projectile
-  :functions nerd-icons-octicon
+  :functions (nerd-icons-octicon icons-displayable-p)
   :hook ((ibuffer . (lambda ()
                       (ibuffer-projectile-set-filter-groups)
                       (unless (eq ibuffer-sorting-mode 'alphabetic)
                         (ibuffer-do-sort-by-alphabetic)))))
   :config
   (setq ibuffer-projectile-prefix
-        (if (display-graphic-p)
+        (if (icons-displayable-p)
             (concat
              (nerd-icons-octicon "nf-oct-file_directory_fill"
                                  :face ibuffer-filter-group-name-face

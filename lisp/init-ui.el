@@ -49,6 +49,7 @@
   (define-key winum-keymap (kbd "M-0") 'treemacs-select-window))
 
 (use-package nerd-icons-completion
+  :functions icons-displayable-p
   :when (icons-displayable-p)
   :hook (vertico-mode . nerd-icons-completion-mode))
 

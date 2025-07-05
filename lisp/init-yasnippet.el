@@ -18,7 +18,7 @@
 (use-package yasnippet-snippets)
 
 (use-package yasnippet-capf
+  :commands yasnippet-capf
   :init (add-to-list 'completion-at-point-functions #'yasnippet-capf))
-
 
 (provide 'init-yasnippet)

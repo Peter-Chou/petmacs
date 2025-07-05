@@ -13,6 +13,7 @@
 ;; Highlight matching parens
 (use-package paren
   :ensure nil
+  :functions childframe-workable-p
   :custom-face
   (show-paren-match ((((class color) (background light))
                       (:box (:line-width (-1 . -1) :color "gray73")))

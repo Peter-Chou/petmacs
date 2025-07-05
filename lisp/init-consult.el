@@ -111,6 +111,7 @@
 
 (when (childframe-completion-workable-p)
   (use-package vertico-posframe
+    :functions posframe-poshandler-frame-center-near-bottom
     :hook (vertico-mode . vertico-posframe-mode)
     :init (setq vertico-posframe-poshandler
                 #'posframe-poshandler-frame-center-near-bottom
