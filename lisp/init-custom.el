@@ -8,19 +8,13 @@
 (defvar petmacs-quelpa-use-gitee-mirror nil
   "use gitee mirror instead of github")
 
-(defvar petmacs-checker
-  ;; 'flycheck
-  'flymake
+(defvar petmacs-checker 'flymake
   "flycheck / flymake ")
 
-(defvar petmacs-lsp-mode-impl
-  ;; 'lsp-mode
-  'eglot
+(defvar petmacs-lsp-mode-impl 'eglot
   "lsp-mode / eglot")
 
-(defvar petmacs-dap-mode-impl
-  ;; 'dap-mode
-  'dape
+(defvar petmacs-dap-mode-impl 'dape
   "dap-mode / dape ")
 
 (defvar petmacs-use-lsp-booster t
@@ -32,29 +26,28 @@
 (defvar petmacs-treesit t
   "Enable tree-sitter or not. Native tree-sitter is introduced in 29.")
 
-(defvar petmacs-completion-style
-  'minibuffer
-  ;; 'childframe
+(defvar petmacs-completion-style 'minibuffer
   "minibuffer / childframe")
 
 (defvar petmacs-favor-color "#F37022"
   "petmacs favor color")
 
-(defvar petmacs-font
-  ;; "JetBrains Mono"
-  "ComicCodeLigatures Nerd Font"
-  ;; "Monego Ligatures"
-  "font")
+(defface petmacs-favor-color-face
+  `((((background light)) :foreground ,petmacs-favor-color :bold t)
+    (t :foreground ,petmacs-favor-color :bold t))
+  "petmacs favorite color face"
+  :group 'basic-faces)
 
-(defvar  petmacs-chinese-font
-  "Maple Mono SC NF"
-  ;; "等距更纱黑体 SC"
+(defvar petmacs-font "ComicCodeLigatures Nerd Font"
+  "default font")
+
+(defvar petmacs-chinese-font "Maple Mono SC NF"
   "chinese font")
 
-(defvar  petmacs-font-size 16.1
+(defvar petmacs-font-size 16.1
   "font size")
 
-(defvar  petmacs-ultra-screen-font-size 17.8
+(defvar petmacs-ultra-screen-font-size 17.8
   "font size for ultra screen")
 
 (defvar petmacs-disable-modeline nil
@@ -67,15 +60,9 @@
 (defvar petmacs-quelpa-checkout-melpa nil
   "update melpa, disable it if the network is unstable.")
 
-(defvar  petmacs-day-night-themes
-  '(("8:00" . catppuccin)
-    ("20:00"  . catppuccin))
+(defvar  petmacs-day-night-themes '(("8:00" . catppuccin)
+                                    ("20:00"  . catppuccin))
   "day night theme")
-
-(defvar petmacs-modeline-style
-  'awesome-tray
-  ;; 'doom-modeline
-  "awesome-tray or doom-modeline. doom-modeline is default in TUI.")
 
 (defvar petmacs-enable-mini-frame nil
   "enable mini frame feature")
@@ -89,28 +76,15 @@
 (defvar petmacs-socks-proxy "127.0.0.1:1080"
   "Set SOCKS proxy.")
 
-(defface petmacs-favor-color-face
-  `((((background light)) :foreground ,petmacs-favor-color :bold t)
-    (t :foreground ,petmacs-favor-color :bold t))
-  "petmacs favorite color face"
-  :group 'basic-faces)
-
 (defvar petmacs-lsp-active-modes '(
-				                   c-mode
-				                   c-ts-mode
-			                       c++-mode
-			                       c++-ts-mode
-				                   python-mode
-				                   python-ts-mode
-				                   java-mode
-				                   java-ts-mode
-				                   scala-mode
-				                   scala-ts-mode
-				                   go-mode
-				                   go-ts-mode
-				                   sh-mode
-				                   sh-ts-mode
-				                   )
+                                   c-mode c-ts-mode c++-mode c++-ts-mode
+                                   cmake-mode cmake-ts-mode
+				                   python-mode python-ts-mode
+				                   java-mode java-ts-mode
+				                   scala-mode scala-ts-mode
+				                   go-mode go-ts-mode
+				                   sh-mode sh-ts-mode bash-ts-mode
+                                   dockerfile-mode dockerfile-ts-mode)
   "Primary major modes of the lsp activated layer.")
 
 (provide 'init-custom)

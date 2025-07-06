@@ -162,10 +162,6 @@ npm install -g dockerfile-language-server-nodejs
 npm install -g bash-language-server
 ```
 
-### 3.7 marksman (markdown)
-
-download [marksman](https://github.com/artempyanykh/marksman/releases) and put it into your `PATH`.
-
 ---
 
 ## 4. install DAP servers
