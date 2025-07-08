@@ -92,7 +92,9 @@
   :config
   (defun petmacs/basedpyright-eglot-workspace-config (server)
     "For the current PDM project, dynamically generate a python lsp config."
-    '(:basedpyright\.analysis (:pythonVersion "3.11"
+    '(:basedpyright\.analysis (
+                               ;; :pythonVersion "3.11"
+                               ;; :typeCheckingMode "off"
                                :diagnosticMode "workspace"
                                :pythonPlatform: "Linux"
                                :autoSearchPaths t
@@ -100,9 +102,8 @@
                                :logLevel "Warning"
                                :exclude ["data" "ckpts" "notebooks"
                                          "resources" "model_repository"
-                                         "model_repositories"]
-                               :useLibraryCodeForTypes t
-                               :typeCheckingMode "off")))
+                                         "model_repositories" "typings"]
+                               :useLibraryCodeForTypes t)))
   (setq-default eglot-workspace-configuration #'petmacs/basedpyright-eglot-workspace-config)
   (advice-add 'eglot-ensure :after 'petmacs/eglot-keybindgs))
 
