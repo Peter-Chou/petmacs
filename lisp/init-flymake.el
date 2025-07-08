@@ -34,6 +34,10 @@
   (sideline-flymake-warning ((t (:height 0.85 :italic t))))
   (sideline-flymake-success ((t (:height 0.85 :italic t))))
   :init (setq
+         sideline-flymake-show-backend-name nil
+         sideline-flymake-note-prefix (format "%s " (nerd-icons-octicon "nf-oct-info"))
+         sideline-flymake-warning-prefix (format "%s " (nerd-icons-codicon "nf-cod-warning"))
+         sideline-flymake-error-prefix (format "%s " (nerd-icons-codicon "nf-cod-error"))
          ;; sideline-flymake-display-mode 'point
          sideline-flymake-display-mode 'line))
 
