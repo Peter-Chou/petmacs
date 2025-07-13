@@ -7,6 +7,7 @@
   ;; :hook (magit-mode . magit-wip-mode)
   :init
   (setq magit-diff-refine-hunk t
+        git-commit-major-mode 'git-commit-elisp-text-mode
         magit-format-file-function #'magit-format-file-nerd-icons
         magit-process-finish-apply-ansi-colors t
         magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1)
@@ -58,19 +59,6 @@
   (define-key magit-mode-map (kbd "M-6") 'winum-select-window-6)
   (define-key magit-mode-map (kbd "M-7") 'winum-select-window-7)
   (define-key magit-mode-map (kbd "M-8") 'winum-select-window-8))
-
-;; Access Git forges from Magit
-(when emacs/>=29p
-  (use-package forge
-    :demand t
-    :defines forge-topic-list-columns
-    :custom-face
-    (forge-topic-label ((t (:inherit variable-pitch :height 0.9 :width condensed :weight regular :underline nil))))
-    :init (setq forge-topic-list-columns
-                '(("#" 5 forge-topic-list-sort-by-number (:right-align t) number nil)
-                  ("Title" 60 t nil title  nil)
-                  ("State" 6 t nil state nil)
-                  ("Updated" 10 t nil updated nil)))))
 
 ;; Walk through git revisions of a file
 (use-package git-timemachine
@@ -249,5 +237,13 @@
               git-gutter:modified-sign (nerd-icons-octicon "nf-oct-diff_modified")
               git-gutter:added-sign (nerd-icons-octicon "nf-oct-diff_added")
               git-gutter:deleted-sign (nerd-icons-octicon "nf-oct-diff_removed")))
+
+;; Show TODOs in magit
+(use-package magit-todos
+  :after magit-status
+  :commands magit-todos-mode
+  :init
+  (setq magit-todos-nice (if (executable-find "nice") t nil))
+  (magit-todos-mode 1))
 
 (provide 'init-vcs)

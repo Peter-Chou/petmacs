@@ -172,12 +172,6 @@ Same as '`replace-string' `C-q' `C-m' `RET' `RET''."
     (delete-file (buffer-file-name))
     (kill-this-buffer)))
 
-;; Mode line
-(defun mode-line-height ()
-  "Get the height of the mode-line."
-  (- (elt (window-pixel-edges) 3)
-     (elt (window-inside-pixel-edges) 3)))
-
 ;; Reload configurations
 (defun petmacs/reload-init-file ()
   "Reload Emacs configurations."

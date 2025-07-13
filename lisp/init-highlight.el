@@ -197,6 +197,8 @@ FACE defaults to inheriting from default and highlight."
 
 ;; Highlight TODO and similar keywords in comments and strings
 (use-package hl-todo
+  :autoload hl-todo-flymake hl-todo-search-and-highlight
+  :functions rg-read-files rg-project
   :bind (:map hl-todo-mode-map
          ([C-f3]    . hl-todo-occur)
          ("C-c t p" . hl-todo-previous)
@@ -221,6 +223,11 @@ FACE defaults to inheriting from default and highlight."
               ;; hl-todo-require-punctuation t
               hl-todo-highlight-punctuation ":")
   :config
+  (with-eval-after-load 'magit
+    (add-hook 'magit-log-wash-summary-hook
+              #'hl-todo-search-and-highlight t)
+    (add-hook 'magit-revision-wash-message-hook
+              #'hl-todo-search-and-highlight t))
 
   (defun hl-todo-rg (regexp &optional files dir)
     "Use `rg' to find all TODO or similar keywords."

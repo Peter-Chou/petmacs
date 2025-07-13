@@ -67,7 +67,8 @@
   (setq proced-auto-update-flag t
         proced-enable-color-flag t
         proced-tree-flag t
-        proced-auto-update-interval 3))
+        proced-auto-update-interval 3
+        proced-enable-color-flag t))
 
 (with-no-warnings
   ;; Optimization
