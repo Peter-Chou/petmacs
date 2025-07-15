@@ -17,7 +17,6 @@
     (define-key evil-normal-state-map "ga" #'eglot-code-actions))
 
   (defun petmacs/eglot-ensure-with-lsp-booster (&optional exe)
-    "exe, binary name"
     (let ((enable-lsp (if (and exe (stringp exe))
                           (stringp (executable-find exe))
                         t))
@@ -30,26 +29,51 @@
           (eglot-booster-mode t))
         (eglot-ensure))))
 
+  (defun petmacs/basedpyright-eglot-workspace-config (server)
+    '(:basedpyright\.analysis (
+                               ;; :pythonVersion "3.11"
+                               :typeCheckingMode "off"
+                               :diagnosticMode "workspace"
+                               :pythonPlatform: "Linux"
+                               :autoSearchPaths t
+                               :extraPaths ["src"]
+                               :logLevel "Warning"
+                               :exclude ["data" "ckpts" "notebooks"
+                                         "resources" "model_repository"
+                                         "model_repositories" "typings"]
+                               :useLibraryCodeForTypes t)))
+
+  (defun petmacs/delance-eglot-workspace-config (server)
+    '(:python.languageServer "Pylance"
+      :python.analysis (
+                        ;; :pythonVersion "3.11"
+                        :typeCheckingMode "off"
+                        :languageServerMode "full"
+                        :diagnosticMode "workspace"
+                        :pythonPlatform: "Linux"
+                        :autoSearchPaths t
+                        :extraPaths ["src"]
+                        :logLevel "Warning"
+                        :exclude ["data" "ckpts" "notebooks"
+                                  "resources" "model_repository"
+                                  "model_repositories" "typings"]
+                        :useLibraryCodeForTypes t)))
   :hook (((c-mode c-ts-mode c++-mode c++-ts-mode) . (lambda ()
                                                       (petmacs/eglot-ensure-with-lsp-booster "clangd")))
          ((bash-ts-mode sh-mode) . (lambda ()
                                      (petmacs/eglot-ensure-with-lsp-booster "bash-language-server")))
          ((cmake-mode cmake-ts-mode) . (lambda ()
                                          (petmacs/eglot-ensure-with-lsp-booster "neocmakelsp")))
-         ;; ((markdown-mode markdown-ts-mode) . (lambda ()
-         ;;                                       (petmacs/eglot-ensure-with-lsp-booster "marksman")))
          ((dockerfile-mode dockerfile-ts-mode) . (lambda ()
                                                    (petmacs/eglot-ensure-with-lsp-booster "docker-langserver"))))
   :init
   (setq eglot-send-changes-idle-time 0.2
         eglot-autoshutdown t
-        ;; eglot-connect-timeout 120
         eglot-connect-timeout 1200 ;; 10 minutes
         eglot-ignored-server-capabilities '(:documentHighlightProvider
                                             :inlayHintProvider
                                             :documentOnTypeFormattingProvider)
         eldoc-echo-area-use-multiline-p nil
-        ;; eglot-events-buffer-size 1
         eglot-server-programs
         '(((c++-mode c-mode c++-ts-mode c-ts-mode objc-mode) . ("clangd"
                                                                 ;; 在后台自动分析文件（基于complie_commands)
@@ -79,7 +103,8 @@
           ((cmake-mode cmake-ts-mode) . ("neocmakelsp" "--stdio"))
 
           ((python-mode python-ts-mode) . ("basedpyright-langserver" "--watch" "--threads 12" "--stdio"))
-          ;; ((python-mode python-ts-mode) . ("pylyzer" "--server"))
+          ;; ((python-mode python-ts-mode) . ("delance-langserver" "--stdio"))
+          ;; ((python-mode python-ts-mode) . ("ty" "server"))
 
           ((java-mode java-ts-mode) . ("jdtls"))
 
@@ -90,28 +115,16 @@
           ((markdown-ts-mode markdown-mode) . ("marksman" "server"))
           ((dockerfile-mode dockerfile-ts-mode) . ("docker-langserver" "--stdio"))))
   :config
-  (defun petmacs/basedpyright-eglot-workspace-config (server)
-    "For the current PDM project, dynamically generate a python lsp config."
-    '(:basedpyright\.analysis (
-                               ;; :pythonVersion "3.11"
-                               ;; :typeCheckingMode "off"
-                               :diagnosticMode "workspace"
-                               :pythonPlatform: "Linux"
-                               :autoSearchPaths t
-                               :extraPaths ["src"]
-                               :logLevel "Warning"
-                               :exclude ["data" "ckpts" "notebooks"
-                                         "resources" "model_repository"
-                                         "model_repositories" "typings"]
-                               :useLibraryCodeForTypes t)))
   (setq-default eglot-workspace-configuration #'petmacs/basedpyright-eglot-workspace-config)
+  ;; (setq-default eglot-workspace-configuration #'petmacs/delance-eglot-workspace-config)
+
   (advice-add 'eglot-ensure :after 'petmacs/eglot-keybindgs))
 
-(use-package eglot-booster
-  :after eglot
-  :ensure nil
-  :demand t
-  :init (setq eglot-booster-no-remote-boost t))
+;; (use-package eglot-booster
+;;   :after eglot
+;;   :ensure nil
+;;   :demand t
+;;   :init (setq eglot-booster-no-remote-boost t))
 
 (use-package eglot-java
   :preface
