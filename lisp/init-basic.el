@@ -49,6 +49,7 @@
 
 ;; Cross-referencing commands
 (use-package xref
+  :autoload xref-show-definitions-completing-read
   :init
   ;; Use faster search tool
   (setq xref-search-program (cond

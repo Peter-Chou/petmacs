@@ -548,6 +548,11 @@
   (dolist (mode-hook '(java-mode-hook java-ts-mode-hook))
     (pretty-code-add-hook mode-hook '((:return "return") (:throw "throw")))))
 
+;; Smooth scrolling
+(when emacs/>=29p
+  (use-package ultra-scroll
+    :hook (after-init . ultra-scroll-mode)))
+
 (use-package org-rainbow-tags)
 
 (provide 'init-ui)

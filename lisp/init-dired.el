@@ -122,10 +122,6 @@
         (concat dired-omit-files
                 "\\|^.DS_Store$\\|^.projectile$\\|^.svn$\\|^.vscode$\\|\\.js\\.meta$\\|\\.meta$\\|\\.elc$")))
 
-;; `find-dired' alternative using `fd'
-(when (executable-find "fd")
-  (use-package fd-dired))
-
 ;; Extra Dired functionality
 (use-package dired-aux :ensure nil)
 

@@ -16,17 +16,11 @@
     (define-key evil-motion-state-map "gh" #'eldoc-box-help-at-point)
     (define-key evil-normal-state-map "ga" #'eglot-code-actions))
 
-  (defun petmacs/eglot-ensure-with-lsp-booster (&optional exe)
+  (defun petmacs/eglot-ensure (&optional exe)
     (let ((enable-lsp (if (and exe (stringp exe))
                           (stringp (executable-find exe))
-                        t))
-          (enable-booster (and emacs/>=29p
-                               petmacs-use-lsp-booster
-                               (fboundp 'eglot-booster-mode)
-                               (executable-find "emacs-lsp-booster"))))
+                        t)))
       (when enable-lsp
-        (when enable-booster
-          (eglot-booster-mode t))
         (eglot-ensure))))
 
   (defun petmacs/basedpyright-eglot-workspace-config (server)
@@ -59,13 +53,13 @@
                                   "model_repositories" "typings"]
                         :useLibraryCodeForTypes t)))
   :hook (((c-mode c-ts-mode c++-mode c++-ts-mode) . (lambda ()
-                                                      (petmacs/eglot-ensure-with-lsp-booster "clangd")))
+                                                      (petmacs/eglot-ensure "clangd")))
          ((bash-ts-mode sh-mode) . (lambda ()
-                                     (petmacs/eglot-ensure-with-lsp-booster "bash-language-server")))
+                                     (petmacs/eglot-ensure "bash-language-server")))
          ((cmake-mode cmake-ts-mode) . (lambda ()
-                                         (petmacs/eglot-ensure-with-lsp-booster "neocmakelsp")))
+                                         (petmacs/eglot-ensure "neocmakelsp")))
          ((dockerfile-mode dockerfile-ts-mode) . (lambda ()
-                                                   (petmacs/eglot-ensure-with-lsp-booster "docker-langserver"))))
+                                                   (petmacs/eglot-ensure "docker-langserver"))))
   :init
   (setq eglot-send-changes-idle-time 0.2
         eglot-autoshutdown t
@@ -120,12 +114,6 @@
 
   (advice-add 'eglot-ensure :after 'petmacs/eglot-keybindgs))
 
-;; (use-package eglot-booster
-;;   :after eglot
-;;   :ensure nil
-;;   :demand t
-;;   :init (setq eglot-booster-no-remote-boost t))
-
 (use-package eglot-java
   :preface
   (defun petmacs/eglot-java-run-test-in-debug ()
@@ -135,11 +123,6 @@
     (interactive)
     (eglot-java-run-main t))
   :hook ((java-mode java-ts-mode) . (lambda ()
-                                      (when (and emacs/>=29p
-                                                 petmacs-use-lsp-booster
-                                                 (fboundp 'eglot-booster-mode)
-                                                 (executable-find "emacs-lsp-booster"))
-                                        (eglot-booster-mode t))
                                       (eglot-java-mode t)))
   :init
   (setq eglot-java-eclipse-jdt-args '("-Xmx6G" ;; 最大堆内存
