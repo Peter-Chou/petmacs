@@ -226,17 +226,13 @@
 ;;     (add-hook 'which-function-mode-hook #'petmacs/remove-which-function-info)))
 
 (use-package hide-mode-line
-  :hook (((treemacs-mode
+  :autoload turn-off-hide-mode-line-mode
+  :hook (((eat-mode
            eshell-mode shell-mode
            term-mode vterm-mode
-           imenu-list-major-mode
            symbols-outline-mode
-           embark-collect-mode
-           lsp-ui-imenu-mode
-           pdf-annot-list-mode) . turn-on-hide-mode-line-mode)
-         (dired-mode . (lambda()
-                         (and (bound-and-true-p hide-mode-line-mode)
-                              (turn-off-hide-mode-line-mode))))))
+           embark-collect-mode lsp-ui-imenu-mode
+           pdf-annot-list-mode) . turn-on-hide-mode-line-mode)))
 
 ;; Show native line numbers if possible, otherwise use `linum'
 (when petmacs-enable-display-line-numbers
