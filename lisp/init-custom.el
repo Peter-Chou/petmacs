@@ -38,7 +38,10 @@
   "petmacs favorite color face"
   :group 'basic-faces)
 
-(defvar petmacs-font "ComicCodeLigatures Nerd Font"
+(defvar petmacs-font
+  ;; "ComicCodeLigatures Nerd Font"
+  ;; "MonegoLigatures Nerd Font"
+  "JetBrains Mono NL"
   "default font")
 
 (defvar petmacs-chinese-font "Maple Mono SC NF"
