@@ -47,10 +47,10 @@
 (defvar petmacs-chinese-font "Maple Mono SC NF"
   "chinese font")
 
-(defvar petmacs-font-size 16.8
+(defvar petmacs-font-size 14.0
   "font size")
 
-(defvar petmacs-ultra-screen-font-size 17.8
+(defvar petmacs-ultra-screen-font-size 16.8
   "font size for ultra screen")
 
 (defvar petmacs-disable-modeline nil

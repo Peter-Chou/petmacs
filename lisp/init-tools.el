@@ -470,7 +470,7 @@
       (symbols-outline-show)))
   :after nerd-icons
   :init
-  (setq symbols-outline-window-position 'left
+  (setq symbols-outline-window-position 'right
         symbols-outline-use-nerd-icon-in-gui (not (image-type-available-p 'svg))
         symbols-outline-window-width 30
         symbols-outline-ignore-variable-symbols t
@@ -479,8 +479,12 @@
         symbols-outline-initial-folded-node-kinds '("function" "method" "prototype" "annotation" "inline" "subst" "member")
         symbols-outline-collapse-functions-on-startup t)
 
-  (when (member petmacs-lsp-mode-impl '(lsp-mode eglot))
-    (setq symbols-outline-fetch-fn #'symbols-outline-lsp-fetch))
+  (cond ((equal petmacs-lsp-mode-impl 'eglot)
+         (add-hook 'eglot-mode-hook (lambda ()
+                                      (setq-local symbols-outline-fetch-fn #'symbols-outline-lsp-fetch))))
+        (t
+         (add-hook 'lsp-mode-hook (lambda ()
+                                    (setq-local symbols-outline-fetch-fn #'symbols-outline-lsp-fetch)))))
 
   (defun petmacs/symbols-outline-nerd-icon-str (icon-name &rest args)
     "Return the nerd font icon for ICON-NAME.
@@ -518,6 +522,7 @@ SCALE are supported."
     [backtab] 'symbols-outline-cycle-visibility-globally
     (kbd "RET") 'symbols-outline-visit
     (kbd "M-RET") 'symbols-outline-visit-and-quit)
+
   (symbols-outline-follow-mode))
 
 (use-package iedit

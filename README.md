@@ -71,9 +71,12 @@ sudo apt-get install cmake libtool-bin make
 
 if your cmake is too old, download the suitable version from [cmake.org](https://cmake.org/download/)
 
-### 1.10 emacs-lsp-booster (speed up lsp service)
+### 1.10 ctags
 
-please install [emacs-lsp-booster](https://github.com/blahgeek/emacs-lsp-booster) installed and in you `PATH`
+``` bash
+sudo apt-get install -y universal-ctags
+```
+
 
 ---
 
