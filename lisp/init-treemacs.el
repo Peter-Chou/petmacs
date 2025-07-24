@@ -17,7 +17,9 @@
         treemacs-sorting                 'alphabetic-asc
         treemacs-follow-after-init       t
         treemacs-no-png-images           (not petmacs-icon)
-        treemacs-width                   30)
+        treemacs-width                   (if (petmacs/ultra-screen-p)
+                                             petmacs-ultra-sidebar-width
+                                           petmacs-sidebar-width))
   :config
   (add-hook 'treemacs-mode-hook
             (lambda ()

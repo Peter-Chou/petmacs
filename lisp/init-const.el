@@ -45,12 +45,6 @@
   (string-equal "root" (getenv "USER"))
   "Are you using ROOT user?")
 
-(defconst sys/ultrap
-  (if (display-graphic-p)
-      (>= (/ (float (x-display-pixel-width)) (x-display-pixel-height)) 2.3)
-    nil)
-  "for 21:9 ultra screen")
-
 (defconst emacs/>=26p
   (>= emacs-major-version 26)
   "Emacs is 26 or above.")

@@ -50,8 +50,14 @@
 (defvar petmacs-font-size 14.0
   "font size")
 
-(defvar petmacs-ultra-screen-font-size 16.8
+(defvar petmacs-sidebar-width 30
+  "sidebar width")
+
+(defvar petmacs-ultra-screen-font-size 17.8
   "font size for ultra screen")
+
+(defvar petmacs-ultra-sidebar-width 35
+  "sidebar width in ultra screen")
 
 (defvar petmacs-disable-modeline nil
   ;; (display-graphic-p)

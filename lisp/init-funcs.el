@@ -1175,4 +1175,12 @@ buffer."
         ""
       (concat (format " %s " (nerd-icons-faicon "nf-fa-folder_open")) relative-dir))))
 
+(defun petmacs/ultra-screen-p ()
+  "for 21:9 ultra screen"
+  (if (display-graphic-p)
+      (>= (/ (float (x-display-pixel-width)) (x-display-pixel-height)) 2.3)
+    nil))
+
+(petmacs/ultra-screen-p)
+
 (provide 'init-funcs)

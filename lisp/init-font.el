@@ -9,7 +9,7 @@
 
 ;; set default font
 (if (font-installed-p petmacs-font)
-    (if sys/ultrap
+    (if (petmacs/ultra-screen-p)
         (set-face-attribute 'default nil :font (font-spec :name petmacs-font :size petmacs-ultra-screen-font-size))
       (set-face-attribute 'default nil :font (font-spec :name petmacs-font :size petmacs-font-size)))
   (message  (format "%s font is not installed, please install it for better ui display." petmacs-font)))
