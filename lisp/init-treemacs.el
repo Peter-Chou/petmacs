@@ -28,6 +28,7 @@
   ;;                (rx "*Treemacs" (0+ any))))
 
   (treemacs-follow-mode t)
+  (treemacs-project-follow-mode t) ;; treemacs just show current project tree
   (treemacs-filewatch-mode t)
   (pcase (cons (not (null (executable-find "git")))
                (not (null (executable-find "python3"))))
