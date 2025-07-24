@@ -458,16 +458,6 @@
   :commands (uuidgen))
 
 (use-package symbols-outline
-  :preface
-  (defun petmacs/symbols-outline-smart-toggle ()
-    "Toggle `symbols-outline-mode' by showing or quitting the `*Outline*' buffer."
-    (interactive)
-    (if (get-buffer-window symbols-outline-buffer-name t)
-        (progn
-          (ignore-errors (quit-windows-on symbols-outline-buffer-name))
-          (when (get-buffer symbols-outline-buffer-name)
-            (bury-buffer (get-buffer symbols-outline-buffer-name))))
-      (symbols-outline-show)))
   :after nerd-icons
   :init
   (setq symbols-outline-window-position 'right
