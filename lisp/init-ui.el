@@ -25,7 +25,8 @@
   (push '(tool-bar-lines . 0) default-frame-alist)
   (push '(vertical-scroll-bars) default-frame-alist))
 
-(use-package nerd-icons)
+(use-package nerd-icons
+  :demand t)
 
 (use-package all-the-icons :if (display-graphic-p))
 
@@ -49,8 +50,6 @@
   (define-key winum-keymap (kbd "M-0") 'treemacs-select-window))
 
 (use-package nerd-icons-completion
-  :functions icons-displayable-p
-  :when (icons-displayable-p)
   :hook (vertico-mode . nerd-icons-completion-mode))
 
 ;; ;; make "unreal" buffers (like popups, sidebars, log buffers,
