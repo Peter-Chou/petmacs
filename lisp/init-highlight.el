@@ -127,21 +127,36 @@ FACE defaults to inheriting from default and highlight."
            go-mode go-ts-mode
            json-mode json-ts-mode
            python-mode python-ts-mode
+           toml-mode toml-ts-mode
            yaml-mode yaml-ts-mode) . (lambda () (unless (too-long-file-p)
-                                                  (indent-bars-mode 1))))
+                                             (indent-bars-mode 1))))
          ((java-mode java-ts-mode) . (lambda ()
                                        (indent-bars-mode -1))))
   :init
-  (setq indent-bars-display-on-blank-lines nil
-        indent-bars-no-descend-string t
-        indent-bars-prefer-character t
-        indent-bars-no-stipple-char ?\┋
-        indent-bars-width-frac 0.25
-        indent-bars-color
-        '(highlight :face-bg t :blend 0.225)
-        indent-bars-highlight-current-depth '(:face petmacs-favor-color-face :pattern "."))
+  (setq
+   ;; indent-bars-no-descend-string t
+   ;; indent-bars-width-frac 0.25
+   ;; indent-bars-color
+   ;; '(highlight :face-bg t :blend 0.225)
+
+   ;; indent-bars-pattern ". . . . "
+   indent-bars-pattern "."
+   indent-bars-color '(highlight :face-bg t :blend 0.25)
+   indent-bars-width-frac 0.25
+   indent-bars-pad-frac 0.2
+   indent-bars-zigzag 0.1
+   indent-bars-color-by-depth '(:palette ("red" "green" "orange" "cyan" "hot pink" "peru" "Light Green") :blend 0.8)
+   indent-bars-display-on-blank-lines nil)
+
+  (if (and emacs/>=30p (display-graphic-p))
+      (setq indent-bars-highlight-current-depth '(:face petmacs-favor-color-face :pattern ". . . . " :pad 0.1 :width 0.45))
+    (setq indent-bars-prefer-character t
+          indent-bars-no-stipple-char ?\┋
+          indent-bars-highlight-current-depth '(:face petmacs-favor-color-face :pattern "." :pad 0.1)))
+
   (when (petmacs-treesit-available-p)
     (setq indent-bars-treesit-support t
+          indent-bars-ts-color '(inherit fringe :face-bg t :blend 0.2)
           indent-bars-treesit-ignore-blank-lines-types '("module")
           indent-bars-treesit-scope '((python function_definition class_definition for_statement
 				                              if_statement with_statement while_statement))
@@ -149,7 +164,11 @@ FACE defaults to inheriting from default and highlight."
           indent-bars-treesit-wrap '((python argument_list parameters ; for python, as an example
 				                             list list_comprehension
 				                             dictionary dictionary_comprehension
-				                             parenthesized_expression subscript))))
+				                             parenthesized_expression subscript)
+                                     (c argument_list parameter_list init_declarator parenthesized_expression)
+                                     (toml table array comment)
+                                     (yaml block_mapping_pair comment)
+                                     )))
   :config
   (require 'indent-bars-ts))
 
