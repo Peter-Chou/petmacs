@@ -123,14 +123,6 @@ Same as '`replace-string' `C-q' `C-m' `RET' `RET''."
       (message "Removed %d " count))
     (widen)))
 
-;; File and buffer
-(defun petmacs/revert-this-buffer ()
-  "Revert the current buffer."
-  (interactive)
-  (unless (minibuffer-window-active-p (selected-window))
-    (revert-buffer t t)
-    (message "Reverted this buffer")))
-
 (defun petmacs/goto-scratch-buffer ()
   "goto Home buffer"
   (interactive)

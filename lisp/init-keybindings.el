@@ -235,7 +235,7 @@
     "w" #'read-only-mode
     "n" #'next-buffer
     "p" #'previous-buffer
-    "R" #'petmacs/revert-this-buffer
+    "R" #'revert-buffer-quick
     "s" #'petmacs/goto-scratch-buffer
     "x" #'kill-buffer-and-window
     "h" #'petmacs/goto-dashboard

@@ -121,6 +121,12 @@
                   (right-fringe . 8)))))
 
 (use-package consult
+  :defines (xref-show-xrefs-function xref-show-definitions-function)
+  :defines shr-color-html-colors-alist
+  :autoload (consult-register-format consult-register-window consult-xref)
+  :autoload (consult--read consult--customize-put)
+  :commands (consult-narrow-help)
+  :functions (list-colors-duplicates consult-colors--web-list)
   :bind (("C-s"   . consult-line)
          ("C-c h" . consult-history)
          ("C-c k" . consult-kmacro)
@@ -190,6 +196,7 @@
   :after (consult yasnippet))
 
 (use-package embark
+  :commands embark-prefix-help-command
   :bind
   (("C-." . embark-act)         ;; pick some comfortable binding
    ("M-." . embark-dwim)        ;; good alternative: M-.

@@ -50,7 +50,7 @@
   (define-key winum-keymap (kbd "M-0") 'treemacs-select-window))
 
 (use-package nerd-icons-completion
-  :hook (vertico-mode . nerd-icons-completion-mode))
+  :hook (marginalia-mode . nerd-icons-completion-marginalia-setup))
 
 ;; ;; make "unreal" buffers (like popups, sidebars, log buffers,
 ;; ;; terminals by giving the latter a slightly different (often darker) background
