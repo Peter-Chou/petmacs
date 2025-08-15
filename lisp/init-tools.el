@@ -30,7 +30,6 @@
 ;; F5 for paging which-key
 (use-package which-key
   :diminish
-  :autoload which-key-posframe-mode
   :functions childframe-completion-workable-p
   :hook (after-init . which-key-mode)
   :init
@@ -76,6 +75,7 @@
 (when (childframe-completion-workable-p)
   (use-package which-key-posframe
     :diminish
+    :autoload which-key-posframe-mode
     :defines posframe-border-width
     :functions posframe-poshandler-frame-center-near-bottom
     :custom-face
