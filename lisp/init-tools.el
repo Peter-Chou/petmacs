@@ -611,4 +611,19 @@ SCALE are supported."
 (use-package numpydoc
   :init (setq numpydoc-template-short t))
 
+(when (childframe-workable-p)
+  (use-package eldoc-box
+    :custom
+    (eldoc-box-lighter nil)
+    (eldoc-box-only-multi-line t)
+    (eldoc-box-clear-with-C-g t)
+    :custom-face
+    (eldoc-box-border ((t (:inherit posframe-border :background unspecified))))
+    (eldoc-box-body ((t (:inherit tooltip))))
+    ;; :hook ((eglot-managed-mode . eldoc-box-hover-at-point-mode))
+    :config
+    ;; Prettify `eldoc-box' frame
+    (setf (alist-get 'left-fringe eldoc-box-frame-parameters) 8
+          (alist-get 'right-fringe eldoc-box-frame-parameters) 8)))
+
 (provide 'init-tools)
