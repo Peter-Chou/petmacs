@@ -472,8 +472,8 @@
         symbols-outline-collapse-functions-on-startup t)
 
   (cond ((equal petmacs-lsp-mode-impl 'eglot)
-         (add-hook 'eglot-mode-hook (lambda ()
-                                      (setq-local symbols-outline-fetch-fn #'symbols-outline-lsp-fetch))))
+         (add-hook 'eglot-managed-mode-hook (lambda ()
+                                              (setq-local symbols-outline-fetch-fn #'symbols-outline-lsp-fetch))))
         (t
          (add-hook 'lsp-mode-hook (lambda ()
                                     (setq-local symbols-outline-fetch-fn #'symbols-outline-lsp-fetch)))))
