@@ -1139,6 +1139,25 @@ buffer."
       (message "Removed %d " count))
     (widen)))
 
+(defun petmacs-browse-url (url)
+  "Open URL using a configurable method.
+See `browse-url' for more details."
+  (interactive)
+  (if (xwidget-workable-p)
+      (petmacs-webkit-browse-url url t)
+    (browse-url url)))
+
+(defun petmacs-browse-url-of-file (file)
+  "Use a web browser to display FILE.
+Display the current buffer's file if FILE is nil or if called
+interactively.  Turn the filename into a URL with function
+`browse-url-file-url'.  Pass the URL to a browser using the
+`browse-url' function then run `browse-url-of-file-hook'."
+  (interactive)
+  (if (xwidget-workable-p)
+      (petmacs-webkit-browse-url (browse-url-file-url file) t)
+    (browse-url-of-file file)))
+
 (defun petmacs-webkit-browse-url (url &optional pop-buffer new-session)
   "Browse URL with xwidget-webkit' and switch or pop to the buffer.
   POP-BUFFER specifies whether to pop to the buffer.

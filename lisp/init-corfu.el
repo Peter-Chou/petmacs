@@ -5,8 +5,8 @@
   (require 'init-funcs))
 
 (use-package corfu
-  :autoload corfu-quit consult-completion-in-region
-  :functions persistent-scratch-save corfu-move-to-minibuffer
+  :autoload (corfu-quit consult-completion-in-region)
+  :functions (corfu-move-to-minibuffer)
   :custom-face
   (corfu-border ((t (:inherit region :background unspecified))))
   :bind (:map corfu-map

@@ -6,18 +6,23 @@
 (require'org-tempo) ;; start easy template
 
 (use-package org
-  :pin melpa
+  :ensure nil
   :custom-face (org-ellipsis ((t (:foreground unspecified))))
-  :hook (
-         ((org-babel-after-execute org-mode) . org-redisplay-inline-images)) ; display image
+  :hook (((org-babel-after-execute org-mode) . org-redisplay-inline-images) ;; display image
+         (org-indent-mode . (lambda()
+                              (diminish 'org-indent-mode)
+                              ;; HACK: Prevent text moving around while using brackets
+                              ;; @see https://github.com/seagle0128/.emacs.d/issues/88
+                              (make-variable-buffer-local 'show-paren-mode)
+                              (setq show-paren-mode nil))))
   :config
   (add-to-list 'org-agenda-files (expand-file-name "gtds"  (getenv "HOME")))
   (setq org-modules nil                 ; Faster loading
         org-todo-keywords
         '((sequence "TODO(t)" "DOING(i)" "HANGUP(h)" "|" "DONE(d)" "CANCEL(c)")
-          (sequence "⚑(T)" "🏴(I)" "❓(H)" "|" "✔(D)" "✘(C)"))
+          (sequence "?(T)" "??(I)" "?(H)" "|" "?(D)" "?(C)"))
         org-todo-keyword-faces '(("HANGUP" . warning)
-                                 ("❓" . warning))
+                                 ("?" . warning))
         org-priority-faces '((?A . error)
                              (?B . warning)
                              (?C . success))
@@ -68,12 +73,7 @@
 
 (use-package org-modern
   :hook ((org-mode . org-modern-mode)
-         (org-agenda-finalize . org-modern-agenda)
-         (org-modern-mode . (lambda ()
-                              "Adapt `org-modern-mode'."
-                              ;; Disable Prettify Symbols mode
-                              (setq prettify-symbols-alist nil)
-                              (prettify-symbols-mode -1))))
+         (org-agenda-finalize . org-modern-agenda))
   :init (setq org-modern-star nil
               org-modern-todo-faces '(("HANGUP" :background "yellow" :foreground "black")
                                       ("DOING" :background "chartreuse" :foreground "black")
@@ -93,9 +93,6 @@
               (if (and (display-graphic-p) (char-displayable-p ?🅐))
                   '("🅐" "🅑" "🅒" "🅓")
                 '("HIGH" "MEDIUM" "LOW" "OPTIONAL"))))
-
-(use-package org-contrib
-  :pin nongnu)
 
 (use-package visual-fill-column
   :preface
@@ -134,7 +131,6 @@
     (C          . t)
     (java       . t)
     (shell      . t)
-    (elasticsearch . t)
     (plantuml   . t))
   "Alist of org ob languages.")
 

@@ -80,31 +80,7 @@
   (doom-themes-enable-italic t)
   :config
   ;; Enable flashing mode-line on errors
-  (doom-themes-visual-bell-config)
-
-  ;; WORKAROUND: Visual bell on 29+
-  ;; @see https://github.com/doomemacs/themes/issues/733
-  (with-no-warnings
-    (defun my-doom-themes-visual-bell-fn ()
-      "Blink the mode-line red briefly. Set `ring-bell-function' to this to use it."
-      (let ((buf (current-buffer))
-            (cookies (mapcar (lambda (face)
-                               (face-remap-add-relative face 'doom-themes-visual-bell))
-                             (if (facep 'mode-line-active)
-                                 '(mode-line-active solaire-mode-line-active-face)
-                               '(mode-line solaire-mode-line-face)))))
-        (force-mode-line-update)
-        (run-with-timer 0.15 nil
-                        (lambda ()
-                          (with-current-buffer buf
-                            (mapc #'face-remap-remove-relative cookies)
-                            (force-mode-line-update))))))
-    (advice-add #'doom-themes-visual-bell-fn :override #'my-doom-themes-visual-bell-fn))
-
-  ;; (doom-themes-treemacs-config)
-  ;; ;; Corrects (and improves) org-mode's native fontification.
-  ;; (doom-themes-org-config)
-  )
+  (doom-themes-visual-bell-config))
 
 (use-package display-time
   :ensure nil
@@ -117,14 +93,11 @@
         display-time-default-load-average nil))
 
 (when (and sys/mac-ns-p sys/mac-x-p)
-  (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
-  (add-to-list 'default-frame-alist '(ns-appearance . dark))
   (add-hook 'after-load-theme-hook
             (lambda ()
               (let ((bg (frame-parameter nil 'background-mode)))
                 (set-frame-parameter nil 'ns-appearance bg)
                 (setcdr (assq 'ns-appearance default-frame-alist) bg)))))
-
 
 (use-package awesome-tray
   :ensure nil
@@ -307,31 +280,31 @@
       window-divider-default-right-width 1)
 (add-hook 'window-setup-hook #'window-divider-mode)
 
-;; Mouse & Smooth Scroll
+;; Scrolling
 ;; Scroll one line at a time (less "jumpy" than defaults)
-(when (display-graphic-p)
-  (setq mouse-wheel-scroll-amount '(1 ((shift) . hscroll))
-        mouse-wheel-scroll-amount-horizontal 1
-        mouse-wheel-progressive-speed nil))
-(setq scroll-step 1
+(setq hscroll-step 1
+      hscroll-margin 2
+      scroll-step 1
       scroll-margin 0
       scroll-conservatively 100000
+      scroll-preserve-screen-position t
       auto-window-vscroll nil
-      scroll-preserve-screen-position t)
+      ;; mouse
+      mouse-wheel-scroll-amount-horizontal 1
+      mouse-wheel-progressive-speed nil)
 
-;; Good pixel line scrolling
-(if (fboundp 'pixel-scroll-precision-mode)
-    (pixel-scroll-precision-mode t)
-  (when (and emacs/>=27p (not sys/macp))
-    (use-package good-scroll
-      :diminish
-      :hook (after-init . good-scroll-mode)
-      :bind (([remap next] . good-scroll-up-full-screen)
-             ([remap prior] . good-scroll-down-full-screen)))))
+;; Smooth scrolling
+(when (fboundp 'pixel-scroll-precision-mode) ;; 29+
+  (use-package ultra-scroll
+    :functions (hl-todo-mode diff-hl-flydiff-mode)
+    :hook (after-init . ultra-scroll-mode)
+    :config
+    (add-hook 'ultra-scroll-hide-functions #'diff-hl-flydiff-mode)
+    (add-hook 'ultra-scroll-hide-functions #'hl-todo-mode)
+    (add-hook 'ultra-scroll-hide-functions #'jit-lock-mode)))
 
 ;; Use fixed pitch where it's sensible
-(use-package mixed-pitch
-  :diminish)
+(use-package mixed-pitch :diminish)
 
 ;; Display ugly ^L page breaks as tidy horizontal lines
 (use-package page-break-lines
@@ -548,11 +521,6 @@
 
   (dolist (mode-hook '(java-mode-hook java-ts-mode-hook))
     (pretty-code-add-hook mode-hook '((:return "return") (:throw "throw")))))
-
-;; Smooth scrolling
-(when emacs/>=29p
-  (use-package ultra-scroll
-    :hook (after-init . ultra-scroll-mode)))
 
 (use-package org-rainbow-tags)
 

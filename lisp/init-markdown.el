@@ -91,11 +91,9 @@ mermaid.initialize({
     (advice-add #'markdown--style-map-prompt   :override #'ignore)
 
     ;; Preview with built-in webkit
-    (defun my-markdown-export-and-preview (fn)
+    (defun my-markdown-export-and-preview ()
       "Preview with `xwidget' if applicable, otherwise with the default browser."
-      (if (and (featurep 'xwidget-internal) (display-graphic-p))
-          (petmacs-webkit-browse-url (concat "file://" (markdown-export)) t)
-        (funcall fn)))
+      (centaur-browse-url-of-file (markdown-export)))
     (advice-add #'markdown-export-and-preview :around #'my-markdown-export-and-preview)))
 
 ;; Table of contents
