@@ -21,14 +21,11 @@
 
 ;; CSS
 (use-package css-mode
-  :ensure nil
   :init (setq css-indent-offset 2))
 
 ;; SCSS
 (use-package scss-mode
-  :init
-  ;; Disable complilation on save
-  (setq scss-compile-at-save nil))
+  :init (setq scss-compile-at-save nil))
 
 ;; LESS
 (unless (fboundp 'less-css-mode)
@@ -37,26 +34,6 @@
 ;; JavaScript
 (use-package js
   :init (setq js-indent-level 2))
-
-;; JSON
-(unless (fboundp 'js-json-mode)
-  (use-package json-mode))
-
-;; Format HTML, CSS and JavaScript/JSON
-;; Install: npm -g install prettier
-(when (executable-find "prettier")
-  (use-package prettier
-    :diminish
-    :defines prettier-pre-warm
-    :hook ((js-mode css-mode sgml-mode web-mode) . prettier-mode)
-    :init (setq prettier-pre-warm 'none)))
-
-(use-package typescript-mode
-  :mode ("\\.ts[x]\\'" . typescript-mode))
-
-;; Major mode for CoffeeScript code
-(use-package coffee-mode
-  :config (setq coffee-tab-width 2))
 
 ;; Major mode for editing web templates
 (use-package web-mode
@@ -68,10 +45,7 @@
 
 ;; Adds node_modules/.bin directory to `exec_path'
 (use-package add-node-modules-path
-  :hook ((web-mode js-mode) . add-node-modules-path))
-
-(use-package haml-mode)
-(use-package php-mode)
+  :hook ((web-mode js-base-mode) . add-node-modules-path))
 
 ;; REST
 (use-package restclient

@@ -147,6 +147,10 @@
 (use-package ob-mermaid
   :init (cl-pushnew '(mermaid . t) load-language-alist))
 
+(use-package ob-restclient
+  :after restclient
+  :init (cl-pushnew '(restclient . t) load-language-alist))
+
 (org-babel-do-load-languages 'org-babel-load-languages
                              load-language-alist)
 

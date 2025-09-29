@@ -903,6 +903,27 @@
            "tb" 'lsp-jt-browser
            ))))
 
+
+;;; restclient mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(leader-declare-prefix-for-major-mode 'restclient-mode
+  "c" "run"
+  "t" "test")
+
+(leader-set-keys-for-major-mode 'restclient-mode
+  "cc" #'restclient-http-send-current
+  "cr" #'restclient-http-send-current-raw
+  "cv" #'restclient-http-send-current-raw
+  "cr" #'restclient-http-send-current-raw
+  "n"  #'restclient-jump-next
+  "p"  #'restclient-jump-prev
+  "y"  #'restclient-copy-curl-command
+  "N"  #'restclient-narrow-to-current
+  "a"  #'restclient-toggle-body-visibility-or-indent
+  "i"  #'restclient-show-info
+  "tb" #'restclient-test-buffer
+  "tc" #'restclient-test-current)
+
 ;;; python mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (dolist (mode '(python-mode python-ts-mode))

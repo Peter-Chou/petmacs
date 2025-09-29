@@ -90,10 +90,10 @@ Avoid placing large files like EAF in `site-lisp` to prevent slow startup."
 (require 'init-python)
 (require 'init-java)
 (require 'init-markdown)
+(require 'init-web)
 
 ;; (require 'init-golang)
 ;; (require 'init-scala)
-;; (require 'init-web)
 
 (require 'init-org)
 
