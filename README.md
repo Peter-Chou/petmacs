@@ -77,6 +77,11 @@ if your cmake is too old, download the suitable version from [cmake.org](https:/
 sudo apt-get install -y universal-ctags
 ```
 
+### 1.11 readability
+
+``` bash
+npm install -g readability-cli
+```
 
 ---
 
