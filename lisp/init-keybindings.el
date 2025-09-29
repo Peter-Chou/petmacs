@@ -908,6 +908,7 @@
 
 (leader-declare-prefix-for-major-mode 'restclient-mode
   "c" "run"
+  "e" "environment"
   "t" "test")
 
 (leader-set-keys-for-major-mode 'restclient-mode
@@ -915,6 +916,8 @@
   "cr" #'restclient-http-send-current-raw
   "cv" #'restclient-http-send-current-raw
   "cr" #'restclient-http-send-current-raw
+  "ee" #'restclient-set-env
+  "er" #'restclient-reload-current-env
   "n"  #'restclient-jump-next
   "p"  #'restclient-jump-prev
   "y"  #'restclient-copy-curl-command
