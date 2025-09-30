@@ -131,6 +131,7 @@
   "fC" "unix <-> dos")
 (leader-with-prefix "f"
   (leader-set-keys
+    "'" #'file-info-show
     "A" #'find-alternate-file
     "f" #'find-file
     "c" #'petmacs/save-as
