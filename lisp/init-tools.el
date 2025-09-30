@@ -72,22 +72,6 @@
       (push (cons (cons nil (concat "\\`" (car nd) "\\'")) (cons nil (cdr nd)))
             which-key-replacement-alist))))
 
-(when (childframe-completion-workable-p)
-  (use-package which-key-posframe
-    :diminish
-    :autoload which-key-posframe-mode
-    :defines posframe-border-width
-    :functions posframe-poshandler-frame-center-near-bottom
-    :custom-face
-    (which-key-posframe ((t (:inherit tooltip))))
-    (which-key-posframe-border ((t (:inherit posframe-border :background unspecified))))
-    :init
-    (setq which-key-posframe-border-width posframe-border-width
-          which-key-posframe-poshandler #'posframe-poshandler-frame-center-near-bottom
-          which-key-posframe-parameters '((left-fringe . 8)
-                                          (right-fringe . 8)))
-    (which-key-posframe-mode 1)))
-
 ;; Jump to things in Emacs tree-style
 (use-package avy
   :hook (after-init . avy-setup-default)
@@ -422,13 +406,7 @@
 ;; add space between Chinese and English character
 ;; these white-space characters are not really added to the contents, it just like to do.
 (use-package pangu-spacing
-  :init
-  (global-pangu-spacing-mode 1)
-  :config
-  ;; Always insert `real' space in org-mode.
-  (add-hook 'org-mode-hook
-            (lambda ()
-              (setq-local pangu-spacing-real-insert-separtor t))))
+  :hook (after-init . global-pangu-spacing-mode))
 
 (use-package list-environment
   :init

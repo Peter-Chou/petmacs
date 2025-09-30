@@ -23,7 +23,7 @@
 (defvar petmacs-treesit t
   "Enable tree-sitter or not. Native tree-sitter is introduced in 29.")
 
-(defvar petmacs-completion-style 'minibuffer
+(defvar petmacs-completion-style 'childframe
   "minibuffer / childframe")
 
 (defvar petmacs-favor-color "#F37022"
