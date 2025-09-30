@@ -204,8 +204,8 @@
          (minibuffer-setup . subword-mode)))
 
 ;; Open files as another user
-(use-package sudo-edit
-  :init (setq sudo-edit-user "root"))
+(unless sys/win32p
+  (use-package sudo-edit))
 
 ;; Flexible text folding
 (use-package hideshow
@@ -296,6 +296,12 @@
 
 (use-package pretty-hydra
   :functions icons-displayable-p
+  :hook (emacs-lisp-mode . (lambda ()
+                             (add-to-list
+                              'imenu-generic-expression
+                              '("Hydras"
+                                "^.*(\\(pretty-hydra-define\\) \\([a-zA-Z-]+\\)"
+                                2))))
   :init
   (require 'pretty-hydra)
   (cl-defun pretty-hydra-title (title &optional icon-type icon-name

@@ -59,8 +59,9 @@
          ((dockerfile-mode dockerfile-ts-mode) . (lambda ()
                                                    (petmacs/eglot-ensure "docker-langserver"))))
   :init
-  (setq eglot-send-changes-idle-time 0.2
+  (setq eglot-send-changes-idle-time 0.3
         eglot-autoshutdown t
+        eglot-events-buffer-size 0
         eglot-connect-timeout 1200 ;; 10 minutes
         eglot-ignored-server-capabilities '(:documentHighlightProvider
                                             :inlayHintProvider

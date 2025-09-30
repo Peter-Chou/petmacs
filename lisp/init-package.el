@@ -48,26 +48,22 @@
 ;; Update GPG keyring for GNU ELPA
 ;; (use-package gnu-elpa-keyring-update)
 
-;; Auto update packages
-(use-package auto-package-update
-  :init
-  (setq auto-package-update-delete-old-versions t
-        auto-package-update-hide-results t)
-  (defalias 'upgrade-packages #'auto-package-update-now))
+;; Update packages
+(unless (fboundp 'package-upgrade-all)
+  (use-package auto-package-update
+    :init
+    (setq auto-package-update-delete-old-versions t
+          auto-package-update-hide-results t)
+    (defalias 'package-upgrade-all #'auto-package-update-now)))
 
-(use-package quelpa
-  :init
-  (setq quelpa-self-upgrade-p nil
-        quelpa-checkout-melpa-p nil
-        quelpa-update-melpa-p nil
-        quelpa-dir (expand-file-name "data/quelpa" user-emacs-directory)))
+;; (use-package quelpa
+;;   :init
+;;   (setq quelpa-self-upgrade-p nil
+;;         quelpa-checkout-melpa-p nil
+;;         quelpa-update-melpa-p nil
+;;         quelpa-dir (expand-file-name "data/quelpa" user-emacs-directory)))
 
-;; Required by `use-package'
-(use-package quelpa-use-package
-  :demand t
-  :init
-  ;; (setq quelpa-use-package-inhibit-loading-quelpa t)
-  ;; (quelpa-use-package-activate-advice)
-  )
+;; ;; Required by `use-package'
+;; (use-package quelpa-use-package :demand t)
 
 (provide 'init-package)

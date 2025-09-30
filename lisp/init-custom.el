@@ -5,9 +5,6 @@
 
 (require 'init-const)
 
-(defvar petmacs-quelpa-use-gitee-mirror nil
-  "use gitee mirror instead of github")
-
 (defvar petmacs-checker 'flymake
   "flycheck / flymake ")
 
@@ -65,9 +62,6 @@
 
 (defvar petmacs-enable-ligatures t
   "enable ligatures")
-
-(defvar petmacs-quelpa-checkout-melpa nil
-  "update melpa, disable it if the network is unstable.")
 
 (defvar  petmacs-day-night-themes '(("8:00" . catppuccin)
                                     ("20:00"  . catppuccin))

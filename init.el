@@ -92,9 +92,6 @@ Avoid placing large files like EAF in `site-lisp` to prevent slow startup."
 (require 'init-markdown)
 (require 'init-web)
 
-;; (require 'init-golang)
-;; (require 'init-scala)
-
 (require 'init-org)
 
 (require 'init-keybindings)
