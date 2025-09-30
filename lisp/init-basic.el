@@ -309,4 +309,20 @@
 ;; Compatibility
 (use-package compat :demand t)
 
+;; Copy&paste GUI clipboard from text terminal
+(unless sys/win32p
+  (use-package xclip
+    :hook (after-init . xclip-mode)
+    :config
+    ;; HACK: fix bug in xclip-mode on WSL
+    (when (eq xclip-method 'powershell)
+      (setq xclip-program "powershell.exe"))
+
+    ;; @see https://github.com/microsoft/wslg/issues/15#issuecomment-1796195663
+    (when (eq xclip-method 'wl-copy)
+      (set-clipboard-coding-system 'gbk) ; for wsl
+      (setq interprogram-cut-function
+            (lambda (text)
+              (start-process "xclip"  nil xclip-program "--trim-newline" "--type" "text/plain;charset=utf-8" text))))))
+
 (provide 'init-basic)
