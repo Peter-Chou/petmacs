@@ -65,4 +65,8 @@
   (>= emacs-major-version 30)
   "Emacs is 30 or above.")
 
+(defconst emacs/>=31p
+  (>= emacs-major-version 31)
+  "Emacs is 31 or above.")
+
 (provide 'init-const)

@@ -3,9 +3,6 @@
 (use-package dashboard
   :after nerd-icons
   :diminish dashboard-mode
-  :functions (nerd-icons-octicon
-              winner-undo
-              widget-forward)
   :custom-face
   (dashboard-heading ((t (:inherit (font-lock-string-face bold)))))
   (dashboard-items-face ((t (:weight normal))))
@@ -56,10 +53,10 @@
 
    dashboard-set-footer t
    dashboard-footer-messages '("Enjoy Emacs, Enjoy Petmacs! ")
-  dashboard-footer-icon
-  (if (icons-displayable-p)
-      (nerd-icons-octicon "nf-oct-heart" :height 1.2 :face 'nerd-icons-lred)
-    (propertize ">" 'face 'dashboard-footer)))
-(dashboard-setup-startup-hook))
+   dashboard-footer-icon
+   (if (icons-displayable-p)
+       (nerd-icons-octicon "nf-oct-heart" :height 1.2 :face 'nerd-icons-lred)
+     (propertize ">" 'face 'dashboard-footer)))
+  (dashboard-setup-startup-hook))
 
 (provide 'init-dashboard)
