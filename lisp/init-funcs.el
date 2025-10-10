@@ -1191,6 +1191,17 @@ interactively.  Turn the filename into a URL with function
       (>= (/ (float (x-display-pixel-width)) (x-display-pixel-height)) 2.3)
     nil))
 
-(petmacs/ultra-screen-p)
+(defun petmacs/project-try-local (dir)
+  "Determine if DIR is a non-Git project."
+  (catch 'ret
+    (let ((pr-flags '(
+                      ;; (".project")
+                      (".prj" ".project" ".projectile")
+                      ("go.mod" "Cargo.toml" "project.clj" "pom.xml" "package.json") ;; higher priority
+                      ("Makefile" "README.org" "README.md"))))
+      (dolist (current-level pr-flags)
+        (dolist (f current-level)
+          (when-let ((root (locate-dominating-file dir f)))
+            (throw 'ret (cons 'local root))))))))
 
 (provide 'init-funcs)

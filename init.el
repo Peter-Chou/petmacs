@@ -79,8 +79,8 @@ Avoid placing large files like EAF in `site-lisp` to prevent slow startup."
 (require 'init-treemacs)
 ;; (require 'init-workspace)
 
+;; (require 'init-project)
 (require 'init-projectile)
-(require 'init-project)
 (require 'init-vcs)
 (require 'init-yasnippet)
 (require 'init-shell)

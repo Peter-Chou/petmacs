@@ -1,5 +1,12 @@
 ;; -*- lexical-binding: t no-byte-compile: t -*-
 
+(eval-when-compile
+  (require 'init-funcs))
+
+(setq project-find-functions '(petmacs/project-try-local project-try-vc))
+
+(use-package consult-project-extra)
+
 (use-package projectile
   :diminish
   :hook (after-init . projectile-mode)
