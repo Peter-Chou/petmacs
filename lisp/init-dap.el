@@ -23,7 +23,7 @@
          (dap-session-created . global-display-line-numbers-mode)
          ;; (dap-stopped . (lambda (arg) (call-interactively #'dap-hydra)))
          ;; (dap-terminated . (lambda (_) (dap-hydra/nil)))
-         ((python-mode python-ts-mode) . (lambda () (require 'dap-python)))
+         (python-base-mode . (lambda () (require 'dap-python)))
          ((java-mode java-ts-mode) . (lambda () (require 'dap-java)))
          ;; dap-lldb needs lldb-vscode which is in LLVM prebuilt package
          ((c-mode c-ts-mode c++-mode c++-ts-mode) . (lambda () (require 'dap-lldb)))

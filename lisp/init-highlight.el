@@ -126,7 +126,7 @@ FACE defaults to inheriting from default and highlight."
   :hook (((
            go-mode go-ts-mode
            json-mode json-ts-mode
-           python-mode python-ts-mode
+           python-base-mode
            toml-mode toml-ts-mode
            yaml-mode yaml-ts-mode) . (lambda () (unless (too-long-file-p)
                                              (indent-bars-mode 1))))

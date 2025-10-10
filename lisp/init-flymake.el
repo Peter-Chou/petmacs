@@ -60,7 +60,7 @@
 
   (defun petmacs/eglot-setup-flymake-ruff ()
     (interactive)
-    (when (memq major-mode '(python-mode python-ts-mode))
+    (when (derived-mode-p 'python-base-mode)
       (flymake-ruff-load)))
   :config
   (add-hook 'eglot-managed-mode-hook 'petmacs/eglot-setup-flymake-ruff))
