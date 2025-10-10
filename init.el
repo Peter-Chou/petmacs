@@ -73,15 +73,8 @@ Avoid placing large files like EAF in `site-lisp` to prevent slow startup."
 
 (require 'init-corfu)
 
-(cond ((equal petmacs-lsp-mode-impl 'eglot)
-       (require 'init-eglot))
-      (t
-       (require 'init-lsp)))
-
-(cond ((and (equal petmacs-dap-mode-impl 'dape) emacs/>=29p)
-       (require 'init-dape))
-      (t
-       (require 'init-dap)))
+(require 'init-eglot)
+(require 'init-dape)
 
 (require 'init-elisp)
 (require 'init-c-c++)
