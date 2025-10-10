@@ -16,9 +16,7 @@
   :demand t
   :functions nerd-icons-octicon
   :init
-  (if (equal petmacs-checker 'flycheck)
-      (setq lsp-diagnostics-provider :flycheck)
-    (setq lsp-diagnostics-provider :flymake))
+  (setq lsp-diagnostics-provider :flymake)
 
   (setq lsp-auto-guess-root nil
         lsp-imenu-index-function #'lsp-imenu-create-categorized-index

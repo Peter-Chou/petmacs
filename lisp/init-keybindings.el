@@ -363,16 +363,9 @@
     "pp" #'toggle-http-proxy
     ))
 
-(if (equal petmacs-checker 'flycheck)
-    (leader-with-prefix "t"
-      (leader-set-keys
-        "s" #'flycheck-mode
-        ))
-  (leader-with-prefix "t"
-    (leader-set-keys
-      "s" #'flymake-mode
-      ))
-  )
+(leader-with-prefix "t"
+  (leader-set-keys
+    "s" #'flymake-mode))
 
 (leader-declare-prefix
   "F" "frame")
@@ -437,29 +430,13 @@
 
 (leader-declare-prefix
   "e" "error")
-(if (equal petmacs-checker 'flycheck)
-    (leader-with-prefix "e"
-      (leader-set-keys
-        "l" #'consult-flycheck
-        "L" #'flycheck-list-errors
-        "c" #'flycheck-clear
-        "h" #'flycheck-describe-checker
-        "n" #'petmacs/next-error
-        "N" #'petmacs/previous-error
-        "p" #'petmacs/previous-error
-        "s" #'flycheck-select-checker
-        "S" #'flycheck-set-checker-executable
-        "v" #'flycheck-verify-setup
-        "y" #'flycheck-copy-errors-as-kill
-        "x" #'flycheck-explain-error-at-point))
-  (leader-with-prefix "e"
-    (leader-set-keys
-      "l" #'consult-flymake
-      "L" #'flymake-show-buffer-diagnostics
-      "n" #'flymake-goto-next-error
-      "p" #'flymake-goto-prev-error
-      "a" #'flymake-show-project-diagnostics)))
-
+(leader-with-prefix "e"
+  (leader-set-keys
+    "l" #'consult-flymake
+    "L" #'flymake-show-buffer-diagnostics
+    "n" #'flymake-goto-next-error
+    "p" #'flymake-goto-prev-error
+    "a" #'flymake-show-project-diagnostics))
 
 (leader-declare-prefix
   "D" "Diff/Compare"

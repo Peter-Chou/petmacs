@@ -56,9 +56,7 @@ Avoid placing large files like EAF in `site-lisp` to prevent slow startup."
 (require 'init-treemacs)
 ;; (require 'init-workspace)
 
-(if (equal petmacs-checker 'flycheck)
-    (require 'init-flycheck)
-  (require 'init-flymake))
+(require 'init-flymake)
 
 (require 'init-vcs)
 

@@ -576,21 +576,14 @@ SCALE are supported."
          (eglot . sideline-mode)
          ((java-mode java-ts-mode) . (lambda ()
                                        "disable sideline-eglot in java-mode / java-ts-mode"
-                                       (if (equal petmacs-checker 'flycheck)
-                                           (setq-local sideline-backends-right '((sideline-flycheck . down)))
-                                         (setq-local sideline-backends-right '((sideline-flymake . down))))
-                                       ))
+                                       (setq-local sideline-backends-right '((sideline-flymake . down)))))
          )
   :init
   (require 'sideline)
   ;; (setq sideline-display-backend-name t)
-  (if (equal petmacs-checker 'flycheck)
-      (setq sideline-backends-right '(
-                                      (sideline-eglot . up)
-                                      (sideline-flycheck . down)))
-    (setq sideline-backends-right '(
-                                    (sideline-eglot . up)
-                                    (sideline-flymake . down)))))
+  (setq sideline-backends-right '(
+                                  (sideline-eglot . up)
+                                  (sideline-flymake . down))))
 
 (use-package numpydoc
   :init (setq numpydoc-template-short t))

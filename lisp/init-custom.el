@@ -5,9 +5,6 @@
 
 (require 'init-const)
 
-(defvar petmacs-checker 'flymake
-  "flycheck / flymake ")
-
 (defvar petmacs-lsp-mode-impl 'eglot
   "lsp-mode / eglot")
 
