@@ -1,5 +1,19 @@
 ;;; init.el --- Petmacs configurations  -*- lexical-binding: t no-byte-compile: t -*-
 
+;;; Commentary:
+;;
+;; Petmacs Emacs - Vim in Emacs
+;;
+
+;;; Code:
+
+(when (version< emacs-version "29.1")
+  (error "This requires Emacs 29.1 and above!"))
+
+;;
+;; Speed up Startup Process
+;;
+
 ;; Defer garbage collection further back in the startup process
 (setq gc-cons-threshold most-positive-fixnum)
 
@@ -16,6 +30,10 @@
                 (setq file-name-handler-alist
                       (delete-dups (append file-name-handler-alist default-handlers))))
               101)))
+
+;;
+;; Configure Load Path
+;;
 
 ;; Add "lisp" and "site-lisp" to the beginning of `load-path`
 (defun update-load-path (&rest _)
@@ -35,13 +53,17 @@ Avoid placing large files like EAF in `site-lisp` to prevent slow startup."
 (advice-add #'package-initialize :after #'update-load-path)
 (advice-add #'package-initialize :after #'add-subdirs-to-load-path)
 
+;; Initialize load paths explicitly
 (update-load-path)
 
+(require 'init-const)
 (require 'init-custom)
-
 (require 'init-funcs)
 
+;; Packages
 (require 'init-package)
+
+;; Preferences
 (require 'init-basic)
 (require 'init-font)
 
@@ -53,29 +75,33 @@ Avoid placing large files like EAF in `site-lisp` to prevent slow startup."
 (require 'init-dashboard)
 (require 'init-ibuffer)
 (require 'init-window)
+(require 'init-dired)
 (require 'init-treemacs)
 ;; (require 'init-workspace)
 
-(require 'init-flymake)
-
-(require 'init-vcs)
-
 (require 'init-projectile)
 (require 'init-project)
-(require 'init-dired)
-(require 'init-shell)
+(require 'init-vcs)
 (require 'init-yasnippet)
+(require 'init-shell)
+(require 'init-flymake)
 
-(require 'init-consult)
-
+;; treesit
 (when (petmacs-treesit-available-p)
   (require 'init-treesit))
 
+;; completion
+(require 'init-consult)
 (require 'init-corfu)
 
+;; lsp & dap
 (require 'init-eglot)
 (require 'init-dape)
 
+;; org
+(require 'init-org)
+
+;; Programming
 (require 'init-elisp)
 (require 'init-c-c++)
 (require 'init-python)
@@ -83,8 +109,7 @@ Avoid placing large files like EAF in `site-lisp` to prevent slow startup."
 (require 'init-markdown)
 (require 'init-web)
 
-(require 'init-org)
-
+;; keybindings
 (require 'init-keybindings)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
