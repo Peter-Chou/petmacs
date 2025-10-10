@@ -37,17 +37,14 @@
                                bash c cmake cpp go gomod  javascript typescript
                                scala java python rust r vue make
                                json sql toml proto dockerfile yaml
-                               ;; markdown
-                               ;; css latex lua
-                               ))))
+                               bibtex css html org tsx lua))
+    :config
+    (treesit-auto-add-to-auto-mode-alist 'all))
 
-;; native support to evil fold feature
-(use-package treesit-fold
-  :pin nongnu
-  :hook ((prog-mode . treesit-fold-mode)
-         (treesit-fold-mode . treesit-fold-line-comment-mode)))
-
-;; remove file -> ts-mode mapping in auto-mode-alist
-;; (setq auto-mode-alist (delete '("\\.rs\\'" . rust-ts-mode) auto-mode-alist))
+  ;; native support to evil fold feature
+  (use-package treesit-fold
+    :pin nongnu
+    :hook ((prog-mode . treesit-fold-mode)
+           (treesit-fold-mode . treesit-fold-line-comment-mode))))
 
 (provide 'init-treesit)
