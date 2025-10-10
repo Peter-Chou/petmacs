@@ -545,350 +545,99 @@
     "R" #'restart-emacs
     ))
 
-(cond ((and (equal petmacs-dap-mode-impl 'dape) emacs/>=29p)
-       (leader-declare-prefix
-         "d" "debug"
-         "db"  "breakpoints"
-         "dd"  "debugging"
-         "dS"  "switch")
-       (leader-with-prefix "d"
-         (leader-set-keys
-           "." #'dape-hydra/body
+(leader-declare-prefix
+  "d" "debug"
+  "db"  "breakpoints"
+  "dd"  "debugging"
+  "dS"  "switch")
+(leader-with-prefix "d"
+  (leader-set-keys
+    "." #'dape-hydra/body
 
-           "q"  #'dape-quit
-           "D"  #'dape-disconnect-quit
+    "q"  #'dape-quit
+    "D"  #'dape-disconnect-quit
 
-           ;; breakpoints
-           "bb" #'dape-breakpoint-toggle
-           "bc" #'dape-breakpoint-expression
-           "bl" #'dape-breakpoint-log
-           "bD" #'dape-breakpoint-remove-all
-           ;; debuging/running
-           "dd" #'dape
+    ;; breakpoints
+    "bb" #'dape-breakpoint-toggle
+    "bc" #'dape-breakpoint-expression
+    "bl" #'dape-breakpoint-log
+    "bD" #'dape-breakpoint-remove-all
+    ;; debuging/running
+    "dd" #'dape
 
-           ;; switching
-           "Sw" #'dape-watch-dwim
-           "Sm" #'dape-read-memory
-           "St" #'dape-select-thread
-           "Ss" #'dape-select-stack
-           "Ss" #'dape-info
-           "Sr"  #'dape-repl
+    ;; switching
+    "Sw" #'dape-watch-dwim
+    "Sm" #'dape-read-memory
+    "St" #'dape-select-thread
+    "Ss" #'dape-select-stack
+    "Ss" #'dape-info
+    "Sr"  #'dape-repl
 
-           ;; stepping
-           "n"  #'dape-next
-           "s"  #'dape-next
-           "o"  #'dape-step-out
-           "c"  #'dape-continue
-           "i"  #'dape-step-in
-           "r"  #'dape-restart
-           "p"  #'dape-pause
-           "k"  #'dape-kill
-           "r"  #'dape-restart
-           )))
-      (t
-       (leader-declare-prefix
-         "d" "debug"
-         "db"  "breakpoints"
-         "dd"  "debugging"
-         "de"  "eval"
-         "dI"  "inspect"
-         "dS"  "switch"
-         "dw"  "debug windows")
-       (leader-with-prefix "d"
-         (leader-set-keys
-           "." #'dap-hydra
-           ;; repl
-           "'"  #'dap-ui-repl
-           ;; abandon
-           "q"  #'dap-disconnect
-           "Q"  #'dap-delete-all-sessions
-           ;; breakpoints
-           "bb" #'dap-breakpoint-toggle
-           "bc" #'dap-breakpoint-condition
-           "bl" #'dap-breakpoint-log-message
-           "bh" #'dap-breakpoint-hit-condition
-           "ba" #'dap-breakpoint-add
-           "bd" #'dap-breakpoint-delete
-           "bD" #'dap-breakpoint-delete-all
-           ;; debuging/running
-           "dd" #'dap-debug
-           "de" #'dap-debug-edit-template
-           "dl" #'dap-debug-last
-           "dr" #'dap-debug-recent
-           ;; eval
-           "ee" #'dap-eval
-           "er" #'dap-eval-region
-           "et" #'dap-eval-thing-at-point
-           "et" #'dap-ui-expressions-add
-           ;; inspect
-           "Ii" #'dap-ui-inspect
-           "Ir" #'dap-ui-inspect-region
-           "It" #'dap-ui-inspect-thing-at-point
-
-           ;; stepping
-           "c"  #'dap-continue
-           "i"  #'dap-step-in
-           "o"  #'dap-step-out
-           "r"  #'dap-restart-frame
-           "s"  #'dap-next
-           "n"  #'dap-next
-           "v"  #'dap-ui-inspect-thing-at-point
-           ;; switching
-           "Ss" #'dap-switch-session
-           "St" #'dap-switch-thread
-           "Sf" #'dap-switch-frame
-           ;; windows
-           "wo" #'dap-go-to-output-buffer
-           "wl" #'dap-ui-locals
-           "ws" #'dap-ui-sessions
-           "wb" #'dap-ui-breakpoints))))
-
+    ;; stepping
+    "n"  #'dape-next
+    "s"  #'dape-next
+    "o"  #'dape-step-out
+    "c"  #'dape-continue
+    "i"  #'dape-step-in
+    "r"  #'dape-restart
+    "p"  #'dape-pause
+    "k"  #'dape-kill
+    "r"  #'dape-restart
+    ))
 
 ;;; major mode keybinidngs ;;;;;;;;;;;;;;;;;;
 
 ;;; lsp for major mode
+(dolist (mode petmacs-lsp-active-modes)
+  (leader-declare-prefix-for-major-mode mode
+    "=" "format"
+    "a" "actions"
+    "g" "goto"
+    "G" "goto (other window)"
+    ;; "b" "backends"
+    ;; "p" "peek"
+    ;; "pR" "peek reference"
+    ;; "T" "toggle module"
+    "r" "refactor"
+    "h" "help"
+    ;; "F" "folders"
+    ;; "x" "text/code"
+    )
+  (leader-set-keys-for-major-mode mode
+    ;; format
+    "=o" #'eglot-code-action-organize-imports
 
-(cond ((equal petmacs-lsp-mode-impl 'lsp-bridge-mode)
-       (dolist (mode '(c-mode c++-mode cmake-mode java-mode python-mode ruby-mode lua-mode rust-mode rustic-mode erlang-mode elixir-mode go-mode haskell-mode haskell-literate-mode dart-mode scala-mode typescript-mode typescript-tsx-mode js2-mode js-mode rjsx-mode tuareg-mode latex-mode Tex-latex-mode texmode context-mode texinfo-mode bibtex-mode clojure-mode clojurec-mode clojurescript-mode clojurex-mode sh-mode web-mode css-mode elm-mode emacs-lisp-mode ielm-mode lisp-interaction-mode org-mode php-mode yaml-mode zig-mode groovy-mode dockerfile-mode d-mode f90-mode fortran-mode nix-mode ess-r-mode verilog-mode))
-         (leader-declare-prefix-for-major-mode mode
-           "=" "format"
-           "a" "actions"
-           "g" "goto"
-           "G" "goto (other window)"
-           "p" "peek"
-           "w" "workspace"
-           "r" "refactor"
-           "h" "help")
-         (leader-set-keys-for-major-mode mode
-           ;; format
-           "==" #'lsp-bridge-code-format
+    ;; help
+    "hh" #'eldoc-doc-buffer
 
-           ;; code actions
+    ;; actions
+    "aa" #'eglot-code-actions
 
+    ;; rename
+    "rr" #'eglot-rename
 
-           ;; format
-           "rr" #'lsp-bridge-rename
+    ;; goto
+    "gd" #'xref-goto-xref
+    "gr" #'xref-find-references
+    "gD" #'eglot-find-declaration
+    "gi" #'eglot-find-implementation
+    "gt" #'eglot-find-typeDefinition
+    "gb" #'xref-pop-marker-stack
+    "gF" #'xref-find-definitions-other-frame
+    "gs" #'consult-eglot-symbols
 
-           ;; goto
-           "gd" #'petmacs/lsp-bridge-jump
-           "ga" #'consult-apropos
-           "ge" #'lsp-bridge-list-diagnostics
-           "gr" #'lsp-bridge-find-references
-           "gi" #'lsp-bridge-find-impl
-           "gt" #'lsp-bridge-find-define
+    ;; goto other window
+    "Gd" #'xref-find-definitions-other-window
 
-           "gb" #'petmacs/lsp-bridge-jump-back
-           "gf" #'xref-find-definitions-other-frame
-
-           ;; goto other window
-           "Gd" #'lsp-bridge-find-def-other-window
-           "Gi" #'lsp-bridge-find-impl-other-window
-
-           ;; workspace
-           "wr" #'lsp-bridge-restart-process
-
-           ;; help
-           "hh" #'lsp-bridge-lookup-documentation
-           "hs" #'lsp-bridge-signature-help-fetch)))
-      ((equal petmacs-lsp-mode-impl 'eglot)
-
-       (dolist (mode petmacs-lsp-active-modes)
-         (leader-declare-prefix-for-major-mode mode
-           "=" "format"
-           "a" "actions"
-           "g" "goto"
-           "G" "goto (other window)"
-           ;; "b" "backends"
-           ;; "p" "peek"
-           ;; "pR" "peek reference"
-           ;; "T" "toggle module"
-           "r" "refactor"
-           "h" "help"
-           ;; "F" "folders"
-           ;; "x" "text/code"
-           )
-
-         (leader-set-keys-for-major-mode mode
-           ;; format
-           "=o" #'eglot-code-action-organize-imports
-
-           ;; help
-           "hh" #'eldoc-doc-buffer
-
-           ;; actions
-           "aa" #'eglot-code-actions
-
-           ;; rename
-           "rr" #'eglot-rename
-
-           ;; goto
-           "gd" #'xref-goto-xref
-           "gr" #'xref-find-references
-           "gD" #'eglot-find-declaration
-           "gi" #'eglot-find-implementation
-           "gt" #'eglot-find-typeDefinition
-           "gb" #'xref-pop-marker-stack
-           "gF" #'xref-find-definitions-other-frame
-           "gs" #'consult-eglot-symbols
-
-           ;; goto other window
-           "Gd" #'xref-find-definitions-other-window
-
-           ;; "gT" #'eglot-hierarchy-type-hierarchy
-           ;; "gC" #'eglot-hierarchy-call-hierarchy
-           )
-
-         ))
-      (t
-       (dolist (mode petmacs-lsp-active-modes)
-         (leader-declare-prefix-for-major-mode mode
-           "=" "format"
-           "a" "actions"
-           "g" "goto"
-           "G" "goto (other window)"
-           "p" "peek"
-           "pR" "peek reference"
-           "b" "backends"
-           "T" "toggle module"
-           "r" "refactor"
-           "h" "help"
-           "F" "folders"
-           "x" "text/code")
-         (leader-set-keys-for-major-mode mode
-           ;; format
-           "=b" #'lsp-format-buffer
-           "=r" #'lsp-format-region
-           "=o" #'lsp-organize-imports
-
-           ;; code actions
-           "aa" #'lsp-execute-code-action
-           "ah" #'lsp-document-highlight
-           "al" #'lsp-avy-lens
-
-           ;; format
-           "rr" #'lsp-rename
-
-           ;; goto
-           "gd" #'lsp-find-definition
-           "gD" #'lsp-find-declaration
-           "ge" #'lsp-treemacs-errors-list
-           "gC" #'lsp-treemacs-call-hierarchy
-           "gT" #'lsp-treemacs-type-hierarchy
-           "gr" #'lsp-find-references
-           "gi" #'lsp-find-implementation
-           "gt" #'lsp-find-type-definition
-
-           "gs" #'petmacs/consult-lsp-file-symbols
-           "gS" #'consult-lsp-symbols
-           "gm" #'symbols-outline-show
-
-           "gb" #'xref-pop-marker-stack
-           "gF" #'xref-find-definitions-other-frame
-
-           ;; goto other window
-           "Gd" #'petmacs/lsp-find-definition-other-window
-           "GD" #'petmacs/lsp-find-declaration-other-window
-           "Gi" #'petmacs/lsp-find-implementation-other-window
-           "Gt" #'petmacs/lsp-find-type-definition-other-window
-           "Gr" #'petmacs/lsp-find-references-other-window
-
-           ;; peek
-           "pd" #'lsp-ui-peek-find-definitions
-           "pi" #'lsp-ui-peek-find-implementation
-           "pr" #'lsp-ui-peek-find-references
-           "ps" #'lsp-ui-peek-find-workspace-symbol
-           "pe" #'lsp-ui-flycheck-list
-           "pb" #'lsp-ui-peek-jump-backward
-           "pn" #'lSp-ui-peek-jump-forward
-           "pRn" #'lsp-ui-find-next-reference
-           "pRp" #'lsp-ui-find-prev-reference
-
-           ;; backends
-           "bd" #'lsp-describe-session
-           "br" #'lsp-workspace-restart
-           "bs" #'lsp-workspace-shutdown
-
-
-           ;; help
-           "hh" #'lsp-describe-thing-at-point
-           "hs" #'lsp-signature-activate
-           "hg" #'lsp-ui-doc-glance
-
-           ;; text/code
-           "xh" #'lsp-document-highlight
-           "xl" #'lsp-lens-show
-           "xL" #'lsp-lens-hide
-
-           ;; folders
-           "Fs" #'lsp-workspace-folders-switch
-           "FR" #'lsp-workspace-folders-remove
-           "Fb" #'lsp-workspace-blacklist-remove
-
-
-           ;; toggles
-           "TD" #'lsp-modeline-diagnostics-mode
-           "Tl" #'lsp-lens-mode
-           "Td" #'lsp-ui-doc-mode
-           "Ts" #'lsp-toggle-signature-auto-activate
-           "TS" #'lsp-ui-sideline-mode))
-
-       (dolist (mode '(java-mode java-ts-mode))
-         (leader-declare-prefix-for-major-mode mode
-           "mc"  "compile/create"
-           "mgk"  "type hierarchy"
-           "mra"  "add/assign"
-           "mrc"  "create/convert"
-           "mrg"  "generate"
-           "mre"  "extract"
-           "mt"  "test")
-
-         (leader-set-keys-for-major-mode mode
-           "wu"  'lsp-java-update-project-configuration
-
-           ;; refactoring
-           "ro" 'lsp-java-organize-imports
-           "rcp" 'lsp-java-create-parameter
-           "rcf" 'lsp-java-create-field
-           "rci" 'lsp-java-convert-to-static-import
-           "rec" 'lsp-java-extract-to-constant
-           "rel" 'lsp-java-extract-to-local-variable
-           "rem" 'lsp-java-extract-method
-
-           ;; assign/add
-           "rai" 'lsp-java-add-import
-           "ram" 'lsp-java-add-unimplemented-methods
-           "rat" 'lsp-java-add-throws
-           "raa" 'lsp-java-assign-all
-           "raf" 'lsp-java-assign-to-field
-           "raF" 'lsp-java-assign-statement-to-field
-           "ral" 'lsp-java-assign-statement-to-local
-
-           ;; generate
-           "rgt" 'lsp-java-generate-to-string
-           "rge" 'lsp-java-generate-equals-and-hash-code
-           "rgo" 'lsp-java-generate-overrides
-           "rgg" 'lsp-java-generate-getters-and-setters
-
-           ;; create/compile
-           "cc"  'lsp-java-build-project
-           "cp"  'lsp-java-spring-initializr
-
-           "gkk" 'lsp-java-type-hierarchy
-           "gku" 'petmacs/lsp-java-super-type
-           "gks" 'petmacs/lsp-java-sub-type
-
-           ;; test
-           "tb" 'lsp-jt-browser
-           ))))
-
+    ;; "gT" #'eglot-hierarchy-type-hierarchy
+    ;; "gC" #'eglot-hierarchy-call-hierarchy
+    ))
 
 ;;; restclient mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (leader-declare-prefix-for-major-mode 'restclient-mode
   "c" "run"
   "e" "environment"
   "t" "test")
-
 (leader-set-keys-for-major-mode 'restclient-mode
   "cc" #'restclient-http-send-current
   "cr" #'restclient-http-send-current-raw
@@ -906,7 +655,6 @@
   "tc" #'restclient-test-current)
 
 ;;; python mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (dolist (mode '(python-mode python-ts-mode))
   (leader-declare-prefix-for-major-mode mode
     "c" "compile"

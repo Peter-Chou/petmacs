@@ -59,16 +59,9 @@
         ;; to compare whether pyvenv-workon and pyvenv-virtual-env-name is equal
         (setq-local pyvenv-workon (gethash "venv" (json-read-file pfile)))
         (pyvenv-workon pyvenv-workon))
-
       (petmacs/set-pythonpath-project)
-
-      (pcase petmacs-lsp-mode-impl
-        ('lsp-mode
-         (lsp-deferred))
-        ('eglot
-         (eglot-ensure)))))
+      (eglot-ensure)))
   :hook (
-         ;; ((python-mode python-ts-mode) . petmacs/pyvenv-pyright-autoload)
          (python-base-mode . petmacs/pyvenv-pyright-autoload)
          (pyvenv-mode . petmacs/remove-pyvenv-modeline-env-info))
   :config

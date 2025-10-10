@@ -455,12 +455,8 @@
         symbols-outline-initial-folded-node-kinds '("function" "method" "prototype" "annotation" "inline" "subst" "member")
         symbols-outline-collapse-functions-on-startup t)
 
-  (cond ((equal petmacs-lsp-mode-impl 'eglot)
-         (add-hook 'eglot-managed-mode-hook (lambda ()
-                                              (setq-local symbols-outline-fetch-fn #'symbols-outline-lsp-fetch))))
-        (t
-         (add-hook 'lsp-mode-hook (lambda ()
-                                    (setq-local symbols-outline-fetch-fn #'symbols-outline-lsp-fetch)))))
+  (add-hook 'eglot-managed-mode-hook (lambda ()
+                                       (setq-local symbols-outline-fetch-fn #'symbols-outline-lsp-fetch)))
 
   (defun petmacs/symbols-outline-nerd-icon-str (icon-name &rest args)
     "Return the nerd font icon for ICON-NAME.

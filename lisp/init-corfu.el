@@ -48,37 +48,17 @@
 
   (define-key corfu-map [remap move-beginning-of-line] #'corfu-beginning-of-prompt)
   (define-key corfu-map [remap move-end-of-line] #'corfu-end-of-prompt)
-
-  (pcase petmacs-lsp-mode-impl
-    ('lsp-mode
-     (with-eval-after-load 'lsp-mode
-       (setq lsp-completion-provider :none) ;; we use Corfu!
-
-       (defun petmacs/lsp-mode-setup-completion ()
-         (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
-               '(orderless flex))) ;; Configure orderless
-       (add-hook 'lsp-completion-mode-hook #'petmacs/lsp-mode-setup-completion)
-       (defun petmacs/set-lsp-capfs ()
-         (setq-local completion-at-point-functions
-      			     (list #'lsp-completion-at-point
-                           #'cape-file
-      			           #'cape-dabbrev)))
-       (add-hook 'lsp-completion-mode-hook #'petmacs/set-lsp-capfs)))
-    ('eglot
-     (defun petmacs/eglot-capf-setup ()
-
-       (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
-             '(orderless)) ;; Configure orderless
-
-       (setq-local completion-at-point-functions
-    		       (list
-                    #'eglot-completion-at-point
-                    #'cape-file
-                    #'yasnippet-capf
-    		        #'cape-dabbrev
-                    )))
-     (add-hook 'eglot-managed-mode-hook #'petmacs/eglot-capf-setup)))
   :config
+  (with-eval-after-load 'eglot
+    (defun petmacs/eglot-capf-setup ()
+      (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
+            '(orderless)) ;; Configure orderless
+      (setq-local completion-at-point-functions (list
+                                                 #'eglot-completion-at-point
+                                                 #'cape-file
+                                                 #'yasnippet-capf
+    		                                     #'cape-dabbrev)))
+    (add-hook 'eglot-managed-mode-hook #'petmacs/eglot-capf-setup))
   ;;Quit completion before saving
   (add-hook 'before-save-hook #'corfu-quit))
 

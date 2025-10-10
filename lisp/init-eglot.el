@@ -1,7 +1,6 @@
 ;; -*- lexical-binding: t no-byte-compile: t -*-
 
-(when (equal petmacs-lsp-mode-impl 'eglot)
-  (setq read-process-output-max (* 5 1024 1024)))
+(setq read-process-output-max (* 5 1024 1024))
 
 (use-package eglot
   :pin gnu
