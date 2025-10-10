@@ -80,7 +80,6 @@
   (setq read-file-name-completion-ignore-case t
         read-buffer-completion-ignore-case t
         completion-ignore-case t
-        vertico-resize petmacs-enable-mini-frame
         vertico-count 12
         vertico-cycle t)
 
