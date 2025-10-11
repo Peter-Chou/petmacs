@@ -1,4 +1,11 @@
-;; -*- lexical-binding: t no-byte-compile: t -*-
+;; init-dap.el --- Initialize DAP configurations.	-*- lexical-binding: t -*-
+
+;;; Commentary:
+;;
+;; Debug Adapter Protocol (DAP) configurations.
+;;
+
+;;; Code:
 
 (eval-when-compile
   (require 'init-custom))
@@ -82,4 +89,7 @@
   ;; (add-hook 'dape-on-start-hooks #'dape-hydra/body)
   )
 
-(provide 'init-dape)
+(provide 'init-dap)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init-dap.el ends here

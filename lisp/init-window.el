@@ -1,4 +1,11 @@
-;; -*- lexical-binding: t no-byte-compile: t -*-
+;; init-window.el --- Initialize window configurations.	-*- lexical-binding: t -*-
+
+;;; Commentary:
+;;
+;; Window configurations.
+;;
+
+;;; Code:
 
 (eval-when-compile
   (require 'init-const)
@@ -201,3 +208,6 @@
     (advice-add #'keyboard-quit :before #'popper-close-window-hack)))
 
 (provide 'init-window)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init-window.el ends here

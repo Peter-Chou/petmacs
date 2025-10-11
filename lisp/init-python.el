@@ -1,8 +1,13 @@
-;; -*- lexical-binding: t no-byte-compile: t -*-
+;; init-python.el --- Initialize python configurations.	-*- lexical-binding: t -*-
 
-;; Install:
-;;   pip install isort
-;;   pip install ruff
+;;; Commentary:
+;;
+;; Python configurations.
+;; pip install isort autoflake ruff
+;;
+
+;;; Code:
+
 (use-package python
   :ensure nil
   :functions exec-path-from-shell-copy-env
@@ -76,3 +81,6 @@
 (use-package virtualenvwrapper)
 
 (provide 'init-python)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init-python.el ends here

@@ -1,4 +1,11 @@
-;; -*- lexical-binding: t no-byte-compile: t -*-
+;; init-ui.el --- Better lookings and appearances.	-*- lexical-binding: t -*-
+
+;;; Commentary:
+;;
+;; Visual (UI) configurations for better lookings and appearances.
+;;
+
+;;; Code:
 
 (eval-when-compile
   (require 'init-custom)
@@ -509,3 +516,6 @@
 (use-package org-rainbow-tags)
 
 (provide 'init-ui)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init-ui.el ends here

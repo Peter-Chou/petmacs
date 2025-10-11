@@ -1,4 +1,11 @@
-;; -*- lexical-binding: t no-byte-compile: t -*-
+;; init-keybindings.el --- Keybinding configurations.	-*- lexical-binding: t -*-
+
+;;; Commentary:
+;;
+;; Keybinding configurations.
+;;
+
+;;; Code:
 
 (eval-when-compile
   (require 'init-custom)
@@ -888,3 +895,6 @@
   )
 
 (provide 'init-keybindings)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init-keybindings.el ends here

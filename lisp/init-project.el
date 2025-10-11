@@ -1,4 +1,11 @@
-;; -*- lexical-binding: t no-byte-compile: t -*-
+;;; init-project.el --- Project configurations.	-*- lexical-binding: t -*-
+
+;;; Commentary:
+;;
+;; Emacs Package management configurations.
+;;
+
+;;; Code:
 
 (eval-when-compile
   (require 'init-funcs))
@@ -61,3 +68,6 @@
   :init (setq consult-projectile-use-projectile-switch-project t))
 
 (provide 'init-project)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init-project.el ends here

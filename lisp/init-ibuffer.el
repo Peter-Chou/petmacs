@@ -1,4 +1,11 @@
-;; -*- lexical-binding: t no-byte-compile: t -*-
+;; init-buffer.el --- Initialize ibuffer configurations.	-*- lexical-binding: t -*-
+
+;;; Commentary:
+;;
+;; IBuffer configurations.
+;;
+
+;;; Code:
 
 (use-package ibuffer
   :ensure nil
@@ -96,3 +103,6 @@
           "Project: ")))
 
 (provide 'init-ibuffer)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init-ibuffer.el ends here

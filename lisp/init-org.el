@@ -1,4 +1,11 @@
-;; -*- lexical-binding: t no-byte-compile: t -*-
+;; init-org.el --- Initialize Org configurations.	-*- lexical-binding: t -*-
+
+;;; Commentary:
+;;
+;; Org configurations.
+;;
+
+;;; Code:
 
 (eval-when-compile
   (require 'init-custom))
@@ -155,3 +162,6 @@
                              load-language-alist)
 
 (provide 'init-org)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init-org.el ends here

@@ -1,4 +1,11 @@
-;; -*- lexical-binding: t no-byte-compile: t -*-
+;; init-dashboard.el --- Initialize dashboard configurations.	-*- lexical-binding: t -*-
+
+;;; Commentary:
+;;
+;; Dashboard configurations.
+;;
+
+;;; Code:
 
 (use-package dashboard
   :after nerd-icons
@@ -60,3 +67,6 @@
   (dashboard-setup-startup-hook))
 
 (provide 'init-dashboard)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init-dashboard.el ends here

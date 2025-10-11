@@ -1,4 +1,11 @@
-;; -*- lexical-binding: t no-byte-compile: t -*-
+;; init-check.el --- Initialize check configurations.	-*- lexical-binding: t -*-
+
+;;; Commentary:
+;;
+;; Check configurations.
+;;
+
+;;; Code:
 
 (eval-when-compile
   (require 'init-const)
@@ -65,4 +72,7 @@
   :config
   (add-hook 'eglot-managed-mode-hook 'petmacs/eglot-setup-flymake-ruff))
 
-(provide 'init-flymake)
+(provide 'init-check)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init-check.el ends here

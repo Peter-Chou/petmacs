@@ -1,4 +1,11 @@
-;;; *- lexical-binding: t no-byte-compile: t -*-
+;; init-mini.el --- Petmacs minimal configurations -*- lexical-binding: t no-byte-compile: t -*-
+
+;;; Commentary:
+;;
+;; Minimal configurations for debugging purpose.
+;;
+
+;;; Code:
 
 ;; Load path
 (push (expand-file-name "site-lisp" user-emacs-directory) load-path)

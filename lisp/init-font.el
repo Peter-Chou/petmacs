@@ -1,4 +1,11 @@
-;; -*- lexical-binding: t no-byte-compile: t -*-
+;; init-check.el --- Font configurations.	-*- lexical-binding: t -*-
+
+;;; Commentary:
+;;
+;; Font configurations.
+;;
+
+;;; Code:
 
 (eval-when-compile
   (require 'init-const)
@@ -38,3 +45,6 @@
                   (set-fontset-font t 'emoji (font-spec :family font) nil 'prepend))))
 
 (provide 'init-font)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init-font.el ends here

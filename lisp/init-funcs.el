@@ -1,4 +1,11 @@
-;; -*- lexical-binding: t no-byte-compile: t -*-
+;; init-funcs.el --- Define functions.	-*- lexical-binding: t -*-
+
+;;; Commentary:
+;;
+;; Define some useful functions.
+;;
+
+;;; Code:
 
 (require 'cl-lib)
 
@@ -1196,3 +1203,6 @@ interactively.  Turn the filename into a URL with function
             (throw 'ret (cons 'local root))))))))
 
 (provide 'init-funcs)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init-funcs.el ends here

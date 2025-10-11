@@ -1,4 +1,4 @@
-;; init-basic.el --- basic default configurations -*- lexical-binding: t no-byte-compile: t -*-
+;; init-basic.el --- basic default configurations.	-*- lexical-binding: t -*-
 
 ;;; Commentary:
 ;;

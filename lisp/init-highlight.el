@@ -1,4 +1,11 @@
-;; -*- lexical-binding: t no-byte-compile: t -*-
+;; init-highlight.el --- Initialize highlighting configurations.	-*- lexical-binding: t -*-
+
+;;; Commentary:
+;;
+;; Highlighting configurations.
+;;
+
+;;; Code:
 
 (eval-when-compile
   (require 'init-funcs))
@@ -129,7 +136,7 @@ FACE defaults to inheriting from default and highlight."
            python-base-mode
            toml-mode toml-ts-mode
            yaml-mode yaml-ts-mode) . (lambda () (unless (too-long-file-p)
-                                             (indent-bars-mode 1))))
+                                                  (indent-bars-mode 1))))
          ((java-mode java-ts-mode) . (lambda ()
                                        (indent-bars-mode -1))))
   :init
@@ -314,3 +321,6 @@ FACE defaults to inheriting from default and highlight."
   :hook ((prog-mode text-mode conf-mode) . goggles-mode))
 
 (provide 'init-highlight)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init-highlight.el ends here

@@ -1,8 +1,8 @@
-;; init-awesome-tray-infos.el --- awesome-tray infos -*- lexical-binding: t no-byte-compile: t -*-
+;; init-awesome-tray-infos.el --- awesome-tray infos.	-*- lexical-binding: t -*-
 
 ;;; Commentary:
 ;;
-;; custom infos for awesome-tray.el
+;; Infos for awesome-tray.el
 ;;
 
 ;;; Code:

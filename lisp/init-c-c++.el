@@ -1,4 +1,4 @@
-;; init-c-c++.el --- C/C++ configurations -*- lexical-binding: t no-byte-compile: t -*-
+;; init-c-c++.el --- C/C++ configurations.	-*- lexical-binding: t -*-
 
 ;;; Commentary:
 ;;

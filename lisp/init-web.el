@@ -1,4 +1,11 @@
-;; -*- lexical-binding: t no-byte-compile: t -*-
+;; init-web.el --- Initialize web configurations.	-*- lexical-binding: t -*-
+
+;;; Commentary:
+;;
+;; Web configurations.
+;;
+
+;;; Code:
 
 (eval-when-compile
   (require 'init-custom))
@@ -56,3 +63,6 @@
     :hook (restclient-mode . restclient-test-mode)))
 
 (provide 'init-web)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init-web.el ends here

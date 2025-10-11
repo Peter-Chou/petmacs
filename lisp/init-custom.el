@@ -1,4 +1,11 @@
-;; -*- lexical-binding: t no-byte-compile: t -*-
+;; init-custom.el --- Define customizations.	-*- lexical-binding: t -*-
+
+;;; Commentary:
+;;
+;; Customization.
+;;
+
+;;; Code:
 
 (eval-when-compile
   (require 'package))
@@ -111,3 +118,6 @@
   :group 'petmacs-faces)
 
 (provide 'init-custom)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init-custom.el ends here

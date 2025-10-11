@@ -1,4 +1,11 @@
-;; -*- lexical-binding: t no-byte-compile: t -*-
+;; init-evil.el --- Evil configurations.	-*- lexical-binding: t -*-
+
+;;; Commentary:
+;;
+;; Evil configurations.
+;;
+
+;;; Code:
 
 (eval-when-compile
   (require 'init-funcs))
@@ -246,5 +253,7 @@
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys))
 
-
 (provide 'init-evil)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init-evil.el ends here

@@ -1,4 +1,11 @@
-;; -*- lexical-binding: t no-byte-compile: t -*-
+;; init-shell.el --- Initialize shell configurations.	-*- lexical-binding: t -*-
+
+;;; Commentary:
+;;
+;; Shell configurations.
+;;
+
+;;; Code:
 
 (use-package shell
   :ensure nil
@@ -129,3 +136,6 @@
     (evil-define-key 'normal vterm-mode-map (kbd "<return>") #'evil-insert-resume)))
 
 (provide 'init-shell)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init-shell.el ends here

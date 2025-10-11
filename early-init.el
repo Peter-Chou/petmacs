@@ -1,4 +1,12 @@
-;;; early-init.el --- Early initialization. -*- lexical-binding: t no-byte-compile: t -*-
+;;; early-init.el --- Early initialization. -*- lexical-binding: t -*-
+
+;;; Commentary:
+;;
+;; Emacs 27 introduces early-init.el, which is run before init.el,
+;; before package and UI initialization happens.
+;;
+
+;;; Code:
 
 (setq frame-resize-pixelwise t
       frame-inhibit-implied-resize t)
@@ -70,3 +78,6 @@
 
 ;; workaround image-type: Invalid image type svg
 (add-to-list 'image-types 'svg)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; early-init.el ends here

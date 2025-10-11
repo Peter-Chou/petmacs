@@ -1,4 +1,11 @@
-;; -*- lexical-binding: t no-byte-compile: t -*-
+;;; init-package.el --- Initialize package configurations.	-*- lexical-binding: t -*-
+
+;;; Commentary:
+;;
+;; Emacs Package management configurations.
+;;
+
+;;; Code:
 
 (eval-when-compile
   (require 'init-const)
@@ -45,9 +52,6 @@
 (use-package diminish)
 (use-package bind-key)
 
-;; Update GPG keyring for GNU ELPA
-;; (use-package gnu-elpa-keyring-update)
-
 ;; Update packages
 (unless (fboundp 'package-upgrade-all)
   (use-package auto-package-update
@@ -56,14 +60,10 @@
           auto-package-update-hide-results t)
     (defalias 'package-upgrade-all #'auto-package-update-now)))
 
-;; (use-package quelpa
-;;   :init
-;;   (setq quelpa-self-upgrade-p nil
-;;         quelpa-checkout-melpa-p nil
-;;         quelpa-update-melpa-p nil
-;;         quelpa-dir (expand-file-name "data/quelpa" user-emacs-directory)))
-
-;; ;; Required by `use-package'
-;; (use-package quelpa-use-package :demand t)
+;; Update GPG keyring for GNU ELPA
+;; (use-package gnu-elpa-keyring-update)
 
 (provide 'init-package)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init-package.el ends here

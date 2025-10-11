@@ -1,4 +1,11 @@
-;; -*- lexical-binding: t no-byte-compile: t -*-
+;; init-tools.el --- Initialize tool configurations.	-*- lexical-binding: t -*-
+
+;;; Commentary:
+;;
+;; Tool configurations.
+;;
+
+;;; Code:
 
 (eval-when-compile
   (require 'init-custom)
@@ -609,4 +616,14 @@ SCALE are supported."
                                        :left-fringe 16
                                        :right-fringe 16))))
 
+;; edit the text in the grep buffer after typing C-c C-p
+(use-package wgrep
+  :commands wgrep-change-to-wgrep-mode
+  :init
+  (setq wgrep-auto-save-buffer t
+        wgrep-change-readonly-file t))
+
 (provide 'init-tools)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init-tools.el ends here

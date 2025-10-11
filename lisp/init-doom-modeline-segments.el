@@ -1,4 +1,11 @@
-;; -*- lexical-binding: t no-byte-compile: t -*-
+;; init-doom-modeline-segments.el --- doom modeline custom segments	-*- lexical-binding: t -*-
+
+;;; Commentary:
+;;
+;; doom-modeline Custom Segments
+;;
+
+;;; Code:
 
 (require 'doom-modeline-segments)
 
@@ -80,3 +87,6 @@ mouse-1: Display Line and Column Mode Menu")
       'face `(:inherit font-lock-function-name-face))))
 
 (provide 'init-doom-modeline-segments)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init-doom-modeline-segments.el ends here

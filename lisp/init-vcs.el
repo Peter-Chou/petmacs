@@ -1,4 +1,11 @@
-;; -*- lexical-binding: t no-byte-compile: t -*-
+;; init-vcs.el --- Initialize version control system configurations.	-*- lexical-binding: t -*-
+
+;;; Commentary:
+;;
+;; Version control systems.
+;;
+
+;;; Code:
 
 (use-package sqlite3
   :demand t)
@@ -247,3 +254,6 @@
   (magit-todos-mode 1))
 
 (provide 'init-vcs)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init-vcs.el ends here

@@ -1,4 +1,11 @@
-;; -*- lexical-binding: t no-byte-compile: t -*-
+;; init-lsp.el --- Initialize LSP configurations.	-*- lexical-binding: t -*-
+
+;;; Commentary:
+;;
+;; Language Server Protocol (LSP) configurations.
+;;
+
+;;; Code:
 
 (setq read-process-output-max (* 5 1024 1024))
 
@@ -233,4 +240,7 @@
   (dolist (lang '("C" "C++"))
     (eval `(eglot-org-babel-enable ,lang))))
 
-(provide 'init-eglot)
+(provide 'init-lsp)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init-lsp.el ends here

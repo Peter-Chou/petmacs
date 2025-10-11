@@ -1,4 +1,11 @@
-;; -*- lexical-binding: t no-byte-compile: t -*-
+;; init-treesit.el --- Initialize builtin tree sitter	-*- lexical-binding: t -*-
+
+;;; Commentary:
+;;
+;; Tree Sitter.
+;;
+
+;;; Code:
 
 (when (and (fboundp 'treesit-available-p)
            (treesit-available-p))
@@ -48,3 +55,6 @@
            (treesit-fold-mode . treesit-fold-line-comment-mode))))
 
 (provide 'init-treesit)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init-treesit.el ends here

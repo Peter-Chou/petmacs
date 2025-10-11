@@ -83,19 +83,18 @@ Avoid placing large files like EAF in `site-lisp` to prevent slow startup."
 (require 'init-vcs)
 (require 'init-yasnippet)
 (require 'init-shell)
-(require 'init-flymake)
+(require 'init-check)
 
 ;; treesit
 (when (petmacs-treesit-available-p)
   (require 'init-treesit))
 
 ;; completion
-(require 'init-consult)
-(require 'init-corfu)
+(require 'init-completion)
 
 ;; lsp & dap
-(require 'init-eglot)
-(require 'init-dape)
+(require 'init-lsp)
+(require 'init-dap)
 
 ;; Programming
 (require 'init-elisp)

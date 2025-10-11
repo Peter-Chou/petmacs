@@ -1,4 +1,11 @@
-;; -*- lexical-binding: t no-byte-compile: t -*-
+;; init-dired.el --- Initialize dired configurations.	-*- lexical-binding: t -*-
+
+;;; Commentary:
+;;
+;; Directory configurations.
+;;
+
+;;; Code:
 
 (eval-when-compile
   (require 'init-const)
@@ -119,3 +126,6 @@
 (use-package dired-aux :ensure nil)
 
 (provide 'init-dired)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init-dired.el ends here

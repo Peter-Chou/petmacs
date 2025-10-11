@@ -1,7 +1,13 @@
-;; -*- lexical-binding: t no-byte-compile: t -*-
+;; init-java.el --- Initialize python configurations.	-*- lexical-binding: t -*-
 
+;;; Commentary:
+;;
+;; Java configurations.
 ;; maven uses JAVA_HOME to find which java version to run
 ;; e.g. JAVA_HOME=/opt/jdk8 mvn test
+;;
+
+;;; Code:
 
 (use-package java
   :ensure nil
@@ -22,3 +28,6 @@
   :init (require 'maven-test-mode))
 
 (provide 'init-java)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init-java.el ends here
