@@ -1,11 +1,18 @@
-;; -*- lexical-binding: t no-byte-compile: t -*-
+;; init-basic.el --- basic default configurations -*- lexical-binding: t no-byte-compile: t -*-
 
-(require 'subr-x)
+;;; Commentary:
+;;
+;; Better defaults.
+;;
+
+;;; Code:
 
 (eval-when-compile
   (require 'init-const)
   (require 'init-custom)
   (require 'init-funcs))
+
+(require 'subr-x)
 
 (when (executable-find "fd")
   (setq find-program "fd"))
@@ -326,3 +333,6 @@
               (start-process "xclip"  nil xclip-program "--trim-newline" "--type" "text/plain;charset=utf-8" text))))))
 
 (provide 'init-basic)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init-basic.el ends here

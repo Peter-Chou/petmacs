@@ -1,21 +1,33 @@
-;; -*- lexical-binding: t no-byte-compile: t -*-
+;; init-awesome-tray-infos.el --- awesome-tray infos -*- lexical-binding: t no-byte-compile: t -*-
+
+;;; Commentary:
+;;
+;; custom infos for awesome-tray.el
+;;
+
+;;; Code:
 
 (require 'awesome-tray)
 
-(defun awesome-tray-project-relative-dir-info () (format "%s" (petmacs/get-project-relateive-dir)))
+(defun awesome-tray-project-relative-dir-info ()
+  "Get relative directory info."
+  (format "%s" (petmacs/get-project-relateive-dir)))
 (add-to-list 'awesome-tray-module-alist '("project-relative-dir" . (awesome-tray-project-relative-dir-info awesome-tray-module-parent-dir-face)))
 
-(defun awesome-tray-module-pomodoro-info () (format "%s" pomodoro-mode-line-string))
+(defun awesome-tray-module-pomodoro-info ()
+  "Get pomodoro info."
+  (format "%s" pomodoro-mode-line-string))
 (defface awesome-tray-module-pomodoro-face
   '((((background light))
      :foreground "#008080" :bold t)
     (t
      :foreground "#00ced1" :bold t))
-  "pomodoro face."
+  "Pomodoro face."
   :group 'awesome-tray)
 (add-to-list 'awesome-tray-module-alist '("pomodoro" . (awesome-tray-module-pomodoro-info awesome-tray-module-pomodoro-face)))
 
 (defun awesome-tray-module-pyvenv-info ()
+  "Get pyvenv info."
   (if (and (member major-mode '(python-mode python-ts-mode)) (bound-and-true-p pyvenv-workon))
       ;; (format "<%s>" pyvenv-workon)
       (concat (format "%s " (nerd-icons-faicon "nf-fae-python")) (format "%s" pyvenv-workon))
@@ -25,11 +37,12 @@
      :foreground "#0673d8" :bold t)
     (t
      :foreground "#369bf7" :bold t))
-  "pyvenv face."
+  "Pyvenv face."
   :group 'awesome-tray)
 (add-to-list 'awesome-tray-module-alist '("pyvenv" . (awesome-tray-module-pyvenv-info awesome-tray-module-pyvenv-face)))
 
 (defun awesome-tray-module-which-function-info ()
+  "Get which function info."
   (if (derived-mode-p 'prog-mode)
       ;; (format "<%s>" pyvenv-workon)
       ;; (concat (format "%s " (nerd-icons-codicon "nf-cod-triangle_right")) (format "%s" (which-function)))
@@ -40,23 +53,24 @@
      :foreground "#0673d8" :bold t)
     (t
      :foreground "#369bf7" :bold t))
-  "pyvenv face."
+  "Pyvenv face."
   :group 'awesome-tray)
 (add-to-list 'awesome-tray-module-alist '("which-function" . (awesome-tray-module-which-function-info awesome-tray-module-which-function-face)))
 
 (defun awesome-tray-module-breadcrumbs-info ()
+  "Get breadcrumbs info."
   (breadcrumb-imenu-crumbs))
 (defface awesome-tray-module-breadcrumbs-face
   `((((background light))
      :foreground ,petmacs-favor-color :bold t)
     (t
      :foreground ,petmacs-favor-color :bold t))
-  "breadcrumbs face."
+  "Breadcrumbs face."
   :group 'awesome-tray)
 (add-to-list 'awesome-tray-module-alist '("breadcrumbs" . (awesome-tray-module-breadcrumbs-info awesome-tray-module-breadcrumbs-face)))
 
 (defun petmacs/awesome-tray-module-flymake-info ()
-  "A module for showing Flymake state.(use custom unicode)"
+  "A module for showing Flymake state.(use custom unicode)."
   (with-demoted-errors
       ""
     (if (and (featurep 'flymake) flymake--state)
@@ -105,3 +119,6 @@
 (advice-add #'awesome-tray-module-flymake-info :override #'petmacs/awesome-tray-module-flymake-info)
 
 (provide 'init-awesome-tray-infos)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init-awesome-tray-infos.el ends here

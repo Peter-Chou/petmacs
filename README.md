@@ -122,7 +122,7 @@ M-x eglot-upgrade-eglot
 
 ---
 
-## 3. install LSP servers
+## 3. Install LSP Servers
 
 ### 3.1 basedpyright (Python)
 
@@ -178,7 +178,7 @@ npm install -g bash-language-server
 
 ---
 
-## 4. install DAP servers
+## 4. Install DAP Servers
 
 ### 4.1 debugpy (Python)
 
@@ -196,7 +196,7 @@ lldb-dap (formerly lldb-vscode) is built and installed in section 3.3
 
 ---
 
-## 5. install formatter
+## 5. Install Formatter
 
 petmacs use [apheleia](https://github.com/radian-software/apheleia) to format the buffer.
 

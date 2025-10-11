@@ -1,4 +1,11 @@
-;; -*- lexical-binding: t no-byte-compile: t -*-
+;; init-c-c++.el --- C/C++ configurations -*- lexical-binding: t no-byte-compile: t -*-
+
+;;; Commentary:
+;;
+;; C/C++ configurations.
+;;
+
+;;; Code:
 
 (use-package cc-mode
   :init
@@ -12,3 +19,6 @@
   :mode (("CMakeLists\\.txt\\'" . cmake-mode) ("\\.cmake\\'" . cmake-mode)))
 
 (provide 'init-c-c++)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init-c-c++.el ends here
