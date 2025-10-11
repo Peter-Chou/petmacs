@@ -276,10 +276,6 @@
       sentence-end-double-space nil
       word-wrap-by-category t)
 
-;; Frame
-(when (display-graphic-p)
-  (add-hook 'window-setup-hook #'fix-fullscreen-cocoa))
-
 (setq confirm-kill-processes nil)
 
 ;; Child frame

@@ -393,15 +393,6 @@ Native tree-sitter is introduced since 29."
   (toggle-http-proxy)
   (toggle-socks-proxy))
 
-;; WORKAROUND: fix blank screen issue on macOS.
-(defun fix-fullscreen-cocoa ()
-  "Address blank screen issue with child-frame in fullscreen.
-This issue has been addressed in 28."
-  (and sys/mac-cocoa-p
-       (not emacs/>=28p)
-       (bound-and-true-p ns-use-native-fullscreen)
-       (setq ns-use-native-fullscreen nil)))
-
 (defun petmacs/frame-killer ()
   "Kill server buffer and hide the main Emacs window"
   (interactive)
