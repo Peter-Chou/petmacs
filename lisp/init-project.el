@@ -1,58 +1,72 @@
 ;; -*- lexical-binding: t no-byte-compile: t -*-
 
-(use-package project
-  :preface
-  (defun my/project-try-local (dir)
-    "Determine if DIR is a non-Git project."
-    (catch 'ret
-      (let ((pr-flags '(
-                        ;; (".project")
-                        (".prj" ".project" ".projectile")
-                        ("go.mod" "Cargo.toml" "project.clj" "pom.xml" "package.json") ;; higher priority
-                        ("Makefile" "README.org" "README.md"))))
-        (dolist (current-level pr-flags)
-          (dolist (f current-level)
-            (when-let ((root (locate-dominating-file dir f)))
-              (throw 'ret (cons 'local root))))))))
-  (defun my/project-files-in-directory (dir)
-    "Use `fd' to list files in DIR."
-    (let* ((default-directory dir)
-           (localdir (file-local-name (expand-file-name dir)))
-           (command (format "fd -H -t f -0 . %s" localdir)))
-      (project--remote-file-names
-       (sort (split-string (shell-command-to-string command) "\0" t)
-             #'string<))))
-  (defun my/project-info ()
-    (interactive)
-    (message "%s" (project-current t)))
+(eval-when-compile
+  (require 'init-funcs))
 
-  (defun my/add-dot-project ()
-    (interactive)
-    (let* ((root-dir (read-directory-name "Root: "))
-           (f (expand-file-name ".project" root-dir)))
-      (message "Create %s..." f)
-      (make-empty-file f)))
-
-  (defun my/project-discover ()
-    "Add dir under search-path to project."
-    (interactive)
-    (dolist (search-path '("~/code/" "~/git/"))
-      (dolist (file (file-name-all-completions  "" search-path))
-        (when (not (member file '("./" "../")))
-          (let ((full-name (expand-file-name file search-path)))
-            (when (file-directory-p full-name)
-              (when-let ((pr (project-current nil full-name)))
-                (project-remember-project pr)
-                (message "add project %s..." pr))))))))
-  :ensure nil
-  :init
-  (setq project-find-functions '(my/project-try-local project-try-vc))
-  :config
-  (cl-defmethod project-files ((project (head local)) &optional dirs)
-    "Override `project-files' to use `fd' in local projects."
-    (mapcan #'my/project-files-in-directory
-            (or dirs (list (project-root project))))))
+(setq project-find-functions '(petmacs/project-try-local project-try-vc))
 
 (use-package consult-project-extra)
+
+(use-package projectile
+  :diminish
+  :pretty-hydra
+  ((:title (pretty-hydra-title "project" 'octicon "nf-oct-project_roadmap")
+    :foreign-keys warn :color blue :quit-key ("q" "C-g"))
+   ("core"
+    (("'" multi-vterm-project "shell")
+     ("-" projectile-dired "dired on root path")
+     ("e" projectile-edit-dir-locals "edit .dir-locals.el")
+     ("d" consult-projectile-find-dir "open directory")
+     ("I" projectile-invalidate-cache "clean invalid cache")
+     ("r" consult-projectile-recentf "recent files")
+     ("p" consult-projectile-switch-project "switch project")
+     ("x" projectile-remove-known-project "remove project")
+     ("a" projectile-add-known-project "add project"))
+    "file"
+    (("ff" consult-projectile-find-file "find file")
+     ("fF" consult-projectile-find-file-other-frame "find file other frame")
+     ("fo" consult-projectile-find-file-other-window "find file other window"))
+    "buffer"
+    (("bb" consult-projectile-switch-to-buffer "switch buffer")
+     ("bF" consult-projectile-switch-to-buffer-other-frame "swither buffer other frame")
+     ("bo" 'consult-projectile-switch-to-buffer-other-window "swither buffer other window"))
+    "org"
+    (("oo" org-projectile/goto-project-todos "go to todos")
+     ("oc" org-projectile-project-todo-completing-read "todo completion"))))
+  :hook (after-init . projectile-mode)
+  :init
+  (setq projectile-mode-line-prefix ""
+	    ;; projectile-enable-caching t
+	    ;; projectile-indexing-method 'native
+	    projectile-sort-order 'recentf
+	    projectile-use-git-grep t)
+  :config
+  ;; (projectile-update-mode-line)         ; Update mode-line at the first time
+
+  ;; Use the faster searcher to handle project files: ripgrep `rg'.
+  (when (and (not (executable-find "fd"))
+             (executable-find "rg"))
+    (setq projectile-generic-command
+          (let ((rg-cmd ""))
+            (dolist (dir projectile-globally-ignored-directories)
+              (setq rg-cmd (format "%s --glob '!%s'" rg-cmd dir)))
+            (concat "rg -0 --files --color=never --hidden" rg-cmd))))
+
+  ;; Faster searching on Windows
+  (when sys/win32p
+    (when (or (executable-find "fd") (executable-find "rg"))
+      (setq projectile-indexing-method 'alien
+            projectile-enable-caching nil))
+
+    ;; FIXME: too slow while getting submodule files on Windows
+    (setq projectile-git-submodule-command nil))
+
+  ;; Support Perforce project
+  (let ((val (or (getenv "P4CONFIG") ".p4config")))
+    (add-to-list 'projectile-project-root-files-bottom-up val)))
+
+(use-package consult-projectile
+  :after consult
+  :init (setq consult-projectile-use-projectile-switch-project t))
 
 (provide 'init-project)

@@ -491,15 +491,17 @@
     ))
 
 (leader-declare-prefix
-  "p" "project")
+  "p" "project"
+  "pf" "project open file"
+  "pf" "project switch buffer"
+  )
 (leader-with-prefix "p"
   (leader-set-keys
+    "." 'projectile-hydra/body
     "!" 'projectile-run-shell-command-in-root
-    "."  #'consult-project-extra-find
-    ;; "'"  #'petmacs/projectile-shell-pop
     "&" 'projectile-run-async-shell-command-in-root
     "%" 'projectile-replace-regexp
-    "a" 'projectile-toggle-between-implementation-and-test
+    ;; "a" 'projectile-toggle-between-implementation-and-test
     "u" 'projectile-run-project
     "D" 'projectile-dired
     "e" 'projectile-edit-dir-locals
@@ -515,12 +517,22 @@
     "v" 'projectile-vc
 
     "'"  #'multi-vterm-project
+    "-"  #'projectile-dired
     "t"  #'petmacs/treemacs-project-toggle
     ;; "t" #'petmacs/toggle-treemacs-and-symbols-outline
-    "b"  #'consult-projectile-switch-to-buffer
     "d"  #'consult-projectile-find-dir
     "p"  #'consult-projectile-switch-project
-    "f"  #'consult-projectile-find-file
+    "x"  #'projectile-remove-known-project
+    "a"  #'projectile-add-known-project
+
+    "ff"  #'consult-projectile-find-file
+    "fo"  #'consult-projectile-find-file-other-window
+    "fF"  #'consult-projectile-find-file-other-frame
+
+    "bb"  #'consult-projectile-switch-to-buffer
+    "bF"  #'consult-projectile-switch-to-buffer-other-frame
+    "bo"  #'consult-projectile-switch-to-buffer-other-window
+
     ;; "f"  #'affe-find
     "r"  #'consult-projectile-recentf
     "o"  #'org-projectile/goto-project-todos

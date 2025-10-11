@@ -79,8 +79,7 @@ Avoid placing large files like EAF in `site-lisp` to prevent slow startup."
 (require 'init-treemacs)
 ;; (require 'init-workspace)
 
-;; (require 'init-project)
-(require 'init-projectile)
+(require 'init-project)
 (require 'init-vcs)
 (require 'init-yasnippet)
 (require 'init-shell)
@@ -98,9 +97,6 @@ Avoid placing large files like EAF in `site-lisp` to prevent slow startup."
 (require 'init-eglot)
 (require 'init-dape)
 
-;; org
-(require 'init-org)
-
 ;; Programming
 (require 'init-elisp)
 (require 'init-c-c++)
@@ -108,6 +104,9 @@ Avoid placing large files like EAF in `site-lisp` to prevent slow startup."
 (require 'init-java)
 (require 'init-markdown)
 (require 'init-web)
+
+;; org
+(require 'init-org)
 
 ;; keybindings
 (require 'init-keybindings)
