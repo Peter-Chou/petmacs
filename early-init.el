@@ -59,12 +59,6 @@
 ;; to skip the mtime checks on every *.elc file.
 (setq load-prefer-newer noninteractive)
 
-;; (when (fboundp 'startup-redirect-eln-cache)
-;;   (startup-redirect-eln-cache
-;;    (convert-standard-filename
-;; 	(expand-file-name  "data/eln-cache" user-emacs-directory)))
-;;   (add-to-list 'native-comp-eln-load-path (expand-file-name "data/eln-cache" user-emacs-directory)))
-
 ;; Faster to disable these here (before they've been initialized)
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(tool-bar-lines . 0) default-frame-alist)
@@ -78,6 +72,13 @@
 
 ;; workaround image-type: Invalid image type svg
 (add-to-list 'image-types 'svg)
+
+(when (and (fboundp 'startup-redirect-eln-cache)
+           (fboundp 'native-comp-available-p)
+           (native-comp-available-p))
+  (startup-redirect-eln-cache
+   (convert-standard-filename
+    (expand-file-name  "data/eln-cache/" user-emacs-directory))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; early-init.el ends here

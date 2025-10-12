@@ -12,8 +12,6 @@
   (require 'init-custom)
   (require 'init-funcs))
 
-(setq package-user-dir (expand-file-name "data/elpa" user-emacs-directory))
-
 ;; HACK: DO NOT save package-selected-packages to `custom-file'.
 ;; https://github.com/jwiegley/use-package/issues/383#issuecomment-247801751
 (defun my-package--save-selected-packages (&optional value)

@@ -7,8 +7,8 @@
 
 ;;; Code:
 
-(use-package sqlite3
-  :demand t)
+;; (use-package sqlite3
+;;   :demand t)
 
 (use-package magit
   ;; :hook (magit-mode . magit-wip-mode)
