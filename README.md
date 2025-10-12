@@ -206,6 +206,7 @@ install [ruff](https://github.com/astral-sh/ruff) in your environment.
 
 ``` bash
 pip install ruff
+pip install autoflake isort # Optional
 ```
 
 ### 5.2 google-java-format (Java)
