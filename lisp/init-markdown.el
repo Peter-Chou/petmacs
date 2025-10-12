@@ -11,6 +11,7 @@
   :mode (("README\\.md\\'" . gfm-mode))
   :init
   (setq markdown-enable-wiki-links t
+        grip-command 'go-grip
         markdown-italic-underscore t
         markdown-asymmetric-header t
         markdown-make-gfm-checkboxes-buttons t
