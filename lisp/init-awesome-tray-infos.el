@@ -16,7 +16,8 @@
 
 (defun awesome-tray-module-pomodoro-info ()
   "Get pomodoro info."
-  (format "%s" pomodoro-mode-line-string))
+  (unless (string-empty-p pomodoro-mode-line-string)
+    (format "%s %s" (nerd-icons-pomicon "nf-pom-pomodoro_squashed") pomodoro-mode-line-string)))
 (defface awesome-tray-module-pomodoro-face
   '((((background light))
      :foreground "#008080" :bold t)

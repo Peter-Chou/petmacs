@@ -212,6 +212,7 @@
   :hook (((treemacs-mode
            eshell-mode shell-mode
            term-mode vterm-mode eat-mode
+           symbols-outline-mode
            embark-collect-mode
            lsp-ui-imenu-mode
            pdf-annot-list-mode) . turn-on-hide-mode-line-mode)
