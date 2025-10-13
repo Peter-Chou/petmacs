@@ -89,6 +89,10 @@ sudo apt-get install -y jq
 npm install -g readability-cli
 ```
 
+### 1.13 go-grip
+
+install [go-grip](https://github.com/chrishrb/go-grip/releases) and put it into your `PATH` for markdown preview.
+
 ---
 
 ## 2. Install
