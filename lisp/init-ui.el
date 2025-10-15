@@ -113,6 +113,9 @@
   :custom-face
   (awesome-tray-module-belong-face ((((background light)) :inherit petmacs-favor-color-face)
                                     (t (:inherit petmacs-favor-color-face))))
+  :custom-face
+  (awesome-tray-module-git-face ((((background light)) :foreground "#f24f29" :bold t)
+                                 (t :foreground "#f24f29" :bold t)))
   (awesome-tray-module-buffer-name-face ((((background light)) :inherit font-lock-warning-face :bold t)
                                          (t (:inherit font-lock-warning-face :bold t))))
   :init
@@ -129,7 +132,7 @@
         ;; awesome-tray-date-format "%H:%M %a %m-%d"
         awesome-tray-date-format "%H:%M %a"
 
-        awesome-tray-git-format (concat (format "%s " (nerd-icons-faicon "nf-fa-git_square")) "%s")
+        awesome-tray-git-format (concat (format "%s " (nerd-icons-faicon "nf-fa-git_alt")) "%s")
         ;; awesome-tray-active-modules   '("pomodoro" "flymake" "pyvenv" "git" "date" )
         ;; awesome-tray-essential-modules '("pomodoro" "date")
         awesome-tray-git-show-status nil)
@@ -138,9 +141,8 @@
             awesome-tray-essential-modules '("buffer-name" "location"))
     ;; (setq awesome-tray-active-modules   '("pomodoro" "project-relative-dir" "which-function" "flymake")
     ;;       awesome-tray-essential-modules '("project-relative-dir"))
-    (setq awesome-tray-active-modules   '("pomodoro" "project-relative-dir" "flymake" "date")
-          awesome-tray-essential-modules '("project-relative-dir"))
-    )
+    (setq awesome-tray-active-modules   '("pomodoro" "project-relative-dir" "flymake" "git" "date")
+          awesome-tray-essential-modules '("pomodoro" "project-relative-dir" "flymake")))
   :config
   (add-hook 'after-save-hook 'awesome-tray-update))
 
