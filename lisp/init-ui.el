@@ -194,7 +194,7 @@
       ;; '(eldoc bar window-state workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
       ;; '(compilation objed-state misc-info project-name persp-name battery grip irc mu4e gnus github debug repl lsp minor-modes input-method indent-info buffer-encoding major-mode process vcs check time)
       '(eldoc bar window-state workspace-name matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
-      '(compilation objed-state misc-info project-name persp-name battery grip irc mu4e gnus github debug repl lsp input-method indent-info buffer-encoding major-mode process time))
+      '(compilation objed-state misc-info project-name persp-name battery grip irc mu4e gnus github debug repl lsp input-method indent-info buffer-encoding process time))
 
     ;; Set default mode-line
     (add-hook 'doom-modeline-mode-hook (lambda ()
