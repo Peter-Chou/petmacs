@@ -419,6 +419,16 @@
     ))
 
 (leader-declare-prefix
+  "G" "GTD")
+(leader-with-prefix "G"
+  (leader-set-keys
+    "s"  #'pomodoro-start
+    "q"  #'pomodoro-stop
+    "i"  #'pomodoro-pause
+    "c"  #'pomodoro-resume
+    "t"  #'petmacs/pomodoro-toggle))
+
+(leader-declare-prefix
   "j" "jump")
 (leader-with-prefix "j"
   (leader-set-keys
