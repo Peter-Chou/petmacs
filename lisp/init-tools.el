@@ -568,6 +568,11 @@ SCALE are supported."
 
 (use-package toml-mode)
 
+;; TODO
+;; (toml:assoc '("project") (toml:read-from-file "/home/peter/projects/llm_algorithms/pyproject.toml"))
+;; (cdr (toml:assoc '("tool" "hatch" "build" "targets" "wheel" "packages") (toml:read-from-file "/home/peter/projects/llm_algorithms/pyproject.toml")))
+(use-package toml :demand t)
+
 (use-package smart-semicolon
   :hook ((c-mode c-ts-mode c++-mode
                  c++-ts-mode java-mode java-ts-mode) . smart-semicolon-mode))
