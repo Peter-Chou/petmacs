@@ -142,7 +142,7 @@
     ;; (setq awesome-tray-active-modules   '("pomodoro" "project-relative-dir" "which-function" "flymake")
     ;;       awesome-tray-essential-modules '("project-relative-dir"))
     (setq awesome-tray-active-modules   '("pomodoro" "project-relative-dir" "flymake" "git" "date")
-          awesome-tray-essential-modules '("pomodoro" "project-relative-dir" "flymake")))
+          awesome-tray-essential-modules '("pomodoro" "project-relative-dir")))
   :config
   (add-hook 'after-save-hook 'awesome-tray-update))
 
