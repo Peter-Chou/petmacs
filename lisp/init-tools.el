@@ -12,6 +12,10 @@
   (require 'init-const)
   (require 'init-funcs))
 
+(use-package json
+  :ensure nil
+  :demand t)
+
 ;; Transient
 (when (childframe-completion-workable-p)
   ;; Display transient in child frame

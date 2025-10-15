@@ -15,6 +15,7 @@
 (use-package consult-project-extra)
 
 (use-package projectile
+  :demand t
   :diminish
   :pretty-hydra
   ((:title (pretty-hydra-title "project" 'octicon "nf-oct-project_roadmap")
