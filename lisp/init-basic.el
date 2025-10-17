@@ -309,9 +309,6 @@
   (async-bytecomp-package-mode 1)
   (dired-async-mode 1))
 
-;; Compatibility
-(use-package compat :demand t)
-
 ;; Copy&paste GUI clipboard from text terminal
 (unless sys/win32p
   (use-package xclip
