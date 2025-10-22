@@ -62,6 +62,7 @@
 
   "v"   #'er/expand-region
   "u"   #'universal-argument
+  "."   #'embark-act
   ;; "d"   #'xref-pop-marker-stack
   "TAB"  #'petmacs/alternate-buffer
   )
