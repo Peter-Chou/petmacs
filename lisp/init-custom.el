@@ -56,8 +56,8 @@
   :group 'petmacs
   :type '(repeat (symbol :tag "Major-Mode")))
 
-(defcustom petmacs-day-night-themes '(("8:00" . catppuccin)
-                                      ("20:00"  . catppuccin))
+(defcustom petmacs-day-night-themes '
+  (("8:00" . catppuccin) ("20:00"  . catppuccin))
   "day night theme"
   :group 'petmacs
   :type '(alist :key-type (string :tag "Time")
