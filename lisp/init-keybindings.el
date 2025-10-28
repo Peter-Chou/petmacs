@@ -624,7 +624,7 @@
     "a" "actions"
     "g" "goto"
     "G" "goto (other window)"
-    ;; "b" "backends"
+    "b" "backend"
     ;; "p" "peek"
     ;; "pR" "peek reference"
     ;; "T" "toggle module"
@@ -636,6 +636,12 @@
   (leader-set-keys-for-major-mode mode
     ;; format
     "=o" #'eglot-code-action-organize-imports
+
+    ;; backends
+    "bc" #'eglot-show-workspace-configuration
+    "bl" #'eglot-list-connections
+    "bs" #'eglot-shutdown
+    "bS" #'eglot-shutdown-all
 
     ;; help
     "hh" #'eldoc-doc-buffer
@@ -659,8 +665,9 @@
     ;; goto other window
     "Gd" #'xref-find-definitions-other-window
 
-    ;; "gT" #'eglot-hierarchy-type-hierarchy
-    ;; "gC" #'eglot-hierarchy-call-hierarchy
+    ;; hierarchy
+    "gT" #'eglot-show-type-hierarchy
+    "gC" #'eglot-show-call-hierarchy
     ))
 
 ;;; restclient mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
