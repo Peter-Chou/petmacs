@@ -16,8 +16,10 @@
          ("C-c C-b" . eval-buffer))
   :config
   ;; Syntax highlighting of known Elisp symbols
-  (use-package highlight-defined
-    :hook ((emacs-lisp-mode inferior-emacs-lisp-mode) . highlight-defined-mode))
+  (if (boundp 'elisp-fontify-semantically)
+      (setq elisp-fontify-semantically t)
+    (use-package highlight-defined
+      :hook ((emacs-lisp-mode inferior-emacs-lisp-mode) . highlight-defined-mode)))
 
   (with-no-warnings
     ;; Align indent keywords
@@ -215,6 +217,8 @@ Lisp function does not specify a special indentation."
          var-bt 'action
          (lambda (button)
            (helpful-variable (button-get button 'apropos-symbol))))))))
+
+
 
 (provide 'init-elisp)
 
