@@ -384,15 +384,9 @@ targets."
     (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
     (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify)))
 
-(unless (display-graphic-p)
-  (use-package popon
-    :ensure nil)
-
+(unless (or (display-graphic-p) (featurep 'tty-child-frames))
   (use-package corfu-terminal
-    :ensure nil
-    :init
-    (require 'corfu-terminal)
-    (corfu-terminal-mode +1)))
+    :hook (global-corfu-mode . corfu-terminal-mode)))
 
 (provide 'init-completion)
 
