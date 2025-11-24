@@ -79,6 +79,8 @@
   :init (add-to-list 'org-export-backends 'gfm))
 
 (use-package org-modern
+  :after org
+  :diminish
   :hook ((org-mode . org-modern-mode)
          (org-agenda-finalize . org-modern-agenda))
   :init (setq org-modern-star nil
@@ -87,13 +89,23 @@
                                       ("TODO" :background "cyan" :foreground "black"))
               org-modern-priority nil))
 
+;; Paste with org-mode markup and link
+(use-package org-rich-yank
+  :after org
+  :diminish
+  :bind (:map org-mode-map
+         ("C-M-y" . org-rich-yank)))
+
+
 (use-package org-superstar
+  :after org
   :if (and (display-graphic-p) (char-displayable-p ?◉))
   :hook (org-mode . org-superstar-mode)
   :init (setq org-superstar-headline-bullets-list '("◉""○""◈""◇""⁕")
               org-superstar-special-todo-items t))
 
 (use-package org-fancy-priorities
+  :after org
   :diminish
   :hook (org-mode . org-fancy-priorities-mode)
   :init (setq org-fancy-priorities-list
@@ -117,7 +129,16 @@
     (add-hook 'evil-insert-state-entry-hook #'org-appear-manual-start nil t)
     (add-hook 'evil-insert-state-exit-hook #'org-appear-manual-stop nil t))
   :after org
+  :diminish
   :hook (org-mode . org-appear-mode)
+  :custom
+  (org-appear-autoentities t)
+  (org-appear-autokeywords t)
+  (org-appear-autolinks t)
+  (org-appear-autosubmarkers t)
+  (org-appear-inside-latex t)
+  (org-appear-manual-linger t)
+  (org-appear-delay 0.5)
   :init
   (setq org-appear-trigger 'manual)
   (add-hook 'org-mode-hook 'org-apperance-evil-hack))
