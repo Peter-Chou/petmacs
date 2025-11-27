@@ -17,7 +17,7 @@
     (define-key evil-motion-state-map "gR" #'eglot-rename)
     (define-key evil-motion-state-map "gr" #'xref-find-references)
     (define-key evil-normal-state-map "gi" #'eglot-find-implementation)
-    (define-key evil-motion-state-map "gh" #'eldoc-box-help-at-point)
+    (define-key evil-motion-state-map "gh" #'eldoc-mouse-pop-doc-at-cursor)
     (define-key evil-normal-state-map "ga" #'eglot-code-actions))
 
   (defun petmacs/eglot-ensure (&optional exe)
