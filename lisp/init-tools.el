@@ -608,8 +608,10 @@ SCALE are supported."
            ("C-h ." . eldoc-mouse-pop-doc-at-cursor))
     :hook (eglot-managed-mode emacs-lisp-mode)
     :init (setq eldoc-mouse-posframe-border-color (face-background 'posframe-border nil t))
-    :config (add-to-list 'eldoc-mouse-posframe-override-parameters
-                         `(background-color . ,(face-background 'tooltip nil t)))))
+    :config
+    (tooltip-mode -1)                 ; Conflict with `track-mouse'
+    (add-to-list 'eldoc-mouse-posframe-override-parameters
+                 `(background-color . ,(face-background 'tooltip nil t)))))
 
 (use-package file-info
   :config
