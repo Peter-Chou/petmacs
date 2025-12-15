@@ -301,16 +301,6 @@
       mouse-wheel-scroll-amount-horizontal 1
       mouse-wheel-progressive-speed nil)
 
-;; Smooth scrolling
-(when (fboundp 'pixel-scroll-precision-mode) ;; 29+
-  (use-package ultra-scroll
-    :functions (hl-todo-mode diff-hl-flydiff-mode)
-    :hook (after-init . ultra-scroll-mode)
-    :config
-    (add-hook 'ultra-scroll-hide-functions #'diff-hl-flydiff-mode)
-    (add-hook 'ultra-scroll-hide-functions #'hl-todo-mode)
-    (add-hook 'ultra-scroll-hide-functions #'jit-lock-mode)))
-
 ;; Use fixed pitch where it's sensible
 (use-package mixed-pitch :diminish)
 
@@ -517,6 +507,19 @@
     (pretty-code-add-hook mode-hook '((:return "return") (:throw "throw")))))
 
 (use-package org-rainbow-tags)
+
+(use-package git-gutter
+  :after magit
+  :custom-face
+  (git-gutter:modified ((t (:inherit nerd-icons-lsilver :height 0.625 :background nil))))
+  (git-gutter:added ((t (:inherit nerd-icons-green :height 0.625 :background nil)))) ;; :weight bold
+  (git-gutter:deleted ((t (:inherit nerd-icons-red :height 0.625 :background nil))))
+  :hook (after-init . global-git-gutter-mode)
+  :init (setq git-gutter:update-interval 1
+              ;; git-gutter:window-width 2
+              git-gutter:modified-sign (nerd-icons-octicon "nf-oct-diff_modified")
+              git-gutter:added-sign (nerd-icons-octicon "nf-oct-diff_added")
+              git-gutter:deleted-sign (nerd-icons-octicon "nf-oct-diff_removed")))
 
 (provide 'init-ui)
 

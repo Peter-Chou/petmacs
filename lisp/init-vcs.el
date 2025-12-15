@@ -233,17 +233,10 @@
 ;; Git related modes
 (use-package git-modes)
 
-(use-package git-gutter
-  :custom-face
-  (git-gutter:modified ((t (:inherit nerd-icons-lsilver :height 0.625 :background nil))))
-  (git-gutter:added ((t (:inherit nerd-icons-green :height 0.625 :background nil)))) ;; :weight bold
-  (git-gutter:deleted ((t (:inherit nerd-icons-red :height 0.625 :background nil))))
-  :hook (after-init . global-git-gutter-mode)
-  :init (setq git-gutter:update-interval 1
-              ;; git-gutter:window-width 2
-              git-gutter:modified-sign (nerd-icons-octicon "nf-oct-diff_modified")
-              git-gutter:added-sign (nerd-icons-octicon "nf-oct-diff_added")
-              git-gutter:deleted-sign (nerd-icons-octicon "nf-oct-diff_removed")))
+;; Prime cache before Magit refresh
+(use-package magit-prime
+  :diminish
+  :hook after-init)
 
 ;; Show TODOs in magit
 (use-package magit-todos

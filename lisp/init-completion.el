@@ -361,7 +361,7 @@ targets."
 (use-package cape
   :commands (cape-file cape-elisp-block cape-keyword)
   :autoload (cape-wrap-noninterruptible cape-wrap-nonexclusive cape-wrap-buster)
-  :autoload (cape-wrap-silent cape-wrap-purify)
+  :autoload (cape-wrap-silent)
   :init (setq cape-dabbrev-check-other-buffers 'some
               ;; cape-dabbrev-check-other-buffers nil
               cape-dabbrev-min-length 2)
@@ -381,8 +381,7 @@ targets."
   ;; Sanitize the `pcomplete-completions-at-point' Capf.  The Capf has undesired
   ;; side effects on Emacs 28.  These advices are not needed on Emacs 29 and newer.
   (unless emacs/>=29p
-    (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
-    (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify)))
+    (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)))
 
 (unless (or (display-graphic-p) (featurep 'tty-child-frames))
   (use-package corfu-terminal

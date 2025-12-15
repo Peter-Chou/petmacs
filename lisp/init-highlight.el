@@ -27,10 +27,11 @@
                      (((class color) (background dark))
                       (:box (:line-width (-1 . -1) :color "gray56")))))
   :hook (after-init . show-paren-mode)
-  :init (setq show-paren-when-point-inside-paren t
-              show-paren-when-point-in-periphery t)
+  :custom
+  (show-paren-when-point-inside-paren t)
+  (show-paren-when-point-in-periphery t)
   :config
-  (if emacs/>=29p
+  (if (fboundp 'show-paren-context-when-offscreen)
       (setq blink-matching-paren-highlight-offscreen t
             show-paren-context-when-offscreen
             (if (childframe-workable-p) 'child-frame 'overlay))
@@ -82,6 +83,7 @@ FACE defaults to inheriting from default and highlight."
 ;; Highlight symbols
 (use-package symbol-overlay
   :diminish
+  :functions (easy-kill easy-kill-destroy-candidate)
   :custom-face
   (symbol-overlay-default-face ((t (:inherit region :background unspecified :foreground unspecified))))
   (symbol-overlay-face-1 ((t (:inherit nerd-icons-blue :background unspecified :foreground unspecified :inverse-video t))))
@@ -103,21 +105,22 @@ FACE defaults to inheriting from default and highlight."
          (iedit-mode-end        . turn-on-symbol-overlay))
   :init (setq symbol-overlay-idle-time 0.3)
   :config
-  (with-no-warnings
-    ;; Disable symbol highlighting while selecting
-    (defun turn-off-symbol-overlay (&rest _)
-      "Turn off symbol highlighting."
-      (interactive)
-      (symbol-overlay-mode -1))
+  ;; Disable symbol highlighting while selecting
+  (defun turn-off-symbol-overlay (&rest _)
+    "Turn off symbol highlighting."
+    (interactive)
+    (symbol-overlay-mode -1))
 
-    (defun turn-on-symbol-overlay (&rest _)
-      "Turn on symbol highlighting."
-      (interactive)
-      (when (derived-mode-p 'prog-mode 'yaml-mode 'yaml-ts-mode)
-        (symbol-overlay-mode 1)))
+  (defun turn-on-symbol-overlay (&rest _)
+    "Turn on symbol highlighting."
+    (interactive)
+    (when (derived-mode-p 'prog-mode 'yaml-mode 'yaml-ts-mode)
+      (symbol-overlay-mode 1)))
 
-    (advice-add #'activate-mark :after #'turn-off-symbol-overlay)
-    (advice-add #'deactivate-mark :after #'turn-on-symbol-overlay)))
+  (advice-add #'activate-mark :after #'turn-off-symbol-overlay)
+  (advice-add #'deactivate-mark :after #'turn-on-symbol-overlay)
+  (advice-add #'easy-kill :after #'turn-off-symbol-overlay)
+  (advice-add #'easy-kill-destroy-candidate :after #'turn-on-symbol-overlay))
 
 ;; Mark occurrences of current region (selection)
 (use-package
@@ -259,7 +262,7 @@ FACE defaults to inheriting from default and highlight."
      (progn
        (unless (require 'rg nil t)
          (error "`rg' is not installed"))
-       (let ((regexp (replace-regexp-in-string "\\\\[<>]*" "" (hl-todo--regexp))))
+       (let ((regexp (replace-regexp-in-string "\\\\[_<>]*" "" (hl-todo--regexp))))
          (list regexp
                (rg-read-files)
                (read-directory-name "Base directory: " nil default-directory t)))))
@@ -270,7 +273,7 @@ FACE defaults to inheriting from default and highlight."
     (interactive)
     (unless (require 'rg nil t)
       (error "`rg' is not installed"))
-    (rg-project (replace-regexp-in-string "\\\\[<>]*" "" (hl-todo--regexp)) "everything")))
+    (rg-project (replace-regexp-in-string "\\\\[_<>]*" "" (hl-todo--regexp)) "everything")))
 
 ;; Pulse current line
 (use-package pulse

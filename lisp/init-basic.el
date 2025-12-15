@@ -174,6 +174,7 @@
               save-place-abbreviate-file-names t))
 
 (use-package simple
+  :diminish visual-line-mode
   :ensure nil
   :hook ((after-init . size-indication-mode)
          (text-mode . visual-line-mode)
@@ -302,8 +303,9 @@
                   (* 2 (plist-get info :font-height)))
                2)))))
 
-;; Async
+;; Asynchronous processing
 (use-package async
+  :diminish (async-bytecomp-package-mode dired-async-mode)
   :functions (async-bytecomp-package-mode dired-async-mode)
   :init
   (async-bytecomp-package-mode 1)
