@@ -72,6 +72,12 @@
   :config
   (add-hook 'eglot-managed-mode-hook 'petmacs/eglot-setup-flymake-ruff))
 
+;; Display Flymake errors with overlays
+(use-package flyover
+  :diminish
+  :hook flymake-mode
+  :custom (flyover-checkers '(flymake)))
+
 (provide 'init-check)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
