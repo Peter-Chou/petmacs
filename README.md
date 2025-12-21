@@ -8,7 +8,7 @@ before you use Petmacs, make sure your emacs version >= 29.1 and tree-sitter is 
 
 ### 1.1 Fonts
 
-- [ComicCodeLigatures Nerd Font](https://github.com/Peter-Chou/ComicCodeLigaturesNerdFont) for default
+- [JetBrains Mono NL](https://www.jetbrains.com/lp/mono) for default
 
 - [Maple Mono SC NF](https://gitee.com/subframe7536/Maple/releases) for Chinese
 
@@ -35,8 +35,7 @@ put [nodejs](https://nodejs.org) binaries into your `PATH`
 install [rime](https://github.com/rime/librime)
 
 ``` bash
-# use terra-pinyin for chinese input
-sudo apt-get install librime-dev fcitx-rime
+sudo apt-get install librime-dev fcitx-rime # use terra-pinyin for chinese input
 ```
 
 ### 1.6 snap (ubuntu)
@@ -103,13 +102,6 @@ install [go-grip](https://github.com/chrishrb/go-grip/releases) and put it into 
 git clone https://github.com/Peter-Chou/petmacs.git ~/.emacs.d
 ```
 
-if you are facing some certification verification problems while cloning repository by git,
-try use the following command and rerun emacs:
-
-``` bash
-export GIT_SSL_NO_VERIFY=1
-```
-
 ### 2.2 install dynamic libs for tree-sitter
 
 run the following command in emacs.
@@ -131,13 +123,12 @@ M-x eglot-upgrade-eglot
 ### 3.1 basedpyright (Python)
 
 ``` sh
-# in your python environment
-pip install basedpyright
+pip install basedpyright # install basedpyright in python environment
 ```
 
 ### 3.2 eclipse jdtls (Java)
 
-Please make sure  java 21 is installed in `/opt/jdk21` folder and run following commands in emacs.
+Please make sure `java 21` is installed in `/opt/jdk21` folder and run following commands in emacs.
 
 ``` bash
 M-x: eglot-java-upgrade-lsp-server
@@ -151,16 +142,19 @@ use `clangd` in [LLVM project](https://github.com/llvm/llvm-project). soft link 
 or you can build it from source
 
 ``` bash
-llvm_version=llvmorg-20.1.6
-git clone -b $llvm_version --depth=1 https://gitee.com/mirrors/LLVM.git $llvm_version
-cd $llvm_version
-cmake -S llvm -G Ninja -B build -DCMAKE_BUILD_TYPE=Release \
+llvm_version=llvmorg-21.1.8 # set version
+# download llvm project
+git clone -b $llvm_version --depth=1 https://gitee.com/mirrors/llvm-project.git $llvm_version
+# cmake setup
+cd $llvm_version && cmake -S llvm -G Ninja -B build -DCMAKE_BUILD_TYPE=Release \
     -DLLVM_ENABLE_PROJECTS="clang;lld;clang-tools-extra;lldb" \
     -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi;libunwind" \
     -DCMAKE_INSTALL_PREFIX=/opt/softwares/$llvm_version
-
+# build targets
 cmake --build build -j $(nproc)
+# install 
 sudo $(which cmake) --install build
+# add soft link
 sudo ln -sf /opt/softwares/$llvm_version /opt/llvm
 ```
 
