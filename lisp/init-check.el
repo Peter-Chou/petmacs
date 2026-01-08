@@ -60,17 +60,7 @@
 
 (use-package flymake-ruff
   :demand t
-  :preface
-  (defun petmacs/setup-flymake-ruff ()
-    (setq-local lsp-diagnostics-provider :none)
-    (flymake-ruff-load))
-
-  (defun petmacs/eglot-setup-flymake-ruff ()
-    (interactive)
-    (when (derived-mode-p 'python-base-mode)
-      (flymake-ruff-load)))
-  :config
-  (add-hook 'eglot-managed-mode-hook 'petmacs/eglot-setup-flymake-ruff))
+  :hook (python-base-mode . flymake-ruff-load))
 
 ;; Display Flymake errors with overlays
 (use-package flyover

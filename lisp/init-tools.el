@@ -94,12 +94,12 @@
 (use-package aggressive-indent
   :diminish
   :autoload aggressive-indent-mode
-  :functions too-long-file-p
+  :functions file-too-long-p
   :hook ((after-init . global-aggressive-indent-mode)
          ;; NOTE: Disable in large files due to the performance issues
          ;; https://github.com/Malabarba/aggressive-indent-mode/issues/73
          (find-file . (lambda ()
-                        (when (too-long-file-p)
+                        (when (file-too-long-p)
                           (aggressive-indent-mode -1)))))
   :config
   ;; Disable in some modes
@@ -267,11 +267,19 @@
   :hook (after-init . default-text-scale-mode))
 
 (use-package hydra
-  :defines posframe-border-width
+  :defines (consult-imenu-config posframe-border-width)
   :functions childframe-completion-workable-p hydra-set-posframe-show-params
-  :hook ((emacs-lisp-mode . hydra-add-imenu)
-         (after-load-theme . hydra-set-posframe-appearance))
+  :hook (after-load-theme . hydra-set-posframe-appearance)
   :init
+  (with-eval-after-load 'consult-imenu
+    (setq consult-imenu-config
+          '((emacs-lisp-mode :toplevel "Functions"
+                             :types ((?f "Functions" font-lock-function-name-face)
+                                     (?h "Hydras"    font-lock-constant-face)
+                                     (?m "Macros"    font-lock-function-name-face)
+                                     (?p "Packages"  font-lock-constant-face)
+                                     (?t "Types"     font-lock-type-face)
+                                     (?v "Variables" font-lock-variable-name-face))))))
   (defun hydra-set-posframe-appearance ()
     "Set appearance of hydra."
     (when (childframe-completion-workable-p)
@@ -289,14 +297,9 @@
 
 (use-package pretty-hydra
   :functions icons-displayable-p
-  :hook (emacs-lisp-mode . (lambda ()
-                             (add-to-list
-                              'imenu-generic-expression
-                              '("Hydras"
-                                "^.*(\\(pretty-hydra-define\\) \\([a-zA-Z-]+\\)"
-                                2))))
   :init
   (require 'pretty-hydra)
+
   (cl-defun pretty-hydra-title (title &optional icon-type icon-name
                                       &key face height v-adjust)
     "Add an icon in the hydra title."

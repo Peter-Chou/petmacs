@@ -71,7 +71,7 @@
   (push '(ns-appearance . dark) default-frame-alist))
 
 ;; Prevent flash of unstyled mode line
-(setq mode-line-format nil)
+(setq-default mode-line-format nil)
 
 ;; workaround image-type: Invalid image type svg
 (add-to-list 'image-types 'svg)

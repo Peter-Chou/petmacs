@@ -59,10 +59,10 @@
 (use-package nerd-icons-completion
   :hook (marginalia-mode . nerd-icons-completion-marginalia-setup))
 
-;; ;; make "unreal" buffers (like popups, sidebars, log buffers,
-;; ;; terminals by giving the latter a slightly different (often darker) background
+;; Make certain buffers grossly incandescent
 (use-package solaire-mode
-  :hook (after-init . solaire-global-mode))
+  :commands solaire-global-mode
+  :init (solaire-global-mode 1))
 
 (use-package catppuccin-theme
   :init (setq catppuccin-flavor 'latte
@@ -210,17 +210,13 @@
 ;;     (add-hook 'which-function-mode-hook #'petmacs/remove-which-function-info)))
 
 (use-package hide-mode-line
-  :autoload turn-off-hide-mode-line-mode
-  :hook (((treemacs-mode
-           eshell-mode shell-mode
-           term-mode vterm-mode eat-mode
-           symbols-outline-mode
-           embark-collect-mode
-           lsp-ui-imenu-mode
-           pdf-annot-list-mode) . turn-on-hide-mode-line-mode)
-         (dired-mode . (lambda()
-                         (and (bound-and-true-p hide-mode-line-mode)
-                              (turn-off-hide-mode-line-mode))))))
+  :hook ((treemacs-mode
+          eshell-mode shell-mode
+          term-mode vterm-mode eat-mode
+          symbols-outline-mode
+          embark-collect-mode
+          lsp-ui-imenu-mode
+          pdf-annot-list-mode) . turn-on-hide-mode-line-mode))
 
 ;; Show native line numbers if possible, otherwise use `linum'
 (if (fboundp 'display-line-numbers-mode)
