@@ -269,7 +269,8 @@
 (use-package hydra
   :defines (consult-imenu-config posframe-border-width)
   :functions childframe-completion-workable-p hydra-set-posframe-show-params
-  :hook (after-load-theme . hydra-set-posframe-appearance)
+  :hook ((emacs-lisp-mode  . hydra-add-imenu)
+         (after-load-theme . hydra-set-posframe-appearance))
   :init
   (with-eval-after-load 'consult-imenu
     (setq consult-imenu-config
@@ -297,8 +298,14 @@
 
 (use-package pretty-hydra
   :functions icons-displayable-p
+  :hook (emacs-lisp-mode . pretty-hydra-add-imenu)
   :init
   (require 'pretty-hydra)
+
+  (defun pretty-hydra-add-imenu ()
+    "Have hydras in `imenu'."
+    (add-to-list 'imenu-generic-expression
+                 '("Hydras" "^.*(\\(pretty-hydra-define\\) \\([a-zA-Z-]+\\)" 2)))
 
   (cl-defun pretty-hydra-title (title &optional icon-type icon-name
                                       &key face height v-adjust)
@@ -421,21 +428,6 @@
 (use-package pangu-spacing
   :hook (after-init . global-pangu-spacing-mode))
 
-(use-package list-environment
-  :init
-  (with-no-warnings
-    (defun my-list-environment-entries ()
-      "Generate environment variable entries list for tabulated-list."
-      (mapcar (lambda (env)
-                (let* ((kv (split-string env "="))
-                       (key (car kv))
-                       (val (mapconcat #'identity (cdr kv) "=")))
-                  (list key (vector
-                             `(,key face font-lock-keyword-face)
-                             `(,val face font-lock-string-face)))))
-              process-environment))
-    (advice-add #'list-environment-entries :override #'my-list-environment-entries)))
-
 (use-package quickrun
   :commands (quickrun)
   :init
@@ -528,10 +520,9 @@ SCALE are supported."
 
 (use-package centered-cursor-mode)
 (use-package restart-emacs)
-(use-package focus)                     ; Focus on the current region
-(use-package disk-usage)                     ; Focus on the current region
 (use-package rg)
 (use-package dotenv-mode)
+(use-package reveal-in-folder)
 
 ;; Visual `align-regexp'
 (use-package ialign)
