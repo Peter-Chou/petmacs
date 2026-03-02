@@ -18,8 +18,6 @@
                             (height . 0.85)))
 
 ;; Optimization
-(setq idle-update-delay 1.0)
-
 (setq-default cursor-in-non-selected-windows nil)
 (setq highlight-nonselected-windows nil)
 
@@ -381,7 +379,7 @@
   (when (bound-and-true-p awesome-tray-mode)
     (add-hook circadian-after-load-theme-hook #'awesome-tray-enable)))
 
-;; Frame background transparence
+;; Frame transparency
 (use-package transwin
   :pretty-hydra
   ((:title (pretty-hydra-title "Frame Management")

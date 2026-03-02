@@ -99,7 +99,6 @@
   (leader-set-keys
     "d"  #'deer
     "P"  #'list-processes
-    "e" #'list-environment
     "P"  #'proced
     "w"  #'whitespace-cleanup
 

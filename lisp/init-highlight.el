@@ -31,7 +31,7 @@
   (show-paren-when-point-inside-paren t)
   (show-paren-when-point-in-periphery t)
   :config
-  (if (fboundp 'show-paren-context-when-offscreen)
+  (if (boundp 'show-paren-context-when-offscreen)
       (setq blink-matching-paren-highlight-offscreen t
             show-paren-context-when-offscreen
             (if (childframe-workable-p) 'child-frame 'overlay))
@@ -132,16 +132,13 @@ FACE defaults to inheriting from default and highlight."
   :hook (after-init . global-region-occurrences-highlighter-mode))
 
 (use-package indent-bars
-  :pin gnu
-  :functions file-too-long-p
-  :commands indent-bars-mode
+  ;; :pin gnu
   :hook (((
            go-mode go-ts-mode
            json-mode json-ts-mode
            python-base-mode
            toml-mode toml-ts-mode
-           yaml-mode yaml-ts-mode) . (lambda () (unless (file-too-long-p)
-                                             (indent-bars-mode 1))))
+           yaml-mode yaml-ts-mode) . indent-bars-mode)
          ((java-mode java-ts-mode) . (lambda ()
                                        (indent-bars-mode -1))))
   :init
@@ -172,7 +169,6 @@ FACE defaults to inheriting from default and highlight."
           indent-bars-treesit-ignore-blank-lines-types '("module")
           indent-bars-treesit-scope '((python function_definition class_definition for_statement
 				                              if_statement with_statement while_statement))
-
           indent-bars-treesit-wrap '((python argument_list parameters ; for python, as an example
 				                             list list_comprehension
 				                             dictionary dictionary_comprehension
@@ -180,9 +176,7 @@ FACE defaults to inheriting from default and highlight."
                                      (c argument_list parameter_list init_declarator parenthesized_expression)
                                      (toml table array comment)
                                      (yaml block_mapping_pair comment)
-                                     )))
-  :config
-  (require 'indent-bars-ts))
+                                     ))))
 
 ;; Highlight brackets according to their depth
 (use-package rainbow-delimiters
@@ -193,10 +187,7 @@ FACE defaults to inheriting from default and highlight."
     (use-package colorful-mode
       :diminish
       :hook (after-init . global-colorful-mode)
-      :init
-      (setq colorful-use-prefix t)
-      :config (dolist (mode '(html-mode php-mode help-mode helpful-mode))
-                (add-to-list 'global-colorful-modes mode)))
+      :init (setq colorful-use-prefix t))
 
   (use-package rainbow-mode
     :diminish
@@ -277,48 +268,12 @@ FACE defaults to inheriting from default and highlight."
       (error "`rg' is not installed"))
     (rg-project (replace-regexp-in-string "\\\\[_<>]*" "" (hl-todo--regexp)) "everything")))
 
-;; Pulse current line
-(use-package pulse
-  :ensure nil
+;; Pulse highlight on selection
+(use-package pulsar
   :custom-face
-  (pulse-highlight-start-face ((t (:inherit region))))
-  (pulse-highlight-face ((t (:inherit region :extend t))))
-  :hook (((dumb-jump-after-jump imenu-after-jump) . my-recenter-and-pulse)
-         ((bookmark-after-jump magit-diff-visit-file next-error) . my-recenter-and-pulse-line))
-  :init
-  (with-no-warnings
-    (defun my-pulse-momentary-line (&rest _)
-      "Pulse the current line."
-      (pulse-momentary-highlight-one-line (point)))
-
-    (defun my-pulse-momentary (&rest _)
-      "Pulse the region or the current line."
-      (if (fboundp 'xref-pulse-momentarily)
-          (xref-pulse-momentarily)
-        (my-pulse-momentary-line)))
-
-    (defun my-recenter-and-pulse(&rest _)
-      "Recenter and pulse the region or the current line."
-      (recenter)
-      (my-pulse-momentary))
-
-    (defun my-recenter-and-pulse-line (&rest _)
-      "Recenter and pulse the current line."
-      (recenter)
-      (my-pulse-momentary-line))
-
-    (dolist (cmd '(recenter-top-bottom
-                   other-window switch-to-buffer
-                   aw-select toggle-window-split
-                   windmove-do-window-select
-                   pager-page-down pager-page-up
-                   treemacs-select-window))
-      (advice-add cmd :after #'my-pulse-momentary-line))
-
-    (dolist (cmd '(pop-to-mark-command
-                   pop-global-mark
-                   goto-last-change))
-      (advice-add cmd :after #'my-recenter-and-pulse))))
+  (pulsar-generic ((t :inherit region :extend t)))
+  :custom (pulsar-delay pulse-delay)
+  :hook (emacs-startup . pulsar-global-mode))
 
 ;; Pulse modified region
 (use-package goggles

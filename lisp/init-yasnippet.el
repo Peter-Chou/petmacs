@@ -22,8 +22,11 @@
   :after cape
   :commands yasnippet-capf
   :functions cape-capf-super eglot-completion-at-point my-eglot-capf-with-yasnippet
+  :hook (((conf-mode prog-mode text-mode) . my-yasnippet-capf-h)
+         (eglot-managed-mode . my-eglot-capf-with-yasnippet))
   :init
-  (add-to-list 'completion-at-point-functions #'yasnippet-capf)
+  (defun my-yasnippet-capf-h ()
+    (add-to-list 'completion-at-point-functions #'yasnippet-capf))
 
   ;; To integrate `yasnippet-capf' with `eglot' completion
   ;; https://github.com/minad/corfu/wiki#making-a-cape-super-capf-for-eglot
@@ -32,7 +35,6 @@
                 (list
 	             (cape-capf-super
 		          #'eglot-completion-at-point
-		          #'yasnippet-capf))))
-  (add-hook 'eglot-managed-mode-hook #'my-eglot-capf-with-yasnippet))
+		          #'yasnippet-capf)))))
 
 (provide 'init-yasnippet)

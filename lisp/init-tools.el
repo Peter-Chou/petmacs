@@ -16,19 +16,25 @@
   :ensure nil
   :demand t)
 
-;; Transient
-(when (childframe-completion-workable-p)
-  ;; Display transient in child frame
-  (use-package transient-posframe
-    :diminish
-    :custom-face
-    (transient-posframe ((t (:inherit tooltip))))
-    (transient-posframe-border ((t (:inherit posframe-border :background unspecified))))
-    :hook (after-init . transient-posframe-mode)
-    :init (setq transient-mode-line-format nil
-                transient-posframe-border-width posframe-border-width
-                transient-posframe-parameters '((left-fringe . 8)
-                                                (right-fringe . 8)))))
+;; Display transient in child frame
+(use-package transient-posframe
+  :diminish
+  :defines posframe-border-width
+  :functions childframe-completion-workable-p
+  :commands transient-posframe-mode
+  :custom-face
+  (transient-posframe-border ((t (:inherit posframe-border :background unspecified))))
+  :hook ((after-init server-after-make-frame)
+         .
+         (lambda ()
+           "Display transient in child frames if applicable."
+           (if (childframe-completion-workable-p)
+               (transient-posframe-mode 1)
+             (transient-posframe-mode -1))))
+  :init (setq transient-mode-line-format nil
+              transient-posframe-border-width posframe-border-width
+              transient-posframe-parameters '((left-fringe . 8)
+                                              (right-fringe . 8))))
 
 (use-package posframe-plus
   :ensure nil
@@ -89,41 +95,6 @@
                 avy-all-windows-alt t
                 avy-background t
                 avy-style 'pre))
-
-;; Minor mode to aggressively keep your code always indented
-(use-package aggressive-indent
-  :diminish
-  :autoload aggressive-indent-mode
-  :functions file-too-long-p
-  :hook ((after-init . global-aggressive-indent-mode)
-         ;; NOTE: Disable in large files due to the performance issues
-         ;; https://github.com/Malabarba/aggressive-indent-mode/issues/73
-         (find-file . (lambda ()
-                        (when (file-too-long-p)
-                          (aggressive-indent-mode -1)))))
-  :config
-  ;; Disable in some modes
-  (dolist (mode '(gitconfig-mode
-                  protobuf-mode
-                  asm-mode web-mode html-mode
-                  css-mode css-ts-mode
-                  python-mode python-ts-mode
-                  go-mode go-ts-mode
-                  java-mode java-ts-mode
-                  shell-mode term-mode vterm-mode
-                  scala-mode prolog-inferior-mode))
-    (push mode aggressive-indent-excluded-modes))
-
-  ;; Disable in some commands
-  (add-to-list 'aggressive-indent-protected-commands #'delete-trailing-whitespace t)
-
-  ;; Be slightly less aggressive in C/C++/C#/Java/Go/Swift
-  (add-to-list 'aggressive-indent-dont-indent-if
-               '(and (derived-mode-p 'c-mode c-ts-mode 'c-or-c++-ts-mode 'c++-mode 'c++-ts-mode
-                                     'csharp-mode 'csharp-ts-mode 'java-mode 'java-ts-mode
-                                     'go-mode go-ts-mode 'swift-mode)
-                     (null (string-match "\\([;{}]\\|\\b\\(if\\|for\\|while\\)\\b\\)"
-                                         (thing-at-point 'line))))))
 
 ;; Show number of matches in mode-line while searching
 (use-package anzu
@@ -268,9 +239,9 @@
 
 (use-package hydra
   :defines (consult-imenu-config posframe-border-width)
-  :functions childframe-completion-workable-p hydra-set-posframe-show-params
-  :hook ((emacs-lisp-mode  . hydra-add-imenu)
-         (after-load-theme . hydra-set-posframe-appearance))
+  :functions childframe-completion-workable-p
+  :hook ((emacs-lisp-mode . hydra-add-imenu)
+         ((after-init after-load-theme server-after-make-frame) . hydra-set-posframe))
   :init
   (with-eval-after-load 'consult-imenu
     (setq consult-imenu-config
@@ -281,27 +252,29 @@
                                      (?p "Packages"  font-lock-constant-face)
                                      (?t "Types"     font-lock-type-face)
                                      (?v "Variables" font-lock-variable-name-face))))))
-  (defun hydra-set-posframe-appearance ()
-    "Set appearance of hydra."
-    (when (childframe-completion-workable-p)
-      (setq hydra-hint-display-type 'posframe)
-      (setq hydra-posframe-show-params
-            `(:left-fringe 8
-              :right-fringe 8
-              :internal-border-width ,posframe-border-width
-              :internal-border-color ,(face-background 'posframe-border nil t)
-              :background-color ,(face-background 'tooltip nil t)
-              :foreground-color ,(face-foreground 'tooltip nil t)
-              :lines-truncate t
-              :poshandler posframe-poshandler-frame-center-near-bottom))))
-  (hydra-set-posframe-appearance))
+
+  (defun hydra-set-posframe ()
+    "Set display type and appearance of hydra."
+    ;; Display type
+    (if (childframe-completion-workable-p)
+        (setq hydra-hint-display-type 'posframe)
+      (setq hydra-hint-display-type 'lv))
+    ;; Appearance
+    (setq hydra-posframe-show-params
+          `(:left-fringe 8
+            :right-fringe 8
+            :internal-border-width ,posframe-border-width
+            :internal-border-color ,(face-background 'posframe-border nil t)
+            :background-color ,(face-background 'tooltip nil t)
+            :foreground-color ,(face-foreground 'tooltip nil t)
+            :lines-truncate t
+            :poshandler posframe-poshandler-frame-center-near-bottom))))
 
 (use-package pretty-hydra
+  :demand t
   :functions icons-displayable-p
   :hook (emacs-lisp-mode . pretty-hydra-add-imenu)
   :init
-  (require 'pretty-hydra)
-
   (defun pretty-hydra-add-imenu ()
     "Have hydras in `imenu'."
     (add-to-list 'imenu-generic-expression
@@ -515,7 +488,9 @@ SCALE are supported."
 (use-package imenu-list
   :init (setq imenu-list-size 30))
 
-(use-package docker)
+(use-package docker
+  :custom (docker-container-shell-file-name "/bin/bash"))
+
 (use-package dockerfile-mode)
 
 (use-package centered-cursor-mode)
@@ -594,17 +569,18 @@ SCALE are supported."
 (use-package numpydoc
   :init (setq numpydoc-template-short t))
 
-(when (childframe-workable-p)
-  (use-package eldoc-mouse
-    :diminish
-    :bind (:map eldoc-mouse-mode-map
-           ("C-h ." . eldoc-mouse-pop-doc-at-cursor))
-    :hook (eglot-managed-mode emacs-lisp-mode)
-    :init (setq eldoc-mouse-posframe-border-color (face-background 'posframe-border nil t))
-    :config
-    (tooltip-mode -1)                 ; Conflict with `track-mouse'
-    (add-to-list 'eldoc-mouse-posframe-override-parameters
-                 `(background-color . ,(face-background 'tooltip nil t)))))
+(use-package eldoc-box
+  :custom
+  (eldoc-box-lighter nil)
+  (eldoc-box-only-multi-line t)
+  (eldoc-box-clear-with-C-g t)
+  :custom-face
+  (eldoc-box-border ((t (:inherit posframe-border :background unspecified))))
+  (eldoc-box-body ((t (:inherit tooltip))))
+  :hook (eglot-managed-mode . (lambda ()
+                                (if (childframe-workable-p)
+                                    (eldoc-box-hover-mode 1)
+                                  (eldoc-box-hover-mode -1)))))
 
 (use-package file-info
   :config
@@ -622,6 +598,58 @@ SCALE are supported."
   :init
   (setq wgrep-auto-save-buffer t
         wgrep-change-readonly-file t))
+
+;; Quickly follow links
+(use-package link-hint
+  :defines (Info-mode-map
+            compilation-mode-map custom-mode-map
+            elfeed-show-mode-map eww-mode-map
+            help-mode-map helpful-mode-map nov-mode-map
+            woman-mode-map xref--xref-buffer-mode-map)
+  :functions embark-dwim
+  :bind (("M-o"     . link-hint-open-link)
+         ("C-c l o" . link-hint-open-link)
+         ("C-c l c" . link-hint-copy-link))
+  :init
+  (with-eval-after-load 'compile
+    (bind-key "o" #'link-hint-open-link compilation-mode-map))
+  (with-eval-after-load 'cus-edit
+    (bind-key "o" #'link-hint-open-link custom-mode-map))
+  (with-eval-after-load 'elfeed-show
+    (bind-key "o" #'link-hint-open-link elfeed-show-mode-map))
+  (with-eval-after-load 'eww
+    (bind-key "o" #'link-hint-open-link eww-mode-map))
+  (with-eval-after-load 'help
+    (bind-key "o" #'link-hint-open-link help-mode-map))
+  (with-eval-after-load 'helpful
+    (bind-key "o" #'link-hint-open-link helpful-mode-map))
+  (with-eval-after-load 'info
+    (bind-key "o" #'link-hint-open-link Info-mode-map))
+  (with-eval-after-load 'nov
+    (bind-key "o" #'link-hint-open-link nov-mode-map))
+  (with-eval-after-load 'woman
+    (bind-key "o" #'link-hint-open-link woman-mode-map))
+  (with-eval-after-load 'xref
+    (bind-key "o" #'link-hint-open-link xref--xref-buffer-mode-map))
+
+  (with-eval-after-load 'embark
+    (setq link-hint-action-fallback-commands
+          (list :open (lambda ()
+                        (condition-case _
+                            (progn
+                              (embark-dwim)
+                              t)
+                          (error
+                           nil)))))))
+
+;; Jump to Chinese characters
+(use-package ace-pinyin
+  :diminish
+  :hook (after-init . ace-pinyin-global-mode))
+
+;; Better performance via tramp
+(use-package tramp-hlo
+  :hook (after-init . tramp-hlo-setup))
 
 (provide 'init-tools)
 

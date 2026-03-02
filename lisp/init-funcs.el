@@ -472,6 +472,29 @@ lines."
   (split-window-horizontally)
   (other-window 1))
 
+;; Window
+
+;; Rearrange split windows
+(defun split-window-horizontally-instead ()
+  "Kill other windows and split the current window is on the top half of the frame."
+  (interactive)
+  (let* ((next-window (next-window))
+         (other-buffer (and next-window (window-buffer next-window))))
+    (delete-other-windows)
+    (split-window-horizontally)
+    (when other-buffer
+      (set-window-buffer next-window other-buffer))))
+
+(defun split-window-vertically-instead ()
+  "Kill other windows and split the current window is on left half of the frame."
+  (interactive)
+  (let* ((next-window (next-window))
+         (other-buffer (and next-window (window-buffer next-window))))
+    (delete-other-windows)
+    (split-window-vertically)
+    (when other-buffer
+      (set-window-buffer next-window other-buffer))))
+
 (defun petmacs//confirm-kill-buffer ()
   "Prompt the user to save a buffer to a file before killing it.
 This skips the following buffers:

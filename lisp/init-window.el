@@ -11,22 +11,6 @@
   (require 'init-const)
   (require 'init-funcs))
 
-;; Restore old window configurations
-(use-package winner
-  :ensure nil
-  :commands (winner-undo winner-redo)
-  :hook (after-init . winner-mode)
-  :init (setq winner-boring-buffers '("*Completions*"
-                                      "*Compile-Log*"
-                                      "*inferior-lisp*"
-                                      "*Fuzzy Completions*"
-                                      "*Apropos*"
-                                      "*Help*"
-                                      "*cvs*"
-                                      "*Buffer List*"
-                                      "*Ibuffer*"
-                                      "*esh command on file*")))
-
 (use-package ace-window
   :pretty-hydra
   ((:title (pretty-hydra-title "Window Management")
@@ -67,7 +51,6 @@
   (aw-minibuffer-leading-char-face ((t (:inherit font-lock-keyword-face :bold t :height 1.0))))
   (aw-mode-line-face ((t (:inherit mode-line-emphasis :bold t))))
   :bind ([remap other-window] . ace-window)
-  :hook (emacs-startup . ace-window-display-mode)
   :init
   (setq aw-scope 'frame
         ;; aw-scope 'visible
@@ -106,12 +89,13 @@
 
 ;; Enforce rules for popups
 (use-package popper
-  ;; :hook (emacs-startup . popper-echo-mode)
   :custom
-  (popper-group-function #'popper-group-by-directory)
+  (popper-group-function #'popper-group-by-project)
   (popper-echo-dispatch-actions t)
+  :hook (window-setup . popper-tab-line-mode)
   :init
-  (setq popper-reference-buffers
+  (setq popper-mode-line ""
+        popper-reference-buffers
         '("\\*Messages\\*$"
           "Output\\*$" "\\*Pp Eval Output\\*$"
           "^\\*eldoc.*\\*$"
@@ -142,12 +126,13 @@
           youdao-dictionary-mode osx-dictionary-mode fanyi-mode
 
           "^\\*Process List\\*$" process-menu-mode
-          list-environment-mode cargo-process-mode
+          cargo-process-mode
 
-          "^\\*.*eshell.*\\*.*$"
-          "^\\*.*shell.*\\*.*$"
-          "^\\*.*terminal.*\\*.*$"
-          "^\\*.*vterm[inal]*.*\\*.*$"
+          "^\\*.*eat.*\\*.*$" eat-mode
+          "^\\*.*eshell.*\\*.*$" eshell-mode
+          "^\\*.*shell.*\\*.*$" shell-mode
+          "^\\*.*terminal.*\\*.*$" term-mode
+          "^\\*.*vterm[inal]*.*\\*.*$" vterm-mode
 
           "\\*DAP Templates\\*$" dap-server-log-mode
           "\\*ELP Profiling Restuls\\*" profiler-report-mode
@@ -166,29 +151,13 @@
           "\\*prolog\\*" inferior-python-mode inf-ruby-mode swift-repl-mode
           "\\*rustfmt\\*$" rustic-compilation-mode rustic-cargo-clippy-mode
           rustic-cargo-outdated-mode rustic-cargo-run-mode rustic-cargo-test-mode))
-
-  (with-eval-after-load 'doom-modeline
-    (setq popper-mode-line
-          '(:eval (let ((face (if (doom-modeline--active)
-                                  'mode-line-emphasis
-                                'mode-line-inactive)))
-                    (if (and (icons-displayable-p)
-                             (bound-and-true-p doom-modeline-mode))
-                        (format " %s "
-                                (nerd-icons-octicon "nf-oct-pin" :face face))
-                      (propertize " POP " 'face face))))))
-
-  (popper-mode +1)
-  ;; For echo-area hints
-  (require 'popper-echo)
-  (popper-echo-mode +1)
   :config
   (with-no-warnings
-    (defun my-popper-fit-window-height (win)
+    (defun my/popper-fit-window-height (win)
       "Adjust the height of popup window WIN to fit the buffer's content."
       (let ((desired-height (floor (/ (frame-height) 3))))
         (fit-window-to-buffer win desired-height desired-height)))
-    (setq popper-window-height #'my-popper-fit-window-height)
+    (setq popper-window-height #'my/popper-fit-window-height)
 
     (defun popper-close-window-hack (&rest _args)
       "Close popper window via `C-g'."

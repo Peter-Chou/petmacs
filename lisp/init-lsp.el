@@ -67,7 +67,7 @@
   :init
   (setq eglot-send-changes-idle-time 0.3
         eglot-autoshutdown t
-        eglot-events-buffer-size 0
+        eglot-events-buffer-config '(:size 0 :format 'short)
         eglot-connect-timeout 1200 ;; 10 minutes
         eglot-ignored-server-capabilities '(:documentHighlightProvider
                                             :inlayHintProvider

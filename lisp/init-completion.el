@@ -116,15 +116,22 @@
   (add-hook 'rfn-eshadow-update-overlay-hook #'vertico-directory-tidy)
   (add-hook 'minibuffer-setup-hook #'vertico-repeat-save))
 
-(when (childframe-completion-workable-p)
-  (use-package vertico-posframe
-    :functions posframe-poshandler-frame-center-near-bottom
-    :hook (vertico-mode . vertico-posframe-mode)
-    :init (setq vertico-posframe-poshandler
-                #'posframe-poshandler-frame-center-near-bottom
-                vertico-posframe-parameters
-                '((left-fringe  . 8)
-                  (right-fringe . 8)))))
+;; Display vertico in the child frame
+(use-package vertico-posframe
+  :functions (childframe-completion-workable-p
+              posframe-poshandler-frame-center-near-bottom)
+  :commands vertico-posframe-mode
+  :hook ((server-after-make-frame vertico-mode)
+         .
+         (lambda ()
+           "Handle vertico child frame."
+           (and (childframe-completion-workable-p)
+                (vertico-posframe-mode 1))))
+  :init (setq vertico-posframe-poshandler
+              #'posframe-poshandler-frame-center-near-bottom
+              vertico-posframe-parameters
+              '((left-fringe  . 8)
+                (right-fringe . 8))))
 
 (use-package consult
   :defines (xref-show-xrefs-function xref-show-definitions-function)

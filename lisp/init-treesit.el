@@ -47,13 +47,7 @@
                                json sql toml proto dockerfile yaml
                                bibtex css html org tsx lua))
     :config
-    (treesit-auto-add-to-auto-mode-alist 'all))
-
-  ;; native support to evil fold feature
-  (use-package treesit-fold
-    :pin nongnu
-    :hook ((prog-mode . treesit-fold-mode)
-           (treesit-fold-mode . treesit-fold-line-comment-mode))))
+    (treesit-auto-add-to-auto-mode-alist 'all)))
 
 (provide 'init-treesit)
 

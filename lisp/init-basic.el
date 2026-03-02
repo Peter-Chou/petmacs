@@ -12,6 +12,20 @@
   (require 'init-custom)
   (require 'init-funcs))
 
+;; Setup fill column indicator with stipple
+(when emacs/>=30p
+  (setq-default display-fill-column-indicator-character ?\s)
+  (defun adjust-fill-column-indicator-stipple ()
+    "Adjust the fill-column-indicator face with stipple using `set-face-attribute'."
+    (let* ((w (window-font-width))
+           (stipple `(,w 1 ,(apply #'unibyte-string
+                                   (append (make-list (1- (/ (+ w 7) 8)) ?\0)
+                                           '(1))))))
+      (set-face-attribute 'fill-column-indicator nil :stipple stipple)))
+  (add-hook 'emacs-startup-hook #'adjust-fill-column-indicator-stipple)
+  (add-hook 'text-scale-mode-hook #'adjust-fill-column-indicator-stipple)
+  (add-hook 'prog-mode-hook #'display-fill-column-indicator-mode))
+
 (require 'subr-x)
 
 (when (executable-find "fd")
@@ -21,7 +35,7 @@
   :init
   (setq no-littering-etc-directory (expand-file-name "config/" user-emacs-directory)
         no-littering-var-directory (expand-file-name "data/" user-emacs-directory)
-        custom-file (no-littering-expand-etc-file-name "custom.el")
+	    custom-file (no-littering-expand-etc-file-name "custom.el")
         auto-save-file-name-transforms
         `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
   ;; (require 'no-littering)
@@ -31,7 +45,7 @@
     (add-to-list 'recentf-exclude no-littering-etc-directory)))
 
 (when (file-exists-p custom-file)
-  (load custom-file 'noerror 'nomessage))
+  (load custom-file 'noerror))
 
 ;; alternative to undo-tree
 (use-package undo-fu)
@@ -139,7 +153,6 @@
 ;;   :ensure nil
 ;;   :hook (after-init . server-mode))
 
-
 (use-package recentf
   :ensure nil
   :bind (("C-x C-r" . recentf-open-files))
@@ -244,12 +257,25 @@
 (use-package so-long
   :hook (after-init . global-so-long-mode))
 
+;; Display fill-column indicator
 (use-package display-fill-column-indicator
   :ensure nil
+  :functions adjust-fill-column-indicator-stipple
   ;; :hook (prog-mode . display-fill-column-indicator-mode)
-  :init
-  (setq-default fill-column  80)
-  (setq display-fill-column-indicator-character "|"))
+  :config
+  ;; Setup fill column indicator with stipple
+  (when (or (and sys/mac-x-p emacs/>=31p)
+            (and sys/linux-x-p sys/win32p emacs/>=30p))
+    (setq-default display-fill-column-indicator-character ?\s)
+    (defun adjust-fill-column-indicator-stipple ()
+      "Adjust the fill-column-indicator face with stipple using `set-face-attribute'."
+      (let* ((w (window-font-width))
+             (stipple `(,w 1 ,(apply #'unibyte-string
+                                     (append (make-list (1- (/ (+ w 7) 8)) ?\0)
+                                             '(1))))))
+        (set-face-attribute 'fill-column-indicator nil :stipple stipple)))
+    (add-hook 'emacs-startup-hook #'adjust-fill-column-indicator-stipple)
+    (add-hook 'text-scale-mode-hook #'adjust-fill-column-indicator-stipple)))
 
 ;; Misc
 (if (boundp 'use-short-answers)
@@ -257,7 +283,8 @@
   (fset 'yes-or-no-p 'y-or-n-p))
 
 (setq-default major-mode 'text-mode
-              fill-column 80
+              ;; fill-column 80
+              fill-column 100
               tab-width 4
               indent-tabs-mode nil)     ; Permanently indent with spaces, never with TABs
 
@@ -281,6 +308,8 @@
 
 ;; Child frame
 (use-package posframe
+  :custom-face
+  (child-frame-border ((t (:inherit posframe-border))))
   :hook (after-load-theme . posframe-delete-all)
   :init
   (defface posframe-border
@@ -302,14 +331,6 @@
             (/ (+ (plist-get info :parent-frame-height)
                   (* 2 (plist-get info :font-height)))
                2)))))
-
-;; Asynchronous processing
-(use-package async
-  :diminish (async-bytecomp-package-mode dired-async-mode)
-  :functions (async-bytecomp-package-mode dired-async-mode)
-  :init
-  (async-bytecomp-package-mode 1)
-  (dired-async-mode 1))
 
 ;; Copy&paste GUI clipboard from text terminal
 (unless sys/win32p

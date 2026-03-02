@@ -12,36 +12,47 @@
   (require 'init-custom)
   (require 'init-funcs))
 
-;; HACK: DO NOT save package-selected-packages to `custom-file'.
-;; https://github.com/jwiegley/use-package/issues/383#issuecomment-247801751
-(defun my-package--save-selected-packages (&optional value)
-  "Set `package-selected-packages' to VALUE but don't save to `custom-file'."
-  (when value
-    (setq package-selected-packages value))
-  (unless after-init-time
-    (add-hook 'after-init-hook #'my-package--save-selected-packages)))
-(advice-add 'package--save-selected-packages :override #'my-package--save-selected-packages)
+;; Suppress warnings
+(defvar use-package-always-ensure)
+(defvar use-package-always-defer)
+(defvar use-package-expand-minimally)
+(defvar use-package-enable-imenu-support)
 
+;; HACK: DO NOT save `package-selected-packages' to `custom-file'
+;; @see https://github.com/jwiegley/use-package/issues/383#issuecomment-247801751
+(defun my/package--save-selected-packages (&optional value)
+  "Set `package-selected-packages' to VALUE but don't save to custom.el."
+  (when (or value after-init-time)
+    ;; It is valid to set it to nil, for example when the last package
+    ;; is uninstalled.  But it shouldn't be done at init time, to
+    ;; avoid overwriting configurations that haven't yet been loaded.
+    (setq package-selected-packages (sort value #'string<)))
+  (unless after-init-time
+    (add-hook 'after-init-hook #'my/package--save-selected-packages)))
+(advice-add 'package--save-selected-packages :override #'my/package--save-selected-packages)
 
 ;; Initialize packages
 (unless (bound-and-true-p package--initialized) ; To avoid warnings in 27
   (setq package-enable-at-startup nil)          ; To prevent initializing twice
   (package-initialize))
 
+;; Prettify package list
+(set-face-attribute 'package-status-available nil :inherit 'font-lock-string-face)
+(set-face-attribute 'package-description nil :inherit 'font-lock-comment-face)
+
 ;; Setup `use-package'
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
 
-;; Should set before loading `use-package'
-(eval-and-compile
-  (setq use-package-always-ensure t
-        use-package-always-defer t
-        use-package-expand-minimally t
-        use-package-enable-imenu-support t))
+;; ;; Should set before loading `use-package'
+(setq use-package-always-ensure t
+      use-package-always-defer t
+      use-package-expand-minimally t
+      use-package-enable-imenu-support t)
 
-(eval-when-compile
-  (require 'use-package))
+;; (eval-when-compile
+;;   (require 'use-package))
 
 ;; Required by `use-package'
 (use-package diminish)

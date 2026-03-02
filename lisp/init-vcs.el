@@ -12,6 +12,7 @@
 
 (use-package magit
   ;; :hook (magit-mode . magit-wip-mode)
+  :hook (git-commit-setup . (lambda () (setq fill-column git-commit-summary-max-length)))
   :init
   (setq magit-diff-refine-hunk t
         git-commit-major-mode 'git-commit-elisp-text-mode
@@ -76,10 +77,6 @@
          ("t" . git-timemachine))
   :hook ((git-timemachine-mode . (lambda ()
                                    "Improve `git-timemachine' buffers."
-                                   ;; Display different colors in mode-line
-                                   (if (facep 'mode-line-active)
-                                       (face-remap-add-relative 'mode-line-active 'custom-invalid)
-                                     (face-remap-add-relative 'mode-line 'custom-invalid))
 
                                    ;; Highlight symbols in elisp
                                    (and (derived-mode-p 'emacs-lisp-mode)
@@ -228,6 +225,10 @@
 (use-package browse-at-remote
   :bind (:map vc-prefix-map
          ("B" . browse-at-remote)))
+
+;; Get git URL for a buffer location
+(use-package git-link
+  :bind ("C-c c g" . git-link-dispatch))
 
 ;; Git related modes
 (use-package git-modes)

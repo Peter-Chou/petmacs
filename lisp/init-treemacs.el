@@ -12,9 +12,10 @@
 
 ;; A tree layout file explorer
 (use-package treemacs
-  :commands (treemacs-follow-mode
-             treemacs-filewatch-mode
-             treemacs-git-mode)
+  :functions (treemacs-follow-mode
+              treemacs-filewatch-mode
+              treemacs-git-mode
+              treemacs-set-scope-type)
   :custom-face
   (cfrs-border-color ((t (:inherit posframe-border))))
   :config
@@ -48,8 +49,8 @@
 
 (use-package treemacs-nerd-icons
   :demand t
-  :functions treemacs-load-theme
-  :config (treemacs-load-theme "nerd-icons"))
+  :autoload treemacs-nerd-icons-config
+  :init (treemacs-nerd-icons-config))
 
 (use-package treemacs-projectile
   :after projectile
@@ -57,16 +58,11 @@
 	     ("h" . treemacs-projectile)))
 
 (use-package treemacs-magit
-  :after magit
-  :hook ((magit-post-commit
-          git-commit-post-finish
-          magit-post-stage
-          magit-post-unstage)
-         . treemacs-magit--schedule-update))
+  :demand t
+  :after magit)
 
 (use-package treemacs-tab-bar
   :demand t
-  :functions treemacs-set-scope-type
   :config (treemacs-set-scope-type 'Tabs))
 
 (provide 'init-treemacs)

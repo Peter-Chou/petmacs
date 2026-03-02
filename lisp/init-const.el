@@ -7,6 +7,10 @@
 
 ;;; Code:
 
+(defconst petmacs-custom-example-file
+  (expand-file-name "custom-example.el" user-emacs-directory)
+  "Custom example file of Petmacs Emacs.")
+
 (defconst sys/win32p
   (eq system-type 'windows-nt)
   "Are we running on a WinTel system?")
