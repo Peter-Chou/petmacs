@@ -78,22 +78,20 @@
                                                                 ;; 在后台自动分析文件（基于complie_commands)
                                                                 "--background-index"
                                                                 ;; 标记compelie_commands.json文件的目录位置
-                                                                "--compile-commands-dir=build"
+                                                                "--compile-commands-dir=${workspaceFolder}/build"
                                                                 ;; 全局补全（会自动补充头文件）
                                                                 "--all-scopes-completion"
                                                                 ;; 更详细的补全内容
                                                                 "--completion-style=detailed"
                                                                 ;; 同时开启的任务数量
                                                                 "-j=12"
-                                                                "-cross-file-rename"
+                                                                "--rename-file-limit=0"
                                                                 ;;clang-tidy功能
                                                                 "--clang-tidy"
-                                                                "--clang-tidy-checks=performance-*,bugprone-*"
                                                                 ;; 告诉clangd用那个clang进行编译，路径参考which clang++的路径
                                                                 ;; "--query-driver=/opt/llvm/bin/clang++"
-                                                                ;; 同时开启的任务数量
                                                                 ;; 补充头文件的形式
-                                                                ;; "--header-insertion=iwyu"
+                                                                "--header-insertion=iwyu"
                                                                 ;; pch优化的位置
                                                                 ;; "--pch-storage=disk"
                                                                 ))
