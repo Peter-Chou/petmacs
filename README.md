@@ -142,9 +142,9 @@ use `clangd` in [LLVM project](https://github.com/llvm/llvm-project). soft link 
 or you can build it from source
 
 ``` bash
-llvm_version=llvmorg-21.1.8 # set version
+llvm_version=llvmorg-22.1.0 # set version
 # download llvm project
-git clone -b $llvm_version --depth=1 https://gitee.com/mirrors/llvm-project.git $llvm_version
+git clone -b $llvm_version --depth=1 https://github.com/llvm/llvm-project.git $llvm_version
 # cmake setup
 cd $llvm_version && cmake -S llvm -G Ninja -B build -DCMAKE_BUILD_TYPE=Release \
     -DLLVM_ENABLE_PROJECTS="clang;lld;clang-tools-extra;lldb" \
