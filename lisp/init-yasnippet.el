@@ -31,10 +31,13 @@
   ;; To integrate `yasnippet-capf' with `eglot' completion
   ;; https://github.com/minad/corfu/wiki#making-a-cape-super-capf-for-eglot
   (defun my-eglot-capf-with-yasnippet ()
+    (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
+          '(orderless)) ;; Configure orderless
     (setq-local completion-at-point-functions
                 (list
-	             (cape-capf-super
-		          #'eglot-completion-at-point
-		          #'yasnippet-capf)))))
+	             (#'eglot-completion-at-point
+                  #'cape-file
+		          #'yasnippet-capf
+                  #'cape-dabbrev)))))
 
 (provide 'init-yasnippet)

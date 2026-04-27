@@ -78,16 +78,17 @@
 (use-package ox-gfm
   :init (add-to-list 'org-export-backends 'gfm))
 
-(use-package org-modern
-  :after org
-  :diminish
-  :hook ((org-mode . org-modern-mode)
-         (org-agenda-finalize . org-modern-agenda))
-  :init (setq org-modern-star nil
-              org-modern-todo-faces '(("HANGUP" :background "yellow" :foreground "black")
-                                      ("DOING" :background "chartreuse" :foreground "black")
-                                      ("TODO" :background "cyan" :foreground "black"))
-              org-modern-priority nil))
+(when emacs/>=29p
+  (use-package org-modern
+    :after org
+    :diminish
+    :hook ((org-mode . org-modern-mode)
+           (org-agenda-finalize . org-modern-agenda))
+    :init (setq org-modern-star nil
+                org-modern-todo-faces '(("HANGUP" :background "yellow" :foreground "black")
+                                        ("DOING" :background "chartreuse" :foreground "black")
+                                        ("TODO" :background "cyan" :foreground "black"))
+                org-modern-priority nil)))
 
 ;; Paste with org-mode markup and link
 (use-package org-rich-yank
@@ -123,25 +124,26 @@
 
 (use-package org-super-agenda)
 
-(use-package org-appear
-  :preface
-  (defun org-apperance-evil-hack ()
-    (add-hook 'evil-insert-state-entry-hook #'org-appear-manual-start nil t)
-    (add-hook 'evil-insert-state-exit-hook #'org-appear-manual-stop nil t))
-  :after org
-  :diminish
-  :hook (org-mode . org-appear-mode)
-  :custom
-  (org-appear-autoentities t)
-  (org-appear-autokeywords t)
-  (org-appear-autolinks t)
-  (org-appear-autosubmarkers t)
-  (org-appear-inside-latex t)
-  (org-appear-manual-linger t)
-  (org-appear-delay 0.5)
-  :init
-  (setq org-appear-trigger 'manual)
-  (add-hook 'org-mode-hook 'org-apperance-evil-hack))
+(when emacs/>=29p
+  (use-package org-appear
+    :preface
+    (defun org-apperance-evil-hack ()
+      (add-hook 'evil-insert-state-entry-hook #'org-appear-manual-start nil t)
+      (add-hook 'evil-insert-state-exit-hook #'org-appear-manual-stop nil t))
+    :after org
+    :diminish
+    :hook (org-mode . org-appear-mode)
+    :custom
+    (org-appear-autoentities t)
+    (org-appear-autokeywords t)
+    (org-appear-autolinks t)
+    (org-appear-autosubmarkers t)
+    (org-appear-inside-latex t)
+    (org-appear-manual-linger t)
+    (org-appear-delay 0.5)
+    :init
+    (setq org-appear-trigger 'manual)
+    (add-hook 'org-mode-hook 'org-apperance-evil-hack)))
 
 ;; Babel
 (setq org-confirm-babel-evaluate nil

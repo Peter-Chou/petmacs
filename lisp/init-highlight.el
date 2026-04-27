@@ -276,9 +276,10 @@ FACE defaults to inheriting from default and highlight."
   :hook (emacs-startup . pulsar-global-mode))
 
 ;; Pulse modified region
-(use-package goggles
-  :diminish
-  :hook ((prog-mode text-mode conf-mode) . goggles-mode))
+(when emacs/>=29p
+  (use-package goggles
+    :diminish
+    :hook (prog-mode text-mode conf-mode)))
 
 (provide 'init-highlight)
 

@@ -8,11 +8,28 @@
 
 ;;; Code:
 
+;; PERF: Defer garbage collection further back in the startup process.
+;; `gcmh-mode' (in init-base.el) will restore this after startup.
+(if noninteractive  ; in CLI sessions
+    (setq gc-cons-threshold #x8000000   ; 128MB
+          ;; Backport from 29 (see emacs-mirror/emacs@73a384a98698)
+          gc-cons-percentage 1.0)
+  (setq gc-cons-threshold most-positive-fixnum))
+
+;; PERF: Many elisp file API calls consult `file-name-handler-alist'.
+;; Setting it to nil speeds up startup significantly.
+;; We restore it in init.el after startup.
+(defvar petmacs--file-name-handler-alist file-name-handler-alist)
+(setq file-name-handler-alist nil)
+
+;; PERF: Reduce file-name operations on `load-path'.
+;; No dynamic modules are loaded this early, so we skip .so/.dll search.
+;; Also skip .gz to avoid decompression checks.
+(setq load-suffixes '(".elc" ".el")
+      load-file-rep-suffixes '(""))
+
 (setq frame-resize-pixelwise t
       frame-inhibit-implied-resize t)
-
-;; Defer garbage collection further back in the startup process
-(setq gc-cons-threshold most-positive-fixnum)
 
 ;; Prefer loading newest compiled .el file
 (customize-set-variable 'load-prefer-newer noninteractive)

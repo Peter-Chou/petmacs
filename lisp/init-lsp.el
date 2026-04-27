@@ -186,8 +186,12 @@
                    :hostname "localhost"
                    :port 11111))))
 
-(use-package consult-eglot
-  :init (setq consult-eglot-show-kind-name t))
+(with-eval-after-load 'consult
+  (use-package consult-eglot
+    :after eglot
+    :bind (:map eglot-mode-map
+           ("C-M-." . consult-eglot-symbols))
+    :init (setq consult-eglot-show-kind-name t)))
 
 (use-package consult-eglot-embark
   :demand t

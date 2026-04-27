@@ -86,16 +86,19 @@
 ;; Shows icons in dired
 (use-package nerd-icons-dired
   :diminish
-  :functions (nerd-icons-icon-for-dir my-nerd-icons-icon-for-dir)
-  :hook (dired-mode . nerd-icons-dired-mode)
+  :functions (nerd-icons-icon-for-dir my/nerd-icons-icon-for-dir)
+  :hook dired-mode
   :init
   (defface nerd-icons-dired-dir-face
-    '((t (:inherit 'font-lock-doc-face)))
+    '((t nil))
     "Face for the directory icon."
     :group 'nerd-icons-faces)
-  (defun my-nerd-icons-icon-for-dir (dir)
-    (nerd-icons-icon-for-dir dir :face 'nerd-icons-dired-dir-face))
-  (setq nerd-icons-dired-dir-icon-function #'my-nerd-icons-icon-for-dir))
+  (defun my/nerd-icons-icon-for-dir (dir &rest args)
+    (apply #'nerd-icons-icon-for-dir
+           dir
+           :face 'nerd-icons-dired-dir-face
+           args))
+  (setq nerd-icons-dired-dir-icon-function #'my/nerd-icons-icon-for-dir))
 
 (use-package dired-x
   :ensure nil

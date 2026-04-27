@@ -94,6 +94,7 @@ pyim/
 eaf/
 etc/
 share/
+agent/
 env.el
 TODO.org
 forge-database.sqlite
