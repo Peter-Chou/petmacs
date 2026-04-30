@@ -31,22 +31,6 @@
 (when (executable-find "fd")
   (setq find-program "fd"))
 
-(use-package no-littering
-  :init
-  (setq no-littering-etc-directory (expand-file-name "config/" user-emacs-directory)
-        no-littering-var-directory (expand-file-name "data/" user-emacs-directory)
-	    custom-file (no-littering-expand-etc-file-name "custom.el")
-        auto-save-file-name-transforms
-        `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
-  ;; (require 'no-littering)
-
-  (with-eval-after-load 'recentf-mode
-    (add-to-list 'recentf-exclude no-littering-var-directory)
-    (add-to-list 'recentf-exclude no-littering-etc-directory)))
-
-(when (file-exists-p custom-file)
-  (load custom-file 'noerror))
-
 ;; alternative to undo-tree
 (use-package undo-fu)
 

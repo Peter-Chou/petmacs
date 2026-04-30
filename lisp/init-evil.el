@@ -11,6 +11,7 @@
   (require 'init-funcs))
 
 (use-package goto-chg)
+(use-package undo-fu)
 
 (use-package evil
   :preface
