@@ -99,9 +99,9 @@
           ;; ((cmake-mode cmake-ts-mode) . ("cmake-language-server"))
           ((cmake-mode cmake-ts-mode) . ("neocmakelsp" "--stdio"))
 
-          ((python-mode python-ts-mode) . ("basedpyright-langserver" "--watch" "--threads 12" "--stdio"))
+          ;; ((python-mode python-ts-mode) . ("basedpyright-langserver" "--watch" "--threads 12" "--stdio"))
           ;; ((python-mode python-ts-mode) . ("delance-langserver" "--stdio"))
-          ;; ((python-mode python-ts-mode) . ("ty" "server"))
+          ((python-mode python-ts-mode) . ("ty" "server"))
 
           ((java-mode java-ts-mode) . ("jdtls"))
 
