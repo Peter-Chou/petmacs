@@ -56,7 +56,8 @@
         leader-major-mode-key "\,"))
 
 (leader-set-keys
-  "'"   #'multi-vterm
+  ;; "'"   #'multi-vterm
+  "'"   #'eat
   "/"   #'consult-ripgrep
   "<SPC>" #'execute-extended-command
 
@@ -64,7 +65,7 @@
   "u"   #'universal-argument
   "."   #'embark-act
   ;; "d"   #'xref-pop-marker-stack
-  "TAB"  #'petmacs/alternate-buffer
+  "TAB" #'petmacs/alternate-buffer
   )
 
 
@@ -449,8 +450,8 @@
   "e" "error")
 (leader-with-prefix "e"
   (leader-set-keys
-    "l" #'consult-flymake
-    "L" #'flymake-show-buffer-diagnostics
+    "l" #'flymake-show-buffer-diagnostics
+    "L" #'consult-flymake
     "n" #'flymake-goto-next-error
     "p" #'flymake-goto-prev-error
     "a" #'flymake-show-project-diagnostics))
@@ -533,7 +534,9 @@
     "T" 'projectile-test-project
     "v" 'projectile-vc
 
-    "'"  #'multi-vterm-project
+    ;; "'"  #'multi-vterm-project
+    "'"  #'projectile-run-eshell
+
     "-"  #'projectile-dired
     "t"  #'petmacs/treemacs-project-toggle
     ;; "t" #'petmacs/toggle-treemacs-and-symbols-outline

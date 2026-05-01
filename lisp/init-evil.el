@@ -184,6 +184,8 @@
                                     corfu
                                     popup
 
+                                    eshell
+
                                     diff-hl
                                     diff-mode
                                     ediff
