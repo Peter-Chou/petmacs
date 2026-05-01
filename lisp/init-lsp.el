@@ -41,21 +41,9 @@
                                          "model_repositories" "typings"]
                                :useLibraryCodeForTypes t)))
 
-  (defun petmacs/delance-eglot-workspace-config (server)
-    '(:python.languageServer "Pylance"
-      :python.analysis (
-                        ;; :pythonVersion "3.11"
-                        :typeCheckingMode "off"
-                        :languageServerMode "full"
-                        :diagnosticMode "workspace"
-                        :pythonPlatform: "Linux"
-                        :autoSearchPaths t
-                        :extraPaths ["src"]
-                        :logLevel "Warning"
-                        :exclude ["data" "ckpts" "notebooks"
-                                  "resources" "model_repository"
-                                  "model_repositories" "typings"]
-                        :useLibraryCodeForTypes t)))
+  (defun petmacs/ty-eglot-workspace-config (server)
+    '(:ty (:diagnosticMode "workspace")))
+
   :hook (((c-mode c-ts-mode c++-mode c++-ts-mode) . (lambda ()
                                                       (petmacs/eglot-ensure "clangd")))
          ((bash-ts-mode sh-mode) . (lambda ()
@@ -99,9 +87,8 @@
           ;; ((cmake-mode cmake-ts-mode) . ("cmake-language-server"))
           ((cmake-mode cmake-ts-mode) . ("neocmakelsp" "--stdio"))
 
-          ;; ((python-mode python-ts-mode) . ("basedpyright-langserver" "--watch" "--threads 12" "--stdio"))
-          ;; ((python-mode python-ts-mode) . ("delance-langserver" "--stdio"))
           ((python-mode python-ts-mode) . ("ty" "server"))
+          ;; ((python-mode python-ts-mode) . ("basedpyright-langserver" "--watch" "--threads 12" "--stdio"))
 
           ((java-mode java-ts-mode) . ("jdtls"))
 
@@ -112,8 +99,8 @@
           ((markdown-ts-mode markdown-mode) . ("marksman" "server"))
           ((dockerfile-mode dockerfile-ts-mode) . ("docker-langserver" "--stdio"))))
   :config
-  (setq-default eglot-workspace-configuration #'petmacs/basedpyright-eglot-workspace-config)
-  ;; (setq-default eglot-workspace-configuration #'petmacs/delance-eglot-workspace-config)
+  ;; (setq-default eglot-workspace-configuration #'petmacs/basedpyright-eglot-workspace-config
+  (setq-default eglot-workspace-configuration #'petmacs/ty-eglot-workspace-config)
 
   (advice-add 'eglot-ensure :after 'petmacs/eglot-keybindgs))
 
