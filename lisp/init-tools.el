@@ -570,6 +570,7 @@ SCALE are supported."
   :init (setq numpydoc-template-short t))
 
 (use-package eldoc-box
+  :commands (eldoc-box-scroll-down eldoc-box-scroll-up)
   :custom
   (eldoc-box-lighter nil)
   (eldoc-box-only-multi-line t)
@@ -577,10 +578,11 @@ SCALE are supported."
   :custom-face
   (eldoc-box-border ((t (:inherit posframe-border :background unspecified))))
   (eldoc-box-body ((t (:inherit tooltip))))
-  :hook (eglot-managed-mode . (lambda ()
-                                (if (childframe-workable-p)
-                                    (eldoc-box-hover-mode 1)
-                                  (eldoc-box-hover-mode -1)))))
+  ;; :hook (eglot-managed-mode . (lambda ()
+  ;;                               (if (childframe-workable-p)
+  ;;                                   (eldoc-box-hover-mode 1)
+  ;;                                 (eldoc-box-hover-mode -1))))
+  )
 
 (use-package file-info
   :config
@@ -646,10 +648,6 @@ SCALE are supported."
 (use-package ace-pinyin
   :diminish
   :hook (after-init . ace-pinyin-global-mode))
-
-;; Better performance via tramp
-(use-package tramp-hlo
-  :hook (after-init . tramp-hlo-setup))
 
 (use-package kirigami
   :after evil

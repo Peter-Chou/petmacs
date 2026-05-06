@@ -57,7 +57,7 @@
 
 (leader-set-keys
   ;; "'"   #'multi-vterm
-  "'"   #'eat
+  "'"   #'eshell
   "/"   #'consult-ripgrep
   "<SPC>" #'execute-extended-command
 
