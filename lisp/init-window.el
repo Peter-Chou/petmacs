@@ -128,7 +128,6 @@
           "^\\*Process List\\*$" process-menu-mode
           cargo-process-mode
 
-          "^\\*.*eat.*\\*.*$" eat-mode
           "^\\*.*eshell.*\\*.*$" eshell-mode
           "^\\*.*shell.*\\*.*$" shell-mode
           "^\\*.*terminal.*\\*.*$" term-mode

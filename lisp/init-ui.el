@@ -210,7 +210,7 @@
 (use-package hide-mode-line
   :hook ((treemacs-mode
           eshell-mode shell-mode
-          term-mode vterm-mode eat-mode
+          term-mode vterm-mode
           symbols-outline-mode
           embark-collect-mode
           lsp-ui-imenu-mode

@@ -85,9 +85,8 @@
 
 ;; Better terminal emulator
 (unless sys/win32p
-  (use-package eat
-    :hook ((eshell-load . eat-eshell-mode)
-           (eshell-load . eat-eshell-visual-command-mode))))
+  (use-package ghostel
+    :hook (eshell-load . ghostel-eshell-visual-command-mode)))
 
 ;; Shell Pop
 (with-no-warnings
@@ -113,20 +112,21 @@
   (defun shell-pop--shell (&optional arg)
     "Run shell and return the buffer."
     (setq shell-pop--buffer
-          (cond ((fboundp 'eat) (eat arg))
-                ((fboundp 'vterm) (vterm arg))
+          (cond ((fboundp 'ghostel) (ghostel arg))
                 (sys/win32p (eshell arg))
                 (t (shell))))
     (when (and shell-pop--buffer
                (buffer-live-p shell-pop--buffer))
-      (shell-pop--reset-cursor-point)
+      (sleep-for 0.2)                   ; wait for shell-ready
       (setq shell-pop--window (get-buffer-window shell-pop--buffer))
       (add-hook 'kill-buffer-hook #'shell-pop--reset t)))
 
   (defun shell-pop--hide-window ()
     "Hide shell window."
     (when (and shell-pop--window
-               (window-live-p shell-pop--window))
+               (window-live-p shell-pop--window)
+               shell-pop--window
+               (get-buffer-window (buffer-name shell-pop--buffer) 'visible))
       (delete-window shell-pop--window)))
 
   (defun shell-pop--hide-frame ()
@@ -141,8 +141,8 @@
     "Toggle shell in a split window."
     (interactive)
     (shell-pop--hide-frame)
-    (if (and shell-pop--window
-             (window-live-p shell-pop--window))
+    (if (and shell-pop--buffer
+             (get-buffer-window (buffer-name shell-pop--buffer) 'visible))
         (shell-pop--hide-window)
       (shell-pop--shell)))
 
@@ -170,6 +170,10 @@
         (shell-pop--shell)
 
         (when (and shell-pop--buffer (buffer-live-p shell-pop--buffer))
+          ;; Bury `shell-pop--buffer'
+          (when (and shell-pop--window
+                     (get-buffer-window (buffer-name shell-pop--buffer) 'visible))
+            (switch-to-prev-buffer shell-pop--window))
           (shell-pop--hide-window)
 
           ;; Pop shell in child frame
