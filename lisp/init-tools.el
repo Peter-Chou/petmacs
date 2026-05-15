@@ -523,6 +523,9 @@ SCALE are supported."
   (setf (alist-get 'python-mode apheleia-mode-alist) '(isort ruff))
   (setf (alist-get 'python-ts-mode apheleia-mode-alist) '(isort ruff)))
 
+(use-package tomlparse
+  :commands tomlparse-file)
+
 (use-package yaml-mode
   :mode (("\\.ya?ml\\'" . yaml-mode)
          ("Procfile\\'" . yaml-mode)))
@@ -553,7 +556,7 @@ SCALE are supported."
   :hook (
          (flycheck-mode . sideline-mode)
          (flymake-mode . sideline-mode)
-         (eglot . sideline-mode)
+         (eglot-managed-mode . sideline-mode)
          ;; ((java-mode java-ts-mode) . (lambda ()
          ;;                               "disable sideline-eglot in java-mode / java-ts-mode"
          ;;                               (setq-local sideline-backends-right '((sideline-flymake . down)))))
@@ -563,7 +566,7 @@ SCALE are supported."
   ;; (setq sideline-display-backend-name t)
   (setq sideline-backends-right '(
                                   (sideline-eglot . up)
-                                  ;; (sideline-flymake . down)
+                                  (sideline-flymake . down)
                                   )))
 
 (use-package numpydoc

@@ -62,15 +62,15 @@
   :demand t
   :hook (python-base-mode . flymake-ruff-load))
 
-;; Display Flymake errors with overlays
-(use-package flyover
-  :diminish
-  :custom
-  (flyover-checkers '(flymake))
-  (flyover-background-lightness 60)
-  (flyover-icon-background-tint-percent 50)
-  (flyover-display-mode 'hide-on-same-line)
-  :hook flymake-mode)
+;; ;; Display Flymake errors with overlays
+;; (use-package flyover
+;;   :diminish
+;;   :custom
+;;   (flyover-checkers '(flymake))
+;;   (flyover-background-lightness 60)
+;;   (flyover-icon-background-tint-percent 50)
+;;   (flyover-display-mode 'hide-on-same-line)
+;;   :hook flymake-mode)
 
 (provide 'init-check)
 
