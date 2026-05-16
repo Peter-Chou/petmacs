@@ -82,6 +82,7 @@
   (use-package org-modern
     :after org
     :diminish
+    :if (display-graphic-p)
     :hook ((org-mode . org-modern-mode)
            (org-agenda-finalize . org-modern-agenda))
     :init (setq org-modern-star nil

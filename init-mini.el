@@ -14,24 +14,10 @@
 ;; Packages
 ;; Without this comment Emacs25 adds (package-initialize) here
 (setq package-archives '(
-                         ;; ("gnu"       . "https://elpa.gnu.org/packages/")
-                         ;; ("gnu-devel" . "https://elpa.gnu.org/devel/")
-                         ;; ("melpa"     . "https://melpa.org/packages/")
-                         ;; ("nongnu"    . "https://elpa.nongnu.org/nongnu/")
-                         ;; ("org"       . "https://orgmode.org/elpa/")
-
-                         ;;; emacs-china mirror
-                         ;; ("gnu"    . "http://1.15.88.122/gnu/")
-                         ;; ("melpa"  . "http://1.15.88.122/melpa/")
-                         ;; ("nongnu" . "http://1.15.88.122/nongnu/")
-                         ;; ("org"    . "http://1.15.88.122/org/")
-
-                         ;;; tsinghua mirror
-                         ("gnu"       . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-                         ("gnu-devel" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu-devel/")
-                         ("melpa"     . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-                         ("nongnu"    . "http://mirrors.tuna.tsinghua.edu.cn/elpa/nongnu/")
-                         ("org"       . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
+                         ("gnu"       . "https://elpa.gnu.org/packages/")
+                         ("gnu-devel" . "https://elpa.gnu.org/devel/")
+                         ("melpa"     . "https://melpa.org/packages/")
+                         ("nongnu"    . "https://elpa.nongnu.org/nongnu/")
                          ))
 
 ;; Explicitly set the prefered coding systems to avoid annoying prompt
@@ -151,20 +137,72 @@
 ;; Keybindings
 (global-set-key (kbd "<C-return>") #'rectangle-mark-mode)
 
-(defun revert-current-buffer ()
-  "Revert the current buffer."
-  (interactive)
-  (message "Revert this buffer")
-  (text-scale-set 0)
-  (widen)
-  (revert-buffer t t))
-(global-set-key (kbd "<f5>") #'revert-current-buffer)
 
-(add-hook 'emacs-lisp-mode-hook
-          (lambda ()
-            (local-set-key (kbd "C-c C-x") #'ielm)
-            (local-set-key (kbd "C-c C-c") #'eval-defun)
-            (local-set-key (kbd "C-c C-b") #'eval-buffer)))
+(use-package undo-fu)
+
+(use-package evil
+  :preface
+  (defun petmacs//evil-visual-shift-left ()
+    "evil left shift without losing selection"
+    (interactive)
+    (call-interactively 'evil-shift-left)
+    (evil-normal-state)
+    (evil-visual-restore))
+
+  (defun petmacs//evil-visual-shift-right ()
+    "evil right shift without losing selection"
+    (interactive)
+    (call-interactively 'evil-shift-right)
+    (evil-normal-state)
+    (evil-visual-restore))
+  :init
+  (setq evil-want-C-u-scroll t
+	    evil-want-integration t
+	    ;; `evil-want-C-i-jump' is set to nil to avoid `TAB' being
+	    ;; overlapped in terminal mode. The GUI specific `<C-i>' is used
+	    ;; instead.
+	    evil-want-C-i-jump nil
+	    evil-want-keybinding nil ;; use evil-collection instead
+	    evil-overriding-maps nil)
+  (evil-mode 1)
+  :config
+  (define-key evil-normal-state-map   (kbd "C-g") #'keyboard-quit)
+  (define-key evil-motion-state-map   (kbd "C-g") #'keyboard-quit)
+  (define-key evil-insert-state-map   (kbd "C-g") #'keyboard-quit)
+  (define-key evil-window-map         (kbd "C-g") #'keyboard-quit)
+  (define-key evil-operator-state-map (kbd "C-g") #'keyboard-quit)
+
+  ;; Use visual line motions even outside of visual-line-mode buffers
+  (evil-global-set-key 'motion "j" 'evil-next-visual-line)
+  (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+
+  (define-key evil-visual-state-map (kbd "y") 'petmacs/evil-yank)
+  (define-key evil-normal-state-map (kbd "Y") 'petmacs/yank-to-end-of-line)
+
+  (define-key evil-normal-state-map (kbd "g[") (lambda () (interactive) (beginning-of-defun)))
+  (define-key evil-normal-state-map (kbd "g]") (lambda () (interactive) (end-of-defun)))
+
+  (evil-set-undo-system 'undo-fu)
+
+  ;; treat _ as word like vim
+  (with-eval-after-load 'evil
+    (defalias #'forward-evil-word #'forward-evil-symbol))
+
+  (with-eval-after-load 'eldoc
+    (eldoc-add-command #'evil-cp-insert)
+    (eldoc-add-command #'evil-cp-insert-at-end-of-form)
+    (eldoc-add-command #'evil-cp-insert-at-beginning-of-form)
+    (eldoc-add-command #'evil-cp-append))
+
+  (when evil-want-C-u-scroll
+    (define-key evil-insert-state-map (kbd "C-u") 'evil-scroll-up)
+    (define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up)
+    (define-key evil-visual-state-map (kbd "C-u") 'evil-scroll-up)
+    (define-key evil-motion-state-map (kbd "C-u") 'evil-scroll-up))
+
+  ;; Overload shifts so that they don't lose the selection
+  (define-key evil-visual-state-map (kbd "<") 'petmacs//evil-visual-shift-left)
+  (define-key evil-visual-state-map (kbd ">") 'petmacs//evil-visual-shift-right))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Init-mini.el ends here
+;;; init-mini.el ends here

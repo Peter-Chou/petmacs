@@ -85,6 +85,7 @@
     (define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up)
     (define-key evil-visual-state-map (kbd "C-u") 'evil-scroll-up)
     (define-key evil-motion-state-map (kbd "C-u") 'evil-scroll-up))
+
   ;; Overload shifts so that they don't lose the selection
   (define-key evil-visual-state-map (kbd "<") 'petmacs//evil-visual-shift-left)
   (define-key evil-visual-state-map (kbd ">") 'petmacs//evil-visual-shift-right))
@@ -144,11 +145,13 @@
   (define-key evil-outer-text-objects-map "J"
     'evil-indent-plus-a-indent-up-down))
 
-(use-package evil-terminal-cursor-changer
-  ;; :if (not (display-graphic-p))
-  :init (setq evil-visual-state-cursor 'box
-              evil-insert-state-cursor 'bar
-              evil-emacs-state-cursor 'hbar))
+(unless (display-graphic-p)
+  (use-package evil-terminal-cursor-changer
+    :init (setq evil-motion-state-cursor 'box
+                evil-visual-state-cursor 'box
+                evil-normal-state-cursor 'box
+                evil-insert-state-cursor 'bar
+                evil-emacs-state-cursor 'hbar)))
 
 (use-package evil-matchit
   :hook (after-init . global-evil-matchit-mode))
