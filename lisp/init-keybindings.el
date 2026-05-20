@@ -644,6 +644,7 @@
     "bl" #'eglot-list-connections
     "bs" #'eglot-shutdown
     "bS" #'eglot-shutdown-all
+    "bi" #'eglot-inlay-hints-mode
 
     ;; help
     "hh" #'eldoc-doc-buffer
