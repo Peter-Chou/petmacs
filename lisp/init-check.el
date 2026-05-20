@@ -60,7 +60,7 @@
 
 (use-package flymake-ruff
   :demand t
-  :hook (python-base-mode . flymake-ruff-load))
+  :hook (eglot-managed-mode . flymake-ruff-load))
 
 ;; ;; Display Flymake errors with overlays
 ;; (use-package flyover
