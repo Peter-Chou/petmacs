@@ -82,9 +82,16 @@
   (use-package org-modern
     :after org
     :diminish
-    :if (display-graphic-p)
-    :hook ((org-mode . org-modern-mode)
-           (org-agenda-finalize . org-modern-agenda))
+    :autoload org-modern-mode org-modern-agenda
+    :hook ((org-mode . (lambda ()
+                         "Display org modern looks in GUI."
+                         (if (display-graphic-p)
+                             (org-modern-mode 1)
+                           (org-modern-mode -1))))
+           (org-agenda-finalize . (lambda ()
+                                    "Display org modern agenda in GUI."
+                                    (when (display-graphic-p)
+                                      (org-modern-agenda)))))
     :init (setq org-modern-star nil
                 org-modern-todo-faces '(("HANGUP" :background "yellow" :foreground "black")
                                         ("DOING" :background "chartreuse" :foreground "black")
