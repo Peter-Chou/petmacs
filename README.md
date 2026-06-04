@@ -244,13 +244,17 @@ sudo apt-get install cmake-format
 sudo apt-get install pgformatter
 ```
 
-### 5.8 dprint (dockerfile, toml)
+### 5.8 dprint (dockerfile)
 
 ``` bash
 npm install -g dprint
 ```
 
-### 5.9 xmllint (xml)
+### 5.9 taplo (toml)
+
+install [taplo](https://github.com/tamasfe/taplo/releases) and put it into your `PATH`
+
+### 5.10 xmllint (xml)
 
 ``` bash
 sudo apt-get install libxml2-utils
