@@ -47,20 +47,14 @@ sudo apt-get install snapd
 
 add `/snap/bin` to `PATH`
 
-### 1.7 libvterm (ubuntu)
-
-``` bash
-sudo apt-get install libvterm-dev
-```
-
-### 1.8 sqlite3 (ubuntu)
+### 1.7 sqlite3 (ubuntu)
 
 ``` bash
 # for magit
 sudo apt-get install libsqlite3-dev
 ```
 
-### 1.9 build tools
+### 1.8 build tools
 
 ``` bash
 # install build tools
@@ -70,25 +64,25 @@ sudo apt-get install cmake libtool-bin make
 
 if your cmake is too old, download the suitable version from [cmake.org](https://cmake.org/download/)
 
-### 1.10 ctags
+### 1.9 ctags
 
 ``` bash
 sudo apt-get install -y universal-ctags
 ```
 
-### 1.11 jq
+### 1.10 jq
 
 ``` bash
 sudo apt-get install -y jq
 ```
 
-### 1.12 readability
+### 1.11 readability
 
 ``` bash
 npm install -g readability-cli
 ```
 
-### 1.13 go-grip
+### 1.12 go-grip
 
 install [go-grip](https://github.com/chrishrb/go-grip/releases) and put it into your `PATH` for markdown preview.
 

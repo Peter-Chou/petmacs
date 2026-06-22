@@ -40,12 +40,6 @@
                          ("gnu-devel" . "https://elpa.gnu.org/devel/")
                          ("melpa"     . "https://melpa.org/packages/")
                          ("nongnu"    . "https://elpa.nongnu.org/nongnu/")
-
-                         ;;; emacs-china mirror
-                         ;; ("gnu"    . "http://1.15.88.122/gnu/")
-                         ;; ("nongnu" . "http://1.15.88.122/nongnu/")
-                         ;; ("melpa"  . "http://1.15.88.122/melpa/")
-                         ;; ("org"    . "http://1.15.88.122/org/")
                          ))
 
 (if (functionp 'json-serialize)

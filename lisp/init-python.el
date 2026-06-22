@@ -78,9 +78,21 @@
         (pyvenv-workon pyvenv-workon)
         (petmacs/set-pythonpath-project)
         (eglot-ensure))))
+
+  (defun petmacs/pyvenv-ty-venv-autoload ()
+    "autoload virtual environment if project_root/ty.toml file exists,"
+    (interactive)
+    (let* ((pdir (projectile-project-root))
+           (venv-dir (concat (projectile-project-root) ".venv")))
+      (when (file-directory-p venv-dir)
+        (pyvenv-activate venv-dir)
+        (petmacs/set-pythonpath-project)
+        (eglot-ensure))))
   :hook (
          ;; (python-base-mode . petmacs/pyvenv-pyright-autoload)
-         (python-base-mode . petmacs/pyvenv-ty-auto-autoload)
+         ;; (python-base-mode . petmacs/pyvenv-ty-auto-autoload)
+         ;; (python-base-mode . eglot-ensure)
+         (python-base-mode . petmacs/pyvenv-ty-venv-autoload)
          (pyvenv-mode . petmacs/remove-pyvenv-modeline-env-info))
   :config
   (pyvenv-mode 1)

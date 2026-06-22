@@ -24,6 +24,11 @@
 (setq fast-but-imprecise-scrolling t)
 (setq redisplay-skip-fontification-on-input t)
 
+;; Disable Bidirectional Text Scanning
+(setq-default bidi-display-reordering 'left-to-right
+              bidi-paragraph-direction 'left-to-right)
+(setq bidi-inhibit-bpa t)
+
 ;; Menu/Tool/Scroll bars
 (unless emacs/>=27p
   (push '(menu-bar-lines . 0) default-frame-alist)
@@ -77,6 +82,10 @@
 
 (use-package modus-themes
   :init (setq modus-themes-to-toggle '(modus-operandi-tinted modus-vivendi-tinted)))
+
+(use-package standard-themes
+  :init
+  (standard-themes-take-over-modus-themes-mode 1))
 
 (use-package doom-themes
   :functions doom-themes-visual-bell-config

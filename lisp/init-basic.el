@@ -12,6 +12,16 @@
   (require 'init-custom)
   (require 'init-funcs))
 
+(eval-and-compile ; Ensure values don't differ at compile time.
+  (setq no-littering-etc-directory
+        (expand-file-name "config/" user-emacs-directory))
+  (setq no-littering-var-directory
+        (expand-file-name "data/" user-emacs-directory)))
+(use-package no-littering
+  :commands (no-littering-expand-etc-file-name)
+  :config
+  (setq custom-file (no-littering-expand-etc-file-name "custom.el")))
+
 ;; Setup fill column indicator with stipple
 (when emacs/>=30p
   (setq-default display-fill-column-indicator-character ?\s)
