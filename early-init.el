@@ -39,8 +39,8 @@
                          ("gnu"       . "https://elpa.gnu.org/packages/")
                          ("gnu-devel" . "https://elpa.gnu.org/devel/")
                          ("melpa"     . "https://melpa.org/packages/")
-                         ("nongnu"    . "https://elpa.nongnu.org/nongnu/")
-                         ))
+                         ("melpa-stable" . "https://stable.melpa.org/packages/")
+                         ("nongnu"    . "https://elpa.nongnu.org/nongnu/")))
 
 (if (functionp 'json-serialize)
     (message "Native JSON is available")

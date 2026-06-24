@@ -114,11 +114,9 @@ M-x eglot-upgrade-eglot
 
 ## 3. Install LSP Servers
 
-### 3.1 basedpyright (Python)
+### 3.1 ty (Python)
 
-``` sh
-pip install basedpyright # install basedpyright in python environment
-```
+download [ty](https://github.com/astral-sh/ty/releases) and put it into your `PATH`.
 
 ### 3.2 eclipse jdtls (Java)
 

@@ -13,6 +13,7 @@
   (require 'init-funcs))
 
 (use-package orderless
+  :pin melpa-stable
   :demand t
   ;; ...otherwise find-file gets different highlighting than other commands
   ;; (set-face-attribute 'completions-first-difference nil :inherit nil)
@@ -74,6 +75,7 @@
   (add-to-list 'orderless-matching-styles 'completion--regex-pinyin))
 
 (use-package vertico
+  :pin melpa-stable
   :bind (:map vertico-map
          ("RET" . vertico-directory-enter)
          ("DEL" . vertico-directory-delete-char)
@@ -134,8 +136,8 @@
                 (right-fringe . 8))))
 
 (use-package consult
+  :pin melpa-stable
   :defines (xref-show-xrefs-function xref-show-definitions-function)
-  :defines shr-color-html-colors-alist
   :autoload (consult-register-format consult-register-window consult-xref)
   :autoload (consult--read consult--customize-put)
   :commands (consult-narrow-help)
@@ -203,12 +205,14 @@
   (advice-add #'multi-occur :override #'consult-multi-occur))
 
 (use-package consult-dir
+  :pin melpa-stable
   :bind (([remap list-directory] . consult-dir)))
 
 (use-package consult-yasnippet
   :after (consult yasnippet))
 
 (use-package embark
+  :pin melpa-stable
   :commands embark-prefix-help-command
   :bind
   (("C-." . embark-act)         ;; pick some comfortable binding
@@ -282,15 +286,18 @@ targets."
   (define-key embark-file-map (kbd "U") #'consult-snv-unlock))
 
 (use-package marginalia
+  :pin melpa-stable
   :hook (after-init . marginalia-mode))
 
 (use-package embark-consult
+  :pin melpa-stable
   :after (embark consult)
   :bind (:map minibuffer-mode-map
          ("C-c C-o" . embark-export))
   :hook (embark-collect-mode . consult-preview-at-point-mode))
 
 (use-package corfu
+  :pin melpa-stable
   :autoload (corfu-quit consult-completion-in-region)
   :functions (corfu-move-to-minibuffer)
   :custom-face
@@ -349,6 +356,7 @@ targets."
   (add-hook 'before-save-hook #'corfu-quit))
 
 (use-package nerd-icons-corfu
+  :pin melpa-stable
   :autoload nerd-icons-corfu-formatter
   :after corfu
   :init (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
@@ -367,6 +375,7 @@ targets."
 
 ;; Add extensions
 (use-package cape
+  :pin melpa-stable
   :commands (cape-file cape-elisp-block cape-keyword)
   :autoload (cape-wrap-noninterruptible cape-wrap-nonexclusive cape-wrap-buster)
   :autoload (cape-wrap-silent)
