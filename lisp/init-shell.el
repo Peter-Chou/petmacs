@@ -86,8 +86,11 @@
 ;; Better terminal emulator
 (unless sys/win32p
   (use-package ghostel
-    :hook ((eshell-load . ghostel-eshell-visual-command-mode)
-           (ghostel-mode . evil-ghostel-mode))))
+    :hook ((eshell-load . ghostel-eshell-visual-command-mode)))
+
+  (use-package evil-ghostel
+    :after (ghostel evil)
+    :hook (ghostel-mode . evil-ghostel-mode)))
 
 ;; Shell Pop
 (when emacs/>=29p

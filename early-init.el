@@ -19,14 +19,30 @@
 ;; PERF: Many elisp file API calls consult `file-name-handler-alist'.
 ;; Setting it to nil speeds up startup significantly.
 ;; We restore it in init.el after startup.
-(defvar petmacs--file-name-handler-alist file-name-handler-alist)
+(defvar default-file-name-handler-alist file-name-handler-alist)
 (setq file-name-handler-alist nil)
 
 ;; PERF: Reduce file-name operations on `load-path'.
 ;; No dynamic modules are loaded this early, so we skip .so/.dll search.
 ;; Also skip .gz to avoid decompression checks.
+(defvar default-load-suffixes load-suffixes)
+(defvar default-load-file-rep-suffixes load-file-rep-suffixes)
 (setq load-suffixes '(".elc" ".el")
       load-file-rep-suffixes '(""))
+
+(if (functionp 'json-serialize)
+    (message "Native JSON is available")
+  (message "Native JSON is *not* available"))
+
+(if (and (fboundp 'native-comp-available-p)
+	     (native-comp-available-p))
+    (progn
+      (message "Native compilation is available")
+      (setq package-native-compile t
+	        native-comp-async-report-warnings-errors nil
+            native-comp-deferred-compilation nil ;; obsolete since 29.1
+            native-comp-jit-compilation nil))
+  (message "Native complation is *not* available"))
 
 (setq frame-resize-pixelwise t
       frame-inhibit-implied-resize t)
@@ -41,21 +57,6 @@
                          ("melpa"     . "https://melpa.org/packages/")
                          ("melpa-stable" . "https://stable.melpa.org/packages/")
                          ("nongnu"    . "https://elpa.nongnu.org/nongnu/")))
-
-(if (functionp 'json-serialize)
-    (message "Native JSON is available")
-  (message "Native JSON is *not* available"))
-
-(if (and (fboundp 'native-comp-available-p)
-	     (native-comp-available-p))
-    (progn
-      (message "Native compilation is available")
-      (setq package-native-compile t
-	        native-comp-async-report-warnings-errors nil
-            ;; Make native compilation happens asynchronously
-            native-comp-deferred-compilation nil ;; obsolete since 29.1
-            native-comp-jit-compilation nil))
-  (message "Native complation is *not* available"))
 
 (setq byte-compile-warnings nil)
 
