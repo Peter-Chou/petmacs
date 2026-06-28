@@ -104,12 +104,12 @@ If using emacs-plus with path ejection, set to nil."
   :group 'petmacs
   :type 'boolean)
 
-(defcustom petmacs-proxy "winhost:1080"
+(defcustom petmacs-proxy "winhost:7890"
   "Set network proxy."
   :group 'petmacs
   :type 'string)
 
-(defcustom petmacs-socks-proxy "127.0.0.1:1080"
+(defcustom petmacs-socks-proxy "127.0.0.1:7890"
   "Set SOCKS proxy."
   :group 'petmacs
   :type 'string)
