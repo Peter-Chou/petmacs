@@ -10,25 +10,36 @@
 
 ;; PERF: Defer garbage collection further back in the startup process.
 ;; `gcmh-mode' (in init-base.el) will restore this after startup.
+(setq gc-cons-percentage 1.0)
 (if noninteractive  ; in CLI sessions
-    (setq gc-cons-threshold #x8000000   ; 128MB
-          ;; Backport from 29 (see emacs-mirror/emacs@73a384a98698)
-          gc-cons-percentage 1.0)
+    (setq gc-cons-threshold #x8000000)  ; 128MB
   (setq gc-cons-threshold most-positive-fixnum))
+
+;; Increase how much is read from processes in a single chunk (default is 4kb)
+(setq read-process-output-max #x10000)  ; 64kb
 
 ;; PERF: Many elisp file API calls consult `file-name-handler-alist'.
 ;; Setting it to nil speeds up startup significantly.
-;; We restore it in init.el after startup.
-(defvar default-file-name-handler-alist file-name-handler-alist)
-(setq file-name-handler-alist nil)
+;; Reduce file-name operations on `load-path'. No dynamic modules are
+;; loaded this early, so we skip .so/.dll search. Also skip .gz to
+;; avoid decompression checks.
+;; We restore them after startup.
+(let ((default-file-name-handler-alist file-name-handler-alist)
+      (default-load-suffixes load-suffixes)
+      (default-load-file-rep-suffixes load-file-rep-suffixes))
+  (setq file-name-handler-alist nil
+        load-suffixes '(".elc" ".el")
+        load-file-rep-suffixes '(""))
+  (add-hook 'emacs-startup-hook
+            (lambda ()
+              (setq load-suffixes default-load-suffixes
+                    load-file-rep-suffixes default-load-file-rep-suffixes
+                    file-name-handler-alist default-file-name-handler-alist))
+            101))
 
-;; PERF: Reduce file-name operations on `load-path'.
-;; No dynamic modules are loaded this early, so we skip .so/.dll search.
-;; Also skip .gz to avoid decompression checks.
-(defvar default-load-suffixes load-suffixes)
-(defvar default-load-file-rep-suffixes load-file-rep-suffixes)
-(setq load-suffixes '(".elc" ".el")
-      load-file-rep-suffixes '(""))
+;; PERF: introduced in Emacs 31 to speed up startup ~15%
+(when (boundp 'load-path-filter-function)
+  (setq load-path-filter-function #'load-path-filter-cache-directory-files))
 
 (if (functionp 'json-serialize)
     (message "Native JSON is available")

@@ -22,6 +22,14 @@
   :config
   (setq custom-file (no-littering-expand-etc-file-name "custom.el")))
 
+;; Garbage Collector Magic Hack
+(use-package gcmh
+  :diminish
+  :hook (emacs-startup . gcmh-mode)
+  :init (setq gcmh-idle-delay 'auto
+              gcmh-auto-idle-delay-factor 10
+              gcmh-high-cons-threshold #x4000000)) ; 64MB
+
 ;; Setup fill column indicator with stipple
 (when emacs/>=30p
   (setq-default display-fill-column-indicator-character ?\s)
