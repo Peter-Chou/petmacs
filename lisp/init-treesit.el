@@ -43,10 +43,12 @@
     :init
     (setq treesit-auto-langs '(
                                bash c cmake cpp go gomod  javascript typescript
-                               scala java python rust r vue make
+                               scala java python r vue make
                                json sql toml proto dockerfile yaml
                                bibtex css html org tsx lua))
     :config
+    ;; `rust-mode' will handle tree-sitter
+    (delete 'rust treesit-auto-langs)
     (treesit-auto-add-to-auto-mode-alist 'all)))
 
 (provide 'init-treesit)

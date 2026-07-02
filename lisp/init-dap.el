@@ -42,7 +42,7 @@
      ("Q" dape-quit "quit" :exit t))))
   :init
   (setq dape-cwd-fn 'projectile-project-root
-        dape-buffer-window-arrangment 'right)
+        dape-buffer-window-arrangement 'right)
   (require 'dape)
   :config
   (plist-put (alist-get 'debugpy dape-configs) 'command "python")

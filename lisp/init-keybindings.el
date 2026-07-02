@@ -629,7 +629,7 @@
     "b" "backend"
     ;; "p" "peek"
     ;; "pR" "peek reference"
-    ;; "T" "toggle module"
+    "t" "toggle module"
     "r" "refactor"
     "h" "help"
     ;; "F" "folders"
@@ -644,7 +644,9 @@
     "bl" #'eglot-list-connections
     "bs" #'eglot-shutdown
     "bS" #'eglot-shutdown-all
-    "bi" #'eglot-inlay-hints-mode
+
+    ;; toggle
+    "ti" #'eglot-inlay-hints-mode
 
     ;; help
     "hh" #'eldoc-doc-buffer

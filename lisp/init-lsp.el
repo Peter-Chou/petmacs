@@ -65,7 +65,6 @@
         eglot-ignored-server-capabilities '(:documentHighlightProvider
                                             :documentFormattingProvider
                                             :documentRangeFormattingProvider
-                                            ;; :inlayHintProvider
                                             :documentOnTypeFormattingProvider)
         eldoc-echo-area-use-multiline-p nil
         eglot-server-programs
