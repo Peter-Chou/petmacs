@@ -51,6 +51,7 @@ Avoid placing large files like EAF in `site-lisp` to prevent slow startup."
 ;; Preferences
 (require 'init-basic)
 (require 'init-font)
+(require 'init-hydra)
 
 (require 'init-evil)
 (require 'init-tools)
@@ -58,9 +59,10 @@ Avoid placing large files like EAF in `site-lisp` to prevent slow startup."
 (require 'init-ui)
 (require 'init-highlight)
 (require 'init-dashboard)
-(require 'init-ibuffer)
 (require 'init-window)
 (require 'init-dired)
+(require 'init-buffer)
+
 (require 'init-treemacs)
 ;; (require 'init-workspace)
 

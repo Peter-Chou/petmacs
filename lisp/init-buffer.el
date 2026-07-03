@@ -1,8 +1,8 @@
-;; init-buffer.el --- Initialize ibuffer configurations.	-*- lexical-binding: t -*-
+;; init-buffer.el --- Initialize buffer configurations.	-*- lexical-binding: t -*-
 
 ;;; Commentary:
 ;;
-;; IBuffer configurations.
+;; Buffer configurations.
 ;;
 
 ;;; Code:
@@ -102,7 +102,18 @@
              " ")
           "Project: ")))
 
-(provide 'init-ibuffer)
+(use-package bufferfile
+  :commands (bufferfile-copy
+             bufferfile-rename
+             bufferfile-delete)
+  :custom
+  ;; If non-nil, display messages during file renaming operations
+  (bufferfile-verbose nil)
+  :config
+  (with-eval-after-load 'dired
+    (define-key dired-mode-map (kbd "R") #'bufferfile-dired-do-rename)))
+
+(provide 'init-buffer)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; init-ibuffer.el ends here
+;;; init-buffer.el ends here

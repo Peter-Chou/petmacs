@@ -176,6 +176,32 @@
 (use-package hideshow
   :ensure nil
   :diminish hs-minor-mode
+  :pretty-hydra
+  ((:title (pretty-hydra-title "HideShow" 'octicon "nf-oct-fold")
+    :color amaranth :quit-key ("q" "C-g"))
+   ("Fold"
+    (("t" hs-toggle-all "toggle all")
+     ("a" hs-show-all "show all" :exit t)
+     ("i" hs-hide-all "hide all" :exit t)
+     ("g" hs-toggle-hiding "toggle hiding")
+     ("c" hs-cycle "cycle block")
+     ("s" hs-show-block "show block")
+     ("h" hs-hide-block "hide block")
+     ("l" hs-hide-level "hide level"))
+    "Move"
+    (("C-a" mwim-beginning-of-code-or-line "?")
+     ("C-e" mwim-end-of-code-or-line "?")
+     ("C-b" backward-char "←")
+     ("C-n" next-line "↓")
+     ("C-p" previous-line "↑")
+     ("C-f" forward-char "→")
+     ("C-v" pager-page-down "↘")
+     ("M-v" pager-page-up "↖")
+     ("M-<" beginning-of-buffer "?")
+     ("M->" end-of-buffer "?"))))
+  :bind (:map hs-minor-mode-map
+         ("C-~" . hideshow-hydra/body)
+         ("C-S-<escape>" . hideshow-hydra/body))
   :hook (prog-mode . hs-minor-mode)
   :config
   ;; More functions
@@ -219,13 +245,15 @@
                    (concat
                     " "
                     (propertize
-                     (if (char-displayable-p ?⏷) "⏷" "...")
-                     'face 'shadow)
-                    (propertize
-                     (format " (%d lines)"
+                     (format "%s(%d lines)..."
+                             (and (char-displayable-p ??) "? ")
                              (count-lines (overlay-start ov)
                                           (overlay-end ov)))
-                     'face '(:inherit shadow :height 0.8))
+                     'face '(:inherit shadow :height 0.8)
+                     'mouse-face 'highlight
+                     'local-map (let ((map (make-sparse-keymap)))
+                                  (define-key map [mouse-1] #'hs-show-block)
+                                  map))
                     " "))))
   (setq hs-set-up-overlay #'hs-display-code-line-counts))
 
@@ -236,64 +264,6 @@
 ;; Easily adjust the font size in all frames
 (use-package default-text-scale
   :hook (after-init . default-text-scale-mode))
-
-(use-package hydra
-  :defines (consult-imenu-config posframe-border-width)
-  :functions childframe-completion-workable-p
-  :hook ((emacs-lisp-mode . hydra-add-imenu)
-         ((after-init after-load-theme server-after-make-frame) . hydra-set-posframe))
-  :init
-  (with-eval-after-load 'consult-imenu
-    (setq consult-imenu-config
-          '((emacs-lisp-mode :toplevel "Functions"
-                             :types ((?f "Functions" font-lock-function-name-face)
-                                     (?h "Hydras"    font-lock-constant-face)
-                                     (?m "Macros"    font-lock-function-name-face)
-                                     (?p "Packages"  font-lock-constant-face)
-                                     (?t "Types"     font-lock-type-face)
-                                     (?v "Variables" font-lock-variable-name-face))))))
-
-  (defun hydra-set-posframe ()
-    "Set display type and appearance of hydra."
-    ;; Display type
-    (if (childframe-completion-workable-p)
-        (setq hydra-hint-display-type 'posframe)
-      (setq hydra-hint-display-type 'lv))
-    ;; Appearance
-    (setq hydra-posframe-show-params
-          `(:left-fringe 8
-            :right-fringe 8
-            :internal-border-width ,posframe-border-width
-            :internal-border-color ,(face-background 'posframe-border nil t)
-            :background-color ,(face-background 'tooltip nil t)
-            :foreground-color ,(face-foreground 'tooltip nil t)
-            :lines-truncate t
-            :poshandler posframe-poshandler-frame-center-near-bottom))))
-
-(use-package pretty-hydra
-  :demand t
-  :functions icons-displayable-p
-  :hook (emacs-lisp-mode . pretty-hydra-add-imenu)
-  :init
-  (defun pretty-hydra-add-imenu ()
-    "Have hydras in `imenu'."
-    (add-to-list 'imenu-generic-expression
-                 '("Hydras" "^.*(\\(pretty-hydra-define\\) \\([a-zA-Z-]+\\)" 2)))
-
-  (cl-defun pretty-hydra-title (title &optional icon-type icon-name
-                                      &key face height v-adjust)
-    "Add an icon in the hydra title."
-    (let ((face (or face `(:inherit highlight :reverse-video t)))
-          (height (or height 1.2))
-          (v-adjust (or v-adjust 0.0)))
-      (concat
-       (when (and (icons-displayable-p) icon-type icon-name)
-         (let ((f (intern (format "nerd-icons-%s" icon-type))))
-           (when (fboundp f)
-             (concat
-              (apply f (list icon-name :face face :height height :v-adjust v-adjust))
-              " "))))
-       (propertize title 'face face)))))
 
 (use-package pomodoro
   :init
