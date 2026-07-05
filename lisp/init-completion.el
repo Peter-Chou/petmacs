@@ -61,6 +61,7 @@
 
   ;; Enrich existing commands with completion annotations
   (use-package marginalia
+    :pin melpa-stable
     :hook (after-init . marginalia-mode))
 
   ;; Add icons to completion candidates
