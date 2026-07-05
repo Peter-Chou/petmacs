@@ -38,7 +38,7 @@
   :group 'petmacs
   :type 'boolean)
 
-(defcustom petmacs-completion-style 'minibuffer
+(defcustom petmacs-completion-style 'childframe
   "minibuffer / childframe"
   :group 'petmacs
   :type '(choice (const :tag "Minibuffer" minibuffer)
