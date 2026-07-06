@@ -36,19 +36,6 @@
       (apply fn args)))
   (advice-add 'elisp-flymake-byte-compile :around #'my-elisp-flymake-byte-compile))
 
-(use-package sideline-flymake
-  :custom-face
-  (sideline-flymake-error ((t (:height 0.85 :italic t))))
-  (sideline-flymake-warning ((t (:height 0.85 :italic t))))
-  (sideline-flymake-success ((t (:height 0.85 :italic t))))
-  :init (setq
-         sideline-flymake-show-backend-name nil
-         sideline-flymake-note-prefix (format "%s " (nerd-icons-octicon "nf-oct-info"))
-         sideline-flymake-warning-prefix (format "%s " (nerd-icons-codicon "nf-cod-warning"))
-         sideline-flymake-error-prefix (format "%s " (nerd-icons-codicon "nf-cod-error"))
-         ;; sideline-flymake-display-mode 'point
-         sideline-flymake-display-mode 'line))
-
 (defun petmacs/filter-eglot-basedpyright-diagnostics (diags)
   "Drop all basedpyright diagnose from langserver"
   (list (seq-remove (lambda (d)
@@ -66,6 +53,28 @@
     (when (derived-mode-p 'python-base-mode)
       (flymake-ruff-load)))
   :hook (eglot-managed-mode . petmacs/eglot-setup-flymake-ruff))
+
+;; Display Flymake errors with overlays
+(use-package flyover
+  :diminish
+  :custom
+  (flyover-checkers '(flymake))
+  (flyover-background-lightness 60)
+  (flyover-icon-background-tint-percent 50)
+  :hook flymake-mode)
+
+;; (use-package sideline-flymake
+;;   :custom-face
+;;   (sideline-flymake-error ((t (:height 0.85 :italic t))))
+;;   (sideline-flymake-warning ((t (:height 0.85 :italic t))))
+;;   (sideline-flymake-success ((t (:height 0.85 :italic t))))
+;;   :init (setq
+;;          sideline-flymake-show-backend-name nil
+;;          sideline-flymake-note-prefix (format "%s " (nerd-icons-octicon "nf-oct-info"))
+;;          sideline-flymake-warning-prefix (format "%s " (nerd-icons-codicon "nf-cod-warning"))
+;;          sideline-flymake-error-prefix (format "%s " (nerd-icons-codicon "nf-cod-error"))
+;;          ;; sideline-flymake-display-mode 'point
+;;          sideline-flymake-display-mode 'line))
 
 (provide 'init-check)
 

@@ -199,12 +199,12 @@
   (add-to-list 'completion-category-overrides
                '(eglot (orderless flex))))
 
-(use-package sideline-eglot
-  :pin melpa
-  :custom-face
-  (sideline-eglot-error ((t (:height 0.85 :italic t))))
-  (sideline-eglot-warning ((t (:height 0.85 :italic t))))
-  (sideline-eglot-success ((t (:height 0.85 :italic t)))))
+;; (use-package sideline-eglot
+;;   :pin melpa
+;;   :custom-face
+;;   (sideline-eglot-error ((t (:height 0.85 :italic t))))
+;;   (sideline-eglot-warning ((t (:height 0.85 :italic t))))
+;;   (sideline-eglot-success ((t (:height 0.85 :italic t)))))
 
 (cl-defmacro eglot-org-babel-enable (lang)
   "Support LANG in org source code block."

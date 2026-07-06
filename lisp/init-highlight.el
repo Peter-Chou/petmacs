@@ -13,9 +13,7 @@
 ;; Highlight the current line
 (use-package hl-line
   :ensure nil
-  :hook ((after-init . global-hl-line-mode)
-         ((dashboard-mode eshell-mode shell-mode term-mode vterm-mode) .
-          (lambda () (setq-local global-hl-line-mode nil)))))
+  :hook (after-init . global-hl-line-mode))
 
 ;; Highlight matching parens
 (use-package paren
@@ -131,6 +129,27 @@ FACE defaults to inheriting from default and highlight."
          ("M-p" . region-occurrences-highlighter-prev))
   :hook (after-init . global-region-occurrences-highlighter-mode))
 
+;; Display fill-column indicator
+(use-package display-fill-column-indicator
+  :ensure nil
+  :functions adjust-fill-column-indicator-stipple
+  ;; :hook (prog-mode . display-fill-column-indicator-mode)
+  :config
+  ;; Setup fill column indicator with stipple
+  (when (or (and sys/mac-x-p emacs/>=31p)
+            (and sys/linux-x-p sys/win32p emacs/>=30p))
+    (setq-default display-fill-column-indicator-character ?\s)
+    (defun adjust-fill-column-indicator-stipple ()
+      "Adjust the fill-column-indicator face with stipple using `set-face-attribute'."
+      (let* ((w (window-font-width))
+             (stipple `(,w 1 ,(apply #'unibyte-string
+                                     (append (make-list (1- (/ (+ w 7) 8)) ?\0)
+                                             '(1))))))
+        (set-face-attribute 'fill-column-indicator nil :stipple stipple)))
+    (add-hook 'emacs-startup-hook #'adjust-fill-column-indicator-stipple)
+    (add-hook 'text-scale-mode-hook #'adjust-fill-column-indicator-stipple)))
+
+
 (use-package indent-bars
   ;; :pin gnu
   :hook (((
@@ -178,53 +197,21 @@ FACE defaults to inheriting from default and highlight."
                                      (yaml block_mapping_pair comment)
                                      ))))
 
+(use-package colorful-mode
+  :diminish
+  :hook (after-init . global-colorful-mode)
+  :init (setq colorful-use-prefix t))
+
 ;; Highlight brackets according to their depth
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
-;; Colorize color names in buffers
-(if emacs/>=28p
-    (use-package colorful-mode
-      :diminish
-      :hook (after-init . global-colorful-mode)
-      :init (setq colorful-use-prefix t))
-
-  (use-package rainbow-mode
-    :diminish
-    :defines helpful-mode-map
-    :bind (:map help-mode-map
-           ("w" . rainbow-mode))
-    :hook ((mhtml-mode html-mode html-ts-mode php-mode latex-mode help-mode helpful-mode) . rainbow-mode)
-    :init (with-eval-after-load 'helpful
-            (bind-key "w" #'rainbow-mode helpful-mode-map))
-    :config
-    (with-no-warnings
-      ;; HACK: Use overlay instead of text properties to override `hl-line' faces.
-      ;; @see https://emacs.stackexchange.com/questions/36420
-      (defun my-rainbow-colorize-match (color &optional match)
-        (let* ((match (or match 0))
-               (ov (make-overlay (match-beginning match) (match-end match))))
-          (overlay-put ov 'ovrainbow t)
-          (overlay-put ov 'face `((:foreground ,(if (> 0.5 (rainbow-x-color-luminance color))
-                                                    "white" "black"))
-                                  (:background ,color)))))
-      (advice-add #'rainbow-colorize-match :override #'my-rainbow-colorize-match)
-
-      (defun my-rainbow-clear-overlays ()
-        "Clear all rainbow overlays."
-        (remove-overlays (point-min) (point-max) 'ovrainbow t))
-      (advice-add #'rainbow-turn-off :after #'my-rainbow-clear-overlays))))
-
 ;; Highlight TODO and similar keywords in comments and strings
 (use-package hl-todo
   :autoload hl-todo-flymake hl-todo-search-and-highlight
-  :functions rg-read-files rg-project
-  :bind (:map hl-todo-mode-map
-         ([C-f3]    . hl-todo-occur)
-         ("C-c t p" . hl-todo-previous)
-         ("C-c t n" . hl-todo-next)
-         ("C-c t o" . hl-todo-occur)
-         ("C-c t i" . hl-todo-insert))
+  :functions rg rg-read-files rg-project
+  :custom-face
+  (hl-todo ((t (:inherit default :height 0.9 :width condensed :weight bold :underline nil :inverse-video t))))
   :hook (after-init . global-hl-todo-mode)
   :init (setq hl-todo-color-background t
               hl-todo-include-modes '(prog-mode conf-mode)
@@ -234,20 +221,24 @@ FACE defaults to inheriting from default and highlight."
                                       yaml-ts-mode)
               hl-todo-keyword-faces '(("TODO" . ((t (:foreground "#ffffff" :background "#e45649" :weight bold))))
                                       ("FIXME" . ((t (:foreground "#ffffff" :background "#e45649" :weight bold))))
+                                      ("BUG" . ((t (:foreground "#ffffff" :background "#e45649" :weight bold))))
                                       ("ISSUE" . ((t (:foreground "#ffffff" :background "#e45649" :weight bold))))
                                       ("DEFECT" . ((t (:foreground "#ffffff" :background "#e45649" :weight bold))))
                                       ("TRICK" . ((t (:foreground "#ffffff" :background "#d0bf8f" :weight bold))))
                                       ("WORKAROUND" . ((t (:foreground "#ffffff" :background "#d0bf8f" :weight bold))))
                                       ("DEBUG" . ((t (:foreground "#ffffff" :background "#7cb8bb" :weight bold))))
                                       ("STUB" . ((t (:foreground "#ffffff" :background "#7cb8bb" :weight bold)))))
-              ;; hl-todo-require-punctuation t
+              hl-todo-require-punctuation t
               hl-todo-highlight-punctuation ":")
   :config
+  ;; Integrate into flymake
+  (with-eval-after-load 'flymake
+    (add-hook 'flymake-diagnostic-functions #'hl-todo-flymake))
+
+  ;; Integrate into magit
   (with-eval-after-load 'magit
-    (add-hook 'magit-log-wash-summary-hook
-              #'hl-todo-search-and-highlight t)
-    (add-hook 'magit-revision-wash-message-hook
-              #'hl-todo-search-and-highlight t))
+    (add-hook 'magit-log-wash-summary-hook #'hl-todo-search-and-highlight t)
+    (add-hook 'magit-revision-wash-message-hook #'hl-todo-search-and-highlight t))
 
   (defun hl-todo-rg (regexp &optional files dir)
     "Use `rg' to find all TODO or similar keywords."

@@ -15,7 +15,7 @@
 ;; Interact with ChatGPT or other LLMs
 (use-package gptel
   :diminish
-  :functions (gptel-make-openai gptel-make-deepseek gptel-make-anthropic)
+  :functions (gptel-make-openai gptel-make-deepseek)
   :bind (("C-<f12>"   . gptel)
          ("C-M-<f12>" . gptel-menu))
   :hook (gptel-mode . gptel-highlight-mode)
@@ -26,39 +26,24 @@
   (setq gptel-model 'gpt-4o
         gptel-backend
         (gptel-make-openai "Github Models"
-                           :host "models.inference.ai.azure.com"
-                           :endpoint "/chat/completions?api-version=2024-05-01-preview"
-                           :stream t
-                           :key 'gptel-api-key
-                           :models '(gpt-4o)))
+          :host "models.inference.ai.azure.com"
+          :endpoint "/chat/completions?api-version=2024-05-01-preview"
+          :stream t
+          :key 'gptel-api-key
+          :models '(gpt-4o)))
 
-  (gptel-make-openai "Nvidia"
-                     :host "integrate.api.nvidia.com"
-                     :endpoint "/v1/chat/completions"
-                     :stream t
-                     :key 'gptel-api-key
-                     :models '(z-ai/glm4.7 minimaxai/minimax-m2.1 deepseek-ai/deepseek-v3.1-terminus))
 
   (gptel-make-openai "ChatGLM"
-                     :host "open.bigmodel.cn"
-                     :endpoint "/api/paas/v4/chat/completions"
-                     :stream t
-                     :key 'gptel-api-key
-                     :models '(glm-4.7 glm-4.7-flash))
+    :host "open.bigmodel.cn"
+    :endpoint "/api/paas/v4/chat/completions"
+    :stream t
+    :key 'gptel-api-key
+    :models '(glm-4.7 glm-4.7-flash))
 
-  (gptel-make-openai "Moonshot"
-                     :host "api.moonshot.cn"
-                     :key 'gptel-api-key
-                     :stream t
-                     :models '(kimi-latest kimi-k2-0711-preview))
 
   (gptel-make-deepseek "DeepSeek"
-                       :stream t
-                       :key 'gptel-api-key)
-
-  (gptel-make-anthropic "Claude"
-                        :stream t
-                        :key 'gptel-api-key))
+    :stream t
+    :key 'gptel-api-key))
 
 ;; A native shell experience to interact with ACP agents
 (when emacs/>=29p
