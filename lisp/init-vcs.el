@@ -11,48 +11,14 @@
 ;;   :demand t)
 
 (use-package magit
-  ;; :hook (magit-mode . magit-wip-mode)
-  :hook (git-commit-setup . (lambda () (setq fill-column git-commit-summary-max-length)))
-  :init
-  (setq magit-diff-refine-hunk t
-        git-commit-major-mode 'git-commit-elisp-text-mode
-        magit-format-file-function #'magit-format-file-nerd-icons
-        magit-process-finish-apply-ansi-colors t
-        magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1)
-  :config
-  (when sys/win32p
-    (setenv "GIT_ASKPASS" "git-gui--askpass"))
-
-  ;; Exterminate Magit buffers
-  (with-no-warnings
-    (defun my-magit-kill-buffers (&rest _)
-      "Restore window configuration and kill all Magit buffers."
-      (interactive)
-      (magit-restore-window-configuration)
-      (let ((buffers (magit-mode-get-buffers)))
-        (when (eq major-mode 'magit-status-mode)
-          (mapc (lambda (buf)
-                  (with-current-buffer buf
-                    (if (and magit-this-process
-                             (eq (process-status magit-this-process) 'run))
-                        (bury-buffer buf)
-                      (kill-buffer buf))))
-                buffers))))
-    (setq magit-bury-buffer-function #'my-magit-kill-buffers))
-
-  ;; When 'C-c C-c' is pressed in the magit commit message buffer,
-  ;; delete the magit-diff buffer related to the current repo.
-  (defun kill-magit-diff-buffer-in-current-repo (&rest _)
-    "Delete the magit-diff buffer related to the current repo"
-    (let ((magit-diff-buffer-in-current-repo
-           (magit-mode-get-buffer 'magit-diff-mode)))
-      (kill-buffer magit-diff-buffer-in-current-repo)))
-
-  (add-hook 'git-commit-setup-hook
-            (lambda ()
-              (add-hook 'with-editor-post-finish-hook
-  			            #'kill-magit-diff-buffer-in-current-repo
-  			            nil t))) ; the t is important
+  :custom
+  (magit-diff-refine-hunk t)
+  (git-commit-major-mode 'git-commit-elisp-text-mode)
+  :config (when sys/win32p
+            (setenv "GIT_ASKPASS" "git-gui--askpass")
+            ;; Perf: improve performance on Windows
+            (setq magit-commit-show-diff nil
+                  magit-diff-refine-hunk nil))
 
   ;; ;; kill magit status buffer when quitting magit status
   (define-key magit-mode-map (kbd "q") (lambda()
