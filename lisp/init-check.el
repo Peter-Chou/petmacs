@@ -45,36 +45,49 @@
                     (car diags))))
 ;; (advice-add 'eglot--report-to-flymake :filter-args #'petmacs/filter-eglot-basedpyright-diagnostics)
 
-(use-package flymake-ruff
-  :demand t
-  :preface
-  (defun petmacs/eglot-setup-flymake-ruff ()
-    (interactive)
-    (when (derived-mode-p 'python-base-mode)
-      (flymake-ruff-load)))
-  :hook (eglot-managed-mode . petmacs/eglot-setup-flymake-ruff))
+;; (use-package flymake-ruff
+;;   :demand t
+;;   :preface
+;;   (defun petmacs/eglot-setup-flymake-ruff ()
+;;     (interactive)
+;;     (when (derived-mode-p 'python-base-mode)
+;;       (flymake-ruff-load)))
+;;   :hook (eglot-managed-mode . petmacs/eglot-setup-flymake-ruff)
+;;   :config
+;;   (with-eval-after-load 'flymake
+;;     (define-key flymake-diagnostics-buffer-mode-map
+;;       (kbd "M-RET") #'flymake-ruff-goto-doc)
+;;     (define-key flymake-project-diagnostics-mode-map
+;;       (kbd "M-RET") #'flymake-ruff-goto-doc)))
 
 ;; Display Flymake errors with overlays
 (use-package flyover
   :diminish
   :custom
   (flyover-checkers '(flymake))
+  (flyover-use-theme-colors t)
   (flyover-background-lightness 60)
+  (flyover-levels '(error warning))
   (flyover-icon-background-tint-percent 50)
+  (flyover-display-mode 'hide-on-same-line)
+  (lyover-info-icon (format "%s " (nerd-icons-octicon "nf-oct-info")))
+  (flyover-warning-icon (format "%s " (nerd-icons-codicon "nf-cod-warning")))
+  (flyover-error-icon (format "%s " (nerd-icons-codicon "nf-cod-error")))
   :hook flymake-mode)
 
 ;; (use-package sideline-flymake
-;;   :custom-face
-;;   (sideline-flymake-error ((t (:height 0.85 :italic t))))
-;;   (sideline-flymake-warning ((t (:height 0.85 :italic t))))
-;;   (sideline-flymake-success ((t (:height 0.85 :italic t))))
+;;   ;;   :custom-face
+;;   ;;   (sideline-flymake-error ((t (:height 0.85 :italic t))))
+;;   ;;   (sideline-flymake-warning ((t (:height 0.85 :italic t))))
+;;   ;;   (sideline-flymake-success ((t (:height 0.85 :italic t))))
 ;;   :init (setq
 ;;          sideline-flymake-show-backend-name nil
-;;          sideline-flymake-note-prefix (format "%s " (nerd-icons-octicon "nf-oct-info"))
-;;          sideline-flymake-warning-prefix (format "%s " (nerd-icons-codicon "nf-cod-warning"))
-;;          sideline-flymake-error-prefix (format "%s " (nerd-icons-codicon "nf-cod-error"))
-;;          ;; sideline-flymake-display-mode 'point
-;;          sideline-flymake-display-mode 'line))
+;;          ;;          sideline-flymake-note-prefix (format "%s " (nerd-icons-octicon "nf-oct-info"))
+;;          ;;          sideline-flymake-warning-prefix (format "%s " (nerd-icons-codicon "nf-cod-warning"))
+;;          ;;          sideline-flymake-error-prefix (format "%s " (nerd-icons-codicon "nf-cod-error"))
+;;          sideline-flymake-display-mode 'point
+;;          ;; sideline-flymake-display-mode 'line
+;;          ))
 
 (provide 'init-check)
 

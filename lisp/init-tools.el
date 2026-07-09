@@ -524,20 +524,20 @@ SCALE are supported."
 ;; ;; please update sideline version >=20240627
 ;; (use-package sideline
 ;;   :hook (
-;;          (flycheck-mode . sideline-mode)
 ;;          (flymake-mode . sideline-mode)
-;;          (eglot-managed-mode . sideline-mode)
-;;          ;; ((java-mode java-ts-mode) . (lambda ()
-;;          ;;                               "disable sideline-eglot in java-mode / java-ts-mode"
-;;          ;;                               (setq-local sideline-backends-right '((sideline-flymake . down)))))
-;;          )
-;;   :init
-;;   (require 'sideline)
-;;   ;; (setq sideline-display-backend-name t)
-;;   (setq sideline-backends-right '(
-;;                                   (sideline-eglot . up)
-;;                                   (sideline-flymake . down)
-;;                                   )))
+;;        (eglot-managed-mode . sideline-mode)
+;;        ;; ((java-mode java-ts-mode) . (lambda ()
+;;        ;;                               "disable sideline-eglot in java-mode / java-ts-mode"
+;;        ;;                               (setq-local sideline-backends-right '((sideline-flymake . down)))))
+;; )
+;; :init
+;; (require 'sideline)
+;; ;; (setq sideline-display-backend-name t)
+;; (setq sideline-backends-right '(
+;;                                 (sideline-eglot . up)
+;;                                 (sideline-flymake . down)
+;;                                 ))
+;; )
 
 (use-package numpydoc
   :init (setq numpydoc-template-short t))

@@ -108,6 +108,8 @@
   ;; (setq-default eglot-workspace-configuration #'petmacs/basedpyright-eglot-workspace-config
   (setq-default eglot-workspace-configuration #'petmacs/ty-eglot-workspace-config)
 
+  (add-hook 'eglot-managed-mode-hook (lambda () (eglot-inlay-hints-mode -1)))
+
   (advice-add 'eglot-ensure :after 'petmacs/eglot-keybindgs))
 
 (use-package eglot-java
