@@ -86,7 +86,30 @@
 ;; Better terminal emulator
 (unless sys/win32p
   (use-package ghostel
-    :hook ((eshell-load . ghostel-eshell-visual-command-mode)))
+    :hook ((eshell-load . ghostel-eshell-visual-command-mode))
+    :bind (:map ghostel-semi-char-mode-map
+           ("C-s"  . consult-line)
+           ("C-k"  . my/ghostel-send-C-k-and-kill)
+           ("M-p" . (lambda () (interactive) (ghostel-send-key "p" "ctrl")))
+           ("M-n" . (lambda () (interactive) (ghostel-send-key "n" "ctrl")))
+           :map project-prefix-map
+           ("m" . ghostel-project)
+           ("M" . ghostel-project-list-buffers))
+    :init (when sys/win32p
+            (setq ghostel-shell (or (executable-find "pwsh")
+                                    (getenv "SHELL"))
+                  ghostel-term "xterm-256color"))
+    :config
+    (defun my/ghostel-send-C-k-and-kill ()
+      "Send `C-k' to ghostel.
+Like normal Emacs `C-k'.  Kill to end of line and put content in kill-ring."
+      (interactive)
+      (kill-ring-save (point) (line-end-position))
+      (ghostel-send-key "k" "ctrl"))
+
+    (add-to-list 'project-switch-commands '(ghostel-project "Ghostel") t)
+    (add-to-list 'project-switch-commands '(ghostel-project-list-buffers "Ghostel buffers") t)
+    (add-to-list 'ghostel-eval-cmds '("magit-status-setup-buffer" magit-status-setup-buffer)))
 
   (use-package evil-ghostel
     :after (ghostel evil)
