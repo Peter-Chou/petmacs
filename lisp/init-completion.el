@@ -147,8 +147,8 @@
     (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help))
 
   (use-package consult-dir)
-  (use-package consult-flyspell)
   (use-package consult-yasnippet)
+  ;; (use-package consult-flyspell)
 
   (use-package embark
     :commands embark-prefix-help-command

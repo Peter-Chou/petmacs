@@ -360,14 +360,16 @@ Native tree-sitter is introduced since 29."
     (error
      (make-frame-invisible nil 1))))
 
-(defun file-too-long-p ()
-  "Check whether the file is too long.
+(defun file-too-big-p ()
+  "Check whether the file is too big.
 
-Returns non-nil if the buffer size exceeds 500,000 bytes or has more than 10,000
-lines."
-  (or (> (buffer-size) 500000)
+Returns non-nil if the buffer size exceeds 999,999 bytes or has more than 10,000
+lines, or more than 2,000 bytes in one line."
+  (or (> (buffer-size) 999999)
       (and (fboundp 'buffer-line-statistics)
-           (> (car (buffer-line-statistics)) 10000))))
+           (let ((statics (buffer-line-statistics)))
+             (or (> (car statics) 10000)
+                 (> (cadr statics) 2000))))))
 
 (defun childframe-workable-p ()
   "Whether childframe is workable."
