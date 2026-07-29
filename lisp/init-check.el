@@ -24,6 +24,7 @@
   :init
   (setq flymake-fringe-indicator-position 'right-fringe
         flymake-margin-indicator-position 'right-margin
+        flymake-show-diagnostics-at-end-of-line 'short
         ;; flymake-no-changes-timeout nil
         ;; flymake-start-on-save-buffer t
         )
@@ -60,20 +61,20 @@
 ;;     (define-key flymake-project-diagnostics-mode-map
 ;;       (kbd "M-RET") #'flymake-ruff-goto-doc)))
 
-;; Display Flymake errors with overlays
-(use-package flyover
-  :diminish
-  :custom
-  (flyover-checkers '(flymake))
-  (flyover-use-theme-colors t)
-  (flyover-background-lightness 60)
-  (flyover-levels '(error warning))
-  (flyover-icon-background-tint-percent 50)
-  (flyover-display-mode 'hide-on-same-line)
-  (lyover-info-icon (format "%s " (nerd-icons-octicon "nf-oct-info")))
-  (flyover-warning-icon (format "%s " (nerd-icons-codicon "nf-cod-warning")))
-  (flyover-error-icon (format "%s " (nerd-icons-codicon "nf-cod-error")))
-  :hook flymake-mode)
+;; ;; Display Flymake errors with overlays
+;; (use-package flyover
+;;   :diminish
+;;   :custom
+;;   (flyover-checkers '(flymake))
+;;   (flyover-use-theme-colors t)
+;;   (flyover-background-lightness 60)
+;;   (flyover-levels '(error warning))
+;;   (flyover-icon-background-tint-percent 50)
+;;   (flyover-display-mode 'hide-on-same-line)
+;;   (lyover-info-icon (format "%s " (nerd-icons-octicon "nf-oct-info")))
+;;   (flyover-warning-icon (format "%s " (nerd-icons-codicon "nf-cod-warning")))
+;;   (flyover-error-icon (format "%s " (nerd-icons-codicon "nf-cod-error")))
+;;   :hook flymake-mode)
 
 ;; (use-package sideline-flymake
 ;;   ;;   :custom-face
