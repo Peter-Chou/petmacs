@@ -4,6 +4,7 @@
 /.emacs.desktop
 /.emacs.desktop.lock
 *.elc
+*.eld
 auto-save-list
 tramp
 .\#*
