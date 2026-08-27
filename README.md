@@ -104,10 +104,10 @@ run the following command in emacs.
 M-x treesit-auto-install-all
 ```
 
-### 2.3 download ghostel module
+### 2.3 install ghostel
 
 ``` emacs-lisp
-M-x ghostel-download-module
+M-x ghostel-module-auto-install
 ```
 
 ### 2.4 update builtin eglot to latest version
