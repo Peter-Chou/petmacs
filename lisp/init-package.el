@@ -29,12 +29,26 @@
     (setq package-selected-packages (sort value #'string<)))
   (unless after-init-time
     (add-hook 'after-init-hook #'my/package--save-selected-packages)))
-(advice-add 'package--save-selected-packages :override #'my/package--save-selected-packages)
+(advice-add #'package--save-selected-packages :override #'my/package--save-selected-packages)
 
 ;; Initialize packages
 (unless (bound-and-true-p package--initialized) ; To avoid warnings in 27
   (setq package-enable-at-startup nil)          ; To prevent initializing twice
   (package-initialize))
+
+;; FIXME: in 31+, :custom-face is incompatible with `doom-themes'
+;; @see https://github.com/doomemacs/themes/issues/893
+(defun my/use-package-handler/:custom-face (name _keyword args rest state)
+  "Generate use-package custom-face keyword code."
+  (use-package-concat
+   (mapcar #'(lambda (def)
+               `(progn
+                  (apply #'face-spec-set (append (backquote ,def)))
+                  (put ',(car def) 'face-modified t)))
+           args)
+   (use-package-process-keywords name rest state)))
+(advice-add #'use-package-handler/:custom-face
+            :override #'my/use-package-handler/:custom-face)
 
 ;; Prettify package list
 (set-face-attribute 'package-status-available nil :inherit 'font-lock-string-face)

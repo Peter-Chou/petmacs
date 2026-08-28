@@ -113,7 +113,8 @@ Same as '`replace-string' `C-q' `C-m' `RET' `RET''."
   (interactive)
   (clipboard-kill-ring-save (point-min) (point-max)))
 
-(defun petmacs/delete-this-file ()
+;; File and buffer
+(defun delete-this-file ()
   "Delete the current file, and kill the buffer."
   (interactive)
   (unless (buffer-file-name)
@@ -121,7 +122,7 @@ Same as '`replace-string' `C-q' `C-m' `RET' `RET''."
   (when (yes-or-no-p (format "Really delete '%s'?"
                              (file-name-nondirectory buffer-file-name)))
     (delete-file (buffer-file-name))
-    (kill-this-buffer)))
+    (kill-current-buffer)))
 
 ;; Reload configurations
 (defun petmacs/reload-init-file ()

@@ -12,7 +12,6 @@
   (require 'init-funcs))
 
 (use-package flymake
-  :diminish
   :functions my-elisp-flymake-byte-compile
   :hook ((prog-mode . flymake-mode)
          (restclient-test-mode . flymake-mode))

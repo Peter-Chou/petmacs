@@ -86,19 +86,20 @@
 ;; Better terminal emulator
 (unless sys/win32p
   (use-package ghostel
+    :functions ghostel-send-key
+    :custom
+    (ghostel-module-directory (expand-file-name ".cache" user-emacs-directory))
+    (ghostel-shell (or (executable-find "pwsh") (getenv "SHELL") "/bin/sh"))
+    (ghostel-term (if sys/win32p "xterm-256color" "xterm-ghostty"))
     :hook ((eshell-load . ghostel-eshell-visual-command-mode))
     :bind (:map ghostel-semi-char-mode-map
-           ("C-s"  . consult-line)
-           ("C-k"  . my/ghostel-send-C-k-and-kill)
+           ("C-s" . consult-line)
+           ("C-k" . my/ghostel-send-C-k-and-kill)
            ("M-p" . (lambda () (interactive) (ghostel-send-key "p" "ctrl")))
            ("M-n" . (lambda () (interactive) (ghostel-send-key "n" "ctrl")))
            :map project-prefix-map
            ("m" . ghostel-project)
            ("M" . ghostel-project-list-buffers))
-    :init (when sys/win32p
-            (setq ghostel-shell (or (executable-find "pwsh")
-                                    (getenv "SHELL"))
-                  ghostel-term "xterm-256color"))
     :config
     (defun my/ghostel-send-C-k-and-kill ()
       "Send `C-k' to ghostel.

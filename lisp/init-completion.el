@@ -70,12 +70,9 @@
 
   ;; Consulting completing-read
   (use-package consult
-    :defines (xref-show-xrefs-function xref-show-definitions-function)
-    :defines shr-color-html-colors-alist
+    :defines (xref-show-xrefs-function xref-show-definitions-function shr-color-html-colors-alist)
     :autoload (consult-register-format consult-register-window consult-xref)
     :autoload (consult--read consult--customize-put consult--grep)
-    :commands (consult-narrow-help)
-    :functions (list-colors-duplicates consult-colors--web-list my/consult--read)
     :bind (([remap Info-search]        . consult-info)
            ([remap isearch-forward]    . consult-line)
            ([remap recentf-open-files] . consult-recent-file)
@@ -113,19 +110,36 @@
     ;; Optionally configure preview. The default value
     ;; is 'any, such that any key triggers the preview.
     ;; (setq consult-preview-key 'any)
+    ;; (setq consult-preview-key "M-.")
     ;; (setq consult-preview-key '("S-<down>" "S-<up>"))
     (setq consult-preview-key nil)
+
     ;; For some commands and buffer sources it is useful to configure the
     ;; :preview-key on a per-command basis using the `consult-customize' macro.
     (consult-customize
      consult-goto-line :preview-key 'any
-     consult-buffer consult-recent-file :preview-key '("M-.")
      consult-theme :preview-key '("M-." :debounce 0.5 "<up>" "<down>")
+
+     consult-buffer consult-recent-file
+     consult-source-recent-file consult-source-project-recent-file
+     :preview-key '("M-.")
+
+     consult-man consult-bookmark consult-xref
+     consult-source-bookmark consult-source-file-register
+     :preview-key '(:debounce 0.4 any)
+
      consult-line consult-line-multi
      consult-ripgrep consult-git-grep consult-grep
      :initial (selected-region-or-symbol-at-point)
      :preview-key 'any)
 
+    ;; Optionally configure the narrowing key.
+    ;; Both < and C-+ work reasonably well.
+    (setq consult-narrow-key "<"  ;; "C-+"
+          consult-project-function (lambda (_) (projectile-project-root)))
+
+    ;; Select initial texts
+    ;; It's useful in `consult-grep' and similar commands
     (defun my/consult--read (fn &rest args)
       "Select initial texts in `consult--read'."
       (minibuffer-with-setup-hook
@@ -136,15 +150,46 @@
         (apply fn args)))
     (advice-add #'consult--read :around #'my/consult--read)
 
-    ;; Optionally configure the narrowing key.
-    ;; Both < and C-+ work reasonably well.
-    (setq consult-narrow-key "<"
-          consult-project-function (lambda (_) (projectile-project-root))
-          ) ;; "C-+"
+    ;;
+    ;; More utilities: list colors
+    ;;
+    (defvar consult-colors-history nil
+      "History for `consult-colors-emacs' and `consult-colors-web'.")
 
-    ;; Optionally make narrowing help available in the minibuffer.
-    ;; You may want to use `embark-prefix-help-command' or which-key instead.
-    (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help))
+    ;; No longer preloaded in Emacs 28.
+    (autoload 'list-colors-duplicates "facemenu")
+
+    (defun consult-colors-emacs (color)
+      "Show a list of all supported colors for a particular frame.
+
+You can insert the name (default), or insert or kill the hexadecimal or RGB
+value of the selected COLOR."
+      (interactive
+       (list (consult--read (list-colors-duplicates (defined-colors))
+                            :prompt "Emacs color: "
+                            :require-match t
+                            :category 'color
+                            :history '(:input consult-colors-history))))
+      (insert color))
+
+    ;; Adapted from counsel.el to get web colors.
+    (defun consult-colors--web-list nil
+      "Return list of CSS colors for `counsult-colors-web'."
+      (require 'shr-color)
+      (sort (mapcar #'downcase (mapcar #'car shr-color-html-colors-alist)) #'string-lessp))
+
+    (defun consult-colors-web (color)
+      "Show a list of all CSS colors.\
+
+You can insert the name (default), or insert or kill the hexadecimal or RGB
+value of the selected COLOR."
+      (interactive
+       (list (consult--read (consult-colors--web-list)
+                            :prompt "Color: "
+                            :require-match t
+                            :category 'color
+                            :history '(:input consult-colors-history))))
+      (insert color)))
 
   (use-package consult-dir)
   (use-package consult-yasnippet)

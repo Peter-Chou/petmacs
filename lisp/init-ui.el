@@ -90,12 +90,14 @@
   (standard-themes-take-over-modus-themes-mode 1))
 
 (use-package doom-themes
-  :functions doom-themes-visual-bell-config
+  :functions (doom-themes-org-config
+              doom-themes-visual-bell-config
+              refresh-ns-appearance)
   :custom
   (doom-themes-enable-bold t)
   (doom-themes-enable-italic t)
   :config
-  ;; Enable flashing mode-line on errors
+  (doom-themes-org-config)
   (doom-themes-visual-bell-config))
 
 (use-package display-time
@@ -218,14 +220,19 @@
 ;;   (unless petmacs-disable-modeline
 ;;     (add-hook 'which-function-mode-hook #'petmacs/remove-which-function-info)))
 
-(use-package hide-mode-line
-  :hook ((treemacs-mode
-          eshell-mode shell-mode
-          term-mode vterm-mode
-          symbols-outline-mode
-          embark-collect-mode
-          lsp-ui-imenu-mode
-          pdf-annot-list-mode) . turn-on-hide-mode-line-mode))
+;; Hide mode-line in some modes
+(if (fboundp 'mode-line-invisible-mode)
+    ;; Built into Emacs 31+
+    (use-package mode-line-invisible
+      :ensure nil
+      :hook ((eshell-mode
+              ghostel-mode shell-mode term-mode
+              embark-collect-mode pdf-annot-list-mode)))
+  ;; Fall back to the hide-mode-line package
+  (use-package hide-mode-line
+    :hook ((eshell-mode
+            ghostel-mode shell-mode term-mode
+            embark-collect-mode pdf-annot-list-mode))))
 
 ;; Show native line numbers if possible, otherwise use `linum'
 (if (fboundp 'display-line-numbers-mode)
@@ -305,6 +312,13 @@
       ;; mouse
       mouse-wheel-scroll-amount-horizontal 1
       mouse-wheel-progressive-speed nil)
+
+;; Smooth Scroll
+(when emacs/>=29p
+  (use-package ultra-scroll
+    :init (setq scroll-conservatively 3
+                scroll-margin 0)
+    :hook window-setup))
 
 ;; Use fixed pitch where it's sensible
 (use-package mixed-pitch :diminish)

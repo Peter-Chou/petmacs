@@ -47,7 +47,7 @@
 (use-package which-key
   :diminish
   :functions childframe-completion-workable-p
-  :hook (after-init . which-key-mode)
+  :hook ((after-init server-after-make-frame) . which-key-mode)
   :init
   (setq which-key-idle-delay 0.2
         which-key-add-column-padding 1
@@ -543,7 +543,6 @@ SCALE are supported."
 ;; ;; On-the-fly spell checker
 ;; (use-package flyspell
 ;;   :ensure nil
-;;   :diminish
 ;;   :functions file-too-big-p
 ;;   :if (executable-find "aspell")
 ;;   :bind (:map flyspell-mode-map
@@ -563,20 +562,31 @@ SCALE are supported."
 (use-package numpydoc
   :init (setq numpydoc-template-short t))
 
-(use-package eldoc-box
-  :commands (eldoc-box-scroll-down eldoc-box-scroll-up)
-  :custom
-  (eldoc-box-lighter nil)
-  (eldoc-box-only-multi-line t)
-  (eldoc-box-clear-with-C-g t)
-  :custom-face
-  (eldoc-box-border ((t (:inherit posframe-border :background unspecified))))
-  (eldoc-box-body ((t (:inherit tooltip))))
-  ;; :hook (eglot-managed-mode . (lambda ()
-  ;;                               (if (childframe-workable-p)
-  ;;                                   (eldoc-box-hover-mode 1)
-  ;;                                 (eldoc-box-hover-mode -1))))
-  )
+;; (use-package eldoc-box
+;;   :functions childframe-workable-p
+;;   :commands eldoc-box-hover-at-point-mode
+;;   :custom
+;;   (eldoc-box-lighter nil)
+;;   (eldoc-box-only-multi-line t)
+;;   (eldoc-box-clear-with-C-g t)
+;;   :custom-face
+;;   (eldoc-box-border ((t (:inherit posframe-border :background unspecified))))
+;;   (eldoc-box-body ((t (:inherit tooltip))))
+;;   :hook (eglot-managed-mode . (lambda ()
+;;                                 (if (childframe-workable-p)
+;;                                     (eldoc-box-hover-at-point-mode 1)
+;;                                   (eldoc-box-hover-at-point-mode -1)))))
+
+(use-package eldoc-mouse
+  :diminish
+  :bind (:map eldoc-mouse-mode-map
+         ("C-h ." . eldoc-mouse-pop-doc-at-cursor))
+  :hook eglot-managed-mode
+  :init
+  ;; Since 31, tooltip is used to display help docs in elisp by default.
+  ;; To avoid the conflicts, only enable <=30
+  (unless emacs/>=31p
+    (add-hook 'emacs-lisp-mode-hook 'eldoc-mouse-mode)))
 
 (use-package file-info
   :config

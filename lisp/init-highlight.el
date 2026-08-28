@@ -92,16 +92,16 @@ FACE defaults to inheriting from default and highlight."
   (symbol-overlay-face-6 ((t (:inherit nerd-icons-orange :background unspecified :foreground unspecified :inverse-video t))))
   (symbol-overlay-face-7 ((t (:inherit nerd-icons-green :background unspecified :foreground unspecified :inverse-video t))))
   (symbol-overlay-face-8 ((t (:inherit nerd-icons-cyan :background unspecified :foreground unspecified :inverse-video t))))
+  :custom (symbol-overlay-idle-time 0.3)
   :bind (("M-i" . symbol-overlay-put)
          ("M-n" . symbol-overlay-jump-next)
          ("M-p" . symbol-overlay-jump-prev)
          ("M-N" . symbol-overlay-switch-forward)
          ("M-P" . symbol-overlay-switch-backward)
          ("M-C" . symbol-overlay-remove-all))
-  :hook (((prog-mode yaml-mode yaml-ts-mode) . symbol-overlay-mode)
-         (iedit-mode            . turn-off-symbol-overlay)
-         (iedit-mode-end        . turn-on-symbol-overlay))
-  :init (setq symbol-overlay-idle-time 0.3)
+  :hook ((after-change-major-mode . turn-on-symbol-overlay)
+         (iedit-mode      . turn-off-symbol-overlay)
+         (iedit-mode-end  . turn-on-symbol-overlay))
   :config
   ;; Disable symbol highlighting while selecting
   (defun turn-off-symbol-overlay (&rest _)
@@ -121,9 +121,9 @@ FACE defaults to inheriting from default and highlight."
   (advice-add #'easy-kill-destroy-candidate :after #'turn-on-symbol-overlay))
 
 ;; Mark occurrences of current region (selection)
-(use-package
-  region-occurrences-highlighter
+(use-package region-occurrences-highlighter
   :diminish
+  :diminish hi-lock-mode
   :bind (:map region-occurrences-highlighter-nav-mode-map
          ("M-n" . region-occurrences-highlighter-next)
          ("M-p" . region-occurrences-highlighter-prev))
@@ -133,6 +133,10 @@ FACE defaults to inheriting from default and highlight."
 (use-package display-fill-column-indicator
   :ensure nil
   :functions adjust-fill-column-indicator-stipple
+  :custom-face (fill-column-indicator ((((class color) (background light))
+                                        (:foreground "gray75"))
+                                       (((class color) (background dark))
+                                        (:foreground "gray25"))))
   ;; :hook (prog-mode . display-fill-column-indicator-mode)
   :config
   ;; Setup fill column indicator with stipple
