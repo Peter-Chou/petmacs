@@ -69,40 +69,40 @@
 (when emacs/>=29p
   (use-package agent-shell
     :diminish agent-shell-ui-mode
-    :commands agent-shell-insert
-    :defines magit-mode-map
-    :functions (magit-staged-files magit-commit-p magit-thing-at-point)
+    :commands (agent-shell-insert)
     :custom (agent-shell-display-action '(display-buffer-reuse-window))
     :bind (("<f12>"      . agent-shell)
            ("<f13>"      . agent-shell)
            ("C-c a"      . agent-shell)
            ("C-c A"      . agent-shell-new-shell)
            :map agent-shell-mode-map
+           ("RET" . newline)
+           ("M-RET" . shell-maker-submit)
+           ("C-c C-c" . shell-maker-submit)
+           ("C-c C-k" . agent-shell-interrupt)
            ("C-h ?"      . agent-shell-help-menu)
-           ("C-<return>" . agent-shell-help-menu)
-           :map magit-mode-map
-           ("C-c C-g"    . my/agent-shell-magit-generate-commit)
-           ("C-c C-r"    . my/agent-shell-review-magit-commit))
-    :config
-    ;; Integrate into magit
-    (with-eval-after-load 'magit
-      (defun centaur-generate-commit ()
-        "Generate conventional commit message from staged changes."
-        (interactive)
-        (if (magit-staged-files)
-            (agent-shell-insert
-             :submit t
-             :text "Commit changes with conventional message")
-          (user-error "No staged changes")))
+           ("C-<return>" . agent-shell-help-menu))
+    :init
+    (require 'agent-shell)
 
-      (defun centaur-review-commit ()
-        "Send the commit at point to agent-shell for review."
-        (interactive)
-        (if-let* ((commit (magit-commit-p (magit-thing-at-point 'git-revision t))))
-            (agent-shell-insert
-             :submit t
-             :text (format "Review commit: %s" commit))
-          (user-error "No magit commit at point"))))))
+    (setq agent-shell-qwen-environment (agent-shell-make-environment-variables
+                                        "OPENAI_BASE_URL" "https://qianfan.baidubce.com/v2"
+                                        "OPENAI_MODEL" "kimi-k2.6"))
+    (setq agent-shell-qwen-authentication
+          (agent-shell-qwen-make-authentication
+           :openai-api-key (string-trim
+                            (shell-command-to-string "$SHELL --login -c 'echo $ANTHROPIC_API_KEY'"))))
+
+    :config
+    ;; Evil state-specific RET behavior: insert mode = newline, normal mode = send
+    (evil-define-key 'insert agent-shell-mode-map (kbd "RET") #'newline)
+    (evil-define-key 'normal agent-shell-mode-map (kbd "RET") #'comint-send-input)
+
+    ;; Configure *agent-shell-diff* buffers to start in Emacs state
+    (add-hook 'diff-mode-hook
+	          (lambda ()
+	            (when (string-match-p "\\*agent-shell-diff\\*" (buffer-name))
+		          (evil-emacs-state))))))
 
 (provide 'init-ai)
 
