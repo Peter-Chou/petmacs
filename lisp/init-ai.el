@@ -28,6 +28,11 @@
   :hook (gptel-mode . gptel-highlight-mode)
   :config
   (require 'gptel)
+  ;; (setq gptel-backend (gptel-make-gemini "Gemini"
+  ;;                       :key (string-trim
+  ;;                             (shell-command-to-string "$SHELL --login -c 'echo $GEMINI_API_KEY'"))
+  ;;                       :stream t))
+
   (setq gptel-model 'deepseek-v4-pro
         gptel-backend
         (gptel-make-openai "qianfan"

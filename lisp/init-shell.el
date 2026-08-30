@@ -100,6 +100,7 @@
            :map project-prefix-map
            ("m" . ghostel-project)
            ("M" . ghostel-project-list-buffers))
+    :init (require 'ghostel)
     :config
     (defun my/ghostel-send-C-k-and-kill ()
       "Send `C-k' to ghostel.
