@@ -302,10 +302,10 @@ targets."
     (keymap-set corfu-map "M-m" #'corfu-move-to-minibuffer)
     (add-to-list 'corfu-continue-commands #'corfu-move-to-minibuffer))
 
-  (unless (childframe-workable-p)
-    (use-package corfu-terminal
-      :functions childframe-workable-p
-      :hook (global-corfu-mode . corfu-terminal-mode)))
+  ;; (unless (childframe-workable-p)
+  ;;   (use-package corfu-terminal
+  ;;     :functions childframe-workable-p
+  ;;     :hook (global-corfu-mode . corfu-terminal-mode)))
 
   ;; A few more useful configurations...
   (use-package emacs

@@ -1,4 +1,4 @@
-;;; awesome-tray.el ---  Modular tray bar
+;;; awesome-tray.el ---  Modular tray bar -*-lexical-binding: t; -*-
 
 ;; Filename: awesome-tray.el
 ;; Description: Modular tray bar
