@@ -57,7 +57,7 @@
 
 (leader-set-keys
   ;; "'"   #'multi-vterm
-  "'"   #'eshell
+  "'"   #'ghostel
   "/"   #'consult-ripgrep
   "<SPC>" #'execute-extended-command
 
@@ -534,8 +534,8 @@
     "T" 'projectile-test-project
     "v" 'projectile-vc
 
-    ;; "'"  #'multi-vterm-project
-    "'"  #'projectile-run-eshell
+    ;; "'"  #'projectile-run-eshell
+    "'"  #'ghostel-project
 
     "-"  #'projectile-dired
     "t"  #'petmacs/treemacs-project-toggle

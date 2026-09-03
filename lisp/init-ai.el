@@ -28,18 +28,16 @@
   :hook (gptel-mode . gptel-highlight-mode)
   :config
   (require 'gptel)
-  ;; (setq gptel-backend (gptel-make-gemini "Gemini"
-  ;;                       :key (string-trim
-  ;;                             (shell-command-to-string "$SHELL --login -c 'echo $GEMINI_API_KEY'"))
-  ;;                       :stream t))
 
+  ;; use BAIDU
   (setq gptel-model 'deepseek-v4-pro
         gptel-backend
         (gptel-make-openai "qianfan"
           :host "qianfan.baidubce.com"
           :endpoint "/v2/chat/completions"
           :stream t
-          :key 'gptel-api-key
+          :key (string-trim
+                (shell-command-to-string "$SHELL --login -c 'echo $BAIDU_API_KEY'"))
           :models '(deepseek-v4-pro)))
 
   ;; DeepSeek
@@ -75,7 +73,9 @@
   (use-package agent-shell
     :diminish agent-shell-ui-mode
     :commands (agent-shell-insert)
-    :custom (agent-shell-display-action '(display-buffer-reuse-window))
+    :custom
+    (agent-shell-display-action '(display-buffer-reuse-window))
+    (agent-shell-inhibit-system-sleep nil)
     :bind (("<f12>"      . agent-shell)
            ("<f13>"      . agent-shell)
            ("C-c a"      . agent-shell)
@@ -93,10 +93,11 @@
     (setq agent-shell-qwen-environment (agent-shell-make-environment-variables
                                         "OPENAI_BASE_URL" "https://qianfan.baidubce.com/v2"
                                         "OPENAI_MODEL" "kimi-k2.6"))
+    ;; use BAIDU
     (setq agent-shell-qwen-authentication
           (agent-shell-qwen-make-authentication
            :openai-api-key (string-trim
-                            (shell-command-to-string "$SHELL --login -c 'echo $ANTHROPIC_API_KEY'"))))
+                            (shell-command-to-string "$SHELL --login -c 'echo $BAIDU_API_KEY'"))))
 
     :config
     ;; Evil state-specific RET behavior: insert mode = newline, normal mode = send
