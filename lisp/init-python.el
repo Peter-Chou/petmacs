@@ -83,11 +83,26 @@
     "autoload virtual environment if project_root/ty.toml file exists,"
     (interactive)
     (let* ((pdir (projectile-project-root))
-           (venv-dir (concat (projectile-project-root) ".venv")))
-      (when (file-directory-p venv-dir)
+           (venv-dir (concat (projectile-project-root) ".venv"))
+           (pfile (concat (projectile-project-root) "pyproject.toml")))
+      ;; (when (file-directory-p venv-dir)
+      ;;   (pyvenv-activate venv-dir)
+      ;;   (petmacs/set-pythonpath-project)
+      ;;   (eglot-ensure))
+
+      (cond
+       ((file-directory-p venv-dir)
         (pyvenv-activate venv-dir)
         (petmacs/set-pythonpath-project)
-        (eglot-ensure))))
+        (eglot-ensure))
+
+       ((file-exists-p pfile)
+        (setq-local pyvenv-workon
+                    (file-name-nondirectory (gethash "name" (gethash "project" (tomlparse-file pfile)))))
+        (pyvenv-workon pyvenv-workon)
+        (petmacs/set-pythonpath-project)
+        (eglot-ensure))
+       )))
   :hook (
          ;; (python-base-mode . petmacs/pyvenv-pyright-autoload)
          ;; (python-base-mode . petmacs/pyvenv-ty-auto-autoload)
