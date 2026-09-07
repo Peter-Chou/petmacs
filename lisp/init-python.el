@@ -84,30 +84,19 @@
     (interactive)
     (let* ((pdir (projectile-project-root))
            (venv-dir (concat (projectile-project-root) ".venv"))
-           (pfile (concat (projectile-project-root) "pyproject.toml")))
-      ;; (when (file-directory-p venv-dir)
-      ;;   (pyvenv-activate venv-dir)
-      ;;   (petmacs/set-pythonpath-project)
-      ;;   (eglot-ensure))
-
+           (tyfile (concat (projectile-project-root) "ty.toml")))
       (cond
-       ((file-directory-p venv-dir)
+       ((file-directory-p venv-dir) ;; use .venv if found
         (pyvenv-activate venv-dir)
         (petmacs/set-pythonpath-project)
         (eglot-ensure))
-
-       ((file-exists-p pfile)
-        (setq-local pyvenv-workon
-                    (file-name-nondirectory (gethash "name" (gethash "project" (tomlparse-file pfile)))))
-        (pyvenv-workon pyvenv-workon)
+       ((file-exists-p tyfile) ;; get venv from environment.python in ty.toml
+        (setq-local pyvenv-workon-name
+                    (file-name-nondirectory (gethash "python" (gethash "environment" (tomlparse-file tyfile)))))
+        (pyvenv-workon pyvenv-workon-name)
         (petmacs/set-pythonpath-project)
-        (eglot-ensure))
-       )))
-  :hook (
-         ;; (python-base-mode . petmacs/pyvenv-pyright-autoload)
-         ;; (python-base-mode . petmacs/pyvenv-ty-auto-autoload)
-         ;; (python-base-mode . eglot-ensure)
-         (python-base-mode . petmacs/pyvenv-ty-venv-autoload)
+        (eglot-ensure)))))
+  :hook ((python-base-mode . petmacs/pyvenv-ty-venv-autoload)
          (pyvenv-mode . petmacs/remove-pyvenv-modeline-env-info))
   :config
   (pyvenv-mode 1)
