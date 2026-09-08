@@ -86,12 +86,12 @@
   :group 'petmacs
   :type 'float)
 
-(defcustom petmacs-sidebar-width 30
+(defcustom petmacs-sidebar-width 25
   "sidebar width"
   :group 'petmacs
   :type 'integer)
 
-(defcustom petmacs-ultra-sidebar-width 35
+(defcustom petmacs-ultra-sidebar-width 30
   "sidebar width in ultra screen"
   :group 'petmacs
   :type 'integer)
