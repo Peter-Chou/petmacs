@@ -8,7 +8,6 @@
 ;;; Code:
 
 (use-package dashboard
-  :diminish
   :after nerd-icons
   :autoload dashboard-setup-startup-hook
   :functions icons-displayable-p nerd-icons-mdicon nerd-icons-octicon

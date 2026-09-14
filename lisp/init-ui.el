@@ -322,11 +322,10 @@
     :hook window-setup))
 
 ;; Use fixed pitch where it's sensible
-(use-package mixed-pitch :diminish)
+(use-package mixed-pitch)
 
 ;; Display ugly ^L page breaks as tidy horizontal lines
 (use-package page-break-lines
-  :diminish
   :hook (after-init . global-page-break-lines-mode)
   :config (dolist (mode '(dashboard-mode emacs-news-mode))
             (add-to-list 'page-break-lines-modes mode)))

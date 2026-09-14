@@ -70,7 +70,6 @@
 
 ;; ;; Display Flymake errors with overlays
 ;; (use-package flyover
-;;   :diminish
 ;;   :custom
 ;;   (flyover-checkers '(flymake))
 ;;   (flyover-use-theme-colors t)

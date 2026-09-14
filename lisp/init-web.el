@@ -59,7 +59,6 @@
   :mode ("\\.http\\'" . restclient-mode)
   :config
   (use-package restclient-test
-    :diminish
     :hook (restclient-mode . restclient-test-mode)))
 
 (provide 'init-web)

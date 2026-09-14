@@ -17,7 +17,6 @@
   :custom-face (org-ellipsis ((t (:foreground unspecified))))
   :hook (((org-babel-after-execute org-mode) . org-redisplay-inline-images) ;; display image
          (org-indent-mode . (lambda()
-                              (diminish 'org-indent-mode)
                               ;; HACK: Prevent text moving around while using brackets
                               ;; @see https://github.com/seagle0128/.emacs.d/issues/88
                               (make-variable-buffer-local 'show-paren-mode)
@@ -81,7 +80,6 @@
 (when emacs/>=29p
   (use-package org-modern
     :after org
-    :diminish
     :autoload org-modern-mode org-modern-agenda
     :hook ((org-mode . (lambda ()
                          "Display org modern looks in GUI."
@@ -101,7 +99,6 @@
 ;; Paste with org-mode markup and link
 (use-package org-rich-yank
   :after org
-  :diminish
   :bind (:map org-mode-map
          ("C-M-y" . org-rich-yank)))
 
@@ -115,7 +112,6 @@
 
 (use-package org-fancy-priorities
   :after org
-  :diminish
   :hook (org-mode . org-fancy-priorities-mode)
   :init (setq org-fancy-priorities-list
               (if (and (display-graphic-p) (char-displayable-p ?🅐))
@@ -139,7 +135,6 @@
       (add-hook 'evil-insert-state-entry-hook #'org-appear-manual-start nil t)
       (add-hook 'evil-insert-state-exit-hook #'org-appear-manual-stop nil t))
     :after org
-    :diminish
     :hook (org-mode . org-appear-mode)
     :custom
     (org-appear-autoentities t)

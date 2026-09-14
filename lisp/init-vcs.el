@@ -147,7 +147,6 @@
 ;; Resolve diff3 conflicts
 (use-package smerge-mode
   :ensure nil
-  :diminish
   :pretty-hydra
   ((:title (pretty-hydra-title "Smerge" 'octicon "nf-oct-diff")
     :color pink :quit-key ("q" "C-g"))
@@ -197,7 +196,6 @@
 
 ;; Prime cache before Magit refresh
 (use-package magit-prime
-  :diminish
   :hook after-init)
 
 ;; Show TODOs in magit

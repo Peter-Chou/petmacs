@@ -24,7 +24,6 @@
 
 ;; Garbage Collector Magic Hack
 (use-package gcmh
-  :diminish
   :hook (emacs-startup . gcmh-mode)
   :init (setq gcmh-idle-delay 'auto
               gcmh-auto-idle-delay-factor 10
@@ -67,7 +66,6 @@
 ;; Automatically reload files was modified by external program
 (use-package autorevert
   :ensure nil
-  :diminish
   :hook (after-init . global-auto-revert-mode))
 
 ;; Cross-referencing commands
@@ -110,7 +108,6 @@
 
   ;; Garbage Collector Magic Hack
   (use-package gcmh
-    :diminish
     :hook (emacs-startup . gcmh-mode)
     :init
     (setq gcmh-idle-delay 3
@@ -189,7 +186,6 @@
               save-place-abbreviate-file-names t))
 
 (use-package simple
-  :diminish visual-line-mode
   :ensure nil
   :hook ((after-init . size-indication-mode)
          (text-mode . visual-line-mode)

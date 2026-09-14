@@ -18,7 +18,6 @@
 
 ;; Display transient in child frame
 (use-package transient-posframe
-  :diminish
   :functions childframe-completion-workable-p
   :commands transient-posframe-mode
   :custom
@@ -45,7 +44,6 @@
 
 ;; F5 for paging which-key
 (use-package which-key
-  :diminish
   :functions childframe-completion-workable-p
   :hook ((after-init server-after-make-frame) . which-key-mode)
   :init
@@ -98,7 +96,6 @@
 
 ;; Show number of matches in mode-line while searching
 (use-package anzu
-  :diminish
   :bind (([remap query-replace] . anzu-query-replace)
          ([remap query-replace-regexp] . anzu-query-replace-regexp)
          :map isearch-mode-map
@@ -144,7 +141,6 @@
 
 ;; Hungry deletion
 (use-package hungry-delete
-  :diminish
   :hook (after-init . global-hungry-delete-mode)
   :init (setq hungry-delete-chars-to-skip " \t\f\v"
               hungry-delete-except-modes
@@ -164,7 +160,6 @@
 ;; Handling capitalized subwords in a nomenclature
 (use-package subword
   :ensure nil
-  :diminish
   :hook ((prog-mode . subword-mode)
          (minibuffer-setup . subword-mode)))
 
@@ -175,7 +170,6 @@
 ;; Flexible text folding
 (use-package hideshow
   :ensure nil
-  :diminish hs-minor-mode
   :pretty-hydra
   ((:title (pretty-hydra-title "HideShow" 'octicon "nf-oct-fold")
     :color amaranth :quit-key ("q" "C-g"))
@@ -319,7 +313,6 @@
   )
 
 (use-package editorconfig
-  :diminish
   :hook (after-init . editorconfig-mode))
 
 ;; Search tool
@@ -563,7 +556,6 @@ SCALE are supported."
 ;;                                   (eldoc-box-hover-at-point-mode -1)))))
 
 (use-package eldoc-mouse
-  :diminish
   :bind (:map eldoc-mouse-mode-map
          ("C-h ." . eldoc-mouse-pop-doc-at-cursor))
   :hook eglot-managed-mode
@@ -634,7 +626,6 @@ SCALE are supported."
 
 ;; Jump to Chinese characters
 (use-package ace-pinyin
-  :diminish
   :hook (after-init . ace-pinyin-global-mode))
 
 (use-package kirigami

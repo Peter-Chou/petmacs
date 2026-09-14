@@ -89,7 +89,6 @@
 
   ;;     ;; Table of contents
   ;;     (use-package markdown-toc
-  ;;       :diminish
   ;;       :bind (:map markdown-mode-command-map
   ;;              ("r" . markdown-toc-generate-or-refresh-toc))
   ;;       :hook ((markdown-mode markdown-ts-mode) . markdown-toc-mode)

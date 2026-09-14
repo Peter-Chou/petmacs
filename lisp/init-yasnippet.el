@@ -1,7 +1,6 @@
 ;; -*- lexical-binding: t no-byte-compile: t -*-
 
 ;; (use-package yasnippet
-;;   :diminish yas-minor-mode
 ;;   :bind ("M-e" . yas-expand)
 ;;   :hook (after-init . yas-global-mode)
 ;;   :config
@@ -17,7 +16,6 @@
 
 ;; Yet another snippet extension
 (use-package yasnippet
-  :diminish yas-minor-mode
   :hook (after-init . yas-global-mode))
 
 ;; Collection of yasnippet snippets

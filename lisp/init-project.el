@@ -16,7 +16,6 @@
 
 (use-package projectile
   :demand t
-  :diminish
   :pretty-hydra
   ((:title (pretty-hydra-title "project" 'octicon "nf-oct-project_roadmap")
     :foreign-keys warn :color blue :quit-key ("q" "C-g"))
