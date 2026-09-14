@@ -128,7 +128,9 @@ Same as '`replace-string' `C-q' `C-m' `RET' `RET''."
 (defun petmacs/reload-init-file ()
   "Reload Emacs configurations."
   (interactive)
-  (load user-init-file))
+  (load early-init-file)
+  (load user-init-file)
+  (run-hooks 'after-init-hook 'window-setup-hook 'emacs-startup-hook))
 
 ;; theme
 

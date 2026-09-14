@@ -19,9 +19,13 @@
 ;; Display transient in child frame
 (use-package transient-posframe
   :diminish
-  :defines posframe-border-width
   :functions childframe-completion-workable-p
   :commands transient-posframe-mode
+  :custom
+  (transient-mode-line-format nil)
+  (transient-posframe-border-width posframe-border-width)
+  (transient-posframe-parameters '((left-fringe . 8) (right-fringe . 8)))
+  (transient-posframe-poshandler #'posframe-poshandler-frame-center)
   :custom-face
   (transient-posframe-border ((t (:inherit posframe-border :background unspecified))))
   :hook ((after-init server-after-make-frame)
@@ -30,11 +34,7 @@
            "Display transient in child frames if applicable."
            (if (childframe-completion-workable-p)
                (transient-posframe-mode 1)
-             (transient-posframe-mode -1))))
-  :init (setq transient-mode-line-format nil
-              transient-posframe-border-width posframe-border-width
-              transient-posframe-parameters '((left-fringe . 8)
-                                              (right-fringe . 8))))
+             (transient-posframe-mode -1)))))
 
 (use-package posframe-plus
   :ensure nil
@@ -466,9 +466,14 @@ SCALE are supported."
 
 (use-package centered-cursor-mode)
 (use-package restart-emacs)
-(use-package rg)
 (use-package dotenv-mode)
 (use-package reveal-in-folder)
+
+;; Fast search tool `ripgrep'
+(use-package rg
+  :defines rg-custom-type-aliases
+  :hook (after-init . rg-enable-default-bindings)
+  :config (add-to-list 'rg-custom-type-aliases '("tmpl" . "*.tmpl")))
 
 ;; Visual `align-regexp'
 (use-package ialign)
@@ -580,10 +585,9 @@ SCALE are supported."
 
 ;; edit the text in the grep buffer after typing C-c C-p
 (use-package wgrep
-  :commands wgrep-change-to-wgrep-mode
-  :init
-  (setq wgrep-auto-save-buffer t
-        wgrep-change-readonly-file t))
+  :custom
+  (wgrep-auto-save-buffer t)
+  (wgrep-change-readonly-file t))
 
 ;; Quickly follow links
 (use-package link-hint

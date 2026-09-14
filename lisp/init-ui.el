@@ -316,8 +316,9 @@
 ;; Smooth Scroll
 (when emacs/>=29p
   (use-package ultra-scroll
-    :init (setq scroll-conservatively 3
-                scroll-margin 0)
+    :custom
+    (scroll-conservatively 3)
+    (scroll-margin 0)
     :hook window-setup))
 
 ;; Use fixed pitch where it's sensible
