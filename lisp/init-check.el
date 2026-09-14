@@ -23,9 +23,8 @@
   :init
   (setq flymake-fringe-indicator-position 'right-fringe
         flymake-margin-indicator-position 'right-margin
+        flymake-no-changes-timeout nil
         ;; flymake-show-diagnostics-at-end-of-line 'short
-        ;; flymake-no-changes-timeout nil
-        ;; flymake-start-on-save-buffer t
         )
   :config
   ;; Check elisp with `load-path'
@@ -84,19 +83,19 @@
 ;;   (flyover-error-icon (format "%s " (nerd-icons-codicon "nf-cod-error")))
 ;;   :hook flymake-mode)
 
-;; (use-package sideline-flymake
-;;   ;;   :custom-face
-;;   ;;   (sideline-flymake-error ((t (:height 0.85 :italic t))))
-;;   ;;   (sideline-flymake-warning ((t (:height 0.85 :italic t))))
-;;   ;;   (sideline-flymake-success ((t (:height 0.85 :italic t))))
-;;   :init (setq
-;;          sideline-flymake-show-backend-name nil
-;;          ;;          sideline-flymake-note-prefix (format "%s " (nerd-icons-octicon "nf-oct-info"))
-;;          ;;          sideline-flymake-warning-prefix (format "%s " (nerd-icons-codicon "nf-cod-warning"))
-;;          ;;          sideline-flymake-error-prefix (format "%s " (nerd-icons-codicon "nf-cod-error"))
-;;          sideline-flymake-display-mode 'point
-;;          ;; sideline-flymake-display-mode 'line
-;;          ))
+(use-package sideline-flymake
+  :custom-face
+  (sideline-flymake-error ((t (:height 0.85 :italic t))))
+  (sideline-flymake-warning ((t (:height 0.85 :italic t))))
+  (sideline-flymake-success ((t (:height 0.85 :italic t))))
+  :init (setq
+         sideline-flymake-show-backend-name nil
+         sideline-flymake-note-prefix (format "%s " (nerd-icons-octicon "nf-oct-info"))
+         sideline-flymake-warning-prefix (format "%s " (nerd-icons-codicon "nf-cod-warning"))
+         sideline-flymake-error-prefix (format "%s " (nerd-icons-codicon "nf-cod-error"))
+         sideline-flymake-display-mode 'point
+         ;; sideline-flymake-display-mode 'line
+         ))
 
 (provide 'init-check)
 

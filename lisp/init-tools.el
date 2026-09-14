@@ -522,42 +522,22 @@ SCALE are supported."
   :ensure nil
   :commands (toggle-one-window))
 
-;; ;; please update sideline version >=20240627
-;; (use-package sideline
-;;   :hook (
-;;          (flymake-mode . sideline-mode)
-;;        (eglot-managed-mode . sideline-mode)
-;;        ;; ((java-mode java-ts-mode) . (lambda ()
-;;        ;;                               "disable sideline-eglot in java-mode / java-ts-mode"
-;;        ;;                               (setq-local sideline-backends-right '((sideline-flymake . down)))))
-;; )
-;; :init
-;; (require 'sideline)
-;; ;; (setq sideline-display-backend-name t)
-;; (setq sideline-backends-right '(
-;;                                 (sideline-eglot . up)
-;;                                 (sideline-flymake . down)
-;;                                 ))
-;; )
-
-;; ;; On-the-fly spell checker
-;; (use-package flyspell
-;;   :ensure nil
-;;   :functions file-too-big-p
-;;   :if (executable-find "aspell")
-;;   :bind (:map flyspell-mode-map
-;;          ("C-;" . nil)
-;;          ("C-," . nil)
-;;          ("C-." . nil))
-;;   :hook (((text-mode outline-mode) . (lambda ()
-;;                                        "Check spells unless the file is too big."
-;;                                        (unless (file-too-big-p)
-;;                                          (flyspell-mode 1))))
-;;          (prog-mode . flyspell-prog-mode))
-;;   :init (setq flyspell-issue-message-flag nil
-;;               flyspell-issue-welcome-flag nil
-;;               ispell-program-name "aspell"
-;;               ispell-extra-args '("--sug-mode=ultra" "--lang=en_US" "--run-together")))
+;; please update sideline version >=20240627
+(use-package sideline
+  :hook (
+         (flymake-mode . sideline-mode)
+         ;; (eglot-managed-mode . sideline-mode)
+         ;; ((java-mode java-ts-mode) . (lambda ()
+         ;;                               "disable sideline-eglot in java-mode / java-ts-mode"
+         ;;                               (setq-local sideline-backends-right '((sideline-flymake . down)))))
+         )
+  :init
+  (require 'sideline)
+  ;; (setq sideline-display-backend-name t)
+  (setq sideline-backends-right '(
+                                  ;; (sideline-eglot . up)
+                                  (sideline-flymake . down)
+                                  )))
 
 (use-package numpydoc
   :init (setq numpydoc-template-short t))
