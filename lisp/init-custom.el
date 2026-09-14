@@ -66,7 +66,7 @@
 (defcustom petmacs-font
   ;; "ComicCodeLigatures Nerd Font"
   ;; "MonegoLigatures Nerd Font"
-  "JetBrains Mono NL"
+  "JetBrainsMono NFM"
   "default font"
   :group 'petmacs
   :type 'string)
