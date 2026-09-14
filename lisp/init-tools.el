@@ -555,15 +555,16 @@ SCALE are supported."
 ;;                                     (eldoc-box-hover-at-point-mode 1)
 ;;                                   (eldoc-box-hover-at-point-mode -1)))))
 
-(use-package eldoc-mouse
-  :bind (:map eldoc-mouse-mode-map
-         ("C-h ." . eldoc-mouse-pop-doc-at-cursor))
-  :hook eglot-managed-mode
-  :init
-  ;; Since 31, tooltip is used to display help docs in elisp by default.
-  ;; To avoid the conflicts, only enable <=30
-  (unless emacs/>=31p
-    (add-hook 'emacs-lisp-mode-hook 'eldoc-mouse-mode)))
+;; Show function arglist or variable docstring
+(when (childframe-workable-p)
+  (use-package eldoc-mouse
+    :functions childframe-workable-p
+    :hook eglot-managed-mode
+    :init
+    ;; Since 31, tooltip is used to display help docs in elisp by default.
+    ;; To avoid the conflicts, only enable <=30
+    (unless emacs/>=31p
+      (add-hook 'emacs-lisp-mode-hook 'eldoc-mouse-mode))))
 
 (use-package file-info
   :config
@@ -630,6 +631,27 @@ SCALE are supported."
 
 (use-package kirigami
   :after evil
+  :pretty-hydra
+  ((:title (pretty-hydra-title "Kirigami" 'octicon "nf-oct-fold")
+    :color amaranth :quit-key ("q" "C-g"))
+   ("Fold"
+    (("o" kirigami-open-fold "open fold at point")
+     ("O" kirigami-open-fold-rec "open fold recursively")
+     ("r" kirigami-open-folds "open all folds")
+     ("c" kirigami-close-fold "close fold at point")
+     ("m" kirigami-close-folds "close all folds")
+     ("a" kirigami-toggle-fold "toggle fold at point"))
+    "Move"
+    (("C-a" mwim-beginning-of-code-or-line "?")
+     ("C-e" mwim-end-of-code-or-line "?")
+     ("C-b" backward-char "←")
+     ("C-n" next-line "↓")
+     ("C-p" previous-line "↑")
+     ("C-f" forward-char "→")
+     ("C-v" pager-page-down "↘")
+     ("M-v" pager-page-up "↖")
+     ("M-<" beginning-of-buffer "?")
+     ("M->" end-of-buffer "?"))))
   :hook (emacs-startup . petmacs/kirigami-evil-binds-setup)
   :init
   (defun petmacs/kirigami-evil-binds-setup ()

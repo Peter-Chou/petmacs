@@ -163,10 +163,10 @@ Same as '`replace-string' `C-q' `C-m' `RET' `RET''."
 (defun byte-compile-site-lisp ()
   "Compile packages in site-lisp directory."
   (interactive)
-  (let ((dir (locate-user-emacs-file "site-lisp")))
+  (let ((default-directory (locate-user-emacs-file "site-lisp")))
     (if (fboundp 'async-byte-recompile-directory)
-        (async-byte-recompile-directory dir)
-      (byte-recompile-directory dir 0 t))))
+        (async-byte-recompile-directory default-directory)
+      (byte-recompile-directory default-directory 0 t))))
 
 (defun native-compile-elpa ()
   "Native-compile packages in elpa directory."
@@ -177,9 +177,9 @@ Same as '`replace-string' `C-q' `C-m' `RET' `RET''."
 (defun native-compile-site-lisp ()
   "Native compile packages in site-lisp directory."
   (interactive)
-  (let ((dir (locate-user-emacs-file "site-lisp")))
+  (let ((default-directory (locate-user-emacs-file "site-lisp")))
     (if (fboundp 'native-compile-async)
-        (native-compile-async dir t))))
+        (native-compile-async default-directory t))))
 
 (defun petmacs-treesit-available-p ()
   "Check whether tree-sitter is available.
@@ -1177,6 +1177,35 @@ interactively.  Turn the filename into a URL with function
         (dolist (f current-level)
           (when-let ((root (locate-dominating-file dir f)))
             (throw 'ret (cons 'local root))))))))
+
+(defun split-window-toggle ()
+  "Toggle window split style: top/below or left/right."
+  (interactive)
+  (if (fboundp 'window-layout-rotate-clockwise)
+      (window-layout-rotate-clockwise)
+    (if (= (count-windows) 2)
+        (let* ((this-win-buffer (window-buffer))
+               (next-win-buffer (window-buffer (next-window)))
+               (this-win-edges (window-edges (selected-window)))
+               (next-win-edges (window-edges (next-window)))
+               (this-win-2nd (not (and (<= (car this-win-edges)
+                                           (car next-win-edges))
+                                       (<= (cadr this-win-edges)
+                                           (cadr next-win-edges)))))
+               (splitter
+                (if (= (car this-win-edges)
+                       (car (window-edges (next-window))))
+                    'split-window-horizontally
+                  'split-window-vertically)))
+          (delete-other-windows)
+          (let ((first-win (selected-window)))
+            (funcall splitter)
+            (if this-win-2nd (other-window 1))
+            (set-window-buffer (selected-window) this-win-buffer)
+            (set-window-buffer (next-window) next-win-buffer)
+            (select-window first-win)
+            (if this-win-2nd (other-window 1))))
+      (user-error "`toggle-window-split' only supports two windows"))))
 
 (provide 'init-funcs)
 

@@ -25,7 +25,9 @@
 (defun update-load-path (&rest _)
   "Update the `load-path` to prioritize personal configurations."
   (dolist (dir '("site-lisp" "lisp"))
-    (push (expand-file-name dir user-emacs-directory) load-path)))
+    (let ((site-lisp-dir (expand-file-name dir user-emacs-directory)))
+      (when (file-directory-p site-lisp-dir)
+        (add-to-list 'load-path site-lisp-dir)))))
 
 ;; Initialize load paths explicitly
 (update-load-path)
@@ -35,7 +37,7 @@
   "Recursively add subdirectories in `site-lisp` to `load-path`.
 
 Avoid placing large files like EAF in `site-lisp` to prevent slow startup."
-  (let ((default-directory (expand-file-name "site-lisp" user-emacs-directory)))
+  (let ((default-directory (locate-user-emacs-file "site-lisp")))
     (normal-top-level-add-subdirs-to-load-path)))
 
 ;; Ensure these functions are called after `package-initialize`
