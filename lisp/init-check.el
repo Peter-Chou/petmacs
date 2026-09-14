@@ -84,6 +84,7 @@
 ;;   :hook flymake-mode)
 
 (use-package sideline-flymake
+  :after sideline
   :custom-face
   (sideline-flymake-error ((t (:height 0.85 :italic t))))
   (sideline-flymake-warning ((t (:height 0.85 :italic t))))
