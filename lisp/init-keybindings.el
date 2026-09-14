@@ -450,8 +450,8 @@
   "e" "error")
 (leader-with-prefix "e"
   (leader-set-keys
-    "l" #'flymake-show-buffer-diagnostics
-    "L" #'consult-flymake
+    "l" #'consult-flymake
+    "L" #'flymake-show-buffer-diagnostics
     "n" #'flymake-goto-next-error
     "p" #'flymake-goto-prev-error
     "a" #'flymake-show-project-diagnostics))

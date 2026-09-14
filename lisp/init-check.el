@@ -45,6 +45,15 @@
                     (car diags))))
 ;; (advice-add 'eglot--report-to-flymake :filter-args #'petmacs/filter-eglot-basedpyright-diagnostics)
 
+(defun petmacs/filter-eglot-ty-diagnostics (diags)
+  "Drop all basedpyright diagnose from langserver"
+  (list (seq-remove (lambda (d)
+                      (string-match "ty" (flymake-diagnostic-text d))
+                      ;; (s-starts-with? "basedpyright" (flymake-diagnostic-text d))
+                      )
+                    (car diags))))
+;; (advice-add 'eglot--report-to-flymake :filter-args #'petmacs/filter-eglot-ty-diagnostics)
+
 ;; (use-package flymake-ruff
 ;;   :demand t
 ;;   :preface
