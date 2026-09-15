@@ -193,7 +193,7 @@
            ;; markdown-mode
            conf-mode) . enable-trailing-whitespace)
          (emacs-startup . (lambda ()
-                            (toggle-frame-fullscreen)
+                            (toggle-frame-maximized)
                             (setq warning-minimum-level ':error))))
   :init
   (setq column-number-mode t

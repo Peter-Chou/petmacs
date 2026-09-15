@@ -386,7 +386,7 @@
 (use-package symbols-outline
   :after nerd-icons
   :init
-  (setq symbols-outline-window-position 'right
+  (setq symbols-outline-window-position 'left
         symbols-outline-use-nerd-icon-in-gui (not (image-type-available-p 'svg))
         symbols-outline-window-width (if (petmacs/ultra-screen-p)
                                          petmacs-ultra-sidebar-width

@@ -91,7 +91,7 @@
   :group 'petmacs
   :type 'integer)
 
-(defcustom petmacs-ultra-sidebar-width 30
+(defcustom petmacs-ultra-sidebar-width 25
   "sidebar width in ultra screen"
   :group 'petmacs
   :type 'integer)
