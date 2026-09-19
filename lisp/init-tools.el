@@ -567,14 +567,17 @@ SCALE are supported."
       (add-hook 'emacs-lisp-mode-hook 'eldoc-mouse-mode))))
 
 (use-package file-info
+  :bind ("C-c c i" . file-info-show)
   :config
-  (when (childframe-completion-workable-p)
-    (setq hydra-hint-display-type 'posframe)
-    (setq hydra-posframe-show-params `(:poshandler posframe-poshandler-frame-center
-                                       :internal-border-width 2
-                                       :internal-border-color "#61AFEF"
-                                       :left-fringe 16
-                                       :right-fringe 16))))
+  (with-no-warnings
+    (defun my/file-info-show (fn &rest args)
+      "Wrapper for `file-info-show'."
+      ;; display on the center of the frame
+      (let ((hydra-posframe-show-params
+             (plist-put (copy-alist hydra-posframe-show-params)
+                        :poshandler #'posframe-poshandler-frame-center)))
+        (apply fn args)))
+    (advice-add 'file-info-show :around #'my/file-info-show)))
 
 ;; edit the text in the grep buffer after typing C-c C-p
 (use-package wgrep

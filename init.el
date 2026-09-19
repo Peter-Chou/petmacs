@@ -63,7 +63,7 @@ Avoid placing large files like EAF in `site-lisp` to prevent slow startup."
 (require 'init-dashboard)
 (require 'init-window)
 (require 'init-dired)
-(require 'init-buffer)
+(require 'init-ibuffer)
 
 (require 'init-treemacs)
 ;; (require 'init-workspace)

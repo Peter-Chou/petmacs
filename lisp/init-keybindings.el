@@ -147,7 +147,8 @@
     "d"  #'petmacs/delete-this-file
     "D"  #'petmacs/delete-current-buffer-file
     "E"  #'petmacs/sudo-edit
-    "i"  #'insert-file
+    ;; "i"  #'insert-file
+    "i"  #'file-info-show
     "l"  #'find-file-literally
 	"w"  #'find-file-other-window
     "F"  #'find-file-other-frame
@@ -537,21 +538,31 @@
     ;; "'"  #'projectile-run-eshell
     "'"  #'ghostel-project
 
-    "-"  #'projectile-dired
+    ;; "-"  #'projectile-dired
+    "-"  #'project-dired
     "t"  #'petmacs/treemacs-project-toggle
     ;; "t" #'petmacs/toggle-treemacs-and-symbols-outline
-    "d"  #'consult-projectile-find-dir
-    "p"  #'consult-projectile-switch-project
-    "x"  #'projectile-remove-known-project
-    "a"  #'projectile-add-known-project
+    ;; "d"  #'consult-projectile-find-dir
+    "d"  #'project-find-dir
+    ;; "p"  #'consult-projectile-switch-project
+    "p"  #'project-switch-project
 
-    "ff"  #'consult-projectile-find-file
-    "fo"  #'consult-projectile-find-file-other-window
-    "fF"  #'consult-projectile-find-file-other-frame
+    ;; "x"  #'projectile-remove-known-project
+    ;; "a"  #'projectile-add-known-project
+    "x"  #'project-forget-projects-under
+    "X"  #'project-forget-zombie-projects
+    "a"  #'project-remember-projects-under
 
-    "bb"  #'consult-projectile-switch-to-buffer
-    "bF"  #'consult-projectile-switch-to-buffer-other-frame
-    "bo"  #'consult-projectile-switch-to-buffer-other-window
+    "ff"  #'project-find-file
+
+    ;; "fo"  #'consult-projectile-find-file-other-window
+    ;; "fF"  #'consult-projectile-find-file-other-frame
+
+    ;; "bb"  #'consult-project-buffer
+    "bb"  #'project-switch-to-buffer
+    ;; "bF"  #'consult-project-extra-find
+    "bo"  #'consult-project-extra-find-other-window
+    "bX"  #'project-kill-buffers
 
     ;; "f"  #'affe-find
     "r"  #'consult-projectile-recentf

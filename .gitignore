@@ -96,6 +96,9 @@ eaf/
 etc/
 share/
 agent/
+.agent-shell/
+/project-window-list
+easysession/
 env.el
 TODO.org
 forge-database.sqlite
