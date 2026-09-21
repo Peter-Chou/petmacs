@@ -349,6 +349,11 @@ targets."
     (advice-add 'eglot-completion-at-point :around #'cape-wrap-nonexclusive)
     (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-nonexclusive)))
 
+(unless (childframe-workable-p)
+  (use-package corfu-terminal
+    :functions childframe-workable-p
+    :hook (global-corfu-mode . corfu-terminal-mode)))
+
 (provide 'init-completion)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
