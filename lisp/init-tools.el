@@ -666,6 +666,8 @@ SCALE are supported."
       (define-key evil-normal-state-map "zr" 'kirigami-open-folds)
       (define-key evil-normal-state-map "zm" 'kirigami-close-folds))))
 
+(use-package breadcrumb)
+
 (provide 'init-tools)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
