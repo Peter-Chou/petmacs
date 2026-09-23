@@ -23,7 +23,7 @@
   :init
   (setq flymake-fringe-indicator-position 'right-fringe
         flymake-margin-indicator-position 'right-margin
-        flymake-no-changes-timeout nil
+        ;; flymake-no-changes-timeout nil
         ;; flymake-show-diagnostics-at-end-of-line 'short
         )
   :config
