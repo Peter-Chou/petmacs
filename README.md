@@ -172,6 +172,12 @@ npm install -g dockerfile-language-server-nodejs
 npm install -g bash-language-server
 ```
 
+### 3.7 yaml-language-server (yaml)
+
+``` bash
+npm install -g yaml-language-server
+```
+
 ---
 
 ## 4. Install DAP Servers
