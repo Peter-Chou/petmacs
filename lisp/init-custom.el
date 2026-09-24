@@ -76,12 +76,12 @@
   :group 'petmacs
   :type 'string)
 
-(defcustom petmacs-font-size 14.0
+(defcustom petmacs-font-size 13.0
   "font size for default"
   :group 'petmacs
   :type 'float)
 
-(defcustom petmacs-ultra-screen-font-size 17.8
+(defcustom petmacs-ultra-screen-font-size 16.8
   "font size for ultra screen"
   :group 'petmacs
   :type 'float)
