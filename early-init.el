@@ -71,6 +71,9 @@
 
 (setq byte-compile-warnings nil)
 
+;; PERF: reduce the startup time
+(setq package-quickstart t)
+
 ;; Package initialize occurs automatically, before `user-init-file' is
 ;; loaded, but after `early-init-file'. We handle package
 ;; initialization, so we must prevent Emacs from doing it early!

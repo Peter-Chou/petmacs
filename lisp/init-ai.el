@@ -61,11 +61,10 @@
     :models '(qwen-plus qwen-turbo qwen-max))
   )
 
-;; ;; Generate commit messages for magit
-;; (when emacs/>=30p
-;;   (use-package gptel-magit
-;;     :vc (:url "https://github.com/roife/gptel-magit" :rev :newest)
-;;     :hook (magit-mode . gptel-magit-install)))
+(when emacs/>=29p
+  ;; Generate commit messages for magit
+  (use-package gptel-magit
+    :hook (magit-mode . gptel-magit-install)))
 
 ;; A native shell experience to interact with ACP agents
 (when emacs/>=29p
@@ -90,7 +89,7 @@
 
     (setq agent-shell-qwen-environment (agent-shell-make-environment-variables
                                         "OPENAI_BASE_URL" "https://qianfan.baidubce.com/v2"
-                                        "OPENAI_MODEL" "kimi-k2.6"))
+                                        "OPENAI_MODEL" "qwen3.5-122b-a10b"))
     ;; use BAIDU
     (setq agent-shell-qwen-authentication
           (agent-shell-qwen-make-authentication
