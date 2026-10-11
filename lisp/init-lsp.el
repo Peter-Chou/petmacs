@@ -14,6 +14,13 @@
   ;; :pin gnu-devel
   :preface
   (defun petmacs/eglot-keybindgs ()
+
+    (define-key evil-motion-state-map "gD" #'xref-find-definitions-other-window)
+    (define-key evil-motion-state-map "gi" #'eglot-find-implementation)
+    (define-key evil-motion-state-map "gt" #'eglot-find-type-definition)
+    (define-key evil-motion-state-map "gC" #'eglot-find-declaration)
+    (define-key evil-motion-state-map "gb" #'xref-go-back)
+
     (define-key evil-motion-state-map "gR" #'eglot-rename)
     (define-key evil-motion-state-map "gr" #'xref-find-references)
     (define-key evil-normal-state-map "gi" #'eglot-find-implementation)

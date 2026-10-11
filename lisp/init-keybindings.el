@@ -636,54 +636,69 @@
     "=" "format"
     "a" "actions"
     "g" "goto"
-    "G" "goto (other window)"
     "b" "backend"
-    ;; "p" "peek"
-    ;; "pR" "peek reference"
-    "t" "toggle module"
+    "t" "toggle"
     "r" "refactor"
     "h" "help"
-    ;; "F" "folders"
-    ;; "x" "text/code"
+    "H" "hierarchy"
     )
   (leader-set-keys-for-major-mode mode
     ;; format
+    "=b" #'eglot-format-buffer
+    "=r" #'eglot-format
     "=o" #'eglot-code-action-organize-imports
+
+    ;; actions
+    "aa" #'eglot-code-actions
+    "af" #'eglot-code-action-quickfix
+    "ai" #'eglot-code-action-inline
+    "ae" #'eglot-code-action-extract
+    "ao" #'eglot-code-action-organize-imports
 
     ;; backends
     "bc" #'eglot-show-workspace-configuration
     "bl" #'eglot-list-connections
     "bs" #'eglot-shutdown
     "bS" #'eglot-shutdown-all
+    "br" #'eglot-reconnect
+    "be" #'eglot-events-buffer
 
-    ;; toggle
+    ;; toggles
     "ti" #'eglot-inlay-hints-mode
 
     ;; help
     "hh" #'eldoc-doc-buffer
 
-    ;; actions
-    "aa" #'eglot-code-actions
-
-    ;; rename
+    ;; refactor
     "rr" #'eglot-rename
+    "ri" #'eglot-code-action-inline
+    "re" #'eglot-code-action-extract
+    "ro" #'eglot-code-action-organize-imports
+    "rf" #'eglot-format
 
     ;; goto
-    "gd" #'xref-goto-xref
+    "gd" #'xref-find-definitions
+    "gD" #'xref-find-definitions-other-window
     "gr" #'xref-find-references
-    "gD" #'eglot-find-declaration
     "gi" #'eglot-find-implementation
-    "gt" #'eglot-find-typeDefinition
-    "gb" #'xref-pop-marker-stack
+    "gt" #'eglot-find-type-definition
+    "gC" #'eglot-find-declaration
+    "gb" #'xref-go-back
     "gF" #'xref-find-definitions-other-frame
     "gs" #'consult-eglot-symbols
 
-    ;; goto other window
-    "Gd" #'xref-find-definitions-other-window
+    ;; "gd" #'xref-goto-xref
+    ;; "gr" #'xref-find-references
+    ;; "gD" #'eglot-find-declaration
+    ;; "gi" #'eglot-find-implementation
+    ;; "gt" #'eglot-find-type-definition
+    ;; "gb" #'xref-pop-marker-stack
+    ;; "gF" #'xref-find-definitions-other-frame
+    ;; "gs" #'consult-eglot-symbols
 
     ;; hierarchy
-    "gT" #'eglot-show-type-hierarchy
-    "gC" #'eglot-show-call-hierarchy
+    "gHt" #'eglot-show-type-hierarchy
+    "gHc" #'eglot-show-call-hierarchy
     ))
 
 ;;; restclient mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
