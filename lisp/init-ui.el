@@ -29,12 +29,6 @@
               bidi-paragraph-direction 'left-to-right)
 (setq bidi-inhibit-bpa t)
 
-;; Menu/Tool/Scroll bars
-(unless emacs/>=27p
-  (push '(menu-bar-lines . 0) default-frame-alist)
-  (push '(tool-bar-lines . 0) default-frame-alist)
-  (push '(vertical-scroll-bars) default-frame-alist))
-
 (use-package nerd-icons
   :demand t)
 
@@ -314,12 +308,11 @@
       mouse-wheel-progressive-speed nil)
 
 ;; Smooth Scroll
-(when emacs/>=29p
-  (use-package ultra-scroll
-    :custom
-    (scroll-conservatively 3)
-    (scroll-margin 0)
-    :hook window-setup))
+(use-package ultra-scroll
+  :custom
+  (scroll-conservatively 3)
+  (scroll-margin 0)
+  :hook window-setup)
 
 ;; Use fixed pitch where it's sensible
 (use-package mixed-pitch)
@@ -338,7 +331,7 @@
     (setq ns-pop-up-frames nil)))
 
 ;; use font supported ligatures
-(when (and emacs/>=28p petmacs-enable-ligatures)
+(when petmacs-enable-ligatures
   (use-package composite
     :ensure nil
     :init (defvar composition-ligature-table (make-char-table nil))
@@ -449,27 +442,26 @@
         :scroll-bar-width 8
         ))))
 
-(when emacs/>=26p
-  (use-package tab-bar
-    :ensure nil
-    :bind (("M-[" . tab-bar-switch-to-prev-tab)
-           ("M-]" . tab-bar-switch-to-prev-tab)
-           ("M-{" . tab-bar-move-tab-backward)
-           ("M-}" . tab-bar-move-tab)
-           ("M-k" . tab-bar-close-tab))
-    ;; :hook (emacs-startup . tab-bar-mode)
-    :init
-    (setq
-     tab-bar-close-button-show nil
-     tab-bar-new-tab-choice "*dashboard*";; buffer to show in new tabs
-     ;; tab-bar-show petmacs-disable-modeline
-     ;; tab-bar-show 1
-     tab-bar-show t
-     ;; elements to include in bar
-     tab-bar-format '(tab-bar-format-tabs tab-bar-separator))
-    ;; "Alist of integers to strings of circled unicode numbers."
-    tab-bar-tab-hints t)
-
+(use-package tab-bar
+  :ensure nil
+  :bind (("M-[" . tab-bar-switch-to-prev-tab)
+         ("M-]" . tab-bar-switch-to-prev-tab)
+         ("M-{" . tab-bar-move-tab-backward)
+         ("M-}" . tab-bar-move-tab)
+         ("M-k" . tab-bar-close-tab))
+  ;; :hook (emacs-startup . tab-bar-mode)
+  :init
+  (setq
+   tab-bar-close-button-show nil
+   tab-bar-new-tab-choice "*dashboard*";; buffer to show in new tabs
+   ;; tab-bar-show petmacs-disable-modeline
+   ;; tab-bar-show 1
+   tab-bar-show t
+   ;; elements to include in bar
+   tab-bar-format '(tab-bar-format-tabs tab-bar-separator)
+   ;; "Alist of integers to strings of circled unicode numbers."
+   tab-bar-tab-hints t)
+  :config
   ;; (defvar petmacs--circle-numbers-alist
   ;;   '((1 . (nerd-icons-mdicon "nf-md-numeric_1_circle"))
   ;;     (2 . (nerd-icons-mdicon "nf-md-numeric_2_circle"))
@@ -497,7 +489,7 @@
   ;;              " ")
   ;;      'face (funcall tab-bar-tab-face-function tab))))
   ;; (setq tab-bar-tab-name-format-function #'petmacs/tab-bar-tab-name-format-default)
-  :config
+
   (set-face-attribute 'tab-bar-tab nil :background petmacs-favor-color :bold t))
 
 (use-package prettify-utils

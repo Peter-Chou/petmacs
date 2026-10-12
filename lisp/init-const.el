@@ -19,6 +19,10 @@
   (eq system-type 'gnu/linux)
   "Are we running on a GNU/Linux system?")
 
+(defconst sys/unixp
+  (eq system-type 'berkeley-unix)
+  "Are we running on an Unix system?")
+
 (defconst sys/wslp
   (and (eq system-type 'gnu/linux)
        (string-match "-[Mm]icrosoft" operating-system-release))
@@ -55,18 +59,6 @@
 (defconst sys/rootp
   (string-equal "root" (getenv "USER"))
   "Are you using ROOT user?")
-
-(defconst emacs/>=26p
-  (>= emacs-major-version 26)
-  "Emacs is 26 or above.")
-
-(defconst emacs/>=27p
-  (>= emacs-major-version 27)
-  "Emacs is 27 or above.")
-
-(defconst emacs/>=28p
-  (>= emacs-major-version 28)
-  "Emacs is 28 or above.")
 
 (defconst emacs/>=29p
   (>= emacs-major-version 29)

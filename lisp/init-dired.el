@@ -14,74 +14,48 @@
 ;; Directory operations
 (use-package dired
   :ensure nil
-  :hook (dired-mode . dired-omit-mode)
-  :preface
-  (defun petmacs/dired-goto-parent-directory ()
-    "go up a level using same buffer"
-    (interactive)
-    (find-alternate-file ".."))
-
-  ;; show diectory first
-  (defun petmacs//dired-sort ()
-    "Sort dired listings with directories first."
-    (save-excursion
-      (let (buffer-read-only)
-	    (forward-line 2) ;; beyond dir. header
-	    (sort-regexp-fields t "^.*$" "[ ]*." (point) (point-max)))
-      (set-buffer-modified-p nil)))
-  :init
-  (setq dired-kill-when-opening-new-dired-buffer t
-        dired-movement-style 'cycle
-        ;; Always delete and copy recursively
-        dired-recursive-deletes 'always
-        dired-recursive-copies 'always
-        dired-dwim-target t)
-  (put 'dired-find-alternate-file 'disabled nil)
-  (define-key evil-normal-state-map (kbd "-") 'dired-jump)
+  :defines ls-lisp-use-insert-directory-program
+  :bind (:map dired-mode-map
+         ("C-c C-p" . wdired-change-to-wdired-mode))
   :config
-  (when sys/macp
-    ;; Suppress the warning: `ls does not support --dired'.
-    (setq dired-use-ls-dired nil)
+  (define-key evil-normal-state-map (kbd "-") 'dired-jump)
 
-    (when (executable-find "gls")
-      ;; Use GNU ls as `gls' from `coreutils' if available.
-      (setq insert-directory-program "gls")))
+  ;; Guess a default target directory
+  (setq dired-dwim-target t)
 
-  (when (or (and sys/macp (executable-find "gls"))
-            (and (not sys/win32p) (and (not sys/macp) (executable-find "ls"))))
+  ;; Always delete and copy recursively
+  (setq dired-recursive-deletes 'always
+        dired-recursive-copies 'always)
 
-    ;; Using `insert-directory-program'
-    (setq ls-lisp-use-insert-directory-program t)
+  (if (and (or sys/macp sys/unixp)
+           (string= insert-directory-program "ls"))
+      ;; Suppress the warning: `ls does not support --dired'.
+      (setq dired-use-ls-dired nil
+            dired-listing-switches "-alh")
     ;; Show directory first
-    (unless sys/win32p
-      (setq dired-listing-switches "-alh --group-directories-first")))
-
-  (when sys/win32p
-    (setq dired-listing-switches "-alh")  ;; show human readable file size
-    (defadvice dired-readin
-	    (after dired-after-updating-hook first () activate)
-      "Sort dired listings with directories first before adding marks."
-      (petmacs//dired-sort)))
-
-  (evil-define-key 'normal dired-mode-map (kbd "-") 'petmacs/dired-goto-parent-directory))
+    (setq dired-listing-switches "-alh --group-directories-first")))
 
 ;; Quick sort dired buffers via hydra
 (use-package dired-quick-sort
-  :bind (:map dired-mode-map
-         ("S" . hydra-dired-quick-sort/body)))
+  :after dired
+  :custom (dired-quick-sort-suppress-setup-warning t)
+  :hook (after-init . dired-quick-sort-setup))
 
 ;; Show git info in dired
 (use-package dired-git-info
+  :after dired
   :bind (:map dired-mode-map
          (")" . dired-git-info-mode)))
 
 ;; Allow rsync from dired buffers
 (use-package dired-rsync
+  :after dired
   :bind (:map dired-mode-map
          ("C-c C-r" . dired-rsync)))
 
+;; Colorful dired
 (use-package diredfl
-  :hook (dired-mode . diredfl-mode))
+  :hook dired-mode)
 
 ;; Shows icons in dired
 (use-package nerd-icons-dired
@@ -99,14 +73,15 @@
            args))
   (setq nerd-icons-dired-dir-icon-function #'my/nerd-icons-icon-for-dir))
 
+;; Extra Dired functionality
+(use-package dired-aux :ensure nil)
 (use-package dired-x
   :ensure nil
-  :demand t
-  :config
-  (let ((cmd (cond (sys/mac-x-p "open")
-                   (sys/linux-x-p "xdg-open")
-                   (sys/win32p "start")
-                   (t ""))))
+  :init
+  (when-let* ((cmd (cond (sys/macp "open")
+                         (sys/linuxp "xdg-open")
+                         (sys/win32p "start")
+                         (t nil))))
     (setq dired-guess-shell-alist-user
           `(("\\.pdf\\'" ,cmd)
             ("\\.docx\\'" ,cmd)
@@ -119,13 +94,10 @@
             ("\\.\\(?:mp3\\|flac\\)\\'" ,cmd)
             ("\\.html?\\'" ,cmd)
             ("\\.md\\'" ,cmd))))
-
+  :config
   (setq dired-omit-files
         (concat dired-omit-files
-                "\\|^.DS_Store$\\|^.projectile$\\|^.svn$\\|^.vscode$\\|\\.js\\.meta$\\|\\.meta$\\|\\.elc$")))
-
-;; Extra Dired functionality
-(use-package dired-aux :ensure nil)
+                "\\|^.DS_Store$\\|^.projectile$\\|^.git*\\|^.svn$\\|^.vscode$\\|\\.js\\.meta$\\|\\.meta$\\|\\.elc$\\|^.emacs.*")))
 
 (provide 'init-dired)
 

@@ -14,7 +14,7 @@
   ;; use the custom prompter that shows session labels
   (project-prompter #'project-x--project-prompt)
   ;; automatically restore the last project on startup
-  (project-x-restore-last-project-on-startup (not centaur-dashboard))
+  (project-x-restore-last-project-on-startup nil)
   ;; not display tab bar
   (tab-bar-show nil)
   :hook
