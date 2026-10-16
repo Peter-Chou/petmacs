@@ -16,10 +16,14 @@
   :ensure nil
   :defines ls-lisp-use-insert-directory-program
   :bind (:map dired-mode-map
+         ("RET" . dired-find-alternate-file)
          ("C-c C-p" . wdired-change-to-wdired-mode))
   :config
   (define-key evil-normal-state-map (kbd "-") 'dired-jump)
+  (evil-define-key 'normal dired-mode-map (kbd "<return>") 'dired-find-alternate-file)
 
+  (setq dired-kill-when-opening-new-dired-buffer t)
+  (setq dired-movement-style 'cycle)
   ;; Guess a default target directory
   (setq dired-dwim-target t)
 
