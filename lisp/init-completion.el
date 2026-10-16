@@ -129,7 +129,6 @@
 
    consult-line consult-line-multi
    consult-ripgrep consult-git-grep consult-grep
-   :initial (selected-region-or-symbol-at-point)
    :preview-key 'any)
 
   ;; Optionally configure the narrowing key.
@@ -137,19 +136,6 @@
   (setq consult-narrow-key "<"  ;; "C-+"
         consult-project-function (lambda (_) (projectile-project-root)))
 
-  ;; Select initial texts
-  ;; It's useful in `consult-grep' and similar commands
-  (defun my/consult--read (fn &rest args)
-    "Select initial texts in `consult--read'."
-    (minibuffer-with-setup-hook
-        (lambda ()
-          "Select initial texts."
-          (set-mark (point-max))
-          (goto-char (minibuffer-prompt-end)))
-      (apply fn args)))
-  (advice-add #'consult--read :around #'my/consult--read)
-
-  ;;
   ;; More utilities: list colors
   ;;
   (defvar consult-colors-history nil
