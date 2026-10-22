@@ -541,26 +541,26 @@
     ;; "-"  #'projectile-dired
     "-"  #'project-dired
     "t"  #'petmacs/treemacs-project-toggle
-    ;; "t" #'petmacs/toggle-treemacs-and-symbols-outline
-    ;; "d"  #'consult-projectile-find-dir
-    "d"  #'project-find-dir
-    ;; "p"  #'consult-projectile-switch-project
-    "p"  #'project-switch-project
+    "d"  #'consult-projectile-find-dir
+    ;; "d"  #'project-find-dir
+    "p"  #'consult-projectile-switch-project
+    ;; "p"  #'project-switch-project
 
-    ;; "x"  #'projectile-remove-known-project
-    ;; "a"  #'projectile-add-known-project
-    "x"  #'project-forget-projects-under
-    "X"  #'project-forget-zombie-projects
-    "a"  #'project-remember-projects-under
+    "x"  #'projectile-remove-known-project
+    "a"  #'projectile-add-known-project
+    ;; "x"  #'project-forget-projects-under
+    ;; "X"  #'project-forget-zombie-projects
+    ;; "a"  #'project-remember-projects-under
 
-    "ff"  #'project-find-file
+    ;; "ff"  #'project-find-file
+    "ff"  #'projectile-find-file
 
     ;; "fo"  #'consult-projectile-find-file-other-window
     ;; "fF"  #'consult-projectile-find-file-other-frame
 
-    ;; "bb"  #'consult-project-buffer
-    "bb"  #'project-switch-to-buffer
-    ;; "bF"  #'consult-project-extra-find
+    "bb"  #'consult-project-buffer
+    ;; "bb"  #'project-switch-to-buffer
+    "bF"  #'consult-project-extra-find
     "bo"  #'consult-project-extra-find-other-window
     "bX"  #'project-kill-buffers
 
