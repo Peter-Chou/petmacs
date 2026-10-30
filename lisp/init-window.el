@@ -95,7 +95,7 @@
           flycheck-error-list-mode flycheck-verify-mode
           "\\*Flymake diagnostics.*\\*$"
 
-          gnus-article-mode devdocs-mode
+          gnus-article-mode
           grep-mode occur-mode rg-mode deadgrep-mode ag-mode pt-mode
           youdao-dictionary-mode osx-dictionary-mode fanyi-mode
 

@@ -39,17 +39,15 @@
     ;; Show directory first
     (setq dired-listing-switches "-alh --group-directories-first")))
 
-;; Quick sort dired buffers via hydra
-(use-package dired-quick-sort
-  :after dired
-  :custom (dired-quick-sort-suppress-setup-warning t)
-  :hook (after-init . dired-quick-sort-setup))
-
-;; Show git info in dired
-(use-package dired-git-info
-  :after dired
-  :bind (:map dired-mode-map
-         (")" . dired-git-info-mode)))
+;; Quick sort dired buffers
+(when (or sys/linuxp sys/cygwinp
+          (and (or sys/macp sys/unixp)
+               (executable-find "gls")))
+  (use-package dired-quick-sort
+    :after dired
+    :bind (:map dired-mode-map
+           ("S" . dired-quick-sort-transient))
+    :hook (dired-mode . dired-quick-sort-set-switches)))
 
 ;; Allow rsync from dired buffers
 (use-package dired-rsync
