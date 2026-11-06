@@ -485,12 +485,13 @@ SCALE are supported."
 
 ;; code format tool
 (setenv "XMLLINT_INDENT" "    ") ;; format xml with 4 spaces
-(use-package apheleia
-  :bind ("C-c f" . apheleia-format-buffer)
-  :hook (emacs-startup . apheleia-global-mode)
-  :config
-  (setf (alist-get 'python-mode apheleia-mode-alist) '(isort ruff))
-  (setf (alist-get 'python-ts-mode apheleia-mode-alist) '(isort ruff)))
+
+(unless sys/win32p
+  (use-package apheleia
+    :hook (after-init . apheleia-global-mode)
+    :config
+    (setf (alist-get 'python-mode apheleia-mode-alist) '(isort ruff))
+    (setf (alist-get 'python-ts-mode apheleia-mode-alist) '(isort ruff))))
 
 (use-package tomlparse
   :commands tomlparse-file)

@@ -28,6 +28,23 @@
 (declare-function petmacs/symbols-outline-smart-toggle 'init-tools)
 (declare-function consult-lsp-file-symbols 'consult-lsp)
 
+(defun update-packages ()
+  "Refresh package contents and update all packages."
+  (interactive)
+  (message "Updating packages...")
+  (package-upgrade-all)
+  (delete-file (locate-user-emacs-file "package-quickstart.elc"))
+  (message "Updating packages...done"))
+(defalias 'petmacs-update-packages #'update-packages)
+
+(defun update-org-gtds ()
+  "Update Org files to the latest version."
+  (interactive)
+  (message "Updating org files %s..." default-directory)
+  (vc-dir "~/gtds/")
+  (sleep-for 0.2)
+  (vc-pull))
+
 (defun selected-region-or-symbol-at-point ()
   "Return the selected region, otherwise return the symbol at point."
   (if (region-active-p)
