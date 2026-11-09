@@ -90,6 +90,16 @@
     (setq agent-shell-qwen-environment (agent-shell-make-environment-variables
                                         "OPENAI_BASE_URL" "https://qianfan.baidubce.com/v2"
                                         "OPENAI_MODEL" "qwen3.5-122b-a10b"))
+
+    (setq agent-shell-anthropic-claude-environment
+          (agent-shell-make-environment-variables
+           "ANTHROPIC_BASE_URL" "http://10.0.2.16:20000"
+           "ANTHROPIC_API_KEY" "dummy"
+           "ANTHROPIC_AUTH_TOKEN" "dummy"
+           "ANTHROPIC_DEFAULT_OPUS_MODEL" "qwen3.8-27b"
+           "ANTHROPIC_DEFAULT_SONNET_MODEL" "qwen3.8-27b"
+           "ANTHROPIC_DEFAULT_HAIKU_MODEL" "qwen3.8-27b"))
+
     ;; use BAIDU
     (setq agent-shell-qwen-authentication
           (agent-shell-qwen-make-authentication
