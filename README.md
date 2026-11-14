@@ -139,7 +139,8 @@ use `clangd` in [LLVM project](https://github.com/llvm/llvm-project). soft link 
 or you can build it from source
 
 ``` bash
-llvm_version=llvmorg-23.1.0 # set version
+# set version
+llvm_version=llvmorg-23.1.5
 # download llvm project
 git clone -b $llvm_version --depth=1 https://github.com/llvm/llvm-project.git $llvm_version
 # cmake setup
