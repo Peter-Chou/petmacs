@@ -125,7 +125,7 @@ download [ty](https://github.com/astral-sh/ty/releases) and put it into your `PA
 
 ### 3.2 eclipse jdtls (Java)
 
-[eclipse jdtls](https://github.com/eclipse-jdtls/eclipse.jdt.ls) equires a runtime environment of Java 25 (at a minimum) to run, please make sure `java 25` is installed in `/opt/jdk25` folder and run following commands in emacs.
+[eclipse jdtls](https://github.com/eclipse-jdtls/eclipse.jdt.ls) requires a runtime environment of Java 25 (at a minimum) to run, please make sure `java 25` is installed in `/opt/jdk25` folder and run following commands in emacs.
 
 ``` bash
 M-x: eglot-java-upgrade-lsp-server
