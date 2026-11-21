@@ -180,10 +180,10 @@ Same as '`replace-string' `C-q' `C-m' `RET' `RET''."
 (defun byte-compile-site-lisp ()
   "Compile packages in site-lisp directory."
   (interactive)
-  (let ((default-directory (locate-user-emacs-file "site-lisp")))
+  (let ((dir (locate-user-emacs-file "site-lisp")))
     (if (fboundp 'async-byte-recompile-directory)
-        (async-byte-recompile-directory default-directory)
-      (byte-recompile-directory default-directory 0 t))))
+        (async-byte-recompile-directory dir)
+      (byte-recompile-directory dir 0 t))))
 
 (defun native-compile-elpa ()
   "Native-compile packages in elpa directory."
@@ -365,6 +365,13 @@ Native tree-sitter is introduced since 29."
   (interactive)
   (disable-http-proxy)
   (disable-socks-proxy))
+
+(defun toggle-socks-proxy ()
+  "Toggle SOCKS proxy."
+  (interactive)
+  (if (bound-and-true-p socks-server)
+      (disable-socks-proxy)
+    (enable-socks-proxy)))
 
 (defun toggle-proxy ()
   "Toggle proxy."
