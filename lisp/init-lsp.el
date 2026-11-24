@@ -105,6 +105,9 @@
 
           ((java-mode java-ts-mode) . ("jdtls"))
 
+          ((js-mode js-ts-mode tsx-ts-mode typescript-ts-mode jtsx-jsx-mode jtsx-tsx-mode jtsx-typescript-mode)
+           "typescript-language-server" "--stdio")
+
           ((go-mode go-dot-mod-mode go-dot-work-mode go-ts-mode go-mod-ts-mode go-work-ts-mode) . ("gopls"))
 
           ((bash-ts-mode sh-mode) . ("bash-language-server" "start"))
@@ -118,6 +121,8 @@
   (add-hook 'eglot-managed-mode-hook (lambda () (eglot-inlay-hints-mode -1)))
 
   (advice-add 'eglot-ensure :after 'petmacs/eglot-keybindgs))
+
+(use-package eglot-typescript-preset)
 
 (use-package eglot-java
   :preface
@@ -246,6 +251,7 @@
 (with-eval-after-load 'org
   (dolist (lang '("C" "C++"))
     (eval `(eglot-org-babel-enable ,lang))))
+
 
 (provide 'init-lsp)
 

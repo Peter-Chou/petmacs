@@ -32,7 +32,11 @@
   "Refresh package contents and update all packages."
   (interactive)
   (message "Updating packages...")
-  (package-upgrade-all)
+  (when (fboundp 'package-upgrade-all)
+    (package-upgrade-all))
+  (when (and current-prefix-arg
+             (fboundp 'package-vc-upgrade-all))
+    (package-vc-upgrade-all))
   (delete-file (locate-user-emacs-file "package-quickstart.elc"))
   (message "Updating packages...done"))
 (defalias 'petmacs-update-packages #'update-packages)
@@ -1266,6 +1270,10 @@ interactively.  Turn the filename into a URL with function
   (if (xwidget-workable-p)
       (petmacs-webkit-browse-url (browse-url-file-url file) t)
     (browse-url-of-file file)))
+
+(defun petmacs/render-html-buffer ()
+  (interactive)
+  (shr-render-buffer (current-buffer)))
 
 (provide 'init-funcs)
 
