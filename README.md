@@ -156,6 +156,12 @@ sudo $(which cmake) --install build
 sudo ln -sf /opt/softwares/$llvm_version /opt/llvm
 ```
 
+# typescript lsp
+
+``` sh
+npm install -g typescript-language-server typescript@6
+```
+
 ### 3.4 neocmakelsp (cmake)
 
 download [neocmakelsp](https://github.com/neocmakelsp/neocmakelsp/releases) (musl version) and put it into your `PATH`.
