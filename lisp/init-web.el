@@ -61,6 +61,16 @@
   (use-package restclient-test
     :hook (restclient-mode . restclient-test-mode)))
 
+(use-package simple-httpd
+  :hook (after-init . popterm-global-mode)
+  :init
+  (setq httpd-root "/var/www")
+  (httpd-start))
+
+;; M-x impatient-mode
+;; And then point your browser to http://localhost:8080/imp/,
+(use-package impatient-mode)
+
 (provide 'init-web)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
