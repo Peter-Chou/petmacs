@@ -62,6 +62,11 @@
                                      (petmacs/eglot-ensure "bash-language-server")))
          ((cmake-mode cmake-ts-mode) . (lambda ()
                                          (petmacs/eglot-ensure "neocmakelsp")))
+
+         ((js-mode js-ts-mode tsx-ts-mode typescript-ts-mode
+                   jtsx-jsx-mode jtsx-tsx-mode jtsx-typescript-mode) . (lambda ()
+                   (petmacs/eglot-ensure "typescript-language-server")))
+
          ((dockerfile-mode dockerfile-ts-mode) . (lambda ()
                                                    (petmacs/eglot-ensure "docker-langserver"))))
   :init
@@ -105,8 +110,7 @@
 
           ((java-mode java-ts-mode) . ("jdtls"))
 
-          ((js-mode js-ts-mode tsx-ts-mode typescript-ts-mode jtsx-jsx-mode jtsx-tsx-mode jtsx-typescript-mode)
-           "typescript-language-server" "--stdio")
+          ((js-mode js-ts-mode tsx-ts-mode typescript-ts-mode jtsx-jsx-mode jtsx-tsx-mode jtsx-typescript-mode) . ("typescript-language-server" "--stdio"))
 
           ((go-mode go-dot-mod-mode go-dot-work-mode go-ts-mode go-mod-ts-mode go-work-ts-mode) . ("gopls"))
 
