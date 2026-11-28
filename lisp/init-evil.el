@@ -189,7 +189,6 @@
 
                                     eshell
 
-                                    diff-hl
                                     diff-mode
                                     ediff
 

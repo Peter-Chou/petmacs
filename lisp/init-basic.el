@@ -66,7 +66,11 @@
 ;; Automatically reload files was modified by external program
 (use-package autorevert
   :ensure nil
-  :hook (after-init . global-auto-revert-mode))
+  :hook (after-init . global-auto-revert-mode)
+  :init
+  ;; Also auto refresh dired, but be quiet about it
+  (setq global-auto-revert-non-file-buffers t)
+  (setq auto-revert-verbose nil))
 
 ;; Cross-referencing commands
 (use-package xref

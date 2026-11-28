@@ -80,7 +80,7 @@ FACE defaults to inheriting from default and highlight."
 
 ;; Highlight symbols
 (use-package symbol-overlay
-  :functions (easy-kill easy-kill-destroy-candidate)
+  :functions (easy-kill easy-kill-destroy-candidate file-too-big-p)
   :custom-face
   (symbol-overlay-default-face ((t (:inherit region :background unspecified :foreground unspecified))))
   (symbol-overlay-face-1 ((t (:inherit nerd-icons-blue :background unspecified :foreground unspecified :inverse-video t))))
@@ -111,7 +111,8 @@ FACE defaults to inheriting from default and highlight."
   (defun turn-on-symbol-overlay (&rest _)
     "Turn on symbol highlighting."
     (interactive)
-    (when (derived-mode-p 'prog-mode 'yaml-mode 'yaml-ts-mode)
+    (when (and (derived-mode-p 'prog-mode 'yaml-mode 'yaml-ts-mode)
+               (not (file-too-big-p)))
       (symbol-overlay-mode 1)))
 
   (advice-add #'activate-mark :after #'turn-off-symbol-overlay)
@@ -124,7 +125,7 @@ FACE defaults to inheriting from default and highlight."
   :bind (:map region-occurrences-highlighter-nav-mode-map
          ("M-n" . region-occurrences-highlighter-next)
          ("M-p" . region-occurrences-highlighter-prev))
-  :hook (after-init . global-region-occurrences-highlighter-mode))
+  :hook (emacs-startup . global-region-occurrences-highlighter-mode))
 
 ;; Display fill-column indicator
 (use-package display-fill-column-indicator
@@ -204,7 +205,7 @@ FACE defaults to inheriting from default and highlight."
   (colorful-prefix-string "■")
   (colorful-only-strings 'only-prog)
   (css-fontify-colors nil)
-  :hook (after-init . global-colorful-mode)
+  :hook (emacs-startup . global-colorful-mode)
   :config
   (add-to-list 'global-colorful-modes 'helpful-mode))
 
@@ -218,7 +219,7 @@ FACE defaults to inheriting from default and highlight."
   :functions rg rg-read-files rg-project
   :custom-face
   (hl-todo ((t (:inherit default :height 0.9 :width condensed :weight bold :underline nil :inverse-video t))))
-  :hook (after-init . global-hl-todo-mode)
+  :hook (emacs-startup . global-hl-todo-mode)
   :init (setq hl-todo-color-background t
               hl-todo-include-modes '(prog-mode conf-mode)
               hl-todo-exclude-modes '(org-mode
